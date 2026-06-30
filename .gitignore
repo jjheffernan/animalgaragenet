@@ -90,3 +90,4 @@ blob-report
 .temp
 tmp
 *.tsbuildinfo
+.wiki-cache/

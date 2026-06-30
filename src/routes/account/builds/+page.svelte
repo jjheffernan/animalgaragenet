@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
 	import { BUILD_LOG_STATUS_LABELS } from '$lib/types/build-log';
-	import ListControls from '$lib/components/ListControls.svelte';
+	import ListControls from '$lib/components/catalog/ListControls.svelte';
 	import type { PageData } from './$types';
 
 	let { data }: { data: PageData } = $props();

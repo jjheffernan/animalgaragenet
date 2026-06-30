@@ -5,7 +5,7 @@
  * Preferences (client-readable): promo dismiss, banner rotation.
  * Consent: cookie notice acknowledgement (analytics stub).
  *
- * @see docs/cookies.md
+ * @see docs/commerce/cookies.md
  */
 
 /** User accepted optional cookies (analytics, etc.). `1` = accepted, `0` = essential only. */

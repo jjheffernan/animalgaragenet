@@ -14,7 +14,7 @@
 
 <!--
   Dashboard shell — zinc palette with mobile drawer sidebar.
-  See docs/dashboard-adoption-plan.md
+  See docs/archive/dashboard-adoption-plan.md
 -->
 <div class="admin-shell flex min-h-[calc(100vh-73px)] flex-col bg-zinc-950 lg:flex-row">
 	<!-- Mobile overlay -->

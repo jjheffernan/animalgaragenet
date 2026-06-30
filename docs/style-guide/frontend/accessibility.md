@@ -66,4 +66,4 @@ Below-fold images use `loading="lazy"` to reduce initial load without blocking a
 
 ## Reference
 
-Full motion a11y plan: [animation-media.md](../../animation-media.md#accessibility)
+Full motion a11y plan: [archive/animation-media.md](../../archive/animation-media.md#accessibility)

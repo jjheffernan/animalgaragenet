@@ -34,54 +34,50 @@ Set all vars from `.env.example` in the hosting platform's env config:
 
 **Required for full functionality:**
 
-- `PUBLIC_SITE_URL=https://animalgarage.net`
-- `PUBLIC_SALEOR_API_URL=https://commerce.animalgarage.net/graphql/`
+- `PUBLIC_SITE_URL` — storefront origin (`https://<your-site-host>`)
+- `PUBLIC_SALEOR_API_URL` — `https://<your-saleor-host>/graphql/`
 - `SALEOR_CHANNEL=default-channel`
-- `PUBLIC_CDN_BASE_URL=https://cdn.animalgarage.net`
+- `PUBLIC_CDN_BASE_URL` — `https://<your-cdn-host>`
 - `PUBLIC_SUPABASE_URL`, `PUBLIC_SUPABASE_ANON_KEY`
 - `SUPABASE_SERVICE_ROLE_KEY` (server only)
 
-**AWS (media pipeline):**
-
-- `S3_BUCKET`, `S3_REGION`, `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`
+**Media pipeline (future):** see `.env.example` for storage-related server vars.
 
 ## CI/CD
 
 | Workflow | Branch | Trigger | Purpose |
 | -------- | ------ | ------- | ------- |
-| `.github/workflows/ci.yml` | `dev` and `main` | Push/PR on **jjheffernan/animalgaragenet** | Lint, typecheck, unit/e2e tests, build |
-| `.github/workflows/sync-org-main.yml` | **`main` only** | CI success on `main` push, or manual | Mirror `main` → **heff-industries/animalgaragenet** for Netlify |
+| `.github/workflows/ci.yml` | `dev` and `main` | Push/PR on this repo | Lint, typecheck, unit/e2e tests, build |
+| `.github/workflows/sync-org-main.yml` | **`main` only** | CI success on `main` push, or manual | Mirror `main` → organization deploy repo for Netlify |
 
 > **Note:** The org-sync workflow and `scripts/sync-org-mirror.sh` live on **`main`**, not `dev`. Merging `dev` → `main` brings sync changes into the personal repo; only then does CI on `main` push to the org mirror.
 
 ### Branch flow
 
 ```
-feature/* → dev (CI) → merge to main (CI) → sync to heff-industries/animalgaragenet → Netlify deploy
+feature/* → dev (CI) → merge to main (CI) → sync to <organization>/<deploy-repo> → Netlify deploy
 ```
 
-Personal repo (`jjheffernan/animalgaragenet`) is where you develop and run GitHub Actions. The org repo is a **read-only deploy mirror** — it receives app source only, not workflow files.
+Personal repo is where you develop and run GitHub Actions. The org repo is a **read-only deploy mirror** — it receives app source only, not workflow files.
 
 ### Org mirror (deploy key)
 
-Auth uses an **org-repo deploy key** (secret `ORG_REPO_DEPLOY_KEY` on the personal repo), not a PAT. Deploy keys cannot push `.github/workflows`, so the mirror builds an orphan snapshot **without** the workflows folder. Netlify does not need Actions on the org repo.
+Auth uses an **org-repo deploy key** (GitHub Actions secret on the personal repo), not a PAT. Deploy keys cannot push `.github/workflows`, so the mirror builds an orphan snapshot **without** the workflows folder. Netlify does not need Actions on the org repo.
 
 | Where | What you see |
 | ----- | ------------ |
-| `heff-industries/animalgaragenet` → Settings → Deploy keys | `personal-main-sync` (public key) |
-| `jjheffernan/animalgaragenet` → Settings → Secrets → Actions | Secret **name** `ORG_REPO_DEPLOY_KEY` only — GitHub never shows secret values |
+| Organization deploy repo → Settings → Deploy keys | Deploy key title (public key fingerprint) |
+| Personal repo → Settings → Secrets → Actions | Secret **name** only — GitHub never shows secret values |
 
 ```bash
 ./scripts/setup-org-sync-auth.sh install   # first time, or rotate key
 ./scripts/setup-org-sync-auth.sh verify    # list deploy keys + secret names
-./scripts/setup-org-sync-auth.sh cleanup   # remove obsolete ORG_REPO_SYNC_TOKEN if set
+./scripts/setup-org-sync-auth.sh cleanup   # remove obsolete PAT secret if set
 ```
 
-Then connect Netlify to `heff-industries/animalgaragenet`, branch `main`.
+Then connect Netlify to `<organization>/<deploy-repo>`, branch `main`.
 
 Manual re-sync: GitHub → Actions → **Sync main to org** → Run workflow (`workflow_dispatch` does not wait for CI).
-
-## Pre-launch checklist
 
 ## Pre-launch checklist
 
@@ -104,11 +100,13 @@ See [STATUS.md](../../STATUS.md) for the live tracker. Summary:
 
 ## Domain setup
 
-| Domain                      | Purpose            |
-| --------------------------- | ------------------ |
-| `animalgarage.net`          | SvelteKit frontend |
-| `commerce.animalgarage.net` | Saleor backend     |
-| `cdn.animalgarage.net`      | CloudFront media   |
+Configure separate hosts via env vars (not hardcoded in docs):
+
+| Role | Env var |
+| ---- | ------- |
+| Storefront | `PUBLIC_SITE_URL` |
+| Saleor GraphQL | `PUBLIC_SALEOR_API_URL` |
+| Media CDN | `PUBLIC_CDN_BASE_URL` |
 
 ## Security
 
@@ -117,4 +115,4 @@ See [STATUS.md](../../STATUS.md) for the live tracker. Summary:
 - Supabase RLS on all user tables
 - HTTPS everywhere
 
-See [infrastructure.md](../../infrastructure.md) for CDN/S3/Supabase architecture.
+See [infrastructure/overview.md](../../infrastructure/overview.md) for CDN/S3/Supabase architecture.

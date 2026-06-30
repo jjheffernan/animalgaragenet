@@ -1,12 +1,12 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
-	import SectionHeading from '$lib/components/SectionHeading.svelte';
-	import LocaleSelector from '$lib/components/LocaleSelector.svelte';
-	import AnimatedReveal from '$lib/components/AnimatedReveal.svelte';
-	import ProductGrid from '$lib/components/ProductGrid.svelte';
-	import ListControls from '$lib/components/ListControls.svelte';
-	import CatalogRibbonShell from '$lib/components/CatalogRibbonShell.svelte';
-	import CategoryPill from '$lib/components/CategoryPill.svelte';
+	import SectionHeading from '$lib/components/shared/SectionHeading.svelte';
+	import LocaleSelector from '$lib/components/navigation/LocaleSelector.svelte';
+	import AnimatedReveal from '$lib/components/shared/AnimatedReveal.svelte';
+	import ProductGrid from '$lib/components/catalog/ProductGrid.svelte';
+	import ListControls from '$lib/components/catalog/ListControls.svelte';
+	import CatalogRibbonShell from '$lib/components/catalog/CatalogRibbonShell.svelte';
+	import CategoryPill from '$lib/components/catalog/CategoryPill.svelte';
 	import { catalogRibbonNavClass } from '$lib/ui/catalog-ribbon';
 	import { locale } from '$lib/stores/locale.svelte';
 

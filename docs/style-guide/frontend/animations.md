@@ -72,7 +72,7 @@ Prefer transform/opacity only (GPU-friendly). Avoid animating width, height, or 
 
 ## Phase 2 considerations
 
-See [animation-media.md](../../animation-media.md) for planned enhancements:
+See [archive/animation-media.md](../../archive/animation-media.md) for planned enhancements:
 
 - `@motionone/svelte` for scroll-triggered reveals
 - Svelte transitions for route changes

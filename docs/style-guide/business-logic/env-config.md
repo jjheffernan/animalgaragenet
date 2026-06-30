@@ -55,10 +55,6 @@ All values fall back to safe defaults or empty strings — missing vars won't cr
 | --------------------------- | ------------------------------------------------ |
 | `SALEOR_CHANNEL`            | Saleor channel slug (default: `default-channel`) |
 | `SUPABASE_SERVICE_ROLE_KEY` | Admin key — never expose to client               |
-| `S3_BUCKET`                 | Media bucket name                                |
-| `S3_REGION`                 | AWS region                                       |
-| `AWS_ACCESS_KEY_ID`         | IAM credentials (CI/deploy)                      |
-| `AWS_SECRET_ACCESS_KEY`     | IAM secret                                       |
 
 ## Missing var behavior
 

@@ -42,7 +42,7 @@ Primary catalog loaders are wired with env gating. Checkout completion and payme
 | Add-to-cart from listing cards | Needs `variantId` on cards |
 | Collection product edges | `products[]` empty on collections |
 
-Detailed audit: `docs/saleor-audit.md` in the repo.
+Detailed audit: `docs/audits/saleor-audit.md` in the repo.
 
 ## Code layout
 

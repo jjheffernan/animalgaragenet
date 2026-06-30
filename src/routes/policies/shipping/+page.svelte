@@ -1,5 +1,5 @@
 <script lang="ts">
-	import AnimatedReveal from '$lib/components/AnimatedReveal.svelte';
+	import AnimatedReveal from '$lib/components/shared/AnimatedReveal.svelte';
 </script>
 
 <svelte:head>

@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
-	import SectionHeading from '$lib/components/SectionHeading.svelte';
-	import AnimatedReveal from '$lib/components/AnimatedReveal.svelte';
-	import ListControls from '$lib/components/ListControls.svelte';
+	import SectionHeading from '$lib/components/shared/SectionHeading.svelte';
+	import AnimatedReveal from '$lib/components/shared/AnimatedReveal.svelte';
+	import ListControls from '$lib/components/catalog/ListControls.svelte';
 	import { locale } from '$lib/stores/locale.svelte';
 
 	let { data } = $props();

@@ -2,11 +2,11 @@
 	import { resolve } from '$app/paths';
 	import { locale } from '$lib/stores/locale.svelte';
 	import { cart } from '$lib/stores/cart.svelte';
-	import LocaleSelector from '$lib/components/LocaleSelector.svelte';
-	import AnimatedReveal from '$lib/components/AnimatedReveal.svelte';
-	import ProductGrid from '$lib/components/ProductGrid.svelte';
-	import PriceDisplay from '$lib/components/PriceDisplay.svelte';
-	import CatalogKindBadge from '$lib/components/CatalogKindBadge.svelte';
+	import LocaleSelector from '$lib/components/navigation/LocaleSelector.svelte';
+	import AnimatedReveal from '$lib/components/shared/AnimatedReveal.svelte';
+	import ProductGrid from '$lib/components/catalog/ProductGrid.svelte';
+	import PriceDisplay from '$lib/components/catalog/PriceDisplay.svelte';
+	import CatalogKindBadge from '$lib/components/catalog/CatalogKindBadge.svelte';
 	import type { Fitment } from '$lib/types/saleor';
 
 	let { data } = $props();

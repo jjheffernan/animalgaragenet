@@ -1,0 +1,18 @@
+# Components index
+
+Svelte UI components grouped by usage domain. Import via `$lib/components/<folder>/<Name>.svelte`.
+
+| Folder | Components | Purpose |
+|--------|------------|---------|
+| `layout/` | Header, Footer, PromoBar, SideDrawer, MobileNavDrawer, CookieConsent | Site chrome, drawers, consent |
+| `navigation/` | MegaMenu, PartCategoryNav, PartsNavSections, PartsShoppingRibbon, LocaleSelector, AccountMenu | Menus, ribbons, locale & account |
+| `catalog/` | ProductCard, ProductGrid, BrandCard, BrandLanes, CatalogKindBadge, CatalogRibbonShell, CategoryPill, ListControls, VehicleSelector, ModelPicker, PriceDisplay, VariantSelector, NotifyMeButton | Browse, filter, and display catalog items |
+| `cart/` | CartDrawer, CartActions | Cart UI and line-item actions |
+| `commerce/` | DealBadge, ClearanceSection, PromoCodeForm | Deals, clearance, promo codes |
+| `content/` | RichContent, MediaGallery, UGCWall, EventsCalendar, BuildCard, GuideCard, TestimonialCard | Editorial, media, events, community cards |
+| `marketing/` | Hero, StaffPicks, SupportCTA, NewsletterSignup, TrustBlocks, ManifestoBlock, CountdownTimer, SocialLinks, CollectionCard | Homepage and promotional sections |
+| `search/` | SearchModal | Global product search overlay |
+| `video/` | VideoGrid, VideoCard, VideoDetailPanel, VideoHero, WatchHub | Video browse and watch experience |
+| `forms/` | BuildLogForm, OAuthButton, TestimonialForm, AuthGateDialog | User input and auth actions |
+| `shared/` | AnimatedReveal, SectionHeading, EmptyState, GarageLevelBadge | Small primitives reused across routes |
+| `admin/` | AdminSidebar, AdminTopbar | Admin dashboard shell |

@@ -19,7 +19,7 @@ You close the gap between **intended work** and **landed code** after multi-agen
 | Local dev auth | `local-dev.ts`, sign-in dev buttons | Untracked? wired? |
 | Account dropdown | `AccountMenu.svelte`, Header | Plain link still? |
 | Production admin | `promote-admin.ts`, `SITE_LOCKED`, `/locked` | Missing? |
-| Media uploads | `docs/plans/media-uploads.md` | Exists? |
+| Media uploads | `docs/plans/active/media-uploads.md` | Exists? |
 | Org sync | deploy-key mirror on `main` | CI prettier blocking auto-sync? |
 | Saleor redeem | `/account/redeem` | Not started? |
 | Prettier CI | 221 files failing lint | `npm run lint` |
@@ -44,7 +44,7 @@ You close the gap between **intended work** and **landed code** after multi-agen
 
 ## Output
 
-- Polish plan markdown (in reply or `docs/polish-plan.md` if user wants it saved)
+- Polish plan markdown (in reply or `docs/meta/polish-plan.md` if user wants it saved)
 - List of files changed if you implement P0/P1 items
 
 Do not commit unless asked.

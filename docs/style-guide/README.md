@@ -61,9 +61,9 @@ Infrastructure, clients, workflow, and deployment.
 ## Related docs
 
 - [Project roadmap](../README.md)
-- [Infrastructure plan](../infrastructure.md)
-- [Saleor integration](../saleor.md)
-- [Animation & media strategy](../animation-media.md)
-- [Site audit](../audit.md)
+- [Infrastructure plan](../infrastructure/overview.md)
+- [Saleor integration](../commerce/saleor.md)
+- [Animation & media strategy](../archive/animation-media.md)
+- [Site audit](../audits/site-audit.md)
 - [Contributing](../../CONTRIBUTING.md)
 - [Agent context](../../agents/AGENTS.md)

@@ -67,7 +67,7 @@
 			"message": "Add cookie helpers, consent bar, and promo persistence.",
 			"dependsOn": [],
 			"paths": [
-				"docs/cookies.md",
+				"docs/commerce/cookies.md",
 				"src/lib/components/CookieConsent.svelte",
 				"src/lib/cookies.ts",
 				"src/lib/cookies/",
@@ -114,10 +114,10 @@
 				"02-deps-and-tooling"
 			],
 			"paths": [
-				"docs/auth-discord.md",
-				"docs/auth-microsoft.md",
-				"docs/auth-oauth.md",
-				"docs/supabase.md",
+				"docs/auth/discord.md",
+				"docs/auth/microsoft.md",
+				"docs/auth/oauth.md",
+				"docs/integrations/supabase.md",
 				"src/app.d.ts",
 				"src/hooks.server.ts",
 				"src/lib/auth/oauth-providers.ts",
@@ -139,8 +139,8 @@
 				"05-types-and-i18n"
 			],
 			"paths": [
-				"docs/saleor-audit.md",
-				"docs/saleor.md",
+				"docs/audits/saleor-audit.md",
+				"docs/commerce/saleor.md",
 				"src/lib/server/saleor/channels.test.ts",
 				"src/lib/server/saleor/channels.ts",
 				"src/lib/server/saleor/checkout-queries.ts",
@@ -162,8 +162,8 @@
 				"02-deps-and-tooling"
 			],
 			"paths": [
-				"docs/ghost-audit.md",
-				"docs/ghost.md",
+				"docs/audits/ghost-audit.md",
+				"docs/content/ghost.md",
 				"src/lib/server/ghost/"
 			]
 		},
@@ -243,7 +243,7 @@
 				"06-supabase-auth"
 			],
 			"paths": [
-				"docs/build-submissions.md",
+				"docs/content/build-submissions.md",
 				"src/lib/components/BuildLogForm.svelte",
 				"src/lib/server/build-logs/",
 				"src/routes/account/builds/",
@@ -425,12 +425,12 @@
 			"dependsOn": [],
 			"paths": [
 				"docs/README.md",
-				"docs/daisyui.md",
-				"docs/dashboard-adoption-plan.md",
-				"docs/decisions.md",
-				"docs/inspiration.md",
-				"docs/media-cdn-plan.md",
-				"docs/phase3-plan.md",
+				"docs/archive/daisyui.md",
+				"docs/archive/dashboard-adoption-plan.md",
+				"docs/meta/decisions.md",
+				"docs/meta/inspiration.md",
+				"docs/archive/media-cdn-plan.md",
+				"docs/archive/phase3-plan.md",
 				"docs/style-guide/business-logic/data-flow.md",
 				"docs/style-guide/business-logic/mock-to-saleor.md",
 				"docs/style-guide/business-logic/types-and-data.md",

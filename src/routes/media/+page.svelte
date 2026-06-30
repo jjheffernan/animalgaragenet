@@ -1,12 +1,12 @@
 <script lang="ts">
 	import { page } from '$app/state';
 	import { resolve } from '$app/paths';
-	import SectionHeading from '$lib/components/SectionHeading.svelte';
-	import MediaGallery from '$lib/components/MediaGallery.svelte';
-	import UGCWall from '$lib/components/UGCWall.svelte';
-	import VideoGrid from '$lib/components/VideoGrid.svelte';
-	import AnimatedReveal from '$lib/components/AnimatedReveal.svelte';
-	import ListControls from '$lib/components/ListControls.svelte';
+	import SectionHeading from '$lib/components/shared/SectionHeading.svelte';
+	import MediaGallery from '$lib/components/content/MediaGallery.svelte';
+	import UGCWall from '$lib/components/content/UGCWall.svelte';
+	import VideoGrid from '$lib/components/video/VideoGrid.svelte';
+	import AnimatedReveal from '$lib/components/shared/AnimatedReveal.svelte';
+	import ListControls from '$lib/components/catalog/ListControls.svelte';
 	import { buildPaginationUrl } from '$lib/pagination';
 	import { resolvePath } from '$lib/utils/paths';
 

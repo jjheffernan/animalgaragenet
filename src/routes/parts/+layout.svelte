@@ -1,5 +1,5 @@
 <script lang="ts">
-	import PartsShoppingRibbon from '$lib/components/PartsShoppingRibbon.svelte';
+	import PartsShoppingRibbon from '$lib/components/navigation/PartsShoppingRibbon.svelte';
 
 	let { data, children } = $props();
 </script>

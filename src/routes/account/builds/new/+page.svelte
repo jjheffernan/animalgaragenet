@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
 	import { resolve } from '$app/paths';
-	import BuildLogForm from '$lib/components/BuildLogForm.svelte';
+	import BuildLogForm from '$lib/components/forms/BuildLogForm.svelte';
 	import type { ActionData, PageData } from './$types';
 
 	let { data, form }: { data: PageData; form: ActionData } = $props();

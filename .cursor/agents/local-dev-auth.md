@@ -14,7 +14,7 @@ You own **local-only** auth shortcuts — never a production vulnerability.
 2. Never read `LOCAL_DEV_AUTH` from `PUBLIC_*` env vars.
 3. Predefined accounts live in `src/lib/server/auth/local-dev-accounts.ts` (emails + roles only — no passwords in repo).
 4. Sign-in: dev-only form action on `/auth/sign-in` creates mock session OR upserts Supabase user via service role with `app_metadata.role`.
-5. Document in `docs/supabase.md` and `.env.example`.
+5. Document in `docs/integrations/supabase.md` and `.env.example`.
 
 ## Files
 

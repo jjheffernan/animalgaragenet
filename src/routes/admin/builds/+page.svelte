@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
-	import ListControls from '$lib/components/ListControls.svelte';
+	import ListControls from '$lib/components/catalog/ListControls.svelte';
 	import type { PageData } from './$types';
 
 	let { data }: { data: PageData } = $props();

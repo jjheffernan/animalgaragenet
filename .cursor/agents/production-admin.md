@@ -22,7 +22,7 @@ You own **production admin** — real Supabase roles, not dev bypass.
    - If `SITE_LOCKED=true`, redirect non-admin routes to `/locked` except `/auth/*`, `/admin/*`, static assets
    - Admins: `canAccessAdmin(session.role)` or valid session with `admin` role
 3. **Production editing** — ensure `/admin` works with Supabase session (no `DEV_ADMIN` on Netlify)
-4. Document Netlify env vars and first-admin bootstrap in `docs/supabase.md`
+4. Document Netlify env vars and first-admin bootstrap in `docs/integrations/supabase.md`
 
 ## Security
 

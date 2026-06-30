@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
-	import SectionHeading from '$lib/components/SectionHeading.svelte';
-	import ManifestoBlock from '$lib/components/ManifestoBlock.svelte';
-	import AnimatedReveal from '$lib/components/AnimatedReveal.svelte';
+	import SectionHeading from '$lib/components/shared/SectionHeading.svelte';
+	import ManifestoBlock from '$lib/components/marketing/ManifestoBlock.svelte';
+	import AnimatedReveal from '$lib/components/shared/AnimatedReveal.svelte';
 </script>
 
 <svelte:head>

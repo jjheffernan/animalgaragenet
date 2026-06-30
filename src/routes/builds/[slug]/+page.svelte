@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
-	import ProductGrid from '$lib/components/ProductGrid.svelte';
-	import AnimatedReveal from '$lib/components/AnimatedReveal.svelte';
+	import ProductGrid from '$lib/components/catalog/ProductGrid.svelte';
+	import AnimatedReveal from '$lib/components/shared/AnimatedReveal.svelte';
 
 	let { data } = $props();
 	let selectedPhoto = $state(0);

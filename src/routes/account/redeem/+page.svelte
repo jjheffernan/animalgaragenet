@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
-	import PromoCodeForm from '$lib/components/PromoCodeForm.svelte';
+	import PromoCodeForm from '$lib/components/commerce/PromoCodeForm.svelte';
 	import { locale } from '$lib/stores/locale.svelte';
 	import type { ActionData, PageData } from './$types';
 

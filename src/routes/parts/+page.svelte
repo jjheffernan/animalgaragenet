@@ -1,9 +1,9 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
-	import SectionHeading from '$lib/components/SectionHeading.svelte';
-	import ProductGrid from '$lib/components/ProductGrid.svelte';
-	import ListControls from '$lib/components/ListControls.svelte';
-	import AnimatedReveal from '$lib/components/AnimatedReveal.svelte';
+	import SectionHeading from '$lib/components/shared/SectionHeading.svelte';
+	import ProductGrid from '$lib/components/catalog/ProductGrid.svelte';
+	import ListControls from '$lib/components/catalog/ListControls.svelte';
+	import AnimatedReveal from '$lib/components/shared/AnimatedReveal.svelte';
 
 	let { data } = $props();
 </script>

@@ -40,7 +40,7 @@ RULES: list[tuple[str, str, callable]] = [
                 "src/lib/cookies",
                 "src/lib/server/cookies",
                 "src/lib/components/CookieConsent",
-                "docs/cookies.md",
+                "docs/commerce/cookies.md",
             ]
         )
         or p.endswith("promo.svelte.ts"),
@@ -73,8 +73,8 @@ RULES: list[tuple[str, str, callable]] = [
                 "src/hooks.server.ts",
                 "src/app.d.ts",
                 "src/lib/components/OAuthButton",
-                "docs/auth-",
-                "docs/supabase.md",
+                "docs/auth/",
+                "docs/integrations/supabase.md",
             ]
         ),
     ),
@@ -82,12 +82,12 @@ RULES: list[tuple[str, str, callable]] = [
         "07-saleor-integration",
         "Add Saleor checkout, channels, mappers, and metadata.",
         lambda p: p.startswith("src/lib/server/saleor/")
-        or p in ("docs/saleor.md", "docs/saleor-audit.md"),
+        or p in ("docs/commerce/saleor.md", "docs/audits/saleor-audit.md"),
     ),
     (
         "08-ghost-cms",
         "Add Ghost CMS client and blog/guide mappers.",
-        lambda p: p.startswith("src/lib/server/ghost/") or p.startswith("docs/ghost"),
+        lambda p: p.startswith("src/lib/server/ghost/") or p.startswith("docs/content/ghost"),
     ),
     (
         "13-shared-components",
@@ -133,7 +133,7 @@ RULES: list[tuple[str, str, callable]] = [
                 "src/routes/builds/submit/+page.server.ts",
                 "src/routes/admin/builds/",
                 "src/routes/account/builds/",
-                "docs/build-submissions.md",
+                "docs/content/build-submissions.md",
             ]
         ),
     ),

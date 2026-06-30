@@ -42,12 +42,12 @@ import { config } from '$lib/config/env';
 const url = `${config.cdnBaseUrl}/products/${slug}/hero.jpg`;
 ```
 
-Set `PUBLIC_CDN_BASE_URL=https://cdn.animalgarage.net` in production.
+Set `PUBLIC_CDN_BASE_URL=https://<your-cdn-host>` in production.
 
 ### S3 bucket structure
 
 ```
-s3://animalgarage-media/
+s3://<media-bucket>/
 ├── products/{slug}/hero.jpg
 ├── products/{slug}/gallery/
 ├── media/{id}/original.mp4
@@ -55,7 +55,7 @@ s3://animalgarage-media/
 └── thumbnails/
 ```
 
-See [infrastructure.md](../../infrastructure.md) for full CDN/S3 plan.
+See [infrastructure/overview.md](../../infrastructure/overview.md) for full CDN/S3 plan.
 
 ### Responsive srcset (future)
 

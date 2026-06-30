@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
-	import AnimatedReveal from '$lib/components/AnimatedReveal.svelte';
+	import AnimatedReveal from '$lib/components/shared/AnimatedReveal.svelte';
 	import type { ActionData } from './$types';
 
 	let { form }: { form: ActionData } = $props();

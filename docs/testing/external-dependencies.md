@@ -14,7 +14,7 @@ Canonical list of outbound integrations for Animal Garage. Keep in sync with `te
 | `oauth-google` | Google OAuth | Supabase OAuth | Supabase dashboard | mock callback | `oauth.test.ts` | callback flow | — | skip — Auth settings probe |
 | `oauth-discord` | Discord OAuth | Supabase OAuth | Supabase dashboard | mock callback | `oauth.test.ts` | — | — | skip — Auth settings probe |
 | `oauth-azure` | Microsoft OAuth | Supabase OAuth | Supabase dashboard | mock callback | `oauth.test.ts` | — | — | skip — Auth settings probe |
-| `netlify-deploy` | GitHub → org mirror | `sync-org-main.yml` | `ORG_REPO_DEPLOY_KEY` | — | — | — | — | skip — manual workflow |
+| `netlify-deploy` | GitHub → org mirror | `sync-org-main.yml` | `<org-sync-secret>` | — | — | — | — | skip — manual workflow |
 
 ## Supabase tables (server writes)
 

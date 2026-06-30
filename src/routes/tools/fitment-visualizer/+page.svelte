@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
-	import AnimatedReveal from '$lib/components/AnimatedReveal.svelte';
+	import AnimatedReveal from '$lib/components/shared/AnimatedReveal.svelte';
 
 	let offset = $state(-10);
 	let width = $state(9.5);

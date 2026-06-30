@@ -1,6 +1,6 @@
 # Mock → Saleor Swap
 
-How catalog loaders use env-gated Saleor with mock fallback. Full inventory: [saleor-audit.md](../../saleor-audit.md).
+How catalog loaders use env-gated Saleor with mock fallback. Full inventory: [saleor-audit.md](../../audits/saleor-audit.md).
 
 ## Current pattern (wired)
 
@@ -54,7 +54,7 @@ Channel read from private env `SALEOR_CHANNEL` (default: `default-channel`).
 
 ```bash
 # .env
-PUBLIC_SALEOR_API_URL=https://commerce.animalgarage.net/graphql/
+PUBLIC_SALEOR_API_URL=https://<your-saleor-host>/graphql/
 SALEOR_CHANNEL=default-channel
 ```
 
@@ -72,7 +72,7 @@ Create Saleor products matching mock slugs (`garage-flag-tee`, etc.) for side-by
 
 ### Step 5: Remaining commerce gaps
 
-See [saleor-audit.md](../../saleor-audit.md): checkout complete, cart line mutations, collection product edges, redeem/promo codes.
+See [audits/saleor-audit.md](../../audits/saleor-audit.md): checkout complete, cart line mutations, collection product edges, redeem/promo codes.
 
 Keep `src/lib/data/` for tests/fallback until fully confident. Delete when live.
 
@@ -90,4 +90,4 @@ Catalog list/detail routes are done. Next surfaces:
 - 404 product: use SvelteKit `error(404, ...)`
 - API down: `error(502, ...)` with user-friendly message
 
-See [saleor.md](../../saleor.md) for full integration plan.
+See [commerce/saleor.md](../../commerce/saleor.md) for full integration plan.

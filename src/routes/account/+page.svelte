@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { resolve } from '$app/paths';
-	import GarageLevelBadge from '$lib/components/GarageLevelBadge.svelte';
-	import EmptyState from '$lib/components/EmptyState.svelte';
+	import GarageLevelBadge from '$lib/components/shared/GarageLevelBadge.svelte';
+	import EmptyState from '$lib/components/shared/EmptyState.svelte';
 	import { garage } from '$lib/stores/garage.svelte';
 	import { garageXp } from '$lib/stores/garage-xp.svelte';
 	import { locale } from '$lib/stores/locale.svelte';

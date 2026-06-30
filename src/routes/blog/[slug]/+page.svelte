@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
-	import AnimatedReveal from '$lib/components/AnimatedReveal.svelte';
-	import RichContent from '$lib/components/RichContent.svelte';
+	import AnimatedReveal from '$lib/components/shared/AnimatedReveal.svelte';
+	import RichContent from '$lib/components/content/RichContent.svelte';
 
 	let { data } = $props();
 </script>

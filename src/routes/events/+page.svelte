@@ -1,8 +1,8 @@
 <script lang="ts">
-	import SectionHeading from '$lib/components/SectionHeading.svelte';
-	import AnimatedReveal from '$lib/components/AnimatedReveal.svelte';
-	import EventsCalendar from '$lib/components/EventsCalendar.svelte';
-	import ListControls from '$lib/components/ListControls.svelte';
+	import SectionHeading from '$lib/components/shared/SectionHeading.svelte';
+	import AnimatedReveal from '$lib/components/shared/AnimatedReveal.svelte';
+	import EventsCalendar from '$lib/components/content/EventsCalendar.svelte';
+	import ListControls from '$lib/components/catalog/ListControls.svelte';
 
 	type ViewMode = 'list' | 'calendar';
 

@@ -1,111 +1,132 @@
-# Animal Garage — Development Roadmap
+# Animal Garage — Documentation index
 
-Architecture, phases, and integration plans for **animalgarage.net**.
+Architecture, integration plans, and developer reference for **animalgarage.net**.
 
 ## Vision
 
 A highly animated, media-heavy automotive brand site — merchandising-forward digital marketing with parts, community, and on-domain media. The frontend is a SvelteKit headless storefront; commerce runs on Saleor at a separate domain; media ships via CDN; non-commerce data lives in Supabase.
 
-## Stack
+**Open work tracker:** [STATUS.md](./STATUS.md) · **Public doc policy:** [SECURITY-PUBLIC.md](./SECURITY-PUBLIC.md)
 
-| Layer          | Technology                         | Role                                        |
-| -------------- | ---------------------------------- | ------------------------------------------- |
-| Frontend       | SvelteKit 2, Svelte 5, Tailwind v4 | SSR/SSG storefront & marketing              |
-| Commerce       | Saleor (GraphQL)                   | Products, cart, checkout, shipping          |
-| Auth & content | Supabase                           | Auth, newsletter, CMS metadata, preferences |
-| Media          | S3 + CloudFront                    | Images, video thumbnails, static assets     |
-| Hosting        | Netlify (preview) + org mirror     | `animalgarage.netlify.app`; deploy via `dev` → `main` |
+**Public-safe policy:** [SECURITY-PUBLIC.md](./SECURITY-PUBLIC.md) — no infra hostnames or secrets in `docs/`.
 
-## Project phases
+**Developer how-to:** [style-guide/README.md](./style-guide/README.md) — Svelte patterns, deployment, env config.
 
-### Phase 1 — Prototype (complete)
+---
 
-- [x] SvelteKit scaffold with TypeScript, ESLint, Prettier, Tailwind
-- [x] Click-through pages: Home, Shop, Product, About, Media
-- [x] Mock Saleor-shaped product data
-- [x] Locale/currency hooks for international readiness
-- [x] GraphQL client structure (placeholder)
-- [x] Documentation & agent compatibility
+## Archive
 
-### Phase 2 — Commerce integration
+Complete, superseded, or stale plans. Each file has a status banner.
 
-- [x] Connect Saleor GraphQL — partial: env-gated catalog loaders, cart scaffold (`docs/saleor-audit.md`)
-- [x] Channel-aware pricing — partial: locale → channel map in `src/lib/server/saleor/channels.ts`
-- [ ] Stripe/payment flow via Saleor
-- [ ] International shipping zones and rate calculation
-- [x] Env-gated catalog loaders with mock fallback (`docs/saleor-audit.md`)
+| Doc | Notes |
+|-----|-------|
+| [archive/README.md](./archive/README.md) | Index of archived docs |
+| [archive/daisyui.md](./archive/daisyui.md) | Stale — Tailwind zinc only |
+| [archive/phase3-plan.md](./archive/phase3-plan.md) | Complete — workstreams A–D |
+| [archive/animation-media.md](./archive/animation-media.md) | Stale — marketing strategy |
+| [archive/dashboard-adoption-plan.md](./archive/dashboard-adoption-plan.md) | Complete — in-repo `/admin` |
+| [archive/media-cdn-plan.md](./archive/media-cdn-plan.md) | Superseded — see media-uploads phase 1 |
 
-### Phase 3 — Media & CDN
+---
 
-- [ ] S3 bucket for media uploads
-- [ ] CloudFront distribution in front of S3
-- [ ] Migrate placeholder images to CDN URLs
-- [ ] Video thumbnail pipeline
-- [ ] Responsive image srcset helpers
+## Audits
 
-### Phase 4 — Supabase services
+| Doc | Purpose |
+|-----|---------|
+| [audits/site-audit.md](./audits/site-audit.md) | Security, gaps, fix log |
+| [audits/ghost-audit.md](./audits/ghost-audit.md) | Ghost CMS wiring inventory |
+| [audits/saleor-audit.md](./audits/saleor-audit.md) | Saleor integration scorecard |
 
-- [x] Auth (magic link / OAuth) — `/auth/*`, mock `ag-session` fallback without keys (`docs/supabase.md`)
-- [ ] Newsletter signups
-- [ ] User preferences (locale, favorites)
-- [ ] Content metadata for dynamic homepage sections
-- [ ] Featured media/collection pre-selection
+---
 
-### Phase 5 — Polish & launch
+## Auth
 
-- [ ] Advanced animations (scroll-driven, page transitions)
-- [ ] SEO, OG tags, structured data
-- [ ] Analytics
-- [ ] Performance audit (LCP, CLS)
-- [x] Production deploy pipeline — Netlify + org mirror (see [deployment.md](./style-guide/backend-ops/deployment.md))
+| Doc | Purpose |
+|-----|---------|
+| [auth/oauth.md](./auth/oauth.md) | Shared PKCE OAuth architecture |
+| [auth/discord.md](./auth/discord.md) | Discord provider setup |
+| [auth/microsoft.md](./auth/microsoft.md) | Microsoft / Azure AD setup |
 
-**Open work tracker:** [STATUS.md](./STATUS.md)
+---
 
-## Branch workflow
+## Commerce
 
-See [CONTRIBUTING.md](../CONTRIBUTING.md):
+| Doc | Purpose |
+|-----|---------|
+| [commerce/saleor.md](./commerce/saleor.md) | Saleor integration plan |
+| [commerce/cookies.md](./commerce/cookies.md) | Cookie consent and promo persistence |
 
-- Feature branches from `dev`
-- Merge to `dev` for staging
-- Merge `dev` → `main` for production
+---
 
-## Directory structure
+## Content
 
-```
-animalgaragenet/
-├── agents/           # AGENTS.md + symlinked Cursor skills
-├── docs/             # Architecture & planning
-├── src/
-│   ├── lib/
-│   │   ├── components/
-│   │   ├── config/
-│   │   ├── data/         # Mock data (temporary)
-│   │   ├── i18n/
-│   │   ├── server/       # Saleor, Supabase clients
-│   │   ├── stores/
-│   │   └── types/
-│   └── routes/
-├── static/
-└── .cursor/skills/   # Symlinks to agents skills
-```
+| Doc | Purpose |
+|-----|---------|
+| [content/ghost.md](./content/ghost.md) | Ghost CMS setup and tags |
+| [content/build-submissions.md](./content/build-submissions.md) | Build log submission flow |
 
-## Environment variables
+---
 
-Copy `.env.example` to `.env`. See [infrastructure.md](./infrastructure.md) for details.
+## Infrastructure
 
-## Related docs
+| Doc | Purpose |
+|-----|---------|
+| [infrastructure/overview.md](./infrastructure/overview.md) | CDN, S3, Supabase architecture |
 
-- **[STATUS.md](./STATUS.md)** — consolidated open-work tracker (reconciles all “next steps”)
-- **[Feature backlog](./inspiration.md)** — integrated vs remaining capabilities
-- **[Phase 3 plan](./phase3-plan.md)** — current bug fixes and workstreams
-- **[Architecture decisions](./decisions.md)** — persistent product/tech choices
-- **[Style guide](./style-guide/README.md)** — comprehensive dev reference
-- [Site audit](./audit.md) — security, gaps, and fix log
-- [Infrastructure (CDN, S3, Supabase)](./infrastructure.md)
-- [Saleor integration](./saleor.md) · [Saleor audit](./saleor-audit.md)
-- [Supabase](./supabase.md)
-- [Media uploads plan](./plans/media-uploads.md)
-- [Animation & media strategy](./animation-media.md)
+---
+
+## Integrations
+
+| Doc | Purpose |
+|-----|---------|
+| [integrations/supabase.md](./integrations/supabase.md) | Auth, RLS, local dev, site lock |
+
+---
+
+## Meta
+
+| Doc | Purpose |
+|-----|---------|
+| [meta/decisions.md](./meta/decisions.md) | Persistent product/tech choices |
+| [meta/inspiration.md](./meta/inspiration.md) | Feature backlog — integrated vs remaining |
+| [meta/polish-plan.md](./meta/polish-plan.md) | Active P0/P1 polish tracker |
+
+---
+
+## Plans
+
+| Doc | Purpose |
+|-----|---------|
+| [plans/TRIAGE.md](./TRIAGE.md) | Plan vs codebase verification |
+| [plans/active/account-flow-fix.md](./plans/active/account-flow-fix.md) | Netlify + Supabase account ops |
+| [plans/active/market-readiness.md](./plans/active/market-readiness.md) | Phased launch roadmap |
+| [plans/active/media-uploads.md](./plans/active/media-uploads.md) | UGC upload pipeline — phase 1 not wired |
+
+---
+
+## Style guide
+
+Comprehensive dev reference — [style-guide/README.md](./style-guide/README.md)
+
+Subfolders: `frontend/`, `business-logic/`, `backend-ops/` (not restructured here).
+
+---
+
+## Testing
+
+| Doc | Purpose |
+|-----|---------|
+| [testing/external-dependencies.md](./testing/external-dependencies.md) | Integration registry |
+| [testing/readiness-report.md](./testing/readiness-report.md) | Live probe results |
+| [testing/security-hardening.md](./testing/security-hardening.md) | Security changelog |
+
+---
+
+## Wiki export
+
+Public GitHub wiki source — [wiki-export/README.md](./wiki-export/README.md)
+
+---
 
 ## Cursor agent specs
 
@@ -123,3 +144,13 @@ Specialized agents live in `.cursor/agents/` (invoke by name in Cursor):
 | `docs-updater` | Refresh `docs/` (not root README) |
 | `ui-consistency` | Nav ribbons, pills, shared component patterns |
 | `git-commit-orchestrator` | Split large diffs into ordered commits |
+
+---
+
+## Branch workflow
+
+See [CONTRIBUTING.md](../CONTRIBUTING.md): feature branches from `dev` → merge to `dev` for staging → `dev` → `main` for production.
+
+## Environment variables
+
+Copy `.env.example` to `.env`. See [infrastructure/overview.md](./infrastructure/overview.md) for details.

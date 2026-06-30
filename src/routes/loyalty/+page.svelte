@@ -2,12 +2,12 @@
 	import { resolve } from '$app/paths';
 	import { enhance } from '$app/forms';
 	import { onMount } from 'svelte';
-	import AuthGateDialog from '$lib/components/AuthGateDialog.svelte';
+	import AuthGateDialog from '$lib/components/forms/AuthGateDialog.svelte';
 	import { garageLevels, garageXpActions } from '$lib/data/garage-levels';
-	import SectionHeading from '$lib/components/SectionHeading.svelte';
-	import AnimatedReveal from '$lib/components/AnimatedReveal.svelte';
-	import TestimonialCard from '$lib/components/TestimonialCard.svelte';
-	import TestimonialForm from '$lib/components/TestimonialForm.svelte';
+	import SectionHeading from '$lib/components/shared/SectionHeading.svelte';
+	import AnimatedReveal from '$lib/components/shared/AnimatedReveal.svelte';
+	import TestimonialCard from '$lib/components/content/TestimonialCard.svelte';
+	import TestimonialForm from '$lib/components/forms/TestimonialForm.svelte';
 	import { garageXp } from '$lib/stores/garage-xp.svelte';
 	import { resolvePath } from '$lib/utils/paths';
 	import { TESTIMONIAL_STATUS_LABELS } from '$lib/types/testimonial';

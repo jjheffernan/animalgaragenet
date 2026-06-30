@@ -48,7 +48,7 @@ Never exposed to browser:
 - `SALEOR_CHANNEL`
 - `SUPABASE_SERVICE_ROLE_KEY`
 - `S3_BUCKET`, `S3_REGION`
-- `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`
+- Object storage / CDN credentials — see `.env.example`
 
 Read these in `+page.server.ts` or `src/lib/server/` modules using `$env/dynamic/private`.
 

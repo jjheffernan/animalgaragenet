@@ -15,7 +15,7 @@ Auth, newsletter, content metadata, and user preferences — not commerce.
 | Local dev auth | `src/lib/server/auth/local-dev.ts` |
 | Migrations | `supabase/migrations/` |
 
-Without env vars, auth falls back to mock `ag-session` cookie. Full reference: [docs/supabase.md](../../supabase.md).
+Without env vars, auth falls back to mock `ag-session` cookie. Full reference: [integrations/supabase.md](../../integrations/supabase.md).
 
 ## Env vars
 
@@ -33,11 +33,11 @@ Without env vars, auth falls back to mock `ag-session` cookie. Full reference: [
 - Newsletter signups
 - Featured homepage sections
 - User preferences (locale, favorites)
-- UGC media — [plans/media-uploads.md](../../plans/media-uploads.md)
+- UGC media — [plans/active/media-uploads.md](../../plans/active/media-uploads.md)
 
 ## Planned schema
 
-See [infrastructure.md](../../infrastructure.md#supabase) for table sketches:
+See [infrastructure/overview.md](../../infrastructure/overview.md#supabase) for table sketches:
 
 - `newsletter_subscribers`
 - `featured_sections`

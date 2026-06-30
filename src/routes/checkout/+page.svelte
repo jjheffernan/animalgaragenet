@@ -5,8 +5,8 @@
 	import { cart } from '$lib/stores/cart.svelte';
 	import { locale } from '$lib/stores/locale.svelte';
 	import { resolvePath } from '$lib/utils/paths';
-	import AnimatedReveal from '$lib/components/AnimatedReveal.svelte';
-	import CatalogKindBadge from '$lib/components/CatalogKindBadge.svelte';
+	import AnimatedReveal from '$lib/components/shared/AnimatedReveal.svelte';
+	import CatalogKindBadge from '$lib/components/catalog/CatalogKindBadge.svelte';
 
 	onMount(() => {
 		cart.init();

@@ -2,7 +2,7 @@ import { fail, redirect } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
 import { config } from '$lib/config/env';
 import { LOCAL_DEV_ACCOUNTS } from '$lib/server/auth/local-dev-accounts';
-import { devSignInAccount, isLocalDevAuthEnabled } from '$lib/server/auth/local-dev';
+import { devSignInAccount, isLocalDevAuthEnabled, isProductionHostname } from '$lib/server/auth/local-dev';
 import {
 	createMockUser,
 	setSessionCookie,
@@ -16,8 +16,11 @@ export const load: PageServerLoad = async ({ locals, url }) => {
 		throw redirect(303, redirectTo);
 	}
 
+	const supabaseReady = isSupabaseConfigured();
+
 	return {
-		supabaseReady: isSupabaseConfigured(),
+		supabaseReady,
+		productionAuthMisconfigured: isProductionHostname(url.hostname) && !supabaseReady,
 		localDevAuthEnabled: isLocalDevAuthEnabled({ url }),
 		devAccounts: LOCAL_DEV_ACCOUNTS,
 		redirectTo: url.searchParams.get('redirect') ?? '/account'
@@ -50,6 +53,14 @@ export const actions: Actions = {
 			}
 
 			return { success: true, message: result.message, email, name };
+		}
+
+		if (isProductionHostname(url.hostname)) {
+			return fail(503, {
+				error: 'Sign-in is not configured for this site. Set Supabase environment variables on the host.',
+				email,
+				name
+			});
 		}
 
 		const user = createMockUser(email, name);

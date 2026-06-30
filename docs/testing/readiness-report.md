@@ -6,7 +6,7 @@ Probe script: [`scripts/test-readiness.ts`](../../scripts/test-readiness.ts)
 
 ## Production Netlify observations (2026-06-30)
 
-Live fetch of https://animalgarage.netlify.app (market-readiness agent). Full roadmap: [`docs/plans/market-readiness.md`](../plans/market-readiness.md).
+Live fetch of https://<your-preview-host> (market-readiness agent). Full roadmap: [`docs/plans/active/market-readiness.md`](../plans/active/market-readiness.md).
 
 | Route | HTTP | Finding |
 |-------|------|---------|
@@ -50,8 +50,8 @@ npm run test:readiness
 | `oauth-google` | skip | Missing Supabase public keys | `PUBLIC_SUPABASE_URL`, `PUBLIC_SUPABASE_ANON_KEY` + dashboard OAuth |
 | `oauth-discord` | skip | Missing Supabase public keys | same |
 | `oauth-azure` | skip | Missing Supabase public keys | same |
-| `cdn-s3` | skip | Env unset; upload path not wired in app | `PUBLIC_CDN_BASE_URL`, `S3_BUCKET`, `S3_REGION`, `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY` |
-| `netlify-deploy` | skip | Manual workflow — not auto-probed | `ORG_REPO_DEPLOY_KEY` (GitHub Actions secret) |
+| `cdn-s3` | skip | Env unset; upload path not wired in app | `PUBLIC_CDN_BASE_URL` + storage vars in `.env.example` |
+| `netlify-deploy` | skip | Manual workflow — not auto-probed | Org sync secret (maintainers) |
 
 ## Known gaps (code review, not live failures)
 
@@ -59,9 +59,9 @@ npm run test:readiness
 |------|---------|
 | Production catalog | Netlify serves 120 mock products when Saleor unset — **mock fallback now blocked** on production `PUBLIC_SITE_URL` via `guardMockCatalogFallback()` |
 | Auth on Netlify | No session in probe; `PUBLIC_SITE_URL` / Supabase redirect URL mismatch likely (see account-flow-fix plan) |
-| `DEV_ADMIN` guard | ~~`animalgarage.netlify.app` not blocked~~ **Fixed** — `isProductionHostname()` includes `*.netlify.app` |
+| `DEV_ADMIN` guard | Preview hosts (`*.netlify.app`) blocked — `isProductionHostname()` in `local-dev.ts` |
 | YouTube | `fetchChannelVideos()` in `src/lib/server/youtube/sync.ts` is a **stub** returning mock data; API key probe can pass while app sync is non-functional |
-| CDN / S3 | No server upload routes; env vars documented but integration planned in `docs/plans/media-uploads.md` |
+| CDN / S3 | No server upload routes; env vars documented but integration planned in `docs/plans/active/media-uploads.md` |
 | Saleor checkout | Promo/redeem wired; live checkout needs catalog + channel validation before production cutover |
 | OAuth | Discord/Microsoft marked P2 in polish plan; probes only verify Supabase Auth provider flags |
 | `check-secrets.sh` | Blocks tracked env files and hardcoded secrets; does not scan client bundles or Netlify env |
@@ -87,12 +87,12 @@ npm run test:readiness
 
 - [ ] `readiness-env`: Copy `.env.example` → `.env` with staging/prod secrets so `npm run test:readiness` produces live pass/fail signal in CI or pre-deploy
 - [ ] `youtube-live-sync`: Replace `fetchChannelVideos` stub with YouTube Data API v3 and Supabase `videos` upsert
-- [ ] `media-uploads-phase1`: Wire S3 presigned upload + `PUBLIC_CDN_BASE_URL` delivery per `docs/plans/media-uploads.md`
+- [ ] `media-uploads-phase1`: Wire S3 presigned upload + `PUBLIC_CDN_BASE_URL` delivery per `docs/plans/active/media-uploads.md`
 - [ ] `saleor-readiness`: Run probes against live Saleor with real channel slug; confirm products, channel, and promo codes before enabling live checkout
 - [x] `supabase-contract-tests`: `testimonials` + `build_submissions` in `tests/contracts/supabase-payloads.test.ts` — **`profiles` still open**
 - [x] `ghost-contract-test`: Mapper contracts in `tests/contracts/ghost-mapper.test.ts` — raw API fetch test still open
 - [ ] `oauth-discord-azure`: Enable Discord + Microsoft providers in Supabase dashboard; verify probes pass
 - [ ] `readiness-ci`: Optional GitHub Actions job with secrets (`RUN_READINESS=1`) calling `npm run test:readiness` on schedule or pre-deploy
-- [ ] `netlify-deploy-verify`: Confirm `sync-org-main.yml` runs after merge to org mirror; document `ORG_REPO_DEPLOY_KEY` rotation
+- [ ] `netlify-deploy-verify`: Confirm `sync-org-main.yml` runs after merge to org mirror; document `<org-sync-secret>` rotation
 
 See [STATUS.md](../STATUS.md) for the consolidated open-work tracker.

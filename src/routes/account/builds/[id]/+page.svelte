@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
 	import { resolve } from '$app/paths';
-	import BuildLogForm from '$lib/components/BuildLogForm.svelte';
+	import BuildLogForm from '$lib/components/forms/BuildLogForm.svelte';
 	import { BUILD_LOG_STATUS_LABELS } from '$lib/types/build-log';
 	import type { ActionData, PageData } from './$types';
 

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import WatchHub from '$lib/components/WatchHub.svelte';
+	import WatchHub from '$lib/components/video/WatchHub.svelte';
 
 	let { data } = $props();
 </script>

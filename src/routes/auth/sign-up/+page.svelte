@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
 	import { enhance } from '$app/forms';
-	import AnimatedReveal from '$lib/components/AnimatedReveal.svelte';
-	import OAuthButton from '$lib/components/OAuthButton.svelte';
+	import AnimatedReveal from '$lib/components/shared/AnimatedReveal.svelte';
+	import OAuthButton from '$lib/components/forms/OAuthButton.svelte';
 	import type { ActionData, PageData } from './$types';
 
 	let { data, form }: { data: PageData; form: ActionData } = $props();

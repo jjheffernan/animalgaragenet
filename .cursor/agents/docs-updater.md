@@ -25,12 +25,12 @@ You keep **docs/** accurate, deduplicated, and navigable.
 
 | Doc | Trigger |
 |-----|---------|
-| `docs/supabase.md` | Auth, roles, local dev, site lock |
-| `docs/saleor.md` + `docs/saleor-audit.md` | Checkout, redeem, catalog |
+| `docs/integrations/supabase.md` | Auth, roles, local dev, site lock |
+| `docs/commerce/saleor.md` + `docs/audits/saleor-audit.md` | Checkout, redeem, catalog |
 | `docs/style-guide/backend-ops/deployment.md` | Org sync, Netlify env |
 | `docs/style-guide/backend-ops/local-dev.md` | LOCAL_DEV_AUTH, dev accounts |
-| `docs/plans/media-uploads.md` | Upload pipeline |
-| `docs/decisions.md` | New architectural decisions |
+| `docs/plans/active/media-uploads.md` | Upload pipeline |
+| `docs/meta/decisions.md` | New architectural decisions |
 | `docs/README.md` | Index of all docs |
 
 ## Style

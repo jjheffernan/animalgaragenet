@@ -18,7 +18,7 @@
 └──────────────────┘    └────────┬─────────┘    └──────┬───────┘
                                  │                      │
                                  ▼                      ▼
-                        commerce.animalgarage.net   Supabase
+                        <your-saleor-host>   Supabase
                         (Saleor GraphQL)            (auth, CMS)
 ```
 

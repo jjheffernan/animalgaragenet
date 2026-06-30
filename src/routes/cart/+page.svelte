@@ -1,9 +1,9 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { resolve } from '$app/paths';
-	import AnimatedReveal from '$lib/components/AnimatedReveal.svelte';
-	import CartActions from '$lib/components/CartActions.svelte';
-	import ProductGrid from '$lib/components/ProductGrid.svelte';
+	import AnimatedReveal from '$lib/components/shared/AnimatedReveal.svelte';
+	import CartActions from '$lib/components/cart/CartActions.svelte';
+	import ProductGrid from '$lib/components/catalog/ProductGrid.svelte';
 	import { cart } from '$lib/stores/cart.svelte';
 	import { locale } from '$lib/stores/locale.svelte';
 

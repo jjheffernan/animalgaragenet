@@ -45,7 +45,7 @@ Add mutations to `src/lib/server/saleor/checkout-queries.ts` and handlers in `ch
 | `src/lib/server/saleor/checkout.ts` | `applyPromoCode`, `removePromoCode` |
 | `src/routes/cart/checkout/+server.ts` or new `/api/checkout/promo` | API for cart |
 | `src/lib/components/CartDrawer.svelte` | Inline code entry |
-| `docs/saleor.md` | Redeem section |
+| `docs/commerce/saleor.md` | Redeem section |
 
 ## Style
 

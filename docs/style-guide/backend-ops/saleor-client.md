@@ -1,6 +1,6 @@
 # Saleor GraphQL Client
 
-Headless commerce backend on a separate domain (`commerce.animalgarage.net`).
+Headless commerce backend on a separate domain (`<your-saleor-host>`).
 
 ## Structure
 
@@ -58,7 +58,7 @@ const result = await saleorFetch(PRODUCTS_QUERY, {
 ## Environment
 
 ```env
-PUBLIC_SALEOR_API_URL=https://commerce.animalgarage.net/graphql/
+PUBLIC_SALEOR_API_URL=https://<your-saleor-host>/graphql/
 SALEOR_CHANNEL=default-channel
 ```
 
@@ -70,4 +70,4 @@ SALEOR_CHANNEL=default-channel
 
 ## Full integration plan
 
-See [saleor.md](../../saleor.md) and [mock-to-saleor.md](../business-logic/mock-to-saleor.md).
+See [commerce/saleor.md](../../commerce/saleor.md) and [mock-to-saleor.md](../business-logic/mock-to-saleor.md).

@@ -13,7 +13,7 @@ Wiki pages intentionally **omit**:
 - GitHub org/repo mirror names and deploy-key secret names
 - Copy-pasteable credential examples
 
-Contributors: use `.env.example` and `docs/style-guide/backend-ops/deployment.md` in the cloned repo for full ops detail. Do not copy those values back into the public wiki.
+Contributors: use `.env.example` and `docs/SECURITY-PUBLIC.md`. Do not copy infra values into the public wiki.
 
 ## Pages
 

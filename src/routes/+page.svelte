@@ -1,22 +1,22 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
-	import Hero from '$lib/components/Hero.svelte';
-	import SectionHeading from '$lib/components/SectionHeading.svelte';
-	import CollectionCard from '$lib/components/CollectionCard.svelte';
-	import AnimatedReveal from '$lib/components/AnimatedReveal.svelte';
-	import VehicleSelector from '$lib/components/VehicleSelector.svelte';
-	import ModelPicker from '$lib/components/ModelPicker.svelte';
-	import VideoGrid from '$lib/components/VideoGrid.svelte';
-	import UGCWall from '$lib/components/UGCWall.svelte';
-	import TrustBlocks from '$lib/components/TrustBlocks.svelte';
-	import ManifestoBlock from '$lib/components/ManifestoBlock.svelte';
-	import CountdownTimer from '$lib/components/CountdownTimer.svelte';
-	import BuildCard from '$lib/components/BuildCard.svelte';
-	import GuideCard from '$lib/components/GuideCard.svelte';
-	import BrandLanes from '$lib/components/BrandLanes.svelte';
-	import ClearanceSection from '$lib/components/ClearanceSection.svelte';
-	import StaffPicks from '$lib/components/StaffPicks.svelte';
-	import TestimonialCard from '$lib/components/TestimonialCard.svelte';
+	import Hero from '$lib/components/marketing/Hero.svelte';
+	import SectionHeading from '$lib/components/shared/SectionHeading.svelte';
+	import CollectionCard from '$lib/components/marketing/CollectionCard.svelte';
+	import AnimatedReveal from '$lib/components/shared/AnimatedReveal.svelte';
+	import VehicleSelector from '$lib/components/catalog/VehicleSelector.svelte';
+	import ModelPicker from '$lib/components/catalog/ModelPicker.svelte';
+	import VideoGrid from '$lib/components/video/VideoGrid.svelte';
+	import UGCWall from '$lib/components/content/UGCWall.svelte';
+	import TrustBlocks from '$lib/components/marketing/TrustBlocks.svelte';
+	import ManifestoBlock from '$lib/components/marketing/ManifestoBlock.svelte';
+	import CountdownTimer from '$lib/components/marketing/CountdownTimer.svelte';
+	import BuildCard from '$lib/components/content/BuildCard.svelte';
+	import GuideCard from '$lib/components/content/GuideCard.svelte';
+	import BrandLanes from '$lib/components/catalog/BrandLanes.svelte';
+	import ClearanceSection from '$lib/components/commerce/ClearanceSection.svelte';
+	import StaffPicks from '$lib/components/marketing/StaffPicks.svelte';
+	import TestimonialCard from '$lib/components/content/TestimonialCard.svelte';
 
 	let { data } = $props();
 </script>

@@ -11,7 +11,7 @@ You own the **upload pipeline** for reviews and linked content in testimonials/b
 - Testimonials — text only in `supabase/migrations/20250629140000_testimonials.sql`
 - `.env.example` — S3 + CloudFront vars stubbed
 
-## Recommended architecture (document in `docs/plans/media-uploads.md`)
+## Recommended architecture (document in `docs/plans/active/media-uploads.md`)
 
 1. **Storage backend** — Supabase Storage for v1 (same project as auth, RLS per bucket); migrate to S3+CloudFront when CDN traffic grows.
 2. **Upload flow** — presigned URL pattern:
@@ -34,7 +34,7 @@ You own the **upload pipeline** for reviews and linked content in testimonials/b
 
 ## Output
 
-- `docs/plans/media-uploads.md` with decisions and schema
+- `docs/plans/active/media-uploads.md` with decisions and schema
 - Implementation only when user asks beyond planning
 
 Do not commit unless asked.

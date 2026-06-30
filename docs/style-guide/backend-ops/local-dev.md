@@ -64,7 +64,7 @@ Guard logic: `src/lib/server/auth/local-dev.ts` (`isLocalDevAuthEnabled`, `isDev
 - **Without Supabase keys:** quick-login sets a mock `ag-session` cookie with the chosen role.
 - **With Supabase + service role:** upserts the user with `app_metadata.role` and signs in via server-side OTP.
 
-Full auth reference: [docs/supabase.md](../../supabase.md).
+Full auth reference: [integrations/supabase.md](../../integrations/supabase.md).
 
 ## Project structure (quick reference)
 

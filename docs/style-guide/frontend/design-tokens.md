@@ -74,4 +74,4 @@ Common patterns (not custom tokens — standard Tailwind):
 
 ## Reference aesthetic
 
-See [animation-media.md](../../animation-media.md) for the full visual direction: near-black backgrounds, industrial uppercase type, red accents, raw garage energy.
+See [archive/animation-media.md](../../archive/animation-media.md) for the full visual direction: near-black backgrounds, industrial uppercase type, red accents, raw garage energy.

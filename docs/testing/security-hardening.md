@@ -42,6 +42,11 @@ Mock promo state is non-sensitive (discount label/percent for dev catalog); http
 - `isLocalDevAuthEnabled`: localhost only + `isProductionSiteUrl()` false.
 - `isDevAdminEnabled`: requires `DEV_ADMIN=true`, blocks `animalgarage.net` hostnames, and blocks when `SITE_URL` points at production.
 
+## Production auth guards (DOC-021 / DOC-022)
+
+- **`hooks.server.ts`**: When Supabase is not configured, `parseSessionCookie('ag-session')` is skipped on production hostnames (`isProductionHostname`); `event.locals.session` stays `null` instead of accepting mock sessions.
+- **`/auth/sign-in`**: Server load exposes `productionAuthMisconfigured` when keys are missing on a production host; the page renders an amber ops warning and disables magic-link/OAuth controls. The sign-in action returns 503 on production hosts without Supabase (no mock `ag-session` cookie).
+
 ## Tests
 
 - `src/lib/server/validation/limits.test.ts`

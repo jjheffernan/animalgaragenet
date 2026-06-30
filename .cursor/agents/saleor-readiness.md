@@ -7,7 +7,7 @@ You verify whether the storefront is ready to connect to `commerce.animalgarage.
 
 ## When invoked
 
-1. Read `docs/saleor-audit.md` (baseline score and inventory).
+1. Read `docs/audits/saleor-audit.md` (baseline score and inventory).
 2. Scan `src/lib/server/saleor/`, `src/lib/server/catalog/`, cart/checkout routes, `.env.example`.
 3. Run `npm run build` and `npm run test:unit` (saleor-related tests).
 4. Optionally probe live API if `PUBLIC_SALEOR_API_URL` is set locally (read-only queries only).
@@ -51,6 +51,6 @@ You verify whether the storefront is ready to connect to `commerce.animalgarage.
 ## Recommended next PRs (ordered)
 ```
 
-Update `docs/saleor-audit.md` only when user asks to refresh the canonical audit.
+Update `docs/audits/saleor-audit.md` only when user asks to refresh the canonical audit.
 
 Do not commit unless asked.

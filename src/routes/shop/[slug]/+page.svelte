@@ -3,12 +3,12 @@
 	import { browser } from '$app/environment';
 	import { resolve } from '$app/paths';
 	import { locale } from '$lib/stores/locale.svelte';
-	import LocaleSelector from '$lib/components/LocaleSelector.svelte';
-	import AnimatedReveal from '$lib/components/AnimatedReveal.svelte';
-	import ProductGrid from '$lib/components/ProductGrid.svelte';
-	import VariantSelector from '$lib/components/VariantSelector.svelte';
-	import NotifyMeButton from '$lib/components/NotifyMeButton.svelte';
-	import TrustBlocks from '$lib/components/TrustBlocks.svelte';
+	import LocaleSelector from '$lib/components/navigation/LocaleSelector.svelte';
+	import AnimatedReveal from '$lib/components/shared/AnimatedReveal.svelte';
+	import ProductGrid from '$lib/components/catalog/ProductGrid.svelte';
+	import VariantSelector from '$lib/components/catalog/VariantSelector.svelte';
+	import NotifyMeButton from '$lib/components/catalog/NotifyMeButton.svelte';
+	import TrustBlocks from '$lib/components/marketing/TrustBlocks.svelte';
 	import { cart } from '$lib/stores/cart.svelte';
 	import { recentlyViewed } from '$lib/stores/recently-viewed.svelte';
 	import { getAllCatalogProducts } from '$lib/data/mock/parts';

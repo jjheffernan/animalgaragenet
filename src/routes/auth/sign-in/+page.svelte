@@ -1,14 +1,15 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
 	import { enhance } from '$app/forms';
-	import AnimatedReveal from '$lib/components/AnimatedReveal.svelte';
-	import OAuthButton from '$lib/components/OAuthButton.svelte';
+	import AnimatedReveal from '$lib/components/shared/AnimatedReveal.svelte';
+	import OAuthButton from '$lib/components/forms/OAuthButton.svelte';
 	import type { PageData, ActionData } from './$types';
 
 	let { data, form }: { data: PageData; form: ActionData } = $props();
 
 	let email = $state(form?.email ?? '');
 	let loading = $state(false);
+	const authDisabled = $derived(data.productionAuthMisconfigured);
 </script>
 
 <svelte:head>
@@ -19,6 +20,18 @@
 	<AnimatedReveal>
 		<h1 class="font-display text-3xl font-bold uppercase text-white">Sign In</h1>
 		<p class="mt-2 text-zinc-400">Magic link, Google, Discord, or Microsoft — Supabase-ready when keys are set.</p>
+
+		{#if data.productionAuthMisconfigured}
+			<p
+				class="mt-4 rounded-sm border border-amber-800/50 bg-amber-950/20 px-4 py-3 text-sm text-amber-400"
+				role="alert"
+			>
+				Authentication is not configured on this host. Set
+				<code class="text-amber-300">PUBLIC_SUPABASE_URL</code>,
+				<code class="text-amber-300">PUBLIC_SUPABASE_ANON_KEY</code>, and
+				<code class="text-amber-300">SUPABASE_SERVICE_ROLE_KEY</code> in the deployment environment.
+			</p>
+		{/if}
 
 		{#if form?.error}
 			<p class="mt-4 rounded-sm border border-red-800 bg-red-950/30 px-4 py-3 text-sm text-red-400">{form.error}</p>
@@ -48,15 +61,16 @@
 					name="email"
 					bind:value={email}
 					required
+					disabled={authDisabled}
 					autocomplete="email"
-					class="mt-1 w-full rounded-sm border border-zinc-700 bg-zinc-900 px-4 py-3 text-white"
+					class="mt-1 w-full rounded-sm border border-zinc-700 bg-zinc-900 px-4 py-3 text-white disabled:opacity-50"
 					placeholder="you@example.com"
 				/>
 			</label>
 
 			<button
 				type="submit"
-				disabled={loading}
+				disabled={loading || authDisabled}
 				class="w-full rounded-sm bg-red-600 py-4 text-sm font-bold uppercase tracking-wider text-white transition hover:bg-red-500 disabled:opacity-50"
 			>
 				{loading ? 'Sending…' : 'Send Magic Link'}
@@ -93,7 +107,12 @@
 			</div>
 		</div>
 
-		<OAuthButton provider="google" redirectTo={data.redirectTo} disabled={loading} onloading={(v) => (loading = v)}>
+		<OAuthButton
+			provider="google"
+			redirectTo={data.redirectTo}
+			disabled={loading || authDisabled}
+			onloading={(v) => (loading = v)}
+		>
 			{#snippet children()}
 				<svg class="h-5 w-5 shrink-0" viewBox="0 0 24 24" aria-hidden="true">
 					<path
@@ -117,11 +136,21 @@
 		</OAuthButton>
 
 		<div class="mt-3">
-			<OAuthButton provider="discord" redirectTo={data.redirectTo} disabled={loading} onloading={(v) => (loading = v)} />
+			<OAuthButton
+				provider="discord"
+				redirectTo={data.redirectTo}
+				disabled={loading || authDisabled}
+				onloading={(v) => (loading = v)}
+			/>
 		</div>
 
 		<div class="mt-3">
-			<OAuthButton provider="azure" redirectTo={data.redirectTo} disabled={loading} onloading={(v) => (loading = v)}>
+			<OAuthButton
+				provider="azure"
+				redirectTo={data.redirectTo}
+				disabled={loading || authDisabled}
+				onloading={(v) => (loading = v)}
+			>
 				{#snippet children()}
 					<svg class="h-5 w-5 shrink-0" viewBox="0 0 23 23" aria-hidden="true">
 						<path fill="#f35325" d="M1 1h10v10H1z" />

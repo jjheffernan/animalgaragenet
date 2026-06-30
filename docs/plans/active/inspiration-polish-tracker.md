@@ -5,7 +5,8 @@
 **Policy:** [SECURITY-PUBLIC.md](../../SECURITY-PUBLIC.md)  
 **Replaces:** `inspiration-implementation-tracker.md`, `inspiration-polish-coordination.md`, `meta/polish-plan.md`, `inspiration-polish-prod-setup.md`  
 **Backlog (built items):** [inspiration.md](../../meta/inspiration.md)  
-**Audit / security:** [AUDIT-REMEDIATION.md](../AUDIT-REMEDIATION.md) — do not duplicate CI/security rows here
+**Audit / security:** [AUDIT-REMEDIATION.md](../AUDIT-REMEDIATION.md) — do not duplicate CI/security rows here  
+**Dedupe (server-only):** [ponytail-audit-tracker.md](./ponytail-audit-tracker.md) — P3 catalog/checkout refactors open
 
 Markers: `@inspiration-scaffold` (Supabase/community/CMS) · `@saleor-migration` (commerce) — [decisions.md](../../meta/decisions.md#migration-scaffolds-inspiration-scaffold--migration). Do not remove unless wiring that step.
 

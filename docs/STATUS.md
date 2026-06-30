@@ -3,7 +3,7 @@
 **Public documentation policy:** [SECURITY-PUBLIC.md](./SECURITY-PUBLIC.md)
 
 **Last updated:** 2026-07-03  
-**Canonical next-step docs:** [plans/AUDIT-REMEDIATION.md](./plans/AUDIT-REMEDIATION.md) · [plans/active/inspiration-polish-tracker.md](./plans/active/inspiration-polish-tracker.md) · [plans/active/market-readiness.md](./plans/active/market-readiness.md) · [plans/active/account-flow-fix.md](./plans/active/account-flow-fix.md) · [archive/batch-2026-07-03-followups.md](./archive/batch-2026-07-03-followups.md) (ops apply)
+**Canonical next-step docs:** [plans/AUDIT-REMEDIATION.md](./plans/AUDIT-REMEDIATION.md) · [plans/active/inspiration-polish-tracker.md](./plans/active/inspiration-polish-tracker.md) · [plans/active/ponytail-audit-tracker.md](./plans/active/ponytail-audit-tracker.md) · [plans/active/market-readiness.md](./plans/active/market-readiness.md) · [plans/active/account-flow-fix.md](./plans/active/account-flow-fix.md) · [archive/batch-2026-07-03-followups.md](./archive/batch-2026-07-03-followups.md) (ops apply)
 
 This file reconciles “next steps” across all `docs/` so nothing is orphaned. Items are **Done**, **Ops** (external dashboard/env), or **Open** (code work).
 
@@ -61,7 +61,7 @@ This file reconciles “next steps” across all `docs/` so nothing is orphaned.
 | CDN invalidation path allowlist (AUD-SEC-001)              | `invalidateCdnPaths` allowlist + admin API cap — `029498b` · [security-audit-2026-07.md](./audits/security-audit-2026-07.md)                                   |
 | Supabase migration squash (17 → 3)                         | `20250701000000` / `010000` / `020000` logical files — `65e9d52` · [migration-squash-notes.md](./infrastructure/migration-squash-notes.md)                     |
 | Ponytail audit (PT-P1/P2)                                  | Shared mock-fallback guard, API POST dedupe, store localStorage helpers — `f1d4ccf`, `2e7700f` · [ponytail-audit-tracker.md](./plans/active/ponytail-audit-tracker.md) |
-| Ponytail docs pass (July batches)                          | Archive stale batch plans; sync STATUS/README/AUDIT counts; remove `meta/polish-plan.md` stub                                                                   |
+| July docs archive pass                                     | Batch plans → `docs/archive/`; STATUS/README/AUDIT sync; `meta/polish-plan.md` stub removed — `01b603e`                                                         |
 
 ---
 

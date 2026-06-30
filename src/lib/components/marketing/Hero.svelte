@@ -4,17 +4,36 @@
 	import CountdownTimer from '$lib/components/marketing/CountdownTimer.svelte';
 	import { getHeroCampaign } from '$lib/data/mock/campaigns';
 
+	interface HeroContent {
+		headline?: string;
+		subheadline?: string;
+		image?: string;
+		ctaLabel?: string;
+		ctaHref?: string;
+	}
+
 	interface Props {
+		content?: HeroContent;
 		campaignImage?: string;
 		showCountdown?: boolean;
 	}
 
-	let { campaignImage, showCountdown = true }: Props = $props();
+	let { content, campaignImage, showCountdown = true }: Props = $props();
 
 	const campaign = getHeroCampaign();
 	const bgImage = $derived(
-		campaignImage ?? campaign?.heroImage ?? 'https://picsum.photos/seed/aghero/1920/1080'
+		content?.image ??
+			campaignImage ??
+			campaign?.heroImage ??
+			'https://picsum.photos/seed/aghero/1920/1080'
 	);
+	const headline = $derived(content?.headline ?? 'Garage Culture Delivered');
+	const subheadline = $derived(
+		content?.subheadline ??
+			'Merch, media, and the raw energy of the shop floor — Animal Garage is your automotive brand touchpoint.'
+	);
+	const ctaLabel = $derived(content?.ctaLabel ?? 'Shop the Drop');
+	const ctaHref = $derived(content?.ctaHref ?? '/shop');
 	const isUpcoming = $derived(
 		campaign ? new Date(campaign.availableFrom).getTime() > Date.now() : false
 	);
@@ -52,11 +71,10 @@
 			<h1
 				class="mt-4 max-w-3xl font-display text-5xl font-black uppercase leading-none tracking-tight text-white sm:text-7xl"
 			>
-				Garage<br /><span class="text-red-600">Culture</span><br />Delivered
+				{headline}
 			</h1>
 			<p class="mt-6 max-w-xl text-lg text-zinc-400">
-				Merch, media, and the raw energy of the shop floor — Animal Garage is your automotive brand
-				touchpoint.
+				{subheadline}
 			</p>
 			{#if countdownTarget}
 				<div class="mt-6">
@@ -68,10 +86,10 @@
 			{/if}
 			<div class="mt-10 flex flex-wrap gap-4">
 				<a
-					href={resolve('/shop')}
+					href={resolve(ctaHref as '/shop')}
 					class="rounded-sm bg-red-600 px-8 py-4 text-base font-bold uppercase tracking-wider text-white transition hover:bg-red-500"
 				>
-					Shop the Drop
+					{ctaLabel}
 				</a>
 				<a
 					href={resolve('/watch')}

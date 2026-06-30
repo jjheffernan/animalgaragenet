@@ -28,17 +28,13 @@
 <h1 class="font-display text-2xl font-bold uppercase text-white">Orders</h1>
 <p class="mt-1 text-zinc-400">Order history from your Garage Squad account.</p>
 
-{#if data.liveOrders && data.orders.length === 0}
-	<p class="mt-4 rounded-sm border border-zinc-800 bg-zinc-900/50 px-4 py-3 text-sm text-zinc-500">
-		Completed purchases will appear here after checkout is live and your orders sync from Saleor.
-	</p>
-{/if}
-
 {#if data.orders.length === 0}
 	<div class="mt-8">
 		<EmptyState
 			title="No orders yet"
-			description="Your order history will show up here after your first purchase."
+			description={data.liveOrders
+				? 'Completed purchases will appear here once checkout is live and orders sync from Saleor.'
+				: 'Sign in to view your order history.'}
 		/>
 	</div>
 {:else}

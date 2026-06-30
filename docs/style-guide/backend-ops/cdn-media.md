@@ -1,6 +1,6 @@
 # CDN & Media URLs
 
-Media delivery via object storage + CDN (planned). Prototype uses picsum placeholders.
+Public media delivery via CDN base URL. v1 uses Supabase Storage; Phase 2 adds S3 + CloudFront presigned uploads.
 
 > **Public repo:** See [SECURITY-PUBLIC.md](../../SECURITY-PUBLIC.md) and `.env.example` for credential variable names.
 
@@ -8,22 +8,32 @@ Media delivery via object storage + CDN (planned). Prototype uses picsum placeho
 
 | Category              | Scope  | Notes                  |
 | --------------------- | ------ | ---------------------- |
-| `PUBLIC_CDN_BASE_URL` | Public | CDN base URL for media |
-| Object storage        | Server | See `.env.example`     |
+| `PUBLIC_CDN_BASE_URL` | Public | CDN base URL for media reads |
+| `S3_BUCKET`, `AWS_*`  | Server | Presigned upload (deferred) |
 
-## URL patterns (planned)
+## Read URLs (wired)
+
+`src/lib/server/media/cdn.ts`:
 
 ```typescript
-import { config } from '$lib/config/env';
+import { resolveUgcPublicUrl } from '$lib/server/media/cdn';
 
-`${config.cdnBaseUrl}/products/${slug}/hero.jpg`;
+// When PUBLIC_CDN_BASE_URL is set:
+resolveUgcPublicUrl('user-1/photo.jpg');
+// → https://cdn.example.com/ugc/user-1/photo.jpg
 ```
+
+`src/lib/server/media/repository.ts` calls `resolveUgcPublicUrl` when `isCdnPublicReadConfigured()` is true.
+
+## Presigned upload (deferred)
+
+`createPresignedUploadUrl` and `invalidateCdnPaths` are stubbed in `cdn.ts` until S3 + CloudFront ops are ready. See [inspiration-polish-tracker.md](../../plans/active/inspiration-polish-tracker.md#IP-013).
 
 ## Bucket layout (conceptual)
 
 ```
-<bucket>/products/{slug}/hero.jpg
-<bucket>/media/{id}/poster.jpg
+ugc/{user_id}/{asset}.jpg
+products/{slug}/hero.jpg
 ```
 
 Overview: [infrastructure/overview.md](../../infrastructure/overview.md) · [plans/active/media-uploads.md](../../plans/active/media-uploads.md)

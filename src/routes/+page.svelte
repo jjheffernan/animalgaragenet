@@ -25,7 +25,7 @@
 	<title>Animal Garage — Garage Culture Delivered</title>
 </svelte:head>
 
-<Hero />
+<Hero content={data.heroSection.content} />
 
 <section class="border-b border-zinc-800 bg-zinc-900/50 py-12">
 	<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">

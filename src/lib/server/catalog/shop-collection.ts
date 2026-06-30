@@ -3,7 +3,6 @@ import type { Product } from '$lib/types/saleor';
 import { getChannelForLocale } from '$lib/server/saleor/channels';
 import { isSaleorEnabled, saleorFetch } from '$lib/server/saleor/client';
 import { guardMockCatalogFallback } from '$lib/server/catalog/fallback';
-import { isProductionSiteUrl } from '$lib/server/auth/local-dev';
 import { mockCollections } from '$lib/data/mock/collections';
 import {
 	mapProductListNode,
@@ -55,7 +54,7 @@ export async function getShopCollectionOptions(
 				source: 'saleor' as const
 			}));
 		} catch (err) {
-			guardMockCatalogFallback(err, isProductionSiteUrl());
+			guardMockCatalogFallback({ saleorAttemptFailed: true, error: err });
 		}
 	}
 	return mockShopCollections();
@@ -78,7 +77,7 @@ export async function getShopProductsByCollection(
 
 			return result.data.collection.products.edges.map(({ node }) => mapProductListNode(node));
 		} catch (err) {
-			guardMockCatalogFallback(err, isProductionSiteUrl());
+			guardMockCatalogFallback({ saleorAttemptFailed: true, error: err });
 		}
 	}
 

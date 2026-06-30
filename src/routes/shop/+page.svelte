@@ -7,6 +7,7 @@
 	import ListControls from '$lib/components/catalog/ListControls.svelte';
 	import CatalogRibbonShell from '$lib/components/catalog/CatalogRibbonShell.svelte';
 	import CategoryPill from '$lib/components/catalog/CategoryPill.svelte';
+	import type { ShopCollectionFilter } from '$lib/server/catalog/shop-collection';
 	import type { ShopFilterOption } from '$lib/server/catalog/shop-filters';
 	import { catalogRibbonNavClass } from '$lib/ui/catalog-ribbon';
 	import { locale } from '$lib/stores/locale.svelte';
@@ -17,6 +18,14 @@
 		if (cat.slug === 'all') return resolve('/shop');
 		return resolve(`/shop?category=${cat.slug}`);
 	}
+
+	function collectionHref(col: ShopCollectionFilter) {
+		return resolve(`/shop?collection=${col.slug}`);
+	}
+
+	const sectionTitle = $derived(
+		data.collection ? data.collection.label : data.category.slug === 'all' ? 'All Products' : data.category.label
+	);
 </script>
 
 <svelte:head>
@@ -52,12 +61,23 @@
 		</nav>
 	</CatalogRibbonShell>
 
+	{#if data.collections.length > 0}
+		<CatalogRibbonShell ariaLabel="Shop collections">
+			<nav class={catalogRibbonNavClass} aria-label="Shop collections">
+				{#each data.collections as col (col.slug)}
+					<CategoryPill
+						href={collectionHref(col)}
+						label={col.label}
+						active={data.collection?.slug === col.slug}
+					/>
+				{/each}
+			</nav>
+		</CatalogRibbonShell>
+	{/if}
+
 	<section class="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
 		<AnimatedReveal>
-			<SectionHeading
-				title={data.category.slug === 'all' ? 'All Products' : data.category.label}
-				subtitle="{data.pagination.total} items"
-			/>
+			<SectionHeading title={sectionTitle} subtitle="{data.pagination.total} items" />
 		</AnimatedReveal>
 		<ListControls pagination={data.pagination} view={data.view} placement="top" />
 		<ProductGrid products={data.products} view={data.view} />

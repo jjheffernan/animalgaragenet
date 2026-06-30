@@ -15,7 +15,7 @@ Canonical implementer queue reconciled from [STATUS.md](../../STATUS.md), [AUDIT
 
 | Bucket | Count | Meaning |
 | ------ | ----: | ------- |
-| **Unblocked** | 11 | Can land in-repo on `dev` without Netlify/Saleor/Stripe dashboard access |
+| **Unblocked** | 10 | Can land in-repo on `dev` without Netlify/Saleor/Stripe dashboard access |
 | **Ops-blocked** | 19 | Requires env vars, migrations on production Supabase, or external console work |
 
 _Audit ID rows (AUD-P*) also appear in [AUDIT-REMEDIATION.md](../AUDIT-REMEDIATION.md). Do not close AUD rows here without updating that file._
@@ -39,8 +39,8 @@ _Audit ID rows (AUD-P*) also appear in [AUDIT-REMEDIATION.md](../AUDIT-REMEDIATI
 | IP-030 | Deal / campaign scheduler (Pit Lane CMS; `/deals` mock) | inspiration-polish | No | — | code | **done** |
 | PT-P3-001 | Split `saleor/checkout.ts` (624 LOC) — defer until second caller (YAGNI) | ponytail-audit | No | — | ponytail | **deferred** |
 | PT-P3-003 | `forms/submit.ts` — remove dead generic insert stub or wire one table | ponytail-audit | No | — | ponytail | **done** |
-| SEO-001 | `src/routes/sitemap.xml/+server.ts` — nav-linked static routes + dynamic content slugs | [sitemap-route-audit.md](../../audits/sitemap-route-audit.md) | No | — | code | **open** (optional) |
-| SEO-002 | Add `Sitemap:` directive to `static/robots.txt` | sitemap-route-audit | No | — | code | **open** (optional) |
+| SEO-001 | `src/routes/sitemap.xml/+server.ts` — nav-linked static routes + dynamic content slugs | [sitemap-route-audit.md](../../audits/sitemap-route-audit.md) | No | — | code | **done** |
+| SEO-002 | `robots.txt` route — `Sitemap:` from `PUBLIC_SITE_URL` | sitemap-route-audit | No | — | code | **done** |
 | SEO-003 | Extend smoke tests beyond `/`, `/shop`, `/parts`, one PDP | sitemap-route-audit | No | — | code | **open** (optional) |
 
 ---
@@ -93,6 +93,7 @@ bash scripts/check-secrets.sh
 | 2026-07-03 | Public-safe scrub per `SECURITY-PUBLIC.md` |
 | 2026-06-30 | SEO-001–003 optional follow-ups from [sitemap-route-audit.md](../../audits/sitemap-route-audit.md) |
 | 2026-06-30 | Swarm slot D — PT-P3-001 YAGNI-deferred; AUD-P2-023 done (`20250701010000_commerce_content.sql`); counts synced |
+| 2026-06-30 | Slot A — AUD-P2-020 symlink onboarding; IP-004-code stock webhook; SEO-001/002 sitemap; AUD-P2-006 live Saleor CI smoke |
 
 ---
 

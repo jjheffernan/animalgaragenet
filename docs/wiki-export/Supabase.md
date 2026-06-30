@@ -53,16 +53,16 @@ Insert columns use snake_case (`user_id`, `mod_list`, `status`).
 
 ## Code layout
 
-| Path                                | Role                                                     |
-| ----------------------------------- | -------------------------------------------------------- |
-| `src/lib/server/supabase/env.ts`    | Derives API URL from `SUPABASE_DATABASE_URL`             |
-| `src/lib/server/supabase/client.ts` | `createServerClient(event)` — SSR cookie client          |
-| `src/lib/server/supabase/admin.ts`  | `createAdminClient()` — service role                     |
-| `src/lib/server/supabase/auth.ts`   | `getSession`, `signInWithOtp`, `signOut`, mock fallbacks |
-| `src/lib/server/auth/oauth-action.ts` | Server-side OAuth redirect (no browser anon key)       |
-| `src/lib/server/auth/local-dev.ts`  | Local dev auth guards                                    |
-| `src/hooks.server.ts`               | Session refresh, admin guard, site lockdown              |
-| `scripts/promote-admin.ts`          | CLI to set `app_metadata.role`                           |
+| Path                                  | Role                                                     |
+| ------------------------------------- | -------------------------------------------------------- |
+| `src/lib/server/supabase/env.ts`      | Derives API URL from `SUPABASE_DATABASE_URL`             |
+| `src/lib/server/supabase/client.ts`   | `createServerClient(event)` — SSR cookie client          |
+| `src/lib/server/supabase/admin.ts`    | `createAdminClient()` — service role                     |
+| `src/lib/server/supabase/auth.ts`     | `getSession`, `signInWithOtp`, `signOut`, mock fallbacks |
+| `src/lib/server/auth/oauth-action.ts` | Server-side OAuth redirect (no browser anon key)         |
+| `src/lib/server/auth/local-dev.ts`    | Local dev auth guards                                    |
+| `src/hooks.server.ts`                 | Session refresh, admin guard, site lockdown              |
+| `scripts/promote-admin.ts`            | CLI to set `app_metadata.role`                           |
 
 `event.locals.supabase` available in server loads/actions when configured. `event.locals.session` is app-shaped user (`id`, `email`, `name`, `role`).
 

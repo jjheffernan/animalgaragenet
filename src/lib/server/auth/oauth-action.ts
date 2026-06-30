@@ -32,7 +32,8 @@ export async function handleOAuthAction(event: RequestEvent) {
 
 	if (isProductionHostname(event.url.hostname)) {
 		return fail(503, {
-			error: 'Sign-in is not configured for this site. Set Supabase environment variables on the host.'
+			error:
+				'Sign-in is not configured for this site. Set Supabase environment variables on the host.'
 		});
 	}
 

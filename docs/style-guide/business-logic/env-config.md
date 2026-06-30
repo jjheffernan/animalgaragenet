@@ -2,12 +2,12 @@
 
 ## Files
 
-| File                    | Purpose                            |
-| ----------------------- | ---------------------------------- |
-| `.env.example`          | Template with all vars (committed) |
-| `.env`                  | Local values (gitignored)          |
-| `src/lib/config/env.ts` | Typed public config accessor (site, Saleor, locale) |
-| `src/lib/server/supabase/env.ts` | Server-only Supabase URL derivation |
+| File                             | Purpose                                             |
+| -------------------------------- | --------------------------------------------------- |
+| `.env.example`                   | Template with all vars (committed)                  |
+| `.env`                           | Local values (gitignored)                           |
+| `src/lib/config/env.ts`          | Typed public config accessor (site, Saleor, locale) |
+| `src/lib/server/supabase/env.ts` | Server-only Supabase URL derivation                 |
 
 ## Setup
 
@@ -38,23 +38,23 @@ All values fall back to safe defaults or empty strings — missing vars won't cr
 
 ### Public (browser-safe)
 
-| Variable                   | Default                 | Description                       |
-| -------------------------- | ----------------------- | --------------------------------- |
-| `PUBLIC_SITE_URL`          | `http://localhost:5173` | Canonical site URL                |
-| `PUBLIC_CDN_BASE_URL`      | `''`                    | CloudFront prefix                 |
-| `PUBLIC_SALEOR_API_URL`    | `''`                    | Saleor GraphQL endpoint           |
-| `PUBLIC_DEFAULT_LOCALE`    | `en-US`                 | Default locale code               |
-| `PUBLIC_DEFAULT_CURRENCY`  | `USD`                   | Default currency code             |
+| Variable                  | Default                 | Description             |
+| ------------------------- | ----------------------- | ----------------------- |
+| `PUBLIC_SITE_URL`         | `http://localhost:5173` | Canonical site URL      |
+| `PUBLIC_CDN_BASE_URL`     | `''`                    | CloudFront prefix       |
+| `PUBLIC_SALEOR_API_URL`   | `''`                    | Saleor GraphQL endpoint |
+| `PUBLIC_DEFAULT_LOCALE`   | `en-US`                 | Default locale code     |
+| `PUBLIC_DEFAULT_CURRENCY` | `USD`                   | Default currency code   |
 
 ### Private (server only)
 
-| Variable                    | Description                                      |
-| --------------------------- | ------------------------------------------------ |
-| `SALEOR_CHANNEL`            | Saleor channel slug (default: `default-channel`) |
+| Variable                    | Description                                         |
+| --------------------------- | --------------------------------------------------- |
+| `SALEOR_CHANNEL`            | Saleor channel slug (default: `default-channel`)    |
 | `SUPABASE_DATABASE_URL`     | Postgres URL — API URL derived in `supabase/env.ts` |
-| `SUPABASE_ANON_KEY`         | Anon key — SSR only                              |
-| `SUPABASE_SERVICE_ROLE_KEY` | Admin key — never expose to client               |
-| Object storage / CDN        | See `.env.example`                               |
+| `SUPABASE_ANON_KEY`         | Anon key — SSR only                                 |
+| `SUPABASE_SERVICE_ROLE_KEY` | Admin key — never expose to client                  |
+| Object storage / CDN        | See `.env.example`                                  |
 
 ## Missing var behavior
 

@@ -91,13 +91,13 @@ Data in the local stack is discarded. Re-seed test users if needed (`scripts/pro
 
 ### `db reset` vs `db push`
 
-| Scenario                                                  | Command                                                                                                                         |
-| --------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
-| Local Docker stack, clean replay                          | `supabase db reset`                                                                                                             |
-| Linked remote, empty / never migrated                     | `supabase db push`                                                                                                              |
-| Linked remote, OK to wipe all data                        | `supabase db reset --linked`                                                                                                    |
-| Linked remote, already has old migration names in history | `supabase migration repair` + `db push`, or Dashboard reset — see above                                                         |
-| Local DB applied old 17 files                             | `supabase db reset`                                                                                                             |
+| Scenario                                                  | Command                                                                 |
+| --------------------------------------------------------- | ----------------------------------------------------------------------- |
+| Local Docker stack, clean replay                          | `supabase db reset`                                                     |
+| Linked remote, empty / never migrated                     | `supabase db push`                                                      |
+| Linked remote, OK to wipe all data                        | `supabase db reset --linked`                                            |
+| Linked remote, already has old migration names in history | `supabase migration repair` + `db push`, or Dashboard reset — see above |
+| Local DB applied old 17 files                             | `supabase db reset`                                                     |
 
 ---
 

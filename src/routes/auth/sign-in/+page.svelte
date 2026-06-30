@@ -28,8 +28,8 @@
 				class="mt-4 rounded-sm border border-amber-800/50 bg-amber-950/20 px-4 py-3 text-sm text-amber-400"
 				role="alert"
 			>
-				Authentication is not configured on this host. Connect the Netlify Supabase
-				integration or set <code class="text-amber-300">SUPABASE_DATABASE_URL</code> and
+				Authentication is not configured on this host. Connect the Netlify Supabase integration or
+				set <code class="text-amber-300">SUPABASE_DATABASE_URL</code> and
 				<code class="text-amber-300">SUPABASE_ANON_KEY</code> in the deployment environment.
 			</p>
 		{/if}

@@ -93,11 +93,11 @@ export const load: PageServerLoad = async () => {
 
 ### Auth / content swap points
 
-| Concern     | Mock                            | Live                                         |
-| ----------- | ------------------------------- | -------------------------------------------- |
+| Concern     | Mock                            | Live                                                     |
+| ----------- | ------------------------------- | -------------------------------------------------------- |
 | Auth        | `ag-session` cookie             | Supabase (`SUPABASE_DATABASE_URL` + `SUPABASE_ANON_KEY`) |
-| Catalog     | `src/lib/data/mock/products.ts` | Saleor (`PUBLIC_SALEOR_API_URL`)             |
-| Blog/guides | `src/lib/data/mock/blog.ts`     | Ghost (`GHOST_URL`, `GHOST_CONTENT_API_KEY`) |
+| Catalog     | `src/lib/data/mock/products.ts` | Saleor (`PUBLIC_SALEOR_API_URL`)                         |
+| Blog/guides | `src/lib/data/mock/blog.ts`     | Ghost (`GHOST_URL`, `GHOST_CONTENT_API_KEY`)             |
 
 ## Verify changes
 

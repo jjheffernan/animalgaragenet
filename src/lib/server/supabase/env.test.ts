@@ -7,9 +7,9 @@ describe('extractProjectRef', () => {
 	});
 
 	it('parses pooler username postgres.<ref>', () => {
-		expect(extractProjectRef('aws-0-us-west-1.pooler.supabase.com', 'postgres.abcdefghijklmnop')).toBe(
-			'abcdefghijklmnop'
-		);
+		expect(
+			extractProjectRef('aws-0-us-west-1.pooler.supabase.com', 'postgres.abcdefghijklmnop')
+		).toBe('abcdefghijklmnop');
 	});
 
 	it('returns null for local docker host', () => {
@@ -41,7 +41,9 @@ describe('deriveSupabaseApiUrl', () => {
 	});
 
 	it('returns null when database URL has no recognizable ref and no legacy URL', () => {
-		expect(deriveSupabaseApiUrl('postgresql://postgres:postgres@127.0.0.1:54322/postgres')).toBeNull();
+		expect(
+			deriveSupabaseApiUrl('postgresql://postgres:postgres@127.0.0.1:54322/postgres')
+		).toBeNull();
 	});
 });
 

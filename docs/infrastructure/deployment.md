@@ -69,12 +69,12 @@ Copy names from [`.env.example`](../../.env.example). Group by service when ente
 
 ### Supabase
 
-| Variable                    | Scope  | Required | Notes                                                                 |
-| --------------------------- | ------ | -------- | --------------------------------------------------------------------- |
-| `SUPABASE_DATABASE_URL`     | Server | **Yes**  | Postgres connection string (Netlify integration) — API URL derived    |
-| `SUPABASE_ANON_KEY`         | Server | **Yes**  | RLS-scoped anon key — server-only (not in browser bundle)             |
-| `SUPABASE_SERVICE_ROLE_KEY` | Server | **Yes**  | Moderation, webhooks, cron — never expose to client                     |
-| `SUPABASE_JWT_SECRET`       | Server | Optional | Not used by app today; reserved for custom JWT verification           |
+| Variable                    | Scope  | Required | Notes                                                                        |
+| --------------------------- | ------ | -------- | ---------------------------------------------------------------------------- |
+| `SUPABASE_DATABASE_URL`     | Server | **Yes**  | Postgres connection string (Netlify integration) — API URL derived           |
+| `SUPABASE_ANON_KEY`         | Server | **Yes**  | RLS-scoped anon key — server-only (not in browser bundle)                    |
+| `SUPABASE_SERVICE_ROLE_KEY` | Server | **Yes**  | Moderation, webhooks, cron — never expose to client                          |
+| `SUPABASE_JWT_SECRET`       | Server | Optional | Not used by app today; reserved for custom JWT verification                  |
 | `PUBLIC_SUPABASE_URL`       | Public | Optional | Local dev fallback when `DATABASE_URL` has no project ref (`supabase start`) |
 
 Without Supabase env, production refuses mock sessions (`hooks.server.ts`). See [integrations/supabase.md](../integrations/supabase.md).
@@ -144,13 +144,13 @@ Provider setup: [auth/oauth.md](../auth/oauth.md) · [auth/discord.md](../auth/d
 
 Production has **no prior migration history**. Apply the **5 squashed migrations** once on a fresh project:
 
-| #   | File                                    | Contents                                                                                           |
-| --- | --------------------------------------- | -------------------------------------------------------------------------------------------------- |
-| 1   | `20250701000000_core_auth_profiles.sql` | `profiles`, signup trigger, `is_staff()`                                                           |
-| 2   | `20250701010000_commerce_content.sql`   | builds, testimonials, newsletter, featured, preferences, YouTube, orders, restock, wholesale, bugs |
-| 3   | `20250701020000_media_social.sql`       | `media_assets`, `ugc` Storage bucket + policies                                                    |
-| 4   | `20250701030000_pit_lane_deals.sql`     | pit lane deals                                                                                     |
-| 5   | `20250701040000_build_submissions_rls.sql` | build submission RLS policies                                                                   |
+| #   | File                                       | Contents                                                                                           |
+| --- | ------------------------------------------ | -------------------------------------------------------------------------------------------------- |
+| 1   | `20250701000000_core_auth_profiles.sql`    | `profiles`, signup trigger, `is_staff()`                                                           |
+| 2   | `20250701010000_commerce_content.sql`      | builds, testimonials, newsletter, featured, preferences, YouTube, orders, restock, wholesale, bugs |
+| 3   | `20250701020000_media_social.sql`          | `media_assets`, `ugc` Storage bucket + policies                                                    |
+| 4   | `20250701030000_pit_lane_deals.sql`        | pit lane deals                                                                                     |
+| 5   | `20250701040000_build_submissions_rls.sql` | build submission RLS policies                                                                      |
 
 ### First deploy — wipe remote and push fresh
 

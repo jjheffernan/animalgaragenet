@@ -26,7 +26,10 @@ if (!email || !roleArg || !isRole(roleArg)) {
 	process.exit(1);
 }
 
-const url = deriveSupabaseApiUrl(process.env.SUPABASE_DATABASE_URL, process.env.PUBLIC_SUPABASE_URL);
+const url = deriveSupabaseApiUrl(
+	process.env.SUPABASE_DATABASE_URL,
+	process.env.PUBLIC_SUPABASE_URL
+);
 const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
 if (!url || !serviceKey) {

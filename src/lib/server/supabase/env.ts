@@ -48,9 +48,7 @@ export function deriveSupabaseApiUrl(
 }
 
 /** Resolve server-side Supabase client config from env record (process.env or SvelteKit private env). */
-export function resolveSupabaseEnv(
-	env: Record<string, string | undefined>
-): SupabaseEnv | null {
+export function resolveSupabaseEnv(env: Record<string, string | undefined>): SupabaseEnv | null {
 	const url = deriveSupabaseApiUrl(env.SUPABASE_DATABASE_URL, env.PUBLIC_SUPABASE_URL);
 	const anonKey = env.SUPABASE_ANON_KEY?.trim();
 	if (!url || !anonKey) return null;

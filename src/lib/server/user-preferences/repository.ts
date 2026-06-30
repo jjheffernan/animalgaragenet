@@ -13,7 +13,7 @@ function defaultState(): UserGarageState {
 	return { vehicles: [], garageXp: 0, completedActions: [] };
 }
 
-// @inspiration-scaffold: intentional — account garage sync; see docs/plans/active/inspiration-polish-coordination.md#IP-009
+// @inspiration-scaffold: intentional — account garage sync; see docs/plans/active/inspiration-polish-coordination.md#IP-010
 export async function getUserGarageState(userId: string): Promise<UserGarageState> {
 	const admin = createAdminClient();
 	if (!admin) {
@@ -63,7 +63,7 @@ export async function saveUserVehicles(
 	return true;
 }
 
-// @inspiration-scaffold: intentional — wire garageXp.addXp server-side dedupe
+// @inspiration-scaffold: intentional — wire garageXp.addXp server-side dedupe; see docs/plans/active/inspiration-polish-coordination.md#IP-009
 export async function addGarageXp(
 	userId: string,
 	amount: number,

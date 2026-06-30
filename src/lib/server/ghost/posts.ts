@@ -5,6 +5,9 @@ import { ghostFetch, isGhostEnabled } from './client';
 import { mapGhostPostToBlogPost, mapGhostPostToGuide } from './mappers';
 import type { GhostContentTag, GhostPostResponse, GhostPostsResponse } from './types';
 
+// @inspiration-scaffold: intentional — see docs/plans/active/inspiration-polish-coordination.md#IP-015
+// When Ghost env is set but API fails, prefer throw/metric over silent mock fallback (AUDIT-P1-009).
+
 const GHOST_INCLUDES = 'tags,authors';
 
 async function fetchPostsByTag(tag: GhostContentTag): Promise<Guide[] | BlogPost[] | null> {

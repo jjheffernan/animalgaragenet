@@ -10,5 +10,6 @@ Docs here are **not deleted** so git history and links can be redirected. Each f
 | `dashboard-adoption-plan.md` | Complete   | Decision: in-repo `/admin`                      |
 | `media-cdn-plan.md`          | Superseded | See `plans/active/media-uploads.md` for phase 1 |
 | `doc-implementation-manifest.md` | Superseded | June 2026 `DOC-###` batch — see `plans/AUDIT-REMEDIATION.md` |
+| `polish-plan.md`                 | Complete   | See `plans/active/inspiration-polish-coordination.md`              |
 
 For open work, see [STATUS.md](../STATUS.md) and [plans/active/](../plans/active/).

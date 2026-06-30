@@ -1,4 +1,4 @@
-// @inspiration-scaffold: intentional — see docs/plans/active/inspiration-polish-tracker.md#IP-007
+// @inspiration-scaffold: intentional — see docs/plans/active/inspiration-polish-coordination.md#IP-007
 import type { Video } from '$lib/types/domain';
 import { mockVideos } from '$lib/data/mock/videos';
 import { upsertSyncedVideos } from '$lib/server/youtube/repository';

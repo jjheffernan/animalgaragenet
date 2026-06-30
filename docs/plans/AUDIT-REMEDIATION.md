@@ -12,7 +12,8 @@ Canonical tracker for findings from `docs/audits/*`, [STATUS.md](../STATUS.md), 
 | ---------------------------------------------------------------- | ---------------------------------------- |
 | [TRIAGE.md](./TRIAGE.md)                                         | Doc reorg map + plan/code evidence table |
 | [STATUS.md](../STATUS.md)                                        | High-level open-work summary             |
-| [meta/polish-plan.md](../meta/polish-plan.md)                    | Session polish P0 checklist              |
+| [archive/polish-plan.md](../archive/polish-plan.md)              | Complete — session polish (June 2026)      |
+| [plans/active/inspiration-polish-coordination.md](./active/inspiration-polish-coordination.md) | Canonical inspiration + polish open work |
 | [plans/active/market-readiness.md](./active/market-readiness.md) | Phased launch roadmap                    |
 | [archive/doc-implementation-manifest.md](../archive/doc-implementation-manifest.md) | Superseded June 2026 `DOC-###` batch |
 

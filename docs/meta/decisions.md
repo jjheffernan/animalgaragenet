@@ -129,20 +129,20 @@ Helpers in `catalog-helpers.ts` (`getCatalogKind`, `getProductPath`, `getCatalog
 
 ## Migration scaffolds (`@inspiration-scaffold` / `@migration`)
 
-Commented code and stub handlers tagged `@inspiration-scaffold`, `@migration`, or scoped `@saleor-migration` are **intentional** — they mark swap points for Saleor catalog/checkout, CDN/S3, YouTube sync, and related backlog items from [inspiration.md](./inspiration.md). Agents (especially `polish-sweep`) must **not** delete these blocks during cleanup; uncomment when the linked env or gateway is ready. Open items: [AUDIT-REMEDIATION.md](../plans/AUDIT-REMEDIATION.md).
+Commented code tagged `@inspiration-scaffold`, `@migration`, or `@saleor-migration` is **intentional** — it marks swap points for inspiration backlog and Saleor catalog/checkout work tracked in [inspiration-polish-coordination.md](../plans/active/inspiration-polish-coordination.md) (`#IP-###`) and [AUDIT-REMEDIATION.md](../plans/AUDIT-REMEDIATION.md). Agents (especially `polish-sweep`) must **not** delete these blocks during cleanup; uncomment when the linked env, migration, or payment gateway is ready. `@saleor-migration` details: [commerce/saleor.md](../commerce/saleor.md).
 
 ---
 
 ## Deferred
 
-- Checkout completion, payment, shipping (Saleor)
-- Promo / voucher redeem UX (`saleor-redeem` agent)
+- Checkout completion, payment, shipping (Saleor) — [IP-003](../plans/active/inspiration-polish-coordination.md#ip-003)
+- Promo / voucher redeem UX — **done** ([IP-018](../plans/active/inspiration-polish-coordination.md#ip-018))
 - `@motionone/svelte`
 - PIM / 100k SKU parts catalog
-- UGC media uploads (plan in [plans/active/media-uploads.md](../plans/active/media-uploads.md))
+- UGC media uploads Phase 2+ (plan in [plans/active/media-uploads.md](../plans/active/media-uploads.md))
 
-See [inspiration.md](./inspiration.md) for full backlog.
+See [inspiration-polish-coordination.md](../plans/active/inspiration-polish-coordination.md) for open work and [inspiration.md](./inspiration.md) for research backlog (built items only).
 
 ---
 
-_Last updated: June 2026 — Phase 3_
+_Last updated: June 30, 2026 — inspiration-polish consolidation_

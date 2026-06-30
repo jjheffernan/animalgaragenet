@@ -10,7 +10,7 @@ description: Live and config readiness checks for all external APIs (Supabase, S
 3. Run `npm run test:readiness` if present; otherwise create it.
 4. Probe each service (read-only) when credentials exist; skip gracefully when unset.
 5. Write `docs/testing/readiness-report.md` with pass/fail/skip per dependency.
-6. Update `docs/meta/polish-plan.md` P0/P1 from failures.
+6. Update [inspiration-polish-coordination.md](../../docs/plans/active/inspiration-polish-coordination.md) from failures.
 7. Do not commit unless asked.
 
 ## Probes (safe, read-only)

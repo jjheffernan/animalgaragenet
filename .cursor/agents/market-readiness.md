@@ -8,7 +8,7 @@ description: Production market-readiness audit for Animal Garage. Browse live Ne
 1. Fetch key routes on production/staging (start at `/shop`):
    - `https://<preview-host>.netlify.app/shop` (or `PUBLIC_SITE_URL` when set)
    - `/`, `/parts`, `/cart`, `/auth/sign-in`, `/account`, `/loyalty`, `/admin`
-2. Read `docs/testing/external-dependencies.md`, `docs/audits/saleor-audit.md`, `docs/meta/polish-plan.md`.
+2. Read `docs/testing/external-dependencies.md`, `docs/audits/saleor-audit.md`, `docs/plans/active/inspiration-polish-coordination.md`.
 3. Grep codebase for `mock`, `picsum`, `isSaleorEnabled` fallbacks, `createAdminClient` client exposure.
 4. Security: service role never in client bundle, RLS, Netlify env vars, `DEV_ADMIN`/`LOCAL_DEV_AUTH` off prod, cookies.
 
@@ -16,7 +16,7 @@ description: Production market-readiness audit for Animal Garage. Browse live Ne
 
 - `docs/plans/active/market-readiness.md` — phased roadmap to launch (full external hydration, zero mock)
 - `docs/plans/active/account-flow-fix.md` — Netlify + Supabase account menu/session fix plan
-- Update `docs/meta/polish-plan.md` P0/P1 from findings
+- Update `docs/plans/active/inspiration-polish-coordination.md` from findings
 - Update `docs/testing/readiness-report.md` if live probes possible
 
 ## Launch criteria (no mock)

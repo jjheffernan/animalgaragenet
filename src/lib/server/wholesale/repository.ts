@@ -18,7 +18,7 @@ function rowToInquiry(row: Record<string, unknown>): WholesaleInquiry {
 	};
 }
 
-// @inspiration-scaffold: intentional — /wholesale form persistence; see docs/plans/active/inspiration-polish-tracker.md#IP-011
+// @inspiration-scaffold: intentional — /wholesale form persistence; see docs/plans/active/inspiration-polish-coordination.md#IP-011
 export async function createWholesaleInquiry(
 	input: WholesaleInquiryInput
 ): Promise<WholesaleInquiry | null> {

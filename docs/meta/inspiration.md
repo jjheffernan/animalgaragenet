@@ -1,8 +1,10 @@
 # Feature Backlog — Industry Patterns Not Yet Integrated
 
-Living backlog of capabilities identified during Phase 2 research. Items marked **Done** ship in the prototype; everything else is queued for Phase 3+.
+Living backlog of capabilities identified during Phase 2 research. Items marked **Done** ship in the prototype.
 
-No external site names — this doc is the canonical reference for what remains.
+**Open work:** [inspiration-polish-coordination.md](../plans/active/inspiration-polish-coordination.md) — canonical tracker with scaffold paths and prod setup.
+
+No external site names — this doc is the canonical reference for what was researched.
 
 ---
 
@@ -36,138 +38,24 @@ No external site names — this doc is the canonical reference for what remains.
 
 See [archive/phase3-plan.md](../archive/phase3-plan.md) — workstreams A–D complete (June 2026).
 
-| Issue                                               | Priority | Status                                     |
-| --------------------------------------------------- | -------- | ------------------------------------------ |
-| Parts nav button non-functional (hover-only)        | P0       | **Done**                                   |
-| Shop nav button non-functional                      | P0       | **Done**                                   |
-| Search modal not opening                            | P0       | **Done**                                   |
-| Cart drawer duplicate / not opening                 | P0       | **Done**                                   |
-| Promo bar dismiss not working                       | P0       | **Done**                                   |
-| Build thread detail blank page                      | P0       | **Done**                                   |
-| Double footer / duplicate newsletter on homepage    | P1       | **Done**                                   |
-| Support + program pages are stubs                   | P1       | Mostly done (policies, contact, wholesale) |
-| Watch lacks video detail panel + shoppable products | P1       | **Done**                                   |
-| No sign-in / account routes                         | P1       | **Done**                                   |
-| No admin CDN / RBAC panel                           | P2       | **Done** (shell + mock media)              |
-| No YouTube channel auto-sync                        | P2       | Stub only — live API still open            |
+Key fixes: nav buttons, search/cart drawers, promo dismiss, build detail, watch detail panel, sign-in/account routes, admin shell, review photo uploads (Phase 1).
 
 ---
 
-## Not Yet Built — Commerce (Saleor)
+## Remaining work (summary)
 
-| Capability                            | Notes                           |
-| ------------------------------------- | ------------------------------- |
-| Live Saleor product catalog           | Replace all mock loaders        |
-| Real cart + checkout mutations        | Stripe via Saleor               |
-| Saleor gift card checkout             | Wire `/gift-cards`              |
-| Multi-channel international pricing   | Map locale → Saleor channel     |
-| Shipping zones + threshold promos     | Free ship >$X from admin config |
-| Variant matrix UI (`+ N more` colors) | PDP enhancement                 |
-| Notify-me restocks → Supabase         | Wire `NotifyMeButton`           |
-| Collection-based shop filters         | `?collection=` param handling   |
-| Unified merch + parts checkout        | Single Saleor cart              |
-| Financing (Affirm/Katapult)           | High AOV parts                  |
-| Price match guarantee workflow        | Support ticket + refund         |
+Full rows, scaffolds, and prod steps live in the [tracker](../plans/active/inspiration-polish-coordination.md). High-level buckets:
 
----
+| Area        | Examples still open                                      |
+| ----------- | -------------------------------------------------------- |
+| Commerce    | Live Saleor catalog, checkout/payment, gift card checkout |
+| Media & CDN | `featured_sections` CMS, S3/CloudFront Phase 2, YouTube sync |
+| Community   | XP + vehicles in Supabase, build moderation, newsletter  |
+| Admin       | Real CDN upload, featured sections editor, deal scheduler |
+| Discovery   | Faceted parts search, YMM fitment on PLPs, 100k SKU PIM  |
+| Motion      | Motion One, view transitions, cart micro-animations      |
 
-## Not Yet Built — Media & CDN
-
-| Capability                                | Notes                                   |
-| ----------------------------------------- | --------------------------------------- |
-| S3 + CloudFront media URLs                | Replace picsum placeholders             |
-| Admin media upload UI                     | **Done (placeholder)** — `/admin/media` |
-| Campaign hero from CMS                    | Supabase `featured_sections`            |
-| Product gallery srcset helpers            | Per `animation-media.md`                |
-| On-domain shoppable video                 | Timestamp → product hotlinks            |
-| Video detail drawer with product showcase | `/watch` enhancement                    |
-| **YouTube channel auto-sync**             | Admin hooks channels → auto-post videos |
-| UGC submission + moderation               | Supabase queue                          |
-| Instagram/social ingest                   | Optional Phase 4                        |
-
----
-
-## Not Yet Built — Community & Auth
-
-| Capability                         | Notes                                                                                                                            |
-| ---------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
-| Supabase auth (magic link + OAuth) | Wired at `/auth/*` — live with keys; mock `ag-session` without. Local quick-login on localhost (`docs/integrations/supabase.md`) |
-| User account dashboard             | **Done** — `/account` (profile, XP, vehicles, orders placeholder)                                                                |
-| Build thread submit → Supabase     | `/builds/submit` backend                                                                                                         |
-| Build of the Month voting          | Gamification                                                                                                                     |
-| Garage XP wired to real actions    | `garage-xp.svelte.ts` → Supabase                                                                                                 |
-| User vehicle garage (saved YMM)    | Persist beyond localStorage                                                                                                      |
-| Newsletter → Supabase              | `newsletter_signups` table                                                                                                       |
-| Discord support integration        | Footer CTA only (no popup)                                                                                                       |
-
----
-
-## Not Yet Built — Admin & RBAC
-
-### Built in Phase 3 (Workstream D)
-
-| Capability                      | Status             | Location                                   |
-| ------------------------------- | ------------------ | ------------------------------------------ |
-| Admin panel shell               | Done               | `/admin` layout + sidebar nav              |
-| User management (create, roles) | Done (mock)        | `/admin/users`                             |
-| CDN asset browser + upload UI   | Done (placeholder) | `/admin/media`                             |
-| RBAC role definitions           | Done               | `src/lib/auth/roles.ts`, `hooks.server.ts` |
-| Session guard (dev mock)        | Done               | `ag-session` cookie, `DEV_ADMIN=true`      |
-
-### Roles
-
-| Role          | Admin access | Capabilities                              |
-| ------------- | ------------ | ----------------------------------------- |
-| `admin`       | Yes          | Full site — users, media, CMS, settings   |
-| `editor`      | Yes          | Content and media — no user admin         |
-| `contributor` | No           | Submit builds/UGC — moderation queue only |
-| `customer`    | No           | Shop, account, garage                     |
-
-Admin routes require `editor` or `admin` role, or `DEV_ADMIN=true` in server env for local development.
-
-### Still queued
-
-| Capability                     | Notes                                                      |
-| ------------------------------ | ---------------------------------------------------------- |
-| Supabase-backed user CRUD      | Replace mock table in `/admin/users`                       |
-| Real CDN upload (S3 presigned) | Wire `/admin/media` upload to S3 + CloudFront invalidation |
-| Site banners / promo CMS       | Replace mock/banners                                       |
-| Featured sections editor       | Homepage CMS                                               |
-| YouTube channel manager        | Channel ID → sync cron (Workstream B)                      |
-| Build moderation queue         | Approve/reject submissions                                 |
-| Deal / campaign scheduler      | Pit Lane Deals CMS                                         |
-
----
-
-## Not Yet Built — Discovery & Scale
-
-| Capability                              | Notes                                        |
-| --------------------------------------- | -------------------------------------------- |
-| Faceted parts search                    | Saleor attributes (exhaust type, CARB, etc.) |
-| Full YMM fitment filtering on PLPs      | Saleor metadata                              |
-| 100k+ SKU catalog                       | PIM integration                              |
-| Shop-by-vehicle deep links              | Model → collection mapping                   |
-| Sponsored / featured product slots      | Admin configurable                           |
-| Recently viewed (server-side)           | Account sync                                 |
-| Open box / rebate channels              | Deal types                                   |
-| Military / first responder verification | Third-party ID service                       |
-| Wholesale application workflow          | Form → Supabase → email                      |
-| Events RSVP + ticketing                 | Optional                                     |
-
----
-
-## Not Yet Built — Motion & Delight
-
-| Capability                        | Notes                    |
-| --------------------------------- | ------------------------ |
-| `@motionone/svelte` scroll system | Per `animation-media.md` |
-| SvelteKit view transitions        | Shop ↔ PDP ↔ media       |
-| Cart add micro-animation          | Bounce + toast           |
-| Drop countdown on hero            | Wire campaign CMS        |
-| Scratch-off post-purchase promos  | Saleor voucher           |
-| Burnout Board leaderboard         | Referral gamification    |
-| Sticker pack loyalty rewards      | Low-cost perks           |
-| Personality empty states          | Branded copy everywhere  |
+Saleor migration swap points use `@saleor-migration` in code (not listed here). New feature scaffolds use `@inspiration-scaffold` — see [decisions.md](./decisions.md#agent-scaffold-markers).
 
 ---
 
@@ -180,4 +68,4 @@ Admin routes require `editor` or `admin` role, or `DEV_ADMIN=true` in server env
 
 ---
 
-_Last updated: June 2026_
+_Last updated: June 30, 2026 — consolidated into inspiration-polish-coordination_

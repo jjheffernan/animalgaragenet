@@ -3,7 +3,7 @@
 **Public documentation policy:** [SECURITY-PUBLIC.md](./SECURITY-PUBLIC.md)
 
 **Last updated:** 2026-06-30  
-**Canonical next-step docs:** [plans/AUDIT-REMEDIATION.md](./plans/AUDIT-REMEDIATION.md) · [meta/polish-plan.md](./meta/polish-plan.md) · [plans/active/market-readiness.md](./plans/active/market-readiness.md) · [plans/active/account-flow-fix.md](./plans/active/account-flow-fix.md)
+**Canonical next-step docs:** [plans/AUDIT-REMEDIATION.md](./plans/AUDIT-REMEDIATION.md) · [plans/active/inspiration-polish-coordination.md](./plans/active/inspiration-polish-coordination.md) · [plans/active/market-readiness.md](./plans/active/market-readiness.md) · [plans/active/account-flow-fix.md](./plans/active/account-flow-fix.md)
 
 This file reconciles “next steps” across all `docs/` so nothing is orphaned. Items are **Done**, **Ops** (external dashboard/env), or **Open** (code work).
 
@@ -61,13 +61,13 @@ These appear as unchecked boxes in plans but **cannot be completed in-repo**:
 | Priority | Task                                                            | Tracker                                                                        |
 | -------- | --------------------------------------------------------------- | ------------------------------------------------------------------------------ |
 | P0       | Merge `dev` → `main` when Netlify env configured                | [deployment.md](./style-guide/backend-ops/deployment.md)                       |
-| P0       | Fix CI Prettier (~221 files) — blocks green checks              | [polish-plan.md](./meta/polish-plan.md)                                        |
+| P0       | Fix CI Prettier (~221 files) — blocks green checks              | [AUDIT-REMEDIATION.md](./plans/AUDIT-REMEDIATION.md) AUD-P0-006 |
 | P1       | Saleor checkout: shipping, `CHECKOUT_COMPLETE`, payment         | [saleor.md](./commerce/saleor.md), [saleor-audit.md](./audits/saleor-audit.md) |
 | P1       | YouTube live sync (replace stub)                                | [readiness-report.md](./testing/readiness-report.md)                           |
 | P2       | Ghost + remaining homepage mock slices (videos, builds)         | market-readiness Phase 3                                                       |
 | P2       | `profiles` table contract test                                  | readiness-report (testimonials + build_submissions done)                       |
 | P2       | `readiness-ci` optional Actions job                             | readiness-report                                                               |
-| P2       | OAuth Discord/Azure verification                                | polish-plan P2                                                                 |
+| P2       | OAuth Discord/Azure verification                                | [inspiration-polish-coordination.md](./plans/active/inspiration-polish-coordination.md) |
 | P2       | SEO/OG, analytics, performance audit                            | Phase 5 (see [README.md](./README.md))                                         |
 | P2       | Newsletter / user preferences tables                            | [supabase.md](./integrations/supabase.md) roadmap                              |
 

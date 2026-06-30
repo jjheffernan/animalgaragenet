@@ -7,7 +7,7 @@ import { isProductionSiteUrl } from '$lib/server/auth/local-dev';
 import { getShopProducts } from '$lib/server/catalog/products';
 import { mockCollections } from '$lib/data/mock/collections';
 
-// @inspiration-scaffold: intentional — ?collection= PLP filter; see docs/plans/active/inspiration-polish-tracker.md#IP-005
+// @inspiration-scaffold: intentional — ?collection= PLP filter; see docs/plans/active/inspiration-polish-coordination.md#IP-005
 // Saleor: uncomment COLLECTION_PRODUCTS_QUERY block in collections.ts and filter by collection slug here.
 const COLLECTION_PRODUCTS_QUERY = `
 	query CollectionProducts($slug: String!, $channel: String!, $first: Int!) {

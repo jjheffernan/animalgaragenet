@@ -24,7 +24,9 @@ Complete, superseded, or stale plans. Each file has a status banner.
 | [archive/animation-media.md](./archive/animation-media.md)                 | Stale — marketing strategy             |
 | [archive/dashboard-adoption-plan.md](./archive/dashboard-adoption-plan.md) | Complete — in-repo `/admin`            |
 | [archive/media-cdn-plan.md](./archive/media-cdn-plan.md)                   | Superseded — see media-uploads phase 1 |
+| [archive/polish-plan.md](./archive/polish-plan.md)                         | Complete — June 2026 session polish      |
 | [archive/doc-implementation-manifest.md](./archive/doc-implementation-manifest.md) | Superseded — June 2026 batch audit (`DOC-###`) |
+| [archive/polish-plan.md](./archive/polish-plan.md)                                 | Complete — see inspiration-polish-coordination |
 
 ---
 
@@ -93,7 +95,8 @@ Complete, superseded, or stale plans. Each file has a status banner.
 | [SECURITY-PUBLIC.md](./SECURITY-PUBLIC.md)                   | Public documentation policy — placeholders, no infra leaks       |
 | [meta/decisions.md](./meta/decisions.md)                     | Persistent product/tech choices                                  |
 | [meta/inspiration.md](./meta/inspiration.md)                 | Feature backlog — integrated vs remaining                        |
-| [meta/polish-plan.md](./meta/polish-plan.md)                 | Active P0/P1 polish tracker                                      |
+| [meta/README.md](./meta/README.md)                           | Meta docs index                                                  |
+| [archive/polish-plan.md](./archive/polish-plan.md)           | Archived session polish (code complete)                          |
 | [meta/agents-skills-audit.md](./meta/agents-skills-audit.md) | Cursor agents/skills audit (detail — tracker: AUDIT-REMEDIATION) |
 
 ---
@@ -105,6 +108,8 @@ Complete, superseded, or stale plans. Each file has a status banner.
 | [plans/README.md](./plans/README.md)                                           | Plan lifecycle                          |
 | [plans/AUDIT-REMEDIATION.md](./plans/AUDIT-REMEDIATION.md)                     | Consolidated audit remediation tracker  |
 | [plans/TRIAGE.md](./plans/TRIAGE.md)                                           | Plan vs codebase verification           |
+| [plans/active/inspiration-polish-coordination.md](./plans/active/inspiration-polish-coordination.md) | Open work — inspiration + polish + AUDIT IDs |
+| [plans/active/inspiration-polish-prod-setup.md](./plans/active/inspiration-polish-prod-setup.md)   | Ops setup for Netlify / Supabase / Saleor    |
 | [plans/active/account-flow-fix.md](./plans/active/account-flow-fix.md)         | Netlify + Supabase account ops          |
 | [plans/active/market-readiness.md](./plans/active/market-readiness.md)         | Phased launch roadmap                   |
 | [plans/active/media-uploads.md](./plans/active/media-uploads.md)               | UGC upload pipeline — Phase 1 wired; apply migration on Supabase |

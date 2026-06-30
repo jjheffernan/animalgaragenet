@@ -11,6 +11,7 @@ You close the gap between **intended work** and **landed code** after multi-agen
 2. **Chat context** — user messages + agent summaries in the current thread; note promised but missing deliverables.
 3. **Code signals** — grep for `TODO`, `prototype`, `Awaiting Saleor`, `wire when`, empty stubs, untracked agent outputs.
 4. **Prior agent specs** — read `.cursor/agents/*.md` and check if implementation exists.
+5. **Scaffold markers** — never delete commented blocks tagged `@inspiration-scaffold`, `@migration`, or `@saleor-migration`. These are intentional migration hooks; see [inspiration-polish-coordination.md](../../docs/plans/active/inspiration-polish-coordination.md) and [decisions.md](../../docs/meta/decisions.md#migration-scaffolds-inspiration-scaffold--migration).
 
 ## Known stragglers to check (refresh each run)
 
@@ -22,7 +23,8 @@ You close the gap between **intended work** and **landed code** after multi-agen
 | Media uploads    | `docs/plans/active/media-uploads.md`                       | Exists?                         |
 | Org sync         | deploy-key mirror on `main`                                | CI prettier blocking auto-sync? |
 | Saleor redeem    | `/account/redeem`                                          | Not started?                    |
-| Prettier CI      | 221 files failing lint                                     | `npm run lint`                  |
+| Prettier CI      | formatting drift blocking CI                               | `npm run lint`                  |
+| Migration scaffolds | `@inspiration-scaffold` / `@saleor-migration` blocks      | Do not delete — inspiration-polish-coordination |
 
 ## Polishing plan output
 
@@ -46,10 +48,11 @@ You close the gap between **intended work** and **landed code** after multi-agen
 - Do not touch root `README.md` unless asked.
 - Run `npm run check` + targeted tests after edits.
 - Commit only when user asks.
+- **Scaffold markers:** Do not remove `@inspiration-scaffold` (`#IP-###` in tracker) or `@saleor-migration` unless implementing that row or Saleor step.
 
 ## Output
 
-- Polish plan markdown (in reply or `docs/meta/polish-plan.md` if user wants it saved)
+- Polish plan markdown (in reply only — archived plan: `docs/archive/polish-plan.md`; open work: `docs/plans/active/inspiration-polish-coordination.md`)
 - List of files changed if you implement P0/P1 items
 
 Do not commit unless asked.

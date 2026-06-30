@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
-	import { resolvePath } from '$lib/utils/paths';
 	import { page } from '$app/stores';
 	import PromoBar from './PromoBar.svelte';
 	import MegaMenu from './MegaMenu.svelte';
@@ -34,6 +33,8 @@
 	$effect(() => {
 		cart.init();
 	});
+
+	const session = $derived($page.data.session);
 
 	const navLinks = [
 		{ href: '/builds', label: 'Builds' },
@@ -114,6 +115,21 @@
 			</nav>
 
 			<div class="flex items-center gap-3 sm:gap-4">
+				{#if session}
+					<a
+						href={resolve('/account')}
+						class="hidden text-sm font-medium uppercase tracking-wider text-zinc-400 transition hover:text-white sm:block"
+					>
+						Account
+					</a>
+				{:else}
+					<a
+						href={resolve('/auth/sign-in')}
+						class="hidden text-sm font-medium uppercase tracking-wider text-zinc-400 transition hover:text-white sm:block"
+					>
+						Sign In
+					</a>
+				{/if}
 				<button
 					type="button"
 					class="text-zinc-400 hover:text-white"
@@ -139,12 +155,6 @@
 						</span>
 					{/if}
 				</button>
-				<a
-					href={resolvePath('/auth/sign-in')}
-					class="hidden text-sm font-medium uppercase tracking-wider text-zinc-400 transition hover:text-white sm:inline"
-				>
-					Sign In
-				</a>
 				<div class="hidden sm:block">
 					<LocaleSelector />
 				</div>
@@ -176,7 +186,11 @@
 				<a href={resolve('/deals')} class="flex items-center gap-2 py-3 text-sm font-medium uppercase tracking-wider text-zinc-300" onclick={() => (mobileOpen = false)}>
 					Pit Lane Deals <DealBadge />
 				</a>
-				<a href={resolvePath('/auth/sign-in')} class="block py-3 text-sm font-medium uppercase tracking-wider text-zinc-300" onclick={() => (mobileOpen = false)}>Sign In</a>
+				{#if session}
+					<a href={resolve('/account')} class="block py-3 text-sm font-medium uppercase tracking-wider text-zinc-300" onclick={() => (mobileOpen = false)}>Account</a>
+				{:else}
+					<a href={resolve('/auth/sign-in')} class="block py-3 text-sm font-medium uppercase tracking-wider text-zinc-300" onclick={() => (mobileOpen = false)}>Sign In</a>
+				{/if}
 				<div class="mt-2 sm:hidden">
 					<LocaleSelector />
 				</div>

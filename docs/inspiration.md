@@ -47,8 +47,8 @@ See [phase3-plan.md](./phase3-plan.md).
 | Double footer / duplicate newsletter on homepage | P1 |
 | Support + program pages are stubs | P1 |
 | Watch lacks video detail panel + shoppable products | P1 |
-| No sign-in / account routes | P1 |
-| No admin CDN / RBAC panel | P2 |
+| No sign-in / account routes | P1 → **Done (Phase 3 D)** |
+| No admin CDN / RBAC panel | P2 → **Done (Phase 3 D)** |
 | No YouTube channel auto-sync | P2 |
 
 ---
@@ -76,7 +76,7 @@ See [phase3-plan.md](./phase3-plan.md).
 | Capability | Notes |
 |------------|-------|
 | S3 + CloudFront media URLs | Replace picsum placeholders |
-| Admin media upload UI | `/admin/media` |
+| Admin media upload UI | **Done (placeholder)** — `/admin/media` |
 | Campaign hero from CMS | Supabase `featured_sections` |
 | Product gallery srcset helpers | Per `animation-media.md` |
 | On-domain shoppable video | Timestamp → product hotlinks |
@@ -91,8 +91,8 @@ See [phase3-plan.md](./phase3-plan.md).
 
 | Capability | Notes |
 |------------|-------|
-| Supabase auth (magic link + OAuth) | `/auth/sign-in`, `/auth/sign-up` |
-| User account dashboard | Orders, garage, builds |
+| Supabase auth (magic link + OAuth) | UI at `/auth/sign-in`, `/auth/sign-up` — stub until keys set |
+| User account dashboard | **Done** — `/account` (profile, XP, vehicles, orders placeholder) |
 | Build thread submit → Supabase | `/builds/submit` backend |
 | Build of the Month voting | Gamification |
 | Garage XP wired to real actions | `garage-xp.svelte.ts` → Supabase |
@@ -104,15 +104,36 @@ See [phase3-plan.md](./phase3-plan.md).
 
 ## Not Yet Built — Admin & RBAC
 
+### Built in Phase 3 (Workstream D)
+
+| Capability | Status | Location |
+|------------|--------|----------|
+| Admin panel shell | Done | `/admin` layout + sidebar nav |
+| User management (create, roles) | Done (mock) | `/admin/users` |
+| CDN asset browser + upload UI | Done (placeholder) | `/admin/media` |
+| RBAC role definitions | Done | `src/lib/auth/roles.ts`, `hooks.server.ts` |
+| Session guard (dev mock) | Done | `ag-session` cookie, `DEV_ADMIN=true` |
+
+### Roles
+
+| Role | Admin access | Capabilities |
+|------|--------------|--------------|
+| `admin` | Yes | Full site — users, media, CMS, settings |
+| `editor` | Yes | Content and media — no user admin |
+| `contributor` | No | Submit builds/UGC — moderation queue only |
+| `customer` | No | Shop, account, garage |
+
+Admin routes require `editor` or `admin` role, or `DEV_ADMIN=true` in server env for local development.
+
+### Still queued
+
 | Capability | Notes |
 |------------|-------|
-| Admin panel shell | `/admin` layout + guard |
-| User management (create, roles) | Supabase RBAC |
-| Roles: admin, editor, contributor | RLS policies |
-| CDN asset browser | S3 listing + upload |
+| Supabase-backed user CRUD | Replace mock table in `/admin/users` |
+| Real CDN upload (S3 presigned) | Wire `/admin/media` upload to S3 + CloudFront invalidation |
 | Site banners / promo CMS | Replace mock-banners |
 | Featured sections editor | Homepage CMS |
-| YouTube channel manager | Channel ID → sync cron |
+| YouTube channel manager | Channel ID → sync cron (Workstream B) |
 | Build moderation queue | Approve/reject submissions |
 | Deal / campaign scheduler | Pit Lane Deals CMS |
 

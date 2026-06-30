@@ -36,6 +36,10 @@
 		if (!line) return;
 		cart.updateQuantity(productId, variantId, line.quantity + delta);
 	}
+
+	function updateSaleorQty(lineId: string, quantity: number) {
+		cart.updateSaleorLineQuantity(lineId, quantity);
+	}
 </script>
 
 <svelte:head>
@@ -67,7 +71,12 @@
 								<p class="text-sm text-zinc-500">{line.variantName}</p>
 							</div>
 							<div class="flex items-center gap-4">
-								<span class="text-sm text-zinc-400">Qty {line.quantity}</span>
+								<div class="flex items-center gap-2">
+									<button type="button" onclick={() => updateSaleorQty(line.id, line.quantity - 1)} class="flex h-8 w-8 items-center justify-center rounded-sm border border-zinc-700 text-zinc-400 transition hover:border-zinc-500 hover:text-white">−</button>
+									<span class="w-8 text-center text-white">{line.quantity}</span>
+									<button type="button" onclick={() => updateSaleorQty(line.id, line.quantity + 1)} class="flex h-8 w-8 items-center justify-center rounded-sm border border-zinc-700 text-zinc-400 transition hover:border-zinc-500 hover:text-white">+</button>
+								</div>
+								<button type="button" onclick={() => cart.removeSaleorLine(line.id)} class="text-xs text-zinc-600 hover:text-red-500">Remove</button>
 								<p class="ml-auto font-medium text-white">{locale.formatPrice(line.lineTotal.amount)}</p>
 							</div>
 						</div>

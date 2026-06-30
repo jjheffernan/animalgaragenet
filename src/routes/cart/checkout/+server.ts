@@ -5,8 +5,10 @@ import { isSaleorEnabled } from '$lib/server/saleor/client';
 import {
 	addCheckoutLine,
 	createCheckout,
+	deleteCheckoutLine,
 	getCheckoutId,
-	setCheckoutId
+	setCheckoutId,
+	updateCheckoutLine
 } from '$lib/server/saleor/checkout';
 
 interface AddLineBody {
@@ -14,8 +16,16 @@ interface AddLineBody {
 	quantity?: number;
 }
 
+interface UpdateLineBody {
+	lineId?: string;
+	quantity?: number;
+}
+
+interface DeleteLineBody {
+	lineId?: string;
+}
+
 /** Server-side cart mutations — keeps Saleor app token off the browser. */
-// @saleor-migration: intentional — checkout scaffold; see docs/commerce/saleor.md#quick-migration
 export const POST: RequestHandler = async ({ request, cookies, url }) => {
 	if (!isSaleorEnabled()) {
 		return json({ error: 'Saleor not configured' }, { status: 503 });
@@ -44,6 +54,62 @@ export const POST: RequestHandler = async ({ request, cookies, url }) => {
 	const checkout = await addCheckoutLine(checkoutId, variantId, quantity);
 	if (!checkout) {
 		return json({ error: 'Failed to add line' }, { status: 502 });
+	}
+
+	setCheckoutId(cookies, checkout.id);
+	return json({ checkout });
+};
+
+export const PATCH: RequestHandler = async ({ request, cookies }) => {
+	if (!isSaleorEnabled()) {
+		return json({ error: 'Saleor not configured' }, { status: 503 });
+	}
+
+	const checkoutId = getCheckoutId(cookies);
+	if (!checkoutId) {
+		return json({ error: 'No active checkout' }, { status: 400 });
+	}
+
+	const body = (await request.json()) as UpdateLineBody;
+	const lineId = body.lineId?.trim();
+	const quantity = Math.floor(body.quantity ?? 0);
+
+	if (!lineId) {
+		return json({ error: 'lineId is required' }, { status: 400 });
+	}
+
+	const checkout =
+		quantity <= 0
+			? await deleteCheckoutLine(checkoutId, lineId)
+			: await updateCheckoutLine(checkoutId, lineId, quantity);
+
+	if (!checkout) {
+		return json({ error: 'Failed to update line' }, { status: 502 });
+	}
+
+	setCheckoutId(cookies, checkout.id);
+	return json({ checkout });
+};
+
+export const DELETE: RequestHandler = async ({ request, cookies }) => {
+	if (!isSaleorEnabled()) {
+		return json({ error: 'Saleor not configured' }, { status: 503 });
+	}
+
+	const checkoutId = getCheckoutId(cookies);
+	if (!checkoutId) {
+		return json({ error: 'No active checkout' }, { status: 400 });
+	}
+
+	const body = (await request.json()) as DeleteLineBody;
+	const lineId = body.lineId?.trim();
+	if (!lineId) {
+		return json({ error: 'lineId is required' }, { status: 400 });
+	}
+
+	const checkout = await deleteCheckoutLine(checkoutId, lineId);
+	if (!checkout) {
+		return json({ error: 'Failed to remove line' }, { status: 502 });
 	}
 
 	setCheckoutId(cookies, checkout.id);

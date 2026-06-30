@@ -65,6 +65,68 @@ const CHECKOUT_DISCOUNT_FIELDS = `
   discountName
 `;
 
+/** Update quantities on existing checkout lines. */
+export const CHECKOUT_LINES_UPDATE = `
+  mutation CheckoutLinesUpdate($id: ID!, $lines: [CheckoutLineUpdateInput!]!) {
+    checkoutLinesUpdate(id: $id, lines: $lines) {
+      checkout {
+        id
+        lines {
+          id
+          quantity
+          variant {
+            id
+            name
+            pricing {
+              price { gross { amount currency } }
+            }
+            product {
+              id
+              name
+              slug
+              thumbnail { url alt }
+            }
+          }
+          totalPrice { gross { amount currency } }
+        }
+        totalPrice { gross { amount currency } }
+      }
+      errors { field message code }
+    }
+  }
+`;
+
+/** Remove lines from checkout. */
+export const CHECKOUT_LINES_DELETE = `
+  mutation CheckoutLinesDelete($id: ID!, $linesIds: [ID!]!) {
+    checkoutLinesDelete(id: $id, linesIds: $linesIds) {
+      checkout {
+        id
+        lines {
+          id
+          quantity
+          variant {
+            id
+            name
+            pricing {
+              price { gross { amount currency } }
+            }
+            product {
+              id
+              name
+              slug
+              thumbnail { url alt }
+            }
+          }
+          totalPrice { gross { amount currency } }
+        }
+        totalPrice { gross { amount currency } }
+      }
+      errors { field message code }
+    }
+  }
+`;
+
 /** Read checkout lines for cart display. */
 export const CHECKOUT_GET = `
   query Checkout($id: ID!) {

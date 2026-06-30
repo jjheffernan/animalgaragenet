@@ -7,6 +7,8 @@ import {
 	CHECKOUT_CREATE,
 	CHECKOUT_GET,
 	CHECKOUT_LINES_ADD,
+	CHECKOUT_LINES_DELETE,
+	CHECKOUT_LINES_UPDATE,
 	CHECKOUT_REMOVE_PROMO_CODE
 } from '$lib/server/saleor/checkout-queries';
 import { config } from '$lib/config/env';
@@ -146,36 +148,56 @@ export async function addCheckoutLine(
 	return checkout ? mapCheckout(checkout) : null;
 }
 
-// @saleor-migration: intentional — uncomment for cart line qty; see docs/commerce/saleor.md#quick-migration
-// export async function updateCheckoutLineQuantity(
-// 	checkoutId: string,
-// 	lineId: string,
-// 	quantity: number
-// ): Promise<CheckoutDisplay | null> {
-// 	if (!isSaleorEnabled()) return null;
-// 	const result = await saleorFetch<{ checkoutLinesUpdate: { checkout: SaleorCheckoutNode | null; errors: Array<{ message: string }> } }>(
-// 		CHECKOUT_LINES_UPDATE,
-// 		{ id: checkoutId, lines: [{ lineId, quantity }] }
-// 	);
-// 	if (result.errors?.length || result.data?.checkoutLinesUpdate.errors?.length) return null;
-// 	const checkout = result.data?.checkoutLinesUpdate.checkout;
-// 	return checkout ? mapCheckout(checkout) : null;
-// }
+/** Update line quantity on checkout. */
+export async function updateCheckoutLine(
+	checkoutId: string,
+	lineId: string,
+	quantity: number
+): Promise<CheckoutDisplay | null> {
+	if (!isSaleorEnabled()) return null;
 
-// @saleor-migration: intentional — uncomment for cart line remove; see docs/commerce/saleor.md#quick-migration
-// export async function removeCheckoutLine(
-// 	checkoutId: string,
-// 	lineId: string
-// ): Promise<CheckoutDisplay | null> {
-// 	if (!isSaleorEnabled()) return null;
-// 	const result = await saleorFetch<{ checkoutLinesDelete: { checkout: SaleorCheckoutNode | null; errors: Array<{ message: string }> } }>(
-// 		CHECKOUT_LINES_DELETE,
-// 		{ id: checkoutId, linesIds: [lineId] }
-// 	);
-// 	if (result.errors?.length || result.data?.checkoutLinesDelete.errors?.length) return null;
-// 	const checkout = result.data?.checkoutLinesDelete.checkout;
-// 	return checkout ? mapCheckout(checkout) : null;
-// }
+	const result = await saleorFetch<{
+		checkoutLinesUpdate: {
+			checkout: SaleorCheckoutNode | null;
+			errors: Array<{ message: string }>;
+		};
+	}>(CHECKOUT_LINES_UPDATE, {
+		id: checkoutId,
+		lines: [{ lineId, quantity }]
+	});
+
+	if (result.errors?.length || result.data?.checkoutLinesUpdate.errors?.length) {
+		return null;
+	}
+
+	const checkout = result.data?.checkoutLinesUpdate.checkout;
+	return checkout ? mapCheckout(checkout) : null;
+}
+
+/** Remove a line from checkout. */
+export async function deleteCheckoutLine(
+	checkoutId: string,
+	lineId: string
+): Promise<CheckoutDisplay | null> {
+	if (!isSaleorEnabled()) return null;
+
+	const result = await saleorFetch<{
+		checkoutLinesDelete: {
+			checkout: SaleorCheckoutNode | null;
+			errors: Array<{ message: string }>;
+		};
+	}>(CHECKOUT_LINES_DELETE, {
+		id: checkoutId,
+		linesIds: [lineId]
+	});
+
+	if (result.errors?.length || result.data?.checkoutLinesDelete.errors?.length) {
+		return null;
+	}
+
+	const checkout = result.data?.checkoutLinesDelete.checkout;
+	return checkout ? mapCheckout(checkout) : null;
+}
 
 // @saleor-migration: intentional — uncomment for payment redirect; see docs/commerce/saleor.md#quick-migration
 // export async function completeCheckout(checkoutId: string): Promise<{ orderId: string } | null> {

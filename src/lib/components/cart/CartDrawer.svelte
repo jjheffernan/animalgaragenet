@@ -67,11 +67,30 @@
 							</a>
 							<p class="text-xs text-zinc-500">{line.variantName}</p>
 							<div class="mt-2 flex items-center justify-between">
-								<span class="text-sm text-white">Qty {line.quantity}</span>
+								<div class="flex items-center gap-2">
+									<button
+										type="button"
+										class="flex h-6 w-6 items-center justify-center rounded-sm border border-zinc-700 text-zinc-400 transition hover:border-zinc-500 hover:text-white"
+										onclick={() => cart.updateSaleorLineQuantity(line.id, line.quantity - 1)}
+									>−</button>
+									<span class="text-sm text-white">{line.quantity}</span>
+									<button
+										type="button"
+										class="flex h-6 w-6 items-center justify-center rounded-sm border border-zinc-700 text-zinc-400 transition hover:border-zinc-500 hover:text-white"
+										onclick={() => cart.updateSaleorLineQuantity(line.id, line.quantity + 1)}
+									>+</button>
+								</div>
 								<span class="text-sm text-zinc-400">
 									{locale.formatPrice(line.lineTotal.amount)}
 								</span>
 							</div>
+							<button
+								type="button"
+								class="mt-1 text-xs text-zinc-600 hover:text-red-500"
+								onclick={() => cart.removeSaleorLine(line.id)}
+							>
+								Remove
+							</button>
 						</div>
 					</li>
 				{/each}

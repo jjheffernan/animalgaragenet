@@ -186,12 +186,13 @@ class CartState {
 
 	removeItem(productId: string, variantId: string) {
 		this.init();
-		// @saleor-migration: intentional — uncomment Saleor path when CHECKOUT_LINES_DELETE wired; see docs/commerce/saleor.md#quick-migration
-		// if (isSaleorCartEnabled()) {
-		//   void this.removeItemSaleor(productId, variantId);
-		//   return;
-		// }
-		if (isSaleorCartEnabled()) return;
+		if (isSaleorCartEnabled()) {
+			const line = this.checkout?.lines.find(
+				(l) => l.productId === productId && l.variantId === variantId
+			);
+			if (line) void this.removeSaleorLine(line.id);
+			return;
+		}
 
 		this.items = this.items.filter(
 			(i) => !(i.productId === productId && i.variantId === variantId)
@@ -201,12 +202,13 @@ class CartState {
 
 	updateQuantity(productId: string, variantId: string, quantity: number) {
 		this.init();
-		// @saleor-migration: intentional — uncomment Saleor path when CHECKOUT_LINES_UPDATE wired; see docs/commerce/saleor.md#quick-migration
-		// if (isSaleorCartEnabled()) {
-		//   void this.updateQuantitySaleor(productId, variantId, quantity);
-		//   return;
-		// }
-		if (isSaleorCartEnabled()) return;
+		if (isSaleorCartEnabled()) {
+			const line = this.checkout?.lines.find(
+				(l) => l.productId === productId && l.variantId === variantId
+			);
+			if (line) void this.updateSaleorLineQuantity(line.id, quantity);
+			return;
+		}
 
 		if (quantity <= 0) {
 			this.removeItem(productId, variantId);
@@ -216,6 +218,44 @@ class CartState {
 			i.productId === productId && i.variantId === variantId ? { ...i, quantity } : i
 		);
 		saveCart(this.items);
+	}
+
+	updateSaleorLineQuantity(lineId: string, quantity: number) {
+		if (!isSaleorCartEnabled()) return;
+
+		void (async () => {
+			try {
+				const response = await fetch('/cart/checkout', {
+					method: 'PATCH',
+					headers: { 'Content-Type': 'application/json' },
+					body: JSON.stringify({ lineId, quantity })
+				});
+				if (!response.ok) return;
+				const data = (await response.json()) as { checkout?: CheckoutDisplay };
+				if (data.checkout) this.checkout = data.checkout;
+			} catch {
+				// Saleor unavailable — cart stays on last known checkout snapshot.
+			}
+		})();
+	}
+
+	removeSaleorLine(lineId: string) {
+		if (!isSaleorCartEnabled()) return;
+
+		void (async () => {
+			try {
+				const response = await fetch('/cart/checkout', {
+					method: 'DELETE',
+					headers: { 'Content-Type': 'application/json' },
+					body: JSON.stringify({ lineId })
+				});
+				if (!response.ok) return;
+				const data = (await response.json()) as { checkout?: CheckoutDisplay };
+				if (data.checkout) this.checkout = data.checkout;
+			} catch {
+				// Saleor unavailable — cart stays on last known checkout snapshot.
+			}
+		})();
 	}
 
 	clear() {

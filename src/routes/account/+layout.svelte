@@ -6,8 +6,8 @@
 		{ href: '/account', label: 'Overview', disabled: false },
 		{ href: '/account/redeem', label: 'Redeem', disabled: false },
 		{ href: '/account/builds', label: 'Build Logs', disabled: false },
-		{ href: '/account/orders', label: 'Orders', disabled: true },
-		{ href: '/account/vehicles', label: 'Vehicles', disabled: true }
+		{ href: '/account/orders', label: 'Orders', disabled: false },
+		{ href: '/account/vehicles', label: 'Vehicles', disabled: false }
 	] as const;
 
 	let { children } = $props();
@@ -24,9 +24,16 @@
 					{:else}
 						<a
 							href={resolvePath(item.href)}
-							class="block rounded-sm px-3 py-2 text-sm transition {$page.url.pathname === item.href ||
-							(item.href === '/account/builds' && $page.url.pathname.startsWith('/account/builds')) ||
-							(item.href === '/account/redeem' && $page.url.pathname.startsWith('/account/redeem'))
+							class="block rounded-sm px-3 py-2 text-sm transition {$page.url.pathname ===
+								item.href ||
+							(item.href === '/account/builds' &&
+								$page.url.pathname.startsWith('/account/builds')) ||
+							(item.href === '/account/redeem' &&
+								$page.url.pathname.startsWith('/account/redeem')) ||
+							(item.href === '/account/orders' &&
+								$page.url.pathname.startsWith('/account/orders')) ||
+							(item.href === '/account/vehicles' &&
+								$page.url.pathname.startsWith('/account/vehicles'))
 								? 'bg-zinc-800 text-white'
 								: 'text-zinc-400 hover:bg-zinc-900 hover:text-white'}"
 						>
@@ -37,7 +44,9 @@
 			</nav>
 
 			<form method="POST" action={resolvePath('/auth/sign-out')} class="mt-8">
-				<button type="submit" class="text-sm text-zinc-500 transition hover:text-red-400">Sign out</button>
+				<button type="submit" class="text-sm text-zinc-500 transition hover:text-red-400"
+					>Sign out</button
+				>
 			</form>
 		</aside>
 

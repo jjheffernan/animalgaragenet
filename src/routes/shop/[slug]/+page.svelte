@@ -113,7 +113,10 @@
 				{product.name}
 			</h1>
 			<p class="mt-4 text-2xl font-medium text-white">
-				{locale.formatPrice(product.pricing.priceRange.start.amount)}
+				{locale.formatPrice(
+					product.pricing.priceRange.start.amount,
+					product.pricing.priceRange.start.currency
+				)}
 			</p>
 			{#if soldOut}
 				<span

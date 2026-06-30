@@ -39,7 +39,10 @@
 				{/if}
 				<div class="p-4 text-center">
 					<h3 class="font-display text-2xl font-bold text-white">
-						{locale.formatPrice(card.pricing.priceRange.start.amount)}
+						{locale.formatPrice(
+							card.pricing.priceRange.start.amount,
+							card.pricing.priceRange.start.currency
+						)}
 					</h3>
 					<p class="mt-1 text-sm text-zinc-500">Digital delivery</p>
 				</div>

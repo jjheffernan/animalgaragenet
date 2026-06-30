@@ -191,7 +191,10 @@
 										</div>
 									</div>
 									<span class="shrink-0 text-zinc-300"
-										>{locale.formatPrice(variant.pricing.price.amount * item.quantity)}</span
+										>{locale.formatPrice(
+											variant.pricing.price.amount * item.quantity,
+											variant.pricing.price.currency
+										)}</span
 									>
 								</li>
 							{/each}
@@ -199,7 +202,7 @@
 						<div class="mt-4 space-y-2 text-sm">
 							<div class="flex justify-between text-zinc-400">
 								<span>Subtotal</span>
-								<span class="text-white">{locale.formatPrice(cart.subtotal)}</span>
+								<span class="text-white">{locale.formatPrice(cart.subtotal, cart.subtotalCurrency)}</span>
 							</div>
 							<div class="flex justify-between text-zinc-400">
 								<span>Shipping</span>
@@ -209,7 +212,7 @@
 								class="flex justify-between border-t border-zinc-800 pt-2 font-medium text-white"
 							>
 								<span>Total</span>
-								<span>{locale.formatPrice(cart.subtotal)}</span>
+								<span>{locale.formatPrice(cart.subtotal, cart.subtotalCurrency)}</span>
 							</div>
 						</div>
 					</div>

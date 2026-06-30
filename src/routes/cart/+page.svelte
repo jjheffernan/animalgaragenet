@@ -31,6 +31,7 @@
 		useSaleorDisplay ? checkoutLines.length === 0 : cartProducts.length === 0
 	);
 	const subtotal = $derived(cart.subtotal);
+	const subtotalCurrency = $derived(cart.subtotalCurrency);
 	const upsells = $derived(cart.getUpsellSuggestions(4));
 
 	function updateQty(productId: string, variantId: string, delta: number) {
@@ -101,7 +102,7 @@
 									class="text-xs text-zinc-600 hover:text-red-500">Remove</button
 								>
 								<p class="ml-auto font-medium text-white">
-									{locale.formatPrice(line.lineTotal.amount)}
+									{locale.formatMoneyValue(line.lineTotal)}
 								</p>
 							</div>
 						</div>
@@ -142,7 +143,10 @@
 									>
 								</div>
 								<p class="ml-auto font-medium text-white">
-									{locale.formatPrice(item.variant.pricing.price.amount * item.quantity)}
+									{locale.formatPrice(
+										item.variant.pricing.price.amount * item.quantity,
+										item.variant.pricing.price.currency
+									)}
 								</p>
 							</div>
 						</div>
@@ -157,11 +161,11 @@
 			<h2 class="font-display text-lg font-bold uppercase text-white">Order Summary</h2>
 			<div class="mt-4 flex justify-between text-zinc-400">
 				<span>Subtotal</span>
-				<span class="text-white">{locale.formatPrice(subtotal)}</span>
+				<span class="text-white">{locale.formatPrice(subtotal, subtotalCurrency)}</span>
 			</div>
 			{#if subtotal < 75}
 				<p class="mt-2 text-xs text-zinc-500">
-					Add {locale.formatPrice(75 - subtotal)} for free shipping
+					Add {locale.formatPrice(75 - subtotal, subtotalCurrency)} for free shipping
 				</p>
 			{:else}
 				<p class="mt-2 text-xs text-green-400">You qualify for free standard shipping</p>

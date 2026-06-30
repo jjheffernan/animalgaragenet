@@ -15,8 +15,12 @@
 </script>
 
 <div class="flex flex-wrap items-baseline gap-2 {className}">
-	<span class="text-sm font-medium text-white">{locale.formatPrice(price)}</span>
+	<span class="text-sm font-medium text-white"
+		>{locale.formatPrice(price, product.pricing.priceRange.start.currency)}</span
+	>
 	{#if onSale && compareAt}
-		<span class="text-xs text-zinc-500 line-through">{locale.formatPrice(compareAt)}</span>
+		<span class="text-xs text-zinc-500 line-through"
+			>{locale.formatPrice(compareAt, product.compareAtPrice?.currency ?? product.pricing.priceRange.start.currency)}</span
+		>
 	{/if}
 </div>

@@ -47,7 +47,7 @@
 			</p>
 			{#if data.checkout.discount && data.checkout.discount.amount > 0}
 				<p class="mt-2 text-sm text-emerald-400">
-					Discount: {locale.formatPrice(data.checkout.discount.amount)}
+					Discount: {locale.formatMoneyValue(data.checkout.discount)}
 					{#if data.checkout.discountName}
 						<span class="text-zinc-500">({data.checkout.discountName})</span>
 					{/if}

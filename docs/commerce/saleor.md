@@ -120,7 +120,7 @@ Frontend readiness (already scaffolded):
 1. ~~Map locale → Saleor channel~~ — done in `src/lib/server/saleor/channels.ts`
 2. Pass shipping address country to checkout
 3. Display shipping rates from `checkout.availableShippingMethods`
-4. Currency from channel pricing when env set (mock still hardcodes USD)
+4. **Currency:** When `PUBLIC_SALEOR_API_URL` is set, catalog and checkout prices come from the Saleor channel (`getChannelForLocale()`). The locale selector sets `?locale=` and reloads catalog data; `formatPrice` formats channel-native amounts without client-side conversion. Mock catalog uses fixed display rates in `src/lib/i18n/currency.ts` (`MOCK_EXCHANGE_RATES_FROM_USD`) — display only, not for checkout.
 
 ## GraphQL queries
 

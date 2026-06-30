@@ -88,7 +88,7 @@
 									>
 								</div>
 								<span class="text-sm text-zinc-400">
-									{locale.formatPrice(line.lineTotal.amount)}
+									{locale.formatMoneyValue(line.lineTotal)}
 								</span>
 							</div>
 							<button
@@ -146,7 +146,10 @@
 									>
 								</div>
 								<span class="text-sm text-zinc-400">
-									{locale.formatPrice(variant.pricing.price.amount * item.quantity)}
+									{locale.formatPrice(
+										variant.pricing.price.amount * item.quantity,
+										variant.pricing.price.currency
+									)}
 								</span>
 							</div>
 							<button
@@ -211,18 +214,25 @@
 		{#if cart.saleorDiscountAmount > 0}
 			<div class="flex justify-between text-sm text-emerald-400">
 				<span>Discount</span>
-				<span>-{locale.formatPrice(cart.saleorDiscountAmount)}</span>
+				<span
+					>-{locale.formatPrice(
+						cart.saleorDiscountAmount,
+						cart.checkout?.discount?.currency ?? cart.subtotalCurrency
+					)}</span
+				>
 			</div>
 		{/if}
 		{#if cart.mockDiscountAmount > 0}
 			<div class="flex justify-between text-sm text-emerald-400">
 				<span>{cart.mockPromo?.label ?? 'Discount'}</span>
-				<span>-{locale.formatPrice(cart.mockDiscountAmount)}</span>
+				<span>-{locale.formatPrice(cart.mockDiscountAmount, cart.subtotalCurrency)}</span>
 			</div>
 		{/if}
 		<div class="flex justify-between text-sm">
 			<span class="text-zinc-400">Subtotal</span>
-			<span class="font-medium text-white">{locale.formatPrice(cart.subtotal)}</span>
+			<span class="font-medium text-white"
+				>{locale.formatPrice(cart.subtotal, cart.subtotalCurrency)}</span
+			>
 		</div>
 		<div class="mt-4">
 			<CartActions empty={cart.itemCount === 0} size="drawer" onNavigate={() => onclose?.()} />

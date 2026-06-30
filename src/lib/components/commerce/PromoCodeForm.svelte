@@ -2,6 +2,7 @@
 	import { enhance } from '$app/forms';
 
 	import type { CheckoutDisplay, MockPromoState } from '$lib/types/checkout';
+	import { locale } from '$lib/stores/locale.svelte';
 
 	let {
 		action = '?/apply',
@@ -38,7 +39,7 @@
 		success = null;
 
 		try {
-			const response = await fetch('/cart/checkout/promo', {
+			const response = await fetch(`/cart/checkout/promo?locale=${encodeURIComponent(locale.code)}`, {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify({ code })

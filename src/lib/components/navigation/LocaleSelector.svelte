@@ -1,4 +1,7 @@
 <script lang="ts">
+	import { goto, invalidateAll } from '$app/navigation';
+	import { page } from '$app/state';
+	import { config } from '$lib/config/env';
 	import { locales, type LocaleCode } from '$lib/types/locale';
 	import { getCurrencySymbol } from '$lib/i18n/currency';
 	import { locale } from '$lib/stores/locale.svelte';
@@ -16,9 +19,21 @@
 	const current = $derived(locales.find((l) => l.code === locale.code) ?? locales[0]);
 	const symbol = $derived(getCurrencySymbol(current.currency, current.code));
 
-	function select(code: LocaleCode) {
+	async function select(code: LocaleCode) {
 		locale.setLocale(code);
 		open = false;
+
+		const url = new URL(page.url);
+		if (url.searchParams.get('locale') === code) return;
+
+		url.searchParams.set('locale', code);
+		const target = `${url.pathname}${url.search}`;
+
+		if (config.saleorApiUrl) {
+			await goto(target, { invalidateAll: true, keepFocus: true, noScroll: true });
+		} else {
+			await goto(target, { replaceState: true, keepFocus: true, noScroll: true });
+		}
 	}
 
 	function toggle() {

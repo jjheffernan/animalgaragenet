@@ -8,11 +8,16 @@ import {
 	getCatalogProductById
 } from '$lib/data/catalog-helpers';
 import { getAllCatalogProducts } from '$lib/data/mock/parts';
+import { locale } from '$lib/stores/locale.svelte';
 
 const STORAGE_KEY = 'ag-cart';
 
 function isSaleorCartEnabled(): boolean {
 	return Boolean(config.saleorApiUrl);
+}
+
+function checkoutApiUrl(path = '/cart/checkout'): string {
+	return `${path}?locale=${encodeURIComponent(locale.code)}`;
 }
 
 function loadCart(): CartItem[] {
@@ -102,6 +107,11 @@ class CartState {
 		return raw;
 	}
 
+	get subtotalCurrency() {
+		if (this.checkout) return this.checkout.subtotal.currency;
+		return config.defaultCurrency;
+	}
+
 	get mockDiscountAmount() {
 		if (!this.mockPromo?.percentOff) return 0;
 		const raw = this.items.reduce((sum, item) => {
@@ -167,7 +177,7 @@ class CartState {
 		if (!vid) return;
 
 		try {
-			const response = await fetch('/cart/checkout', {
+			const response = await fetch(checkoutApiUrl(), {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify({ variantId: vid, quantity })
@@ -225,7 +235,7 @@ class CartState {
 
 		void (async () => {
 			try {
-				const response = await fetch('/cart/checkout', {
+				const response = await fetch(checkoutApiUrl(), {
 					method: 'PATCH',
 					headers: { 'Content-Type': 'application/json' },
 					body: JSON.stringify({ lineId, quantity })
@@ -244,7 +254,7 @@ class CartState {
 
 		void (async () => {
 			try {
-				const response = await fetch('/cart/checkout', {
+				const response = await fetch(checkoutApiUrl(), {
 					method: 'DELETE',
 					headers: { 'Content-Type': 'application/json' },
 					body: JSON.stringify({ lineId })

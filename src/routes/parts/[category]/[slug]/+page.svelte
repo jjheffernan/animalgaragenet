@@ -214,7 +214,10 @@
 					onclick={addToCart}
 					class="mt-8 w-full rounded-sm bg-red-600 px-8 py-4 text-sm font-bold uppercase tracking-wider text-white transition hover:bg-red-500 sm:w-auto"
 				>
-					Add to Cart — {locale.formatPrice(product.pricing.priceRange.start.amount)}
+					Add to Cart — {locale.formatPrice(
+						product.pricing.priceRange.start.amount,
+						product.pricing.priceRange.start.currency
+					)}
 				</button>
 			{/if}
 

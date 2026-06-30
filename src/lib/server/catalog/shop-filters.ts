@@ -11,19 +11,10 @@ import { withSaleorCatalog } from '$lib/server/catalog/fallback';
 import { isProductionSiteUrl } from '$lib/server/auth/local-dev';
 import { CATEGORIES_QUERY } from '$lib/server/saleor/queries';
 import type { SaleorCategoryTreeNode } from '$lib/server/saleor/mappers';
+import type { ShopFilterOption } from '$lib/data/shop-filters';
 
-export interface ShopFilterOption {
-	id: string;
-	slug: string;
-	label: string;
-	/** Parent group label for ribbon grouping (mock taxonomy or Saleor parent category). */
-	group?: string;
-}
-
-export interface ShopFilterGroup {
-	label: string;
-	options: ShopFilterOption[];
-}
+export type { ShopFilterGroup, ShopFilterOption } from '$lib/data/shop-filters';
+export { groupShopFilterOptions } from '$lib/data/shop-filters';
 
 export interface ShopFilterOptions {
 	categories: ShopFilterOption[];
@@ -83,34 +74,6 @@ async function fetchSaleorShopFilterOptions(_locale: string): Promise<ShopFilter
 	const nodes = result.data.categories.edges.map(({ node }) => node);
 	const categories = flattenSaleorCategoryTree(nodes);
 	return [ALL_SHOP_FILTER, ...categories];
-}
-
-/** Group flat filter options by `group` for shop ribbon / dropdown UI. */
-export function groupShopFilterOptions(categories: ShopFilterOption[]): ShopFilterGroup[] {
-	const ungrouped: ShopFilterOption[] = [];
-	const byGroup = new Map<string, ShopFilterOption[]>();
-	const groupOrder: string[] = [];
-
-	for (const option of categories) {
-		if (!option.group) {
-			ungrouped.push(option);
-			continue;
-		}
-		if (!byGroup.has(option.group)) {
-			byGroup.set(option.group, []);
-			groupOrder.push(option.group);
-		}
-		byGroup.get(option.group)!.push(option);
-	}
-
-	const groups: ShopFilterGroup[] = [];
-	if (ungrouped.length > 0) {
-		groups.push({ label: '', options: ungrouped });
-	}
-	for (const label of groupOrder) {
-		groups.push({ label, options: byGroup.get(label)! });
-	}
-	return groups;
 }
 
 /**

@@ -9,7 +9,7 @@
 	import PaginatedListCanvas from '$lib/components/catalog/PaginatedListCanvas.svelte';
 	import CatalogRibbonShell from '$lib/components/catalog/CatalogRibbonShell.svelte';
 	import CategoryPill from '$lib/components/catalog/CategoryPill.svelte';
-	import { groupShopFilterOptions, type ShopFilterOption } from '$lib/server/catalog/shop-filters';
+	import { groupShopFilterOptions, type ShopFilterOption } from '$lib/data/shop-filters';
 	import { catalogRibbonNavClass, ribbonSectionLabelClass } from '$lib/ui/catalog-ribbon';
 	import { locale } from '$lib/stores/locale.svelte';
 

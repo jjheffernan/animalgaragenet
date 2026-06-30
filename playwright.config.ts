@@ -5,8 +5,8 @@ const baseURL = `http://localhost:${port}`;
 
 /** Force mock auth/cart for deterministic e2e (no live Supabase/Saleor required). */
 const e2eEnv = {
-	PUBLIC_SUPABASE_URL: '',
-	PUBLIC_SUPABASE_ANON_KEY: '',
+	SUPABASE_DATABASE_URL: '',
+	SUPABASE_ANON_KEY: '',
 	PUBLIC_SALEOR_API_URL: '',
 	LOCAL_DEV_AUTH: 'true'
 };
@@ -25,7 +25,7 @@ export default defineConfig({
 	},
 	webServer: {
 		command: [
-			`PUBLIC_SUPABASE_URL= PUBLIC_SUPABASE_ANON_KEY= PUBLIC_SALEOR_API_URL= npm run build`,
+			`SUPABASE_DATABASE_URL= SUPABASE_ANON_KEY= PUBLIC_SALEOR_API_URL= npm run build`,
 			`npm run preview -- --port ${port}`
 		].join(' && '),
 		url: baseURL,

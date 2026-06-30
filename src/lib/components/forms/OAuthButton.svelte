@@ -1,8 +1,7 @@
 <script lang="ts">
-	import { resolve } from '$app/paths';
+	import { enhance } from '$app/forms';
 	import type { Snippet } from 'svelte';
-	import { mockCallbackQuery, OAUTH_BUTTON_LABELS, type OAuthProvider } from '$lib/auth/oauth';
-	import { signInWithOAuth } from '$lib/supabase/auth-client';
+	import { OAUTH_BUTTON_LABELS, type OAuthProvider } from '$lib/auth/oauth';
 
 	let {
 		provider,
@@ -21,31 +20,31 @@
 	} = $props();
 
 	const buttonLabel = $derived(label ?? OAUTH_BUTTON_LABELS[provider]);
-
-	function mockFallbackUrl(): string {
-		return `${resolve('/auth/callback')}?${mockCallbackQuery(provider, redirectTo)}`;
-	}
-
-	async function signIn() {
-		onloading?.(true);
-		try {
-			const result = await signInWithOAuth(provider, redirectTo);
-			if (!result.ok) return;
-			window.location.href = result.url ?? mockFallbackUrl();
-		} finally {
-			onloading?.(false);
-		}
-	}
 </script>
 
-<button
-	type="button"
-	{disabled}
-	onclick={signIn}
-	class="flex w-full items-center justify-center gap-3 rounded-sm border border-zinc-700 py-4 text-sm font-bold uppercase tracking-wider text-zinc-300 transition hover:border-red-600 hover:text-white disabled:opacity-50"
+<form
+	method="POST"
+	action="?/oauth"
+	use:enhance={() => {
+		onloading?.(true);
+		return async ({ result, update }) => {
+			onloading?.(false);
+			if (result.type !== 'redirect') {
+				await update();
+			}
+		};
+	}}
 >
-	{#if children}
-		{@render children()}
-	{/if}
-	{buttonLabel}
-</button>
+	<input type="hidden" name="provider" value={provider} />
+	<input type="hidden" name="redirect" value={redirectTo} />
+	<button
+		type="submit"
+		{disabled}
+		class="flex w-full items-center justify-center gap-3 rounded-sm border border-zinc-700 py-4 text-sm font-bold uppercase tracking-wider text-zinc-300 transition hover:border-red-600 hover:text-white disabled:opacity-50"
+	>
+		{#if children}
+			{@render children()}
+		{/if}
+		{buttonLabel}
+	</button>
+</form>

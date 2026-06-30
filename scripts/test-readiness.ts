@@ -11,6 +11,7 @@ import { readFileSync, existsSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { createClient } from '@supabase/supabase-js';
+import { resolveSupabaseEnv } from '../src/lib/server/supabase/env';
 
 function loadEnvFile(): void {
 	const path = resolve(process.cwd(), '.env');
@@ -59,14 +60,23 @@ function fail(id: string, notes: string, requiredEnv: string[]): ProbeResult {
 }
 
 async function probeSupabaseAuth(): Promise<ProbeResult> {
-	const requiredEnv = ['PUBLIC_SUPABASE_URL', 'PUBLIC_SUPABASE_ANON_KEY'];
+	const requiredEnv = ['SUPABASE_DATABASE_URL', 'SUPABASE_ANON_KEY'];
 	const unset = missing(...requiredEnv);
 	if (unset.length) {
 		return skip('supabase-auth', `Missing: ${unset.join(', ')}`, requiredEnv);
 	}
 
-	const url = env('PUBLIC_SUPABASE_URL').replace(/\/$/, '');
-	const anonKey = env('PUBLIC_SUPABASE_ANON_KEY');
+	const cfg = resolveSupabaseEnv(process.env);
+	if (!cfg) {
+		return skip(
+			'supabase-auth',
+			'Could not derive API URL from SUPABASE_DATABASE_URL (set PUBLIC_SUPABASE_URL for local dev)',
+			[...requiredEnv, 'PUBLIC_SUPABASE_URL (local dev fallback)']
+		);
+	}
+
+	const url = cfg.url.replace(/\/$/, '');
+	const anonKey = cfg.anonKey;
 
 	try {
 		const response = await fetch(`${url}/auth/v1/health`, {
@@ -90,13 +100,22 @@ async function probeSupabaseAuth(): Promise<ProbeResult> {
 }
 
 async function probeSupabaseDb(): Promise<ProbeResult> {
-	const requiredEnv = ['PUBLIC_SUPABASE_URL', 'SUPABASE_SERVICE_ROLE_KEY'];
+	const requiredEnv = ['SUPABASE_DATABASE_URL', 'SUPABASE_SERVICE_ROLE_KEY'];
 	const unset = missing(...requiredEnv);
 	if (unset.length) {
 		return skip('supabase-db', `Missing: ${unset.join(', ')}`, requiredEnv);
 	}
 
-	const admin = createClient(env('PUBLIC_SUPABASE_URL'), env('SUPABASE_SERVICE_ROLE_KEY'), {
+	const cfg = resolveSupabaseEnv(process.env);
+	if (!cfg) {
+		return skip(
+			'supabase-db',
+			'Could not derive API URL from SUPABASE_DATABASE_URL (set PUBLIC_SUPABASE_URL for local dev)',
+			[...requiredEnv, 'PUBLIC_SUPABASE_URL (local dev fallback)']
+		);
+	}
+
+	const admin = createClient(cfg.url, env('SUPABASE_SERVICE_ROLE_KEY'), {
 		auth: { persistSession: false, autoRefreshToken: false }
 	});
 
@@ -256,7 +275,7 @@ async function probeOAuthProvider(
 	provider: (typeof OAUTH_PROVIDERS)[number]
 ): Promise<ProbeResult> {
 	const id = `oauth-${provider}`;
-	const requiredEnv = ['PUBLIC_SUPABASE_URL', 'PUBLIC_SUPABASE_ANON_KEY'];
+	const requiredEnv = ['SUPABASE_DATABASE_URL', 'SUPABASE_ANON_KEY'];
 	const unset = missing(...requiredEnv);
 	if (unset.length) {
 		return skip(id, `Missing: ${unset.join(', ')}`, [
@@ -265,8 +284,17 @@ async function probeOAuthProvider(
 		]);
 	}
 
-	const url = env('PUBLIC_SUPABASE_URL').replace(/\/$/, '');
-	const anonKey = env('PUBLIC_SUPABASE_ANON_KEY');
+	const cfg = resolveSupabaseEnv(process.env);
+	if (!cfg) {
+		return skip(
+			id,
+			'Could not derive API URL from SUPABASE_DATABASE_URL (set PUBLIC_SUPABASE_URL for local dev)',
+			[...requiredEnv, 'PUBLIC_SUPABASE_URL (local dev fallback)']
+		);
+	}
+
+	const url = cfg.url.replace(/\/$/, '');
+	const anonKey = cfg.anonKey;
 
 	try {
 		const response = await fetch(`${url}/auth/v1/settings`, {

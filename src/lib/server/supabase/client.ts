@@ -1,27 +1,15 @@
 import { createServerClient as createSupabaseServerClient } from '@supabase/ssr';
 import type { RequestEvent } from '@sveltejs/kit';
 import type { SupabaseClient } from '@supabase/supabase-js';
-import { config } from '$lib/config/env';
+import { getSupabaseEnv, isSupabaseConfigured } from '$lib/server/supabase/config';
 import { createAdminClient } from '$lib/server/supabase/admin';
 
-export interface SupabaseClientConfig {
-	url: string;
-	anonKey: string;
-}
+export type SupabaseClientConfig = NonNullable<ReturnType<typeof getSupabaseEnv>>;
 
-export function isSupabaseConfigured(): boolean {
-	return Boolean(config.supabaseUrl && config.supabaseAnonKey);
-}
+export { isSupabaseConfigured };
 
 export function getSupabaseConfig(): SupabaseClientConfig | null {
-	if (!isSupabaseConfigured()) {
-		return null;
-	}
-
-	return {
-		url: config.supabaseUrl,
-		anonKey: config.supabaseAnonKey
-	};
+	return getSupabaseEnv();
 }
 
 /** Request-scoped Supabase client with cookie-based auth (SSR). */

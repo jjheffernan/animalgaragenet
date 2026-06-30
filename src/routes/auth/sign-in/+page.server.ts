@@ -9,6 +9,7 @@ import {
 } from '$lib/server/auth/local-dev';
 import { createMockUser, setSessionCookie, signInWithOtp } from '$lib/server/supabase/auth';
 import { createServerClient, isSupabaseConfigured } from '$lib/server/supabase/client';
+import { handleOAuthAction } from '$lib/server/auth/oauth-action';
 
 export const load: PageServerLoad = async ({ locals, url }) => {
 	if (locals.session) {
@@ -90,5 +91,7 @@ export const actions: Actions = {
 		}
 
 		throw redirect(303, redirectTo);
-	}
+	},
+
+	oauth: handleOAuthAction
 };

@@ -34,8 +34,6 @@ Safe for browser. Defined in `.env.example`:
 - `PUBLIC_SITE_URL`
 - `PUBLIC_CDN_BASE_URL`
 - `PUBLIC_SALEOR_API_URL`
-- `PUBLIC_SUPABASE_URL`
-- `PUBLIC_SUPABASE_ANON_KEY`
 - `PUBLIC_DEFAULT_LOCALE`
 - `PUBLIC_DEFAULT_CURRENCY`
 
@@ -46,7 +44,7 @@ Accessed via `src/lib/config/env.ts` (uses `$env/dynamic/public`).
 Never exposed to browser:
 
 - `SALEOR_CHANNEL`
-- `SUPABASE_SERVICE_ROLE_KEY`
+- `SUPABASE_DATABASE_URL`, `SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY`
 - `S3_BUCKET`, `S3_REGION`
 - Object storage / CDN credentials — see `.env.example`
 

@@ -4,9 +4,10 @@
  * Usage:
  *   npx tsx --env-file=.env scripts/promote-admin.ts user@email.com admin
  *
- * Requires PUBLIC_SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY.
+ * Requires SUPABASE_DATABASE_URL (or PUBLIC_SUPABASE_URL) and SUPABASE_SERVICE_ROLE_KEY.
  */
 import { createClient } from '@supabase/supabase-js';
+import { deriveSupabaseApiUrl } from '../src/lib/server/supabase/env';
 import { findUserByEmail } from '../src/lib/server/supabase/admin-users';
 
 const ROLES = ['admin', 'editor', 'contributor', 'customer'] as const;
@@ -25,11 +26,13 @@ if (!email || !roleArg || !isRole(roleArg)) {
 	process.exit(1);
 }
 
-const url = process.env.PUBLIC_SUPABASE_URL;
+const url = deriveSupabaseApiUrl(process.env.SUPABASE_DATABASE_URL, process.env.PUBLIC_SUPABASE_URL);
 const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
 if (!url || !serviceKey) {
-	console.error('Missing PUBLIC_SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY.');
+	console.error(
+		'Missing Supabase config. Set SUPABASE_DATABASE_URL (or PUBLIC_SUPABASE_URL) and SUPABASE_SERVICE_ROLE_KEY.'
+	);
 	process.exit(1);
 }
 

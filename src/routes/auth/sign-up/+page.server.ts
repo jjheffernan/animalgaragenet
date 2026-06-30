@@ -4,6 +4,7 @@ import { buildAuthCallbackUrl } from '$lib/server/auth/callback-url';
 import { isProductionHostname } from '$lib/server/auth/local-dev';
 import { createMockUser, setSessionCookie, signUpWithOtp } from '$lib/server/supabase/auth';
 import { createServerClient, isSupabaseConfigured } from '$lib/server/supabase/client';
+import { handleOAuthAction } from '$lib/server/auth/oauth-action';
 
 export const load: PageServerLoad = async ({ locals }) => {
 	if (locals.session) {
@@ -55,5 +56,7 @@ export const actions: Actions = {
 		const user = createMockUser(email, name);
 		setSessionCookie(cookies, user);
 		throw redirect(303, '/account');
-	}
+	},
+
+	oauth: handleOAuthAction
 };

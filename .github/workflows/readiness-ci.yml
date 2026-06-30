@@ -31,8 +31,8 @@ jobs:
       - name: Live readiness probes
         run: npm run test:readiness
         env:
-          PUBLIC_SUPABASE_URL: ${{ secrets.PUBLIC_SUPABASE_URL }}
-          PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.PUBLIC_SUPABASE_ANON_KEY }}
+          SUPABASE_DATABASE_URL: ${{ secrets.SUPABASE_DATABASE_URL }}
+          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
           SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
           PUBLIC_SALEOR_API_URL: ${{ secrets.PUBLIC_SALEOR_API_URL }}
           SALEOR_CHANNEL: ${{ secrets.SALEOR_CHANNEL }}

@@ -2,29 +2,33 @@
 
 Auth, content metadata, and form storage. **Not** commerce — Saleor owns product inventory.
 
-Uses `@supabase/ssr` for cookie sessions (server) and `@supabase/supabase-js` (browser).
+Uses `@supabase/ssr` for cookie sessions on the server only (anon key is not exposed to the browser).
 
 ## Environment
 
-| Variable                    | Scope           | Purpose                                |
-| --------------------------- | --------------- | -------------------------------------- |
-| `PUBLIC_SUPABASE_URL`       | Public          | Project API URL                        |
-| `PUBLIC_SUPABASE_ANON_KEY`  | Public          | Anon key — RLS-protected               |
-| `SUPABASE_SERVICE_ROLE_KEY` | **Server only** | Bypasses RLS — never in client bundles |
+Netlify Supabase integration sets these automatically:
 
-Without env vars, auth falls back to mock `ag-session` cookie.
+| Variable                    | Scope           | Purpose                                                       |
+| --------------------------- | --------------- | ------------------------------------------------------------- |
+| `SUPABASE_DATABASE_URL`     | **Server only** | Postgres connection string — REST API URL derived in app code |
+| `SUPABASE_ANON_KEY`         | **Server only** | Anon key — SSR auth client only                               |
+| `SUPABASE_SERVICE_ROLE_KEY` | **Server only** | Bypasses RLS — never in client bundles                        |
+| `SUPABASE_JWT_SECRET`       | **Server only** | Optional — not used by app code today                         |
+
+Local dev with `supabase start`: optional `PUBLIC_SUPABASE_URL=http://127.0.0.1:54321` when `DATABASE_URL` has no project ref.
+
+Without `SUPABASE_DATABASE_URL` + `SUPABASE_ANON_KEY`, auth falls back to mock `ag-session` cookie (localhost only; blocked on production hostnames).
 
 ## Migrations
 
-SQL migrations live in `supabase/migrations/`.
+SQL migrations live in `supabase/migrations/` (5 squashed files).
 
 ```bash
-supabase link --project-ref <your-ref>   # remote
-supabase db push                         # apply migrations
-# or: supabase migration up              # local stack
+supabase link --project-ref <your-ref>
+supabase db reset --linked   # first deploy — wipes remote and replays all migrations
+# or: supabase db push        # empty remote with no prior history
+supabase migration list      # expect 5 applied
 ```
-
-Initial profiles pattern: `supabase/migrations/20260629120000_initial_profiles.sql`.
 
 All tables in `public` must have **RLS enabled** with explicit policies.
 
@@ -51,11 +55,12 @@ Insert columns use snake_case (`user_id`, `mod_list`, `status`).
 
 | Path                                | Role                                                     |
 | ----------------------------------- | -------------------------------------------------------- |
+| `src/lib/server/supabase/env.ts`    | Derives API URL from `SUPABASE_DATABASE_URL`             |
 | `src/lib/server/supabase/client.ts` | `createServerClient(event)` — SSR cookie client          |
 | `src/lib/server/supabase/admin.ts`  | `createAdminClient()` — service role                     |
 | `src/lib/server/supabase/auth.ts`   | `getSession`, `signInWithOtp`, `signOut`, mock fallbacks |
+| `src/lib/server/auth/oauth-action.ts` | Server-side OAuth redirect (no browser anon key)       |
 | `src/lib/server/auth/local-dev.ts`  | Local dev auth guards                                    |
-| `src/lib/supabase/browser.ts`       | Browser singleton                                        |
 | `src/hooks.server.ts`               | Session refresh, admin guard, site lockdown              |
 | `scripts/promote-admin.ts`          | CLI to set `app_metadata.role`                           |
 
@@ -67,7 +72,7 @@ Insert columns use snake_case (`user_id`, `mod_list`, `status`).
 // src/lib/server/supabase/admin.ts — OK
 import { createAdminClient } from '$lib/server/supabase/admin';
 
-// NEVER in client components or $lib/supabase/browser.ts
+// NEVER in client components
 ```
 
 ## Local / production auth

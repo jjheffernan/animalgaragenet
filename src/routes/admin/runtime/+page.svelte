@@ -58,7 +58,7 @@
 				{
 					key: 'supabaseConfigured',
 					label: 'Supabase',
-					hint: 'PUBLIC_SUPABASE_URL + anon key'
+					hint: 'SUPABASE_DATABASE_URL + SUPABASE_ANON_KEY'
 				},
 				{
 					key: 'mockGuardsActive',

@@ -1,16 +1,24 @@
 # Supabase
 
-Auth, content metadata, and form storage for Animal Garage. The SvelteKit app uses `@supabase/ssr` for cookie-based sessions on the server and `@supabase/supabase-js` in the browser.
+Auth, content metadata, and form storage for Animal Garage. The SvelteKit app uses `@supabase/ssr` for cookie-based sessions on the server (SSR-only — anon key is not exposed to the browser).
 
 ## Environment variables
 
 Copy `.env.example` to `.env` and set:
 
-| Variable                    | Scope           | Purpose                                         |
-| --------------------------- | --------------- | ----------------------------------------------- |
-| `PUBLIC_SUPABASE_URL`       | Public          | Project API URL (`https://<ref>.supabase.co`)   |
-| `PUBLIC_SUPABASE_ANON_KEY`  | Public          | Publishable/anon key — safe in browser with RLS |
-| `SUPABASE_SERVICE_ROLE_KEY` | **Server only** | Bypasses RLS; never expose to client bundles    |
+| Variable                    | Scope           | Purpose                                                                 |
+| --------------------------- | --------------- | ----------------------------------------------------------------------- |
+| `SUPABASE_DATABASE_URL`     | **Server only** | Postgres connection string (Netlify integration) — REST API URL derived |
+| `SUPABASE_ANON_KEY`         | **Server only** | Publishable/anon key — used by SSR client only                          |
+| `SUPABASE_SERVICE_ROLE_KEY` | **Server only** | Bypasses RLS; never expose to client bundles                            |
+| `SUPABASE_JWT_SECRET`       | **Server only** | Optional — not used by app code today                                   |
+| `PUBLIC_SUPABASE_URL`       | Public          | Optional local dev fallback when `DATABASE_URL` has no project ref      |
+
+API URL derivation (`src/lib/server/supabase/env.ts`):
+
+- `db.<ref>.supabase.co` in `SUPABASE_DATABASE_URL` → `https://<ref>.supabase.co`
+- Pooler URLs with username `postgres.<ref>` → same
+- Local `supabase start`: set `PUBLIC_SUPABASE_URL=http://127.0.0.1:54321`
 
 Optional (local dev):
 
@@ -26,7 +34,7 @@ Production only:
 | ------------- | -------------------------------------------------------------------------------------- |
 | `SITE_LOCKED` | `true` redirects non-admins to `/locked` (allows `/auth/*`, `/admin/*`, static assets) |
 
-When `PUBLIC_SUPABASE_URL` or `PUBLIC_SUPABASE_ANON_KEY` is unset, the site uses a **mock session** (`ag-session` cookie) so local development works without a Supabase project.
+When `SUPABASE_DATABASE_URL` + `SUPABASE_ANON_KEY` are unset, the site uses a **mock session** (`ag-session` cookie) so local development works without a Supabase project.
 
 **Never** set `DEV_ADMIN` or `LOCAL_DEV_AUTH` on Netlify/production.
 
@@ -89,9 +97,9 @@ Real admin access uses `auth.users.raw_app_meta_data.role` — not `DEV_ADMIN`.
 
 ### Netlify env vars
 
-Set in Site settings → Environment variables:
+Set in Site settings → Environment variables (Netlify Supabase integration provides these):
 
-- `PUBLIC_SUPABASE_URL`, `PUBLIC_SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY`
+- `SUPABASE_DATABASE_URL`, `SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY`
 - `PUBLIC_SITE_URL=https://<your-site-host>`
 - `SITE_LOCKED=true` (optional, during preview/maintenance)
 
@@ -109,12 +117,14 @@ When `SITE_LOCKED=true`:
 
 | Path                                        | Role                                                     |
 | ------------------------------------------- | -------------------------------------------------------- |
+| `src/lib/server/supabase/env.ts`            | Derive API URL from `SUPABASE_DATABASE_URL`              |
+| `src/lib/server/supabase/config.ts`         | Server-only env resolution                               |
 | `src/lib/server/supabase/client.ts`         | `createServerClient(event)` — SSR cookie client          |
 | `src/lib/server/supabase/admin.ts`          | `createAdminClient()` — service role, server only        |
 | `src/lib/server/supabase/auth.ts`           | `getSession`, `signInWithOtp`, `signOut`, mock fallbacks |
+| `src/lib/server/auth/oauth-action.ts`       | Server form action for OAuth (PKCE)                      |
 | `src/lib/server/auth/local-dev.ts`          | `isLocalDevAuthEnabled`, `devSignInAccount`              |
 | `src/lib/server/auth/local-dev-accounts.ts` | Predefined local dev accounts                            |
-| `src/lib/supabase/browser.ts`               | Browser singleton client                                 |
 | `src/hooks.server.ts`                       | Session refresh, admin guard, site lockdown              |
 | `src/routes/auth/callback/+server.ts`       | PKCE code exchange for magic links / OAuth               |
 | `scripts/promote-admin.ts`                  | CLI to set `app_metadata.role`                           |
@@ -127,16 +137,17 @@ When `SITE_LOCKED=true`:
 - **Authorization roles** (`admin`, `editor`, `contributor`, `customer`) are read from `auth.users.raw_app_meta_data.role`.
 - Never use `user_metadata` for authorization — users can edit it. Set roles with the **service role** key or `scripts/promote-admin.ts` only.
 - All tables in `public` must have **RLS enabled** with explicit policies. See `supabase/migrations/20260629120000_initial_profiles.sql` for the profiles pattern.
-- The **service role** key bypasses RLS — use only in `src/lib/server/**` (e.g. `createAdminClient()`), never in `$lib/supabase/browser.ts` or client components.
+- The **service role** key bypasses RLS — use only in `src/lib/server/**` (e.g. `createAdminClient()`), never in client components.
 
 ## OAuth
 
-Google, Discord, and Microsoft (Azure) sign-in is wired via Supabase Auth PKCE. Without Supabase env vars, OAuth buttons fall back to a mock callback (`(mock dev flow)`).
+Google, Discord, and Microsoft (Azure) sign-in is wired via Supabase Auth PKCE on the **server** (`?/oauth` form action). Without Supabase env vars, OAuth buttons fall back to a mock callback (`(mock dev flow)`).
 
 | Concern                      | Location                                                                                             |
 | ---------------------------- | ---------------------------------------------------------------------------------------------------- |
 | Provider types               | `src/lib/auth/oauth.ts`                                                                              |
-| Browser `signInWithOAuth`    | `src/lib/supabase/auth-client.ts`                                                                    |
+| Server `signInWithOAuth`     | `src/lib/server/supabase/auth.ts` + `src/lib/server/auth/oauth-action.ts`                            |
+| OAuth button (form POST)     | `src/lib/components/forms/OAuthButton.svelte`                                                        |
 | Callback `exchangeOAuthCode` | `src/routes/auth/callback/+server.ts`                                                                |
 | Provider dashboard setup     | [oauth.md](../auth/oauth.md), [discord.md](../auth/discord.md), [microsoft.md](../auth/microsoft.md) |
 

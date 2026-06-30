@@ -69,11 +69,13 @@ Copy names from [`.env.example`](../../.env.example). Group by service when ente
 
 ### Supabase
 
-| Variable                    | Scope  | Required | Notes                                         |
-| --------------------------- | ------ | -------- | --------------------------------------------- |
-| `PUBLIC_SUPABASE_URL`       | Public | **Yes**  | Project API URL                               |
-| `PUBLIC_SUPABASE_ANON_KEY`  | Public | **Yes**  | RLS-scoped anon key                           |
-| `SUPABASE_SERVICE_ROLE_KEY` | Server | **Yes**  | Moderation, webhooks, cron — never `PUBLIC_*` |
+| Variable                    | Scope  | Required | Notes                                                                 |
+| --------------------------- | ------ | -------- | --------------------------------------------------------------------- |
+| `SUPABASE_DATABASE_URL`     | Server | **Yes**  | Postgres connection string (Netlify integration) — API URL derived    |
+| `SUPABASE_ANON_KEY`         | Server | **Yes**  | RLS-scoped anon key — server-only (not in browser bundle)             |
+| `SUPABASE_SERVICE_ROLE_KEY` | Server | **Yes**  | Moderation, webhooks, cron — never expose to client                     |
+| `SUPABASE_JWT_SECRET`       | Server | Optional | Not used by app today; reserved for custom JWT verification           |
+| `PUBLIC_SUPABASE_URL`       | Public | Optional | Local dev fallback when `DATABASE_URL` has no project ref (`supabase start`) |
 
 Without Supabase env, production refuses mock sessions (`hooks.server.ts`). See [integrations/supabase.md](../integrations/supabase.md).
 
@@ -121,11 +123,11 @@ Without `AWS_CLOUDFRONT_DISTRIBUTION_ID`, uploads work but `POST /api/admin/medi
 
 No Discord/Microsoft client secrets in Netlify — those live in **Supabase Dashboard → Authentication → Providers**.
 
-| Variable                   | Scope  | Required | Notes                                |
-| -------------------------- | ------ | -------- | ------------------------------------ |
-| `PUBLIC_SUPABASE_URL`      | Public | **Yes**  | OAuth broker                         |
-| `PUBLIC_SUPABASE_ANON_KEY` | Public | **Yes**  | PKCE session                         |
-| `PUBLIC_SITE_URL`          | Public | **Yes**  | Callback origin for `/auth/callback` |
+| Variable                | Scope  | Required | Notes                                |
+| ----------------------- | ------ | -------- | ------------------------------------ |
+| `SUPABASE_DATABASE_URL` | Server | **Yes**  | OAuth broker (API URL derived)       |
+| `SUPABASE_ANON_KEY`     | Server | **Yes**  | PKCE session (SSR-only client)       |
+| `PUBLIC_SITE_URL`       | Public | **Yes**  | Callback origin for `/auth/callback` |
 
 Provider setup: [auth/oauth.md](../auth/oauth.md) · [auth/discord.md](../auth/discord.md) · [auth/microsoft.md](../auth/microsoft.md).
 
@@ -140,22 +142,47 @@ Provider setup: [auth/oauth.md](../auth/oauth.md) · [auth/discord.md](../auth/d
 
 ## Supabase — apply schema
 
-Production has **no prior migration history**. Apply the **3 squashed migrations** once:
+Production has **no prior migration history**. Apply the **5 squashed migrations** once on a fresh project:
 
 | #   | File                                    | Contents                                                                                           |
 | --- | --------------------------------------- | -------------------------------------------------------------------------------------------------- |
 | 1   | `20250701000000_core_auth_profiles.sql` | `profiles`, signup trigger, `is_staff()`                                                           |
 | 2   | `20250701010000_commerce_content.sql`   | builds, testimonials, newsletter, featured, preferences, YouTube, orders, restock, wholesale, bugs |
 | 3   | `20250701020000_media_social.sql`       | `media_assets`, `ugc` Storage bucket + policies                                                    |
+| 4   | `20250701030000_pit_lane_deals.sql`     | pit lane deals                                                                                     |
+| 5   | `20250701040000_build_submissions_rls.sql` | build submission RLS policies                                                                   |
+
+### First deploy — wipe remote and push fresh
+
+When both local and remote DBs can be reset (no production data to preserve):
 
 ```bash
 supabase link --project-ref <your-ref>
+
+# Option A: reset remote via CLI (drops all data + migration history, replays local migrations)
+supabase db reset --linked
+
+# Option B: push to empty remote (if migration history table is empty)
 supabase db push
-supabase migration list    # expect 3 applied
+
+supabase migration list    # expect 5 applied migrations
+```
+
+If remote has **stale migration names** from an earlier schema attempt, repair before push:
+
+```bash
+# List remote history
+supabase migration list
+
+# Mark all remote-only versions reverted, then push (example — adjust versions to your remote)
+supabase migration repair --status reverted 20250629120000
+# … repeat for each stale version, or reset via Dashboard → Database → Reset
+
+supabase db push
 ```
 
 **Local clone after squash pull:** `supabase db reset` (do not incremental-push over old 17-file history).  
-**If remote already has old migration names:** stop — contact maintainer before pushing. Details: [migration-squash-notes.md](./migration-squash-notes.md).
+Details: [migration-squash-notes.md](./migration-squash-notes.md).
 
 ### RLS note
 
@@ -380,7 +407,7 @@ Full runbook: [observability-lgtm.md](./observability-lgtm.md).
 
 ### Supabase
 
-- [ ] `supabase db push` — 3 squashed migrations applied
+- [ ] `supabase db reset --linked` or `supabase db push` — 5 squashed migrations applied
 - [ ] RLS enabled on all `public` tables (advisors clean)
 - [ ] Auth Site URL + redirect URLs include production + preview origins
 - [ ] First admin promoted via `scripts/promote-admin.ts`

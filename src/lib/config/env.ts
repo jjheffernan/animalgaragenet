@@ -19,8 +19,6 @@ export const config = {
 	cdnBaseUrl: env.PUBLIC_CDN_BASE_URL ?? '',
 	/** Saleor GraphQL URL (`PUBLIC_SALEOR_API_URL`). Empty disables live API calls. */
 	saleorApiUrl: env.PUBLIC_SALEOR_API_URL ?? '',
-	supabaseUrl: env.PUBLIC_SUPABASE_URL ?? '',
-	supabaseAnonKey: env.PUBLIC_SUPABASE_ANON_KEY ?? '',
 	defaultLocale: env.PUBLIC_DEFAULT_LOCALE ?? 'en-US',
 	defaultCurrency: env.PUBLIC_DEFAULT_CURRENCY ?? 'USD'
 } as const;

@@ -186,7 +186,7 @@
 		{/if}
 		{#if !data.ugcConfigured}
 			<p class="mt-4 text-sm text-zinc-500">
-				Supabase is not configured — UGC list requires `PUBLIC_SUPABASE_*` and service role env.
+				Supabase is not configured — UGC list requires `SUPABASE_*` env and service role key.
 			</p>
 		{:else if data.ugcAssets.length === 0}
 			<p class="mt-4 text-sm text-zinc-500">No `media_assets` rows yet.</p>

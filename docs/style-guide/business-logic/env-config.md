@@ -6,7 +6,8 @@
 | ----------------------- | ---------------------------------- |
 | `.env.example`          | Template with all vars (committed) |
 | `.env`                  | Local values (gitignored)          |
-| `src/lib/config/env.ts` | Typed public config accessor       |
+| `src/lib/config/env.ts` | Typed public config accessor (site, Saleor, locale) |
+| `src/lib/server/supabase/env.ts` | Server-only Supabase URL derivation |
 
 ## Setup
 
@@ -26,8 +27,6 @@ export const config = {
 	siteUrl: env.PUBLIC_SITE_URL ?? 'http://localhost:5173',
 	cdnBaseUrl: env.PUBLIC_CDN_BASE_URL ?? '',
 	saleorApiUrl: env.PUBLIC_SALEOR_API_URL ?? '',
-	supabaseUrl: env.PUBLIC_SUPABASE_URL ?? '',
-	supabaseAnonKey: env.PUBLIC_SUPABASE_ANON_KEY ?? '',
 	defaultLocale: env.PUBLIC_DEFAULT_LOCALE ?? 'en-US',
 	defaultCurrency: env.PUBLIC_DEFAULT_CURRENCY ?? 'USD'
 } as const;
@@ -44,8 +43,6 @@ All values fall back to safe defaults or empty strings — missing vars won't cr
 | `PUBLIC_SITE_URL`          | `http://localhost:5173` | Canonical site URL                |
 | `PUBLIC_CDN_BASE_URL`      | `''`                    | CloudFront prefix                 |
 | `PUBLIC_SALEOR_API_URL`    | `''`                    | Saleor GraphQL endpoint           |
-| `PUBLIC_SUPABASE_URL`      | `''`                    | Supabase project URL              |
-| `PUBLIC_SUPABASE_ANON_KEY` | `''`                    | Supabase anon key (RLS-protected) |
 | `PUBLIC_DEFAULT_LOCALE`    | `en-US`                 | Default locale code               |
 | `PUBLIC_DEFAULT_CURRENCY`  | `USD`                   | Default currency code             |
 
@@ -54,6 +51,8 @@ All values fall back to safe defaults or empty strings — missing vars won't cr
 | Variable                    | Description                                      |
 | --------------------------- | ------------------------------------------------ |
 | `SALEOR_CHANNEL`            | Saleor channel slug (default: `default-channel`) |
+| `SUPABASE_DATABASE_URL`     | Postgres URL — API URL derived in `supabase/env.ts` |
+| `SUPABASE_ANON_KEY`         | Anon key — SSR only                              |
 | `SUPABASE_SERVICE_ROLE_KEY` | Admin key — never expose to client               |
 | Object storage / CDN        | See `.env.example`                               |
 
@@ -63,7 +62,7 @@ All values fall back to safe defaults or empty strings — missing vars won't cr
 | ----------------------------- | ---------------------------------------------------- |
 | No `.env` file                | Public config uses defaults; app runs with mock data |
 | Empty `PUBLIC_SALEOR_API_URL` | `saleorFetch()` returns error object, doesn't throw  |
-| Empty Supabase vars           | `getSupabaseConfig()` returns `null`                 |
+| Empty Supabase server vars    | `isSupabaseConfigured()` returns `false`             |
 | Empty CDN URL                 | Image URLs stay as-is (picsum in prototype)          |
 
 ## SvelteKit env rules

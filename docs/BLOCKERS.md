@@ -12,7 +12,7 @@ All items below require **dashboard, env, or production access**. They cannot be
 
 | Step | ID                      | Action                                                       | Console                                                                                      |
 | ---- | ----------------------- | ------------------------------------------------------------ | -------------------------------------------------------------------------------------------- |
-| 1    | NS-OPS-001              | Apply squashed Supabase migrations (3 files)                 | `supabase db push` · [migration-squash-notes.md](./infrastructure/migration-squash-notes.md) |
+| 1    | NS-OPS-001              | Apply squashed Supabase migrations (5 files)                 | `supabase db reset --linked` or `db push` · [migration-squash-notes.md](./infrastructure/migration-squash-notes.md) |
 | 2    | AUD-P0-001–003          | Supabase env + `PUBLIC_SITE_URL` + redirect allowlist        | Netlify + Supabase Auth                                                                      |
 | 3    | AUD-P0-005              | Bootstrap first admin                                        | `npx tsx --env-file=.env scripts/promote-admin.ts user@email.com admin`                      |
 | 4    | AUD-P0-004              | Saleor API URL + channel on Netlify                          | Netlify env                                                                                  |
@@ -33,7 +33,7 @@ All items below require **dashboard, env, or production access**. They cannot be
 
 | ID             | Item                                                        | Owner          |
 | -------------- | ----------------------------------------------------------- | -------------- |
-| AUD-P0-001     | `PUBLIC_SUPABASE_*`, `SUPABASE_SERVICE_ROLE_KEY` on Netlify | auth / ops     |
+| AUD-P0-001     | `SUPABASE_DATABASE_URL`, `SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY` on Netlify | auth / ops     |
 | AUD-P0-002     | `PUBLIC_SITE_URL` matches browsed deploy origin             | auth / ops     |
 | AUD-P0-003     | Supabase redirect URL allowlist (`/auth/callback`)          | auth / ops     |
 | AUD-P0-004     | `PUBLIC_SALEOR_API_URL` + `SALEOR_CHANNEL`                  | saleor / ops   |

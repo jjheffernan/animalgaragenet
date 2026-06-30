@@ -20,8 +20,6 @@ cp .env.example .env
 | `PUBLIC_SITE_URL`          | `http://localhost:5173` | Canonical site URL (magic links, OAuth redirects) |
 | `PUBLIC_CDN_BASE_URL`      | `''`                    | CDN base URL for media                            |
 | `PUBLIC_SALEOR_API_URL`    | `''`                    | Saleor GraphQL endpoint                           |
-| `PUBLIC_SUPABASE_URL`      | `''`                    | Supabase project API URL                          |
-| `PUBLIC_SUPABASE_ANON_KEY` | `''`                    | Supabase anon key (RLS-protected)                 |
 | `PUBLIC_DEFAULT_LOCALE`    | `en-US`                 | Default locale code                               |
 | `PUBLIC_DEFAULT_CURRENCY`  | `USD`                   | Default currency code                             |
 
@@ -30,7 +28,7 @@ cp .env.example .env
 | Category         | Description                                                              |
 | ---------------- | ------------------------------------------------------------------------ |
 | Commerce channel | Saleor channel slug (server-only)                                        |
-| Supabase admin   | Service-role key — bypasses RLS; **never** in client bundles             |
+| Supabase         | `SUPABASE_DATABASE_URL`, `SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY` (Netlify integration); optional `PUBLIC_SUPABASE_URL` for local `supabase start` |
 | Object storage   | Bucket/region and upload credentials for the media pipeline (when wired) |
 | CMS / APIs       | Ghost, YouTube, and webhook sync secrets                                 |
 | Dev-only flags   | `DEV_ADMIN`, `LOCAL_DEV_AUTH` — **localhost only**                       |

@@ -4,17 +4,17 @@ Supabase Auth with `@supabase/ssr` cookie sessions. Mock fallback when env vars 
 
 ## Environment variables
 
-| Variable                    | Scope       | Purpose                                |
-| --------------------------- | ----------- | -------------------------------------- |
-| `PUBLIC_SUPABASE_URL`       | Public      | Project API URL                        |
-| `PUBLIC_SUPABASE_ANON_KEY`  | Public      | Anon key — safe in browser with RLS    |
-| `SUPABASE_SERVICE_ROLE_KEY` | Server only | Bypasses RLS; never in client bundles  |
-| `PUBLIC_SITE_URL`           | Public      | Magic-link and OAuth redirect URLs     |
-| `DEV_ADMIN`                 | Server only | Admin bypass on **localhost only**     |
-| `LOCAL_DEV_AUTH`            | Server only | Quick-login buttons on `/auth/sign-in` |
-| `SITE_LOCKED`               | Server only | Production preview lockdown            |
+| Variable                    | Scope       | Purpose                                                       |
+| --------------------------- | ----------- | ------------------------------------------------------------- |
+| `SUPABASE_DATABASE_URL`     | Server only | Postgres URL — app derives REST API URL (Netlify integration) |
+| `SUPABASE_ANON_KEY`         | Server only | Anon key — SSR client only; not in browser bundle             |
+| `SUPABASE_SERVICE_ROLE_KEY` | Server only | Bypasses RLS; never in client bundles                         |
+| `PUBLIC_SITE_URL`           | Public      | Magic-link and OAuth redirect URLs                            |
+| `DEV_ADMIN`                 | Server only | Admin bypass on **localhost only**                            |
+| `LOCAL_DEV_AUTH`            | Server only | Quick-login buttons on `/auth/sign-in`                        |
+| `SITE_LOCKED`               | Server only | Production preview lockdown                                   |
 
-When `PUBLIC_SUPABASE_URL` or `PUBLIC_SUPABASE_ANON_KEY` is unset, the site uses a mock `ag-session` cookie.
+When `SUPABASE_DATABASE_URL` + `SUPABASE_ANON_KEY` are unset, the site uses a mock `ag-session` cookie (localhost only).
 
 ## Local development
 
@@ -100,14 +100,14 @@ Dropdown links (`src/lib/components/AccountMenu.svelte`):
 | `src/lib/server/supabase/client.ts`   | SSR cookie client                           |
 | `src/lib/server/supabase/admin.ts`    | Service role client (server only)           |
 | `src/lib/server/supabase/auth.ts`     | Session helpers, mock fallbacks             |
-| `src/lib/supabase/browser.ts`         | Browser singleton                           |
+| `src/lib/server/auth/oauth-action.ts` | Server-side OAuth redirect (form POST)      |
 | `src/hooks.server.ts`                 | Session refresh, admin guard, site lockdown |
 | `src/routes/auth/callback/+server.ts` | PKCE code exchange                          |
 | `scripts/promote-admin.ts`            | CLI to set `app_metadata.role`              |
 
 ## OAuth
 
-Google, Discord, Microsoft via Supabase Auth PKCE. Without Supabase env, OAuth falls back to mock callback.
+Google, Discord, Microsoft via Supabase Auth PKCE — OAuth buttons POST to a server action (`?/oauth`); no anon key in the browser bundle.
 
 Enable providers in Supabase Dashboard → **Authentication** → **Providers**.
 

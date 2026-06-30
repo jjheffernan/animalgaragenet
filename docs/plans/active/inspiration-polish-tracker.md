@@ -90,7 +90,7 @@ Public-safe — no secrets. Placeholders only.
 
 Verify: `npm run test:readiness` → `saleor-catalog` pass; `/shop` count ≠ 120; no `picsum.photos`.
 
-**Code done:** `guardMockCatalogFallback()`; cart line qty/remove wired (`@saleor-migration`).
+**Code done:** `guardMockCatalogFallback()`; cart line qty/remove wired; listing quick-add passes Saleor `variantId` (`@saleor-migration`).
 
 ### Prod checkout {#prod-checkout}
 
@@ -118,7 +118,7 @@ See [saleor-payments.md](../../commerce/saleor-payments.md).
 | Ghost   | `GHOST_URL`, `GHOST_CONTENT_API_KEY`     | Blog + guides from CMS (IP-015)        |
 | YouTube | `YOUTUBE_API_KEY`, `YOUTUBE_SYNC_SECRET` | Live sync in `youtube/sync.ts` (IP-007) |
 
-**Code done:** Homepage UGC from approved testimonials when Supabase configured.
+**Code done:** Homepage UGC from approved testimonials when Supabase configured. `guardMockGhostFallback()` for Ghost loaders (AUD-P1-009).
 
 ### Prod CDN {#prod-cdn}
 

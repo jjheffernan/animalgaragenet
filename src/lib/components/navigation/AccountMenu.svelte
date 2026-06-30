@@ -66,7 +66,6 @@
 						type="submit"
 						role="menuitem"
 						class="block w-full px-4 py-2.5 text-left text-sm font-medium uppercase tracking-wider text-zinc-400 transition hover:bg-zinc-900/80 hover:text-red-400"
-						onclick={onclose}
 					>
 						Sign out
 					</button>

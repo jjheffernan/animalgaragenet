@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
 	import { page } from '$app/stores';
+	import { resolvePath } from '$lib/utils/paths';
 
 	interface Props {
 		sessionName?: string | null;
@@ -86,14 +87,15 @@
 						</a>
 					</li>
 					<li>
-						<a
-							href={resolve('/auth/sign-out')}
-							class="block px-3 py-2 text-sm text-zinc-300 hover:bg-zinc-800 hover:text-white"
-							role="menuitem"
-							onclick={() => (profileOpen = false)}
-						>
-							Sign out
-						</a>
+						<form method="POST" action={resolvePath('/auth/sign-out')}>
+							<button
+								type="submit"
+								class="block w-full px-3 py-2 text-left text-sm text-zinc-300 hover:bg-zinc-800 hover:text-white"
+								role="menuitem"
+							>
+								Sign out
+							</button>
+						</form>
 					</li>
 				</ul>
 			{/if}

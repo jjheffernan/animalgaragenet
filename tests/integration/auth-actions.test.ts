@@ -1,9 +1,11 @@
 import { isActionFailure, isRedirect } from '@sveltejs/kit';
 import { describe, expect, it } from 'vitest';
+import { POST as signOutPost } from '../../src/routes/auth/sign-out/+server';
 import { actions as signInActions } from '../../src/routes/auth/sign-in/+page.server';
 import { actions as signUpActions } from '../../src/routes/auth/sign-up/+page.server';
 import type { RequestEvent as SignInEvent } from '../../src/routes/auth/sign-in/$types';
 import type { RequestEvent as SignUpEvent } from '../../src/routes/auth/sign-up/$types';
+import type { RequestEvent as SignOutEvent } from '../../src/routes/auth/sign-out/$types';
 
 function signInRequest(fields: Record<string, string>, hostname = 'localhost'): SignInEvent {
 	const formData = new FormData();
@@ -102,5 +104,26 @@ describe('auth sign-up action', () => {
 		await expect(
 			signUpActions.default(signUpRequest({ email: 'new@example.com', name: 'New Driver' }))
 		).rejects.toSatisfy((error: unknown) => isRedirect(error));
+	});
+});
+
+describe('auth sign-out', () => {
+	it('redirects home and clears the legacy session cookie', async () => {
+		let cookieDeleted = false;
+		const cookies = {
+			get: () => undefined,
+			set: () => {},
+			delete: () => {
+				cookieDeleted = true;
+			},
+			getAll: () => [],
+			serialize: () => ''
+		};
+
+		await expect(
+			signOutPost({ locals: { supabase: null }, cookies } as unknown as SignOutEvent)
+		).rejects.toSatisfy((error: unknown) => isRedirect(error));
+
+		expect(cookieDeleted).toBe(true);
 	});
 });

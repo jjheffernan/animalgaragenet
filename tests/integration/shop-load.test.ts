@@ -56,12 +56,14 @@ describe('shop/+page.server load', () => {
 		expect(data.collections.some((c: { slug: string }) => c.slug === slug)).toBe(true);
 	});
 
-	it('collection filter takes precedence over category', async () => {
+	it('applies both category and collection when both query params are set', async () => {
 		const slug = mockCollections[0]?.slug ?? 'shop-essentials';
-		const data = await loadShop({ collection: slug, category: 'gift-cards' });
+		const collectionOnly = await loadShop({ collection: slug });
+		const data = await loadShop({ collection: slug, category: 'accessories' });
 
 		expect(data.collection?.slug).toBe(slug);
-		const giftCardOnly = data.products.every((p: Product) => p.productType === 'GIFT_CARD');
-		expect(giftCardOnly).toBe(false);
+		expect(data.category.slug).toBe('accessories');
+		expect(data.products.length).toBeGreaterThan(0);
+		expect(data.products.length).toBeLessThanOrEqual(collectionOnly.products.length);
 	});
 });

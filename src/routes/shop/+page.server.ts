@@ -1,13 +1,32 @@
 import { config } from '$lib/config/env';
 import { paginateFromUrl, parseListView } from '$lib/pagination';
 import { getShopProducts } from '$lib/server/catalog/products';
-import { getShopFilterOptions, resolveShopFilter } from '$lib/server/catalog/shop-filters';
+import {
+	filterProductsByShopSlug,
+	getShopFilterOptions,
+	resolveShopFilter
+} from '$lib/server/catalog/shop-filters';
 import {
 	getShopCollectionOptions,
 	getShopProductsByCollection,
-	resolveShopCollection
+	resolveShopCollection,
+	type ShopCollectionFilter
 } from '$lib/server/catalog/shop-collection';
+import type { Product } from '$lib/types/saleor';
 import type { PageServerLoad } from './$types';
+
+async function getFilteredShopProducts(
+	categorySlug: string,
+	collection: ShopCollectionFilter | null,
+	locale: string
+): Promise<Product[]> {
+	if (collection) {
+		const collectionProducts = await getShopProductsByCollection(collection.slug, locale);
+		if (categorySlug === 'all') return collectionProducts;
+		return filterProductsByShopSlug(collectionProducts, categorySlug);
+	}
+	return getShopProducts(categorySlug, locale);
+}
 
 export const load: PageServerLoad = async ({ url }) => {
 	const locale = url.searchParams.get('locale') ?? config.defaultLocale;
@@ -16,10 +35,7 @@ export const load: PageServerLoad = async ({ url }) => {
 	const category = resolveShopFilter(url.searchParams.get('category'), filterOptions.categories);
 	const collection = resolveShopCollection(url.searchParams.get('collection'), collectionOptions);
 
-	// ?collection= takes precedence over category when set
-	const allProducts = collection
-		? await getShopProductsByCollection(collection.slug, locale)
-		: await getShopProducts(category.slug, locale);
+	const allProducts = await getFilteredShopProducts(category.slug, collection, locale);
 	const { items, pagination } = paginateFromUrl(url, allProducts);
 
 	return {

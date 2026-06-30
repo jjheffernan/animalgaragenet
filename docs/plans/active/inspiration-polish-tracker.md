@@ -90,6 +90,7 @@ Explicit follow-ups from the June 30 implementation batch (`67a150c`–`6837217`
 | —      | batch `5ca1b1f`     | Footer layout (shipped — no follow-up)                               | —            | Condensed Z1-inspired footer; mobile stack; e2e footer links pass                    | —                                                                          |
 | IP-BUG-001 | polish / UI      | Navbar spacing when logged in + notifications                        | code         | **done** — desktop grid keeps nav centered; icon buttons fixed `size-9`; badge overlays bell/cart | `src/lib/components/layout/Header.svelte` · `notificationCount` in layout load |
 | IP-BUG-002 | polish / UI      | Header overlap + mobile account label + newsletter validation bleed  | code         | **done** — nav truncates before bell; Account text `lg+` only; footer form `novalidate` + JS validation | `Header.svelte` · `NewsletterSignup.svelte` · `Footer.svelte` · `e2e/navigation.spec.ts` |
+| IP-BUG-003 | polish / UI      | Sign-out dropdown + shop filter ribbons                              | code         | **done** — AccountMenu POST submit no longer unmounts form; collections dropdown in single categories ribbon | `AccountMenu.svelte` · `shop/+page.svelte` · `tests/integration/auth-actions.test.ts` |
 
 ---
 

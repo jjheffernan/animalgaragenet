@@ -3,7 +3,7 @@
 	"strategy": "sequential-commits",
 	"backupRef": "refs/backup/pre-commit-orchestrator-1782793316",
 	"current": null,
-	"lastCommit": "87dd043",
+	"lastCommit": "2ea70b3",
 	"completed": [
 		"01-mock-data-layout",
 		"02-deps-and-tooling",
@@ -26,8 +26,9 @@
 		"19-unit-tests",
 		"20-e2e-ci",
 		"21-docs",
-		"22-agent-tooling"
+		"22-agent-tooling",
+		"23-market-readiness-agent"
 	],
 	"blocked": [],
-	"notes": "22 batches / ~246 paths. Regenerate manifest: python3 .cursor/scripts/generate-commit-manifest.py. Invoke git-commit-orchestrator for next batch."
+	"notes": "23 batches complete. Post-manifest: 23-market-readiness-agent. Prettier dependabot (70bb298, aa563a2) left as-is ahead of origin/dev. docs/plans, polish-plan, wiki-export already in 320d2b7 or absent."
 }

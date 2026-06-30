@@ -6,8 +6,7 @@ function normalizeOrigin(origin: string): string {
 }
 
 function getConfiguredSiteOrigin(): string {
-	const siteUrl =
-		env.PUBLIC_SITE_URL ?? process.env.PUBLIC_SITE_URL ?? 'http://localhost:5173';
+	const siteUrl = env.PUBLIC_SITE_URL ?? process.env.PUBLIC_SITE_URL ?? 'http://localhost:5173';
 	return normalizeOrigin(siteUrl);
 }
 

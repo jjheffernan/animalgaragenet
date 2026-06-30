@@ -2,11 +2,7 @@ import { fail, redirect } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
 import { buildAuthCallbackUrl } from '$lib/server/auth/callback-url';
 import { isProductionHostname } from '$lib/server/auth/local-dev';
-import {
-	createMockUser,
-	setSessionCookie,
-	signUpWithOtp
-} from '$lib/server/supabase/auth';
+import { createMockUser, setSessionCookie, signUpWithOtp } from '$lib/server/supabase/auth';
 import { createServerClient, isSupabaseConfigured } from '$lib/server/supabase/client';
 
 export const load: PageServerLoad = async ({ locals }) => {
@@ -49,7 +45,8 @@ export const actions: Actions = {
 
 		if (isProductionHostname(url.hostname)) {
 			return fail(503, {
-				error: 'Sign-up is not configured for this site. Set Supabase environment variables on the host.',
+				error:
+					'Sign-up is not configured for this site. Set Supabase environment variables on the host.',
 				email,
 				name
 			});

@@ -2,12 +2,12 @@ import { fail, redirect } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
 import { buildAuthCallbackUrl } from '$lib/server/auth/callback-url';
 import { LOCAL_DEV_ACCOUNTS } from '$lib/server/auth/local-dev-accounts';
-import { devSignInAccount, isLocalDevAuthEnabled, isProductionHostname } from '$lib/server/auth/local-dev';
 import {
-	createMockUser,
-	setSessionCookie,
-	signInWithOtp
-} from '$lib/server/supabase/auth';
+	devSignInAccount,
+	isLocalDevAuthEnabled,
+	isProductionHostname
+} from '$lib/server/auth/local-dev';
+import { createMockUser, setSessionCookie, signInWithOtp } from '$lib/server/supabase/auth';
 import { createServerClient, isSupabaseConfigured } from '$lib/server/supabase/client';
 
 export const load: PageServerLoad = async ({ locals, url }) => {
@@ -32,7 +32,9 @@ export const actions: Actions = {
 		const form = await request.formData();
 		const email = String(form.get('email') ?? '').trim();
 		const name = String(form.get('name') ?? '').trim();
-		const redirectTo = String(form.get('redirect') ?? url.searchParams.get('redirect') ?? '/account');
+		const redirectTo = String(
+			form.get('redirect') ?? url.searchParams.get('redirect') ?? '/account'
+		);
 
 		if (!email || !email.includes('@')) {
 			return fail(400, { error: 'Enter a valid email address.', email, name });
@@ -54,7 +56,8 @@ export const actions: Actions = {
 
 		if (isProductionHostname(url.hostname)) {
 			return fail(503, {
-				error: 'Sign-in is not configured for this site. Set Supabase environment variables on the host.',
+				error:
+					'Sign-in is not configured for this site. Set Supabase environment variables on the host.',
 				email,
 				name
 			});

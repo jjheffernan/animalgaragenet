@@ -47,3 +47,10 @@ export async function resolveWatchVideo(id: string): Promise<Video | null> {
 
 	return getVideoById(id) ?? null;
 }
+
+/** Homepage video strip — Supabase `videos` when synced, mock fallback otherwise. */
+export async function loadHomepageVideos(limit = 3): Promise<Video[]> {
+	const { featuredVideo, listVideos } = await loadWatchHubVideos();
+	const merged = featuredVideo ? [featuredVideo, ...listVideos] : listVideos;
+	return merged.slice(0, limit);
+}

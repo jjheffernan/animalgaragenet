@@ -31,11 +31,11 @@ _Audit ID rows (AUD-P*) also appear in [AUDIT-REMEDIATION.md](../AUDIT-REMEDIATI
 | AUD-P2-020 | Machine-local agent skill symlink onboarding in `agents/AGENTS.md` | AUDIT-REMEDIATION, agents-skills-audit | No | — | docs | **done** |
 | AUD-P2-021 | Remove daisyUI skill tree after sign-off (deprecation banner remains) | AUDIT-REMEDIATION | No | — | docs | **done** |
 | AUD-P2-023 | Newsletter / user preferences tables (schema + RLS per roadmap) | AUDIT-REMEDIATION, integrations/supabase.md | No | — | supabase | **done** |
-| MR-PH3-001 | Remaining homepage mock slices (videos, campaigns, hero beyond CMS; UGC/watch wired) | market-readiness Phase 3, STATUS | No | — | code | **open** |
+| MR-PH3-001 | Remaining homepage mock slices (videos, campaigns, hero beyond CMS; UGC/watch wired) | market-readiness Phase 3, STATUS | No | — | code | **done** |
 | IP-004-code | Saleor stock webhook → `restock_alerts` notify handler (signup API live; webhook stub only) | inspiration-polish IP-004 | No | — | saleor | **done** |
 | IP-023 | Multi-channel international pricing — wire `channels.ts` to Saleor admin channel map | inspiration-polish | No | — | saleor | **done** |
 | IP-024 | Shipping zones + threshold promos (Saleor shipping + promotion rules) | inspiration-polish | No | — | saleor | **done** |
-| IP-029 | `@motionone/svelte` scroll system (reduced-motion baseline done) | inspiration-polish | No | — | code | **partial** |
+| IP-029 | `@motionone/svelte` scroll system (IO scroll trigger on `AnimatedReveal`; Motion One dep deferred) | inspiration-polish | No | — | code | **partial** |
 | IP-030 | Deal / campaign scheduler (Pit Lane CMS; `/deals` mock) | inspiration-polish | No | — | code | **done** |
 | PT-P3-001 | Split `saleor/checkout.ts` (624 LOC) — defer until second caller (YAGNI) | ponytail-audit | No | — | ponytail | **deferred** |
 | PT-P3-003 | `forms/submit.ts` — remove dead generic insert stub or wire one table | ponytail-audit | No | — | ponytail | **done** |

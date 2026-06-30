@@ -74,3 +74,17 @@ describe('deals repository (mock fallback)', () => {
 		expect(deals.length).toBeGreaterThan(0);
 	});
 });
+
+describe('getUpcomingDropCampaign', () => {
+	beforeEach(() => {
+		vi.mocked(createAdminClient).mockReturnValue(null);
+		_resetMockStoreForTests();
+	});
+
+	it('returns mock upcoming campaign when Supabase unset', async () => {
+		const { getUpcomingDropCampaign } = await import('./repository');
+		const campaign = await getUpcomingDropCampaign(new Date('2026-06-01T12:00:00Z'));
+		expect(campaign?.name).toBeTruthy();
+		expect(campaign?.availableFrom).toBeTruthy();
+	});
+});

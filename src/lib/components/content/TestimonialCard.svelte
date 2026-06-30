@@ -7,6 +7,8 @@
 	}
 
 	let { testimonial, compact = false }: Props = $props();
+
+	const photoUrls = $derived(testimonial.photoUrls ?? []);
 </script>
 
 <article class="rounded-sm border border-zinc-800 bg-zinc-900/50 p-6 {compact ? '' : 'h-full'}">
@@ -35,6 +37,20 @@
 		</div>
 	</div>
 	<h3 class="mt-3 font-display text-lg font-bold uppercase text-white">{testimonial.title}</h3>
+	{#if photoUrls.length > 0}
+		<ul class="mt-3 flex flex-wrap gap-2" aria-label="Review photos">
+			{#each photoUrls as url, index (url)}
+				<li>
+					<img
+						src={url}
+						alt=""
+						class="h-16 w-16 rounded-sm object-cover"
+						loading={index === 0 ? 'eager' : 'lazy'}
+					/>
+				</li>
+			{/each}
+		</ul>
+	{/if}
 	<p class="mt-2 text-sm text-zinc-400 {compact ? 'line-clamp-3' : ''}">{testimonial.body}</p>
 	{#if testimonial.loyaltyTier}
 		<p class="mt-4 text-xs text-zinc-600">Garage Squad · {testimonial.loyaltyTier}</p>

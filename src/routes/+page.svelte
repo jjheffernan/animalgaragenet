@@ -29,7 +29,7 @@
 
 <section class="border-b border-zinc-800 bg-zinc-900/50 py-12">
 	<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-		<AnimatedReveal>
+		<AnimatedReveal trigger="scroll">
 			<SectionHeading
 				title="Find Parts for Your Ride"
 				subtitle="Year, make, model — shop what fits."
@@ -51,7 +51,7 @@
 {#if data.campaignSection?.active && data.campaignSection.content.endDate}
 	<section class="border-y border-red-900/50 bg-red-950/30 py-10">
 		<div class="mx-auto max-w-7xl px-4 text-center sm:px-6 lg:px-8">
-			<AnimatedReveal>
+			<AnimatedReveal trigger="scroll">
 				<p class="text-xs font-bold uppercase tracking-[0.3em] text-red-500">
 					{String(data.campaignSection.content.badgeLabel ?? 'Drop Incoming')}
 				</p>
@@ -66,7 +66,7 @@
 {:else if data.activeCampaign?.availableFrom}
 	<section class="border-y border-red-900/50 bg-red-950/30 py-10">
 		<div class="mx-auto max-w-7xl px-4 text-center sm:px-6 lg:px-8">
-			<AnimatedReveal>
+			<AnimatedReveal trigger="scroll">
 				<p class="text-xs font-bold uppercase tracking-[0.3em] text-red-500">Drop Incoming</p>
 				<h2 class="mt-2 font-display text-3xl font-bold uppercase text-white">
 					{data.activeCampaign.name}
@@ -103,7 +103,7 @@
 
 <section class="border-t border-zinc-800 bg-zinc-900/30 py-20">
 	<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-		<AnimatedReveal>
+		<AnimatedReveal trigger="scroll">
 			<SectionHeading
 				title="Featured Videos"
 				subtitle="Builds, burnouts, and shop chaos."
@@ -124,7 +124,7 @@
 
 <section class="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
 	{#if data.ugcSection?.active !== false}
-		<AnimatedReveal>
+		<AnimatedReveal trigger="scroll">
 			<SectionHeading
 				title={String(data.ugcSection?.content.title ?? 'Community Garage')}
 				subtitle={String(data.ugcSection?.content.subtitle ?? '')}
@@ -137,7 +137,7 @@
 
 <section class="border-y border-zinc-800 bg-zinc-900/50 py-20">
 	<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-		<AnimatedReveal>
+		<AnimatedReveal trigger="scroll">
 			<SectionHeading title="Build Threads" subtitle="Real cars, real mods, real stories." />
 		</AnimatedReveal>
 		<div class="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -163,7 +163,7 @@
 {#if data.featuredTestimonials.length > 0}
 	<section class="border-y border-zinc-800 bg-zinc-900/50 py-20">
 		<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-			<AnimatedReveal>
+			<AnimatedReveal trigger="scroll">
 				<SectionHeading
 					title="Garage Squad Stories"
 					subtitle="Real members, real builds."

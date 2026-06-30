@@ -1,14 +1,16 @@
 import type { MediaItem } from '$lib/data/mock/media';
 import { mockMedia } from '$lib/data/mock/media';
 import { mockUGC } from '$lib/data/mock/ugc';
-import { mockVideos } from '$lib/data/mock/videos';
 import { paginateFromUrl } from '$lib/pagination';
+import { listApprovedUgcGalleryItems } from '$lib/server/media/repository';
 import { createAdminClient } from '$lib/server/supabase/admin';
 import {
 	listApprovedTestimonials,
 	listFeaturedTestimonials
 } from '$lib/server/testimonials/repository';
+import { enrichTestimonialsWithPhotos } from '$lib/server/media/repository';
 import { testimonialsToUgcItems } from '$lib/server/testimonials/to-ugc';
+import { loadWatchHubVideos } from '$lib/server/youtube/public';
 import type { UGCItem, Video } from '$lib/types/domain';
 import type { PageServerLoad } from './$types';
 
@@ -25,7 +27,7 @@ export async function _loadMediaUgcItems(): Promise<UGCItem[]> {
 	const featured = await listFeaturedTestimonials(48);
 	const source =
 		featured.length > 0 ? featured : await listApprovedTestimonials(48);
-	return testimonialsToUgcItems(source);
+	return testimonialsToUgcItems(await enrichTestimonialsWithPhotos(source));
 }
 
 export const load: PageServerLoad = async ({ url }) => {
@@ -39,16 +41,26 @@ export const load: PageServerLoad = async ({ url }) => {
 
 	switch (tab) {
 		case 'videos': {
-			const result = paginateFromUrl(url, mockVideos);
+			const { listVideos } = await loadWatchHubVideos();
+			const result = paginateFromUrl(url, listVideos);
 			videos = result.items;
 			pagination = result.pagination;
 			break;
 		}
 		case 'photos': {
-			const result = paginateFromUrl(
-				url,
-				mockMedia.filter((item) => item.type === 'image')
-			);
+			const ugcPhotos = await listApprovedUgcGalleryItems(200);
+			const photoItems: MediaItem[] =
+				ugcPhotos.length > 0
+					? ugcPhotos.map((item) => ({
+							id: item.id,
+							title: item.title,
+							type: 'image' as const,
+							thumbnail: item.thumbnail,
+							src: item.src,
+							category: 'Community'
+						}))
+					: mockMedia.filter((item) => item.type === 'image');
+			const result = paginateFromUrl(url, photoItems);
 			mediaItems = result.items;
 			pagination = result.pagination;
 			break;

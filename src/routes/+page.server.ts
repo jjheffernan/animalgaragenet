@@ -1,13 +1,8 @@
-import {
-	getFeaturedPublicBuilds,
-	listPublicBuilds,
-	getPublicBuildBySlug
-} from '$lib/server/builds/public';
+import { getFeaturedPublicBuilds } from '$lib/server/builds/public';
 import { mockUGC } from '$lib/data/mock/ugc';
-import { mockVideos } from '$lib/data/mock/videos';
 import { mockBrands } from '$lib/data/mock/brands';
 import { mockPopularModels } from '$lib/data/mock/popular-models';
-import { getActiveCampaign } from '$lib/data/mock/campaigns';
+import { getUpcomingDropCampaign } from '$lib/server/deals/repository';
 import {
 	getClearanceProducts,
 	getCollections,
@@ -15,27 +10,35 @@ import {
 } from '$lib/server/catalog/collections';
 import { listGuides } from '$lib/server/ghost/posts';
 import { createAdminClient } from '$lib/server/supabase/admin';
+import { enrichTestimonialsWithPhotos } from '$lib/server/media/repository';
 import { getDefaultHeroSection, getHomepageFeaturedSections } from '$lib/server/featured-sections/repository';
 import {
 	listApprovedTestimonials,
 	listFeaturedTestimonials
 } from '$lib/server/testimonials/repository';
 import { testimonialsToUgcItems } from '$lib/server/testimonials/to-ugc';
+import { loadHomepageVideos } from '$lib/server/youtube/public';
 import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async () => {
-	const [collections, staffPicks, clearance, guides, featuredTestimonials, approvedTestimonials, featuredSections] =
+	const [collections, staffPicks, clearance, guides, approvedTestimonials, featuredSections, videos, activeCampaign] =
 		await Promise.all([
 			getCollections(),
 			getStaffPickProducts(),
 			getClearanceProducts(),
 			listGuides(),
-			listFeaturedTestimonials(3),
 			listApprovedTestimonials(12),
-			getHomepageFeaturedSections()
+			getHomepageFeaturedSections(),
+			loadHomepageVideos(3),
+			getUpcomingDropCampaign()
 		]);
 
-	const ugcFromTestimonials = testimonialsToUgcItems(approvedTestimonials);
+	const [featuredTestimonials, enrichedApproved] = await Promise.all([
+		enrichTestimonialsWithPhotos(await listFeaturedTestimonials(3)),
+		enrichTestimonialsWithPhotos(approvedTestimonials)
+	]);
+
+	const ugcFromTestimonials = testimonialsToUgcItems(enrichedApproved);
 	const supabaseConfigured = createAdminClient() !== null;
 	const ugc = supabaseConfigured && ugcFromTestimonials.length > 0 ? ugcFromTestimonials : mockUGC;
 
@@ -43,13 +46,13 @@ export const load: PageServerLoad = async () => {
 		collections,
 		staffPicks,
 		clearance,
-		videos: mockVideos.slice(0, 3),
+		videos,
 		ugc,
 		builds: (await getFeaturedPublicBuilds(3)).slice(0, 3),
 		guides: guides.slice(0, 3),
 		brands: mockBrands.slice(0, 8),
 		popularModels: mockPopularModels,
-		activeCampaign: getActiveCampaign() ?? null,
+		activeCampaign: activeCampaign ?? null,
 		featuredTestimonials,
 		heroSection: featuredSections.hero ?? getDefaultHeroSection(),
 		ugcSection: featuredSections.ugc,

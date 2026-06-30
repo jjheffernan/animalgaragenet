@@ -37,6 +37,20 @@
 						<p class="text-sm font-bold text-red-500">{testimonial.rating}/5</p>
 					</div>
 					<p class="mt-3 text-sm text-zinc-400">{testimonial.body}</p>
+					{#if testimonial.photoUrls && testimonial.photoUrls.length > 0}
+						<ul class="mt-3 flex flex-wrap gap-2" aria-label="Attached photos">
+							{#each testimonial.photoUrls as photoUrl, index (photoUrl)}
+								<li>
+									<img
+										src={photoUrl}
+										alt="Review photo {index + 1}"
+										class="h-16 w-16 rounded-sm object-cover"
+										loading="lazy"
+									/>
+								</li>
+							{/each}
+						</ul>
+					{/if}
 					{#if testimonial.loyaltyTier}
 						<p class="mt-2 text-xs text-zinc-600">Tier snapshot: {testimonial.loyaltyTier}</p>
 					{/if}

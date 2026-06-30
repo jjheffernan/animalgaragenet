@@ -116,6 +116,101 @@ export async function confirmUpload(
 	return { asset: rowToAsset(updated) };
 }
 
+export interface StaffMediaAsset extends MediaAsset {
+	previewUrl: string | null;
+}
+
+export async function listStaffMediaAssets(limit = 48): Promise<StaffMediaAsset[]> {
+	const admin = createAdminClient();
+	if (!admin) return [];
+
+	const { data, error } = await admin
+		.from('media_assets')
+		.select('*')
+		.order('created_at', { ascending: false })
+		.limit(limit);
+
+	if (error || !data) return [];
+
+	const assets = data.map(rowToAsset);
+	return Promise.all(
+		assets.map(async (asset) => ({
+			...asset,
+			previewUrl: await signedReadUrl(asset.storagePath)
+		}))
+	);
+}
+
+export async function resolvePhotoUrlsForTestimonials(
+	testimonialIds: string[]
+): Promise<Record<string, string[]>> {
+	const result: Record<string, string[]> = {};
+	if (testimonialIds.length === 0) return result;
+
+	const byTestimonial = await listMediaForTestimonials(testimonialIds);
+	for (const [testimonialId, assets] of byTestimonial) {
+		const urls = (
+			await Promise.all(assets.map((asset) => signedReadUrl(asset.storagePath)))
+		).filter((url): url is string => Boolean(url));
+		if (urls.length > 0) result[testimonialId] = urls;
+	}
+
+	return result;
+}
+
+export async function deleteMediaAssetAsAdmin(
+	assetId: string
+): Promise<{ ok: true } | { error: string }> {
+	const admin = createAdminClient();
+	if (!admin) {
+		return { error: 'Media storage is not configured.' };
+	}
+
+	const { data: row, error: fetchError } = await admin
+		.from('media_assets')
+		.select('storage_path, bucket')
+		.eq('id', assetId)
+		.single();
+
+	if (fetchError || !row) {
+		return { error: 'Asset not found.' };
+	}
+
+	await admin.storage.from(String(row.bucket)).remove([String(row.storage_path)]);
+	const { error: deleteError } = await admin.from('media_assets').delete().eq('id', assetId);
+
+	if (deleteError) {
+		return { error: deleteError.message };
+	}
+
+	return { ok: true };
+}
+
+/** Drop pending uploads that were never confirmed within the retention window. */
+export async function cleanupStalePendingAssets(
+	maxAgeHours = 24
+): Promise<{ deleted: number }> {
+	const admin = createAdminClient();
+	if (!admin) return { deleted: 0 };
+
+	const cutoff = new Date(Date.now() - maxAgeHours * 60 * 60 * 1000).toISOString();
+	const { data: stale } = await admin
+		.from('media_assets')
+		.select('id')
+		.eq('status', 'pending')
+		.lt('created_at', cutoff);
+
+	if (!stale?.length) return { deleted: 0 };
+
+	let deleted = 0;
+	for (const row of stale) {
+		const result = await deleteMediaAssetAsAdmin(String(row.id));
+		if ('ok' in result) deleted += 1;
+	}
+
+	return { deleted };
+}
+
 export async function deleteMediaAsset(
 	supabase: SupabaseClient,
 	userId: string,
@@ -199,6 +294,25 @@ export async function listMediaForTestimonials(
 	return result;
 }
 
+export async function enrichTestimonialsWithPhotos<T extends { id: string }>(
+	testimonials: T[]
+): Promise<(T & { photoUrls: string[] })[]> {
+	if (testimonials.length === 0) return [];
+
+	const mediaMap = await listMediaForTestimonials(testimonials.map((t) => t.id));
+
+	return Promise.all(
+		testimonials.map(async (testimonial) => {
+			const assets = mediaMap.get(testimonial.id) ?? [];
+			const photoUrls = (
+				await Promise.all(assets.map((asset) => signedReadUrl(asset.storagePath)))
+			).filter((url): url is string => Boolean(url));
+
+			return { ...testimonial, photoUrls };
+		})
+	);
+}
+
 /** Public read URL — CDN when configured, otherwise Supabase signed URL. */
 export async function signedReadUrl(storagePath: string): Promise<string | null> {
 	if (!storagePath) return null;
@@ -215,4 +329,49 @@ export async function signedReadUrl(storagePath: string): Promise<string | null>
 
 	if (error || !data?.signedUrl) return null;
 	return data.signedUrl;
+}
+
+export interface UgcGalleryItem {
+	id: string;
+	title: string;
+	thumbnail: string;
+	src: string;
+}
+
+/** Approved testimonial photos for `/media?tab=photos`. */
+export async function listApprovedUgcGalleryItems(limit = 100): Promise<UgcGalleryItem[]> {
+	const admin = createAdminClient();
+	if (!admin) return [];
+
+	const { data, error } = await admin
+		.from('media_assets')
+		.select('id, storage_path, testimonial_media ( testimonials ( status, title ) )')
+		.eq('status', 'ready')
+		.order('created_at', { ascending: false })
+		.limit(limit);
+
+	if (error || !data) return [];
+
+	const items: UgcGalleryItem[] = [];
+	for (const row of data) {
+		const links = row.testimonial_media as Array<{
+			testimonials: { status: string; title: string } | null;
+		}> | null;
+		const approved = links?.some((link) => link.testimonials?.status === 'approved');
+		if (!approved) continue;
+
+		const title =
+			links?.find((link) => link.testimonials?.title)?.testimonials?.title ?? 'Community photo';
+		const url = await signedReadUrl(String(row.storage_path));
+		if (!url) continue;
+
+		items.push({
+			id: String(row.id),
+			title,
+			thumbnail: url,
+			src: url
+		});
+	}
+
+	return items;
 }

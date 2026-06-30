@@ -1,4 +1,5 @@
 import { fail } from '@sveltejs/kit';
+import { enrichTestimonialsWithPhotos } from '$lib/server/media/repository';
 import { listPendingTestimonials, moderateTestimonial } from '$lib/server/testimonials/repository';
 import { paginateFromUrl } from '$lib/pagination';
 import type { Actions, PageServerLoad } from './$types';
@@ -6,7 +7,7 @@ import type { Actions, PageServerLoad } from './$types';
 export const load: PageServerLoad = async ({ url }) => {
 	const allPending = await listPendingTestimonials();
 	const { items, pagination } = paginateFromUrl(url, allPending);
-	return { pending: items, pagination };
+	return { pending: await enrichTestimonialsWithPhotos(items), pagination };
 };
 
 export const actions: Actions = {

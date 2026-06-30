@@ -4,13 +4,15 @@
 		adminBadgeOff,
 		adminBadgeOn,
 		adminBtnPrimary,
+		adminBtnOutline,
 		adminCard,
 		adminSectionTitle
 	} from '$lib/components/admin/admin-ui';
 	import { mockMedia } from '$lib/data/mock/media';
 	import { config } from '$lib/config/env';
+	import { enhance } from '$app/forms';
 
-	let { data } = $props();
+	let { data, form } = $props();
 
 	let selectedFile = $state<File | null>(null);
 	let uploadStatus = $state('');
@@ -99,8 +101,13 @@
 	}
 
 	function cdnUrl(path: string): string {
-		const base = config.cdnBaseUrl || 'https://cdn.animalgarage.net';
-		return `${base.replace(/\/$/, '')}/${path}`;
+		const base = config.cdnBaseUrl?.replace(/\/$/, '') ?? '';
+		return base ? `${base}/${path}` : path;
+	}
+
+	function formatBytes(bytes: number): string {
+		if (bytes < 1024) return `${bytes} B`;
+		return `${(bytes / 1024).toFixed(1)} KB`;
 	}
 </script>
 
@@ -110,8 +117,8 @@
 
 <div class="space-y-8">
 	<AdminPageHeader
-		title="Media CDN"
-		subtitle="Asset browser and CDN upload for S3 + CloudFront."
+		title="Media"
+		subtitle="Supabase UGC bucket and optional S3 + CloudFront admin uploads."
 	/>
 
 	<section class={adminCard}>
@@ -161,8 +168,59 @@
 		{/if}
 	</section>
 
+	<section class={adminCard}>
+		<div class="flex flex-wrap items-center justify-between gap-4">
+			<h2 class={adminSectionTitle}>UGC bucket (`media_assets`)</h2>
+			<form method="POST" action="?/cleanupOrphans" use:enhance>
+				<button type="submit" class={adminBtnOutline}>Purge stale pending (24h)</button>
+			</form>
+		</div>
+		{#if form?.cleanup}
+			<p class="mt-3 text-sm text-zinc-400">
+				Removed {form.cleanup.deleted} abandoned pending upload{form.cleanup.deleted === 1 ? '' : 's'}.
+			</p>
+		{/if}
+		{#if !data.ugcConfigured}
+			<p class="mt-4 text-sm text-zinc-500">
+				Supabase is not configured — UGC list requires `PUBLIC_SUPABASE_*` and service role env.
+			</p>
+		{:else if data.ugcAssets.length === 0}
+			<p class="mt-4 text-sm text-zinc-500">No `media_assets` rows yet.</p>
+		{:else}
+			<div class="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+				{#each data.ugcAssets as asset (asset.id)}
+					<article class="overflow-hidden rounded-sm border border-zinc-800 bg-zinc-900/50">
+						{#if asset.previewUrl}
+							<img src={asset.previewUrl} alt="" class="aspect-video w-full object-cover" />
+						{:else}
+							<div class="flex aspect-video items-center justify-center bg-zinc-950 text-xs text-zinc-600">
+								No preview
+							</div>
+						{/if}
+						<div class="space-y-2 p-4">
+							<div class="flex flex-wrap items-center gap-2">
+								<span class={asset.status === 'ready' ? adminBadgeOn : adminBadgeOff}>{asset.status}</span>
+								<span class="text-xs text-zinc-500">{formatBytes(asset.byteSize)}</span>
+							</div>
+							<p class="truncate font-mono text-[10px] text-zinc-600" title={asset.storagePath}>
+								{asset.storagePath}
+							</p>
+							<form method="POST" action="?/deleteAsset" use:enhance class="pt-1">
+								<input type="hidden" name="id" value={asset.id} />
+								<button type="submit" class="text-xs font-bold uppercase tracking-wider text-red-400 hover:text-red-300">
+									Delete
+								</button>
+							</form>
+						</div>
+					</article>
+				{/each}
+			</div>
+		{/if}
+	</section>
+
 	<section>
-		<h2 class={adminSectionTitle}>Assets</h2>
+		<h2 class={adminSectionTitle}>CDN mock gallery</h2>
+		<p class="mt-2 text-sm text-zinc-500">Reference tiles until S3 inventory API ships.</p>
 		<div class="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
 			{#each mockMedia as item (item.id)}
 				<article class="overflow-hidden rounded-sm border border-zinc-800 bg-zinc-900/50">

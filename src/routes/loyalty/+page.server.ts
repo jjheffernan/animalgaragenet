@@ -1,5 +1,5 @@
 import { fail, redirect } from '@sveltejs/kit';
-import { linkMediaToTestimonial } from '$lib/server/media/repository';
+import { enrichTestimonialsWithPhotos, linkMediaToTestimonial } from '$lib/server/media/repository';
 import { validateMediaAssetIds } from '$lib/server/media/validation';
 import {
 	createTestimonial,
@@ -19,7 +19,7 @@ export const load: PageServerLoad = async ({ locals }) => {
 	return {
 		authenticated: Boolean(session),
 		user: session,
-		approved,
+		approved: await enrichTestimonialsWithPhotos(approved),
 		userTestimonials
 	};
 };

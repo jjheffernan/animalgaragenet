@@ -1,6 +1,7 @@
 import { getActiveDeals as getMockActiveDeals } from '$lib/data/mock/deals';
+import { getHeroCampaign, getUpcomingCampaign } from '$lib/data/mock/campaigns';
 import { createAdminClient } from '$lib/server/supabase/admin';
-import type { Deal } from '$lib/types/domain';
+import type { Campaign, Deal } from '$lib/types/domain';
 
 const mockStore: Deal[] = [];
 
@@ -32,6 +33,55 @@ export function isDealInSchedule(deal: Deal, now = new Date()): boolean {
 
 function filterScheduled(deals: Deal[], now = new Date()): Deal[] {
 	return deals.filter((deal) => isDealInSchedule(deal, now));
+}
+
+function dealToCampaign(deal: Deal): Campaign {
+	return {
+		id: deal.id,
+		name: deal.title,
+		slug: deal.id,
+		description: deal.description,
+		heroImage: '',
+		availableFrom: deal.startsAt ?? new Date().toISOString(),
+		availableUntil: deal.expiresAt,
+		active: deal.active
+	};
+}
+
+async function listScheduledDealsRaw(now = new Date()): Promise<Deal[]> {
+	const admin = createAdminClient();
+	if (!admin) {
+		const source = mockStore.length > 0 ? mockStore : getMockActiveDeals();
+		return source.filter((deal) => deal.active);
+	}
+
+	const { data, error } = await admin
+		.from('pit_lane_deals')
+		.select('*')
+		.eq('active', true)
+		.order('sort_order', { ascending: true })
+		.order('created_at', { ascending: false });
+
+	if (error || !data) {
+		return getMockActiveDeals().filter((deal) => deal.active);
+	}
+
+	return data.map(rowToDeal);
+}
+
+/** Upcoming drop countdown on homepage when CMS campaign section is inactive. */
+export async function getUpcomingDropCampaign(now = new Date()): Promise<Campaign | undefined> {
+	const deals = await listScheduledDealsRaw(now);
+	const upcoming = deals
+		.filter((deal) => deal.startsAt && new Date(deal.startsAt) > now)
+		.sort(
+			(a, b) =>
+				new Date(a.startsAt ?? 0).getTime() - new Date(b.startsAt ?? 0).getTime()
+		)[0];
+
+	if (upcoming) return dealToCampaign(upcoming);
+
+	return getUpcomingCampaign() ?? getHeroCampaign();
 }
 
 // @inspiration-scaffold: intentional — Pit Lane deals CMS; see docs/plans/active/inspiration-polish-tracker.md#IP-030

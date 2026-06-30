@@ -14,6 +14,8 @@ export interface Testimonial {
 	createdAt: string;
 	updatedAt: string;
 	approvedAt: string | null;
+	/** Resolved read URLs for linked review photos (approved/public views only). */
+	photoUrls?: string[];
 }
 
 export const TESTIMONIAL_STATUS_LABELS: Record<TestimonialStatus, string> = {

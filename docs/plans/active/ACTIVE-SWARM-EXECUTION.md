@@ -17,7 +17,7 @@ Batch slots: **A** = API/webhooks/SEO/CI · **B** = admin UI · **C** = inspirat
 |-------|--------|-------------:|----------------:|------------:|
 | **A** | API / webhooks / SEO / CI | 0 | 7 | 20 |
 | **B** | Admin UI | 0 | 9 | 2 |
-| **C** | Inspiration-polish code | 4 | 3 | 0 |
+| **C** | Inspiration-polish code | 1 | 6 | 0 |
 | **D** | Ponytail / schema / docs-only | 3 | 8 | 2 |
 | | **Grand total** | **7** | **27** | **24** |
 | | | | **59 rows** | |
@@ -46,13 +46,13 @@ _NS-OPS-010 (merge `dev` → `main`) has no batch slot._
 | admin-dashboard | ADM-S4-users | Users list — client search filter above table | No | B | **done** (`dd32c00` search + zinc table) |
 | admin-dashboard | ADM-S4-bugs | Bug reports — status filter chips + inbox/table | No | B | **done** (`dd32c00` status chips) |
 | admin-dashboard | ADM-S5 | Runtime panel — Commerce/Content/Platform grouping + last-checked timestamp | No | B | **done** (`dd32c00` grouped cards + `checkedAt`) |
-| next-steps | MR-PH3-001 | Remaining homepage mock slices (videos, campaigns, hero beyond CMS; UGC/watch wired) | No | C | open |
+| next-steps | MR-PH3-001 | Remaining homepage mock slices (videos, campaigns, hero beyond CMS; UGC/watch wired) | No | C | **done** |
 | inspiration-polish | IP-023 | Multi-channel international pricing — `channels.ts` + `SALEOR_LOCALE_CHANNELS` / `listSaleorChannels()` | No | C | **done** |
 | inspiration-polish | IP-024 | Shipping threshold promos — `shipping-promo.ts` + cart/checkout loaders | No | C | **done** |
-| inspiration-polish | IP-029 | `@motionone/svelte` scroll system (reduced-motion baseline done) | No | C | partial |
+| inspiration-polish | IP-029 | Scroll-triggered `AnimatedReveal` (IO); full `@motionone/svelte` deferred | No | C | partial |
 | inspiration-polish | IP-030 | Deal / campaign scheduler — `pit_lane_deals` + `deals/repository.ts` | No | C | **done** |
-| media-uploads | MEDIA-P2 | Review photo upload UI — complete Phase 2 wiring (`ReviewPhotoUpload.svelte`) | No | C | partial |
-| media-uploads | MEDIA-P3 | `/admin/media` real storage list/delete + orphan cleanup job | No | C | open |
+| media-uploads | MEDIA-P2 | Review photo upload UI — complete Phase 2 wiring (`ReviewPhotoUpload.svelte`) | No | C | **done** |
+| media-uploads | MEDIA-P3 | `/admin/media` real storage list/delete + orphan cleanup job | No | C | **done** |
 | next-steps | AUD-P2-020 | Machine-local agent skill symlink onboarding in `agents/AGENTS.md` | No | D | **done** (`bbeecbe`) |
 | next-steps | AUD-P2-021 | Remove daisyUI skill tree after sign-off (deprecation banner remains) | No | D | open |
 | next-steps | AUD-P2-023 | Newsletter / user preferences tables (schema + RLS per roadmap) | No | D | open |
@@ -100,7 +100,7 @@ _NS-OPS-010 (merge `dev` → `main`) has no batch slot._
 | Admin theme unify (zinc/red) | `dd32c00` — removed daisyUI + `.admin-shell`; shared `admin-ui.ts`; storefront unchanged (plain Tailwind `@theme`) |
 | LGTM observability | `eba78ff` — request logging, metrics endpoint, OTLP hook point; [observability-lgtm.md](../../infrastructure/observability-lgtm.md) |
 | account-flow-fix | Code hardening done; remaining items are ops duplicates of AUD-P0-* |
-| Inspiration-polish slot C (IP-023, IP-024, IP-030) | `channels.ts`, `shipping-promo.ts`, `deals/repository.ts`, `pit_lane_deals` migration |
+| Inspiration-polish slot C (continued) | Homepage videos/campaigns, testimonial photos, admin UGC browser, scroll `AnimatedReveal` |
 | inspiration-polish IP-005–IP-028 (except open rows above), IP-BUG-001–004, archived batches | done |
 
 ---

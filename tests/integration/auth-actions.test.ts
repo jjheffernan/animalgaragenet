@@ -5,12 +5,12 @@ import { actions as signUpActions } from '../../src/routes/auth/sign-up/+page.se
 import type { RequestEvent as SignInEvent } from '../../src/routes/auth/sign-in/$types';
 import type { RequestEvent as SignUpEvent } from '../../src/routes/auth/sign-up/$types';
 
-function signInRequest(fields: Record<string, string>): SignInEvent {
+function signInRequest(fields: Record<string, string>, hostname = 'localhost'): SignInEvent {
 	const formData = new FormData();
 	for (const [key, value] of Object.entries(fields)) {
 		formData.set(key, value);
 	}
-	const request = new Request('http://localhost/auth/sign-in', { method: 'POST', body: formData });
+	const request = new Request(`http://${hostname}/auth/sign-in`, { method: 'POST', body: formData });
 	const cookies = {
 		get: () => undefined,
 		set: () => {},
@@ -60,6 +60,26 @@ describe('auth sign-in action', () => {
 				})
 			)
 		).rejects.toSatisfy((error: unknown) => isRedirect(error));
+	});
+
+	it('rejects sign-in on production hostname when Supabase is not configured', async () => {
+		const result = await signInActions.default(
+			signInRequest(
+				{
+					email: 'driver@example.com',
+					name: 'Driver'
+				},
+				'animalgarage.netlify.app'
+			)
+		);
+
+		expect(isActionFailure(result)).toBe(true);
+		if (isActionFailure(result)) {
+			expect(result.status).toBe(503);
+			expect(result.data).toMatchObject({
+				error: expect.stringMatching(/not configured/i)
+			});
+		}
 	});
 });
 

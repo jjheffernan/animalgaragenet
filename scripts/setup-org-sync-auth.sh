@@ -1,58 +1,75 @@
 #!/usr/bin/env bash
-# Setup auth for mirroring jjheffernan/animalgaragenet main → heff-industries/animalgaragenet
+# One-time setup: deploy key on heff-industries/animalgaragenet → ORG_REPO_DEPLOY_KEY secret.
 #
-# GitHub cannot create fine-grained PATs via API. Use pat-url, then store the token.
-# Deploy keys cannot push .github/workflows changes — PAT is required for full sync.
+# Why deploy key (not PAT)?
+# - Fine-grained PATs must be created in the browser; OAuth tokens fail in Actions.
+# - Deploy keys cannot push .github/workflows — our mirror script excludes that folder.
+# - Netlify only needs app source on the org repo, not GitHub Actions workflows.
 
 set -euo pipefail
 
 PERSONAL_REPO="jjheffernan/animalgaragenet"
 ORG_REPO="heff-industries/animalgaragenet"
-
-# Pre-filled fine-grained PAT: heff-industries → animalgaragenet only
-PAT_URL="https://github.com/settings/personal-access-tokens/new?name=Org+main+sync&description=Mirror+main+to+heff-industries%2Fanimalgaragenet&target_name=heff-industries&expires_in=366&contents=write&actions=write&metadata=read"
+DEPLOY_KEY_TITLE="personal-main-sync"
 
 usage() {
   cat <<EOF
-Usage: $(basename "$0") [pat-url|store-token]
+Usage: $(basename "$0") [install|verify|cleanup]
 
-  pat-url      Print PAT creation URL (select repository: animalgaragenet only)
-  store-token  Store token from stdin as ORG_REPO_SYNC_TOKEN on $PERSONAL_REPO
+  install  Create deploy key on $ORG_REPO and store ORG_REPO_DEPLOY_KEY on $PERSONAL_REPO
+  verify   List deploy keys + secrets (values are never visible)
+  cleanup  Remove obsolete ORG_REPO_SYNC_TOKEN secret (PAT no longer used)
 
-After creating the PAT in GitHub:
-  gh secret set ORG_REPO_SYNC_TOKEN --repo $PERSONAL_REPO
+Secrets appear under: $PERSONAL_REPO → Settings → Secrets and variables → Actions
+You will only see names (ORG_REPO_DEPLOY_KEY), never the key value — that is normal.
 
 EOF
 }
 
-print_pat_url() {
-  echo "1. Open this URL and create the token (select only animalgaragenet):"
-  echo "$PAT_URL"
-  echo
-  echo "2. Required permissions (pre-filled): Contents write, Actions write, Metadata read"
-  echo
-  echo "3. Store the token:"
-  echo "   gh secret set ORG_REPO_SYNC_TOKEN --repo $PERSONAL_REPO"
-  echo
-  echo "4. Test sync:"
-  echo "   gh workflow run sync-org-main.yml --repo $PERSONAL_REPO"
-}
-
-store_token() {
-  command -v gh >/dev/null || { echo "gh CLI required"; exit 1; }
-  echo "Paste PAT (hidden), then Enter:"
-  read -rs TOKEN
-  echo
-  if [ -z "$TOKEN" ]; then
-    echo "Empty token"; exit 1
+cleanup() {
+  if gh secret list --repo "$PERSONAL_REPO" --json name -q '.[].name' | grep -qx ORG_REPO_SYNC_TOKEN; then
+    gh secret delete ORG_REPO_SYNC_TOKEN --repo "$PERSONAL_REPO"
+    echo "Removed ORG_REPO_SYNC_TOKEN from $PERSONAL_REPO"
+  else
+    echo "ORG_REPO_SYNC_TOKEN not set (already clean)"
   fi
-  printf '%s' "$TOKEN" | gh secret set ORG_REPO_SYNC_TOKEN --repo "$PERSONAL_REPO"
-  echo "Stored ORG_REPO_SYNC_TOKEN on $PERSONAL_REPO"
 }
 
-case "${1:-pat-url}" in
-  pat-url) print_pat_url ;;
-  store-token) store_token ;;
+install_deploy_key() {
+  command -v gh >/dev/null || { echo "gh CLI required"; exit 1; }
+  command -v ssh-keygen >/dev/null || { echo "ssh-keygen required"; exit 1; }
+
+  KEY_DIR=$(mktemp -d)
+  trap 'rm -rf "$KEY_DIR"' EXIT
+  KEY_FILE="$KEY_DIR/org_sync"
+
+  echo "Generating ed25519 deploy key..."
+  ssh-keygen -t ed25519 -f "$KEY_FILE" -N "" -C "github-actions:sync-main-to-heff-industries" >/dev/null
+
+  echo "Registering deploy key on $ORG_REPO (write access)..."
+  gh api "repos/${ORG_REPO}/keys" \
+    -f title="$DEPLOY_KEY_TITLE" \
+    -f key="$(cat "${KEY_FILE}.pub")" \
+    -f read_only=false >/dev/null
+
+  echo "Storing ORG_REPO_DEPLOY_KEY on $PERSONAL_REPO..."
+  gh secret set ORG_REPO_DEPLOY_KEY --repo "$PERSONAL_REPO" < "$KEY_FILE"
+
+  echo "Done. Test: gh workflow run sync-org-main.yml --repo $PERSONAL_REPO"
+}
+
+verify() {
+  echo "Deploy keys on $ORG_REPO:"
+  gh api "repos/${ORG_REPO}/keys" --jq '.[] | "- \(.title) (id \(.id), read_only=\(.read_only))"'
+  echo
+  echo "Action secrets on $PERSONAL_REPO:"
+  gh secret list --repo "$PERSONAL_REPO"
+}
+
+case "${1:-install}" in
+  install) install_deploy_key ;;
+  verify) verify ;;
+  cleanup) cleanup ;;
   -h|--help|help) usage ;;
   *) usage; exit 1 ;;
 esac

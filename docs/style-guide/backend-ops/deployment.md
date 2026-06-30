@@ -62,27 +62,30 @@ Personal repo (`jjheffernan/animalgaragenet`) is where you develop. The org repo
 
 ### One-time sync setup
 
-GitHub **cannot mint fine-grained PATs via API** — use a deploy key (recommended for CI) or create a PAT in the browser.
+**Use the deploy key only.** Run `./scripts/setup-org-sync-auth.sh cleanup` to remove the obsolete `ORG_REPO_SYNC_TOKEN` secret if it was set during earlier attempts.
 
-**Deploy key (via `scripts/setup-org-sync-auth.sh`):**
+| Where | What you see |
+| ----- | ------------ |
+| `heff-industries/animalgaragenet` → Settings → Deploy keys | `personal-main-sync` (public key) |
+| `jjheffernan/animalgaragenet` → Settings → Secrets → Actions | Secret **name** `ORG_REPO_DEPLOY_KEY` only — GitHub never shows secret values |
 
-- Write deploy key on `heff-industries/animalgaragenet` (`personal-main-sync`)
-- Secret `ORG_REPO_DEPLOY_KEY` on `jjheffernan/animalgaragenet`
-- Re-run: `./scripts/setup-org-sync-auth.sh deploy-key`
+Why we were stuck:
 
-**Fine-grained PAT (manual alternative):**
+1. **Deploy key** can push code but GitHub **blocks** updating `.github/workflows/*` via deploy keys.
+2. **PAT** stored as a secret does not appear on the org repo — only on the personal repo secrets list (names only).
+3. OAuth / `gh auth token` tokens fail in Actions with `Permission denied to github-actions[bot]`.
+
+**Fix:** `scripts/sync-org-mirror.sh` builds an orphan snapshot of `main` **without** `.github/workflows` and force-pushes to org `main`. Netlify does not need Actions on the org repo.
 
 ```bash
-./scripts/setup-org-sync-auth.sh pat-url   # prints pre-filled GitHub URL
-gh secret set ORG_REPO_SYNC_TOKEN --repo jjheffernan/animalgaragenet
+./scripts/setup-org-sync-auth.sh install   # first time, or rotate key
+./scripts/setup-org-sync-auth.sh verify    # list deploy keys + secret names
 ```
-
-Switch the sync workflow to HTTPS if you prefer PAT over deploy key.
 
 3. Connect Netlify to `heff-industries/animalgaragenet`, branch `main`.
 4. Re-run **Sync main to org** from Actions if you need to backfill without a new commit.
 
-Manual re-sync: GitHub → Actions → **Sync main to org** → Run workflow.
+Manual re-sync: GitHub → Actions → **Sync main to org** → Run workflow (`workflow_dispatch` does not wait for CI).
 
 ## Pre-launch checklist
 

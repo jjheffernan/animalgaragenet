@@ -35,9 +35,7 @@
 
 <footer class="border-t border-zinc-800 bg-zinc-950">
 	<div class="mx-auto max-w-7xl px-4 py-10 sm:px-6 sm:py-12 lg:px-8">
-		<div
-			class="grid gap-10 lg:grid-cols-12 lg:gap-8 xl:gap-12"
-		>
+		<div class="grid gap-10 lg:grid-cols-12 lg:gap-x-8 lg:gap-y-10">
 			<!-- Brand: logo, address, hours -->
 			<div class="lg:col-span-4">
 				<a href={resolvePath('/')} class="inline-flex items-center gap-3">
@@ -71,7 +69,7 @@
 			</div>
 
 			<!-- Contact + social -->
-			<div class="lg:col-span-3">
+			<div class="lg:col-span-2">
 				<p class="text-xs font-bold uppercase tracking-widest text-zinc-400">Get in Touch</p>
 				<ul class="mt-4 space-y-3 text-sm">
 					<li>
@@ -101,9 +99,9 @@
 			</div>
 
 			<!-- Helpful links — desktop -->
-			<div class="hidden lg:col-span-5 lg:block">
+			<div class="hidden lg:col-span-6 lg:col-start-7 lg:block">
 				<p class="text-xs font-bold uppercase tracking-widest text-zinc-400">Helpful Links</p>
-				<div class="mt-4 grid grid-cols-3 gap-x-6 gap-y-1">
+				<div class="mt-4 grid grid-cols-3 gap-x-8 gap-y-1">
 					{#each helpfulLinkColumns as column, columnIndex (columnIndex)}
 						<ul class="space-y-1.5">
 							{#each column as link (link.href)}
@@ -144,7 +142,7 @@
 					</svg>
 				</button>
 				{#if helpfulLinksOpen}
-					<div class="grid grid-cols-2 gap-x-6 gap-y-1 py-4">
+					<div class="grid grid-cols-2 gap-x-8 gap-y-1 py-4 sm:grid-cols-3">
 						{#each helpfulLinkColumns as column, columnIndex (columnIndex)}
 							<ul class="space-y-2">
 								{#each column as link (link.href)}

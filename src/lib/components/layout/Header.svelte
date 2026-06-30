@@ -212,7 +212,7 @@
 
 	<header class="relative border-b border-zinc-800/80 bg-zinc-950/90 backdrop-blur-md">
 		<div
-			class="relative mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:grid lg:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] lg:items-center lg:gap-x-4 lg:px-8"
+			class="relative mx-auto grid max-w-7xl grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-x-2 px-4 py-3 sm:gap-x-3 sm:px-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,auto)_minmax(0,1fr)] lg:gap-x-4 lg:px-8 lg:py-4"
 		>
 			<button
 				type="button"
@@ -239,28 +239,31 @@
 
 			<a
 				href={resolve('/')}
-				class="group absolute left-1/2 flex -translate-x-1/2 items-center gap-2 lg:static lg:translate-x-0 lg:justify-self-start"
+				class="group flex min-w-0 items-center justify-center gap-2 justify-self-center lg:justify-self-start"
 			>
 				<span
-					class="flex h-9 w-9 items-center justify-center bg-red-600 text-sm font-black tracking-tighter text-white transition-transform group-hover:scale-105"
+					class="flex size-9 shrink-0 items-center justify-center bg-red-600 text-sm font-black tracking-tighter text-white transition-transform group-hover:scale-105"
 					>AG</span
 				>
 				<span
-					class="hidden font-display text-lg font-bold uppercase tracking-widest text-white sm:block"
+					class="hidden truncate font-display text-lg font-bold uppercase tracking-widest text-white sm:block"
 				>
 					Animal Garage
 				</span>
 			</a>
 
-			<nav class="hidden items-center gap-6 lg:flex lg:justify-self-center" aria-label="Main">
+			<nav
+				class="hidden min-w-0 items-center gap-4 overflow-hidden lg:flex lg:justify-self-center lg:pe-2"
+				aria-label="Main"
+			>
 				<div
-					class="relative inline-flex items-center gap-0.5"
+					class="relative inline-flex min-w-0 max-w-full shrink items-center gap-0.5"
 					onmouseenter={openShopMenu}
 					onmouseleave={scheduleClose}
 				>
 					<a
 						href={resolve('/shop')}
-						class="text-sm font-medium uppercase tracking-wider transition-colors {activeMenu ===
+						class="truncate text-sm font-medium uppercase tracking-wider transition-colors {activeMenu ===
 						'shop'
 							? 'text-white'
 							: 'text-zinc-400 hover:text-white'}"
@@ -295,13 +298,13 @@
 				</div>
 
 				<div
-					class="relative inline-flex items-center gap-0.5"
+					class="relative inline-flex min-w-0 max-w-full shrink items-center gap-0.5"
 					onmouseenter={openPartsMenu}
 					onmouseleave={scheduleClose}
 				>
 					<a
 						href={resolve('/parts')}
-						class="text-sm font-medium uppercase tracking-wider transition-colors {activeMenu ===
+						class="truncate text-sm font-medium uppercase tracking-wider transition-colors {activeMenu ===
 						'parts'
 							? 'text-white'
 							: 'text-zinc-400 hover:text-white'}"
@@ -336,13 +339,13 @@
 				</div>
 
 				<div
-					class="relative inline-flex items-center gap-0.5"
+					class="relative inline-flex min-w-0 max-w-full shrink items-center gap-0.5"
 					onmouseenter={openCommunityMenu}
 					onmouseleave={scheduleClose}
 				>
 					<a
 						href={resolve('/builds')}
-						class="text-sm font-medium uppercase tracking-wider transition-colors {communityMenuOpen ||
+						class="truncate text-sm font-medium uppercase tracking-wider transition-colors {communityMenuOpen ||
 						isCommunityActive
 							? 'text-white'
 							: 'text-zinc-400 hover:text-white'}"
@@ -409,7 +412,7 @@
 
 				<a
 					href={dealsHref}
-					class="inline-flex items-center gap-1.5 text-sm font-medium uppercase tracking-wider transition-colors {$page
+					class="inline-flex min-w-0 max-w-full shrink items-center gap-1.5 truncate text-sm font-medium uppercase tracking-wider transition-colors {$page
 						.url.pathname === '/deals'
 						? 'text-red-500'
 						: 'text-zinc-400 hover:text-white'}"
@@ -436,13 +439,15 @@
 				</a>
 			</nav>
 
-			<div class="z-10 flex shrink-0 items-center gap-2 sm:gap-3 lg:justify-self-end">
+			<div
+				class="isolate z-10 flex shrink-0 items-center gap-1.5 justify-self-end sm:gap-2 lg:ps-2"
+			>
 				{#if session}
-					<div class="flex shrink-0 items-center gap-2 sm:gap-3">
-						<div class="relative">
+					<div class="flex shrink-0 items-center gap-1.5 sm:gap-2">
+						<div class="relative isolate shrink-0">
 							<button
 								type="button"
-								class={headerIconBtn}
+								class="{headerIconBtn} size-9"
 								aria-label="Notifications"
 								aria-expanded={notificationsOpen}
 								aria-haspopup="menu"
@@ -480,10 +485,10 @@
 								</div>
 							{/if}
 						</div>
-						<div class="relative" bind:this={accountMenuRoot}>
+						<div class="relative isolate shrink-0" bind:this={accountMenuRoot}>
 							<button
 								type="button"
-								class="hidden min-h-9 shrink-0 items-center px-2 text-sm font-medium uppercase tracking-wider text-zinc-400 transition hover:text-white sm:inline-flex"
+								class="hidden min-h-9 shrink-0 items-center px-2 text-sm font-medium uppercase tracking-wider text-zinc-400 transition hover:text-white lg:inline-flex"
 								aria-label="Account menu"
 								aria-expanded={accountMenuOpen}
 								aria-haspopup="menu"
@@ -497,7 +502,7 @@
 							</button>
 							<button
 								type="button"
-								class="{headerIconBtn} sm:hidden"
+								class="{headerIconBtn} size-9 lg:hidden"
 								aria-label="Account menu"
 								aria-expanded={accountMenuOpen}
 								aria-haspopup="menu"
@@ -532,13 +537,13 @@
 				{:else}
 					<a
 						href={resolve('/auth/sign-in')}
-						class="hidden min-h-9 shrink-0 items-center px-2 text-sm font-medium uppercase tracking-wider text-zinc-400 transition hover:text-white sm:inline-flex"
+						class="hidden min-h-9 shrink-0 items-center px-2 text-sm font-medium uppercase tracking-wider text-zinc-400 transition hover:text-white lg:inline-flex"
 					>
 						Sign In
 					</a>
 					<a
 						href={resolve('/auth/sign-in')}
-						class="{headerIconBtn} sm:hidden"
+						class="{headerIconBtn} size-9 lg:hidden"
 						aria-label="Sign In"
 					>
 						<svg
@@ -559,7 +564,7 @@
 				{/if}
 				<button
 					type="button"
-					class={headerIconBtn}
+					class="{headerIconBtn} size-9"
 					aria-label="Search"
 					onclick={() => search.openModal()}
 				>
@@ -574,7 +579,7 @@
 				</button>
 				<button
 					type="button"
-					class={headerIconBtn}
+					class="{headerIconBtn} size-9"
 					aria-label="Cart"
 					onclick={toggleCart}
 				>

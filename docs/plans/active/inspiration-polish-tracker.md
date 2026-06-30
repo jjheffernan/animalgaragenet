@@ -40,11 +40,12 @@ Markers: `@inspiration-scaffold` (Supabase/community/CMS) · `@saleor-migration`
 | IP-023 | inspiration         | Multi-channel international pricing          | `src/lib/server/saleor/channels.ts` (`@saleor-migration`)                        | **scaffolded** | Map locales in Saleor admin                                         |
 | IP-024 | inspiration         | Shipping zones + threshold promos            | —                                                                                | **not started** | Saleor shipping + promotion rules                                   |
 | IP-025 | inspiration         | Supabase-backed admin user CRUD              | `src/lib/server/supabase/admin-users.ts`, `/admin/users`                         | **partial**   | Service role + `promote-admin.ts`                                   |
-| IP-026 | inspiration         | Deal / campaign scheduler (Pit Lane CMS)     | `/deals` mock                                                                    | **not started** | CMS table TBD                                                       |
+| IP-026 | inspiration         | Admin runtime dashboard (staff integrations) | `src/lib/server/admin/runtime-status.ts`, `/admin/runtime` (`@inspiration-scaffold`) | **done**      | Staff JWT (`editor`/`admin`); cron registry scaffold for future jobs |
 | IP-027 | inspiration         | Faceted parts search                         | —                                                                                | **not started** | Saleor attributes                                                   |
 | IP-028 | inspiration         | `@motionone/svelte` scroll system            | —                                                                                | **not started** | animation-media.md                                                  |
+| IP-029 | inspiration         | Deal / campaign scheduler (Pit Lane CMS)     | `/deals` mock                                                                    | **not started** | CMS table TBD (formerly scoped as IP-026)                           |
 
-**Row count:** 28
+**Row count:** 29
 
 **Related scaffold (no IP):** Saleor webhooks — `api/webhooks/saleor/+server.ts` (`@saleor-migration`)
 
@@ -67,6 +68,7 @@ Explicit follow-ups from the June 30 implementation batch (`67a150c`–`6837217`
 | IP-015 | AUD-P1-009 / batch  | Live Ghost CMS (fallback policy shipped)                             | code / ops   | `/blog` and `/guides` load real posts when env set; production never silently mocks | `GHOST_URL`, `GHOST_CONTENT_API_KEY`; Ghost tags `guide` / `blog`            |
 | —      | batch `5ca1b1f`     | Footer layout (shipped — no follow-up)                               | —            | Condensed Z1-inspired footer; mobile stack; e2e footer links pass                    | —                                                                          |
 | IP-BUG-001 | polish / UI      | Navbar spacing when logged in + notifications                        | code         | **done** — desktop grid keeps nav centered; icon buttons fixed `size-9`; badge overlays bell/cart | `src/lib/components/layout/Header.svelte` · `notificationCount` in layout load |
+| IP-BUG-002 | polish / UI      | Header overlap + mobile account label + newsletter validation bleed  | code         | **done** — nav truncates before bell; Account text `lg+` only; footer form `novalidate` + JS validation | `Header.svelte` · `NewsletterSignup.svelte` · `Footer.svelte` · `e2e/navigation.spec.ts` |
 
 ---
 

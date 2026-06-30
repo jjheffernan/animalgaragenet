@@ -46,4 +46,28 @@ test.describe('navigation', () => {
 		await expect(page).toHaveURL(/\/contact/);
 		await expect(page.getByRole('heading', { level: 1, name: 'Contact' })).toBeVisible();
 	});
+
+	test('mobile header keeps account icon-only (IP-BUG-002)', async ({ page }) => {
+		await page.setViewportSize({ width: 390, height: 844 });
+
+		const header = page.locator('header');
+		await expect(header.getByRole('button', { name: 'Account menu' })).toBeVisible();
+		await expect(header.getByText('Account', { exact: true })).toHaveCount(0);
+	});
+
+	test('desktop nav does not overlap header actions (IP-BUG-002)', async ({ page }) => {
+		await page.setViewportSize({ width: 1280, height: 800 });
+
+		const mainNav = page.getByRole('navigation', { name: 'Main' });
+		const dealsLink = mainNav.getByRole('link', { name: /Pit Lane Deals/i });
+		const notifications = page.getByRole('button', { name: 'Notifications' });
+
+		if (await notifications.isVisible()) {
+			const dealsBox = await dealsLink.boundingBox();
+			const bellBox = await notifications.boundingBox();
+			expect(dealsBox).not.toBeNull();
+			expect(bellBox).not.toBeNull();
+			expect(dealsBox!.x + dealsBox!.width).toBeLessThanOrEqual(bellBox!.x);
+		}
+	});
 });

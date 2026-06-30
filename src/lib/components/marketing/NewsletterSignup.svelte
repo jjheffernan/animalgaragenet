@@ -39,7 +39,7 @@
 	}
 </script>
 
-<form onsubmit={handleSubmit} class="space-y-3">
+<form onsubmit={handleSubmit} novalidate class="space-y-3">
 	<p class="text-xs font-bold uppercase tracking-widest text-zinc-400">Newsletter</p>
 	<p class="text-sm text-zinc-500">Drops, deals, and garage culture — no spam.</p>
 	{#if submitted}
@@ -50,7 +50,8 @@
 				type="email"
 				bind:value={email}
 				placeholder="you@email.com"
-				required
+				autocomplete="email"
+				aria-required="true"
 				class="min-w-0 flex-1 rounded-sm border border-zinc-700 bg-zinc-900 px-3 py-2 text-sm text-white placeholder-zinc-500 focus:border-red-600 focus:outline-none"
 			/>
 			<button

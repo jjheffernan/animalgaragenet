@@ -8,6 +8,8 @@ on:
 
 jobs:
   build:
+    # Org repo is a deploy mirror; CI runs on the personal repo before sync.
+    if: github.repository == 'jjheffernan/animalgaragenet'
     runs-on: ubuntu-latest
 
     steps:

@@ -47,9 +47,32 @@ Set all vars from `.env.example` in the hosting platform's env config:
 
 ## CI/CD
 
-GitHub Actions (`.github/workflows/ci.yml`) validates lint/check/build on PRs.
+| Workflow | Trigger | Purpose |
+| -------- | ------- | ------- |
+| `.github/workflows/ci.yml` | Push/PR to `dev` or `main` on **jjheffernan/animalgaragenet** | Lint, typecheck, unit/e2e tests, build |
+| `.github/workflows/sync-org-main.yml` | CI success on `main`, or manual | Mirror `main` → **heff-industries/animalgaragenet** for Netlify |
 
-Deployment pipeline not yet configured — add platform-specific workflow when host is chosen.
+### Branch flow
+
+```
+feature/* → dev (CI) → merge to main (CI) → sync to heff-industries/animalgaragenet → Netlify deploy
+```
+
+Personal repo (`jjheffernan/animalgaragenet`) is where you develop. The org repo is the production mirror only.
+
+### One-time sync setup
+
+1. Create a fine-grained GitHub PAT with **Contents: Read and write** on `heff-industries/animalgaragenet` only.
+2. Add it to the personal repo as secret `ORG_REPO_SYNC_TOKEN`:
+
+   ```bash
+   gh secret set ORG_REPO_SYNC_TOKEN --repo jjheffernan/animalgaragenet
+   ```
+
+3. Connect Netlify to `heff-industries/animalgaragenet`, branch `main`.
+4. Re-run **Sync main to org** from Actions if you need to backfill without a new commit.
+
+Manual re-sync: GitHub → Actions → **Sync main to org** → Run workflow.
 
 ## Pre-launch checklist
 

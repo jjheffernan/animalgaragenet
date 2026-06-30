@@ -1,0 +1,67 @@
+# After CI passes on main in the personal repo, mirror main to the org repo
+# used by Netlify (heff-industries/animalgaragenet).
+#
+# Setup (one time, repo admin on jjheffernan/animalgaragenet):
+# 1. Create a fine-grained PAT (or classic PAT with repo scope) that can
+#    write to heff-industries/animalgaragenet only.
+# 2. Add it as a repository secret:
+#      gh secret set ORG_REPO_SYNC_TOKEN --repo jjheffernan/animalgaragenet
+# 3. Netlify should stay connected to heff-industries/animalgaragenet @ main.
+
+name: Sync main to org
+
+on:
+  workflow_run:
+    workflows: [CI]
+    types: [completed]
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: sync-org-main
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    if: >
+      github.repository == 'jjheffernan/animalgaragenet' &&
+      (
+        github.event_name == 'workflow_dispatch' ||
+        (
+          github.event.workflow_run.conclusion == 'success' &&
+          github.event.workflow_run.event == 'push'
+        )
+      )
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout vetted main
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event_name == 'workflow_dispatch' && 'main' || github.event.workflow_run.head_sha }}
+          fetch-depth: 0
+
+      - name: Verify secret is configured
+        env:
+          ORG_REPO_SYNC_TOKEN: ${{ secrets.ORG_REPO_SYNC_TOKEN }}
+        run: |
+          if [ -z "$ORG_REPO_SYNC_TOKEN" ]; then
+            echo "::error::ORG_REPO_SYNC_TOKEN is not set. See .github/workflows/sync-org-main.yml header."
+            exit 1
+          fi
+
+      - name: Push main to heff-industries/animalgaragenet
+        env:
+          ORG_REPO_SYNC_TOKEN: ${{ secrets.ORG_REPO_SYNC_TOKEN }}
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git remote add org "https://x-access-token:${ORG_REPO_SYNC_TOKEN}@github.com/heff-industries/animalgaragenet.git"
+          git push org HEAD:refs/heads/main
+
+      - name: Summary
+        run: |
+          echo "Synced $(git rev-parse --short HEAD) to heff-industries/animalgaragenet main"

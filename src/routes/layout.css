@@ -1,5 +1,11 @@
 @import 'tailwindcss';
 
+@plugin 'daisyui' {
+	themes: dark --default;
+	root: '.admin-shell';
+	logs: false;
+}
+
 @theme {
 	--font-display: 'Arial Black', 'Helvetica Neue', Helvetica, sans-serif;
 	--font-sans: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;

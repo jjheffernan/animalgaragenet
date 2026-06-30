@@ -1,6 +1,18 @@
+import { getDashboardActivity } from '$lib/server/admin/dashboard-activity';
+import { getDashboardStats } from '$lib/server/admin/dashboard-stats';
+import { getRuntimeStatus } from '$lib/server/admin/runtime-status';
 import type { PageServerLoad } from './$types';
 
-/** Overview stats use mock counts until Saleor and Supabase admin queries ship. */
+/** Overview stats — commerce KPIs mock until Saleor queries ship. */
 export const load: PageServerLoad = async ({ parent }) => {
-	return parent();
+	const parentData = await parent();
+
+	const [stats, activity] = await Promise.all([getDashboardStats(), getDashboardActivity()]);
+
+	return {
+		...parentData,
+		stats,
+		activity,
+		status: getRuntimeStatus()
+	};
 };

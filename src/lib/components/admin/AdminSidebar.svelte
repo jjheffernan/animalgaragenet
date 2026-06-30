@@ -16,51 +16,39 @@
 	}
 
 	function linkClass(href: string, exact = false): string {
-		return isActive(href, exact)
-			? 'bg-zinc-800 text-white'
-			: 'text-zinc-400 hover:bg-zinc-800/60 hover:text-white';
+		return isActive(href, exact) ? 'menu-active' : '';
 	}
 </script>
 
-<aside class="flex h-full w-64 shrink-0 flex-col border-r border-zinc-800 bg-zinc-900/40 p-4">
+<aside class="bg-base-200 flex h-full w-64 shrink-0 flex-col border-r border-base-300 p-4">
 	<a href={resolve('/admin/dashboard')} class="mb-6 flex items-center gap-2 px-2">
-		<span class="text-xs font-bold uppercase tracking-[0.3em] text-red-500">Animal Garage</span>
+		<span class="text-primary text-xs font-bold uppercase tracking-[0.3em]">Animal Garage</span>
 	</a>
 
-	<nav class="flex-1 space-y-6 overflow-y-auto" aria-label="Admin">
+	<nav class="flex-1 overflow-y-auto" aria-label="Admin">
 		{#each ADMIN_NAV as section (section.label)}
-			<div>
-				<p class="mb-2 px-2 text-[10px] font-bold uppercase tracking-widest text-zinc-600">
-					{section.label}
-				</p>
-				<ul class="space-y-0.5">
-					{#each section.items as item (item.href)}
-						<li>
-							{#if item.disabled}
-								<span
-									class="block cursor-not-allowed rounded-sm px-2 py-1.5 text-sm text-zinc-600"
-									title="Coming soon"
-								>
-									{item.label}
-								</span>
-							{:else}
-								<a
-									href={resolve(item.href as '/admin')}
-									class="block rounded-sm px-2 py-1.5 text-sm transition {linkClass(
-										item.href,
-										item.exact
-									)}"
-									onclick={onNavigate}
-								>
-									{item.label}
-								</a>
-							{/if}
-						</li>
-					{/each}
-				</ul>
-			</div>
+			<ul class="menu menu-sm mb-4 rounded-box p-0">
+				<li class="menu-title text-[10px] uppercase tracking-widest">{section.label}</li>
+				{#each section.items as item (item.href)}
+					<li>
+						{#if item.disabled}
+							<span class="menu-disabled text-base-content/40" title="Coming soon">
+								{item.label}
+							</span>
+						{:else}
+							<a
+								href={resolve(item.href as '/admin')}
+								class={linkClass(item.href, item.exact)}
+								onclick={onNavigate}
+							>
+								{item.label}
+							</a>
+						{/if}
+					</li>
+				{/each}
+			</ul>
 		{/each}
 	</nav>
 
-	<p class="mt-4 px-2 text-[10px] text-zinc-600">Admin shell — zinc palette, red accents.</p>
+	<p class="text-base-content/40 mt-4 px-2 text-[10px]">Admin shell — daisyUI dark theme.</p>
 </aside>

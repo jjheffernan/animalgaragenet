@@ -53,65 +53,74 @@
 	<title>Runtime — Admin — Animal Garage</title>
 </svelte:head>
 
-<h1 class="font-display text-2xl font-bold uppercase text-white">Runtime</h1>
-<p class="mt-1 text-zinc-400">Integration status and staff tools — booleans only, no secrets.</p>
-
-<section class="mt-8">
-	<h2 class="text-xs font-bold uppercase tracking-widest text-zinc-500">Integration status</h2>
-	<div class="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-		{#each statusCards as card (card.key)}
-			{@const on = data.status[card.key]}
-			<div class="rounded-sm border border-zinc-800 bg-zinc-900/50 p-5">
-				<div class="flex items-start justify-between gap-3">
-					<p class="text-xs font-bold uppercase tracking-widest text-zinc-500">{card.label}</p>
-					<span
-						class="rounded-sm px-2 py-0.5 text-[10px] font-bold uppercase {on
-							? 'bg-emerald-600/20 text-emerald-400'
-							: 'bg-zinc-800 text-zinc-500'}"
-					>
-						{on ? 'On' : 'Off'}
-					</span>
-				</div>
-				<p class="mt-3 text-sm text-zinc-400">{card.hint}</p>
-			</div>
-		{/each}
+<div class="space-y-8">
+	<div>
+		<h1 class="font-display text-2xl font-bold uppercase">Runtime</h1>
+		<p class="mt-1 text-base-content/70">Integration status and staff tools — booleans only, no secrets.</p>
 	</div>
-</section>
 
-<section class="mt-10">
-	<h2 class="text-xs font-bold uppercase tracking-widest text-zinc-500">Cron triggers</h2>
-	<p class="mt-2 text-sm text-zinc-500">
-		Scheduled jobs use secret headers — configure in Netlify cron or external scheduler.
-	</p>
-	<ul class="mt-4 space-y-3">
-		{#each data.cronTriggers as trigger (trigger.id)}
-			<li class="rounded-sm border border-zinc-800 bg-zinc-900/30 px-4 py-3 text-sm">
-				<div class="flex flex-wrap items-center justify-between gap-2">
-					<span class="font-medium text-zinc-200">{trigger.label}</span>
-					<span
-						class="rounded-sm px-2 py-0.5 text-[10px] font-bold uppercase {trigger.configured
-							? 'bg-emerald-600/20 text-emerald-400'
-							: 'bg-amber-600/20 text-amber-400'}"
-					>
-						{trigger.configured ? 'Configured' : 'Not configured'}
-					</span>
+	<section>
+		<h2 class="text-base-content/50 text-xs font-bold uppercase tracking-widest">Integration status</h2>
+		<div class="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+			{#each statusCards as card (card.key)}
+				{@const on = data.status[card.key]}
+				<div class="card bg-base-200 shadow-sm">
+					<div class="card-body gap-2 py-4">
+						<div class="flex items-start justify-between gap-3">
+							<p class="text-base-content/50 text-xs font-bold uppercase tracking-widest">
+								{card.label}
+							</p>
+							<span class="badge badge-sm {on ? 'badge-success' : 'badge-ghost'}">
+								{on ? 'On' : 'Off'}
+							</span>
+						</div>
+						<p class="text-base-content/70 text-sm">{card.hint}</p>
+					</div>
 				</div>
-				<p class="mt-1 font-mono text-xs text-zinc-600">{trigger.path}</p>
-			</li>
-		{/each}
-	</ul>
-</section>
+			{/each}
+		</div>
+	</section>
 
-<section class="mt-10 rounded-sm border border-zinc-800 bg-zinc-900/50 p-6">
-	<h2 class="text-xs font-bold uppercase tracking-widest text-zinc-500">Admin tools</h2>
-	<ul class="mt-4 space-y-3 text-sm">
-		{#each adminTools as tool (tool.href)}
-			<li>
-				<a href={resolve(tool.href)} class="text-zinc-300 hover:text-red-400">
-					→ {tool.label}
-				</a>
-				<span class="text-zinc-600"> — {tool.detail}</span>
-			</li>
-		{/each}
-	</ul>
-</section>
+	<section>
+		<h2 class="text-base-content/50 text-xs font-bold uppercase tracking-widest">Cron triggers</h2>
+		<p class="text-base-content/60 mt-2 text-sm">
+			Scheduled jobs use secret headers — configure in Netlify cron or external scheduler.
+		</p>
+		<ul class="mt-4 space-y-3">
+			{#each data.cronTriggers as trigger (trigger.id)}
+				<li class="card bg-base-200 shadow-sm">
+					<div class="card-body gap-2 py-3">
+						<div class="flex flex-wrap items-center justify-between gap-2">
+							<span class="font-medium">{trigger.label}</span>
+							<span
+								class="badge badge-sm {trigger.configured ? 'badge-success' : 'badge-warning'}"
+							>
+								{trigger.configured ? 'Configured' : 'Not configured'}
+							</span>
+						</div>
+						<p class="font-mono text-base-content/50 text-xs">{trigger.path}</p>
+					</div>
+				</li>
+			{/each}
+		</ul>
+	</section>
+
+	<div class="card bg-base-200 shadow-sm">
+		<div class="card-body">
+			<h2 class="card-title text-sm">Admin tools</h2>
+			<ul class="list mt-2">
+				{#each adminTools as tool (tool.href)}
+					<li>
+						<a href={resolve(tool.href)} class="list-row hover:bg-base-300 rounded-box">
+							<div class="list-col-grow">
+								<span class="font-medium">{tool.label}</span>
+								<p class="text-base-content/60 text-xs">{tool.detail}</p>
+							</div>
+							<span class="text-base-content/40" aria-hidden="true">→</span>
+						</a>
+					</li>
+				{/each}
+			</ul>
+		</div>
+	</div>
+</div>

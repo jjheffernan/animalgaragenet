@@ -2,6 +2,7 @@
 	import { resolve } from '$app/paths';
 	import SectionHeading from '$lib/components/SectionHeading.svelte';
 	import AnimatedReveal from '$lib/components/AnimatedReveal.svelte';
+	import ListControls from '$lib/components/ListControls.svelte';
 
 	let { data } = $props();
 </script>
@@ -17,8 +18,8 @@
 				<h1 class="font-display text-4xl font-bold uppercase tracking-wider text-white">Build Threads</h1>
 				<p class="mt-2 text-zinc-400">Real cars, real mods, real stories from the squad.</p>
 			</div>
-			<a href={resolve('/builds/submit')} class="rounded-sm bg-red-600 px-6 py-3 text-sm font-bold uppercase tracking-wider text-white hover:bg-red-500">
-				Submit Your Build
+			<a href={resolve('/account/builds')} class="rounded-sm bg-red-600 px-4 py-2 text-sm font-bold uppercase tracking-wider text-white transition hover:bg-red-500">
+				My Build Logs
 			</a>
 		</div>
 	</div>
@@ -26,7 +27,7 @@
 
 <section class="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
 	<AnimatedReveal>
-		<SectionHeading title="All Builds" subtitle="{data.builds.length} threads" />
+		<SectionHeading title="All Builds" subtitle="{data.pagination.total} threads" />
 	</AnimatedReveal>
 	<div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
 		{#each data.builds as build (build.id)}
@@ -40,4 +41,5 @@
 			</a>
 		{/each}
 	</div>
+	<ListControls pagination={data.pagination} />
 </section>

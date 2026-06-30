@@ -1,12 +1,14 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
 	import AnimatedReveal from '$lib/components/AnimatedReveal.svelte';
+	import RichContent from '$lib/components/RichContent.svelte';
 
 	let { data } = $props();
 </script>
 
 <svelte:head>
 	<title>{data.post.title} — Animal Garage Blog</title>
+	<meta name="description" content={data.post.excerpt} />
 </svelte:head>
 
 <article>
@@ -26,9 +28,7 @@
 
 	<section class="mx-auto max-w-3xl px-4 py-16 sm:px-6">
 		<AnimatedReveal>
-			{#each data.post.content.split('\n\n') as para (para)}
-				<p class="mt-4 leading-relaxed text-zinc-400">{para}</p>
-			{/each}
+			<RichContent html={data.post.html} content={data.post.content} />
 			<div class="mt-8 flex gap-2">
 				{#each data.post.tags as tag (tag)}
 					<span class="rounded-sm bg-zinc-800 px-2 py-1 text-xs text-zinc-500">{tag}</span>

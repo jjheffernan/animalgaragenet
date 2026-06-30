@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
 	import ProductGrid from '$lib/components/ProductGrid.svelte';
+	import ListControls from '$lib/components/ListControls.svelte';
 	import AnimatedReveal from '$lib/components/AnimatedReveal.svelte';
 
 	let { data } = $props();
@@ -36,4 +37,5 @@
 		<h2 class="mb-8 font-display text-2xl font-bold uppercase text-white">Products</h2>
 	</AnimatedReveal>
 	<ProductGrid products={data.products} />
+	<ListControls pagination={data.pagination} />
 </section>

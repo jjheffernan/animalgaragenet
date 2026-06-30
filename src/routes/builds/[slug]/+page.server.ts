@@ -1,5 +1,5 @@
 import { error } from '@sveltejs/kit';
-import { getBuildBySlug } from '$lib/data/mock-builds';
+import { getBuildBySlug } from '$lib/data/mock/builds';
 import { getProductsForBuild } from '$lib/data/catalog-helpers';
 import type { PageServerLoad } from './$types';
 

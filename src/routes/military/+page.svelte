@@ -18,38 +18,45 @@
 			<div>
 				<h2 class="font-display text-lg font-bold uppercase text-white">How to Verify</h2>
 				<p class="mt-3">
-					Verify your military status through our secure partner portal. We support verification
-					via <strong class="text-zinc-300">ID.me</strong> and
-					<strong class="text-zinc-300">VerifyPass</strong> — choose either option at checkout once
-					the integration is live.
+					When Saleor checkout goes live, you will verify once through our secure partner portal.
+					Your military status is stored on your account and the <strong class="text-zinc-300">15%
+					discount applies automatically</strong> at checkout — no promo code needed.
 				</p>
 				<div class="mt-6 flex flex-wrap gap-4">
 					<div class="rounded-sm border border-zinc-700 bg-zinc-900/50 px-6 py-4">
 						<p class="text-xs font-bold uppercase tracking-widest text-zinc-500">ID.me</p>
-						<p class="mt-1 text-sm text-zinc-400">Verify with military ID or .mil email</p>
+						<p class="mt-1 text-sm text-zinc-400">
+							Verify with CAC, military ID, or .mil email. Fastest option for active duty.
+						</p>
 						<button
 							type="button"
 							disabled
-							class="mt-3 rounded-sm bg-zinc-800 px-4 py-2 text-xs font-bold uppercase tracking-wider text-zinc-500"
+							title="Available at Saleor checkout"
+							class="mt-3 rounded-sm border border-zinc-700 bg-zinc-800 px-4 py-2 text-xs font-bold uppercase tracking-wider text-zinc-400"
 						>
-							Coming Soon
+							Verify at Checkout
 						</button>
+						<p class="mt-2 text-[10px] uppercase tracking-wider text-zinc-600">Saleor integration pending</p>
 					</div>
 					<div class="rounded-sm border border-zinc-700 bg-zinc-900/50 px-6 py-4">
 						<p class="text-xs font-bold uppercase tracking-widest text-zinc-500">VerifyPass</p>
-						<p class="mt-1 text-sm text-zinc-400">Alternative verification for veterans &amp; spouses</p>
+						<p class="mt-1 text-sm text-zinc-400">
+							Alternative path for veterans, retirees, and spouses — DD-214 or VA ID accepted.
+						</p>
 						<button
 							type="button"
 							disabled
-							class="mt-3 rounded-sm bg-zinc-800 px-4 py-2 text-xs font-bold uppercase tracking-wider text-zinc-500"
+							title="Available at Saleor checkout"
+							class="mt-3 rounded-sm border border-zinc-700 bg-zinc-800 px-4 py-2 text-xs font-bold uppercase tracking-wider text-zinc-400"
 						>
-							Coming Soon
+							Verify at Checkout
 						</button>
+						<p class="mt-2 text-[10px] uppercase tracking-wider text-zinc-600">Saleor integration pending</p>
 					</div>
 				</div>
 				<p class="mt-4 text-sm text-zinc-500">
-					Once verified, your 15% discount applies automatically at checkout for 12 months.
-					Re-verification may be required annually.
+					Verification happens during checkout, not on this page. Once confirmed, your discount
+					stays active for 12 months — re-verification may be required annually.
 				</p>
 			</div>
 

@@ -1,26 +1,52 @@
 import { redirect } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
-import { createMockUser, createServerClient, setSessionCookie } from '$lib/server/supabase/auth';
+import {
+	isOAuthProvider,
+	mockOAuthEmail,
+	oauthDisplayName,
+	OAUTH_PROVIDER_LABELS
+} from '$lib/auth/oauth';
+import {
+	createMockUser,
+	exchangeOAuthCode,
+	setSessionCookie
+} from '$lib/server/supabase/auth';
+import { isSupabaseConfigured } from '$lib/server/supabase/client';
 
-export const GET: RequestHandler = async ({ url, cookies }) => {
-	const provider = url.searchParams.get('provider');
+export const GET: RequestHandler = async ({ url, cookies, locals }) => {
+	const providerParam = url.searchParams.get('provider');
 	const isMock = url.searchParams.get('mock') === '1';
-
-	const client = createServerClient(cookies);
-	if (client && !isMock) {
-		// TODO: exchange OAuth code for session when @supabase/supabase-js is wired
-		await client.signInWithOAuth('google');
-	}
-
-	const email = url.searchParams.get('email') ?? 'user@gmail.com';
-	const user = createMockUser(email, email.split('@')[0]);
-
-	if (provider === 'google') {
-		user.name = `${user.name} (Google)`;
-	}
-
-	setSessionCookie(cookies, user);
-
 	const redirectTo = url.searchParams.get('redirect') ?? '/account';
-	throw redirect(303, redirectTo);
+	const code = url.searchParams.get('code');
+
+	if (!isMock && locals.supabase && code) {
+		const result = await exchangeOAuthCode(locals.supabase, code);
+		if (!result.ok) {
+			throw redirect(303, `/auth/sign-in?error=${encodeURIComponent(result.message)}`);
+		}
+		if (result.user) {
+			setSessionCookie(cookies, result.user);
+		}
+		throw redirect(303, redirectTo);
+	}
+
+	if (isMock || !isSupabaseConfigured()) {
+		const provider = isOAuthProvider(providerParam) ? providerParam : 'google';
+		const email = url.searchParams.get('email') ?? mockOAuthEmail(provider);
+		const user = createMockUser(email, email.split('@')[0]);
+
+		if (provider === 'discord') {
+			user.name =
+				url.searchParams.get('username') ??
+				oauthDisplayName({ user_name: url.searchParams.get('username') ?? undefined }) ??
+				email.split('@')[0];
+		} else {
+			user.name = `${user.name} (${OAUTH_PROVIDER_LABELS[provider]})`;
+		}
+
+		setSessionCookie(cookies, user);
+		throw redirect(303, redirectTo);
+	}
+
+	throw redirect(303, '/auth/sign-in');
 };

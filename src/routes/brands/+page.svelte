@@ -2,6 +2,7 @@
 	import { resolve } from '$app/paths';
 	import SectionHeading from '$lib/components/SectionHeading.svelte';
 	import AnimatedReveal from '$lib/components/AnimatedReveal.svelte';
+	import ListControls from '$lib/components/ListControls.svelte';
 
 	let { data } = $props();
 </script>
@@ -37,4 +38,5 @@
 			</a>
 		{/each}
 	</div>
+	<ListControls pagination={data.pagination} />
 </section>

@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
 	import SectionHeading from '$lib/components/SectionHeading.svelte';
+	import ManifestoBlock from '$lib/components/ManifestoBlock.svelte';
 	import AnimatedReveal from '$lib/components/AnimatedReveal.svelte';
 </script>
 
@@ -17,15 +18,13 @@
 	</div>
 </section>
 
-<!-- TODO: ManifestoBlock component -->
 <section class="border-b border-zinc-800 bg-red-950/10 py-20">
 	<div class="mx-auto max-w-3xl px-4 text-center sm:px-6">
 		<AnimatedReveal>
 			<p class="text-xs font-bold uppercase tracking-[0.3em] text-red-500">The Manifesto</p>
-			<h2 class="mt-4 font-display text-3xl font-bold uppercase text-white">We Build. We Break. We Rebuild.</h2>
-			<p class="mt-6 text-lg leading-relaxed text-zinc-400">
-				Animal Garage is not a lifestyle brand pretending to be automotive — we live this. Late nights on the lift, early mornings at the track, and merch that survives both. Culture first, commerce second, chaos always.
-			</p>
+			<div class="mt-6 text-left">
+				<ManifestoBlock />
+			</div>
 		</AnimatedReveal>
 	</div>
 </section>

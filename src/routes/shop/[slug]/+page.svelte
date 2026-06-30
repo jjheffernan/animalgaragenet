@@ -6,56 +6,45 @@
 	import LocaleSelector from '$lib/components/LocaleSelector.svelte';
 	import AnimatedReveal from '$lib/components/AnimatedReveal.svelte';
 	import ProductGrid from '$lib/components/ProductGrid.svelte';
-	import { getAllCatalogProducts } from '$lib/data/mock-parts';
+	import VariantSelector from '$lib/components/VariantSelector.svelte';
+	import NotifyMeButton from '$lib/components/NotifyMeButton.svelte';
+	import TrustBlocks from '$lib/components/TrustBlocks.svelte';
+	import { cart } from '$lib/stores/cart.svelte';
+	import { recentlyViewed } from '$lib/stores/recently-viewed.svelte';
+	import { getAllCatalogProducts } from '$lib/data/mock/parts';
 
 	let { data } = $props();
 	const product = $derived(data.product);
 	const soldOut = $derived(!product.isAvailableForPurchase);
 
-	// TODO: import VariantSelector from '$lib/components/VariantSelector.svelte'
 	let selectedVariantId = $state('');
 	$effect(() => {
 		selectedVariantId = product.variants[0]?.id ?? '';
 	});
 
-	// TODO: import cart from '$lib/stores/cart.svelte.ts'
-	function addToCart() {
-		if (soldOut || !selectedVariantId) return;
-		if (!browser) return;
-		const key = 'ag-cart';
-		const items = JSON.parse(localStorage.getItem(key) || '[]');
-		const existing = items.find((i: { variantId: string }) => i.variantId === selectedVariantId);
-		if (existing) existing.quantity += 1;
-		else items.push({ productId: product.id, variantId: selectedVariantId, quantity: 1 });
-		localStorage.setItem(key, JSON.stringify(items));
-	}
-
-	// TODO: import recentlyViewed from '$lib/stores/recently-viewed.svelte.ts'
-	const RECENT_KEY = 'ag-recently-viewed';
 	const catalog = getAllCatalogProducts();
 	let recentProducts = $state<typeof catalog>([]);
 
 	onMount(() => {
+		cart.init();
+		recentlyViewed.init();
+		recentlyViewed.add(product.id);
 		if (!browser) return;
-		const slugs: string[] = JSON.parse(localStorage.getItem(RECENT_KEY) || '[]');
-		const updated = [product.slug, ...slugs.filter((s) => s !== product.slug)].slice(0, 8);
-		localStorage.setItem(RECENT_KEY, JSON.stringify(updated));
-		recentProducts = updated
-			.filter((s) => s !== product.slug)
-			.map((s) => catalog.find((p) => p.slug === s))
+		recentProducts = recentlyViewed.productIds
+			.filter((id) => id !== product.id)
+			.map((id) => catalog.find((p) => p.id === id))
 			.filter((p): p is (typeof catalog)[number] => p !== undefined)
 			.slice(0, 4);
 	});
 
+	function addToCart() {
+		if (soldOut || !selectedVariantId) return;
+		cart.addItem(product.id, selectedVariantId);
+		cart.openDrawer();
+	}
+
 	let selectedImage = $state(0);
 	const images = $derived(product.media.length > 0 ? product.media : product.thumbnail ? [product.thumbnail] : []);
-
-	// TODO: NotifyMeButton component
-	let notifyEmail = $state('');
-	function submitNotify(e: Event) {
-		e.preventDefault();
-		notifyEmail = '';
-	}
 </script>
 
 <svelte:head>
@@ -107,33 +96,20 @@
 				<LocaleSelector />
 			</div>
 
-			{#if product.variants.length > 1}
-				<div class="mt-6">
-					<p class="text-xs font-bold uppercase tracking-widest text-zinc-500">Variant</p>
-					<div class="mt-2 flex flex-wrap gap-2">
-						{#each product.variants as variant (variant.id)}
-							<button
-								type="button"
-								onclick={() => (selectedVariantId = variant.id)}
-								class="rounded-sm border px-4 py-2 text-sm transition {selectedVariantId === variant.id ? 'border-red-600 bg-red-600/10 text-white' : 'border-zinc-700 text-zinc-400 hover:border-zinc-500'}"
-							>
-								{variant.name}
-							</button>
-						{/each}
-					</div>
-				</div>
-			{/if}
+			<VariantSelector
+				{product}
+				selectedVariantId={selectedVariantId}
+				onselect={(id) => (selectedVariantId = id)}
+				class="mt-6"
+			/>
 
 			<p class="mt-6 leading-relaxed text-zinc-400">{product.description}</p>
 
 			{#if soldOut}
-				<form class="mt-8 rounded-sm border border-zinc-800 bg-zinc-900/50 p-4" onsubmit={submitNotify}>
+				<div class="mt-8 rounded-sm border border-zinc-800 bg-zinc-900/50 p-4">
 					<p class="text-sm font-bold uppercase tracking-widest text-zinc-300">Notify Me When Available</p>
-					<div class="mt-3 flex gap-2">
-						<input type="email" bind:value={notifyEmail} required placeholder="Email" class="flex-1 rounded-sm border border-zinc-700 bg-zinc-900 px-3 py-2 text-white" />
-						<button type="submit" class="rounded-sm bg-red-600 px-4 py-2 text-sm font-bold uppercase text-white hover:bg-red-500">Notify</button>
-					</div>
-				</form>
+					<NotifyMeButton productName={product.name} class="mt-3" />
+				</div>
 			{:else}
 				<button
 					type="button"
@@ -144,12 +120,7 @@
 				</button>
 			{/if}
 
-			<!-- TODO: TrustBlocks component -->
-			<div class="mt-10 grid gap-3 sm:grid-cols-2">
-				{#each ['Lowest price guarantee', 'Fast ship on merch', 'Easy returns', 'Secure checkout'] as perk (perk)}
-					<p class="text-xs text-zinc-500">✓ {perk}</p>
-				{/each}
-			</div>
+			<TrustBlocks class="mt-10" />
 		</AnimatedReveal>
 	</div>
 </section>

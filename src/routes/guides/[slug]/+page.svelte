@@ -1,12 +1,14 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
 	import AnimatedReveal from '$lib/components/AnimatedReveal.svelte';
+	import RichContent from '$lib/components/RichContent.svelte';
 
 	let { data } = $props();
 </script>
 
 <svelte:head>
 	<title>{data.guide.title} — Animal Garage Guides</title>
+	<meta name="description" content={data.guide.excerpt} />
 </svelte:head>
 
 <article>
@@ -27,15 +29,7 @@
 
 	<section class="mx-auto max-w-3xl px-4 py-16 sm:px-6">
 		<AnimatedReveal>
-			<div class="prose-invert leading-relaxed">
-				{#each data.guide.content.split('\n\n') as block (block)}
-					{#if block.startsWith('## ')}
-						<h2 class="mt-8 mb-4 font-display text-xl font-bold uppercase text-white">{block.slice(3)}</h2>
-					{:else}
-						<p class="mt-4 text-zinc-400">{block}</p>
-					{/if}
-				{/each}
-			</div>
+			<RichContent html={data.guide.html} content={data.guide.content} />
 		</AnimatedReveal>
 	</section>
 

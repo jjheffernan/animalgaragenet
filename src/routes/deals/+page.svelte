@@ -1,6 +1,7 @@
 <script lang="ts">
 	import SectionHeading from '$lib/components/SectionHeading.svelte';
 	import ProductGrid from '$lib/components/ProductGrid.svelte';
+	import ListControls from '$lib/components/ListControls.svelte';
 	import AnimatedReveal from '$lib/components/AnimatedReveal.svelte';
 
 	let { data } = $props();
@@ -37,7 +38,8 @@
 
 <section class="mx-auto max-w-7xl px-4 pb-16 sm:px-6 lg:px-8">
 	<AnimatedReveal>
-		<SectionHeading title="On Sale Now" subtitle="{data.products.length} deals" />
+		<SectionHeading title="On Sale Now" subtitle="{data.pagination.total} deals" />
 	</AnimatedReveal>
 	<ProductGrid products={data.products} />
+	<ListControls pagination={data.pagination} />
 </section>

@@ -8,4 +8,4 @@
 	<title>Watch — Animal Garage</title>
 </svelte:head>
 
-<WatchHub videos={data.videos} />
+<WatchHub videos={data.videos} pagination={data.pagination} featuredVideo={data.featuredVideo} />

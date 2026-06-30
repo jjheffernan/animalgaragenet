@@ -5,7 +5,25 @@
 	import EmptyState from '$lib/components/EmptyState.svelte';
 	import { garage } from '$lib/stores/garage.svelte';
 	import { garageXp } from '$lib/stores/garage-xp.svelte';
+	import { locale } from '$lib/stores/locale.svelte';
+	import { getOrdersForAccount, type OrderStatus } from '$lib/data/mock/orders';
 	import type { PageData } from './$types';
+
+	const orders = getOrdersForAccount();
+
+	const statusLabels: Record<OrderStatus, string> = {
+		processing: 'Processing',
+		shipped: 'Shipped',
+		delivered: 'Delivered',
+		cancelled: 'Cancelled'
+	};
+
+	const statusColors: Record<OrderStatus, string> = {
+		processing: 'text-yellow-400',
+		shipped: 'text-blue-400',
+		delivered: 'text-green-400',
+		cancelled: 'text-zinc-500'
+	};
 
 	let { data }: { data: PageData } = $props();
 
@@ -78,5 +96,34 @@
 
 <section class="mt-6 rounded-sm border border-zinc-800 bg-zinc-900/50 p-6">
 	<h2 class="text-xs font-bold uppercase tracking-widest text-zinc-500">Orders</h2>
-	<p class="mt-4 text-sm text-zinc-500">Order history will appear here once Saleor checkout is wired.</p>
+	<ul class="mt-4 space-y-4">
+		{#each orders as order (order.id)}
+			<li class="rounded-sm border border-zinc-800 p-4">
+				<div class="flex flex-wrap items-start justify-between gap-2">
+					<div>
+						<p class="font-medium text-white">{order.orderNumber}</p>
+						<p class="text-xs text-zinc-500">{order.date}</p>
+					</div>
+					<div class="text-right">
+						<p class="text-sm font-medium text-white">{locale.formatPrice(order.total)}</p>
+						<p class="text-xs font-bold uppercase tracking-wider {statusColors[order.status]}">
+							{statusLabels[order.status]}
+						</p>
+					</div>
+				</div>
+				<ul class="mt-3 space-y-1 text-sm text-zinc-400">
+					{#each order.lines as line, i (i)}
+						<li>
+							{line.productName}{line.variantName ? ` — ${line.variantName}` : ''} × {line.quantity}
+						</li>
+					{/each}
+				</ul>
+				{#if order.trackingNumber}
+					<p class="mt-3 text-xs text-zinc-500">
+						Tracking: <span class="font-mono text-zinc-400">{order.trackingNumber}</span>
+					</p>
+				{/if}
+			</li>
+		{/each}
+	</ul>
 </section>

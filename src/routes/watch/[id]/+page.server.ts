@@ -1,9 +1,13 @@
 import { error } from '@sveltejs/kit';
-import { getVideoById, mockVideos } from '$lib/data/mock-videos';
+import { getLatestVideo, getVideoById, getVideosExcluding } from '$lib/data/mock/videos';
+import { paginateFromUrl } from '$lib/pagination';
 import type { PageServerLoad } from './$types';
 
-export const load: PageServerLoad = async ({ params }) => {
+export const load: PageServerLoad = async ({ params, url }) => {
 	const video = getVideoById(params.id);
 	if (!video) error(404, 'Video not found');
-	return { videos: mockVideos, video };
+	const featuredVideo = getLatestVideo();
+	const listVideos = featuredVideo ? getVideosExcluding(featuredVideo) : [];
+	const { items, pagination } = paginateFromUrl(url, listVideos);
+	return { videos: items, pagination, video, featuredVideo };
 };

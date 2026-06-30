@@ -13,9 +13,10 @@
 	import CountdownTimer from '$lib/components/CountdownTimer.svelte';
 	import BuildCard from '$lib/components/BuildCard.svelte';
 	import GuideCard from '$lib/components/GuideCard.svelte';
-	import BrandCard from '$lib/components/BrandCard.svelte';
+	import BrandLanes from '$lib/components/BrandLanes.svelte';
 	import ClearanceSection from '$lib/components/ClearanceSection.svelte';
 	import StaffPicks from '$lib/components/StaffPicks.svelte';
+	import TestimonialCard from '$lib/components/TestimonialCard.svelte';
 
 	let { data } = $props();
 </script>
@@ -74,12 +75,12 @@
 
 <section class="border-y border-zinc-800 bg-zinc-900/50 py-20">
 	<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-		<StaffPicks />
+		<StaffPicks products={data.staffPicks} />
 	</div>
 </section>
 
 <section class="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
-	<ClearanceSection />
+	<ClearanceSection products={data.clearance} />
 </section>
 
 <section class="border-t border-zinc-800 bg-zinc-900/30 py-20">
@@ -132,6 +133,33 @@
 	<TrustBlocks />
 </section>
 
+{#if data.featuredTestimonials.length > 0}
+	<section class="border-y border-zinc-800 bg-zinc-900/50 py-20">
+		<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+			<AnimatedReveal>
+				<SectionHeading
+					title="Garage Squad Stories"
+					subtitle="Real members, real builds."
+					align="center"
+				/>
+			</AnimatedReveal>
+			<div class="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+				{#each data.featuredTestimonials as testimonial (testimonial.id)}
+					<TestimonialCard {testimonial} compact />
+				{/each}
+			</div>
+			<div class="mt-10 text-center">
+				<a
+					href={resolve('/loyalty') + '#reviews'}
+					class="text-sm font-bold uppercase tracking-widest text-red-500 hover:text-red-400"
+				>
+					Join Garage Squad →
+				</a>
+			</div>
+		</div>
+	</section>
+{/if}
+
 <ManifestoBlock />
 
 <section class="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
@@ -145,15 +173,4 @@
 	</div>
 </section>
 
-<section class="border-y border-zinc-800 py-16">
-	<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-		<AnimatedReveal>
-			<SectionHeading title="Brand Lanes" subtitle="Shop by the brands we trust." />
-		</AnimatedReveal>
-		<div class="mt-6 flex flex-wrap gap-6">
-			{#each data.brands as brand (brand.id)}
-				<BrandCard {brand} />
-			{/each}
-		</div>
-	</div>
-</section>
+<BrandLanes brands={data.brands} />

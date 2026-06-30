@@ -2,6 +2,7 @@
 	import { resolve } from '$app/paths';
 	import SectionHeading from '$lib/components/SectionHeading.svelte';
 	import AnimatedReveal from '$lib/components/AnimatedReveal.svelte';
+	import ListControls from '$lib/components/ListControls.svelte';
 
 	let { data } = $props();
 </script>
@@ -19,7 +20,7 @@
 
 <section class="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
 	<AnimatedReveal>
-		<SectionHeading title="All Guides" subtitle="{data.guides.length} articles" />
+		<SectionHeading title="All Guides" subtitle="{data.pagination.total} articles" />
 	</AnimatedReveal>
 	<div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
 		{#each data.guides as guide (guide.id)}
@@ -33,4 +34,5 @@
 			</a>
 		{/each}
 	</div>
+	<ListControls pagination={data.pagination} />
 </section>

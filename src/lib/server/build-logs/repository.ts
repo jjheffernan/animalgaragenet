@@ -175,6 +175,47 @@ export async function updateBuildLog(
 	return rowToLog(data);
 }
 
+export async function listApprovedBuildLogs(limit?: number): Promise<BuildLog[]> {
+	const admin = createAdminClient();
+	if (!admin) {
+		const approved = [...mockStore.values()]
+			.filter((l) => l.status === 'approved' && l.slug)
+			.sort((a, b) => b.updatedAt.localeCompare(a.updatedAt));
+		return limit ? approved.slice(0, limit) : approved;
+	}
+
+	let query = admin
+		.from('build_submissions')
+		.select('*')
+		.eq('status', 'approved')
+		.not('slug', 'is', null)
+		.order('updated_at', { ascending: false });
+
+	if (limit) query = query.limit(limit);
+
+	const { data, error } = await query;
+	if (error || !data) return [];
+	return data.map(rowToLog);
+}
+
+export async function getApprovedBuildLogBySlug(slug: string): Promise<BuildLog | null> {
+	const admin = createAdminClient();
+	if (!admin) {
+		const log = [...mockStore.values()].find((l) => l.status === 'approved' && l.slug === slug);
+		return log ?? null;
+	}
+
+	const { data, error } = await admin
+		.from('build_submissions')
+		.select('*')
+		.eq('status', 'approved')
+		.eq('slug', slug)
+		.maybeSingle();
+
+	if (error || !data) return null;
+	return rowToLog(data);
+}
+
 export async function listPendingBuildLogs(): Promise<BuildLog[]> {
 	const admin = createAdminClient();
 	if (!admin) {

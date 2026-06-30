@@ -1,4 +1,4 @@
-import { getFeaturedBuilds } from '$lib/data/mock/builds';
+import { getFeaturedPublicBuilds, listPublicBuilds, getPublicBuildBySlug } from '$lib/server/builds/public';
 import { mockUGC } from '$lib/data/mock/ugc';
 import { mockVideos } from '$lib/data/mock/videos';
 import { mockBrands } from '$lib/data/mock/brands';
@@ -40,7 +40,7 @@ export const load: PageServerLoad = async () => {
 		clearance,
 		videos: mockVideos.slice(0, 3),
 		ugc,
-		builds: getFeaturedBuilds().slice(0, 3),
+		builds: (await getFeaturedPublicBuilds(3)).slice(0, 3),
 		guides: guides.slice(0, 3),
 		brands: mockBrands.slice(0, 8),
 		popularModels: mockPopularModels,

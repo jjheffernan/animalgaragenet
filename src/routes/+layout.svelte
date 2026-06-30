@@ -6,9 +6,23 @@
 	import Header from '$lib/components/layout/Header.svelte';
 	import Footer from '$lib/components/layout/Footer.svelte';
 	import { isSupportedLocale } from '$lib/i18n/locale';
+	import { garage } from '$lib/stores/garage.svelte';
+	import { garageXp } from '$lib/stores/garage-xp.svelte';
 	import { locale } from '$lib/stores/locale.svelte';
 
 	let { children, data } = $props();
+
+	let lastSessionId = $state<string | null | undefined>(undefined);
+
+	$effect(() => {
+		const sessionId = data.session?.id ?? null;
+		if (typeof window === 'undefined' || sessionId === lastSessionId) return;
+		lastSessionId = sessionId;
+		garage.resetForSession();
+		garageXp.resetForSession();
+		void garage.init();
+		void garageXp.init();
+	});
 
 	$effect(() => {
 		const code = page.url.searchParams.get('locale');

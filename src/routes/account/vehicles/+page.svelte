@@ -4,10 +4,12 @@
 	import EmptyState from '$lib/components/shared/EmptyState.svelte';
 	import { garage } from '$lib/stores/garage.svelte';
 
-	onMount(() => garage.init());
+	onMount(() => {
+		void garage.init();
+	});
 
 	function removeVehicle(id: string) {
-		garage.removeVehicle(id);
+		void garage.removeVehicle(id);
 	}
 </script>
 
@@ -19,7 +21,7 @@
 <p class="mt-1 text-zinc-400">Your garage — used for fitment and build context across the site.</p>
 
 <p class="mt-4 rounded-sm border border-zinc-800 bg-zinc-900/50 px-4 py-3 text-sm text-zinc-500">
-	Vehicles are stored on this device for now. Server sync ships with the account garage migration.
+	Saved vehicles sync to your account when signed in. Guests keep vehicles on this device only.
 </p>
 
 {#if garage.vehicles.length === 0}

@@ -33,10 +33,15 @@
 		submodel = '';
 	}
 
-	function handleSubmit(e: Event) {
+	async function handleSubmit(e: Event) {
 		e.preventDefault();
 		if (!year || !make || !model) return;
-		garage.addVehicle({ year: Number(year), make, model, submodel: submodel || undefined });
+		await garage.addVehicle({
+			year: Number(year),
+			make,
+			model,
+			submodel: submodel || undefined
+		});
 		const params = new URLSearchParams();
 		params.set('year', String(year));
 		params.set('make', make);

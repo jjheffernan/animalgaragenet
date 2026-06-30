@@ -15,7 +15,9 @@
 
 	let { data, form }: { data: PageData; form: ActionData } = $props();
 
-	onMount(() => garageXp.init());
+	onMount(() => {
+		void garageXp.init();
+	});
 
 	const currentLevel = $derived(garageXp.level);
 	const nextLevel = $derived(garageXp.nextLevel);

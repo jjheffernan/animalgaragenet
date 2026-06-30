@@ -28,8 +28,8 @@
 	let { data }: { data: PageData } = $props();
 
 	onMount(() => {
-		garage.init();
-		garageXp.init();
+		void garage.init();
+		void garageXp.init();
 	});
 </script>
 

@@ -1,4 +1,5 @@
 import { garageLevels } from '$lib/data/garage-levels';
+import { addGarageXpToApi, loadGarageFromApi, resetGarageApiCache } from './garage-api';
 
 const STORAGE_KEY = 'ag-garage-xp';
 
@@ -22,21 +23,53 @@ function saveXp(state: XpState) {
 	localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
 }
 
+function clearLocalXp() {
+	if (typeof window === 'undefined') return;
+	localStorage.removeItem(STORAGE_KEY);
+}
+
 class GarageXpState {
 	xp = $state(0);
 	completedActions = $state<string[]>([]);
 	private initialized = false;
+	private synced = false;
+	private initPromise: Promise<void> | null = null;
 
-	init() {
-		if (this.initialized || typeof window === 'undefined') return;
-		const data = loadXp();
-		this.xp = data.xp;
-		this.completedActions = data.actions;
+	resetForSession() {
+		this.initialized = false;
+		this.synced = false;
+		this.initPromise = null;
+		resetGarageApiCache();
+	}
+
+	init(): Promise<void> {
+		if (typeof window === 'undefined') return Promise.resolve();
+		if (this.initPromise) return this.initPromise;
+		this.initPromise = this.load();
+		return this.initPromise;
+	}
+
+	private async load() {
+		if (this.initialized) return;
 		this.initialized = true;
+
+		const remote = await loadGarageFromApi();
+		if (remote === 'guest') {
+			const data = loadXp();
+			this.xp = data.xp;
+			this.completedActions = data.actions;
+			this.synced = false;
+			return;
+		}
+
+		this.xp = remote.garageXp;
+		this.completedActions = remote.completedActions;
+		this.synced = true;
+		clearLocalXp();
 	}
 
 	get level() {
-		this.init();
+		void this.init();
 		let current = garageLevels[0];
 		for (const lvl of garageLevels) {
 			if (this.xp >= lvl.xpRequired) current = lvl;
@@ -45,13 +78,13 @@ class GarageXpState {
 	}
 
 	get nextLevel() {
-		this.init();
+		void this.init();
 		const idx = garageLevels.findIndex((l) => l.level === this.level.level);
 		return garageLevels[idx + 1];
 	}
 
 	get progressToNext(): number {
-		this.init();
+		void this.init();
 		const next = this.nextLevel;
 		if (!next) return 100;
 		const current = this.level.xpRequired;
@@ -60,9 +93,18 @@ class GarageXpState {
 		return Math.min(100, Math.round((progress / range) * 100));
 	}
 
-	addXp(amount: number, actionId?: string) {
-		this.init();
+	async addXp(amount: number, actionId?: string) {
+		await this.init();
 		if (actionId && this.completedActions.includes(actionId)) return;
+
+		if (this.synced) {
+			const state = await addGarageXpToApi(amount, actionId);
+			if (!state) return;
+			this.xp = state.garageXp;
+			this.completedActions = state.completedActions;
+			return;
+		}
+
 		this.xp += amount;
 		if (actionId) this.completedActions = [...this.completedActions, actionId];
 		saveXp({ xp: this.xp, actions: this.completedActions });

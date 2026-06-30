@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
 	import { enhance } from '$app/forms';
+	import { goto } from '$app/navigation';
 	import AnimatedReveal from '$lib/components/shared/AnimatedReveal.svelte';
 	import OAuthButton from '$lib/components/forms/OAuthButton.svelte';
 	import type { PageData, ActionData } from './$types';
@@ -56,9 +57,11 @@
 				loading = true;
 				return async ({ result, update }) => {
 					loading = false;
-					if (result.type !== 'redirect') {
-						await update();
+					if (result.type === 'redirect') {
+						goto(result.location);
+						return;
 					}
+					await update();
 				};
 			}}
 		>

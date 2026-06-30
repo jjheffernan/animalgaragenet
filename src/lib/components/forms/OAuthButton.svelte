@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
+	import { goto } from '$app/navigation';
 	import type { Snippet } from 'svelte';
 	import { OAUTH_BUTTON_LABELS, type OAuthProvider } from '$lib/auth/oauth';
 
@@ -29,9 +30,11 @@
 		onloading?.(true);
 		return async ({ result, update }) => {
 			onloading?.(false);
-			if (result.type !== 'redirect') {
-				await update();
+			if (result.type === 'redirect') {
+				goto(result.location);
+				return;
 			}
+			await update();
 		};
 	}}
 >

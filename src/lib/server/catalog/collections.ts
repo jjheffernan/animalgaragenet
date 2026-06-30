@@ -7,6 +7,8 @@ import { config } from '$lib/config/env';
 import type { Collection, Product } from '$lib/types/saleor';
 import { getChannelForLocale } from '$lib/server/saleor/channels';
 import { isSaleorEnabled, saleorFetch } from '$lib/server/saleor/client';
+import { guardMockCatalogFallback } from '$lib/server/catalog/fallback';
+import { isProductionSiteUrl } from '$lib/server/auth/local-dev';
 import {
 	mapCollection,
 	mapProductListNode,
@@ -54,11 +56,12 @@ export async function getCollections(
 			}
 
 			return result.data.collections.edges.map(({ node }) => mapCollection(node));
-		} catch {
-			// Fall back to mock catalog when Saleor is unreachable or misconfigured.
+		} catch (err) {
+			guardMockCatalogFallback({ saleorAttemptFailed: true, error: err });
 		}
 	}
 
+	guardMockCatalogFallback();
 	return mockCollections;
 }
 
@@ -72,12 +75,13 @@ export async function getStaffPickProducts(
 	if (isSaleorEnabled()) {
 		try {
 			const products = await fetchSaleorProductsByTag('staff-pick', locale);
-			if (products.length > 0) return products;
-		} catch {
-			// Fall back to mock catalog when Saleor is unreachable or misconfigured.
+			if (products.length > 0 || isProductionSiteUrl()) return products;
+		} catch (err) {
+			guardMockCatalogFallback({ saleorAttemptFailed: true, error: err });
 		}
 	}
 
+	guardMockCatalogFallback();
 	return getMockStaffPickProducts();
 }
 
@@ -91,11 +95,12 @@ export async function getClearanceProducts(
 	if (isSaleorEnabled()) {
 		try {
 			const products = await fetchSaleorProductsByTag('clearance', locale);
-			if (products.length > 0) return products;
-		} catch {
-			// Fall back to mock catalog when Saleor is unreachable or misconfigured.
+			if (products.length > 0 || isProductionSiteUrl()) return products;
+		} catch (err) {
+			guardMockCatalogFallback({ saleorAttemptFailed: true, error: err });
 		}
 	}
 
+	guardMockCatalogFallback();
 	return getMockClearanceProducts();
 }

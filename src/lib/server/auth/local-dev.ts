@@ -14,9 +14,13 @@ import { isSupabaseConfigured } from '$lib/server/supabase/client';
 import type { LocalDevAccount } from './local-dev-accounts';
 
 const PRODUCTION_HOST = 'animalgarage.net';
+const NETLIFY_PREVIEW_SUFFIX = '.netlify.app';
 
 export function isProductionHostname(hostname: string): boolean {
-	return hostname === PRODUCTION_HOST || hostname.endsWith(`.${PRODUCTION_HOST}`);
+	if (hostname === PRODUCTION_HOST || hostname.endsWith(`.${PRODUCTION_HOST}`)) {
+		return true;
+	}
+	return hostname === 'netlify.app' || hostname.endsWith(NETLIFY_PREVIEW_SUFFIX);
 }
 
 export function isProductionSiteUrl(): boolean {

@@ -13,6 +13,8 @@ import type { PartCategory } from '$lib/types/domain';
 import type { Product } from '$lib/types/saleor';
 import { getChannelForLocale } from '$lib/server/saleor/channels';
 import { isSaleorEnabled, saleorFetch } from '$lib/server/saleor/client';
+import { guardMockCatalogFallback } from '$lib/server/catalog/fallback';
+import { isProductionSiteUrl } from '$lib/server/auth/local-dev';
 import {
 	mapPartCategory,
 	mapProduct,
@@ -60,12 +62,13 @@ export async function getPartCategoriesForNav(
 	if (isSaleorEnabled()) {
 		try {
 			const categories = await fetchSaleorPartCategories();
-			if (categories.length > 0) return categories;
-		} catch {
-			// Fall back to mock taxonomy when Saleor is unreachable or misconfigured.
+			if (categories.length > 0 || isProductionSiteUrl()) return categories;
+		} catch (err) {
+			guardMockCatalogFallback({ saleorAttemptFailed: true, error: err });
 		}
 	}
 
+	guardMockCatalogFallback();
 	return mockPartCategories;
 }
 
@@ -106,11 +109,12 @@ export async function getPartsProducts(
 			return result.data.products.edges
 				.map(({ node }) => mapProductListNode(node))
 				.filter(isPartProduct);
-		} catch {
-			// Fall back to mock catalog when Saleor is unreachable or misconfigured.
+		} catch (err) {
+			guardMockCatalogFallback({ saleorAttemptFailed: true, error: err });
 		}
 	}
 
+	guardMockCatalogFallback();
 	return mockParts;
 }
 
@@ -147,11 +151,12 @@ export async function getPartBySlug(
 			if (!isPartProduct(product)) return null;
 			if (product.category?.slug !== categorySlug) return null;
 			return product;
-		} catch {
-			// Fall back to mock catalog when Saleor is unreachable or misconfigured.
+		} catch (err) {
+			guardMockCatalogFallback({ saleorAttemptFailed: true, error: err });
 		}
 	}
 
+	guardMockCatalogFallback();
 	const product = mockGetPartBySlug(slug);
 	if (!product) return null;
 	if (product.category?.slug !== categorySlug) return null;

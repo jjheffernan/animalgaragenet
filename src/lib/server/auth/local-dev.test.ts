@@ -14,7 +14,13 @@ describe('isProductionHostname', () => {
 	it('matches production and subdomains', () => {
 		expect(isProductionHostname('animalgarage.net')).toBe(true);
 		expect(isProductionHostname('www.animalgarage.net')).toBe(true);
+		expect(isProductionHostname('animalgarage.netlify.app')).toBe(true);
+		expect(isProductionHostname('preview--animalgarage.netlify.app')).toBe(true);
 		expect(isProductionHostname('localhost')).toBe(false);
+	});
+
+	it('blocks dev admin on Netlify preview hostnames', () => {
+		expect(isDevAdminEnabled(mockEvent('animalgarage.netlify.app'))).toBe(false);
 	});
 });
 

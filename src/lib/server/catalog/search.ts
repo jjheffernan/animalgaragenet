@@ -8,7 +8,7 @@ import type { Product } from '$lib/types/saleor';
 import { getChannelForLocale } from '$lib/server/saleor/channels';
 import { isSaleorEnabled, saleorFetch } from '$lib/server/saleor/client';
 import { mapProductListNode, type SaleorProductListNode } from '$lib/server/saleor/mappers';
-import { PRODUCTS_QUERY } from '$lib/server/saleor/queries';
+import { guardMockCatalogFallback } from '$lib/server/catalog/fallback';
 
 export interface CatalogSearchResults {
 	products: Product[];
@@ -64,10 +64,12 @@ export async function searchCatalog(
 	if (isSaleorEnabled()) {
 		try {
 			products = await searchSaleorProducts(q, locale);
-		} catch {
+		} catch (err) {
+			guardMockCatalogFallback({ saleorAttemptFailed: true, error: err });
 			products = searchProducts(q);
 		}
 	} else {
+		guardMockCatalogFallback();
 		products = searchProducts(q);
 	}
 

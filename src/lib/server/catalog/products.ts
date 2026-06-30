@@ -16,7 +16,7 @@ import {
 	type SaleorProductListNode,
 	type SaleorTaxedMoney
 } from '$lib/server/saleor/mappers';
-import { PRODUCT_BY_SLUG_QUERY, PRODUCTS_QUERY } from '$lib/server/saleor/queries';
+import { guardMockCatalogFallback } from '$lib/server/catalog/fallback';
 
 /** Extended list query — metadata + full price range for gift cards / deals. */
 const PRODUCTS_CATALOG_QUERY = `
@@ -133,11 +133,12 @@ export async function getShopProducts(
 
 			const products = result.data.products.edges.map(({ node }) => mapProductListNode(node));
 			return filterProductsByShopCategory(products, category);
-		} catch {
-			// Fall back to mock catalog when Saleor is unreachable or misconfigured.
+		} catch (err) {
+			guardMockCatalogFallback({ saleorAttemptFailed: true, error: err });
 		}
 	}
 
+	guardMockCatalogFallback();
 	return filterShopProducts(category);
 }
 
@@ -161,11 +162,12 @@ export async function getShopProductBySlug(
 			}
 
 			return mapProduct(result.data.product);
-		} catch {
-			// Fall back to mock catalog when Saleor is unreachable or misconfigured.
+		} catch (err) {
+			guardMockCatalogFallback({ saleorAttemptFailed: true, error: err });
 		}
 	}
 
+	guardMockCatalogFallback();
 	return getProductBySlug(slug) ?? null;
 }
 
@@ -182,11 +184,12 @@ export async function getGiftCardProducts(
 			return nodes
 				.filter(isGiftCardNode)
 				.map((node) => ({ ...mapCatalogNode(node), productType: 'GIFT_CARD' as const }));
-		} catch {
-			// Fall back to mock catalog when Saleor is unreachable or misconfigured.
+		} catch (err) {
+			guardMockCatalogFallback({ saleorAttemptFailed: true, error: err });
 		}
 	}
 
+	guardMockCatalogFallback();
 	return getMockGiftCardProducts();
 }
 
@@ -200,10 +203,11 @@ export async function getDealProducts(locale: string = config.defaultLocale): Pr
 			const nodes = await fetchSaleorCatalogNodes(locale);
 			const products = nodes.filter(isDealNode).map(mapCatalogNode);
 			if (products.length > 0) return products;
-		} catch {
-			// Fall back to mock catalog when Saleor is unreachable or misconfigured.
+		} catch (err) {
+			guardMockCatalogFallback({ saleorAttemptFailed: true, error: err });
 		}
 	}
 
+	guardMockCatalogFallback();
 	return getMockDealProducts();
 }

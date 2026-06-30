@@ -63,7 +63,7 @@ Common patterns (not custom tokens — standard Tailwind):
 | Page container  | `mx-auto max-w-7xl px-4 sm:px-6 lg:px-8` | All page sections               |
 | Section padding | `py-20`                                  | Homepage sections               |
 | Card padding    | `p-4`                                    | ProductCard                     |
-| Header offset   | `pt-[73px]` on `<main>`                  | `+layout.svelte` (fixed header) |
+| Header offset   | `pt-[var(--site-header-height)]` on `<main>` | `+layout.svelte` (fixed header; set in `Header.svelte`) |
 | Grid gaps       | `gap-6`, `gap-8`, `gap-12`               | Product/collection grids        |
 
 ## Adding a new token

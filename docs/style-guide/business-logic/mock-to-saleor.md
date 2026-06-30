@@ -7,7 +7,7 @@ How server loaders work today and how to replace mock data with live Saleor Grap
 ### Shop list — `src/routes/shop/+page.server.ts`
 
 ```typescript
-import { mockProducts } from '$lib/data/mock-products';
+import { mockProducts } from '$lib/data/mock/products';
 
 export const load: PageServerLoad = async () => {
 	return { products: mockProducts };
@@ -17,7 +17,7 @@ export const load: PageServerLoad = async () => {
 ### Product detail — `src/routes/shop/[slug]/+page.server.ts`
 
 ```typescript
-import { getProductBySlug } from '$lib/data/mock-products';
+import { getProductBySlug } from '$lib/data/mock/products';
 
 export const load: PageServerLoad = async ({ params }) => {
 	const product = getProductBySlug(params.slug);

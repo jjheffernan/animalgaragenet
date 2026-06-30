@@ -18,7 +18,7 @@ A highly animated, media-heavy automotive brand site — merchandising-forward d
 
 ## Project phases
 
-### Phase 1 — Prototype (current)
+### Phase 1 — Prototype (complete)
 
 - [x] SvelteKit scaffold with TypeScript, ESLint, Prettier, Tailwind
 - [x] Click-through pages: Home, Shop, Product, About, Media
@@ -29,11 +29,11 @@ A highly animated, media-heavy automotive brand site — merchandising-forward d
 
 ### Phase 2 — Commerce integration
 
-- [ ] Connect Saleor GraphQL (products, collections, cart, checkout)
-- [ ] Channel-aware pricing and inventory
+- [x] Connect Saleor GraphQL — partial: env-gated catalog loaders, cart scaffold (`docs/saleor-audit.md`)
+- [x] Channel-aware pricing — partial: locale → channel map in `src/lib/server/saleor/channels.ts`
 - [ ] Stripe/payment flow via Saleor
 - [ ] International shipping zones and rate calculation
-- [ ] Replace mock data with live API calls
+- [ ] Replace mock data with live API calls (mock fallback when `PUBLIC_SALEOR_API_URL` unset)
 
 ### Phase 3 — Media & CDN
 
@@ -45,7 +45,7 @@ A highly animated, media-heavy automotive brand site — merchandising-forward d
 
 ### Phase 4 — Supabase services
 
-- [ ] Auth (magic link / OAuth)
+- [x] Auth (magic link / OAuth) — `/auth/*`, mock `ag-session` fallback without keys (`docs/supabase.md`)
 - [ ] Newsletter signups
 - [ ] User preferences (locale, favorites)
 - [ ] Content metadata for dynamic homepage sections

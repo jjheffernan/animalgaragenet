@@ -10,8 +10,8 @@ No external site names — this doc is the canonical reference for what remains.
 
 | Capability | Status | Location |
 |------------|--------|----------|
-| Merch catalog + category tabs | Done | `/shop`, `mock-products.ts` |
-| Parts catalog + category nav | Done | `/parts`, `mock-parts.ts` |
+| Merch catalog + category tabs | Done | `/shop`, `mock/products.ts` |
+| Parts catalog + category nav | Done | `/parts`, `mock/parts.ts` |
 | YMM vehicle selector | Done | `VehicleSelector.svelte`, homepage |
 | Shop by popular model | Done | `ModelPicker.svelte` |
 | Build thread gallery + detail | Done | `/builds`, `/builds/[slug]` |
@@ -131,7 +131,7 @@ Admin routes require `editor` or `admin` role, or `DEV_ADMIN=true` in server env
 |------------|-------|
 | Supabase-backed user CRUD | Replace mock table in `/admin/users` |
 | Real CDN upload (S3 presigned) | Wire `/admin/media` upload to S3 + CloudFront invalidation |
-| Site banners / promo CMS | Replace mock-banners |
+| Site banners / promo CMS | Replace mock/banners |
 | Featured sections editor | Homepage CMS |
 | YouTube channel manager | Channel ID → sync cron (Workstream B) |
 | Build moderation queue | Approve/reject submissions |

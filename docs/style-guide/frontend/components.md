@@ -22,6 +22,12 @@ Current components:
 | `ProductCard.svelte`    | Product tile for grids     |
 | `ProductGrid.svelte`    | Responsive product grid    |
 | `SectionHeading.svelte` | Section title + subtitle   |
+| `CategoryPill.svelte`   | Catalog ribbon category link pill |
+| `CatalogRibbonShell.svelte` | Sticky shop/parts ribbon wrapper |
+| `PartsShoppingRibbon.svelte` | Parts PLP shopping ribbon |
+| `PartsNavSections.svelte` | Shared parts nav panels (mega menu, ribbon, mobile) |
+
+See [catalog-ribbons.md](./catalog-ribbons.md) for ribbon + pill styling rules.
 
 Route-specific markup stays in `src/routes/**/+page.svelte`. Extract to `$lib/components/` when reused on 2+ pages.
 

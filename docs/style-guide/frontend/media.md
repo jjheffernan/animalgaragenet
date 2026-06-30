@@ -7,7 +7,7 @@
 Mock data uses deterministic seeded URLs:
 
 ```typescript
-// src/lib/data/mock-products.ts
+// src/lib/data/mock/products.ts
 const img = (id: number, w = 800, h = 800) => `https://picsum.photos/seed/ag${id}/${w}/${h}`;
 ```
 
@@ -17,9 +17,9 @@ Seeds like `ag101`, `aghero` ensure stable images across reloads.
 
 | File                  | Pattern                            |
 | --------------------- | ---------------------------------- |
-| `mock-products.ts`    | `seed/ag{id}` for product images   |
-| `mock-collections.ts` | Seeded collection backgrounds      |
-| `mock-media.ts`       | Seeded media thumbnails            |
+| `mock/products.ts`    | `seed/ag{id}` for product images   |
+| `mock/collections.ts` | Seeded collection backgrounds      |
+| `mock/media.ts`       | Seeded media thumbnails            |
 | `Hero.svelte`         | `seed/aghero/1920/1080` background |
 | `+page.svelte`        | `seed/agbrand/800/600` brand image |
 

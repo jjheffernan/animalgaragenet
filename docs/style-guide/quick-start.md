@@ -22,7 +22,7 @@ CTA button labels and links are in the same file (`Shop the Drop` → `/shop`, `
 
 ## Add a product to mock data
 
-**File:** `src/lib/data/mock-products.ts`
+**File:** `src/lib/data/mock/products.ts`
 
 1. Add a new entry to the `mockProducts` array using the `product()` helper.
 2. Provide: id, name, slug, price, seed (for picsum image), description, category.

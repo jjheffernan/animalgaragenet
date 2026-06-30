@@ -2,6 +2,15 @@
 
 Execution plan for bug fixes, content completion, auth, admin, and YouTube integration. Work is split across four parallel workstreams (sub-agents).
 
+## Status (June 2026)
+
+| Workstream | Status |
+| ---------- | ------ |
+| A — Nav & UX | Done (mega-menus, search, cart, promo, community nav) |
+| B — Watch / YouTube | Done (detail panel, admin sync stub) |
+| C — Content | Mostly done (policies, contact, wholesale; Ghost guides/blog) |
+| D — Auth / Admin | Done (auth routes, account builds, `/admin` shell, build moderation) |
+
 ---
 
 ## Workstream A — Navigation & Core UX
@@ -30,7 +39,7 @@ Execution plan for bug fixes, content completion, auth, admin, and YouTube integ
 ## Workstream B — Watch & YouTube
 
 **Owner:** Sub-agent B  
-**Files:** `/watch`, `/watch/[id]`, `VideoGrid.svelte`, `VideoCard.svelte`, `VideoDetailPanel.svelte` (new), `mock-videos.ts`, `/admin/youtube`, `src/lib/server/youtube/`
+**Files:** `/watch`, `/watch/[id]`, `VideoGrid.svelte`, `VideoCard.svelte`, `VideoDetailPanel.svelte` (new), `mock/videos.ts`, `/admin/youtube`, `src/lib/server/youtube/`
 
 ### Tasks
 
@@ -65,7 +74,7 @@ Execution plan for bug fixes, content completion, auth, admin, and YouTube integ
 
 ### Tasks
 
-1. **Build blank page** — Fix `getProductsForBuild` to search `mock-products` + `mock-parts` via `getAllCatalogProducts()`. Fix linked product IDs in `mock-builds.ts` if needed.
+1. **Build blank page** — Fix `getProductsForBuild` to search `mock/products` + `mock/parts` via `getAllCatalogProducts()`. Fix linked product IDs in `mock/builds.ts` if needed.
 2. **Support pages** — Full content for shipping, refunds, privacy, contact (forms with validation UI, Supabase submit stub).
 3. **Program pages** — Wholesale + military: eligibility, how to apply, FAQ, forms.
 4. **Footer dedup** — Remove `ManifestoBlock` from footer (keep tagline only). Remove duplicate `NewsletterSignup` from homepage (footer only).

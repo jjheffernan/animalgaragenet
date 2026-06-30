@@ -13,7 +13,7 @@
            ▼ (Phase 1)            ▼ (Phase 2+)
 ┌──────────────────┐    ┌──────────────────┐    ┌──────────────┐
 │ src/lib/data/    │    │ src/lib/server/  │    │ src/lib/     │
-│ mock-*.ts        │    │ saleor/client.ts │    │ server/      │
+│ mock/*.ts        │    │ saleor/client.ts │    │ server/      │
 │ (local arrays)   │    │ (GraphQL fetch)  │    │ supabase/    │
 └──────────────────┘    └────────┬─────────┘    └──────┬───────┘
                                  │                      │
@@ -24,7 +24,7 @@
 
 ## Phase 1 — Mock data (current)
 
-1. **Server loaders** in `+page.server.ts` import from `src/lib/data/mock-*.ts`
+1. **Server loaders** in `+page.server.ts` import from `src/lib/data/mock/*.ts`
 2. Loaders return plain objects: `{ products }`, `{ product }`
 3. **Page components** receive data and pass to child components
 4. **Client components** read locale from `$lib/stores/locale.svelte.ts` for formatting
@@ -47,7 +47,7 @@ Swap loaders one at a time:
 
 ```typescript
 // Before
-import { mockProducts } from '$lib/data/mock-products';
+import { mockProducts } from '$lib/data/mock/products';
 return { products: mockProducts };
 
 // After
@@ -75,9 +75,9 @@ Homepage featured sections, newsletter, user preferences hydrate from Supabase w
 
 | Concern           | Location                           |
 | ----------------- | ---------------------------------- |
-| Mock catalog      | `src/lib/data/mock-products.ts`    |
-| Mock collections  | `src/lib/data/mock-collections.ts` |
-| Mock media        | `src/lib/data/mock-media.ts`       |
+| Mock catalog      | `src/lib/data/mock/products.ts`    |
+| Mock collections  | `src/lib/data/mock/collections.ts` |
+| Mock media        | `src/lib/data/mock/media.ts`       |
 | Type definitions  | `src/lib/types/saleor.ts`          |
 | GraphQL client    | `src/lib/server/saleor/client.ts`  |
 | GraphQL queries   | `src/lib/server/saleor/queries.ts` |

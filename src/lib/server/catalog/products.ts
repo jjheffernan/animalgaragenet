@@ -1,9 +1,5 @@
-import {
-	filterProductsByShopCategory,
-	filterShopProducts,
-	getDealProducts as getMockDealProducts,
-	type ShopCategory
-} from '$lib/data/catalog-helpers';
+import { filterShopProducts, getDealProducts as getMockDealProducts } from '$lib/data/catalog-helpers';
+import { filterProductsByShopSlug, filterSlugToShopCategory } from '$lib/server/catalog/shop-filters';
 import { getGiftCardProducts as getMockGiftCardProducts, getProductBySlug } from '$lib/data/mock/products';
 import { config } from '$lib/config/env';
 import type { Product } from '$lib/types/saleor';
@@ -117,7 +113,7 @@ function mapCatalogNode(node: SaleorProductCatalogNode): Product {
  * Mock when `PUBLIC_SALEOR_API_URL` is unset; Saleor when set (falls back to mock on error).
  */
 export async function getShopProducts(
-	category: ShopCategory = 'ALL',
+	filterSlug: string = 'all',
 	locale: string = config.defaultLocale
 ): Promise<Product[]> {
 	if (isSaleorEnabled()) {
@@ -132,14 +128,14 @@ export async function getShopProducts(
 			}
 
 			const products = result.data.products.edges.map(({ node }) => mapProductListNode(node));
-			return filterProductsByShopCategory(products, category);
+			return filterProductsByShopSlug(products, filterSlug);
 		} catch (err) {
 			guardMockCatalogFallback({ saleorAttemptFailed: true, error: err });
 		}
 	}
 
 	guardMockCatalogFallback();
-	return filterShopProducts(category);
+	return filterShopProducts(filterSlugToShopCategory(filterSlug) ?? 'ALL');
 }
 
 /**

@@ -68,6 +68,18 @@ Use `PRODUCT_BY_SLUG_QUERY` in `shop/[slug]/+page.server.ts`.
 
 Use `COLLECTIONS_QUERY` for homepage and `/shop?collection=` filtering.
 
+### Shop category filters
+
+`/shop` category pills are hydrated from Saleor when `PUBLIC_SALEOR_API_URL` is set:
+
+| Piece | Location |
+| ----- | -------- |
+| Filter loader | `src/lib/server/catalog/shop-filters.ts` — `getShopFilterOptions()` |
+| Shop page | `src/routes/shop/+page.server.ts` — server load |
+| JSON API | `GET /api/catalog/shop-filters` — `{ categories, source }` |
+
+Saleor path uses `CATEGORIES_QUERY` (top-level category tree). Mock fallback derives from `SHOP_CATEGORIES` in `catalog-helpers.ts`. Product filtering uses legacy heuristics for mock slugs (`tees`, `gift-cards`) or matches Saleor `category.slug` / `tags` metadata when live.
+
 ### 4. Cart & checkout
 
 **Done (partial):** create checkout, add line, read lines — `src/lib/server/saleor/checkout.ts`, `cart/checkout/+server.ts`, `ag-checkout-id` cookie.
@@ -117,6 +129,7 @@ Defined in `src/lib/server/saleor/queries.ts` and `checkout-queries.ts`:
 - `PRODUCTS_QUERY` — paginated product list
 - `PRODUCT_BY_SLUG_QUERY` — single product with variants/media
 - `COLLECTIONS_QUERY` — collection list for homepage
+- `CATEGORIES_QUERY` — shop filter taxonomy (`shop-filters.ts`)
 - Checkout create / add line — in `checkout-queries.ts` (wired)
 
 Still needed:

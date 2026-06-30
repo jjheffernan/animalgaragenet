@@ -7,14 +7,15 @@
 	import ListControls from '$lib/components/catalog/ListControls.svelte';
 	import CatalogRibbonShell from '$lib/components/catalog/CatalogRibbonShell.svelte';
 	import CategoryPill from '$lib/components/catalog/CategoryPill.svelte';
+	import type { ShopFilterOption } from '$lib/server/catalog/shop-filters';
 	import { catalogRibbonNavClass } from '$lib/ui/catalog-ribbon';
 	import { locale } from '$lib/stores/locale.svelte';
 
 	let { data } = $props();
 
-	function categoryHref(cat: string) {
-		if (cat === 'ALL') return resolve('/shop');
-		return resolve(`/shop?category=${cat}`);
+	function categoryHref(cat: ShopFilterOption) {
+		if (cat.slug === 'all') return resolve('/shop');
+		return resolve(`/shop?category=${cat.slug}`);
 	}
 </script>
 
@@ -40,11 +41,11 @@
 <div>
 	<CatalogRibbonShell ariaLabel="Shop categories">
 		<nav class={catalogRibbonNavClass} aria-label="Shop categories">
-			{#each data.categories as cat (cat)}
+			{#each data.categories as cat (cat.slug)}
 				<CategoryPill
 					href={categoryHref(cat)}
-					label={cat}
-					active={data.category === cat}
+					label={cat.label}
+					active={data.category.slug === cat.slug}
 				/>
 			{/each}
 		</nav>
@@ -53,7 +54,7 @@
 	<section class="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
 	<AnimatedReveal>
 		<SectionHeading
-			title={data.category === 'ALL' ? 'All Products' : data.category}
+			title={data.category.slug === 'all' ? 'All Products' : data.category.label}
 			subtitle="{data.pagination.total} items"
 		/>
 	</AnimatedReveal>

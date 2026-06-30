@@ -42,6 +42,33 @@ if git grep -n -E 'SUPABASE_SERVICE_ROLE_KEY\s*=\s*[^y\s]|AWS_SECRET_ACCESS_KEY\
 	fail=1
 fi
 
+# Service role must not appear outside server-only paths
+if git grep -n 'SUPABASE_SERVICE_ROLE_KEY' -- \
+	':!src/lib/server/**' \
+	':!scripts/**' \
+	':!supabase/migrations/**' \
+	':!*.md' ':!docs/' ':!*.example' ':!.env.test' \
+	2>/dev/null; then
+	echo "ERROR: SUPABASE_SERVICE_ROLE_KEY referenced outside server-only paths" >&2
+	fail=1
+fi
+
+# DEV_ADMIN must not be enabled in tracked deploy config
+if git grep -n -E 'DEV_ADMIN\s*=\s*true' -- \
+	'netlify.toml' 'netlify.json' '.netlify/**' 'vercel.json' \
+	2>/dev/null; then
+	echo "ERROR: DEV_ADMIN=true in tracked deploy config" >&2
+	fail=1
+fi
+
+# Scan client bundle for service role leakage when build output exists
+if [ -d .svelte-kit/output/client ]; then
+	if grep -r -l 'SERVICE_ROLE' .svelte-kit/output/client 2>/dev/null; then
+		echo "ERROR: SERVICE_ROLE string found in client bundle" >&2
+		fail=1
+	fi
+fi
+
 if [ "$fail" -ne 0 ]; then
 	echo "Secret/credential check failed. Fix before pushing." >&2
 	exit 1

@@ -25,7 +25,13 @@ z-40
 
 Inner container: `mx-auto max-w-7xl overflow-x-auto px-4 sm:px-6 lg:px-8`
 
-Nav row: `flex gap-1 py-3` (wrap on narrow parts ribbon)
+**Parts ribbon with dropdowns:** split inset + scroll track so panels are not clipped:
+
+- Inset: `catalogRibbonInsetClass` (padding only)
+- Scroll: `catalogRibbonScrollTrackClass` + `catalogRibbonScrollNavClass` (`w-max min-w-full flex-nowrap`)
+- Dropdown layer: sibling under shell (`absolute inset-x-0 top-full z-50`), outside the scroll track
+
+Nav row: `flex gap-1 py-3` (shop); parts scroll row uses `catalogRibbonScrollNavClass`
 
 ### Category pill (active + inactive)
 

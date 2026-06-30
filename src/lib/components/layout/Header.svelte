@@ -25,6 +25,7 @@
 	let closeTimer: ReturnType<typeof setTimeout> | undefined;
 	let headerShell = $state<HTMLDivElement | null>(null);
 	let accountMenuRoot = $state<HTMLDivElement | null>(null);
+	let communityMenuRoot = $state<HTMLDivElement | null>(null);
 
 	$effect(() => {
 		if (!headerShell) return;
@@ -132,6 +133,20 @@
 		notificationsOpen = false;
 		accountMenuOpen = false;
 		cart.closeDrawer();
+	});
+
+	$effect(() => {
+		if (!communityMenuOpen) return;
+
+		const onPointerDown = (event: PointerEvent) => {
+			const target = event.target as Node | null;
+			if (!target) return;
+			if (communityMenuRoot?.contains(target)) return;
+			closeMenus();
+		};
+
+		document.addEventListener('pointerdown', onPointerDown);
+		return () => document.removeEventListener('pointerdown', onPointerDown);
 	});
 
 	const communityPaths = ['/loyalty', '/guides', '/events', '/watch', '/builds', '/media'];
@@ -254,7 +269,7 @@
 			</a>
 
 			<nav
-				class="hidden min-w-0 items-center gap-4 overflow-hidden lg:flex lg:justify-self-center lg:pe-2"
+				class="hidden min-w-0 items-center gap-4 overflow-visible lg:flex lg:justify-self-center lg:pe-2"
 				aria-label="Main"
 			>
 				<div
@@ -341,6 +356,7 @@
 
 				<div
 					class="relative inline-flex min-w-0 max-w-full shrink items-center gap-0.5"
+					bind:this={communityMenuRoot}
 					onmouseenter={openCommunityMenu}
 					onmouseleave={scheduleClose}
 				>
@@ -361,6 +377,7 @@
 						aria-expanded={communityMenuOpen}
 						aria-haspopup="menu"
 						aria-label="Open community menu"
+						aria-controls="community-menu"
 						onclick={toggleCommunityMenu}
 					>
 						<svg
@@ -381,11 +398,16 @@
 
 					{#if communityMenuOpen}
 						<div
-							class="absolute left-0 top-full z-50 mt-1 min-w-[13rem] overflow-hidden rounded-sm border border-zinc-800 bg-zinc-950 py-2 shadow-2xl"
-							role="menu"
+							class="absolute left-0 top-full z-[60] pt-1"
+							role="presentation"
 							onmouseenter={cancelClose}
 							onmouseleave={scheduleClose}
 						>
+							<div
+								class="min-w-[13rem] overflow-hidden rounded-sm border border-zinc-800 bg-zinc-950 py-2 shadow-2xl"
+								role="menu"
+								id="community-menu"
+							>
 							<p class="px-4 pb-1 text-xs font-bold uppercase tracking-widest text-zinc-500">
 								Community
 							</p>
@@ -407,6 +429,7 @@
 									</li>
 								{/each}
 							</ul>
+							</div>
 						</div>
 					{/if}
 				</div>

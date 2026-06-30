@@ -4,7 +4,17 @@ export const catalogRibbonShellClass =
 
 export const catalogRibbonInnerClass = 'mx-auto max-w-7xl overflow-x-auto px-4 sm:px-6 lg:px-8';
 
+/** Padding wrapper when scroll track is split from dropdown layer (parts ribbon). */
+export const catalogRibbonInsetClass = 'mx-auto max-w-7xl px-4 sm:px-6 lg:px-8';
+
+/** Horizontal scroll track — keep dropdown panels outside this element. */
+export const catalogRibbonScrollTrackClass = 'overflow-x-auto overscroll-x-contain';
+
 export const catalogRibbonNavClass = 'flex min-w-0 gap-1 py-3';
+
+/** Nav row inside a horizontal scroll track (w-max enables overflow scroll). */
+export const catalogRibbonScrollNavClass =
+	'flex w-max min-w-full flex-nowrap items-center gap-1 py-3';
 
 export const categoryPillBaseClass =
 	'shrink-0 rounded-sm px-4 py-2 text-xs font-bold uppercase tracking-widest transition';

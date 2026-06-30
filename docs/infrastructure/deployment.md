@@ -343,7 +343,21 @@ bash scripts/check-secrets.sh
 | `oauth-discord` / `oauth-azure` | Provider enabled in Supabase           |
 | `cdn-s3`                        | `HEAD` on `PUBLIC_CDN_BASE_URL`        |
 
-**CI:** `.github/workflows/readiness-ci.yml` — weekly + manual + non-blocking on PRs when GitHub Actions secrets are configured (see maintainer runbook for secret names).
+**CI:**
+
+- `.github/workflows/secrets-ci.yml` — gitleaks + post-build client bundle scan + GitHub secrets manifest audit (blocking on `dev`/`main`)
+- `.github/workflows/readiness-ci.yml` — weekly + manual live probes when Actions secrets are configured
+
+**GitHub Actions secrets (personal repo only):**
+
+```bash
+cp .env.example .env          # fill from Netlify / dashboards
+npm run secrets:push          # interactive — never prints values
+npm run secrets:audit
+bash scripts/check-github-secrets.sh --strict-all   # fail if any integration secret missing
+```
+
+Manifest: `scripts/github-secrets.manifest.json`. Netlify-only vars (`PUBLIC_SITE_URL`, `YOUTUBE_SYNC_SECRET`, etc.) are listed under `netlify_only` — do not duplicate to GitHub unless a workflow needs them.
 
 ### 2. Playwright smoke (`e2e/smoke.spec.ts`)
 

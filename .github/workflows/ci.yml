@@ -48,6 +48,13 @@ jobs:
 
       - name: Build
         run: npm run build
+        env:
+          SUPABASE_DATABASE_URL: ''
+          SUPABASE_ANON_KEY: ''
+          PUBLIC_SALEOR_API_URL: ''
+
+      - name: Post-build client bundle secret scan
+        run: CHECK_CLIENT_BUNDLE=1 bash scripts/check-secrets.sh
 
       - name: Install Playwright browsers
         run: npx playwright install --with-deps chromium

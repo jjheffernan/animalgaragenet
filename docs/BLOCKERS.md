@@ -20,7 +20,7 @@ All items below require **dashboard, env, or production access**. They cannot be
 | 6    | AUD-P1-001-ops          | Stripe Payment App on Saleor channel                         | Saleor Dashboard (not Netlify)                                                                                      |
 | 7    | AUD-P1-008 / IP-015     | Ghost site + `guide` / `blog` tags + env                     | Ghost admin + Netlify                                                                                               |
 | 8    | NS-OPS-004              | YouTube sync cron + `YOUTUBE_SYNC_SECRET`                    | External scheduler                                                                                                  |
-| 9    | NS-OPS-005              | GitHub Actions secrets for readiness CI                      | Repo Settings                                                                                                       |
+| 9    | NS-OPS-005              | GitHub Actions secrets for readiness CI                      | `scripts/github-secrets.manifest.json` · `npm run secrets:push` · `npm run secrets:audit`                           |
 | 10   | NS-OPS-007              | CDN / S3 / CloudFront env                                    | AWS + Netlify                                                                                                       |
 | 11   | AUD-P2-018 / NS-OPS-009 | Discord, Microsoft, social OAuth                             | Supabase + IdP consoles                                                                                             |
 | 12   | NS-OPS-002              | Verify Storage bucket `ugc`                                  | Supabase (after migrations)                                                                                         |
@@ -49,7 +49,7 @@ All items below require **dashboard, env, or production access**. They cannot be
 | NS-OPS-002     | Storage bucket `ugc` + policies                                                      | supabase / ops |
 | NS-OPS-003     | Saleor webhook → `/api/webhooks/saleor`                                              | saleor / ops   |
 | NS-OPS-004     | YouTube cron `POST /api/cron/youtube-sync`                                           | content / ops  |
-| NS-OPS-005     | CI secrets for `readiness-ci.yml`                                                    | CI / ops       |
+| NS-OPS-005     | CI secrets manifest + audit (`secrets-ci.yml`, `scripts/push-github-secrets.sh`)     | CI / ops       |
 | NS-OPS-006     | Org mirror sync after `main` merge                                                   | maintainer     |
 | NS-OPS-007     | CDN invalidation + S3 env                                                            | media / ops    |
 | NS-OPS-008     | Optional `BUG_REPORT_WEBHOOK_URL`                                                    | ops            |

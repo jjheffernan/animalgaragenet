@@ -1,4 +1,4 @@
-const STORAGE_KEY = 'ag-promo-dismissed';
+import { isPromoDismissed, setPromoDismissed } from '$lib/cookies/client';
 
 class PromoState {
 	dismissed = $state(false);
@@ -7,14 +7,14 @@ class PromoState {
 
 	init() {
 		if (this.initialized || typeof window === 'undefined') return;
-		this.dismissed = sessionStorage.getItem(STORAGE_KEY) === '1';
+		this.dismissed = isPromoDismissed();
 		this.initialized = true;
 	}
 
 	dismiss() {
 		this.init();
 		this.dismissed = true;
-		sessionStorage.setItem(STORAGE_KEY, '1');
+		setPromoDismissed();
 	}
 }
 

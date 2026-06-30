@@ -30,7 +30,7 @@ Verdicts: `implement` | `ops-only` | `update-doc` | `archive` | `delete` | `alre
 | DOC-017 | `docs/meta/decisions.md` | Org mirror section sanitized | update-doc | docs-updater | done |
 | DOC-018 | `docs/meta/inspiration.md` | Phase 3 P0 bugs marked done | already-done | — | done |
 | DOC-019 | `docs/meta/polish-plan.md` | P0 Netlify ops; guards done in code | ops-only | — | pending |
-| DOC-020 | `docs/plans/TRIAGE.md` | Accurate triage baseline | already-done | — | done |
+| DOC-020 | `docs/plans/TRIAGE.md` | Refreshed stats + done rows (auth, UGC, shop filters) | update-doc | docs-updater | done |
 | DOC-021 | `docs/plans/active/account-flow-fix.md` | `productionAuthMisconfigured` banner on sign-in | implement | security-hardening | done |
 | DOC-022 | `docs/plans/active/account-flow-fix.md` | Refuse mock `ag-session` on production hostname | implement | security-hardening | done |
 | DOC-023 | `docs/plans/active/account-flow-fix.md` | Netlify env + redirect URL checklist | ops-only | — | pending |

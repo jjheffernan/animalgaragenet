@@ -116,14 +116,14 @@ cookies: {
 
 Roles: `admin`, `editor`, `contributor`, `customer`.
 
-### 5. Code hardening (follow-up PR)
+### 5. Code hardening
 
-| Change | Why |
-|--------|-----|
-| ~~Add preview hosts to `isProductionHostname()`~~ **Done** | `src/lib/server/auth/local-dev.ts` |
-| Refuse mock `ag-session` when request host is non-localhost HTTPS | Fail loud instead of fake auth on staging |
-| Build OAuth/magic-link redirect from `event.url.origin` with `PUBLIC_SITE_URL` as allowlist fallback | Safer multi-domain staging |
-| Surface `supabaseReady` on sign-in page when keys missing on production | Ops visibility |
+| Change | Status | Notes |
+|--------|--------|-------|
+| Add preview hosts to `isProductionHostname()` | **Done** | `src/lib/server/auth/local-dev.ts` |
+| Refuse mock `ag-session` when request host is non-localhost HTTPS | **Done** | `src/hooks.server.ts` returns `null` session on production hostname |
+| Surface `productionAuthMisconfigured` on sign-in when keys missing | **Done** | `sign-in/+page.svelte` banner |
+| Build OAuth/magic-link redirect from `event.url.origin` with `PUBLIC_SITE_URL` as allowlist fallback | **Open** | `sign-in/+page.server.ts` still uses `config.siteUrl` only |
 
 ---
 
@@ -189,4 +189,4 @@ npm run test:readiness   # expect supabase-auth + supabase-db pass
 - [ ] `PUBLIC_SITE_URL` matches browsed origin (documented in Netlify + Supabase)
 - [ ] Both Netlify and custom-domain callback URLs in Supabase allowlist
 - [ ] At least one `admin` user bootstrapped via `promote-admin.ts`
-- [ ] No production reliance on `ag-session` mock cookie
+- [x] No production reliance on `ag-session` mock cookie (code refuses mock session on production hostname)

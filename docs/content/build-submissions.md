@@ -1,6 +1,6 @@
 # Build submissions
 
-User-submitted build logs from [`/builds/submit`](../src/routes/builds/submit/) are stored in Supabase for moderation before appearing on the public builds gallery.
+User-submitted build logs from [`/builds/submit`](../../src/routes/builds/submit/) are stored in Supabase for moderation before appearing on the public builds gallery.
 
 ## Flow
 
@@ -53,7 +53,7 @@ Migration: [`supabase/migrations/20250629120000_build_submissions.sql`](../../su
 
 - **INSERT:** `anon` and `authenticated` — public form submissions (email required in app validation).
 - **SELECT:** No policy for anon/authenticated. Submissions are not publicly readable.
-- **Moderation reads:** Use `SUPABASE_SERVICE_ROLE_KEY` via [`src/lib/server/supabase/admin.ts`](../src/lib/server/supabase/admin.ts) (bypasses RLS). Future admin UI should add a role-based SELECT policy instead of exposing the service key to browsers.
+- **Moderation reads:** Use `SUPABASE_SERVICE_ROLE_KEY` via [`src/lib/server/supabase/admin.ts`](../../src/lib/server/supabase/admin.ts) (bypasses RLS). Future admin UI should add a role-based SELECT policy instead of exposing the service key to browsers.
 
 Server writes use the service role so inserts succeed regardless of caller RLS; the INSERT policy documents intent if direct client inserts are added later.
 
@@ -67,7 +67,7 @@ Rejected rows stay in the table for audit; they are never shown on `/builds`.
 
 ## Future: publish to builds
 
-Approved submissions should become public [`BuildThread`](../src/lib/types/domain) entries:
+Approved submissions should become public [`BuildThread`](../../src/lib/types/domain.ts) entries:
 
 1. Generate unique `slug` from title (e.g. `project-redline-civic`).
 2. Set `status = 'approved'` and persist `slug` on the submission row.
@@ -75,7 +75,7 @@ Approved submissions should become public [`BuildThread`](../src/lib/types/domai
 4. Award garage XP to `user_id` when present (see loyalty flow).
 5. Invalidate or revalidate `/builds` cache.
 
-Until that pipeline exists, [`src/lib/data/mock/builds.ts`](../src/lib/data/mock/builds.ts) remains the source for the public builds gallery.
+Until that pipeline exists, [`src/lib/data/mock/builds.ts`](../../src/lib/data/mock/builds.ts) remains the source for the public builds gallery.
 
 ## Related code
 

@@ -11,7 +11,7 @@
 
 | Route | Status | Observation |
 |-------|--------|-------------|
-| `/` | Live | Full homepage; campaigns, UGC, videos, builds, guides — all mock content (picsum images, `@handle` UGC wall) |
+| `/` | Live | Homepage UGC from approved `testimonials` when Supabase configured; otherwise mock fallback. Videos, builds, campaigns still mock. |
 | `/shop` | Live | **120 items** — exact count of `mockProducts`; names match mock catalog (`Garage Flag Tee`, `Redline Hoodie`, etc.) |
 | `/auth/sign-in` | Live | OAuth + magic link UI; no dev quick-login (correct for Netlify host) |
 | `/cart` | Live | Empty cart; “You Might Also Like” shows mock staff picks |
@@ -29,20 +29,21 @@
 
 | Loader | File | Live when `PUBLIC_SALEOR_API_URL` set | Silent mock fallback on error |
 |--------|------|--------------------------------------|------------------------------|
-| Shop list/detail | `catalog/products.ts` | ✅ | ⚠️ Yes |
-| Parts hub/detail | `catalog/parts.ts` | ✅ | ⚠️ Yes |
-| Collections | `catalog/collections.ts` | ✅ | ⚠️ Yes |
-| Staff picks / clearance | `+page.server.ts` (homepage) | ✅ | ⚠️ Yes |
-| Gift cards / deals | `catalog/products.ts` | ✅ | ⚠️ Yes |
-| Catalog search API | `catalog/search.ts` | ✅ | ⚠️ Yes |
+| Shop list/detail | `catalog/products.ts` | ✅ | Guarded on prod |
+| Shop category filters | `catalog/shop-filters.ts` | ✅ | Guarded on prod |
+| Parts hub/detail | `catalog/parts.ts` | ✅ | Guarded on prod |
+| Collections | `catalog/collections.ts` | ✅ | Guarded on prod |
+| Staff picks / clearance | `+page.server.ts` (homepage) | ✅ | Guarded on prod |
+| Gift cards / deals | `catalog/products.ts` | ✅ | Guarded on prod |
+| Catalog search API | `catalog/search.ts` | ✅ | Guarded on prod |
 
-**Production risk:** If Saleor URL is set but channel slug, CORS, or network fails, users still see 120 mock products with picsum images — indistinguishable from “working” commerce.
+**Production guard (June 2026):** `guardMockCatalogFallback()` throws `CatalogUnavailableError` on production hostname when Saleor is unset or query fails — no silent mock catalog on Netlify. Local dev still uses mock fallback.
 
 ### Always mock (even when Saleor env set)
 
 | Surface | Location | Notes |
 |---------|----------|-------|
-| Homepage UGC wall | `+page.server.ts`, `UGCWall.svelte` | `mockUGC` — picsum |
+| Homepage UGC wall | `+page.server.ts`, `UGCWall.svelte` | Approved `testimonials` when Supabase set; else `mockUGC` |
 | Homepage videos | `+page.server.ts`, `mock/videos.ts` | picsum thumbnails |
 | Build threads (public) | `routes/builds/*` | `mock/builds.ts` |
 | Brands / parts nav | `brands/*`, `parts-nav.ts` | `mock/brands.ts`, `mockPartCategories` |
@@ -70,11 +71,13 @@ Cart remove/qty is **no-op** when Saleor enabled. Listing-card add-to-cart still
 ### Auth fallback (`hooks.server.ts`)
 
 ```ts
-// When Supabase keys unset:
+// When Supabase keys unset on non-production host:
 event.locals.session = parseSessionCookie(event.cookies.get(SESSION_COOKIE));
+// When Supabase keys unset on production hostname:
+event.locals.session = null;  // no mock ag-session
 ```
 
-On production with Supabase **unset**, sign-in creates an `ag-session` mock cookie immediately (no email verification). This must never be the production state.
+On production with Supabase **unset**, sign-in shows `productionAuthMisconfigured` and **does not** persist mock `ag-session` cookies. Configure Netlify env vars before launch.
 
 Magic link / OAuth `redirectTo` is built from `config.siteUrl` (`PUBLIC_SITE_URL`), **not** the request origin — mismatch with Netlify preview domain breaks callbacks.
 
@@ -211,7 +214,7 @@ See **[account-flow-fix.md](./account-flow-fix.md)** for the detailed plan.
 **Acceptance criteria**
 
 - [ ] `/guides` and `/blog` posts from Ghost; mock titles absent
-- [ ] Homepage UGC from `testimonials` where `status = 'approved'`
+- [x] Homepage UGC from `testimonials` where `status = 'approved'` (mock fallback when Supabase unset)
 - [ ] `/builds` from approved `build_submissions` (or hybrid until migration)
 - [ ] No picsum URLs on homepage, shop, or guides in production
 - [ ] `npm run test:readiness` → `ghost-cms`, `supabase-db`, `cdn-s3` pass
@@ -239,7 +242,7 @@ See **[account-flow-fix.md](./account-flow-fix.md)** for the detailed plan.
 
 - [ ] `DEV_ADMIN=true` on Netlify does **not** grant admin (even on `netlify.app`)
 - [ ] `scripts/check-secrets.sh` passes; extended checks added
-- [ ] No mock session path reachable on production hostname
+- [x] No mock session path reachable on production hostname (`hooks.server.ts`)
 - [ ] All `supabase/migrations/*` applied to production project
 - [ ] Security review agent sign-off
 
@@ -248,8 +251,8 @@ See **[account-flow-fix.md](./account-flow-fix.md)** for the detailed plan.
 ## Related docs
 
 - [account-flow-fix.md](./account-flow-fix.md) — Phase 0 detail
-- [../audits/saleor-audit.md](../audits/saleor-audit.md) — Saleor wiring inventory
-- [../testing/external-dependencies.md](../testing/external-dependencies.md) — Integration registry
-- [../testing/readiness-report.md](../testing/readiness-report.md) — Live probe results
-- [../integrations/supabase.md](../integrations/supabase.md) — Auth, RLS, Netlify env
+- [../../audits/saleor-audit.md](../../audits/saleor-audit.md) — Saleor wiring inventory
+- [../../testing/external-dependencies.md](../../testing/external-dependencies.md) — Integration registry
+- [../../testing/readiness-report.md](../../testing/readiness-report.md) — Live probe results
+- [../../integrations/supabase.md](../../integrations/supabase.md) — Auth, RLS, Netlify env
 - [media-uploads.md](./media-uploads.md) — CDN phase plan

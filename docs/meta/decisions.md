@@ -1,6 +1,6 @@
 # Architecture & Product Decisions
 
-Persistent memory for major choices made during build-out. Minor implementation details live in code and the [style guide](./style-guide/README.md).
+Persistent memory for major choices made during build-out. Minor implementation details live in code and the [style guide](../style-guide/README.md).
 
 ---
 

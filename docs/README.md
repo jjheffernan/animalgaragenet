@@ -102,9 +102,8 @@ Complete, superseded, or stale plans. Each file has a status banner.
 |-----|---------|
 | [plans/README.md](./plans/README.md) | Plan lifecycle |
 | [plans/AUDIT-REMEDIATION.md](./plans/AUDIT-REMEDIATION.md) | Consolidated audit remediation tracker |
-| [plans/DOC-IMPLEMENTATION-MANIFEST.md](./plans/DOC-IMPLEMENTATION-MANIFEST.md) | Doc batch implementation verdicts |
+| [plans/DOC-IMPLEMENTATION-MANIFEST.md](./plans/DOC-IMPLEMENTATION-MANIFEST.md) | Doc batch audit tracker (June 2026) |
 | [plans/TRIAGE.md](./plans/TRIAGE.md) | Plan vs codebase verification |
-| [plans/DOC-IMPLEMENTATION-MANIFEST.md](./plans/DOC-IMPLEMENTATION-MANIFEST.md) | Batch doc audit tracker (June 2026) |
 | [plans/active/account-flow-fix.md](./plans/active/account-flow-fix.md) | Netlify + Supabase account ops |
 | [plans/active/market-readiness.md](./plans/active/market-readiness.md) | Phased launch roadmap |
 | [plans/active/media-uploads.md](./plans/active/media-uploads.md) | UGC upload pipeline — phase 1 not wired |

@@ -59,8 +59,8 @@ No shared `ImageSet` or srcset type exists yet; everything is a single URL strin
 
 | System | Image role | Storage owner |
 |--------|------------|---------------|
-| **Saleor** | Product thumbnails + gallery | Saleor dashboard upload → Saleor storage or custom S3 backend; storefront reads `thumbnail.url` / `media[].url` via GraphQL ([mappers.ts](../src/lib/server/saleor/mappers.ts)) |
-| **Ghost** | Feature images + inline HTML `<img>` in post body | Ghost(Pro) CDN or self-hosted Ghost `content/images/`; mapped to `heroImage` ([ghost/mappers.ts](../src/lib/server/ghost/mappers.ts)) |
+| **Saleor** | Product thumbnails + gallery | Saleor dashboard upload → Saleor storage or custom S3 backend; storefront reads `thumbnail.url` / `media[].url` via GraphQL ([mappers.ts](../../src/lib/server/saleor/mappers.ts)) |
+| **Ghost** | Feature images + inline HTML `<img>` in post body | Ghost(Pro) CDN or self-hosted Ghost `content/images/`; mapped to `heroImage` ([ghost/mappers.ts](../../src/lib/server/ghost/mappers.ts)) |
 | **YouTube** | Video posters | `i.ytimg.com` — keep external; no need to mirror unless branding requires |
 | **Supabase** | Auth, `build_submissions`, future `media_assets` metadata | **No Storage buckets in use** — see [integrations/supabase.md](../integrations/supabase.md) |
 
@@ -80,7 +80,7 @@ const img = (seed: string, w = 800, h = 800) =>
   `https://picsum.photos/seed/${seed}/${w}/${h}`;
 ```
 
-Documented in [style-guide/frontend/media.md](./style-guide/frontend/media.md). Deterministic seeds keep dev stable but are unsuitable for production (third-party dependency, no alt control, no variants).
+Documented in [style-guide/frontend/media.md](../style-guide/frontend/media.md). Deterministic seeds keep dev stable but are unsuitable for production (third-party dependency, no alt control, no variants).
 
 ---
 
@@ -317,7 +317,7 @@ sequenceDiagram
 
 | Source | Upload entry | Notes |
 |--------|--------------|-------|
-| `/admin/media` | Presign action | Replace stub in [admin/media/+page.svelte](../src/routes/admin/media/+page.svelte) |
+| `/admin/media` | Presign action | Replace stub in [admin/media/+page.svelte](../../src/routes/admin/media/+page.svelte) |
 | Saleor | Saleor S3 plugin **or** sync job copying to Garage + URL rewrite in mapper | Prefer Saleor pointing at same Garage endpoint |
 | Build submissions | New multi-file field on `/builds/submit` → `submissions/` quarantine | Moderation moves to `builds/` on approve |
 | UGC | Moderated upload or Instagram-style submit | `ugc/` after approval |
@@ -369,7 +369,7 @@ Garage bucket policy: deny public listing; allow read only via CDN origin creden
 
 ### Upload auth
 
-- `/api/media/presign` — server-only; require `editor` or `admin` role ([roles](../src/lib/auth/roles.ts)).
+- `/api/media/presign` — server-only; require `editor` or `admin` role ([roles](../../src/lib/auth/roles.ts)).
 - Build photo upload — authenticated user or verified email; rate limit per IP.
 - Never expose Garage root keys to the browser — only presigned URLs.
 
@@ -442,7 +442,7 @@ export function productSrcSet(slug: string, hash: string, channel = 'us'): strin
 | `CartDrawer` | thumbnail 400w |
 | `admin/media` | wire presign + list from `media_assets` table |
 
-**Saleor path:** continue using `product.thumbnail.url` from API — ensure Saleor stores Garage/CDN URLs (mapper unchanged in [saleor/mappers.ts](../src/lib/server/saleor/mappers.ts)).
+**Saleor path:** continue using `product.thumbnail.url` from API — ensure Saleor stores Garage/CDN URLs (mapper unchanged in [saleor/mappers.ts](../../src/lib/server/saleor/mappers.ts)).
 
 **Ghost path:** `heroImage` stays absolute URL from Ghost; inline post images remain Ghost-hosted unless mirror pipeline is built.
 
@@ -466,7 +466,7 @@ When `PUBLIC_CDN_BASE_URL` is empty, keep picsum fallbacks (current behavior). O
 
 ### vs managed AWS
 
-AWS S3 + CloudFront is simpler operationally but typically **$50–200+/mo** at thousands of images with global egress. Self-hosted trades labor for cost control — aligned with project direction in [agents/AGENTS.md](../agents/AGENTS.md).
+AWS S3 + CloudFront is simpler operationally but typically **$50–200+/mo** at thousands of images with global egress. Self-hosted trades labor for cost control — aligned with project direction in [agents/AGENTS.md](../../agents/AGENTS.md).
 
 ### Backups
 

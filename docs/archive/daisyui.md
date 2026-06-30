@@ -29,5 +29,5 @@ daisyUI 5 was briefly adopted with custom `animalgarage-light` / `animalgarage-d
 
 ## References
 
-- [AG design tokens](./style-guide/frontend/design-tokens.md)
+- [AG design tokens](../style-guide/frontend/design-tokens.md)
 - [daisyUI docs](https://daisyui.com/) (external, not installed)

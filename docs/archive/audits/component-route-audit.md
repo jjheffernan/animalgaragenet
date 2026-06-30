@@ -1,3 +1,5 @@
+> **Status: Archived** — AUD-P2-034–038 done. See [archive/changelog-2026-H1.md](../changelog-2026-H1.md).
+
 # Component & route audit — 2026-06-30
 
 **Branch:** `dev`  

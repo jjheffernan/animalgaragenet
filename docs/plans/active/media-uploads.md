@@ -14,7 +14,7 @@ User-generated media for reviews (testimonials), build logs, and admin `/admin/m
 | Review photo upload UI                        | **Done** — loyalty form, homepage cards, `/media?tab=photos` gallery          |
 | `.env.example`                                | S3 + CloudFront vars stubbed for future CDN                                   |
 
-## Setup (blocked until applied)
+## Setup (ops — see [BLOCKERS.md](../../BLOCKERS.md))
 
 1. Run `supabase db push` (or apply `20250630120000_media_assets.sql`) on the production project.
 2. Confirm Storage bucket `ugc` exists (migration inserts it) with 5 MB / image mime limits.

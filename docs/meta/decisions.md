@@ -129,7 +129,7 @@ Helpers in `catalog-helpers.ts` (`getCatalogKind`, `getProductPath`, `getCatalog
 
 ## Migration scaffolds (`@inspiration-scaffold` / `@migration`)
 
-Commented code tagged `@inspiration-scaffold`, `@migration`, or `@saleor-migration` is **intentional** — it marks swap points for inspiration backlog and Saleor catalog/checkout work tracked in [inspiration-polish-tracker.md](../plans/active/inspiration-polish-tracker.md) (`#IP-###`) and [AUDIT-REMEDIATION.md](../plans/AUDIT-REMEDIATION.md). Agents (especially `polish-sweep`) must **not** delete these blocks during cleanup; uncomment when the linked env, migration, or payment gateway is ready. `@saleor-migration` details: [commerce/saleor.md](../commerce/saleor.md).
+Commented code tagged `@inspiration-scaffold`, `@migration`, or `@saleor-migration` is **intentional** — it marks swap points for inspiration backlog and Saleor catalog/checkout work tracked in [inspiration-polish-tracker.md](../plans/active/inspiration-polish-tracker.md) (`#IP-###`) and [BLOCKERS.md](../BLOCKERS.md) / [STATUS.md](../STATUS.md). Agents (especially `polish-sweep`) must **not** delete these blocks during cleanup; uncomment when the linked env, migration, or payment gateway is ready. `@saleor-migration` details: [commerce/saleor.md](../commerce/saleor.md).
 
 ---
 

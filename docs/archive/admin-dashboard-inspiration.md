@@ -1,3 +1,5 @@
+> **Status: Archived** — Admin slices shipped. See [STATUS.md](../STATUS.md).
+
 # Admin dashboard inspiration — Flowbite → Animal Garage
 
 **Status:** Active — UI planning reference  

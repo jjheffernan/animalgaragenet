@@ -1,26 +1,31 @@
 # Plans — lifecycle
 
-| Status         | Meaning                                                        |
-| -------------- | -------------------------------------------------------------- |
-| **Active**     | Current roadmap; tasks may be open                             |
-| **Complete**   | Delivered; moved to `docs/archive/`                            |
-| **Superseded** | Replaced by another doc; moved to `docs/archive/` with pointer |
-| **Stale**      | Deprecated approach (see `docs/archive/daisyui.md` pattern)    |
+**Coder flow:** [CODER-FLOW.md](../CODER-FLOW.md) · **Ops blockers:** [BLOCKERS.md](../BLOCKERS.md)
 
-## Active plans (`active/`)
+## Active (`active/`)
 
-| Plan                                                | Status                   | Notes                                                |
-| --------------------------------------------------- | ------------------------ | ---------------------------------------------------- |
-| [ACTIVE-SWARM-EXECUTION.md](./active/ACTIVE-SWARM-EXECUTION.md) | Active — swarm inventory | 59 rows · batch slots A–D · ops-blocked flagged |
-| [next-steps-tracker.md](./active/next-steps-tracker.md) | Active — consolidated implementer queue (unblocked vs ops) |
-| [inspiration-polish-tracker.md](./active/inspiration-polish-tracker.md) | Active — canonical inspiration + polish + AUDIT tracker |
-| [ponytail-audit-tracker.md](./active/ponytail-audit-tracker.md) | Active — server LOC/dedupe audit (P3 open) |
-| [account-flow-fix.md](./active/account-flow-fix.md) | Active — Ops             | Netlify + Supabase env; code guards Done             |
-| [market-readiness.md](./active/market-readiness.md) | Active                   | Phased launch roadmap                                |
-| [media-uploads.md](./active/media-uploads.md)       | Active — partial         | Phase 1 API + migration in repo; apply on Supabase project |
+| Plan | Role |
+| ---- | ---- |
+| [inspiration-polish-tracker.md](./active/inspiration-polish-tracker.md) | `IP-*` features, prod setup sections, scaffold markers |
+| [market-readiness.md](./active/market-readiness.md) | Phased launch / mock vs live roadmap |
+| [media-uploads.md](./active/media-uploads.md) | UGC media architecture; ops apply for bucket |
 
-**Archived implementer batches:** [batch-2026-07-01.md](../archive/batch-2026-07-01.md) · [batch-2026-07-02.md](../archive/batch-2026-07-02.md) · [batch-2026-07-03-followups.md](../archive/batch-2026-07-03-followups.md) (ops apply checklist)
+## Pointers (not duplicate trackers)
 
-Triage and moves: [TRIAGE.md](./TRIAGE.md) (June 2026 reorg + public-safe pass).
+| Doc | Role |
+| --- | ---- |
+| [AUDIT-REMEDIATION.md](./AUDIT-REMEDIATION.md) | Pointer to STATUS + BLOCKERS + archive |
+| [TRIAGE.md](./TRIAGE.md) | Historical June 2026 doc reorg map |
 
-**Audit open items:** [AUDIT-REMEDIATION.md](./AUDIT-REMEDIATION.md) — canonical P0/P1/P2 tracker (source audits in `docs/audits/` kept for detail until all items done).
+## Archived
+
+Completed batches, swarm inventories, and superseded trackers: [archive/README.md](../archive/README.md)
+
+| Former `active/` doc | Archive path |
+| -------------------- | ------------ |
+| Swarm execution | [archive/active-swarm-execution.md](../archive/active-swarm-execution.md) |
+| Next steps queue | [archive/next-steps-tracker.md](../archive/next-steps-tracker.md) |
+| Ponytail audit | [archive/ponytail-audit-tracker.md](../archive/ponytail-audit-tracker.md) |
+| Admin dashboard inspiration | [archive/admin-dashboard-inspiration.md](../archive/admin-dashboard-inspiration.md) |
+| Account flow fix | [archive/account-flow-fix.md](../archive/account-flow-fix.md) |
+| Full AUD remediation | [archive/audit-remediation-2026-06.md](../archive/audit-remediation-2026-06.md) |

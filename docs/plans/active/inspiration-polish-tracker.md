@@ -5,8 +5,8 @@
 **Policy:** [SECURITY-PUBLIC.md](../../SECURITY-PUBLIC.md)  
 **Replaces:** `inspiration-implementation-tracker.md`, `inspiration-polish-coordination.md`, `meta/polish-plan.md`, `inspiration-polish-prod-setup.md`  
 **Backlog (built items):** [inspiration.md](../../meta/inspiration.md)  
-**Audit / security:** [AUDIT-REMEDIATION.md](../AUDIT-REMEDIATION.md) — do not duplicate CI/security rows here  
-**Dedupe (server-only):** [ponytail-audit-tracker.md](./ponytail-audit-tracker.md) — P3 **done** (PT-P3-001 checkout split YAGNI-deferred)
+**Ops blockers:** [BLOCKERS.md](../../BLOCKERS.md) — do not duplicate env/console rows here  
+**Coder flow:** [CODER-FLOW.md](../../CODER-FLOW.md)
 
 Markers: `@inspiration-scaffold` (Supabase/community/CMS) · `@saleor-migration` (commerce) — [decisions.md](../../meta/decisions.md#migration-scaffolds-inspiration-scaffold--migration). Do not remove unless wiring that step.
 
@@ -64,7 +64,7 @@ July 1–3 implementer tables are **complete** and archived:
 | 2026-07-02 | [batch-2026-07-02.md](../../archive/batch-2026-07-02.md) | BATCH-013–020 shipped (`b4614c5`–`905f481`) |
 | 2026-07-03 | [batch-2026-07-03-followups.md](../../archive/batch-2026-07-03-followups.md) | BATCH-021 + ops apply checklist (squashed migrations) |
 
-**Current open work:** [next-steps-tracker.md](./next-steps-tracker.md) · [AUDIT-REMEDIATION.md](../AUDIT-REMEDIATION.md) · ops rows below.
+**Current open work:** [STATUS.md](../../STATUS.md) · [BLOCKERS.md](../../BLOCKERS.md) for ops-blocked IP rows below.
 
 ---
 

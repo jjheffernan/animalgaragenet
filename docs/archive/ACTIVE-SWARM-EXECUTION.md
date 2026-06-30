@@ -1,3 +1,5 @@
+> **Status: Archived** — Swarm complete 2026-06-30. See [STATUS.md](../STATUS.md) · [BLOCKERS.md](../BLOCKERS.md) · [CODER-FLOW.md](../CODER-FLOW.md).
+
 # Active swarm execution tracker
 
 **Created:** 2026-06-30  

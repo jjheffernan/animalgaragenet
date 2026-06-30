@@ -1,3 +1,5 @@
+> **Status: Archived** — SEO-001–003 shipped. See [STATUS.md](../../STATUS.md).
+
 # Sitemap & route navigation audit — 2026-06-30
 
 **Branch:** `dev`  
@@ -182,4 +184,4 @@ All **enabled** nav items point to existing routes. Admin disabled items render 
 | SEO-003 | Extend smoke tests beyond `/`, `/shop`, `/parts`, one PDP | code |
 | AUD-P2-035 | `/military` discoverability — footer link exists; optional checkout cross-link | code |
 
-Track open SEO work in [next-steps-tracker.md](../plans/active/next-steps-tracker.md) when prioritized.
+Track open SEO work in [STATUS.md](../../STATUS.md) when prioritized.

@@ -4,7 +4,7 @@ Production deploys via **GitHub → organization mirror → Netlify**. The perso
 
 **Full runbook:** [infrastructure/deployment.md](../../infrastructure/deployment.md)
 
-**Consolidated open work:** [next-steps-tracker.md](../../plans/active/next-steps-tracker.md) · [STATUS.md](../../STATUS.md)
+**Consolidated open work:** [CODER-FLOW.md](../../CODER-FLOW.md) · [BLOCKERS.md](../../BLOCKERS.md) · [STATUS.md](../../STATUS.md)
 
 ---
 
@@ -125,7 +125,7 @@ npx tsx --env-file=.env scripts/promote-admin.ts user@email.com admin
 
 User must sign out and back in so JWT picks up `app_metadata.role`.
 
-Full flow: [account-flow-fix.md](../../plans/active/account-flow-fix.md).
+Full flow: [archive/account-flow-fix.md](../../archive/account-flow-fix.md) (historical). Ops checklist: [BLOCKERS.md](../../BLOCKERS.md).
 
 ### 5. Saleor — catalog + checkout
 
@@ -144,7 +144,7 @@ Register in Saleor Dashboard → Webhooks:
 
 Handler: `src/routes/api/webhooks/saleor/+server.ts` — upserts `order_snapshots` for `/account/orders`.
 
-**Restock alerts (future):** `IP-004` signup API is live; Saleor stock webhook → notify handler is **not wired** yet ([next-steps-tracker.md](../../plans/active/next-steps-tracker.md#IP-004-code)).
+**Restock alerts:** Stock webhook handler shipped (IP-004). Register webhook in Saleor — [BLOCKERS.md](../../BLOCKERS.md) NS-OPS-003.
 
 ### 7. Ghost CMS (optional)
 
@@ -188,7 +188,7 @@ bash scripts/check-secrets.sh
 npm run test:unit
 ```
 
-Manual QA matrix: [account-flow-fix.md](../../plans/active/account-flow-fix.md) § Verification.
+Manual QA matrix: [archive/account-flow-fix.md](../../archive/account-flow-fix.md) § Verification.
 
 Staff integrations dashboard: `/admin/runtime` (cron registry, env booleans only).
 

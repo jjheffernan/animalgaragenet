@@ -10,4 +10,4 @@ Product decisions, feature backlog, and session polish history.
 
 **Archived:** [polish-plan.md](../archive/polish-plan.md) (June 2026; code items complete). Redirect stub `meta/polish-plan.md` removed 2026-07-03.
 
-**Open work coordination:** [plans/active/inspiration-polish-tracker.md](../plans/active/inspiration-polish-tracker.md) · [plans/AUDIT-REMEDIATION.md](../plans/AUDIT-REMEDIATION.md)
+**Open work coordination:** [CODER-FLOW.md](../CODER-FLOW.md) · [BLOCKERS.md](../BLOCKERS.md)

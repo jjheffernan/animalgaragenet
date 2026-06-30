@@ -1,3 +1,5 @@
+> **Status: Archived** — All batches done. See [CODER-FLOW.md](../CODER-FLOW.md).
+
 # Ponytail audit tracker
 
 **Created:** 2026-06-30  

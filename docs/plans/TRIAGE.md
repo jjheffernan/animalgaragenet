@@ -1,3 +1,5 @@
+> **Status: Historical** — June 2026 doc reorg map. Open work: [STATUS.md](../STATUS.md) · [BLOCKERS.md](../BLOCKERS.md).
+
 # Documentation triage — root `docs/` audit
 
 **Date:** 2026-07-03 (refreshed)  

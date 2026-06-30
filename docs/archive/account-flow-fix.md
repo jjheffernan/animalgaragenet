@@ -1,3 +1,5 @@
+> **Status: Archived** — Code hardening done. Ops → [BLOCKERS.md](../BLOCKERS.md).
+
 # Account flow fix — Netlify + Supabase
 
 **Status:** Partial — code hardening done; Netlify/Supabase ops remain

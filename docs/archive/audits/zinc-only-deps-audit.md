@@ -1,3 +1,5 @@
+> **Status: Archived** — daisyUI removed; build verified. See [CODER-FLOW.md](../../CODER-FLOW.md).
+
 # Zinc-only styling & dependency audit
 
 **Date:** 2026-06-30  

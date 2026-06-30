@@ -1,3 +1,5 @@
+> **Status: Archived** — Queue consolidated into [BLOCKERS.md](../BLOCKERS.md) + [STATUS.md](../STATUS.md).
+
 # Next steps tracker
 
 **Created:** 2026-06-30  

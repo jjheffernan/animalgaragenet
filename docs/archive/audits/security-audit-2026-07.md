@@ -1,10 +1,12 @@
+> **Status: Archived** — Finding remediated (AUD-SEC-001). See [BLOCKERS.md](../../BLOCKERS.md).
+
 # Security audit — July 2026
 
 **Branch:** `dev`  
 **Scope:** Admin CDN invalidation API, secret scanning, auth boundaries  
-**Policy:** [SECURITY-PUBLIC.md](../SECURITY-PUBLIC.md) — no hostnames, keys, or account identifiers in this doc.
+**Policy:** [SECURITY-PUBLIC.md](../../SECURITY-PUBLIC.md) — no hostnames, keys, or account identifiers in this doc.
 
-Canonical remediation tracker: [plans/AUDIT-REMEDIATION.md](../plans/AUDIT-REMEDIATION.md) (`AUD-SEC-001`).
+Canonical remediation: [archive/audit-remediation-2026-06.md](../audit-remediation-2026-06.md) (`AUD-SEC-001` done).
 
 ---
 

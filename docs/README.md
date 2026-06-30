@@ -6,7 +6,7 @@ Architecture, integration plans, and developer reference for **animalgarage.net*
 
 A highly animated, media-heavy automotive brand site — merchandising-forward digital marketing with parts, community, and on-domain media. The frontend is a SvelteKit headless storefront; commerce runs on Saleor at a separate domain; media ships via CDN; non-commerce data lives in Supabase.
 
-**Open work tracker:** [STATUS.md](./STATUS.md) · **Implementer queue:** [plans/active/next-steps-tracker.md](./plans/active/next-steps-tracker.md) · **Audit remediation:** [plans/AUDIT-REMEDIATION.md](./plans/AUDIT-REMEDIATION.md) · **Public doc policy:** [SECURITY-PUBLIC.md](./SECURITY-PUBLIC.md) — no infra hostnames or secrets in `docs/`.
+**Start here:** [CODER-FLOW.md](./CODER-FLOW.md) · **Open code:** [STATUS.md](./STATUS.md) · **Ops blockers:** [BLOCKERS.md](./BLOCKERS.md) · **Public doc policy:** [SECURITY-PUBLIC.md](./SECURITY-PUBLIC.md)
 
 **Developer how-to:** [style-guide/README.md](./style-guide/README.md) — Svelte patterns, deployment, env config.
 
@@ -34,17 +34,14 @@ Complete, superseded, or stale plans. Each file has a status banner.
 
 ## Audits
 
-**Canonical open-item tracker:** [plans/AUDIT-REMEDIATION.md](./plans/AUDIT-REMEDIATION.md) (P0/P1/P2 — merges audits, STATUS, TRIAGE, DOC manifest).
+Integration scorecards and archived one-time findings: [audits/README.md](./audits/README.md)
 
-| Doc                                                          | Purpose                                                   |
-| ------------------------------------------------------------ | --------------------------------------------------------- |
-| [plans/AUDIT-REMEDIATION.md](./plans/AUDIT-REMEDIATION.md)   | **Tracker** — open/blocker items with acceptance criteria |
-| [audits/site-audit.md](./audits/site-audit.md)               | Security, gaps, fix log (detail)                          |
-| [audits/ghost-audit.md](./audits/ghost-audit.md)             | Ghost CMS wiring inventory (detail)                       |
-| [audits/saleor-audit.md](./audits/saleor-audit.md)           | Saleor integration scorecard (detail)                     |
-| [audits/security-audit-2026-07.md](./audits/security-audit-2026-07.md) | CDN invalidation hardening (detail)                 |
-| [audits/sitemap-route-audit.md](./audits/sitemap-route-audit.md) | Sitemap gaps, orphan routes, stub pages (detail)    |
-| [meta/agents-skills-audit.md](./meta/agents-skills-audit.md) | Cursor agents/skills dead-reference audit                 |
+| Doc | Purpose |
+| --- | ------- |
+| [audits/saleor-audit.md](./audits/saleor-audit.md) | Saleor integration scorecard |
+| [audits/ghost-audit.md](./audits/ghost-audit.md) | Ghost CMS wiring |
+| [audits/site-audit.md](./audits/site-audit.md) | Cross-cutting quality notes |
+| [meta/agents-skills-audit.md](./meta/agents-skills-audit.md) | Agent/skills hygiene |
 
 ---
 
@@ -111,17 +108,14 @@ Complete, superseded, or stale plans. Each file has a status banner.
 
 ## Plans
 
-| Doc                                                                            | Purpose                                 |
-| ------------------------------------------------------------------------------ | --------------------------------------- |
-| [plans/README.md](./plans/README.md)                                           | Plan lifecycle                          |
-| [plans/AUDIT-REMEDIATION.md](./plans/AUDIT-REMEDIATION.md)                     | Consolidated audit remediation tracker  |
-| [plans/TRIAGE.md](./plans/TRIAGE.md)                                           | Plan vs codebase verification           |
-| [plans/active/next-steps-tracker.md](./plans/active/next-steps-tracker.md) | Consolidated unblocked vs ops-blocked queue |
-| [plans/active/inspiration-polish-tracker.md](./plans/active/inspiration-polish-tracker.md) | Open work — inspiration + polish + AUDIT IDs + prod setup |
-| [plans/active/ponytail-audit-tracker.md](./plans/active/ponytail-audit-tracker.md) | Server-side dedupe / guard tightening (no UI markup) |
-| [plans/active/account-flow-fix.md](./plans/active/account-flow-fix.md)         | Netlify + Supabase account ops          |
-| [plans/active/market-readiness.md](./plans/active/market-readiness.md)         | Phased launch roadmap                   |
-| [plans/active/media-uploads.md](./plans/active/media-uploads.md)               | UGC upload pipeline — Phase 1 wired; apply migration on Supabase |
+| Doc | Purpose |
+| --- | ------- |
+| [CODER-FLOW.md](./CODER-FLOW.md) | **Start here** — dev workflow |
+| [BLOCKERS.md](./BLOCKERS.md) | Ops-only blockers (canonical) |
+| [plans/README.md](./plans/README.md) | Active vs archived plans |
+| [plans/active/inspiration-polish-tracker.md](./plans/active/inspiration-polish-tracker.md) | `IP-*` features + prod setup |
+| [plans/active/market-readiness.md](./plans/active/market-readiness.md) | Launch phases |
+| [plans/active/media-uploads.md](./plans/active/media-uploads.md) | UGC media architecture |
 
 ---
 

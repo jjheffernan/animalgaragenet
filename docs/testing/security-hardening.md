@@ -82,4 +82,4 @@ Public-safe pass after next-steps / deployment runbook land:
 | Redacted `garage.internal`, `ag-media-dev` bucket literal | `archive/media-cdn-plan.md` |
 | Expanded `SECURITY-PUBLIC.md` pre-PR grep + placeholders | `SECURITY-PUBLIC.md` |
 | Linked `next-steps-tracker.md` from index docs | `README.md`, `plans/README.md`, `AUDIT-REMEDIATION.md` |
-| Maintainer-only infra table | `plans/active/next-steps-tracker.md` |
+| Maintainer-only infra table | `archive/next-steps-tracker.md` |

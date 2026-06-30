@@ -70,7 +70,7 @@ No other markdown files remain at `docs/` root.
 | **Checkout / payment** | Proxies + Stripe Elements scaffold **done**; live pay blocked on Payment App (ops)                                                   |
 | **Media uploads**      | Plan + API wired — **Done** (code); apply migration on Supabase — **Ops**                                                      |
 | **UGC / content**      | Testimonials CRUD + homepage UGC + public `/builds` from approved rows **Done** (mock fallback when Supabase unset)              |
-| **Admin dashboard**    | Runtime dashboard **done** (`/admin/runtime`); nav stubs disabled; user CRUD partial                                                 |
+| **Admin dashboard**    | Overview **done** (`/admin/dashboard`, `3732fb9`); Integrations at `/admin/runtime` (IP-026); nav stubs disabled; user CRUD partial |
 | **Archived plans**     | `phase3-plan` delivered; `media-cdn-plan` superseded for v1                                                                          |
 
 ### Recommended next code tasks (doc-aligned)

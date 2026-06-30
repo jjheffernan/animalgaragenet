@@ -66,7 +66,7 @@
 			{#if showAdmin}
 				<li role="none" class="mt-1 border-t border-zinc-800 pt-1">
 					<a
-						href={resolve('/admin/runtime')}
+						href={resolve('/admin/dashboard')}
 						role="menuitem"
 						class="block px-4 py-2.5 text-sm font-medium uppercase tracking-wider text-red-400/90 transition hover:bg-zinc-900/80 hover:text-red-400"
 						onclick={onclose}

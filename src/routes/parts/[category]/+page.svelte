@@ -69,7 +69,7 @@
 				<AnimatedReveal>
 					<SectionHeading title="Products" subtitle="{data.pagination.total} items" />
 				</AnimatedReveal>
-				<PaginatedListCanvas pagination={data.pagination} view={data.view}>
+				<PaginatedListCanvas pagination={data.pagination} view={data.view} stickyTop="parts">
 					<ProductGrid products={data.products} view={data.view} />
 				</PaginatedListCanvas>
 			</div>

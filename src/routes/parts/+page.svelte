@@ -59,7 +59,7 @@
 			<AnimatedReveal>
 				<SectionHeading title="Popular Parts" subtitle="Crew-tested bolt-ons." />
 			</AnimatedReveal>
-			<PaginatedListCanvas pagination={data.pagination} view={data.view}>
+			<PaginatedListCanvas pagination={data.pagination} view={data.view} stickyTop="parts">
 				<ProductGrid products={data.products} view={data.view} />
 			</PaginatedListCanvas>
 		</div>

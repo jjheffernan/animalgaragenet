@@ -77,7 +77,7 @@
 </section>
 
 <div>
-	<CatalogRibbonShell ariaLabel="Shop categories">
+	<CatalogRibbonShell ariaLabel="Shop categories" syncHeightVar>
 		<nav class="{catalogRibbonNavClass} items-center" aria-label="Shop categories">
 			{#each data.categories as cat (cat.slug)}
 				<CategoryPill
@@ -115,7 +115,7 @@
 		<AnimatedReveal>
 			<SectionHeading title={sectionTitle} subtitle="{data.pagination.total} items" />
 		</AnimatedReveal>
-		<PaginatedListCanvas pagination={data.pagination} view={data.view}>
+		<PaginatedListCanvas pagination={data.pagination} view={data.view} stickyTop="catalog">
 			<ProductGrid products={data.products} view={data.view} />
 		</PaginatedListCanvas>
 	</section>

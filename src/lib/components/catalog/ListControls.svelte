@@ -46,7 +46,11 @@
 
 {#snippet viewToggle()}
 	{#if showView}
-		<div class="flex items-center gap-1" role="group" aria-label="View layout">
+		<div
+			class="flex flex-wrap items-center justify-center gap-1 sm:justify-start"
+			role="group"
+			aria-label="View layout"
+		>
 			<span class="mr-1 text-sm font-bold uppercase tracking-wider text-zinc-500">View</span>
 			{#each LIST_VIEW_OPTIONS as option (option)}
 				{#if activeView === option}
@@ -71,7 +75,7 @@
 {/snippet}
 
 {#snippet perPageSelect()}
-	<label class="flex items-center gap-2 text-sm text-zinc-500">
+	<label class="flex items-center justify-center gap-2 text-sm text-zinc-500 sm:justify-start">
 		<span class="font-bold uppercase tracking-wider">Per page</span>
 		<select
 			class="rounded-sm border border-zinc-700 bg-zinc-900 px-2 py-1.5 text-sm text-zinc-200 focus:border-red-600 focus:outline-none"
@@ -89,7 +93,9 @@
 {/snippet}
 
 {#snippet filterToolbar()}
-	<div class="flex flex-wrap items-center gap-4">
+	<div
+		class="flex w-full flex-wrap items-center justify-center gap-x-4 gap-y-3 sm:w-auto sm:justify-end"
+	>
 		{@render viewToggle()}
 		{@render perPageSelect()}
 	</div>
@@ -97,7 +103,7 @@
 
 {#snippet pager()}
 	{#if showPager}
-		<div class="flex items-center gap-1">
+		<div class="flex w-full items-center justify-center gap-1 sm:w-auto">
 			{#if pagination.page > 1}
 				<button
 					type="button"
@@ -142,22 +148,24 @@
 {#if showControls}
 	{#if placement === 'top'}
 		<div
-			class="mb-6 flex flex-wrap items-center justify-end gap-4 {className}"
+			class="mb-6 flex w-full flex-wrap items-center justify-center gap-4 sm:justify-end {className}"
 			aria-label="List filter options"
 		>
 			{@render filterToolbar()}
 		</div>
 	{:else}
 		<nav
-			class="mt-8 flex flex-col gap-4 border-t border-zinc-800 pt-6 sm:flex-row sm:items-center sm:justify-between {className}"
+			class="mt-8 flex w-full flex-col items-center gap-4 border-t border-zinc-800 pt-6 sm:flex-row sm:items-center sm:justify-between {className}"
 			aria-label="List pagination"
 		>
-			<p class="text-sm text-zinc-500">
+			<p class="w-full text-center text-sm text-zinc-500 sm:w-auto sm:text-left">
 				Showing <span class="text-zinc-300">{range.start}–{range.end}</span> of
 				<span class="text-zinc-300">{pagination.total}</span>
 			</p>
 
-			<div class="flex flex-wrap items-center gap-4">
+			<div
+				class="flex w-full flex-col items-center gap-4 sm:w-auto sm:flex-row sm:flex-wrap sm:justify-end"
+			>
 				{@render filterToolbar()}
 				{@render pager()}
 			</div>

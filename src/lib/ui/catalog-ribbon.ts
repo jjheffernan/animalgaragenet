@@ -35,3 +35,12 @@ export function ribbonMenuLinkClass(active = false): string {
 		? `${ribbonMenuLinkBaseClass} bg-red-600 text-white`
 		: `${ribbonMenuLinkBaseClass} text-zinc-400 hover:bg-zinc-800 hover:text-white`;
 }
+
+/** Sticky shell for top list controls (shop / parts PLP). */
+export const listControlsStickyShellClass =
+	'sticky z-30 -mx-4 mb-6 border-b border-zinc-800 bg-zinc-950/95 px-4 py-3 backdrop-blur sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8';
+
+export function listControlsStickyTopClass(ribbon: 'catalog' | 'parts'): string {
+	const ribbonVar = ribbon === 'parts' ? '--parts-ribbon-height' : '--catalog-ribbon-height';
+	return `top-[calc(var(--site-header-height,4.5rem)+var(${ribbonVar},0px))]`;
+}

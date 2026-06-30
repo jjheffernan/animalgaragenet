@@ -1,6 +1,8 @@
 import { createAdminClient } from '$lib/server/supabase/admin';
 import type { OrderSnapshot, OrderStatus } from '$lib/types/order';
 
+const mockStore = new Map<string, OrderSnapshot>();
+
 function rowToSnapshot(row: Record<string, unknown>): OrderSnapshot {
 	return {
 		id: String(row.id),
@@ -17,11 +19,16 @@ function rowToSnapshot(row: Record<string, unknown>): OrderSnapshot {
 	};
 }
 
-// @inspiration-scaffold: intentional — see docs/plans/active/inspiration-polish-tracker.md#IP-012
+function mockSnapshotsForUser(userId: string): OrderSnapshot[] {
+	return [...mockStore.values()]
+		.filter((s) => s.userId === userId)
+		.sort((a, b) => b.orderedAt.localeCompare(a.orderedAt));
+}
+
 /** Account order history from Saleor mirror table (newest first). */
 export async function listOrderSnapshotsForUser(userId: string): Promise<OrderSnapshot[]> {
 	const admin = createAdminClient();
-	if (!admin) return [];
+	if (!admin) return mockSnapshotsForUser(userId);
 
 	const { data, error } = await admin
 		.from('order_snapshots')
@@ -33,13 +40,32 @@ export async function listOrderSnapshotsForUser(userId: string): Promise<OrderSn
 	return data.map(rowToSnapshot);
 }
 
-// @inspiration-scaffold: intentional — see docs/plans/active/inspiration-polish-tracker.md#IP-012
 /** Upsert from Saleor webhook / sync job (service role). */
 export async function upsertOrderSnapshot(
 	fields: Omit<OrderSnapshot, 'id' | 'syncedAt'> & { syncedAt?: string }
 ): Promise<OrderSnapshot | null> {
+	const syncedAt = fields.syncedAt ?? new Date().toISOString();
 	const admin = createAdminClient();
-	if (!admin) return null;
+	if (!admin) {
+		const existing = [...mockStore.values()].find(
+			(s) => s.saleorOrderId === fields.saleorOrderId
+		);
+		const snapshot: OrderSnapshot = {
+			id: existing?.id ?? crypto.randomUUID(),
+			userId: fields.userId,
+			saleorOrderId: fields.saleorOrderId,
+			orderNumber: fields.orderNumber,
+			status: fields.status,
+			totalCents: fields.totalCents,
+			currency: fields.currency,
+			trackingNumber: fields.trackingNumber,
+			lines: fields.lines,
+			orderedAt: fields.orderedAt,
+			syncedAt
+		};
+		mockStore.set(snapshot.id, snapshot);
+		return snapshot;
+	}
 
 	const { data, error } = await admin
 		.from('order_snapshots')
@@ -54,7 +80,7 @@ export async function upsertOrderSnapshot(
 				tracking_number: fields.trackingNumber,
 				lines: fields.lines,
 				ordered_at: fields.orderedAt,
-				synced_at: fields.syncedAt ?? new Date().toISOString()
+				synced_at: syncedAt
 			},
 			{ onConflict: 'saleor_order_id' }
 		)
@@ -63,4 +89,9 @@ export async function upsertOrderSnapshot(
 
 	if (error || !data) return null;
 	return rowToSnapshot(data);
+}
+
+/** Test helper */
+export function _resetMockStoreForTests(): void {
+	mockStore.clear();
 }

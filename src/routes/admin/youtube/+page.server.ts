@@ -1,3 +1,4 @@
+import { env } from '$env/dynamic/private';
 import { fail } from '@sveltejs/kit';
 import { addYouTubeChannel, listYouTubeChannels } from '$lib/server/youtube/repository';
 import { syncToDatabase } from '$lib/server/youtube/sync';
@@ -40,7 +41,7 @@ export const actions: Actions = {
 			return fail(404, { error: 'Channel not found.' });
 		}
 
-		const result = await syncToDatabase(channelId);
+		const result = await syncToDatabase(channelId, env.YOUTUBE_API_KEY ?? '');
 
 		return {
 			synced: true,

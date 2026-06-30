@@ -28,10 +28,9 @@
 <h1 class="font-display text-2xl font-bold uppercase text-white">Orders</h1>
 <p class="mt-1 text-zinc-400">Order history from your Garage Squad account.</p>
 
-{#if !data.liveOrders}
+{#if data.liveOrders && data.orders.length === 0}
 	<p class="mt-4 rounded-sm border border-zinc-800 bg-zinc-900/50 px-4 py-3 text-sm text-zinc-500">
-		Showing sample orders until Saleor checkout is live. Completed purchases will appear here
-		automatically.
+		Completed purchases will appear here after checkout is live and your orders sync from Saleor.
 	</p>
 {/if}
 

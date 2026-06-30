@@ -1,7 +1,10 @@
 import { fail } from '@sveltejs/kit';
-import { submitFormStub } from '$lib/server/forms/submit';
+import { createWholesaleInquiry } from '$lib/server/wholesale/repository';
 import { LIMITS } from '$lib/server/validation/limits';
 import type { Actions } from './$types';
+
+const SUCCESS_MESSAGE =
+	'Application received — our wholesale team will respond within 1–2 business days.';
 
 function validateEmail(email: string): boolean {
 	return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -56,7 +59,7 @@ export const actions: Actions = {
 			});
 		}
 
-		const result = await submitFormStub('wholesale_inquiries', {
+		const inquiry = await createWholesaleInquiry({
 			businessName,
 			contactName,
 			email,
@@ -64,9 +67,9 @@ export const actions: Actions = {
 			website,
 			message
 		});
-		if (!result.ok) {
+		if (!inquiry) {
 			return fail(500, {
-				errors: { form: result.message },
+				errors: { form: 'Unable to submit application. Please try again.' },
 				businessName,
 				contactName,
 				email,
@@ -76,6 +79,6 @@ export const actions: Actions = {
 			});
 		}
 
-		return { success: true, message: result.message };
+		return { success: true, message: SUCCESS_MESSAGE };
 	}
 };

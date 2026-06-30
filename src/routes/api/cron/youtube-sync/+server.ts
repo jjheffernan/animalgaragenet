@@ -6,10 +6,7 @@ import type { RequestHandler } from './$types';
 
 /**
  * Cron entry: sync all registered YouTube channels.
- *
- * @inspiration-scaffold: intentional — protect with YOUTUBE_SYNC_SECRET header;
- * wire Netlify scheduled function or Supabase pg_cron.
- * see docs/plans/active/inspiration-polish-tracker.md#IP-007
+ * Requires `YOUTUBE_SYNC_SECRET` and request header `x-youtube-sync-secret`.
  */
 export const POST: RequestHandler = async ({ request }) => {
 	const secret = privateEnv.YOUTUBE_SYNC_SECRET;

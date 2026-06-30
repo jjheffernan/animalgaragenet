@@ -8,7 +8,9 @@ import { createAdminClient } from '$lib/server/supabase/admin';
 import {
 	_resetMockStoreForTests,
 	getDefaultHeroSection,
-	getFeaturedSection
+	getFeaturedSection,
+	listFeaturedSections,
+	upsertFeaturedSection
 } from './repository';
 
 describe('featured-sections repository', () => {
@@ -33,5 +35,23 @@ describe('featured-sections repository', () => {
 		const section = await getFeaturedSection('hero');
 		expect(section?.sectionKey).toBe('hero');
 		expect(section?.content.headline).toBeTruthy();
+	});
+
+	it('upsertFeaturedSection persists hero content in mock mode', async () => {
+		const saved = await upsertFeaturedSection('hero', {
+			headline: 'Fresh Drop',
+			subheadline: 'Limited merch run',
+			image: 'https://example.com/hero.jpg',
+			ctaLabel: 'Shop',
+			ctaHref: '/shop'
+		});
+		expect(saved?.sectionKey).toBe('hero');
+		expect(saved?.content.headline).toBe('Fresh Drop');
+
+		const sections = await listFeaturedSections();
+		expect(sections.some((s) => s.content.headline === 'Fresh Drop')).toBe(true);
+
+		const loaded = await getFeaturedSection('hero');
+		expect(loaded?.content.headline).toBe('Fresh Drop');
 	});
 });

@@ -17,18 +17,18 @@ Markers: `@inspiration-scaffold` (Supabase/community/CMS) · `@saleor-migration`
 | ------ | ------------------- | -------------------------------------------- | -------------------------------------------------------------------------------- | ------------- | ------------------------------------------------------------------- |
 | IP-001 | polish / AUDIT      | Supabase auth on Netlify preview             | —                                                                                | **blocked**   | [§ Auth](#prod-auth)                                                |
 | IP-002 | inspiration / AUDIT | Live Saleor product catalog                    | `src/lib/server/catalog/*.ts` (`@saleor-migration`)                              | **blocked**   | [§ Saleor catalog](#prod-saleor-catalog)                            |
-| IP-003 | inspiration / AUDIT | Checkout + payment (Stripe via Saleor)       | `src/lib/server/saleor/checkout*.ts`, `routes/checkout/` (`@saleor-migration`)   | **blocked**   | [§ Checkout](#prod-checkout)                                        |
+| IP-003 | inspiration / AUDIT | Checkout + payment (Stripe via Saleor)       | `src/lib/server/saleor/checkout*.ts`, `routes/checkout/` (`@saleor-migration`)   | **partial**   | [§ Checkout](#prod-checkout)                                        |
 | IP-004 | inspiration         | Notify-me restocks → Supabase                | `src/lib/server/restock/repository.ts`, `POST /api/restock/notify`               | **scaffolded** | Apply `20250630210000_restock_alerts.sql`; Saleor stock webhook   |
 | IP-005 | inspiration         | Collection shop filters (`?collection=`)     | `src/lib/server/catalog/shop-collection.ts`                                      | **scaffolded** | Uncomment `COLLECTION_PRODUCTS_QUERY` when Saleor live            |
 | IP-006 | inspiration         | Campaign hero / homepage CMS                 | `src/lib/server/featured-sections/repository.ts`, `/admin/featured`              | **scaffolded** | `20250630150000_content_metadata.sql`; seed `hero` row              |
-| IP-007 | inspiration / AUDIT | YouTube channel auto-sync                    | `src/lib/server/youtube/repository.ts`, `youtube/sync.ts`, `/api/cron/youtube-sync` | **scaffolded** | [§ Content](#prod-content)                                          |
+| IP-007 | inspiration / AUDIT | YouTube channel auto-sync                    | `src/lib/server/youtube/repository.ts`, `youtube/sync.ts`, `/api/cron/youtube-sync` | **done**      | Apply `20250630160000_youtube_sync.sql`; cron header `x-youtube-sync-secret` — [§ Content](#prod-content) |
 | IP-008 | inspiration         | Newsletter → Supabase                        | `src/lib/server/newsletter/repository.ts`, `POST /api/newsletter/subscribe`      | **scaffolded** | `20250630140000_newsletter_subscribers.sql`                         |
 | IP-009 | inspiration         | Garage Squad XP (off localStorage)           | `src/lib/server/user-preferences/repository.ts`, `POST /api/account/garage`      | **done**      | `20250630230000_account_garage_xp.sql`; apply migration on Supabase |
 | IP-010 | inspiration         | Saved vehicle garage (persist YMM)           | `user-preferences/repository.ts`, `GET/PUT /api/account/garage`                  | **done**      | Same migration; guest localStorage fallback retained                |
 | IP-011 | inspiration         | Wholesale application workflow               | `src/lib/server/wholesale/repository.ts`, `/wholesale`                            | **scaffolded** | `20250630220000_wholesale_inquiries.sql`                            |
 | IP-012 | inspiration / AUDIT | Account order history (Saleor mirror)        | `src/lib/server/orders/snapshots.ts`, `routes/account/orders/`                   | **scaffolded** | `20250630170000_order_snapshots.sql` + Saleor webhook               |
 | IP-013 | inspiration         | CDN Phase 2 (S3 + CloudFront)                | `src/lib/server/media/cdn.ts`                                                    | **deferred**  | [§ CDN](#prod-cdn)                                                  |
-| IP-014 | inspiration         | Watch hub — DB videos + shoppable            | `src/routes/watch/+page.server.ts`                                               | **scaffolded** | Depends IP-007                                                    |
+| IP-014 | inspiration         | Watch hub — DB videos + shoppable            | `src/routes/watch/+page.server.ts`                                               | **done**      | `/watch` prefers Supabase `videos` when rows exist; mock fallback retained |
 | IP-015 | inspiration / AUDIT | Ghost blog + guides (live CMS)               | `src/lib/server/ghost/posts.ts`                                                  | **blocked**   | [§ Content](#prod-content)                                          |
 | IP-016 | polish              | Review photo uploads (media Phase 1)         | `src/lib/server/media/repository.ts`, `ReviewPhotoUpload.svelte`                 | **done**      | [§ Media uploads](#prod-media-uploads)                                |
 | IP-017 | polish              | Account dropdown + production auth guards    | `AccountMenu.svelte`, `local-dev.ts`, `hooks.server.ts`                          | **done**      | Do not set `DEV_ADMIN` / `LOCAL_DEV_AUTH` on Netlify               |
@@ -94,14 +94,16 @@ Verify: `npm run test:readiness` → `saleor-catalog` pass; `/shop` count ≠ 12
 
 ### Prod checkout {#prod-checkout}
 
-Blocked on Saleor payment app (Stripe/PayPal in Saleor admin).
+Code wired — **partial** until Payment App is enabled on the Saleor channel (ops).
 
-| Step                                              | Owner        |
-| ------------------------------------------------- | ------------ |
-| Configure payment gateway in Saleor channel       | Saleor admin |
-| Uncomment `@saleor-migration` blocks in checkout  | Code         |
-| Replace `/checkout` placeholder UI                | Code         |
-| `npm run test:readiness` → `saleor-checkout` pass | CI / local   |
+| Step                                              | Owner        | Status |
+| ------------------------------------------------- | ------------ | ------ |
+| Configure payment gateway in Saleor channel       | Saleor admin | **ops** |
+| Uncomment `@saleor-migration` blocks in checkout  | Code         | **done** |
+| Replace `/checkout` placeholder UI                | Code         | **done** |
+| `npm run test:readiness` → `saleor-checkout` pass | CI / local   | pending ops |
+
+Routes: `POST /checkout/shipping`, `/checkout/payment/initialize`, `/checkout/payment/process`, `/checkout/complete`.
 
 See [saleor-payments.md](../../commerce/saleor-payments.md).
 
@@ -113,12 +115,12 @@ See [saleor-payments.md](../../commerce/saleor-payments.md).
 
 ### Prod content {#prod-content}
 
-| Service | Env vars                                 | Task                                   |
-| ------- | ---------------------------------------- | -------------------------------------- |
-| Ghost   | `GHOST_URL`, `GHOST_CONTENT_API_KEY`     | Blog + guides from CMS (IP-015)        |
-| YouTube | `YOUTUBE_API_KEY`, `YOUTUBE_SYNC_SECRET` | Live sync in `youtube/sync.ts` (IP-007) |
+| Service | Env vars                                 | Task                                                                                       |
+| ------- | ---------------------------------------- | ------------------------------------------------------------------------------------------ |
+| Ghost   | `GHOST_URL`, `GHOST_CONTENT_API_KEY`     | Blog + guides from CMS (IP-015)                                                            |
+| YouTube | `YOUTUBE_API_KEY`, `YOUTUBE_SYNC_SECRET` | Apply `20250630160000_youtube_sync.sql`; cron `POST /api/cron/youtube-sync` with header `x-youtube-sync-secret` matching `YOUTUBE_SYNC_SECRET` |
 
-**Code done:** Homepage UGC from approved testimonials when Supabase configured. `guardMockGhostFallback()` for Ghost loaders (AUD-P1-009).
+**Code done:** Homepage UGC from approved testimonials when Supabase configured. `guardMockGhostFallback()` for Ghost loaders (AUD-P1-009). Live YouTube Data API sync with Supabase upsert; `/watch` prefers synced `videos` rows when present (IP-007, IP-014).
 
 ### Prod CDN {#prod-cdn}
 

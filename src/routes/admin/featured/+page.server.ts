@@ -12,10 +12,6 @@ export const load: PageServerLoad = async () => {
 	return { sections, hero };
 };
 
-/**
- * @inspiration-scaffold: intentional — homepage CMS editor shell;
- * see docs/plans/active/inspiration-polish-tracker.md#IP-006
- */
 export const actions: Actions = {
 	saveHero: async ({ request }) => {
 		const data = await request.formData();

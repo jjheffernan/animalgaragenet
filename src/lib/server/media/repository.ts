@@ -1,5 +1,6 @@
 import type { SupabaseClient } from '@supabase/supabase-js';
 import { createAdminClient } from '$lib/server/supabase/admin';
+import { isCdnPublicReadConfigured, resolveUgcPublicUrl } from './cdn';
 import { UGC_BUCKET, UPLOAD_URL_TTL_SECONDS, type AllowedImageMime } from './constants';
 import { mimeToExtension } from './validation';
 
@@ -198,8 +199,13 @@ export async function listMediaForTestimonials(
 	return result;
 }
 
-/** Signed read URL for approved testimonial media (short TTL). */
+/** Public read URL — CDN when configured, otherwise Supabase signed URL. */
 export async function signedReadUrl(storagePath: string): Promise<string | null> {
+	if (!storagePath) return null;
+	if (isCdnPublicReadConfigured()) {
+		return resolveUgcPublicUrl(storagePath);
+	}
+
 	const admin = createAdminClient();
 	if (!admin) return null;
 

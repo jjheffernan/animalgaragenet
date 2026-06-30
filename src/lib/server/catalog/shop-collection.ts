@@ -4,26 +4,13 @@ import { getChannelForLocale } from '$lib/server/saleor/channels';
 import { isSaleorEnabled, saleorFetch } from '$lib/server/saleor/client';
 import { guardMockCatalogFallback } from '$lib/server/catalog/fallback';
 import { isProductionSiteUrl } from '$lib/server/auth/local-dev';
-import { getShopProducts } from '$lib/server/catalog/products';
 import { mockCollections } from '$lib/data/mock/collections';
-
-// @inspiration-scaffold: intentional — ?collection= PLP filter; see docs/plans/active/inspiration-polish-tracker.md#IP-005
-// Saleor: uncomment COLLECTION_PRODUCTS_QUERY block in collections.ts and filter by collection slug here.
-const COLLECTION_PRODUCTS_QUERY = `
-	query CollectionProducts($slug: String!, $channel: String!, $first: Int!) {
-		collection(slug: $slug, channel: $channel) {
-			products(first: $first) {
-				edges {
-					node {
-						id
-						name
-						slug
-					}
-				}
-			}
-		}
-	}
-`;
+import {
+	mapProductListNode,
+	type SaleorCollectionNode,
+	type SaleorProductListNode
+} from '$lib/server/saleor/mappers';
+import { COLLECTIONS_QUERY, COLLECTION_PRODUCTS_QUERY } from '$lib/server/saleor/queries';
 
 export interface ShopCollectionFilter {
 	slug: string;
@@ -53,11 +40,20 @@ export async function getShopCollectionOptions(
 ): Promise<ShopCollectionFilter[]> {
 	if (isSaleorEnabled()) {
 		try {
-			// @inspiration-scaffold: map Saleor collections query when product edges wired
 			const channel = getChannelForLocale(locale);
-			void channel;
-			void COLLECTION_PRODUCTS_QUERY;
-			return mockShopCollections();
+			const result = await saleorFetch<{
+				collections: { edges: { node: SaleorCollectionNode }[] };
+			}>(COLLECTIONS_QUERY, { channel, first: 20 });
+
+			if (result.errors?.length || !result.data) {
+				throw new Error(result.errors?.[0]?.message ?? 'Saleor collections query failed');
+			}
+
+			return result.data.collections.edges.map(({ node }) => ({
+				slug: node.slug,
+				label: node.name,
+				source: 'saleor' as const
+			}));
 		} catch (err) {
 			guardMockCatalogFallback(err, isProductionSiteUrl());
 		}
@@ -73,17 +69,14 @@ export async function getShopProductsByCollection(
 		try {
 			const channel = getChannelForLocale(locale);
 			const result = await saleorFetch<{
-				collection: { products: { edges: { node: { id: string } }[] } } | null;
+				collection: { products: { edges: { node: SaleorProductListNode }[] } } | null;
 			}>(COLLECTION_PRODUCTS_QUERY, { slug: collectionSlug, channel, first: 100 });
 
 			if (result.errors?.length || !result.data?.collection) {
 				throw new Error(result.errors?.[0]?.message ?? 'Saleor collection products failed');
 			}
 
-			// @inspiration-scaffold: map full product nodes via mapProductListNode when wired
-			const ids = result.data.collection.products.edges.map((e) => e.node.id);
-			const all = await getShopProducts('all', locale);
-			return all.filter((p) => ids.includes(p.id));
+			return result.data.collection.products.edges.map(({ node }) => mapProductListNode(node));
 		} catch (err) {
 			guardMockCatalogFallback(err, isProductionSiteUrl());
 		}

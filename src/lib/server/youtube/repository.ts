@@ -3,6 +3,16 @@ import { createAdminClient } from '$lib/server/supabase/admin';
 import { trimToMax } from '$lib/server/validation/limits';
 import type { Video } from '$lib/types/domain';
 
+const MOCK_CHANNEL_SEED = mockYouTubeChannels.map((c) => ({ ...c }));
+
+/** Reset mutable mock channel store between unit tests. */
+export function _resetMockStoreForTests(): void {
+	mockYouTubeChannels.length = 0;
+	for (const channel of MOCK_CHANNEL_SEED) {
+		mockYouTubeChannels.push({ ...channel });
+	}
+}
+
 export interface YouTubeChannelRecord {
 	id: string;
 	channelId: string;
@@ -126,6 +136,19 @@ export async function upsertSyncedVideos(
 		return videos.length;
 	}
 
+	const youtubeIds = videos.map((v) => v.youtubeId);
+	const { data: existingRows } = await admin
+		.from('videos')
+		.select('youtube_id, linked_product_ids')
+		.in('youtube_id', youtubeIds);
+
+	const linkedByYoutubeId = new Map(
+		(existingRows ?? []).map((row) => [
+			String(row.youtube_id),
+			Array.isArray(row.linked_product_ids) ? (row.linked_product_ids as string[]) : []
+		])
+	);
+
 	const rows = videos.map((v) => ({
 		youtube_id: v.youtubeId,
 		channel_id: channelId,
@@ -135,7 +158,7 @@ export async function upsertSyncedVideos(
 		thumbnail: v.thumbnail,
 		duration: v.duration,
 		published_at: v.publishedAt ?? null,
-		linked_product_ids: v.linkedProductIds
+		linked_product_ids: linkedByYoutubeId.get(v.youtubeId) ?? v.linkedProductIds
 	}));
 
 	const { error: videoError } = await admin.from('videos').upsert(rows, { onConflict: 'youtube_id' });
@@ -164,4 +187,17 @@ export async function listPublicVideos(limit = 24): Promise<Video[]> {
 
 	if (error || !data) return [];
 	return data.map(rowToVideo);
+}
+
+export async function getPublicVideoById(id: string): Promise<Video | null> {
+	const admin = createAdminClient();
+	if (!admin) return null;
+
+	const byId = await admin.from('videos').select('*').eq('id', id).maybeSingle();
+	if (byId.data) return rowToVideo(byId.data);
+
+	const byYoutubeId = await admin.from('videos').select('*').eq('youtube_id', id).maybeSingle();
+	if (byYoutubeId.data) return rowToVideo(byYoutubeId.data);
+
+	return null;
 }

@@ -25,11 +25,12 @@
 </script>
 
 {#if open}
-	<div
-		class="absolute left-0 right-0 top-full border-b border-zinc-800 bg-zinc-950 shadow-xl"
-		role="menu"
-		onmouseleave={() => onclose?.()}
-	>
+	<div class="absolute left-0 right-0 top-full pt-2">
+		<div
+			class="border-b border-zinc-800 bg-zinc-950 shadow-xl"
+			role="menu"
+			tabindex="0"
+		>
 		<div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
 			{#if type === 'shop'}
 				<div class="grid gap-6 md:grid-cols-2">
@@ -114,6 +115,7 @@
 					{/each}
 				</div>
 			{/if}
+		</div>
 		</div>
 	</div>
 {/if}

@@ -2,6 +2,7 @@ const STORAGE_KEY = 'ag-promo-dismissed';
 
 class PromoState {
 	dismissed = $state(false);
+	visible = $derived(!this.dismissed);
 	private initialized = false;
 
 	init() {
@@ -14,11 +15,6 @@ class PromoState {
 		this.init();
 		this.dismissed = true;
 		sessionStorage.setItem(STORAGE_KEY, '1');
-	}
-
-	get visible() {
-		this.init();
-		return !this.dismissed;
 	}
 }
 

@@ -10,6 +10,10 @@
 	const campaign = getActiveCampaign();
 
 	$effect(() => {
+		promo.init();
+	});
+
+	$effect(() => {
 		if (banners.length <= 1) return;
 		const interval = setInterval(() => {
 			bannerIndex = (bannerIndex + 1) % banners.length;

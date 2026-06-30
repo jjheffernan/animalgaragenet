@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
+	import { resolvePath } from '$lib/utils/paths';
 	import { page } from '$app/stores';
 	import PromoBar from './PromoBar.svelte';
 	import MegaMenu from './MegaMenu.svelte';
@@ -13,6 +14,22 @@
 	let mobileOpen = $state(false);
 	let shopMenuOpen = $state(false);
 	let partsMenuOpen = $state(false);
+
+	function openShopMenu() {
+		partsMenuOpen = false;
+		shopMenuOpen = true;
+	}
+
+	function openPartsMenu() {
+		shopMenuOpen = false;
+		partsMenuOpen = true;
+	}
+
+	function handleMenuFocusOut(e: FocusEvent, close: () => void) {
+		const container = e.currentTarget as HTMLElement;
+		const next = e.relatedTarget as Node | null;
+		if (!next || !container.contains(next)) close();
+	}
 
 	$effect(() => {
 		cart.init();
@@ -42,29 +59,37 @@
 
 			<nav class="hidden items-center gap-6 lg:flex" aria-label="Main">
 				<div
+					role="group"
+					tabindex="-1"
 					class="relative"
-					onmouseenter={() => { partsMenuOpen = false; shopMenuOpen = true; }}
+					onmouseenter={openShopMenu}
 					onmouseleave={() => (shopMenuOpen = false)}
+					onfocusin={openShopMenu}
+					onfocusout={(e) => handleMenuFocusOut(e, () => (shopMenuOpen = false))}
 				>
-					<button
-						type="button"
+					<a
+						href={resolve('/shop')}
 						class="text-sm font-medium uppercase tracking-wider text-zinc-400 transition hover:text-white"
 					>
 						Shop
-					</button>
+					</a>
 					<MegaMenu type="shop" open={shopMenuOpen} onclose={() => (shopMenuOpen = false)} />
 				</div>
 				<div
+					role="group"
+					tabindex="-1"
 					class="relative"
-					onmouseenter={() => { shopMenuOpen = false; partsMenuOpen = true; }}
+					onmouseenter={openPartsMenu}
 					onmouseleave={() => (partsMenuOpen = false)}
+					onfocusin={openPartsMenu}
+					onfocusout={(e) => handleMenuFocusOut(e, () => (partsMenuOpen = false))}
 				>
-					<button
-						type="button"
+					<a
+						href={resolve('/parts')}
 						class="text-sm font-medium uppercase tracking-wider text-zinc-400 transition hover:text-white"
 					>
 						Parts
-					</button>
+					</a>
 					<MegaMenu type="parts" open={partsMenuOpen} onclose={() => (partsMenuOpen = false)} />
 				</div>
 				{#each navLinks as link (link.href)}
@@ -114,6 +139,12 @@
 						</span>
 					{/if}
 				</button>
+				<a
+					href={resolvePath('/auth/sign-in')}
+					class="hidden text-sm font-medium uppercase tracking-wider text-zinc-400 transition hover:text-white sm:inline"
+				>
+					Sign In
+				</a>
 				<div class="hidden sm:block">
 					<LocaleSelector />
 				</div>
@@ -145,6 +176,7 @@
 				<a href={resolve('/deals')} class="flex items-center gap-2 py-3 text-sm font-medium uppercase tracking-wider text-zinc-300" onclick={() => (mobileOpen = false)}>
 					Pit Lane Deals <DealBadge />
 				</a>
+				<a href={resolvePath('/auth/sign-in')} class="block py-3 text-sm font-medium uppercase tracking-wider text-zinc-300" onclick={() => (mobileOpen = false)}>Sign In</a>
 				<div class="mt-2 sm:hidden">
 					<LocaleSelector />
 				</div>

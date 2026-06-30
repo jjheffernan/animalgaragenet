@@ -3,8 +3,6 @@
 	import favicon from '$lib/assets/favicon.svg';
 	import Header from '$lib/components/Header.svelte';
 	import Footer from '$lib/components/Footer.svelte';
-	import CartDrawer from '$lib/components/CartDrawer.svelte';
-	import SearchModal from '$lib/components/SearchModal.svelte';
 
 	let { children } = $props();
 </script>
@@ -24,6 +22,4 @@
 		{@render children()}
 	</main>
 	<Footer />
-	<CartDrawer />
-	<SearchModal />
 </div>

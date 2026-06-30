@@ -26,6 +26,14 @@
 		search.query.length > 0 &&
 			(productResults.length + partResults.length + buildResults.length + guideResults.length > 0)
 	);
+
+	let inputEl = $state<HTMLInputElement | undefined>();
+
+	$effect(() => {
+		if (search.open) {
+			inputEl?.focus();
+		}
+	});
 </script>
 
 <svelte:window onkeydown={handleKeydown} />
@@ -46,11 +54,11 @@
 					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
 				</svg>
 				<input
+					bind:this={inputEl}
 					type="search"
 					bind:value={search.query}
 					placeholder="Search products, parts, builds, guides…"
 					class="min-w-0 flex-1 bg-transparent text-sm text-white placeholder:text-zinc-600 focus:outline-none"
-					autofocus
 				/>
 				<kbd class="hidden rounded-sm border border-zinc-700 px-1.5 py-0.5 text-[10px] text-zinc-500 sm:inline">ESC</kbd>
 			</div>

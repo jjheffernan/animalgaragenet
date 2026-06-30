@@ -1,5 +1,6 @@
 import { env } from '$env/dynamic/private';
-import { redirect, type Handle } from '@sveltejs/kit';
+import { error, redirect, type Handle } from '@sveltejs/kit';
+import { resolveAdminGate } from '$lib/server/auth/admin-gate';
 import { isDevAdminEnabled, isProductionHostname } from '$lib/server/auth/local-dev';
 import { canAccessAdmin } from '$lib/server/auth/roles';
 import { getSession, parseSessionCookie, SESSION_COOKIE } from '$lib/server/supabase/auth';
@@ -37,11 +38,19 @@ export const handle: Handle = async ({ event, resolve }) => {
 	}
 
 	if (event.url.pathname.startsWith('/admin')) {
-		const hasAccess = event.locals.devAdmin || canAccessAdmin(event.locals.session?.role ?? null);
+		const gate = resolveAdminGate({
+			hasSession: Boolean(event.locals.session),
+			role: event.locals.session?.role,
+			devAdmin: event.locals.devAdmin
+		});
 
-		if (!hasAccess) {
+		if (gate === 'sign-in') {
 			const redirectTo = encodeURIComponent(event.url.pathname);
 			throw redirect(303, `/auth/sign-in?redirect=${redirectTo}`);
+		}
+
+		if (gate === 'forbidden') {
+			throw error(403, 'Admin access requires an editor or admin role.');
 		}
 	}
 

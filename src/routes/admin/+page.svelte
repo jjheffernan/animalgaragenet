@@ -52,6 +52,11 @@
 	<h2 class="text-xs font-bold uppercase tracking-widest text-zinc-500">Quick Links</h2>
 	<ul class="mt-4 space-y-2 text-sm">
 		<li>
+			<a href={resolve('/admin/runtime')} class="text-zinc-400 hover:text-red-400"
+				>→ Runtime status and integrations</a
+			>
+		</li>
+		<li>
 			<a href={resolve('/admin/users')} class="text-zinc-400 hover:text-red-400"
 				>→ Manage users and roles</a
 			>

@@ -15,7 +15,10 @@ export interface AdminNavSection {
 export const ADMIN_NAV: AdminNavSection[] = [
 	{
 		label: 'Overview',
-		items: [{ href: '/admin', label: 'Dashboard', exact: true }]
+		items: [
+			{ href: '/admin', label: 'Dashboard', exact: true },
+			{ href: '/admin/runtime', label: 'Runtime' }
+		]
 	},
 	{
 		label: 'Social',

@@ -1,6 +1,27 @@
 # Polish plan — June 30, 2026
 
-## P0 — Done this session
+## P0 — Account & production auth (market-readiness audit)
+
+From live probe of https://animalgarage.netlify.app and `docs/plans/account-flow-fix.md`:
+
+- Set Netlify env: `PUBLIC_SUPABASE_URL`, `PUBLIC_SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY`
+- Set `PUBLIC_SITE_URL=https://animalgarage.netlify.app` (must match browsed origin until custom domain cutover)
+- Add Supabase redirect URLs: `https://animalgarage.netlify.app/auth/callback` and `https://animalgarage.net/auth/callback`
+- Bootstrap first admin: `npx tsx --env-file=.env scripts/promote-admin.ts user@email.com admin`
+- Verify Account menu appears in header after magic link / OAuth (not stuck on “Sign In”)
+- **Do not** set `DEV_ADMIN` or `LOCAL_DEV_AUTH` on Netlify
+- Code follow-up: extend `isProductionHostname()` to block `*.netlify.app` for `DEV_ADMIN` bypass
+
+## P0 — Live catalog on Netlify (no mock)
+
+From `docs/plans/market-readiness.md` — production `/shop` shows **120 mock products** (picsum images):
+
+- Set `PUBLIC_SALEOR_API_URL` + `SALEOR_CHANNEL` on Netlify
+- Run `npm run test:readiness` with prod secrets — `saleor-catalog` must pass
+- Confirm `/shop` count ≠ 120 and images are not `picsum.photos`
+- Remove or gate silent Saleor→mock fallback in `catalog/*.ts` for production
+
+## P0 — Done (prior session)
 
 - Local dev auth (`local-dev.ts`, quick-login on `/auth/sign-in`)
 - Account header dropdown (`AccountMenu.svelte`)
@@ -9,9 +30,9 @@
 - Media uploads plan (`docs/plans/media-uploads.md`)
 - Docs refresh (`docs/supabase.md`, local-dev, deployment)
 
-## P0 — External API readiness (2026-06-30)
+## P0 — External API readiness (structural)
 
-From `npm run test:readiness` — all probes skipped without `.env`; structural gaps below block live cutover:
+From `npm run test:readiness` — all probes skipped without `.env`; gaps below block launch:
 
 - Populate `.env` from `.env.example` and re-run `npm run test:readiness` for pass/fail signal
 - YouTube sync is stub-only (`youtube/sync.ts` returns mock videos) — implement live API + DB upsert
@@ -24,9 +45,12 @@ From `npm run test:readiness` — all probes skipped without `.env`; structural 
 - Run `saleor-readiness` agent before enabling live checkout
 - Wire review photo uploads (phase 1 of media-uploads plan)
 - Fix CI Prettier (221 files) so org sync auto-triggers after merge
+- Checkout/payment (Phase 2 of market-readiness plan)
+- Ghost CMS + Supabase UGC hydration (Phase 3)
 
 ## P2 — Nice-to-have
 
 - Cart line qty/remove when Saleor enabled
 - OAuth provider completion (Discord/Microsoft)
 - Account orders/vehicles pages (currently disabled in nav)
+- Security hardening checklist (Phase 4 of market-readiness plan)

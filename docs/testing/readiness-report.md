@@ -4,6 +4,24 @@ Generated: 2026-06-30
 Command: `npm run test:readiness`  
 Probe script: [`scripts/test-readiness.ts`](../../scripts/test-readiness.ts)
 
+## Production Netlify observations (2026-06-30)
+
+Live fetch of https://animalgarage.netlify.app (market-readiness agent). Full roadmap: [`docs/plans/market-readiness.md`](../plans/market-readiness.md).
+
+| Route | HTTP | Finding |
+|-------|------|---------|
+| `/` | 200 | Homepage live; campaigns, UGC (`@projectredline` handles), videos, builds, guides — **mock data** (picsum images) |
+| `/shop` | 200 | **120 items** — exact `mockProducts.length`; names match mock catalog (`Garage Flag Tee`, `Redline Hoodie`, …) |
+| `/auth/sign-in` | 200 | Magic link + Google/Discord/Microsoft UI; no dev quick-login (expected on Netlify) |
+| `/cart` | 200 | Empty cart; recommendations are mock staff picks |
+| `/loyalty` | 200 | “Sign in required” gate |
+| `/account` | 302 | → `/auth/sign-in?redirect=/account` (no session cookie) |
+| `/admin` | 302 | → `/auth/sign-in?redirect=/admin` (no session cookie) |
+
+**Inference:** Deploy is serving the **full mock commerce layer**. Either `PUBLIC_SALEOR_API_URL` is unset on Netlify, or Saleor queries fail and loaders silently fall back to mock (`src/lib/server/catalog/products.ts`). Supabase session also absent in probe (unauthenticated); account-flow fix tracked in [`docs/plans/account-flow-fix.md`](../plans/account-flow-fix.md).
+
+**Launch blockers visible on production:** mock catalog (120 picsum products), mock homepage content, no verified auth session, checkout not live.
+
 ## Summary
 
 | Metric | Count |
@@ -39,10 +57,14 @@ npm run test:readiness
 
 | Area | Finding |
 |------|---------|
+| Production catalog | Netlify serves 120 mock products — Saleor env unset or silent fallback |
+| Auth on Netlify | No session in probe; `PUBLIC_SITE_URL` / Supabase redirect URL mismatch likely (see account-flow-fix plan) |
+| `DEV_ADMIN` guard | `isProductionHostname()` blocks `animalgarage.net` only — **`animalgarage.netlify.app` not blocked** |
 | YouTube | `fetchChannelVideos()` in `src/lib/server/youtube/sync.ts` is a **stub** returning mock data; API key probe can pass while app sync is non-functional |
 | CDN / S3 | No server upload routes; env vars documented but integration planned in `docs/plans/media-uploads.md` |
 | Saleor checkout | Promo/redeem wired; live checkout needs catalog + channel validation before production cutover |
 | OAuth | Discord/Microsoft marked P2 in polish plan; probes only verify Supabase Auth provider flags |
+| `check-secrets.sh` | Blocks tracked env files and hardcoded secrets; does not scan client bundles or Netlify env |
 | Integration tests | `tests/contracts/` and `tests/readiness/` opt-in patterns planned; probes live in `scripts/test-readiness.ts` |
 
 ## Probe reference

@@ -61,7 +61,10 @@ export interface Guide {
 	slug: string;
 	title: string;
 	excerpt: string;
+	/** Plain-text / mock markdown body (fallback when Ghost is unset). */
 	content: string;
+	/** Sanitized Ghost HTML body when loaded from CMS. */
+	html?: string;
 	category: string;
 	heroImage: string;
 	readTimeMinutes: number;
@@ -72,7 +75,10 @@ export interface BlogPost {
 	slug: string;
 	title: string;
 	excerpt: string;
+	/** Plain-text mock body (fallback when Ghost is unset). */
 	content: string;
+	/** Sanitized Ghost HTML body when loaded from CMS. */
+	html?: string;
 	author: string;
 	publishedAt: string;
 	heroImage: string;
@@ -142,6 +148,7 @@ export interface CountryLocale {
 	country: string;
 	currency: string;
 	label: string;
+	flag: string;
 }
 
 export interface Event {
@@ -153,6 +160,16 @@ export interface Event {
 	startDate: string;
 	endDate?: string;
 	imageUrl: string;
+	/** Primary host label (e.g. "Animal Garage" or "Animal Garage × Enkei"). */
+	host?: string;
+	/** Animal Garage–produced / hosted event. */
+	isHosted?: boolean;
+	featured?: boolean;
+	tags?: string[];
+	/** RSVP or ticket URL. */
+	rsvpUrl?: string;
+	/** General external link (event page, charity partner, etc.). */
+	externalUrl?: string;
 }
 
 export interface CartItem {

@@ -26,6 +26,7 @@ export const garageLevels: GarageLevel[] = [
 export const garageXpActions: GarageXpAction[] = [
 	{ id: 'first-order', label: 'Place your first order', xp: 50 },
 	{ id: 'submit-build', label: 'Submit a build thread', xp: 100 },
+	{ id: 'submit-testimonial', label: 'Share your build story (approved review)', xp: 50 },
 	{ id: 'newsletter', label: 'Join the newsletter', xp: 25 },
 	{ id: 'share-media', label: 'Share garage media', xp: 30 },
 	{ id: 'refer-friend', label: 'Refer a friend', xp: 75 }

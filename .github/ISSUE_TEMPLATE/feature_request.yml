@@ -1,0 +1,48 @@
+---
+name: Feature request
+description: Suggest a new feature or enhancement
+title: '[Feature]: '
+labels: enhancement
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem / motivation
+      description: What problem does this solve? Who benefits?
+      placeholder: As a shopper, I want to...
+    validations:
+      required: true
+
+  - type: textarea
+    id: solution
+    attributes:
+      label: Proposed solution
+      description: How should it work?
+    validations:
+      required: true
+
+  - type: dropdown
+    id: phase
+    attributes:
+      label: Roadmap phase
+      options:
+        - Phase 1 — Prototype
+        - Phase 2 — Commerce (Saleor)
+        - Phase 3 — Media & CDN
+        - Phase 4 — Supabase services
+        - Phase 5 — Polish & launch
+        - Not sure
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      placeholder: Optional
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Pre-submit checks
+      options:
+        - label: I searched existing issues
+          required: true

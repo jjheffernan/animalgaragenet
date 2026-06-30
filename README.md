@@ -13,12 +13,12 @@ Open [http://localhost:5173](http://localhost:5173).
 
 ## Scripts
 
-| Command        | Description              |
-| -------------- | ------------------------ |
-| `npm run dev`  | Start dev server         |
-| `npm run build`| Production build         |
+| Command           | Description              |
+| ----------------- | ------------------------ |
+| `npm run dev`     | Start dev server         |
+| `npm run build`   | Production build         |
 | `npm run preview` | Preview production build |
-| `npm run check`| Type-check               |
-| `npm run lint` | ESLint + Prettier check  |
+| `npm run check`   | Type-check               |
+| `npm run lint`    | ESLint + Prettier check  |
 
 See [docs/README.md](docs/README.md) for architecture, roadmap, and integration plans.

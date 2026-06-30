@@ -30,6 +30,21 @@ export interface ProductCategory {
 	slug: string;
 }
 
+export interface ProductBrand {
+	id: string;
+	name: string;
+	slug: string;
+}
+
+export interface Fitment {
+	year: number;
+	make: string;
+	model: string;
+	submodel?: string;
+}
+
+export type ProductType = 'STANDARD' | 'GIFT_CARD' | 'PART';
+
 export interface Product {
 	id: string;
 	name: string;
@@ -41,6 +56,12 @@ export interface Product {
 	variants: ProductVariant[];
 	category: ProductCategory | null;
 	isAvailableForPurchase: boolean;
+	tags?: string[];
+	productType?: ProductType;
+	availableQuantity?: number;
+	compareAtPrice?: Money;
+	brand?: ProductBrand;
+	fitment?: Fitment[];
 }
 
 export interface Collection {

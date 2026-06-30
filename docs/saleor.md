@@ -45,8 +45,8 @@ import { PRODUCTS_QUERY } from '$lib/server/saleor/queries';
 import { config } from '$lib/config/env';
 
 const result = await saleorFetch(PRODUCTS_QUERY, {
-  channel: config.saleorChannel,
-  first: 24
+	channel: config.saleorChannel,
+	first: 24
 });
 ```
 
@@ -73,13 +73,13 @@ Saleor shipping zones define available countries and rates.
 
 Frontend readiness (already scaffolded):
 
-| Feature | Location |
-| ------- | -------- |
-| Locale codes | `src/lib/types/locale.ts` |
-| Currency formatting | `src/lib/i18n/currency.ts` |
-| Locale store | `src/lib/stores/locale.svelte.ts` |
-| Region selector | `src/lib/components/LocaleSelector.svelte` |
-| Shipping region display | Product & shop pages |
+| Feature                 | Location                                   |
+| ----------------------- | ------------------------------------------ |
+| Locale codes            | `src/lib/types/locale.ts`                  |
+| Currency formatting     | `src/lib/i18n/currency.ts`                 |
+| Locale store            | `src/lib/stores/locale.svelte.ts`          |
+| Region selector         | `src/lib/components/LocaleSelector.svelte` |
+| Shipping region display | Product & shop pages                       |
 
 **Next steps:**
 
@@ -108,9 +108,12 @@ Saleor uses `Money` with `gross`/`net` wrappers. Internal types flatten to:
 
 ```typescript
 pricing: {
-  priceRange: {
-    start: { amount: number; currency: string }
-  }
+	priceRange: {
+		start: {
+			amount: number;
+			currency: string;
+		}
+	}
 }
 ```
 

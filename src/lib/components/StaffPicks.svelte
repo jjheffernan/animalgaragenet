@@ -1,0 +1,32 @@
+<script lang="ts">
+	import { resolve } from '$app/paths';
+	import { getStaffPickProducts } from '$lib/data/mock-products';
+	import ProductCard from './ProductCard.svelte';
+	import SectionHeading from './SectionHeading.svelte';
+
+	interface Props {
+		limit?: number;
+		class?: string;
+	}
+
+	let { limit = 4, class: className = '' }: Props = $props();
+
+	const products = $derived(getStaffPickProducts().slice(0, limit));
+</script>
+
+<section class={className}>
+	<SectionHeading title="Staff Picks" subtitle="Hand-picked by the Animal Garage crew" />
+	<div class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+		{#each products as product (product.id)}
+			<ProductCard {product} />
+		{/each}
+	</div>
+	<div class="mt-6 text-center">
+		<a
+			href={resolve('/shop?collection=staff-picks')}
+			class="text-xs font-bold uppercase tracking-wider text-red-500 hover:text-red-400"
+		>
+			View All Staff Picks →
+		</a>
+	</div>
+</section>

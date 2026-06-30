@@ -1,7 +1,12 @@
-import { mockProducts } from '$lib/data/mock-products';
+import { SHOP_CATEGORIES, filterShopProducts, type ShopCategory } from '$lib/data/catalog-helpers';
 import type { PageServerLoad } from './$types';
 
-export const load: PageServerLoad = async () => {
-	// Future: replace with saleorFetch(PRODUCTS_QUERY, { channel, first: 24 })
-	return { products: mockProducts };
+export const load: PageServerLoad = async ({ url }) => {
+	const raw = url.searchParams.get('category')?.toUpperCase() ?? 'ALL';
+	const category = (SHOP_CATEGORIES.includes(raw as ShopCategory) ? raw : 'ALL') as ShopCategory;
+	return {
+		products: filterShopProducts(category),
+		category,
+		categories: SHOP_CATEGORIES
+	};
 };

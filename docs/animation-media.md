@@ -6,7 +6,7 @@ Visual and motion design plan for Animal Garage.
 
 - **Palette:** Near-black backgrounds (`#09090b`), zinc grays, red accents (`#dc2626`)
 - **Typography:** Bold uppercase display headings, industrial feel
-- **Reference:** Hoonigan, BigTime, Speeed — raw garage energy, not polished corporate
+- **Reference:** Raw garage energy — industrial, not polished corporate
 
 ## Current implementation (Phase 1)
 
@@ -20,10 +20,10 @@ Visual and motion design plan for Animal Garage.
 
 Consider adding only when needed:
 
-| Library | Use case |
-| ------- | -------- |
-| `@motionone/svelte` | Scroll-triggered reveals, staggered lists |
-| Svelte transitions | Page route changes |
+| Library                | Use case                                          |
+| ---------------------- | ------------------------------------------------- |
+| `@motionone/svelte`    | Scroll-triggered reveals, staggered lists         |
+| Svelte transitions     | Page route changes                                |
 | CSS `@view-transition` | Native page transitions (progressive enhancement) |
 
 Guidelines:
@@ -57,13 +57,13 @@ Pre-selected content loaded server-side, hydrated client-side:
 
 ```html
 <img
-  src="{cdn}/products/{slug}/800.webp"
-  srcset="
-    {cdn}/products/{slug}/400.webp 400w,
-    {cdn}/products/{slug}/800.webp 800w,
-    {cdn}/products/{slug}/1200.webp 1200w
-  "
-  sizes="(max-width: 768px) 100vw, 50vw"
+	src="{cdn}/products/{slug}/800.webp"
+	srcset="
+		{cdn}/products/{slug}/400.webp   400w,
+		{cdn}/products/{slug}/800.webp   800w,
+		{cdn}/products/{slug}/1200.webp 1200w
+	"
+	sizes="(max-width: 768px) 100vw, 50vw"
 />
 ```
 
@@ -75,13 +75,13 @@ Pre-selected content loaded server-side, hydrated client-side:
 
 ## Performance targets
 
-| Metric | Target |
-| ------ | ------ |
-| LCP | < 2.5s |
-| CLS | < 0.1 |
-| Hero image | Preload, priority fetch |
-| Below-fold | `loading="lazy"` |
-| Video | Poster image only until play |
+| Metric     | Target                       |
+| ---------- | ---------------------------- |
+| LCP        | < 2.5s                       |
+| CLS        | < 0.1                        |
+| Hero image | Preload, priority fetch      |
+| Below-fold | `loading="lazy"`             |
+| Video      | Poster image only until play |
 
 ## Accessibility
 

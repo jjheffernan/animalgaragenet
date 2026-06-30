@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { resolve } from '$app/paths';
 	import type { Collection } from '$lib/types/saleor';
 
 	interface Props {
@@ -9,7 +10,7 @@
 </script>
 
 <a
-	href="/shop?collection={collection.slug}"
+	href="{resolve('/shop')}?collection={collection.slug}"
 	class="group relative block overflow-hidden rounded-sm"
 >
 	<div class="aspect-[2/1] overflow-hidden bg-zinc-800">
@@ -21,7 +22,9 @@
 				loading="lazy"
 			/>
 		{/if}
-		<div class="absolute inset-0 bg-gradient-to-r from-zinc-950 via-zinc-950/70 to-transparent"></div>
+		<div
+			class="absolute inset-0 bg-gradient-to-r from-zinc-950 via-zinc-950/70 to-transparent"
+		></div>
 	</div>
 	<div class="absolute inset-0 flex flex-col justify-end p-6 sm:p-8">
 		<h3 class="font-display text-2xl font-bold uppercase tracking-wider text-white sm:text-3xl">

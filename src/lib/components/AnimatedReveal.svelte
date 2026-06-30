@@ -18,11 +18,7 @@
 	});
 </script>
 
-<div
-	class="reveal {className}"
-	class:reveal-visible={visible}
-	style="--reveal-delay: {delay}ms"
->
+<div class="reveal {className}" class:reveal-visible={visible} style="--reveal-delay: {delay}ms">
 	{@render children()}
 </div>
 

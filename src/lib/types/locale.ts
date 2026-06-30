@@ -1,4 +1,7 @@
-export type LocaleCode = 'en-US' | 'en-GB' | 'de-DE' | 'ja-JP';
+import { mockLocales } from '$lib/data/mock-locales';
+import { getCurrencyForLocale } from '$lib/data/mock-locales';
+
+export type LocaleCode = (typeof mockLocales)[number]['code'];
 
 export interface LocaleConfig {
 	code: LocaleCode;
@@ -7,9 +10,11 @@ export interface LocaleConfig {
 	shippingRegions: string[];
 }
 
-export const locales: LocaleConfig[] = [
-	{ code: 'en-US', label: 'United States', currency: 'USD', shippingRegions: ['US', 'CA'] },
-	{ code: 'en-GB', label: 'United Kingdom', currency: 'GBP', shippingRegions: ['GB', 'EU'] },
-	{ code: 'de-DE', label: 'Deutschland', currency: 'EUR', shippingRegions: ['DE', 'EU'] },
-	{ code: 'ja-JP', label: '日本', currency: 'JPY', shippingRegions: ['JP', 'APAC'] }
-];
+export const locales: LocaleConfig[] = mockLocales.map((l) => ({
+	code: l.code as LocaleCode,
+	label: l.label,
+	currency: l.currency,
+	shippingRegions: [l.country.slice(0, 2).toUpperCase()]
+}));
+
+export { getCurrencyForLocale };

@@ -26,6 +26,17 @@ npm run dev
 
 Run `npm run check` and `npm run lint` before opening a PR.
 
+## Branch protection (recommended)
+
+Configure on GitHub for team repos:
+
+| Branch | Settings                                                 |
+| ------ | -------------------------------------------------------- |
+| `main` | Require PR, require status checks (`CI`), no direct push |
+| `dev`  | Require PR, require status checks (`CI`)                 |
+
+CI workflow: `.github/workflows/ci.yml` (lint, check, build on PRs to `dev` and `main`).
+
 ## Conventions
 
 - SvelteKit 2 / Svelte 5 with runes

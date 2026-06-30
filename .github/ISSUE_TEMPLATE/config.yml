@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Contributing guide
+    url: https://github.com/jjheffernan/animalgaragenet/blob/dev/CONTRIBUTING.md
+    about: Branch workflow and development setup
+  - name: Style guide
+    url: https://github.com/jjheffernan/animalgaragenet/blob/dev/docs/style-guide/README.md
+    about: Developer reference for the codebase

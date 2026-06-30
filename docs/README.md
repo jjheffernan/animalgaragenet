@@ -4,17 +4,17 @@ Architecture, phases, and integration plans for **animalgarage.net**.
 
 ## Vision
 
-A highly animated, media-heavy automotive brand site — merchandising-forward like Hoonigan, BigTime, or Speeed. The frontend is a SvelteKit headless storefront; commerce runs on Saleor at a separate domain; media ships via CDN; non-commerce data lives in Supabase.
+A highly animated, media-heavy automotive brand site — merchandising-forward digital marketing with parts, community, and on-domain media. The frontend is a SvelteKit headless storefront; commerce runs on Saleor at a separate domain; media ships via CDN; non-commerce data lives in Supabase.
 
 ## Stack
 
-| Layer | Technology | Role |
-| ----- | ---------- | ---- |
-| Frontend | SvelteKit 2, Svelte 5, Tailwind v4 | SSR/SSG storefront & marketing |
-| Commerce | Saleor (GraphQL) | Products, cart, checkout, shipping |
-| Auth & content | Supabase | Auth, newsletter, CMS metadata, preferences |
-| Media | S3 + CloudFront | Images, video thumbnails, static assets |
-| Hosting | TBD (adapter-auto) | Deploy target selected per environment |
+| Layer          | Technology                         | Role                                        |
+| -------------- | ---------------------------------- | ------------------------------------------- |
+| Frontend       | SvelteKit 2, Svelte 5, Tailwind v4 | SSR/SSG storefront & marketing              |
+| Commerce       | Saleor (GraphQL)                   | Products, cart, checkout, shipping          |
+| Auth & content | Supabase                           | Auth, newsletter, CMS metadata, preferences |
+| Media          | S3 + CloudFront                    | Images, video thumbnails, static assets     |
+| Hosting        | TBD (adapter-auto)                 | Deploy target selected per environment      |
 
 ## Project phases
 
@@ -93,6 +93,11 @@ Copy `.env.example` to `.env`. See [infrastructure.md](./infrastructure.md) for 
 
 ## Related docs
 
+- **[Feature backlog](./inspiration.md)** — integrated vs remaining capabilities
+- **[Phase 3 plan](./phase3-plan.md)** — current bug fixes and workstreams
+- **[Architecture decisions](./decisions.md)** — persistent product/tech choices
+- **[Style guide](./style-guide/README.md)** — comprehensive dev reference
+- [Site audit](./audit.md) — security, gaps, and fix log
 - [Infrastructure (CDN, S3, Supabase)](./infrastructure.md)
 - [Saleor integration](./saleor.md)
 - [Animation & media strategy](./animation-media.md)

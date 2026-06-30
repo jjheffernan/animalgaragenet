@@ -74,13 +74,13 @@ s3://animalgarage-media/
 
 ### Env vars
 
-| Variable | Scope | Description |
-| -------- | ----- | ----------- |
-| `S3_BUCKET` | Server | Bucket name |
-| `S3_REGION` | Server | AWS region |
-| `AWS_ACCESS_KEY_ID` | Server | IAM credentials (CI/deploy only) |
-| `AWS_SECRET_ACCESS_KEY` | Server | IAM secret |
-| `PUBLIC_CDN_BASE_URL` | Public | CloudFront URL prefix |
+| Variable                | Scope  | Description                      |
+| ----------------------- | ------ | -------------------------------- |
+| `S3_BUCKET`             | Server | Bucket name                      |
+| `S3_REGION`             | Server | AWS region                       |
+| `AWS_ACCESS_KEY_ID`     | Server | IAM credentials (CI/deploy only) |
+| `AWS_SECRET_ACCESS_KEY` | Server | IAM secret                       |
+| `PUBLIC_CDN_BASE_URL`   | Public | CloudFront URL prefix            |
 
 ## Supabase
 
@@ -139,10 +139,10 @@ npm install @supabase/supabase-js @supabase/ssr
 
 ### Env vars
 
-| Variable | Scope | Description |
-| -------- | ----- | ----------- |
-| `PUBLIC_SUPABASE_URL` | Public | Project URL |
-| `PUBLIC_SUPABASE_ANON_KEY` | Public | Anon key (RLS-protected) |
+| Variable                    | Scope       | Description                               |
+| --------------------------- | ----------- | ----------------------------------------- |
+| `PUBLIC_SUPABASE_URL`       | Public      | Project URL                               |
+| `PUBLIC_SUPABASE_ANON_KEY`  | Public      | Anon key (RLS-protected)                  |
 | `SUPABASE_SERVICE_ROLE_KEY` | Server only | Admin operations — never expose to client |
 
 ## Environment file pattern

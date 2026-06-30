@@ -1,8 +1,13 @@
+import { env as privateEnv } from '$env/dynamic/private';
 import { config } from '$lib/config/env';
 
 export interface GraphQLResponse<T> {
 	data?: T;
 	errors?: Array<{ message: string }>;
+}
+
+export function getSaleorChannel(): string {
+	return privateEnv.SALEOR_CHANNEL ?? 'default-channel';
 }
 
 export async function saleorFetch<T>(

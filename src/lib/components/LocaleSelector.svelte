@@ -16,7 +16,7 @@
 		onchange={handleChange}
 		class="rounded-sm border border-zinc-700 bg-zinc-900 px-2 py-1 text-zinc-300"
 	>
-		{#each locales as loc}
+		{#each locales as loc (loc.code)}
 			<option value={loc.code}>{loc.label} ({loc.currency})</option>
 		{/each}
 	</select>

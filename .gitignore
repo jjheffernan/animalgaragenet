@@ -7,10 +7,14 @@ node_modules
 .wrangler
 /.svelte-kit
 /build
+dist
 
 # OS
 .DS_Store
 Thumbs.db
+*.swp
+*.swo
+*~
 
 # Env
 .env
@@ -21,3 +25,24 @@ Thumbs.db
 # Vite
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
+
+# Logs & coverage
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+coverage
+.nyc_output
+
+# IDE (keep committed .cursor config)
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+
+# Temp & cache
+.cache
+.temp
+tmp
+*.tsbuildinfo

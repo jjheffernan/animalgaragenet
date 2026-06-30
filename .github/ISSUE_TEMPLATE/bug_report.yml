@@ -1,0 +1,47 @@
+---
+name: Bug report
+description: Something isn't working as expected
+title: '[Bug]: '
+labels: bug
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: What happened?
+      description: Describe the bug and expected behavior.
+      placeholder: When I visit /shop/unknown-slug, I see...
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. npm run dev
+        2. Go to ...
+        3. Click ...
+    validations:
+      required: true
+
+  - type: input
+    id: browser
+    attributes:
+      label: Browser / OS
+      placeholder: Chrome 125 / macOS 15
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Console / terminal output
+      render: shell
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Pre-submit checks
+      options:
+        - label: I searched existing issues
+          required: true
+        - label: I can reproduce on the latest `dev` branch
+          required: false

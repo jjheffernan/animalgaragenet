@@ -1,0 +1,22 @@
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+    open-pull-requests-limit: 5
+    groups:
+      svelte:
+        patterns:
+          - '@sveltejs/*'
+          - 'svelte*'
+      lint:
+        patterns:
+          - 'eslint*'
+          - 'prettier*'
+          - 'typescript-eslint'
+      tailwind:
+        patterns:
+          - 'tailwindcss'
+          - '@tailwindcss/*'

@@ -32,6 +32,12 @@ Mock promo state is non-sensitive (discount label/percent for dev catalog); http
 - Applied in `redeemCode()` when `clientKey` (from `getClientAddress()`) is provided — `/cart/checkout/promo` POST and `/account/redeem` apply action.
 - Promo code input capped at 64 chars.
 
+## Build submission abuse (MR-SEC-001)
+
+- Honeypot field `_hp` on `BuildLogForm.svelte`; tripped submits fake success.
+- Rate limit: 10 inserts/hour per user id or IP via `submit-guard.ts` on `/account/builds/new` actions and `forms/submit.ts`.
+- Migration `20250701040000` replaces permissive anon insert with authenticated `auth.uid() = user_id` check (app inserts via service role).
+
 ## Sanitization
 
 - Testimonials and build logs: plain text in UI (Svelte escaping); server enforces trim + max length.

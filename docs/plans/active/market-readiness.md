@@ -232,7 +232,7 @@ See **[account-flow-fix.md](./account-flow-fix.md)** for the detailed plan.
 | Block `*.netlify.app` and custom domain in `isProductionHostname()`                                                 | P0       |
 | Add production guard: refuse mock auth when `PUBLIC_SITE_URL` is HTTPS non-localhost                                | P0       |
 | Replace silent Saleor/Ghost mock fallback with explicit error boundary                                              | P0       |
-| Tighten `build_submissions` insert policy (rate limit / captcha / honeypot)                                         | P1       |
+| Tighten `build_submissions` insert policy (rate limit / captcha / honeypot)                                         | P1       | **done** — honeypot + rate limit; migration drops anon insert |
 | Extend `check-secrets.sh`: grep client bundle for `SERVICE_ROLE`, fail on `DEV_ADMIN=true` in tracked deploy config | Done     |
 | Optional: `readiness-ci` GitHub Action with Netlify secrets                                                         | P2       |
 | `SITE_LOCKED=true` during preview; admins pass through                                                              | Ops      |

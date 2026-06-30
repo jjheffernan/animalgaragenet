@@ -43,6 +43,10 @@
 | `/builds` | Yes |
 | `/blog` | Yes |
 | `/about` | Yes |
+| `/contact` | Yes |
+| `/support` | Yes |
+| `/gift-cards` | Yes |
+| `/auth/sign-in` | Yes |
 | `/sitemap.xml` | Yes (urlset) |
 | `/robots.txt` | Yes (Sitemap directive) |
 | All other routes | No |

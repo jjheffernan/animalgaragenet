@@ -1,5 +1,5 @@
 import { fail } from '@sveltejs/kit';
-import { mockYouTubeChannels } from '$lib/data/mock-youtube-channels';
+import { mockYouTubeChannels } from '$lib/data/mock/youtube-channels';
 import { syncToDatabase } from '$lib/server/youtube/sync';
 import type { Actions, PageServerLoad } from './$types';
 

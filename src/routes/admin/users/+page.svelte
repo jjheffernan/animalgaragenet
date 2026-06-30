@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { mockAdminUsers, type MockAdminUser } from '$lib/data/mock-admin-users';
+	import { mockAdminUsers, type MockAdminUser } from '$lib/data/mock/admin-users';
 	import { ROLE_OPTIONS, type Role } from '$lib/auth/roles';
 
 	let users = $state<MockAdminUser[]>([...mockAdminUsers]);
@@ -41,7 +41,7 @@
 </svelte:head>
 
 <h1 class="font-display text-2xl font-bold uppercase text-white">Users</h1>
-<p class="mt-1 text-zinc-400">Create accounts and assign roles. Supabase sync coming soon.</p>
+<p class="mt-1 text-zinc-400">Create accounts and assign roles. Prototype uses in-memory mock data until Supabase sync.</p>
 
 {#if message}
 	<p class="mt-4 rounded-sm border border-zinc-700 bg-zinc-900 px-4 py-3 text-sm text-zinc-300">{message}</p>

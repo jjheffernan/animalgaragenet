@@ -1,7 +1,13 @@
 <script lang="ts">
+	import { resolve } from '$app/paths';
 	import type { LayoutData } from './$types';
+	import { mockAdminUsers } from '$lib/data/mock/admin-users';
+	import { mockMedia } from '$lib/data/mock/media';
+	import { mockYouTubeChannels } from '$lib/data/mock/youtube-channels';
 
 	let { data }: { data: LayoutData } = $props();
+
+	const totalVideos = mockYouTubeChannels.reduce((sum, ch) => sum + ch.videoCount, 0);
 </script>
 
 <svelte:head>
@@ -20,18 +26,18 @@
 <div class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
 	<div class="rounded-sm border border-zinc-800 bg-zinc-900/50 p-6">
 		<p class="text-xs font-bold uppercase tracking-widest text-zinc-500">Users</p>
-		<p class="mt-2 text-3xl font-bold text-white">4</p>
-		<p class="mt-1 text-xs text-zinc-600">Mock accounts</p>
+		<p class="mt-2 text-3xl font-bold text-white">{mockAdminUsers.length}</p>
+		<p class="mt-1 text-xs text-zinc-600">Registered accounts</p>
 	</div>
 	<div class="rounded-sm border border-zinc-800 bg-zinc-900/50 p-6">
 		<p class="text-xs font-bold uppercase tracking-widest text-zinc-500">Media Assets</p>
-		<p class="mt-2 text-3xl font-bold text-white">6</p>
-		<p class="mt-1 text-xs text-zinc-600">CDN placeholders</p>
+		<p class="mt-2 text-3xl font-bold text-white">{mockMedia.length}</p>
+		<p class="mt-1 text-xs text-zinc-600">CDN catalog items</p>
 	</div>
 	<div class="rounded-sm border border-zinc-800 bg-zinc-900/50 p-6">
 		<p class="text-xs font-bold uppercase tracking-widest text-zinc-500">YouTube Channels</p>
-		<p class="mt-2 text-3xl font-bold text-white">—</p>
-		<p class="mt-1 text-xs text-zinc-600">Workstream B</p>
+		<p class="mt-2 text-3xl font-bold text-white">{mockYouTubeChannels.length}</p>
+		<p class="mt-1 text-xs text-zinc-600">{totalVideos} synced videos</p>
 	</div>
 	<div class="rounded-sm border border-zinc-800 bg-zinc-900/50 p-6">
 		<p class="text-xs font-bold uppercase tracking-widest text-zinc-500">Signed In</p>
@@ -42,9 +48,36 @@
 
 <section class="mt-8 rounded-sm border border-zinc-800 bg-zinc-900/50 p-6">
 	<h2 class="text-xs font-bold uppercase tracking-widest text-zinc-500">Quick Links</h2>
-	<ul class="mt-4 space-y-2 text-sm text-zinc-400">
-		<li>→ Manage users and roles in Users</li>
-		<li>→ Browse and upload CDN assets in Media</li>
-		<li>→ Connect YouTube channels (coming in Workstream B)</li>
+	<ul class="mt-4 space-y-2 text-sm">
+		<li>
+			<a href={resolve('/admin/users')} class="text-zinc-400 hover:text-red-400">→ Manage users and roles</a>
+		</li>
+		<li>
+			<a href={resolve('/admin/media')} class="text-zinc-400 hover:text-red-400">→ Browse and upload CDN assets</a>
+		</li>
+		<li>
+			<a href={resolve('/admin/builds')} class="text-zinc-400 hover:text-red-400">→ Moderate build log submissions</a>
+		</li>
+		<li>
+			<a href={resolve('/admin/youtube')} class="text-zinc-400 hover:text-red-400">→ Sync YouTube channels ({mockYouTubeChannels.length} connected)</a>
+		</li>
+	</ul>
+</section>
+
+<section class="mt-8 rounded-sm border border-zinc-800 bg-zinc-900/30 p-6">
+	<h2 class="text-xs font-bold uppercase tracking-widest text-zinc-500">Recent Activity</h2>
+	<ul class="mt-4 space-y-3 text-sm text-zinc-400">
+		<li>
+			<span class="text-zinc-600">Jun 28</span> — Wholesale inquiry submitted from Pacific Auto Supply
+		</li>
+		<li>
+			<span class="text-zinc-600">Jun 27</span> — Build submission: "Midnight 350Z" pending review
+		</li>
+		<li>
+			<span class="text-zinc-600">Jun 25</span> — YouTube sync completed for @animalgarage (12 videos)
+		</li>
+		<li>
+			<span class="text-zinc-600">Jun 20</span> — New customer account: Garage Fan
+		</li>
 	</ul>
 </section>

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { mockMedia } from '$lib/data/mock-media';
+	import { mockMedia } from '$lib/data/mock/media';
 	import { config } from '$lib/config/env';
 
 	let selectedFile = $state<File | null>(null);
@@ -17,7 +17,7 @@
 			uploadStatus = 'Select a file first.';
 			return;
 		}
-		uploadStatus = `Upload stub: ${selectedFile.name} — wire S3 presigned URL when infra is ready.`;
+		uploadStatus = `Queued "${selectedFile.name}" for upload — prototype simulates CDN ingest. Wire S3 presigned URL when infra is ready.`;
 	}
 
 	function cdnUrl(path: string): string {
@@ -31,7 +31,7 @@
 </svelte:head>
 
 <h1 class="font-display text-2xl font-bold uppercase text-white">Media CDN</h1>
-<p class="mt-1 text-zinc-400">Asset browser and upload placeholder for S3 + CloudFront.</p>
+<p class="mt-1 text-zinc-400">Asset browser and CDN upload for S3 + CloudFront.</p>
 
 <section class="mt-6 rounded-sm border border-zinc-800 bg-zinc-900/30 p-6">
 	<h2 class="text-xs font-bold uppercase tracking-widest text-zinc-500">Environment</h2>

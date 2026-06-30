@@ -1,6 +1,6 @@
 import { fail, redirect } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
-import { config } from '$lib/config/env';
+import { buildAuthCallbackUrl } from '$lib/server/auth/callback-url';
 import { LOCAL_DEV_ACCOUNTS } from '$lib/server/auth/local-dev-accounts';
 import { devSignInAccount, isLocalDevAuthEnabled, isProductionHostname } from '$lib/server/auth/local-dev';
 import {
@@ -40,11 +40,8 @@ export const actions: Actions = {
 
 		const supabase = createServerClient({ cookies });
 		if (supabase) {
-			const callbackUrl = new URL('/auth/callback', config.siteUrl);
-			callbackUrl.searchParams.set('redirect', redirectTo);
-
 			const result = await signInWithOtp(supabase, email, {
-				emailRedirectTo: callbackUrl.toString(),
+				emailRedirectTo: buildAuthCallbackUrl(url.origin, redirectTo),
 				name: name || undefined
 			});
 

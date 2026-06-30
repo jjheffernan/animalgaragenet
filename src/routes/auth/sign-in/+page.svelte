@@ -27,9 +27,9 @@
 				role="alert"
 			>
 				Authentication is not configured on this host. Set
-				<code class="text-amber-300">PUBLIC_SUPABASE_URL</code>,
-				<code class="text-amber-300">PUBLIC_SUPABASE_ANON_KEY</code>, and
-				<code class="text-amber-300">SUPABASE_SERVICE_ROLE_KEY</code> in the deployment environment.
+				<code class="text-amber-300">PUBLIC_SUPABASE_URL</code> and
+				<code class="text-amber-300">PUBLIC_SUPABASE_ANON_KEY</code> in the deployment environment
+				(plus the server-only Supabase secret for admin writes).
 			</p>
 		{/if}
 

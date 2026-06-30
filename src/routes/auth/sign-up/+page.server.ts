@@ -1,6 +1,7 @@
 import { fail, redirect } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
-import { config } from '$lib/config/env';
+import { buildAuthCallbackUrl } from '$lib/server/auth/callback-url';
+import { isProductionHostname } from '$lib/server/auth/local-dev';
 import {
 	createMockUser,
 	setSessionCookie,
@@ -20,7 +21,7 @@ export const load: PageServerLoad = async ({ locals }) => {
 };
 
 export const actions: Actions = {
-	default: async ({ request, cookies }) => {
+	default: async ({ request, cookies, url }) => {
 		const form = await request.formData();
 		const email = String(form.get('email') ?? '').trim();
 		const name = String(form.get('name') ?? '').trim();
@@ -35,11 +36,8 @@ export const actions: Actions = {
 
 		const supabase = createServerClient({ cookies });
 		if (supabase) {
-			const callbackUrl = new URL('/auth/callback', config.siteUrl);
-			callbackUrl.searchParams.set('redirect', '/account');
-
 			const result = await signUpWithOtp(supabase, email, name, {
-				emailRedirectTo: callbackUrl.toString()
+				emailRedirectTo: buildAuthCallbackUrl(url.origin, '/account')
 			});
 
 			if (!result.ok) {
@@ -47,6 +45,14 @@ export const actions: Actions = {
 			}
 
 			return { success: true, message: result.message, email, name };
+		}
+
+		if (isProductionHostname(url.hostname)) {
+			return fail(503, {
+				error: 'Sign-up is not configured for this site. Set Supabase environment variables on the host.',
+				email,
+				name
+			});
 		}
 
 		const user = createMockUser(email, name);

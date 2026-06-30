@@ -27,6 +27,9 @@ export const adminBtnPrimary =
 export const adminBtnOutline =
 	'rounded-sm border border-zinc-700 px-4 py-2 text-sm font-bold uppercase tracking-wider text-zinc-300 transition hover:border-red-600 hover:text-white';
 
+export const adminBtnSecondary =
+	'rounded-sm border border-zinc-700 bg-zinc-800 px-4 py-2 text-sm font-bold uppercase tracking-wider text-zinc-300 transition hover:border-zinc-500 hover:text-white';
+
 export const adminAlertSuccess =
 	'rounded-sm border border-emerald-900/50 bg-emerald-950/30 px-4 py-3 text-sm text-emerald-400';
 

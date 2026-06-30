@@ -68,7 +68,6 @@ After `git clone`, several `agents/*` entries are **symlinks to machine-local pa
 | Kind | Examples | Target | Fix |
 | ---- | -------- | ------ | --- |
 | **Repo-owned** | `ponytail`, `caveman` | Real directories in `agents/` | Always works |
-| **Vendored reference** | `daisyui` | `.agents/skills/daisyui/` | Always works |
 | **Cursor IDE defaults** | `automate`, `babysit`, `sdk`, `review-*`, … | `~/.cursor/skills-cursor/<name>` | Install [Cursor](https://cursor.com); run repair script below |
 | **Plugin cache** | `supabase`, `svelte-code-writer`, `svelte-core-bestpractices` | Cursor plugin cache under `~/.cursor/plugins/` | Enable plugins in `.cursor/settings.json` (`plugins.*.enabled: true`) |
 
@@ -103,8 +102,6 @@ Symlinks: `.cursor/skills/ponytail` → `../../agents/ponytail`, `.cursor/skills
 **Svelte plugin** (`svelte-code-writer`, `svelte-core-bestpractices`) and **Supabase plugin** (`supabase`, `supabase-postgres-best-practices`) — see `.cursor/settings.json` (`plugins.*.enabled: true`). Svelte MCP: `list-sections`, `get-documentation`, `svelte-autofixer`. Supabase MCP: schema, migrations, SQL, logs.
 
 Canvas, babysit, review-bugbot, review-security, sdk, and other Cursor default skills live under `agents/` with matching `.cursor/skills/` symlinks (see **Fresh clone** above).
-
-**daisyUI skill** (`.agents/skills/daisyui/`) is vendored for reference only — the app uses Tailwind zinc/red with no daisyUI dependency. Do not auto-trigger it for UI work.
 
 Install or refresh optional skills: `npx skills add supabase/agent-skills`
 

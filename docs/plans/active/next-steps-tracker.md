@@ -29,7 +29,7 @@ _Audit ID rows (AUD-P*) also appear in [AUDIT-REMEDIATION.md](../AUDIT-REMEDIATI
 | AUD-P2-006 | Live Saleor integration smoke tests (env-gated CI job beyond readiness probes) | AUDIT-REMEDIATION, STATUS | No | — | saleor / CI | **done** |
 | AUD-P2-012 | Site-wide analytics hook (SEO/OG baseline shipped; consent-gated page hook wired) | AUDIT-REMEDIATION, STATUS | No | — | code | **done** |
 | AUD-P2-020 | Machine-local agent skill symlink onboarding in `agents/AGENTS.md` | AUDIT-REMEDIATION, agents-skills-audit | No | — | docs | **done** |
-| AUD-P2-021 | Remove daisyUI skill tree after sign-off (deprecation banner remains) | AUDIT-REMEDIATION | No | — | docs | **open** |
+| AUD-P2-021 | Remove daisyUI skill tree after sign-off (deprecation banner remains) | AUDIT-REMEDIATION | No | — | docs | **done** |
 | AUD-P2-023 | Newsletter / user preferences tables (schema + RLS per roadmap) | AUDIT-REMEDIATION, integrations/supabase.md | No | — | supabase | **done** |
 | MR-PH3-001 | Remaining homepage mock slices (videos, campaigns, hero beyond CMS; UGC/watch wired) | market-readiness Phase 3, STATUS | No | — | code | **open** |
 | IP-004-code | Saleor stock webhook → `restock_alerts` notify handler (signup API live; webhook stub only) | inspiration-polish IP-004 | No | — | saleor | **done** |

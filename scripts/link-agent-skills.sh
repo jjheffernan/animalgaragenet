@@ -19,8 +19,6 @@ for name in ponytail caveman; do
 	link_cursor_skill "$name" "$AGENTS/$name"
 done
 
-link_cursor_skill daisyui "$ROOT/.agents/skills/daisyui"
-
 if [[ -d "$HOME_CURSOR" ]]; then
 	for name in automate babysit canvas create-hook create-rule create-skill create-subagent \
 		loop migrate-to-skills onboard review review-bugbot review-security sdk shell \

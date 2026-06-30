@@ -13,7 +13,7 @@ import type { PartCategory } from '$lib/types/domain';
 import type { Product } from '$lib/types/saleor';
 import { getChannelForLocale } from '$lib/server/saleor/channels';
 import { isSaleorEnabled, saleorFetch } from '$lib/server/saleor/client';
-import { guardMockCatalogFallback } from '$lib/server/catalog/fallback';
+import { withSaleorCatalog } from '$lib/server/catalog/fallback';
 import { isProductionSiteUrl } from '$lib/server/auth/local-dev';
 import {
 	mapPartCategory,
@@ -59,17 +59,13 @@ async function fetchSaleorPartCategories(): Promise<PartCategory[]> {
 export async function getPartCategoriesForNav(
 	locale: string = config.defaultLocale
 ): Promise<PartCategory[]> {
-	if (isSaleorEnabled()) {
-		try {
+	return withSaleorCatalog(
+		async () => {
 			const categories = await fetchSaleorPartCategories();
 			if (categories.length > 0 || isProductionSiteUrl()) return categories;
-		} catch (err) {
-			guardMockCatalogFallback({ saleorAttemptFailed: true, error: err });
-		}
-	}
-
-	guardMockCatalogFallback();
-	return mockPartCategories;
+		},
+		() => mockPartCategories
+	);
 }
 
 export async function getPartCategoryBySlug(
@@ -94,8 +90,8 @@ export async function getPartCategoryBySlug(
  */
 // @saleor-migration: intentional — catalog swap point; see docs/commerce/saleor.md#quick-migration
 export async function getPartsProducts(locale: string = config.defaultLocale): Promise<Product[]> {
-	if (isSaleorEnabled()) {
-		try {
+	return withSaleorCatalog(
+		async () => {
 			const channel = getChannelForLocale(locale);
 			const result = await saleorFetch<{
 				products: { edges: { node: SaleorProductListNode }[] };
@@ -108,14 +104,10 @@ export async function getPartsProducts(locale: string = config.defaultLocale): P
 			return result.data.products.edges
 				.map(({ node }) => mapProductListNode(node))
 				.filter(isPartProduct);
-		} catch (err) {
-			guardMockCatalogFallback({ saleorAttemptFailed: true, error: err });
-		}
-	}
-
-	// @saleor-migration: intentional — mock fallback; see docs/commerce/saleor.md#quick-migration
-	guardMockCatalogFallback();
-	return mockParts;
+		},
+		// @saleor-migration: intentional — mock fallback; see docs/commerce/saleor.md#quick-migration
+		() => mockParts
+	);
 }
 
 // @saleor-migration: intentional — catalog swap point; see docs/commerce/saleor.md#quick-migration
@@ -137,8 +129,8 @@ export async function getPartBySlug(
 	slug: string,
 	locale: string = config.defaultLocale
 ): Promise<Product | null> {
-	if (isSaleorEnabled()) {
-		try {
+	return withSaleorCatalog(
+		async () => {
 			const channel = getChannelForLocale(locale);
 			const result = await saleorFetch<{ product: SaleorProductDetailNode | null }>(
 				PRODUCT_BY_SLUG_QUERY,
@@ -153,14 +145,12 @@ export async function getPartBySlug(
 			if (!isPartProduct(product)) return null;
 			if (product.category?.slug !== categorySlug) return null;
 			return product;
-		} catch (err) {
-			guardMockCatalogFallback({ saleorAttemptFailed: true, error: err });
+		},
+		() => {
+			const product = mockGetPartBySlug(slug);
+			if (!product) return null;
+			if (product.category?.slug !== categorySlug) return null;
+			return product;
 		}
-	}
-
-	guardMockCatalogFallback();
-	const product = mockGetPartBySlug(slug);
-	if (!product) return null;
-	if (product.category?.slug !== categorySlug) return null;
-	return product;
+	);
 }

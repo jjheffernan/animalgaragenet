@@ -7,9 +7,9 @@ import { config } from '$lib/config/env';
 import type { BuildThread, Guide } from '$lib/types/domain';
 import type { Product } from '$lib/types/saleor';
 import { getChannelForLocale } from '$lib/server/saleor/channels';
-import { isSaleorEnabled, saleorFetch } from '$lib/server/saleor/client';
+import { saleorFetch } from '$lib/server/saleor/client';
 import { mapProductListNode, type SaleorProductListNode } from '$lib/server/saleor/mappers';
-import { guardMockCatalogFallback } from '$lib/server/catalog/fallback';
+import { withSaleorCatalog } from '$lib/server/catalog/fallback';
 import { PRODUCT_SEARCH_QUERY } from '$lib/server/saleor/queries';
 
 export interface CatalogSearchResults {
@@ -50,23 +50,16 @@ export async function searchCatalog(
 	const q = query.trim();
 	if (!q) return EMPTY_RESULTS;
 
-	let products: Product[];
-	let parts: Product[];
-	if (isSaleorEnabled()) {
-		try {
+	const { products, parts } = await withSaleorCatalog(
+		async () => {
 			const saleorHits = await searchSaleorProducts(q, locale);
-			products = saleorHits.filter((p) => !isPartProduct(p));
-			parts = saleorHits.filter(isPartProduct);
-		} catch (err) {
-			guardMockCatalogFallback({ saleorAttemptFailed: true, error: err });
-			products = searchProducts(q);
-			parts = searchParts(q);
-		}
-	} else {
-		guardMockCatalogFallback();
-		products = searchProducts(q);
-		parts = searchParts(q);
-	}
+			return {
+				products: saleorHits.filter((p) => !isPartProduct(p)),
+				parts: saleorHits.filter(isPartProduct)
+			};
+		},
+		() => ({ products: searchProducts(q), parts: searchParts(q) })
+	);
 
 	return {
 		products,

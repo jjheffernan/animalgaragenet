@@ -6,8 +6,8 @@ import {
 import { config } from '$lib/config/env';
 import type { Collection, Product } from '$lib/types/saleor';
 import { getChannelForLocale } from '$lib/server/saleor/channels';
-import { isSaleorEnabled, saleorFetch } from '$lib/server/saleor/client';
-import { guardMockCatalogFallback } from '$lib/server/catalog/fallback';
+import { saleorFetch } from '$lib/server/saleor/client';
+import { withSaleorCatalog } from '$lib/server/catalog/fallback';
 import { isProductionSiteUrl } from '$lib/server/auth/local-dev';
 import {
 	mapCollection,
@@ -42,8 +42,8 @@ async function fetchSaleorProductsByTag(
 /** Collections catalog — mock default, Saleor when env is set. */
 // @saleor-migration: intentional — catalog swap point; see docs/commerce/saleor.md#quick-migration
 export async function getCollections(locale: string = config.defaultLocale): Promise<Collection[]> {
-	if (isSaleorEnabled()) {
-		try {
+	return withSaleorCatalog(
+		async () => {
 			const channel = getChannelForLocale(locale);
 			const result = await saleorFetch<{
 				collections: { edges: { node: SaleorCollectionNode }[] };
@@ -53,7 +53,7 @@ export async function getCollections(locale: string = config.defaultLocale): Pro
 				throw new Error(result.errors?.[0]?.message ?? 'Saleor collections query failed');
 			}
 
-			const collections = await Promise.all(
+			return Promise.all(
 				result.data.collections.edges.map(async ({ node }) => {
 					const base = mapCollection(node);
 					const productsResult = await saleorFetch<{
@@ -68,15 +68,9 @@ export async function getCollections(locale: string = config.defaultLocale): Pro
 					return { ...base, products };
 				})
 			);
-
-			return collections;
-		} catch (err) {
-			guardMockCatalogFallback({ saleorAttemptFailed: true, error: err });
-		}
-	}
-
-	guardMockCatalogFallback();
-	return mockCollections;
+		},
+		() => mockCollections
+	);
 }
 
 /**
@@ -87,17 +81,14 @@ export async function getCollections(locale: string = config.defaultLocale): Pro
 export async function getStaffPickProducts(
 	locale: string = config.defaultLocale
 ): Promise<Product[]> {
-	if (isSaleorEnabled()) {
-		try {
+	return withSaleorCatalog(
+		async () => {
 			const products = await fetchSaleorProductsByTag('staff-pick', locale);
 			if (products.length > 0 || isProductionSiteUrl()) return products;
-		} catch (err) {
-			guardMockCatalogFallback({ saleorAttemptFailed: true, error: err });
-		}
-	}
-
-	guardMockCatalogFallback();
-	return getMockStaffPickProducts();
+			return undefined;
+		},
+		getMockStaffPickProducts
+	);
 }
 
 /**
@@ -108,15 +99,12 @@ export async function getStaffPickProducts(
 export async function getClearanceProducts(
 	locale: string = config.defaultLocale
 ): Promise<Product[]> {
-	if (isSaleorEnabled()) {
-		try {
+	return withSaleorCatalog(
+		async () => {
 			const products = await fetchSaleorProductsByTag('clearance', locale);
 			if (products.length > 0 || isProductionSiteUrl()) return products;
-		} catch (err) {
-			guardMockCatalogFallback({ saleorAttemptFailed: true, error: err });
-		}
-	}
-
-	guardMockCatalogFallback();
-	return getMockClearanceProducts();
+			return undefined;
+		},
+		getMockClearanceProducts
+	);
 }

@@ -6,9 +6,10 @@ vi.mock('$lib/server/saleor/client', () => ({
 	saleorFetch: vi.fn()
 }));
 
-vi.mock('$lib/server/catalog/fallback', () => ({
-	guardMockCatalogFallback: vi.fn()
-}));
+vi.mock('$lib/server/catalog/fallback', async (importOriginal) => {
+	const actual = await importOriginal<typeof import('$lib/server/catalog/fallback')>();
+	return { ...actual, guardMockCatalogFallback: vi.fn() };
+});
 
 import { isSaleorEnabled, saleorFetch } from '$lib/server/saleor/client';
 import { getCollections } from './collections';

@@ -13,7 +13,7 @@ import {
 import { config } from '$lib/config/env';
 import type { Product } from '$lib/types/saleor';
 import { getChannelForLocale } from '$lib/server/saleor/channels';
-import { isSaleorEnabled, saleorFetch } from '$lib/server/saleor/client';
+import { saleorFetch } from '$lib/server/saleor/client';
 import {
 	mapProduct,
 	mapProductListNode,
@@ -21,7 +21,7 @@ import {
 	type SaleorProductListNode,
 	type SaleorTaxedMoney
 } from '$lib/server/saleor/mappers';
-import { guardMockCatalogFallback } from '$lib/server/catalog/fallback';
+import { withSaleorCatalog } from '$lib/server/catalog/fallback';
 import { PRODUCTS_QUERY, PRODUCT_BY_SLUG_QUERY } from '$lib/server/saleor/queries';
 
 /** Extended list query — metadata + full price range for gift cards / deals. */
@@ -127,8 +127,8 @@ export async function getShopProducts(
 	filterSlug: string = 'all',
 	locale: string = config.defaultLocale
 ): Promise<Product[]> {
-	if (isSaleorEnabled()) {
-		try {
+	return withSaleorCatalog(
+		async () => {
 			const channel = getChannelForLocale(locale);
 			const result = await saleorFetch<{
 				products: { edges: { node: SaleorProductListNode }[] };
@@ -140,14 +140,10 @@ export async function getShopProducts(
 
 			const products = result.data.products.edges.map(({ node }) => mapProductListNode(node));
 			return filterProductsByShopSlug(products, filterSlug);
-		} catch (err) {
-			guardMockCatalogFallback({ saleorAttemptFailed: true, error: err });
-		}
-	}
-
-	// @saleor-migration: intentional — mock fallback; see docs/commerce/saleor.md#quick-migration
-	guardMockCatalogFallback();
-	return filterShopProducts(filterSlugToShopCategory(filterSlug) ?? 'ALL');
+		},
+		// @saleor-migration: intentional — mock fallback; see docs/commerce/saleor.md#quick-migration
+		() => filterShopProducts(filterSlugToShopCategory(filterSlug) ?? 'ALL')
+	);
 }
 
 /**
@@ -158,8 +154,8 @@ export async function getShopProductBySlug(
 	slug: string,
 	locale: string = config.defaultLocale
 ): Promise<Product | null> {
-	if (isSaleorEnabled()) {
-		try {
+	return withSaleorCatalog(
+		async () => {
 			const channel = getChannelForLocale(locale);
 			const result = await saleorFetch<{ product: SaleorProductDetailNode | null }>(
 				PRODUCT_BY_SLUG_QUERY,
@@ -171,14 +167,10 @@ export async function getShopProductBySlug(
 			}
 
 			return mapProduct(result.data.product);
-		} catch (err) {
-			guardMockCatalogFallback({ saleorAttemptFailed: true, error: err });
-		}
-	}
-
-	// @saleor-migration: intentional — mock fallback; see docs/commerce/saleor.md#quick-migration
-	guardMockCatalogFallback();
-	return getProductBySlug(slug) ?? null;
+		},
+		// @saleor-migration: intentional — mock fallback; see docs/commerce/saleor.md#quick-migration
+		() => getProductBySlug(slug) ?? null
+	);
 }
 
 /**
@@ -189,19 +181,15 @@ export async function getShopProductBySlug(
 export async function getGiftCardProducts(
 	locale: string = config.defaultLocale
 ): Promise<Product[]> {
-	if (isSaleorEnabled()) {
-		try {
+	return withSaleorCatalog(
+		async () => {
 			const nodes = await fetchSaleorCatalogNodes(locale);
 			return nodes
 				.filter(isGiftCardNode)
 				.map((node) => ({ ...mapCatalogNode(node), productType: 'GIFT_CARD' as const }));
-		} catch (err) {
-			guardMockCatalogFallback({ saleorAttemptFailed: true, error: err });
-		}
-	}
-
-	guardMockCatalogFallback();
-	return getMockGiftCardProducts();
+		},
+		() => getMockGiftCardProducts()
+	);
 }
 
 /**
@@ -210,16 +198,12 @@ export async function getGiftCardProducts(
  */
 // @saleor-migration: intentional — catalog swap point; see docs/commerce/saleor.md#quick-migration
 export async function getDealProducts(locale: string = config.defaultLocale): Promise<Product[]> {
-	if (isSaleorEnabled()) {
-		try {
+	return withSaleorCatalog(
+		async () => {
 			const nodes = await fetchSaleorCatalogNodes(locale);
 			const products = nodes.filter(isDealNode).map(mapCatalogNode);
 			if (products.length > 0) return products;
-		} catch (err) {
-			guardMockCatalogFallback({ saleorAttemptFailed: true, error: err });
-		}
-	}
-
-	guardMockCatalogFallback();
-	return getMockDealProducts();
+		},
+		() => getMockDealProducts()
+	);
 }

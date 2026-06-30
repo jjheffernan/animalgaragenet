@@ -8,8 +8,7 @@ import {
 import { mockBrands } from '$lib/data/mock/brands';
 import { config } from '$lib/config/env';
 import type { Product } from '$lib/types/saleor';
-import { isSaleorEnabled } from '$lib/server/saleor/client';
-import { guardMockCatalogFallback } from '$lib/server/catalog/fallback';
+import { withSaleorCatalog } from '$lib/server/catalog/fallback';
 import { getPartsByCategory, getPartsProducts } from '$lib/server/catalog/parts';
 
 export type { PartsFilterState };
@@ -105,21 +104,18 @@ export async function getPartsFilterOptions(
 	categorySlug?: string,
 	locale: string = config.defaultLocale
 ): Promise<PartsFilterOptions> {
-	if (isSaleorEnabled()) {
-		try {
+	return withSaleorCatalog(
+		async () => {
 			const products = categorySlug
 				? await getPartsByCategory(categorySlug, locale)
 				: await getPartsProducts(locale);
 			if (products.length > 0) {
-				return { facets: derivePartsFacetsFromProducts(products), source: 'saleor' };
+				return { facets: derivePartsFacetsFromProducts(products), source: 'saleor' as const };
 			}
-		} catch (err) {
-			guardMockCatalogFallback({ saleorAttemptFailed: true, error: err });
-		}
-	}
-
-	guardMockCatalogFallback();
-	return mockPartsFilterOptions();
+			return undefined;
+		},
+		mockPartsFilterOptions
+	);
 }
 
 /** Apply URL-synced facet state (YMM, brand, build) to a parts product list. */

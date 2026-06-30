@@ -8,7 +8,7 @@ import { config } from '$lib/config/env';
 import type { BuildThread } from '$lib/types/domain';
 import type { Product } from '$lib/types/saleor';
 import { listPublicBuilds } from '$lib/server/builds/public';
-import { guardMockCatalogFallback } from '$lib/server/catalog/fallback';
+import { withSaleorCatalog } from '$lib/server/catalog/fallback';
 import { getPartsByCategory, getPartsProducts } from '$lib/server/catalog/parts';
 import { getShopProducts } from '$lib/server/catalog/products';
 import { isSaleorEnabled } from '$lib/server/saleor/client';
@@ -37,8 +37,8 @@ export async function getRelatedCatalogProducts(
 	locale: string = config.defaultLocale,
 	count = 4
 ): Promise<Product[]> {
-	if (isSaleorEnabled()) {
-		try {
+	return withSaleorCatalog(
+		async () => {
 			const categorySlug = product.category?.slug;
 			const pool = isPartProduct(product)
 				? categorySlug
@@ -52,13 +52,10 @@ export async function getRelatedCatalogProducts(
 				.slice(0, count);
 
 			if (related.length > 0) return related;
-		} catch (err) {
-			guardMockCatalogFallback({ saleorAttemptFailed: true, error: err });
-		}
-	}
-
-	guardMockCatalogFallback();
-	return getMockRelatedProducts(product, count);
+			return undefined;
+		},
+		() => getMockRelatedProducts(product, count)
+	);
 }
 
 /** Linked build for a product — CMS/public builds when configured, mock fallback. */
@@ -73,18 +70,15 @@ export async function getBuildLinkedProducts(
 	build: BuildThread,
 	locale: string = config.defaultLocale
 ): Promise<Product[]> {
-	if (isSaleorEnabled()) {
-		try {
+	return withSaleorCatalog(
+		async () => {
 			const products = await Promise.all(
 				build.linkedProductIds.map((id) => findCatalogProductById(id, locale))
 			);
 			const resolved = products.filter((p): p is Product => p !== undefined);
 			if (resolved.length > 0) return resolved;
-		} catch (err) {
-			guardMockCatalogFallback({ saleorAttemptFailed: true, error: err });
-		}
-	}
-
-	guardMockCatalogFallback();
-	return getMockProductsForBuild(build);
+			return undefined;
+		},
+		() => getMockProductsForBuild(build)
+	);
 }

@@ -6,8 +6,8 @@ import {
 } from '$lib/data/catalog-helpers';
 import { config } from '$lib/config/env';
 import type { Product } from '$lib/types/saleor';
-import { isSaleorEnabled, saleorFetch } from '$lib/server/saleor/client';
-import { guardMockCatalogFallback } from '$lib/server/catalog/fallback';
+import { saleorFetch } from '$lib/server/saleor/client';
+import { withSaleorCatalog } from '$lib/server/catalog/fallback';
 import { isProductionSiteUrl } from '$lib/server/auth/local-dev';
 import { CATEGORIES_QUERY } from '$lib/server/saleor/queries';
 import type { SaleorCategoryTreeNode } from '$lib/server/saleor/mappers';
@@ -120,19 +120,16 @@ export function groupShopFilterOptions(categories: ShopFilterOption[]): ShopFilt
 export async function getShopFilterOptions(
 	locale: string = config.defaultLocale
 ): Promise<ShopFilterOptions> {
-	if (isSaleorEnabled()) {
-		try {
+	return withSaleorCatalog(
+		async () => {
 			const categories = await fetchSaleorShopFilterOptions(locale);
 			if (categories.length > 1 || isProductionSiteUrl()) {
-				return { categories, source: 'saleor' };
+				return { categories, source: 'saleor' as const };
 			}
-		} catch (err) {
-			guardMockCatalogFallback({ saleorAttemptFailed: true, error: err });
-		}
-	}
-
-	guardMockCatalogFallback();
-	return mockShopFilterOptions();
+			return undefined;
+		},
+		mockShopFilterOptions
+	);
 }
 
 /** Match URL `?category=` against filter options (slug, id, or label — case-insensitive). */

@@ -1,4 +1,5 @@
 import { guardProductionMockFallback } from '$lib/server/mock-fallback-guard';
+import { isSaleorEnabled } from '$lib/server/saleor/client';
 
 export class CatalogUnavailableError extends Error {
 	constructor(message: string) {
@@ -24,4 +25,22 @@ export function guardMockCatalogFallback(
 		missingConfigMessage: 'PUBLIC_SALEOR_API_URL must be configured for production catalog',
 		attemptFailedMessage: 'Saleor catalog query failed; mock fallback disabled in production'
 	});
+}
+
+/** Saleor fetch when enabled; mock after guard. Return `undefined` from saleorFn to reject weak results. */
+export async function withSaleorCatalog<T>(
+	saleorFn: () => Promise<T | undefined>,
+	mockFn: () => T
+): Promise<T> {
+	if (isSaleorEnabled()) {
+		try {
+			const result = await saleorFn();
+			if (result !== undefined) return result;
+		} catch (err) {
+			guardMockCatalogFallback({ saleorAttemptFailed: true, error: err });
+		}
+	}
+
+	guardMockCatalogFallback();
+	return mockFn();
 }

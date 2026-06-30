@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import { resolve } from '$app/paths';
 	import SectionHeading from '$lib/components/shared/SectionHeading.svelte';
 	import LocaleSelector from '$lib/components/navigation/LocaleSelector.svelte';
 	import AnimatedReveal from '$lib/components/shared/AnimatedReveal.svelte';
@@ -34,14 +33,14 @@
 	}
 
 	function categoryHref(cat: ShopFilterOption) {
-		return resolve(getShopPath({ category: cat.slug === 'all' ? '' : cat.slug }));
+		return getShopPath({ category: cat.slug === 'all' ? '' : cat.slug });
 	}
 
 	const collectionValue = $derived(data.collection?.slug ?? '');
 
 	function onCollectionChange(event: Event) {
 		const value = (event.currentTarget as HTMLSelectElement).value;
-		goto(resolve(getShopPath({ collection: value || null })), {
+		goto(getShopPath({ collection: value || null }), {
 			keepFocus: true,
 			noScroll: true
 		});

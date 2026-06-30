@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { resolve } from '$app/paths';
 	import type { Product } from '$lib/types/saleor';
 	import ProductCard from '$lib/components/catalog/ProductCard.svelte';
 	import SectionHeading from '$lib/components/shared/SectionHeading.svelte';
@@ -41,7 +40,7 @@
 	{#if viewAllHref}
 		<div class="mt-6 text-center">
 			<a
-				href={resolve(viewAllHref)}
+				href={viewAllHref}
 				class="text-xs font-bold uppercase tracking-wider text-red-500 hover:text-red-400"
 			>
 				{viewAllLabel}

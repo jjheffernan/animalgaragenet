@@ -1,3 +1,4 @@
+import { checkBuildSubmitRateLimit } from '$lib/server/build-logs/submit-guard';
 import { createAdminClient } from '$lib/server/supabase/admin';
 import { createWholesaleInquiry } from '$lib/server/wholesale/repository';
 import { LIMITS, trimToMax } from '$lib/server/validation/limits';
@@ -10,6 +11,10 @@ export interface FormSubmitResult {
 /** userId must come from server session (locals.session.id), never from form body. */
 export interface SubmitFormOptions {
 	userId?: string | null;
+	/** Client IP or fingerprint for rate limiting (from `getClientAddress()`). */
+	clientKey?: string;
+	/** Honeypot field value — bots that fill it are silently rejected. */
+	honeypot?: string;
 }
 
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
@@ -43,6 +48,13 @@ async function insertBuildSubmission(
 	payload: Record<string, string>,
 	options?: SubmitFormOptions
 ): Promise<FormSubmitResult> {
+	if (options?.honeypot?.trim()) {
+		return { ok: true, message: mockSuccessMessage('build_submissions') };
+	}
+	if (options?.clientKey && !checkBuildSubmitRateLimit(options.clientKey)) {
+		return { ok: false, message: 'Too many submissions. Please try again later.' };
+	}
+
 	const admin = createAdminClient();
 	if (!admin) {
 		return { ok: true, message: mockSuccessMessage('build_submissions') };

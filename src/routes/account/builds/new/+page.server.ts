@@ -1,7 +1,6 @@
 import { fail, redirect } from '@sveltejs/kit';
 import { createBuildLogDraft, updateBuildLog } from '$lib/server/build-logs/repository';
 import {
-	BUILD_SUBMIT_HONEYPOT,
 	checkBuildSubmitRateLimit,
 	isBuildSubmitHoneypotTripped
 } from '$lib/server/build-logs/submit-guard';
@@ -24,8 +23,7 @@ function parseFields(data: FormData) {
 	};
 }
 
-function guardBuildSubmit(formData: FormData, rateKey: string): Response | null {
-	if (isBuildSubmitHoneypotTripped(formData)) return null;
+function rateLimitBuildSubmit(rateKey: string) {
 	if (!checkBuildSubmitRateLimit(rateKey)) {
 		return fail(429, { errors: { form: 'Too many submissions. Try again later.' } });
 	}
@@ -41,7 +39,7 @@ export const actions: Actions = {
 		if (isBuildSubmitHoneypotTripped(formData)) {
 			throw redirect(303, '/account/builds');
 		}
-		const rateLimited = guardBuildSubmit(formData, user.id || getClientAddress());
+		const rateLimited = rateLimitBuildSubmit(user.id || getClientAddress());
 		if (rateLimited) return rateLimited;
 
 		const fields = parseFields(formData);
@@ -63,7 +61,7 @@ export const actions: Actions = {
 		if (isBuildSubmitHoneypotTripped(formData)) {
 			return { success: true, message: 'Build log submitted for review.' };
 		}
-		const rateLimited = guardBuildSubmit(formData, user.id || getClientAddress());
+		const rateLimited = rateLimitBuildSubmit(user.id || getClientAddress());
 		if (rateLimited) return rateLimited;
 
 		const fields = parseFields(formData);

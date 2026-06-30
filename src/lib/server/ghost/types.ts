@@ -21,8 +21,6 @@ export interface GhostPost {
 	meta_title: string | null;
 	meta_description: string | null;
 	feature_image: string | null;
-	meta_title: string | null;
-	meta_description: string | null;
 	reading_time: number;
 	published_at: string | null;
 	primary_tag: GhostTag | null;

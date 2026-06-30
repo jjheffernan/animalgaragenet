@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { setAnalyticsEnabled, trackPageView } from '$lib/analytics';
 	import { getCookieConsent, setCookieConsent } from '$lib/cookies/client';
 
 	let { show = false }: { show?: boolean } = $props();
@@ -12,10 +13,13 @@
 	function accept() {
 		setCookieConsent(true);
 		dismissed = true;
+		setAnalyticsEnabled(true);
+		trackPageView(window.location.pathname);
 	}
 
 	function decline() {
 		setCookieConsent(false);
+		setAnalyticsEnabled(false);
 		dismissed = true;
 	}
 </script>

@@ -1,11 +1,12 @@
-# After CI passes on main in the personal repo, mirror main to the org repo
-# used by Netlify (heff-industries/animalgaragenet).
+# Mirror personal main → heff-industries/animalgaragenet for Netlify.
 #
-# Auth: fine-grained PAT in ORG_REPO_SYNC_TOKEN (Contents + Actions write on org repo).
-# Deploy keys cannot update .github/workflows — a PAT is required for full mirroring.
+# Auth: deploy key on the org repo (secret ORG_REPO_DEPLOY_KEY on this repo).
+# Deploy keys cannot push .github/workflows — we mirror an orphan snapshot WITHOUT
+# that folder. CI/workflows stay on jjheffernan/animalgaragenet only.
 #
-# Setup: ./scripts/setup-org-sync-auth.sh pat-url
-#        gh secret set ORG_REPO_SYNC_TOKEN --repo jjheffernan/animalgaragenet
+# Setup: ./scripts/setup-org-sync-auth.sh
+#
+# Note: GitHub Actions secrets never show token values in the UI — only secret names.
 
 name: Sync main to org
 
@@ -42,24 +43,28 @@ jobs:
           ref: ${{ github.event_name == 'workflow_dispatch' && 'main' || github.event.workflow_run.head_sha }}
           fetch-depth: 0
 
-      - name: Verify sync token secret
+      - name: Verify deploy key secret
         env:
-          ORG_REPO_SYNC_TOKEN: ${{ secrets.ORG_REPO_SYNC_TOKEN }}
+          ORG_REPO_DEPLOY_KEY: ${{ secrets.ORG_REPO_DEPLOY_KEY }}
         run: |
-          if [ -z "$ORG_REPO_SYNC_TOKEN" ]; then
-            echo "::error::ORG_REPO_SYNC_TOKEN is not set. Run scripts/setup-org-sync-auth.sh pat-url"
+          if [ -z "$ORG_REPO_DEPLOY_KEY" ]; then
+            echo "::error::ORG_REPO_DEPLOY_KEY missing. Run: ./scripts/setup-org-sync-auth.sh"
             exit 1
           fi
 
-      - name: Push main to heff-industries/animalgaragenet
+      - name: Load deploy key
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.ORG_REPO_DEPLOY_KEY }}
+
+      - name: Mirror to org (workflows excluded)
         env:
-          ORG_REPO_SYNC_TOKEN: ${{ secrets.ORG_REPO_SYNC_TOKEN }}
+          SOURCE_SHA: ${{ github.event_name == 'workflow_dispatch' && github.sha || github.event.workflow_run.head_sha }}
         run: |
           set -euo pipefail
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git remote add org "https://x-access-token:${ORG_REPO_SYNC_TOKEN}@github.com/heff-industries/animalgaragenet.git"
-          git push org HEAD:refs/heads/main
+          mkdir -p ~/.ssh
+          ssh-keyscan github.com >> ~/.ssh/known_hosts
+          bash scripts/sync-org-mirror.sh "$SOURCE_SHA" git@github.com:heff-industries/animalgaragenet.git
 
       - name: Summary
-        run: echo "Synced $(git rev-parse --short HEAD) to heff-industries/animalgaragenet main"
+        run: echo "Org mirror updated from $(git rev-parse --short HEAD)"

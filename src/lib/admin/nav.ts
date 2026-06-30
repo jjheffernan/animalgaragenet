@@ -7,6 +7,8 @@ export interface AdminNavItem {
 	icon?: string;
 	/** Route not scaffolded yet — sidebar renders label without link */
 	disabled?: boolean;
+	/** Key into layout `navCounts` for pending-work badge */
+	badgeKey?: 'builds' | 'testimonials';
 }
 
 export interface AdminNavSection {
@@ -31,8 +33,8 @@ export const ADMIN_NAV: AdminNavSection[] = [
 		label: 'Content',
 		items: [
 			{ href: '/admin/featured', label: 'Featured Sections' },
-			{ href: '/admin/builds', label: 'Builds' },
-			{ href: '/admin/testimonials', label: 'Testimonials' },
+			{ href: '/admin/builds', label: 'Builds', badgeKey: 'builds' },
+			{ href: '/admin/testimonials', label: 'Testimonials', badgeKey: 'testimonials' },
 			{ href: '/admin/youtube', label: 'YouTube' },
 			{ href: '/admin/media', label: 'Media' },
 			{ href: '/admin/social/ugc', label: 'UGC', disabled: true }

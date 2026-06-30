@@ -1,5 +1,7 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
+	import AdminPageHeader from '$lib/components/admin/AdminPageHeader.svelte';
+	import { adminAlertWarning } from '$lib/components/admin/admin-ui';
 	import type { DashboardActivityType } from '$lib/server/admin/dashboard-activity';
 	import type { PageData } from './$types';
 
@@ -41,18 +43,12 @@
 </svelte:head>
 
 <div class="space-y-6">
-	<div>
-		<h1 class="font-display text-2xl font-bold uppercase">Dashboard</h1>
-		<p class="mt-1 text-zinc-400">Site administration overview.</p>
-	</div>
+	<AdminPageHeader title="Dashboard" subtitle="Site administration overview." />
 
 	{#if data.devAdmin}
-		<p
-			role="alert"
-			class="rounded-sm border border-amber-900/50 bg-amber-950/30 px-4 py-3 text-sm text-amber-400"
-		>
+		<div role="alert" class={adminAlertWarning}>
 			DEV_ADMIN mode active — admin access granted without session role.
-		</p>
+		</div>
 	{/if}
 
 	<!-- Integration snapshot strip (top 3 runtime booleans) -->
@@ -226,7 +222,7 @@
 									<td class="max-w-md truncate px-4 py-3" title={item.summary}>{item.summary}</td>
 									<td class="px-4 py-3 text-right">
 										<a
-											href={resolve(item.href)}
+											href={resolve(item.href as '/admin')}
 											class="text-xs text-red-400 transition hover:text-red-300"
 										>
 											Open

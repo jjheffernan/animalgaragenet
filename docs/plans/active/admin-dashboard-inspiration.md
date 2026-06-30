@@ -2,10 +2,10 @@
 
 **Status:** Active — UI planning reference  
 **Created:** 2026-06-30  
-**Last updated:** 2026-06-30 (post `4e7d0a9` admin daisyUI pass)  
+**Last updated:** 2026-06-30 (Slot B complete — zinc theme unify + open slices)  
 **Policy:** [SECURITY-PUBLIC.md](../../SECURITY-PUBLIC.md)  
 **Inspiration source:** [Flowbite Svelte Admin Dashboard](https://flowbite-svelte.com/admin-dashboard/dashboard) (layout patterns only — we do **not** adopt `flowbite-svelte` components)  
-**Design system:** daisyUI 5 scoped to `.admin-shell` in `src/routes/layout.css`; storefront stays zinc/red per [design-tokens.md](../../style-guide/frontend/design-tokens.md). Read `.agents/skills/daisyui/SKILL.md` + component docs (`card`, `stat`, `badge`, `table`, `timeline`, `menu`, `navbar`) before admin UI work.  
+**Design system:** Tailwind zinc/red site theme per [design-tokens.md](../../style-guide/frontend/design-tokens.md). Shared admin tokens in `src/lib/components/admin/admin-ui.ts`; no `.admin-shell` or daisyUI plugin.  
 **Prior art:** [dashboard-adoption-plan.md](../../archive/dashboard-adoption-plan.md) (DashWind era — shell shipped `3732fb9`; dashboard polish `4e7d0a9`)  
 **Tracker cross-ref:** [inspiration-polish-tracker.md](./inspiration-polish-tracker.md) — IP-026 (runtime), IP-025 (users), IP-031 (bug reports)
 
@@ -17,14 +17,14 @@ The Flowbite admin demo (`/admin-dashboard/*`) is a SvelteKit shell with:
 
 | Pattern | Flowbite implementation | Animal Garage equivalent |
 | ------- | ----------------------- | ------------------------ |
-| Sidebar | `Sidebar` + `SidebarItem` + dropdown groups | `AdminSidebar.svelte` + `ADMIN_NAV` — **shipped** (`menu`, `menu-title`, `menu-disabled`) |
-| Topbar | Sticky navbar, page title, profile dropdown | `AdminTopbar.svelte` — **shipped** (`navbar`, `dropdown`, `avatar`; no notifications bell) |
-| KPI / stat row | Large number + delta % + period label + icons | Dashboard `stats` row — **shipped** (`4e7d0a9`); no trend deltas yet |
-| System health strip | N/A in Flowbite | Dashboard badge row from `getRuntimeStatus()` — **shipped** |
+| Sidebar | `Sidebar` + `SidebarItem` + dropdown groups | `AdminSidebar.svelte` + `ADMIN_NAV` — **shipped** (zinc menu; pending badges) |
+| Topbar | Sticky navbar, page title, profile dropdown | `AdminTopbar.svelte` — **shipped** (zinc navbar; no notifications bell) |
+| KPI / stat row | Large number + delta % + period label + icons | Dashboard KPI row — **shipped** (zinc cards; no trend deltas yet) |
+| System health strip | N/A in Flowbite | Dashboard badge row from `getRuntimeStatus()` — **shipped** (top 3 + Runtime link) |
 | Chart cards | Area + donut widgets | **Missing** — defer until Saleor analytics ship |
-| Activity feed | Vertical timeline with month headers | Dashboard `timeline` — **partial** (UI shipped; data still mock) |
-| Data table | Sortable table + status badges + row actions | Users — **shipped** (`table`); YouTube — **partial** (zinc table, not daisyUI) |
-| Toolbar | Search, filter chips, export, “Add” CTA | **Missing** on list pages |
+| Activity feed | Vertical timeline with month headers | Dashboard activity table — **shipped** (live builds/bugs/YouTube) |
+| Data table | Sortable table + status badges + row actions | Users + bug reports — **shipped** (`table` zinc chrome) |
+| Toolbar | Search, filter chips, export, “Add” CTA | Users search + bug status chips — **shipped** |
 | Settings | Multi-section forms, toggles, session list | **No route** — account lives at `/account` |
 | CRUD modals | Add/edit/delete user modals | Users inline card forms — **partial** |
 | Breadcrumbs | `Breadcrumb` under page title | **Missing** |
@@ -42,18 +42,19 @@ We intentionally **do not** port demo-only routes (layouts playground, auth samp
 
 ### Shell (`src/routes/admin/+layout.svelte`)
 
-- `data-theme="dark"` on `.admin-shell`; daisyUI plugin root = `.admin-shell` only
-- Mobile drawer sidebar + sticky topbar (`navbar`)
+- Zinc/red site theme (`bg-zinc-950`); no `data-theme` or `.admin-shell`
+- Mobile drawer sidebar + sticky topbar
 - Storefront header offset: 73px
+- Layout load: `navBadges` for pending builds/testimonials
 
 ### Components (`src/lib/components/admin/`)
 
-| File | Role | daisyUI |
-| ---- | ---- | ------- |
-| `AdminSidebar.svelte` | Sectioned nav from `ADMIN_NAV` | `menu`, `menu-title` |
-| `AdminTopbar.svelte` | Title, dev badge, profile dropdown | `navbar`, `dropdown`, `badge`, `avatar` |
-
-No shared `AdminStatCard` / `AdminDataTable` primitives yet — patterns are inlined per page.
+| File | Role |
+| ---- | ---- |
+| `AdminSidebar.svelte` | Sectioned nav from `ADMIN_NAV`; pending count badges |
+| `AdminTopbar.svelte` | Title, dev badge, profile dropdown |
+| `AdminPageHeader.svelte` | Shared page title + subtitle + optional toolbar slot |
+| `admin-ui.ts` | Shared zinc/red class tokens (card, btn, badge, table, alerts) |
 
 ### Navigation (`src/lib/admin/nav.ts`)
 
@@ -67,19 +68,19 @@ No shared `AdminStatCard` / `AdminDataTable` primitives yet — patterns are inl
 | Support | `/admin/bug-reports` | Yes |
 | Runtime | `/admin/runtime` | Yes |
 
-### Page maturity (post `4e7d0a9`)
+### Page maturity (post Slot B)
 
-| Route | Data source | UI shape | daisyUI pass | Notes |
-| ----- | ----------- | -------- | ------------ | ----- |
-| `/admin/dashboard` | `getDashboardStats()` + `getRuntimeStatus()` | Health strip, `stats`, timeline, quick links | Yes | Activity list still `@inspiration-scaffold` mock |
+| Route | Data source | UI shape | Theme pass | Notes |
+| ----- | ----------- | -------- | ---------- | ----- |
+| `/admin/dashboard` | `getDashboardStats()` + `getDashboardActivity()` + `getRuntimeStatus()` | Health strip, KPI row, activity table, shortcuts | Yes | Live activity from builds/bugs/YouTube |
 | `/admin/featured` | Supabase CMS | Card forms per section | Yes | Hero + UGC/campaign blocks |
-| `/admin/builds` | Supabase | Card queue + `PaginatedListCanvas` | **No** — zinc cards/buttons | Approve/reject |
-| `/admin/testimonials` | Supabase | Card queue + pagination | **No** — zinc | Feature checkbox |
-| `/admin/youtube` | Supabase | Table + sync form | **No** — zinc table | Reference for table chrome migration |
-| `/admin/media` | CDN API + mock | Upload + asset grid | **No** — zinc | Presigned PUT when env set |
-| `/admin/users` | Supabase or mock | Invite card + `table` + role defs | Yes | No search/filter toolbar |
-| `/admin/bug-reports` | Supabase or mock | Card inbox + `badge` status | Yes | Cards only — no table view |
-| `/admin/runtime` | Server booleans | Card grid + cron list | Yes | No Commerce/Content grouping |
+| `/admin/builds` | Supabase | Card queue + `PaginatedListCanvas` | Yes | Approve/reject |
+| `/admin/testimonials` | Supabase | Card queue + pagination | Yes | Feature checkbox |
+| `/admin/youtube` | Supabase | Table + sync form | Yes | Zinc table chrome |
+| `/admin/media` | CDN API + mock | Upload + asset grid | Yes | Env badges |
+| `/admin/users` | Supabase or mock | Invite card + table + role defs | Yes | Client search toolbar |
+| `/admin/bug-reports` | Supabase or mock | Table + status filter chips | Yes | open / resolved / all |
+| `/admin/runtime` | Server booleans | Grouped cards + cron list | Yes | Commerce / Content / Platform groups; `checkedAt` |
 
 ---
 
@@ -87,105 +88,101 @@ No shared `AdminStatCard` / `AdminDataTable` primitives yet — patterns are inl
 
 | Flowbite view | Our route | Gap | Priority | Status |
 | ------------- | --------- | --- | -------- | ------ |
-| Dashboard (KPI hero + sales chart) | `/admin/dashboard` | `stats` row shipped; no chart widget; commerce fields mock (`orders`, `revenueLabel`) | P2 | partial |
+| Dashboard (KPI hero + sales chart) | `/admin/dashboard` | KPI row shipped; no chart widget; commerce fields mock | P2 | partial |
 | Dashboard (statistics tabs — top products/customers) | — | No analytics route; needs Saleor order data | P3 | not started |
-| Dashboard (secondary stat cards — products/users) | `/admin/dashboard` | Users + open bugs wired via `getDashboardStats()`; no month-over-month delta | P3 | partial |
-| Dashboard (smart chat / team thread) | — | Out of scope — not a garage ops need | — | skip |
+| Dashboard (secondary stat cards — products/users) | `/admin/dashboard` | Users + open bugs wired; no month-over-month delta | P3 | partial |
+| Dashboard (smart chat / team thread) | — | Out of scope | — | skip |
 | Dashboard (sales by category chart) | — | Needs live catalog + order aggregates | P3 | not started |
 | Dashboard (traffic by device) | — | No analytics pipeline | — | skip |
-| Dashboard (latest activity timeline) | `/admin/dashboard` | `timeline` UI shipped; needs live rows from builds/bugs/sync | P1 | partial |
-| Dashboard (insights / CTA card) | `/admin/runtime` | Health strip summarizes integrations; no “action required” CTA | P3 | partial |
-| Dashboard (transactions table) | `/admin/bug-reports`, future orders | No unified events table; bugs are per-card inbox | P2 | partial |
-| Sidebar shell | `/admin/*` layout | No nav icons; no collapsible submenus; no pending counts | P2 | shipped |
-| Topbar + profile menu | `AdminTopbar.svelte` | No notification bell; title from URL segment only | P3 | shipped |
-| CRUD Users (table + modals + export) | `/admin/users` | daisyUI table; no avatars, search, bulk select, export, delete | P2 | partial |
-| CRUD Products (table + filters) | `/admin/media` (assets), Saleor TBD | Media is grid not product table; no `/admin/commerce/*` yet | P3 | partial |
+| Dashboard (latest activity timeline) | `/admin/dashboard` | Live rows from builds/bugs/YouTube sync | P1 | **shipped** |
+| Dashboard (insights / CTA card) | `/admin/runtime` | Health strip summarizes integrations | P3 | partial |
+| Dashboard (transactions table) | `/admin/bug-reports`, future orders | Bug reports table with filters | P2 | partial |
+| Sidebar shell | `/admin/*` layout | Pending badges on Builds/Testimonials | P2 | **shipped** |
+| Topbar + profile menu | `AdminTopbar.svelte` | No notification bell | P3 | shipped |
+| CRUD Users (table + modals + export) | `/admin/users` | Table + search; no avatars, bulk select, export | P2 | partial |
+| CRUD Products (table + filters) | `/admin/media` (assets), Saleor TBD | Media is grid not product table | P3 | partial |
 | Settings (profile + notifications + sessions) | `/account` (storefront) | No staff settings page | — | skip |
-| Integration / status widgets | `/admin/runtime`, dashboard strip | Runtime page shipped; dashboard shows all 6 badges (could trim to top 3) | P2 | shipped |
+| Integration / status widgets | `/admin/runtime`, dashboard strip | Grouped runtime + dashboard top-3 strip | P2 | **shipped** |
 | Error pages (404/500 demos) | SvelteKit `+error.svelte` | Storefront errors only | — | skip |
-| Auth sign-in demo | `/auth/sign-in` | Server Supabase auth — stronger than demo | — | shipped |
-| Moderation queues (N/A in Flowbite) | `/admin/builds`, `/admin/testimonials` | Zinc styling off-brand vs rest of admin; share queue card pattern | P1 | partial |
+| Auth sign-in demo | `/auth/sign-in` | Server Supabase auth | — | shipped |
+| Moderation queues (N/A in Flowbite) | `/admin/builds`, `/admin/testimonials` | Zinc queue cards + shared header | P1 | **shipped** |
 | CMS editor (N/A in Flowbite) | `/admin/featured` | Form-heavy; no live preview pane | P3 | shipped |
-| YouTube sync table (N/A in Flowbite) | `/admin/youtube` | Strongest zinc table — migrate to daisyUI `table` | P1 | partial |
-| Wholesale / orders (N/A in Flowbite) | `/admin/wholesale`, `/admin/commerce/orders` | Nav disabled — **do not implement UI slices here yet** | — | blocked |
-| UGC hub (N/A in Flowbite) | `/admin/social/ugc` | Nav disabled — testimonials cover moderation today | — | blocked |
+| YouTube sync table (N/A in Flowbite) | `/admin/youtube` | Zinc table + card form | P1 | **shipped** |
+| Wholesale / orders (N/A in Flowbite) | `/admin/wholesale`, `/admin/commerce/orders` | Nav disabled | — | blocked |
+| UGC hub (N/A in Flowbite) | `/admin/social/ugc` | Nav disabled | — | blocked |
 
 ---
 
 ## 4. Design translation cheat sheet
 
-Flowbite uses `Card`, `Badge`, `Table`, `Button` from `flowbite-svelte`. Inside `.admin-shell`, use daisyUI semantic classes (read skill component docs first):
+Flowbite uses component libraries; Animal Garage admin uses shared zinc/red Tailwind tokens (`admin-ui.ts`):
 
-| Flowbite / concept | daisyUI (admin shell) | Storefront (no daisyUI) |
-| ------------------ | --------------------- | ----------------------- |
-| Card | `card bg-base-200 shadow-sm` + `card-body` | `rounded-sm border border-zinc-800 bg-zinc-900/50 p-6` |
-| Stat / KPI | `stats` / `stat` / `stat-title` / `stat-value` / `stat-desc` | Eyebrow + `text-3xl font-bold text-white` |
-| Badge (success) | `badge badge-success badge-sm` | `bg-emerald-600/20 text-emerald-400` |
-| Badge (warning) | `badge badge-warning` | `bg-amber-600/20 text-amber-400` |
-| Badge (neutral) | `badge badge-ghost` | `border border-zinc-700 text-zinc-300` |
-| Table | `table` inside `overflow-x-auto` card | zinc thead pattern (legacy admin pages) |
-| Primary CTA | `btn btn-primary` | `bg-red-600 hover:bg-red-500` uppercase |
-| Page title | `font-display text-2xl font-bold uppercase` + `text-base-content/70` subtitle | same headline scale |
-| Timeline | `timeline timeline-vertical timeline-compact` | N/A |
-| Nav | `menu menu-sm`, `menu-title`, `menu-active` | Header nav patterns |
-| Alert | `alert alert-warning alert-soft` | amber border panel |
+| Flowbite / concept | Admin (zinc/red) | Storefront |
+| ------------------ | ---------------- | ---------- |
+| Card | `adminCard` / `adminCardFlush` | `rounded-sm border border-zinc-800 bg-zinc-900/50` |
+| Stat / KPI | Grid of bordered panels + `text-3xl font-bold` | Eyebrow + bold headline |
+| Badge (success) | `adminBadgeOn` | `bg-emerald-600/20 text-emerald-400` |
+| Badge (warning) | `adminBadgeWarning` | `bg-amber-600/20 text-amber-400` |
+| Badge (neutral) | `adminBadgeOff` | `border border-zinc-700 text-zinc-300` |
+| Table | `adminTableHead` + zinc tbody | Same zinc thead pattern |
+| Primary CTA | `adminBtnPrimary` | `bg-red-600 hover:bg-red-500` uppercase |
+| Page title | `AdminPageHeader` | `font-display text-2xl uppercase` |
+| Alert | `adminAlert*` variants | amber/emerald/red border panels |
 
-Reuse storefront primitives where they already fit admin flows: `PaginatedListCanvas`, `ListControls` on moderation queues.
+Reuse storefront primitives where they fit: `PaginatedListCanvas`, `ListControls` on moderation queues.
 
 ---
 
-## 5. UI slices to implement (scoped — no disabled-nav work)
+## 5. UI slices — status
 
 Improve **existing routes** only. Do **not** scaffold `/admin/commerce/*`, `/admin/wholesale`, or `/admin/social/ugc`.
 
-### Done in `4e7d0a9` (do not re-implement)
+### Slice 1 — Live recent activity feed (`/admin/dashboard`) **P1** — **shipped**
 
-- daisyUI plugin scoped to `.admin-shell`
-- Dashboard system health strip + `stats` KPI row + `timeline` + quick links
-- Shell: `AdminSidebar` / `AdminTopbar` daisyUI pass
-- `getDashboardStats()` server module (orders/revenue mock, users + open bugs live)
-- daisyUI pass: `users`, `bug-reports`, `runtime`, `featured`
+| Item | Status |
+| ---- | ------ |
+| `getDashboardActivity()` from builds, bugs, YouTube | Done |
+| Type badges per row | Done |
+| Deep-links to moderation routes | Done |
+| `@inspiration-scaffold` comment for future `admin_activity` view | Done |
 
-### Slice 1 — Live recent activity feed (`/admin/dashboard`) **P1**
+### Slice 2 — Content route visual consistency **P1** — **shipped**
 
-| Item | Acceptance |
-| ---- | ---------- |
-| Replace `recentActivity` mock array | Build rows in `+page.server.ts` from pending builds, latest bug reports, last YouTube sync timestamp |
-| Table or timeline | Keep `timeline` UI; add type `badge` per row (Build, Bug, Sync, User) |
-| “View all” links | Row deep-links to `/admin/builds`, `/admin/bug-reports`, `/admin/youtube` |
-| `@inspiration-scaffold` | Comment path to future `admin_activity` Supabase view (extend IP-026) |
+| Item | Status |
+| ---- | ------ |
+| Builds + testimonials queue cards | Done (`admin-ui` buttons) |
+| YouTube table + form | Done |
+| Media env badges + upload | Done |
 
-### Slice 2 — Content route daisyUI consistency **P1**
+### Slice 3 — Nav pending-work indicators **P2** — **shipped**
 
-| Item | Files | Acceptance |
-| ---- | ----- | ---------- |
-| Moderation queues | `builds/+page.svelte`, `testimonials/+page.svelte` | `card`, `btn btn-primary` / `btn btn-outline`; match dashboard density |
-| YouTube admin | `youtube/+page.svelte` | `table` + `card` form; drop raw zinc classes |
-| Media browser | `media/+page.svelte` | `card` sections, `badge` for env flags, `btn` for upload |
+| Item | Status |
+| ---- | ------ |
+| `+layout.server.ts` pending counts | Done |
+| Sidebar red count badges | Done |
 
-### Slice 3 — Nav pending-work indicators **P2**
+### Slice 4 — List toolbar + table polish **P2** — **shipped**
 
-| Item | Acceptance |
-| ---- | ---------- |
-| `+layout.server.ts` load | Count pending builds + testimonials (existing repositories) |
-| `nav.ts` or layout data | Pass counts to `AdminSidebar` |
-| Sidebar UI | `badge badge-error badge-sm` on Builds / Testimonials when count > 0 |
+| Item | Status |
+| ---- | ------ |
+| Users client search | Done |
+| Bug reports status filter chips | Done |
+| `AdminPageHeader.svelte` | Done |
 
-### Slice 4 — List toolbar + table polish **P2**
+### Slice 5 — Runtime panel enhancement **P2** — **shipped**
 
-| Item | Acceptance |
-| ---- | ---------- |
-| Users search | Client filter by name/email above `table` (no new API) |
-| Bug reports | Optional `table` view toggle OR status filter chips (`open` / `resolved`) |
-| Shared chrome | Extract `AdminPageHeader.svelte` (title + subtitle + optional actions slot) if 3+ pages need it |
+| Item | Status |
+| ---- | ------ |
+| Commerce / Content / Platform groups | Done |
+| Server `checkedAt` timestamp | Done |
+| Dashboard strip (top 3 booleans) | Done (prior pass) |
 
-### Slice 5 — Runtime panel enhancement **P2**
+### Theme unify — **shipped**
 
-| Item | Acceptance |
-| ---- | ---------- |
-| Group cards | Headings: Commerce (Saleor), Content (Ghost, YouTube), Platform (Supabase, mock guards, site lock) |
-| Last-checked | Show server `load` timestamp — no browser-side probing |
-| Dashboard strip trim | Optional: show only Saleor + Supabase + site lock on dashboard; link “+3 more” to runtime |
+| Item | Status |
+| ---- | ------ |
+| Remove `.admin-shell` + daisyUI classes from admin routes | Done |
+| Single zinc/red token module | `admin-ui.ts` |
 
 ### Deferred (explicitly out of this plan)
 
@@ -198,27 +195,16 @@ Improve **existing routes** only. Do **not** scaffold `/admin/commerce/*`, `/adm
 
 ---
 
-## 6. Suggested implementation order
-
-1. **Slice 1** — dashboard activity feels “real” without new routes
-2. **Slice 2** — visual consistency across content admin
-3. **Slice 3** — sidebar signals moderation backlog
-4. **Slice 4** — staff efficiency on users + bugs
-5. **Slice 5** — runtime readability
-
----
-
-## 7. Verification
+## 6. Verification
 
 ```bash
-# Public doc safety (expect no hits except policy exceptions)
 rg -i 'jjheffernan|heff-industries|commerce\.animalgarage|cdn\.animalgarage|sk_live|eyJ[A-Za-z0-9_-]+\.' docs/plans/active/admin-dashboard-inspiration.md
 
 npm run lint
 npm run test:unit
 ```
 
-Manual: staff session → `/admin/dashboard` → health strip + stats + timeline; spot-check `/admin/builds` and `/admin/youtube` for zinc/daisyUI drift.
+Manual: staff session → `/admin/dashboard` → health strip + stats + activity table; sidebar badges when builds/testimonials pending; `/admin/runtime` grouped cards + timestamp.
 
 ---
 

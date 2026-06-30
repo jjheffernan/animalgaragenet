@@ -13,13 +13,10 @@
 </script>
 
 <!--
-  Dashboard shell — zinc palette with mobile drawer sidebar.
+  Dashboard shell — zinc palette (same as storefront).
   See docs/archive/dashboard-adoption-plan.md
 -->
-<div
-	class="admin-shell flex min-h-[calc(100vh-73px)] flex-col bg-base-100 text-base-content lg:flex-row"
-	data-theme="dark"
->
+<div class="flex min-h-[calc(100vh-73px)] flex-col bg-zinc-950 text-zinc-100 lg:flex-row">
 	<!-- Mobile overlay -->
 	{#if mobileOpen}
 		<button
@@ -37,7 +34,7 @@
 			: '-translate-x-full lg:translate-x-0'}"
 		style="top: 73px"
 	>
-		<AdminSidebar onNavigate={closeMobile} />
+		<AdminSidebar navCounts={data.navCounts} onNavigate={closeMobile} />
 	</div>
 
 	<div class="flex min-w-0 flex-1 flex-col">

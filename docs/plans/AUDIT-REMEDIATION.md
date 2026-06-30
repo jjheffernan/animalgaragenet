@@ -14,7 +14,7 @@ Canonical tracker for findings from `docs/audits/*`, [STATUS.md](../STATUS.md), 
 | [STATUS.md](../STATUS.md)                                        | High-level open-work summary             |
 | [archive/polish-plan.md](../archive/polish-plan.md)              | Complete — session polish (June 2026)      |
 | [plans/active/inspiration-polish-tracker.md](./active/inspiration-polish-tracker.md) | Canonical inspiration + polish open work |
-| [plans/active/ponytail-audit-tracker.md](./active/ponytail-audit-tracker.md) | Server LOC/dedupe — P1/P2 done; P3 partial (PT-P3-002/003 done) |
+| [plans/active/ponytail-audit-tracker.md](./active/ponytail-audit-tracker.md) | Server LOC/dedupe — P1/P2/P3 **done** (PT-P3-001 YAGNI-deferred) |
 | [plans/active/next-steps-tracker.md](./active/next-steps-tracker.md) | Consolidated implementer queue — unblocked vs ops-blocked |
 | [plans/active/next-steps-tracker.md](./active/next-steps-tracker.md) | Consolidated implementer queue (unblocked vs ops-blocked) |
 | [plans/active/market-readiness.md](./active/market-readiness.md) | Phased launch roadmap                    |
@@ -28,8 +28,8 @@ Canonical tracker for findings from `docs/audits/*`, [STATUS.md](../STATUS.md), 
 | --------- | ------ | ------------- | ------ |
 | **P0**    | 0      | 5             | 4      |
 | **P1**    | 0      | 1             | 12     |
-| **P2**    | 5      | 0             | 29     |
-| **Total** | **5**  | **6**         | **45** |
+| **P2**    | 2      | 1             | 32     |
+| **Total** | **2**  | **7**         | **48** |
 
 _Blocked = external dashboard/env; cannot close in-repo._
 
@@ -87,7 +87,7 @@ _Blocked = external dashboard/env; cannot close in-repo._
 | AUD-P2-003 | Saleor catalog search at scale                  | saleor-audit              | **done** | saleor     | Server-side `PRODUCT_SEARCH_QUERY` instead of fetch-100 + client filter            | `src/lib/server/catalog/search.ts` · BATCH-010                          |
 | AUD-P2-004 | Parts YMM URL filter vs `fitment` metadata      | saleor-audit              | **done** | saleor     | Category route applies year/make/model query params to Saleor products             | `src/routes/parts/[category]/+page.server.ts` · BATCH-013               |
 | AUD-P2-005 | Product detail related products / linked builds | saleor-audit              | **done** | saleor     | Related slice from Saleor or CMS, not mock helpers only                            | `src/routes/shop/[slug]/+page.server.ts` · BATCH-014                    |
-| AUD-P2-006 | Live Saleor integration smoke tests             | saleor-audit              | **open** | saleor     | Optional CI job with env-gated live API contract                                   | `tests/` · `npm run test:readiness`                                     |
+| AUD-P2-006 | Live Saleor integration smoke tests             | saleor-audit              | **done** | saleor     | Env-gated vitest skips without `PUBLIC_SALEOR_API_URL`                             | `tests/integration/saleor-live.test.ts` · `npm run test:readiness`      |
 | AUD-P2-007 | Ghost OG / Twitter cards on detail pages        | ghost-audit, STATUS       | **done** | code       | `og:title`, `og:description`, `og:image` from `heroImage`                          | `src/routes/guides/[slug]/` · `src/routes/blog/[slug]/` · BATCH-005 · `a895eb7` |
 | AUD-P2-008 | Map Ghost `meta_title` / `meta_description`     | ghost-audit               | **done** | code       | SEO fields override title/excerpt when present                                     | `src/lib/server/ghost/mappers.ts` · BATCH-005                               |
 | AUD-P2-009 | Ghost `posts.ts` integration tests              | ghost-audit               | **done** | code       | Mocked `fetch` covers list/slug + fallback paths                                   | `src/lib/server/ghost/posts.test.ts`                                    |
@@ -99,9 +99,9 @@ _Blocked = external dashboard/env; cannot close in-repo._
 | AUD-P2-015 | `/media` UGC wall from Supabase                 | TRIAGE (related)          | **done** | supabase   | `loadMediaUgcItems()` from featured/approved testimonials when Supabase configured | `src/routes/media/+page.server.ts` · BATCH-004 · `a895eb7`              |
 | AUD-P2-016 | `profiles` table contract test                  | STATUS, readiness-report  | **done** | code       | Payload contract in `tests/contracts/`                                             | `tests/contracts/profiles-signup-trigger.test.ts` · BATCH-006            |
 | AUD-P2-017 | Optional `readiness-ci` GitHub Actions job      | STATUS                    | **done** | code       | `.github/workflows/readiness-ci.yml` runs `npm run test:readiness` with secrets      | `.github/workflows/readiness-ci.yml`                                    |
-| AUD-P2-018 | Discord / Microsoft OAuth verification          | STATUS, polish-plan       | **open** | auth / ops | Providers enabled in Supabase; readiness probes pass                               | [auth/discord.md](../auth/discord.md) · DOC-010                         |
+| AUD-P2-018 | Discord / Microsoft OAuth verification          | STATUS, polish-plan       | **blocked** | auth / ops | Providers enabled in Supabase; readiness probes pass                            | [auth/discord.md](../auth/discord.md) · DOC-010                         |
 | AUD-P2-019 | Extend `check-secrets.sh` for bundles           | DOC manifest              | **done** | code       | Script scans client bundles for `SERVICE_ROLE`; blocks `DEV_ADMIN` in deploy config | Commit `ce05185` · `scripts/check-secrets.sh` · DOC-040                 |
-| AUD-P2-020 | Machine-local agent skill symlinks documented   | agents-skills-audit       | **open** | docs       | Onboarding notes for `agents/*` → `~/.cursor/skills-cursor/`                       | `agents/AGENTS.md`                                                      |
+| AUD-P2-020 | Machine-local agent skill symlinks documented   | agents-skills-audit       | **done** | docs       | Onboarding + `scripts/link-agent-skills.sh` for `agents/*` → `~/.cursor/skills-cursor/` | `agents/AGENTS.md`                                                      |
 | AUD-P2-021 | daisyUI skill tree removal (post sign-off)      | agents-skills-audit       | **open** | docs       | Deprecation banner remains until tree deleted                                      | `.agents/skills/daisyui/` · `skills-lock.json`                          |
 | AUD-P2-022 | Refresh polish-sweep stale Prettier count       | agents-skills-audit       | **done** | docs       | `.cursor/agents/polish-sweep.md` matches current CI                                | `.cursor/agents/polish-sweep.md`                                        |
 | AUD-P2-030 | Ghost guide category/topic filters              | ghost-audit, content/ghost | **done** | code       | `getGuideFilterOptions()` hydrates from Ghost; `/guides?category=` + `?topic=`     | `src/lib/server/ghost/guide-filters.ts` · `/api/content/guide-filters` |
@@ -113,7 +113,7 @@ _Blocked = external dashboard/env; cannot close in-repo._
 | AUD-P2-036 | `/media` in community nav                       | component-route-audit     | **done** | code       | `media` added to `communityLinks` in `Header.svelte`                               | `src/lib/components/layout/Header.svelte`                                 |
 | AUD-P2-037 | Admin nav stub routes (6× 404)                  | component-route-audit     | **done** | code       | Six prototype links `disabled: true` until routes scaffolded; no 404 from sidebar | `src/lib/admin/nav.ts` · commit `847ba4b`                                 |
 | AUD-P2-038 | `/builds/submit` dead page shell                | component-route-audit     | **done** | code       | Unreachable `+page.svelte` removed; `+page.server.ts` redirect retained            | `src/routes/builds/submit/`                                             |
-| AUD-P2-023 | Newsletter / user preferences tables            | STATUS, supabase.md       | **open** | supabase   | Schema + RLS per roadmap                                                           | [integrations/supabase.md](../integrations/supabase.md)                 |
+| AUD-P2-023 | Newsletter / user preferences tables            | STATUS, supabase.md       | **done** | supabase   | `newsletter_subscribers` + `user_preferences` with RLS in squashed migration       | `supabase/migrations/20250701010000_commerce_content.sql`               |
 | AUD-P2-024 | Site audit: unit test coverage                  | site-audit                | **done** | code       | 180+ tests; `npm run test:unit` in CI                                              | `tests/`                                                                |
 | AUD-P2-025 | Site audit: `+error.svelte`                     | site-audit                | **done** | code       | Branded error page exists                                                          | `src/routes/+error.svelte`                                              |
 | AUD-P2-026 | Agents audit: dead doc paths in agent specs     | agents-skills-audit       | **done** | docs       | No `docs/saleor.md` / `PUBLIC-SAFE.md` hits                                        | `.cursor/agents/`                                                       |
@@ -128,9 +128,9 @@ _Blocked = external dashboard/env; cannot close in-repo._
 | Source file                                                   | Open items remaining                 | Retire when                   |
 | ------------------------------------------------------------- | ------------------------------------ | ----------------------------- |
 | [audits/site-audit.md](../audits/site-audit.md)               | P2-012–013 (SEO, a11y)               | All AUD-P2 site rows **done** |
-| [audits/saleor-audit.md](../audits/saleor-audit.md)           | P0-004 (ops), P1-001 (partial), P2-006 | All Saleor AUD rows **done**  |
+| [audits/saleor-audit.md](../audits/saleor-audit.md)           | P0-004 (ops), P1-001 (partial) | All Saleor AUD rows **done**  |
 | [audits/ghost-audit.md](../audits/ghost-audit.md)             | P1-008, P2-011           | All Ghost AUD rows **done**   |
-| [meta/agents-skills-audit.md](../meta/agents-skills-audit.md) | —                                    | AUD-P2-020–022 **done**       |
+| [meta/agents-skills-audit.md](../meta/agents-skills-audit.md) | AUD-P2-021 (daisyUI tree removal)    | AUD-P2-020, 022 **done**; 021 open |
 | [audits/component-route-audit.md](../audits/component-route-audit.md) | — | AUD-P2-034–038 **done** |
 | [audits/security-audit-2026-07.md](../audits/security-audit-2026-07.md) | — | AUD-SEC-001 **done** |
 

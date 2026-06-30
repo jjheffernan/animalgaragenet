@@ -1,4 +1,4 @@
-import { isProductionSiteUrl } from '$lib/server/auth/local-dev';
+import { guardProductionMockFallback } from '$lib/server/mock-fallback-guard';
 
 export class GhostContentUnavailableError extends Error {
 	constructor(message: string) {
@@ -18,17 +18,11 @@ export function guardMockGhostFallback(
 		error?: unknown;
 	} = {}
 ): void {
-	if (!isProductionSiteUrl()) return;
-
-	if (opts.ghostAttemptFailed) {
-		const message =
-			opts.error instanceof Error
-				? opts.error.message
-				: 'Ghost Content API failed; mock fallback disabled in production';
-		throw new GhostContentUnavailableError(message);
-	}
-
-	throw new GhostContentUnavailableError(
-		'Ghost content required in production when GHOST_URL and GHOST_CONTENT_API_KEY are set'
-	);
+	guardProductionMockFallback(GhostContentUnavailableError, {
+		attemptFailed: opts.ghostAttemptFailed,
+		error: opts.error,
+		missingConfigMessage:
+			'Ghost content required in production when GHOST_URL and GHOST_CONTENT_API_KEY are set',
+		attemptFailedMessage: 'Ghost Content API failed; mock fallback disabled in production'
+	});
 }

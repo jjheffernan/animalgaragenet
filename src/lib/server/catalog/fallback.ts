@@ -1,4 +1,4 @@
-import { isProductionSiteUrl } from '$lib/server/auth/local-dev';
+import { guardProductionMockFallback } from '$lib/server/mock-fallback-guard';
 
 export class CatalogUnavailableError extends Error {
 	constructor(message: string) {
@@ -18,17 +18,10 @@ export function guardMockCatalogFallback(
 		error?: unknown;
 	} = {}
 ): void {
-	if (!isProductionSiteUrl()) return;
-
-	if (opts.saleorAttemptFailed) {
-		const message =
-			opts.error instanceof Error
-				? opts.error.message
-				: 'Saleor catalog query failed; mock fallback disabled in production';
-		throw new CatalogUnavailableError(message);
-	}
-
-	throw new CatalogUnavailableError(
-		'PUBLIC_SALEOR_API_URL must be configured for production catalog'
-	);
+	guardProductionMockFallback(CatalogUnavailableError, {
+		attemptFailed: opts.saleorAttemptFailed,
+		error: opts.error,
+		missingConfigMessage: 'PUBLIC_SALEOR_API_URL must be configured for production catalog',
+		attemptFailedMessage: 'Saleor catalog query failed; mock fallback disabled in production'
+	});
 }

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { LIMITS, clampText, trimToMax } from './limits';
+import { LIMITS, trimToMax } from './limits';
 
 describe('LIMITS', () => {
 	it('defines expected testimonial body max', () => {
@@ -10,6 +10,5 @@ describe('LIMITS', () => {
 describe('trimToMax', () => {
 	it('trims and truncates', () => {
 		expect(trimToMax('  hello world  ', 5)).toBe('hello');
-		expect(clampText('  hello world  ', 5)).toBe('hello');
 	});
 });

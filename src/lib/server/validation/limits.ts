@@ -44,13 +44,6 @@ export const LIMITS = {
 	}
 } as const;
 
-/** @deprecated Use LIMITS */
-export const FIELD_LIMITS = LIMITS;
-
 export function trimToMax(value: string, max: number): string {
 	return value.trim().slice(0, max);
-}
-
-export function clampText(value: string, max: number): string {
-	return trimToMax(value, max);
 }

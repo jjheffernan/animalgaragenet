@@ -79,17 +79,15 @@ Use `COLLECTIONS_QUERY` for homepage and `/shop?collection=` filtering.
 - Payment + `CHECKOUT_COMPLETE`
 - `/checkout` page (currently placeholder)
 
-### 5. Vouchers, promo codes & gift cards (planned)
+### 5. Vouchers, promo codes & gift cards
 
-Redeem UX is not implemented yet. Planned scope (see `.cursor/agents/saleor-redeem.md`):
+**Done (partial):** Account redeem (`/account/redeem`), cart promo API (`/cart/checkout/promo`), `checkoutAddPromoCode` / `checkoutRemovePromoCode` in `checkout.ts`. Mock codes when Saleor unset (`GARAGE10`, `PITLANE15`).
 
-| Surface | Route / component | Saleor API |
-|---------|-------------------|------------|
-| Account redeem | `/account/redeem` | `checkoutAddPromoCode` / `checkoutRemovePromoCode` |
-| Cart / checkout inline | `CartDrawer.svelte`, `/checkout` | Same mutations on active checkout cookie |
-| Gift card balance | Checkout summary | `checkout { giftCards { ... } }` |
-
-When Saleor is unset, mock validation may use `src/lib/data/mock/promo-codes.ts` (dev only) or a "connect Saleor" message.
+| Surface | Route / component | Status |
+|---------|-------------------|--------|
+| Account redeem | `/account/redeem` | Done |
+| Cart / checkout inline | `PromoCodeForm`, cart promo API | Done |
+| Gift card balance | Checkout summary | Not wired |
 
 ### 6. International shipping
 
@@ -125,7 +123,7 @@ Still needed:
 
 - `CHECKOUT_LINES_UPDATE` / `CHECKOUT_LINES_DELETE`
 - `CHECKOUT_COMPLETE`
-- `checkoutAddPromoCode` / `checkoutRemovePromoCode` (redeem — planned)
+- ~~`checkoutAddPromoCode` / `checkoutRemovePromoCode`~~ — done in `checkout-queries.ts`
 
 ## Type mapping
 

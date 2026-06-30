@@ -32,24 +32,24 @@ No external site names — this doc is the canonical reference for what remains.
 
 ---
 
-## Phase 3 — Bug Fixes & UX Polish (In Progress)
+## Phase 3 — Bug Fixes & UX Polish (Done)
 
-See [phase3-plan.md](./phase3-plan.md).
+See [phase3-plan.md](./phase3-plan.md) — workstreams A–D complete (June 2026).
 
-| Issue | Priority |
-|-------|----------|
-| Parts nav button non-functional (hover-only) | P0 |
-| Shop nav button non-functional | P0 |
-| Search modal not opening | P0 |
-| Cart drawer duplicate / not opening | P0 |
-| Promo bar dismiss not working | P0 |
-| Build thread detail blank page | P0 |
-| Double footer / duplicate newsletter on homepage | P1 |
-| Support + program pages are stubs | P1 |
-| Watch lacks video detail panel + shoppable products | P1 |
-| No sign-in / account routes | P1 → **Done (Phase 3 D)** |
-| No admin CDN / RBAC panel | P2 → **Done (Phase 3 D)** |
-| No YouTube channel auto-sync | P2 |
+| Issue | Priority | Status |
+|-------|----------|--------|
+| Parts nav button non-functional (hover-only) | P0 | **Done** |
+| Shop nav button non-functional | P0 | **Done** |
+| Search modal not opening | P0 | **Done** |
+| Cart drawer duplicate / not opening | P0 | **Done** |
+| Promo bar dismiss not working | P0 | **Done** |
+| Build thread detail blank page | P0 | **Done** |
+| Double footer / duplicate newsletter on homepage | P1 | **Done** |
+| Support + program pages are stubs | P1 | Mostly done (policies, contact, wholesale) |
+| Watch lacks video detail panel + shoppable products | P1 | **Done** |
+| No sign-in / account routes | P1 | **Done** |
+| No admin CDN / RBAC panel | P2 | **Done** (shell + mock media) |
+| No YouTube channel auto-sync | P2 | Stub only — live API still open |
 
 ---
 

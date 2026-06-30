@@ -14,7 +14,7 @@ A highly animated, media-heavy automotive brand site — merchandising-forward d
 | Commerce       | Saleor (GraphQL)                   | Products, cart, checkout, shipping          |
 | Auth & content | Supabase                           | Auth, newsletter, CMS metadata, preferences |
 | Media          | S3 + CloudFront                    | Images, video thumbnails, static assets     |
-| Hosting        | TBD (adapter-auto)                 | Deploy target selected per environment      |
+| Hosting        | Netlify (preview) + org mirror     | `animalgarage.netlify.app`; deploy via `dev` → `main` |
 
 ## Project phases
 
@@ -57,7 +57,9 @@ A highly animated, media-heavy automotive brand site — merchandising-forward d
 - [ ] SEO, OG tags, structured data
 - [ ] Analytics
 - [ ] Performance audit (LCP, CLS)
-- [ ] Production deploy pipeline
+- [x] Production deploy pipeline — Netlify + org mirror (see [deployment.md](./style-guide/backend-ops/deployment.md))
+
+**Open work tracker:** [STATUS.md](./STATUS.md)
 
 ## Branch workflow
 
@@ -93,6 +95,7 @@ Copy `.env.example` to `.env`. See [infrastructure.md](./infrastructure.md) for 
 
 ## Related docs
 
+- **[STATUS.md](./STATUS.md)** — consolidated open-work tracker (reconciles all “next steps”)
 - **[Feature backlog](./inspiration.md)** — integrated vs remaining capabilities
 - **[Phase 3 plan](./phase3-plan.md)** — current bug fixes and workstreams
 - **[Architecture decisions](./decisions.md)** — persistent product/tech choices

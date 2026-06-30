@@ -1,6 +1,8 @@
 # GitHub Wiki export
 
-Nine developer wiki pages derived from `docs/`. Kept in-repo as a backup when the GitHub wiki is not yet enabled.
+Nine developer wiki pages derived from `docs/`. Kept in-repo as the source of truth for wiki content.
+
+**Live wiki:** https://github.com/jjheffernan/animalgaragenet/wiki (published 2026-06-30)
 
 ## Pages
 
@@ -16,23 +18,17 @@ Nine developer wiki pages derived from `docs/`. Kept in-repo as a backup when th
 | `Deployment-and-CI.md` | Deployment and CI |
 | `Testing.md` | Testing |
 
-## Publish to GitHub Wiki (manual)
+## Re-sync after doc changes
 
-GitHub wikis use a separate git repo (`<owner>/<repo>.wiki`). If `git push` fails with **Repository not found**, enable the wiki first:
+```bash
+git clone https://github.com/jjheffernan/animalgaragenet.wiki.git /tmp/animalgaragenet-wiki
+cp docs/wiki-export/*.md /tmp/animalgaragenet-wiki/
+# Exclude this README from wiki pages
+rm -f /tmp/animalgaragenet-wiki/README.md
+cd /tmp/animalgaragenet-wiki
+git add -A
+git commit -m "Sync wiki from docs/wiki-export"
+git push origin master
+```
 
-1. Open **GitHub → jjheffernan/animalgaragenet → Settings → Features**
-2. Check **Wikis** → Save
-3. Clone the wiki repo and copy pages:
-
-   ```bash
-   git clone https://github.com/jjheffernan/animalgaragenet.wiki.git /tmp/animalgaragenet-wiki
-   cp docs/wiki-export/*.md /tmp/animalgaragenet-wiki/
-   cd /tmp/animalgaragenet-wiki
-   git add -A
-   git commit -m "Sync wiki from docs/wiki-export"
-   git push origin master   # or main, depending on default branch
-   ```
-
-4. View at `https://github.com/jjheffernan/animalgaragenet/wiki`
-
-**Note:** GitHub wiki page titles come from filenames (hyphens become spaces). `Home.md` is the wiki landing page.
+GitHub wiki page titles come from filenames (hyphens become spaces). `Home.md` is the wiki landing page.

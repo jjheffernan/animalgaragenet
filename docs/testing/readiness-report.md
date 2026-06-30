@@ -18,7 +18,7 @@ Live fetch of https://animalgarage.netlify.app (market-readiness agent). Full ro
 | `/account` | 302 | → `/auth/sign-in?redirect=/account` (no session cookie) |
 | `/admin` | 302 | → `/auth/sign-in?redirect=/admin` (no session cookie) |
 
-**Inference:** Deploy is serving the **full mock commerce layer**. Either `PUBLIC_SALEOR_API_URL` is unset on Netlify, or Saleor queries fail and loaders silently fall back to mock (`src/lib/server/catalog/products.ts`). Supabase session also absent in probe (unauthenticated); account-flow fix tracked in [`docs/plans/account-flow-fix.md`](../plans/account-flow-fix.md).
+**Inference:** Deploy is serving mock commerce when Saleor is unset. On production `PUBLIC_SITE_URL`, catalog loaders **throw** instead of silent mock fallback (`catalog/fallback.ts`).
 
 **Launch blockers visible on production:** mock catalog (120 picsum products), mock homepage content, no verified auth session, checkout not live.
 
@@ -57,15 +57,15 @@ npm run test:readiness
 
 | Area | Finding |
 |------|---------|
-| Production catalog | Netlify serves 120 mock products — Saleor env unset or silent fallback |
+| Production catalog | Netlify serves 120 mock products when Saleor unset — **mock fallback now blocked** on production `PUBLIC_SITE_URL` via `guardMockCatalogFallback()` |
 | Auth on Netlify | No session in probe; `PUBLIC_SITE_URL` / Supabase redirect URL mismatch likely (see account-flow-fix plan) |
-| `DEV_ADMIN` guard | `isProductionHostname()` blocks `animalgarage.net` only — **`animalgarage.netlify.app` not blocked** |
+| `DEV_ADMIN` guard | ~~`animalgarage.netlify.app` not blocked~~ **Fixed** — `isProductionHostname()` includes `*.netlify.app` |
 | YouTube | `fetchChannelVideos()` in `src/lib/server/youtube/sync.ts` is a **stub** returning mock data; API key probe can pass while app sync is non-functional |
 | CDN / S3 | No server upload routes; env vars documented but integration planned in `docs/plans/media-uploads.md` |
 | Saleor checkout | Promo/redeem wired; live checkout needs catalog + channel validation before production cutover |
 | OAuth | Discord/Microsoft marked P2 in polish plan; probes only verify Supabase Auth provider flags |
 | `check-secrets.sh` | Blocks tracked env files and hardcoded secrets; does not scan client bundles or Netlify env |
-| Integration tests | `tests/contracts/` and `tests/readiness/` opt-in patterns planned; probes live in `scripts/test-readiness.ts` |
+| Integration tests | `tests/contracts/` (20 tests) + `tests/integration/crud-business-logic.test.ts` (9 tests); probes in `scripts/test-readiness.ts` |
 
 ## Probe reference
 
@@ -86,11 +86,13 @@ npm run test:readiness
 ## Implementation todos (for follow-up agents)
 
 - [ ] `readiness-env`: Copy `.env.example` → `.env` with staging/prod secrets so `npm run test:readiness` produces live pass/fail signal in CI or pre-deploy
-- [ ] `youtube-live-sync`: Replace `fetchChannelVideos` stub with YouTube Data API v3 (`channels.list` → uploads playlist → `playlistItems.list` → `videos.list`) and Supabase `videos` upsert
-- [ ] `media-uploads-phase1`: Wire S3 presigned upload + `PUBLIC_CDN_BASE_URL` delivery per `docs/plans/media-uploads.md`; add `cdn-s3` upload probe (HEAD on test object)
-- [ ] `saleor-readiness`: Run probes against `commerce.animalgarage.net` with real channel slug; confirm products, channel, and promo codes before enabling live checkout
-- [ ] `supabase-contract-tests`: Add `tests/contracts/` CRUD shape tests for `testimonials`, `build_submissions`, `profiles` using service role
-- [ ] `ghost-contract-test`: Add integration test for Ghost posts payload → mapper contract when `GHOST_*` env set
-- [ ] `oauth-discord-azure`: Enable Discord + Microsoft providers in Supabase dashboard; verify `oauth-discord` / `oauth-azure` probes pass
+- [ ] `youtube-live-sync`: Replace `fetchChannelVideos` stub with YouTube Data API v3 and Supabase `videos` upsert
+- [ ] `media-uploads-phase1`: Wire S3 presigned upload + `PUBLIC_CDN_BASE_URL` delivery per `docs/plans/media-uploads.md`
+- [ ] `saleor-readiness`: Run probes against live Saleor with real channel slug; confirm products, channel, and promo codes before enabling live checkout
+- [x] `supabase-contract-tests`: `testimonials` + `build_submissions` in `tests/contracts/supabase-payloads.test.ts` — **`profiles` still open**
+- [x] `ghost-contract-test`: Mapper contracts in `tests/contracts/ghost-mapper.test.ts` — raw API fetch test still open
+- [ ] `oauth-discord-azure`: Enable Discord + Microsoft providers in Supabase dashboard; verify probes pass
 - [ ] `readiness-ci`: Optional GitHub Actions job with secrets (`RUN_READINESS=1`) calling `npm run test:readiness` on schedule or pre-deploy
 - [ ] `netlify-deploy-verify`: Confirm `sync-org-main.yml` runs after merge to org mirror; document `ORG_REPO_DEPLOY_KEY` rotation
+
+See [STATUS.md](../STATUS.md) for the consolidated open-work tracker.

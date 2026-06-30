@@ -88,7 +88,7 @@ Audit of animalgaragenet prototype on `dev` branch. Run after infrastructure/doc
 | No custom 404 page content for unknown products only | Low      | Generic error page handles 404                   |
 | `LocaleSelector` not in Header                       | Low      | Component exists, not wired to nav               |
 | No SEO/OG tags per page                              | Medium   | Phase 5                                          |
-| No tests                                             | Low      | Not required for prototype                       |
+| No tests                                             | **Done** | 180+ unit/contract/integration tests — `npm run test:unit` |
 | No `svelte.config.js` file                           | Info     | Config lives in `vite.config.ts` (valid for SK2) |
 
 ### TODO/FIXME scan

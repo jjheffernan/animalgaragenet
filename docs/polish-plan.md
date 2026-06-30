@@ -10,7 +10,8 @@ From live probe of https://animalgarage.netlify.app and `docs/plans/account-flow
 - Bootstrap first admin: `npx tsx --env-file=.env scripts/promote-admin.ts user@email.com admin`
 - Verify Account menu appears in header after magic link / OAuth (not stuck on “Sign In”)
 - **Do not** set `DEV_ADMIN` or `LOCAL_DEV_AUTH` on Netlify
-- Code follow-up: extend `isProductionHostname()` to block `*.netlify.app` for `DEV_ADMIN` bypass
+- Code follow-up: ~~extend `isProductionHostname()` to block `*.netlify.app`~~ **Done** (`local-dev.ts`)
+- Code follow-up: ~~gate silent Saleor→mock fallback on production~~ **Done** (`catalog/fallback.ts`)
 
 ## P0 — Live catalog on Netlify (no mock)
 
@@ -19,7 +20,7 @@ From `docs/plans/market-readiness.md` — production `/shop` shows **120 mock pr
 - Set `PUBLIC_SALEOR_API_URL` + `SALEOR_CHANNEL` on Netlify
 - Run `npm run test:readiness` with prod secrets — `saleor-catalog` must pass
 - Confirm `/shop` count ≠ 120 and images are not `picsum.photos`
-- Remove or gate silent Saleor→mock fallback in `catalog/*.ts` for production
+- Remove or gate silent Saleor→mock fallback in `catalog/*.ts` for production — **Done** (`guardMockCatalogFallback`)
 
 ## P0 — Done (prior session)
 

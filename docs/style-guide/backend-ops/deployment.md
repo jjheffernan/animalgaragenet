@@ -83,8 +83,11 @@ Manual re-sync: GitHub → Actions → **Sync main to org** → Run workflow (`w
 
 ## Pre-launch checklist
 
-- [ ] Choose adapter and hosting platform
-- [ ] Configure production env vars
+## Pre-launch checklist
+
+See [STATUS.md](../../STATUS.md) for the live tracker. Summary:
+
+- [ ] Configure production env vars (Netlify + Supabase + Saleor)
 - [ ] Checkout completion and payment (Saleor)
 - [ ] Configure CDN (replace picsum images)
 - [ ] Wire Supabase newsletter and remaining Phase 4 tables

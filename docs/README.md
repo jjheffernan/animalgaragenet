@@ -43,6 +43,7 @@ Complete, superseded, or stale plans. Each file has a status banner.
 | [audits/ghost-audit.md](./audits/ghost-audit.md)             | Ghost CMS wiring inventory (detail)                       |
 | [audits/saleor-audit.md](./audits/saleor-audit.md)           | Saleor integration scorecard (detail)                     |
 | [audits/security-audit-2026-07.md](./audits/security-audit-2026-07.md) | CDN invalidation hardening (detail)                 |
+| [audits/sitemap-route-audit.md](./audits/sitemap-route-audit.md) | Sitemap gaps, orphan routes, stub pages (detail)    |
 | [meta/agents-skills-audit.md](./meta/agents-skills-audit.md) | Cursor agents/skills dead-reference audit                 |
 
 ---

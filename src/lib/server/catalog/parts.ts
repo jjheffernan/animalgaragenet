@@ -92,6 +92,7 @@ export async function getPartCategoryBySlug(
  *
  * Mock when `PUBLIC_SALEOR_API_URL` is unset; Saleor when set (falls back to mock on error).
  */
+// @saleor-migration: intentional — catalog swap point; see docs/commerce/saleor.md#quick-migration
 export async function getPartsProducts(
 	locale: string = config.defaultLocale
 ): Promise<Product[]> {
@@ -114,10 +115,12 @@ export async function getPartsProducts(
 		}
 	}
 
+	// @saleor-migration: intentional — mock fallback; see docs/commerce/saleor.md#quick-migration
 	guardMockCatalogFallback();
 	return mockParts;
 }
 
+// @saleor-migration: intentional — catalog swap point; see docs/commerce/saleor.md#quick-migration
 export async function getPartsByCategory(
 	categorySlug: string,
 	locale: string = config.defaultLocale
@@ -130,6 +133,7 @@ export async function getPartsByCategory(
 	return mockGetPartsByCategory(categorySlug);
 }
 
+// @saleor-migration: intentional — catalog swap point; see docs/commerce/saleor.md#quick-migration
 export async function getPartBySlug(
 	categorySlug: string,
 	slug: string,

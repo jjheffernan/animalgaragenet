@@ -54,3 +54,7 @@ You verify whether the storefront is ready to connect to `<your-saleor-host>` (`
 Update `docs/audits/saleor-audit.md` only when user asks to refresh the canonical audit.
 
 Do not commit unless asked.
+
+## `@saleor-migration` marker convention
+
+Catalog, Saleor client, and checkout files include `// @saleor-migration:` comments (see [docs/commerce/saleor.md#agent-flag--saleor-migration-comments](../../docs/commerce/saleor.md#agent-flag--saleor-migration-comments)). These mark env-gated swap points and commented GraphQL scaffolds for mock→live migration — **not dead code**. Do not flag or remove them during readiness audits, polish sweeps, or lint fixes unless you are simultaneously wiring the referenced migration step.

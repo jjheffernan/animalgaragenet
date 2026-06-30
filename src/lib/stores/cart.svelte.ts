@@ -133,6 +133,7 @@ class CartState {
 		this.init();
 
 		if (isSaleorCartEnabled()) {
+			// @saleor-migration: intentional — live add-line via POST /cart/checkout; see docs/commerce/saleor.md#quick-migration
 			void this.addItemSaleor(productId, variantId, quantity);
 			return;
 		}
@@ -185,6 +186,11 @@ class CartState {
 
 	removeItem(productId: string, variantId: string) {
 		this.init();
+		// @saleor-migration: intentional — uncomment Saleor path when CHECKOUT_LINES_DELETE wired; see docs/commerce/saleor.md#quick-migration
+		// if (isSaleorCartEnabled()) {
+		//   void this.removeItemSaleor(productId, variantId);
+		//   return;
+		// }
 		if (isSaleorCartEnabled()) return;
 
 		this.items = this.items.filter(
@@ -195,6 +201,11 @@ class CartState {
 
 	updateQuantity(productId: string, variantId: string, quantity: number) {
 		this.init();
+		// @saleor-migration: intentional — uncomment Saleor path when CHECKOUT_LINES_UPDATE wired; see docs/commerce/saleor.md#quick-migration
+		// if (isSaleorCartEnabled()) {
+		//   void this.updateQuantitySaleor(productId, variantId, quantity);
+		//   return;
+		// }
 		if (isSaleorCartEnabled()) return;
 
 		if (quantity <= 0) {

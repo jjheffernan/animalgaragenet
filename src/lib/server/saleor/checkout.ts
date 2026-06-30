@@ -146,6 +146,49 @@ export async function addCheckoutLine(
 	return checkout ? mapCheckout(checkout) : null;
 }
 
+// @saleor-migration: intentional — uncomment for cart line qty; see docs/commerce/saleor.md#quick-migration
+// export async function updateCheckoutLineQuantity(
+// 	checkoutId: string,
+// 	lineId: string,
+// 	quantity: number
+// ): Promise<CheckoutDisplay | null> {
+// 	if (!isSaleorEnabled()) return null;
+// 	const result = await saleorFetch<{ checkoutLinesUpdate: { checkout: SaleorCheckoutNode | null; errors: Array<{ message: string }> } }>(
+// 		CHECKOUT_LINES_UPDATE,
+// 		{ id: checkoutId, lines: [{ lineId, quantity }] }
+// 	);
+// 	if (result.errors?.length || result.data?.checkoutLinesUpdate.errors?.length) return null;
+// 	const checkout = result.data?.checkoutLinesUpdate.checkout;
+// 	return checkout ? mapCheckout(checkout) : null;
+// }
+
+// @saleor-migration: intentional — uncomment for cart line remove; see docs/commerce/saleor.md#quick-migration
+// export async function removeCheckoutLine(
+// 	checkoutId: string,
+// 	lineId: string
+// ): Promise<CheckoutDisplay | null> {
+// 	if (!isSaleorEnabled()) return null;
+// 	const result = await saleorFetch<{ checkoutLinesDelete: { checkout: SaleorCheckoutNode | null; errors: Array<{ message: string }> } }>(
+// 		CHECKOUT_LINES_DELETE,
+// 		{ id: checkoutId, linesIds: [lineId] }
+// 	);
+// 	if (result.errors?.length || result.data?.checkoutLinesDelete.errors?.length) return null;
+// 	const checkout = result.data?.checkoutLinesDelete.checkout;
+// 	return checkout ? mapCheckout(checkout) : null;
+// }
+
+// @saleor-migration: intentional — uncomment for payment redirect; see docs/commerce/saleor.md#quick-migration
+// export async function completeCheckout(checkoutId: string): Promise<{ orderId: string } | null> {
+// 	if (!isSaleorEnabled()) return null;
+// 	const result = await saleorFetch<{ checkoutComplete: { order: { id: string } | null; errors: Array<{ message: string }> } }>(
+// 		CHECKOUT_COMPLETE,
+// 		{ id: checkoutId }
+// 	);
+// 	if (result.errors?.length || result.data?.checkoutComplete.errors?.length) return null;
+// 	const orderId = result.data?.checkoutComplete.order?.id;
+// 	return orderId ? { orderId } : null;
+// }
+
 /** Read checkout lines for read-only cart display. */
 export async function getCheckoutLines(checkoutId: string): Promise<CheckoutDisplay | null> {
 	if (!isSaleorEnabled()) return null;

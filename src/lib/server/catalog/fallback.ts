@@ -11,6 +11,7 @@ export class CatalogUnavailableError extends Error {
  * Mock catalog fallback is allowed in local dev only.
  * On production `PUBLIC_SITE_URL`, Saleor must be configured and healthy.
  */
+// @saleor-migration: intentional — production gate for mock fallback; see docs/commerce/saleor.md#quick-migration
 export function guardMockCatalogFallback(opts: {
 	saleorAttemptFailed?: boolean;
 	error?: unknown;

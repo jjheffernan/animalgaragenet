@@ -167,3 +167,30 @@ Mappers live in `src/lib/server/saleor/mappers.ts` (`mapProduct`, `mapProductLis
 - GraphQL endpoint is public for catalog reads
 - Checkout mutations may require app tokens — use server-side loaders/actions only
 - Never expose Saleor app secret to the browser
+
+## Quick migration
+
+Set `PUBLIC_SALEOR_API_URL` (and optionally `SALEOR_CHANNEL`) — primary catalog loaders already swap at env gates. Remaining work is mostly **uncommenting scaffolded checkout/collection blocks** marked `@saleor-migration` in code.
+
+| Step | Action | Swap point |
+| ---- | ------ | ---------- |
+| 1 | Set env vars | `.env` — `PUBLIC_SALEOR_API_URL`, `SALEOR_CHANNEL` |
+| 2 | Verify gate | `src/lib/server/saleor/client.ts` — `isSaleorEnabled()` |
+| 3 | Catalog loads | `src/lib/server/catalog/products.ts`, `parts.ts`, `collections.ts`, `shop-filters.ts`, `search.ts` |
+| 4 | Channel per locale | `src/lib/server/saleor/channels.ts` — `getChannelForLocale()` |
+| 5 | Map responses | `src/lib/server/saleor/mappers.ts`, `metadata.ts` |
+| 6 | GraphQL strings | `src/lib/server/saleor/queries.ts`, `checkout-queries.ts` |
+| 7 | Cart add / read | `src/lib/server/saleor/checkout.ts`, `routes/cart/checkout/+server.ts`, `routes/cart/+page.server.ts` |
+| 8 | Cart remove/qty | Uncomment blocks in `checkout-queries.ts`, `checkout.ts`, `src/lib/stores/cart.svelte.ts` |
+| 9 | Checkout complete | Uncomment `CHECKOUT_COMPLETE` + shipping blocks in `checkout-queries.ts`, `checkout.ts` |
+| 10 | Collection products | Uncomment `COLLECTION_PRODUCTS_QUERY` in `queries.ts`, wire in `collections.ts` |
+
+**Mock fallback:** When env is unset, loaders call mock data via `guardMockCatalogFallback()` (`src/lib/server/catalog/fallback.ts`). Production requires Saleor — mock is dev-only.
+
+**Filter wiring:** Shop category pills use `getShopFilterOptions()` (`shop-filters.ts`); product lists filter via `filterProductsByShopSlug()` (legacy heuristics or Saleor `category.slug` / `tags`).
+
+### Agent flag — `@saleor-migration` comments
+
+Source files contain `// @saleor-migration:` (or block-comment equivalents) marking **intentional migration scaffolding** — env-gated live paths, mock fallbacks, and **commented GraphQL / handlers** ready to uncomment for checkout completion, line mutations, and collection product edges.
+
+**These are not dead code.** Agents running polish, lint, or simplify sweeps **must not remove** `@saleor-migration` markers or their associated commented blocks unless explicitly implementing and wiring that migration step. The saleor-readiness agent treats missing markers as a regression.

@@ -66,6 +66,7 @@ async function fetchSaleorShopFilterOptions(
 /**
  * Shop filter taxonomy — Saleor category tree when configured, mock `SHOP_CATEGORIES` otherwise.
  */
+// @saleor-migration: intentional — filter swap point; see docs/commerce/saleor.md#quick-migration
 export async function getShopFilterOptions(
 	locale: string = config.defaultLocale
 ): Promise<ShopFilterOptions> {
@@ -111,6 +112,7 @@ export function filterSlugToShopCategory(slug: string): ShopCategory | undefined
 }
 
 /** Filter products by shop filter slug — legacy heuristics or Saleor category/tag match. */
+// @saleor-migration: intentional — filter wiring; see docs/commerce/saleor.md#quick-migration
 export function filterProductsByShopSlug(
 	products: Product[],
 	filterSlug: string,

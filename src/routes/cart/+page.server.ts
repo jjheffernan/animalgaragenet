@@ -3,6 +3,7 @@ import { getMockPromo } from '$lib/server/checkout/promo';
 import { isSaleorEnabled } from '$lib/server/saleor/client';
 import { getCheckoutId, getCheckoutLines } from '$lib/server/saleor/checkout';
 
+// @saleor-migration: intentional — checkout scaffold load; see docs/commerce/saleor.md#quick-migration
 export const load: PageServerLoad = async ({ cookies }) => {
 	const saleorEnabled = isSaleorEnabled();
 

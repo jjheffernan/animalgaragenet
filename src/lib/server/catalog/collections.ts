@@ -41,6 +41,7 @@ async function fetchSaleorProductsByTag(
  * Saleor `COLLECTIONS_QUERY` returns collection metadata only (no product edges yet);
  * `products` on each collection is empty until collection product queries are added.
  */
+// @saleor-migration: intentional — catalog swap point; see docs/commerce/saleor.md#quick-migration
 export async function getCollections(
 	locale: string = config.defaultLocale
 ): Promise<Collection[]> {
@@ -54,6 +55,20 @@ export async function getCollections(
 			if (result.errors?.length || !result.data) {
 				throw new Error(result.errors?.[0]?.message ?? 'Saleor collections query failed');
 			}
+
+			// @saleor-migration: intentional — uncomment COLLECTION_PRODUCTS_QUERY to populate products[]; see docs/commerce/saleor.md#quick-migration
+			// const collections = await Promise.all(
+			//   result.data.collections.edges.map(async ({ node }) => {
+			//     const base = mapCollection(node);
+			//     const productsResult = await saleorFetch<{ collection: { products: { edges: { node: SaleorProductListNode }[] } } | null }>(
+			//       COLLECTION_PRODUCTS_QUERY,
+			//       { slug: node.slug, channel, first: 12 }
+			//     );
+			//     const products = productsResult.data?.collection?.products.edges.map(({ node: p }) => mapProductListNode(p)) ?? [];
+			//     return { ...base, products };
+			//   })
+			// );
+			// return collections;
 
 			return result.data.collections.edges.map(({ node }) => mapCollection(node));
 		} catch (err) {
@@ -69,6 +84,7 @@ export async function getCollections(
  * Staff-pick homepage slice — mock default, Saleor when env is set.
  * Saleor: `tags` metadata includes `staff-pick` (parsed by `mapProductMetadata`).
  */
+// @saleor-migration: intentional — catalog swap point; see docs/commerce/saleor.md#quick-migration
 export async function getStaffPickProducts(
 	locale: string = config.defaultLocale
 ): Promise<Product[]> {
@@ -89,6 +105,7 @@ export async function getStaffPickProducts(
  * Clearance homepage slice — mock default, Saleor when env is set.
  * Saleor: `tags` metadata includes `clearance` (parsed by `mapProductMetadata`).
  */
+// @saleor-migration: intentional — catalog swap point; see docs/commerce/saleor.md#quick-migration
 export async function getClearanceProducts(
 	locale: string = config.defaultLocale
 ): Promise<Product[]> {

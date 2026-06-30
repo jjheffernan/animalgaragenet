@@ -126,6 +126,69 @@ export const CHECKOUT_ADD_PROMO_CODE = `
   }
 `;
 
+// @saleor-migration: intentional — uncomment for cart line qty; see docs/commerce/saleor.md#quick-migration
+// export const CHECKOUT_LINES_UPDATE = `
+//   mutation CheckoutLinesUpdate($id: ID!, $lines: [CheckoutLineUpdateInput!]!) {
+//     checkoutLinesUpdate(id: $id, lines: $lines) {
+//       checkout {
+//         id
+//         lines {
+//           id
+//           quantity
+//           variant { id name }
+//           totalPrice { gross { amount currency } }
+//         }
+//         totalPrice { gross { amount currency } }
+//       }
+//       errors { field message code }
+//     }
+//   }
+// `;
+
+// @saleor-migration: intentional — uncomment for cart line remove; see docs/commerce/saleor.md#quick-migration
+// export const CHECKOUT_LINES_DELETE = `
+//   mutation CheckoutLinesDelete($id: ID!, $linesIds: [ID!]!) {
+//     checkoutLinesDelete(id: $id, linesIds: $linesIds) {
+//       checkout {
+//         id
+//         lines {
+//           id
+//           quantity
+//           variant { id name }
+//           totalPrice { gross { amount currency } }
+//         }
+//         totalPrice { gross { amount currency } }
+//       }
+//       errors { field message code }
+//     }
+//   }
+// `;
+
+// @saleor-migration: intentional — uncomment for shipping address step; see docs/commerce/saleor.md#quick-migration
+// export const CHECKOUT_SHIPPING_ADDRESS_UPDATE = `
+//   mutation CheckoutShippingAddressUpdate($id: ID!, $shippingAddress: AddressInput!) {
+//     checkoutShippingAddressUpdate(id: $id, shippingAddress: $shippingAddress) {
+//       checkout {
+//         id
+//         availableShippingMethods { id name price { amount currency } }
+//       }
+//       errors { field message code }
+//     }
+//   }
+// `;
+
+// @saleor-migration: intentional — uncomment for payment redirect; see docs/commerce/saleor.md#quick-migration
+// export const CHECKOUT_COMPLETE = `
+//   mutation CheckoutComplete($id: ID!) {
+//     checkoutComplete(id: $id) {
+//       order { id status number }
+//       confirmationNeeded
+//       confirmationData
+//       errors { field message code }
+//     }
+//   }
+// `;
+
 /** Remove an applied promo code from checkout. */
 export const CHECKOUT_REMOVE_PROMO_CODE = `
   mutation CheckoutRemovePromoCode($id: ID!, $promoCode: String!) {

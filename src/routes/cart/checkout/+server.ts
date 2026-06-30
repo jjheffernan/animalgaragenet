@@ -15,6 +15,7 @@ interface AddLineBody {
 }
 
 /** Server-side cart mutations — keeps Saleor app token off the browser. */
+// @saleor-migration: intentional — checkout scaffold; see docs/commerce/saleor.md#quick-migration
 export const POST: RequestHandler = async ({ request, cookies, url }) => {
 	if (!isSaleorEnabled()) {
 		return json({ error: 'Saleor not configured' }, { status: 503 });

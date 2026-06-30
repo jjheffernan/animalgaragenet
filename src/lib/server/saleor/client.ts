@@ -10,6 +10,7 @@ export function getSaleorChannel(): string {
 	return privateEnv.SALEOR_CHANNEL ?? 'default-channel';
 }
 
+// @saleor-migration: intentional — env gate; see docs/commerce/saleor.md#quick-migration
 /** True when `PUBLIC_SALEOR_API_URL` is set — live catalog reads are allowed. */
 export function isSaleorEnabled(): boolean {
 	return Boolean(config.saleorApiUrl);

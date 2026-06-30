@@ -94,6 +94,7 @@ function mapPriceRange(node: SaleorProductListNode): Product['pricing'] {
 }
 
 /** Map a Saleor list/detail product node to the internal `Product` type. */
+// @saleor-migration: intentional — mapper hook; see docs/commerce/saleor.md#quick-migration
 export function mapProduct(node: SaleorProductDetailNode): Product {
 	const variants =
 		node.variants?.map((v) => ({

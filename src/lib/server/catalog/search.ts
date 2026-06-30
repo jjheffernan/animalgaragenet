@@ -9,6 +9,7 @@ import { getChannelForLocale } from '$lib/server/saleor/channels';
 import { isSaleorEnabled, saleorFetch } from '$lib/server/saleor/client';
 import { mapProductListNode, type SaleorProductListNode } from '$lib/server/saleor/mappers';
 import { guardMockCatalogFallback } from '$lib/server/catalog/fallback';
+import { PRODUCTS_QUERY } from '$lib/server/saleor/queries';
 
 export interface CatalogSearchResults {
 	products: Product[];
@@ -38,6 +39,7 @@ function filterProductsByQuery(products: Product[], query: string): Product[] {
 
 async function searchSaleorProducts(query: string, locale: string): Promise<Product[]> {
 	const channel = getChannelForLocale(locale);
+	// @saleor-migration: intentional — swap to PRODUCT_SEARCH_QUERY for scale; see docs/commerce/saleor.md#quick-migration
 	const result = await saleorFetch<{
 		products: { edges: { node: SaleorProductListNode }[] };
 	}>(PRODUCTS_QUERY, { channel, first: 100 });
@@ -53,6 +55,7 @@ async function searchSaleorProducts(query: string, locale: string): Promise<Prod
 /**
  * Merged catalog search — mock default; Saleor merch when env is set (v1: client-side filter on fetched list).
  */
+// @saleor-migration: intentional — catalog swap point; see docs/commerce/saleor.md#quick-migration
 export async function searchCatalog(
 	query: string,
 	locale: string = config.defaultLocale

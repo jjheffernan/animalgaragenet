@@ -13,6 +13,10 @@ import {
 	type SaleorTaxedMoney
 } from '$lib/server/saleor/mappers';
 import { guardMockCatalogFallback } from '$lib/server/catalog/fallback';
+import {
+	PRODUCTS_QUERY,
+	PRODUCT_BY_SLUG_QUERY
+} from '$lib/server/saleor/queries';
 
 /** Extended list query — metadata + full price range for gift cards / deals. */
 const PRODUCTS_CATALOG_QUERY = `
@@ -112,6 +116,7 @@ function mapCatalogNode(node: SaleorProductCatalogNode): Product {
  *
  * Mock when `PUBLIC_SALEOR_API_URL` is unset; Saleor when set (falls back to mock on error).
  */
+// @saleor-migration: intentional — catalog swap point; see docs/commerce/saleor.md#quick-migration
 export async function getShopProducts(
 	filterSlug: string = 'all',
 	locale: string = config.defaultLocale
@@ -134,6 +139,7 @@ export async function getShopProducts(
 		}
 	}
 
+	// @saleor-migration: intentional — mock fallback; see docs/commerce/saleor.md#quick-migration
 	guardMockCatalogFallback();
 	return filterShopProducts(filterSlugToShopCategory(filterSlug) ?? 'ALL');
 }
@@ -141,6 +147,7 @@ export async function getShopProducts(
 /**
  * Single shop product by slug — mock default, Saleor when env is set.
  */
+// @saleor-migration: intentional — catalog swap point; see docs/commerce/saleor.md#quick-migration
 export async function getShopProductBySlug(
 	slug: string,
 	locale: string = config.defaultLocale
@@ -163,6 +170,7 @@ export async function getShopProductBySlug(
 		}
 	}
 
+	// @saleor-migration: intentional — mock fallback; see docs/commerce/saleor.md#quick-migration
 	guardMockCatalogFallback();
 	return getProductBySlug(slug) ?? null;
 }
@@ -171,6 +179,7 @@ export async function getShopProductBySlug(
  * Gift card products — mock default, Saleor when env is set.
  * Saleor: `productType` metadata, gift-cards category, or gift-card slug prefix.
  */
+// @saleor-migration: intentional — catalog swap point; see docs/commerce/saleor.md#quick-migration
 export async function getGiftCardProducts(
 	locale: string = config.defaultLocale
 ): Promise<Product[]> {
@@ -193,6 +202,7 @@ export async function getGiftCardProducts(
  * Deal / on-sale products — mock default, Saleor when env is set.
  * Saleor: `on_sale` metadata or sale pricing (start < stop).
  */
+// @saleor-migration: intentional — catalog swap point; see docs/commerce/saleor.md#quick-migration
 export async function getDealProducts(locale: string = config.defaultLocale): Promise<Product[]> {
 	if (isSaleorEnabled()) {
 		try {

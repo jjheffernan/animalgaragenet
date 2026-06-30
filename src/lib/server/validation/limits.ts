@@ -33,7 +33,15 @@ export const LIMITS = {
 		message: 5000,
 		messageMin: 20
 	},
-	promoCode: 64
+	promoCode: 64,
+	bugReport: {
+		email: 254,
+		description: 4000,
+		descriptionMin: 10,
+		steps: 4000,
+		stepsMin: 10,
+		pageUrl: 2000
+	}
 } as const;
 
 /** @deprecated Use LIMITS */

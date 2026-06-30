@@ -40,13 +40,14 @@ Markers: `@inspiration-scaffold` (Supabase/community/CMS) · `@saleor-migration`
 | IP-023 | inspiration         | Multi-channel international pricing          | `src/lib/server/saleor/channels.ts` (`@saleor-migration`)                        | **scaffolded** | Map locales in Saleor admin                                         |
 | IP-024 | inspiration         | Shipping zones + threshold promos            | —                                                                                | **not started** | Saleor shipping + promotion rules                                   |
 | IP-025 | inspiration         | Supabase-backed admin user CRUD              | `src/lib/server/supabase/admin-users.ts`, `/admin/users`                         | **done**      | Service role list/invite/role update; mock when unset               |
-| IP-026 | inspiration         | Admin runtime dashboard (staff integrations) | `src/lib/server/admin/runtime-status.ts`, `/admin/runtime` (`@inspiration-scaffold`) | **done**      | Staff JWT (`editor`/`admin`); cron registry scaffold for future jobs |
+| IP-026 | inspiration         | Admin runtime dashboard (staff integrations) | `src/lib/server/admin/runtime-status.ts`, `/admin/runtime` (`@inspiration-scaffold`) | **done**      | Staff landing `/admin/dashboard` (`3732fb9`); Integrations sidebar link; cron registry scaffold |
 | IP-027 | inspiration         | Account social connections (OAuth scaffold)  | `src/routes/account/connections/`, `GET/PUT /api/account/connections`, `social-oauth.ts` (`@inspiration-scaffold`) | **done**      | Apply `20250630240000_social_connections.sql`; set `SOCIAL_*_CLIENT_ID` for live OAuth |
 | IP-028 | inspiration         | Faceted parts search                         | —                                                                                | **not started** | Saleor attributes                                                   |
 | IP-029 | inspiration         | `@motionone/svelte` scroll system            | —                                                                                | **not started** | animation-media.md                                                  |
 | IP-030 | inspiration         | Deal / campaign scheduler (Pit Lane CMS)     | `/deals` mock                                                                    | **not started** | CMS table TBD (formerly scoped as IP-026)                           |
+| IP-031 | inspiration         | Public bug report form                       | `src/lib/server/support/repository.ts`, `POST /api/support/bug-report`, `/support/report-bug` (`@inspiration-scaffold`) | **live**      | Apply `20250630250000_bug_reports.sql`; optional `BUG_REPORT_WEBHOOK_URL` |
 
-**Row count:** 30
+**Row count:** 31
 
 **Related scaffold (no IP):** Saleor webhooks — `api/webhooks/saleor/+server.ts` (`@saleor-migration`)
 

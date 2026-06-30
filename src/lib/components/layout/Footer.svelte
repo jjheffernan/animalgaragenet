@@ -6,7 +6,9 @@
 	const helpfulLinkColumns = [
 		[
 			{ label: 'Our Story', href: '/about' },
+			{ label: 'Support', href: '/support' },
 			{ label: 'Contact', href: '/contact' },
+			{ label: 'Report a Bug', href: '/support/report-bug' },
 			{ label: 'Order Status', href: '/account/orders' },
 			{ label: 'Wholesale', href: '/wholesale' },
 			{ label: 'Military Discount', href: '/military' }

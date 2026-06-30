@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test';
-import { dismissCookieBanner } from './helpers';
+import { devQuickSignIn, dismissCookieBanner } from './helpers';
 
 test.describe('navigation', () => {
 	test.beforeEach(async ({ page }) => {
@@ -49,25 +49,32 @@ test.describe('navigation', () => {
 
 	test('mobile header keeps account icon-only (IP-BUG-002)', async ({ page }) => {
 		await page.setViewportSize({ width: 390, height: 844 });
+		test.skip(!(await devQuickSignIn(page, 'Customer')), 'Local dev quick login unavailable');
 
-		const header = page.locator('header');
+		await page.goto('/');
+		await dismissCookieBanner(page);
+
+		const header = page.getByRole('banner');
 		await expect(header.getByRole('button', { name: 'Account menu' })).toBeVisible();
-		await expect(header.getByText('Account', { exact: true })).toHaveCount(0);
+		await expect(header.getByRole('button', { name: 'Account', exact: true })).toBeHidden();
 	});
 
 	test('desktop nav does not overlap header actions (IP-BUG-002)', async ({ page }) => {
 		await page.setViewportSize({ width: 1280, height: 800 });
+		test.skip(!(await devQuickSignIn(page, 'Customer')), 'Local dev quick login unavailable');
+
+		await page.goto('/');
+		await dismissCookieBanner(page);
 
 		const mainNav = page.getByRole('navigation', { name: 'Main' });
 		const dealsLink = mainNav.getByRole('link', { name: /Pit Lane Deals/i });
 		const notifications = page.getByRole('button', { name: 'Notifications' });
 
-		if (await notifications.isVisible()) {
-			const dealsBox = await dealsLink.boundingBox();
-			const bellBox = await notifications.boundingBox();
-			expect(dealsBox).not.toBeNull();
-			expect(bellBox).not.toBeNull();
-			expect(dealsBox!.x + dealsBox!.width).toBeLessThanOrEqual(bellBox!.x);
-		}
+		await expect(notifications).toBeVisible();
+		const dealsBox = await dealsLink.boundingBox();
+		const bellBox = await notifications.boundingBox();
+		expect(dealsBox).not.toBeNull();
+		expect(bellBox).not.toBeNull();
+		expect(dealsBox!.x + dealsBox!.width).toBeLessThanOrEqual(bellBox!.x);
 	});
 });

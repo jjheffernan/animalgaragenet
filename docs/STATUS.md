@@ -3,7 +3,7 @@
 **Public documentation policy:** [SECURITY-PUBLIC.md](./SECURITY-PUBLIC.md)
 
 **Last updated:** 2026-06-30  
-**Canonical next-step docs:** [meta/polish-plan.md](./meta/polish-plan.md) · [plans/active/market-readiness.md](./plans/active/market-readiness.md) · [plans/active/account-flow-fix.md](./plans/active/account-flow-fix.md)
+**Canonical next-step docs:** [plans/DOC-IMPLEMENTATION-MANIFEST.md](./plans/DOC-IMPLEMENTATION-MANIFEST.md) · [meta/polish-plan.md](./meta/polish-plan.md) · [plans/active/market-readiness.md](./plans/active/market-readiness.md) · [plans/active/account-flow-fix.md](./plans/active/account-flow-fix.md)
 
 This file reconciles “next steps” across all `docs/` so nothing is orphaned. Items are **Done**, **Ops** (external dashboard/env), or **Open** (code work).
 
@@ -90,7 +90,7 @@ These appear as unchecked boxes in plans but **cannot be completed in-repo**:
 ## Quick verification commands
 
 ```bash
-npm run test:unit          # 180 tests
+npm run test:unit          # 184 tests
 npm run test:contracts     # 20 payload contracts
 npm run test:readiness     # 11 probes (needs .env)
 bash scripts/check-secrets.sh

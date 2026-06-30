@@ -2,7 +2,8 @@
 
 **Batch audit date:** 2026-06-30  
 **Branch:** `dev`  
-**Method:** A→Z read of `docs/` vs `src/`, `tests/`, `.env.example`
+**Method:** A→Z read of `docs/` vs `src/`, `tests/`, `.env.example`  
+**Open remediation items:** [AUDIT-REMEDIATION.md](./AUDIT-REMEDIATION.md) (canonical P0/P1/P2 tracker — merge duplicates here, not new lists)
 
 Verdicts: `implement` | `ops-only` | `update-doc` | `archive` | `delete` | `already-done`
 

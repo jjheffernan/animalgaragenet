@@ -6,7 +6,7 @@ Architecture, integration plans, and developer reference for **animalgarage.net*
 
 A highly animated, media-heavy automotive brand site — merchandising-forward digital marketing with parts, community, and on-domain media. The frontend is a SvelteKit headless storefront; commerce runs on Saleor at a separate domain; media ships via CDN; non-commerce data lives in Supabase.
 
-**Open work tracker:** [STATUS.md](./STATUS.md) · **Public doc policy:** [SECURITY-PUBLIC.md](./SECURITY-PUBLIC.md) — no infra hostnames or secrets in `docs/`.
+**Open work tracker:** [STATUS.md](./STATUS.md) · **Audit remediation:** [plans/AUDIT-REMEDIATION.md](./plans/AUDIT-REMEDIATION.md) · **Public doc policy:** [SECURITY-PUBLIC.md](./SECURITY-PUBLIC.md) — no infra hostnames or secrets in `docs/`.
 
 **Developer how-to:** [style-guide/README.md](./style-guide/README.md) — Svelte patterns, deployment, env config.
 
@@ -29,11 +29,15 @@ Complete, superseded, or stale plans. Each file has a status banner.
 
 ## Audits
 
+**Canonical open-item tracker:** [plans/AUDIT-REMEDIATION.md](./plans/AUDIT-REMEDIATION.md) (P0/P1/P2 — merges audits, STATUS, TRIAGE, DOC manifest).
+
 | Doc | Purpose |
 |-----|---------|
-| [audits/site-audit.md](./audits/site-audit.md) | Security, gaps, fix log |
-| [audits/ghost-audit.md](./audits/ghost-audit.md) | Ghost CMS wiring inventory |
-| [audits/saleor-audit.md](./audits/saleor-audit.md) | Saleor integration scorecard |
+| [plans/AUDIT-REMEDIATION.md](./plans/AUDIT-REMEDIATION.md) | **Tracker** — open/blocker items with acceptance criteria |
+| [audits/site-audit.md](./audits/site-audit.md) | Security, gaps, fix log (detail) |
+| [audits/ghost-audit.md](./audits/ghost-audit.md) | Ghost CMS wiring inventory (detail) |
+| [audits/saleor-audit.md](./audits/saleor-audit.md) | Saleor integration scorecard (detail) |
+| [meta/agents-skills-audit.md](./meta/agents-skills-audit.md) | Cursor agents/skills dead-reference audit |
 
 ---
 
@@ -89,8 +93,7 @@ Complete, superseded, or stale plans. Each file has a status banner.
 | [meta/decisions.md](./meta/decisions.md) | Persistent product/tech choices |
 | [meta/inspiration.md](./meta/inspiration.md) | Feature backlog — integrated vs remaining |
 | [meta/polish-plan.md](./meta/polish-plan.md) | Active P0/P1 polish tracker |
-| [meta/agents-skills-audit.md](./meta/agents-skills-audit.md) | Cursor agents/skills dead-reference audit |
-
+| [meta/agents-skills-audit.md](./meta/agents-skills-audit.md) | Cursor agents/skills audit (detail — tracker: AUDIT-REMEDIATION) |
 ---
 
 ## Plans
@@ -98,7 +101,10 @@ Complete, superseded, or stale plans. Each file has a status banner.
 | Doc | Purpose |
 |-----|---------|
 | [plans/README.md](./plans/README.md) | Plan lifecycle |
+| [plans/AUDIT-REMEDIATION.md](./plans/AUDIT-REMEDIATION.md) | Consolidated audit remediation tracker |
+| [plans/DOC-IMPLEMENTATION-MANIFEST.md](./plans/DOC-IMPLEMENTATION-MANIFEST.md) | Doc batch implementation verdicts |
 | [plans/TRIAGE.md](./plans/TRIAGE.md) | Plan vs codebase verification |
+| [plans/DOC-IMPLEMENTATION-MANIFEST.md](./plans/DOC-IMPLEMENTATION-MANIFEST.md) | Batch doc audit tracker (June 2026) |
 | [plans/active/account-flow-fix.md](./plans/active/account-flow-fix.md) | Netlify + Supabase account ops |
 | [plans/active/market-readiness.md](./plans/active/market-readiness.md) | Phased launch roadmap |
 | [plans/active/media-uploads.md](./plans/active/media-uploads.md) | UGC upload pipeline — phase 1 not wired |

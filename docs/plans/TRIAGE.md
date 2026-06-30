@@ -1,10 +1,20 @@
 # Documentation triage — root `docs/` audit
 
-**Date:** 2026-06-30  
+**Date:** 2026-06-30 (refreshed)  
 **Branch:** `dev`  
-**Policy:** [SECURITY-PUBLIC.md](../SECURITY-PUBLIC.md)
+**Policy:** [SECURITY-PUBLIC.md](../SECURITY-PUBLIC.md)  
+**Open items:** [AUDIT-REMEDIATION.md](./AUDIT-REMEDIATION.md) (canonical P0/P1/P2 tracker — this file is the reorg/triage map)
 
-Every markdown file that **was** at `docs/` root (or created during reorg) — verdict and final location.
+## Triage stats
+
+| Category | Count | Notes |
+|----------|------:|-------|
+| **Open** (code) | 9 | Checkout, media Phase 1, builds gallery, YouTube sync, CI Prettier, `check-secrets` extend, OAuth redirect origin |
+| **Open** (ops) | 8 | Netlify env, Supabase redirect URLs, Saleor catalog env, Ghost, OAuth providers, admin bootstrap |
+| **Done** (code) | 18 | Auth guards, homepage UGC, shop filters, redeem/promo, catalog production guard, Phase 3 shell |
+| **Archived** | 6 | `docs/archive/*.md` — banners + pointers to active docs |
+
+Canonical batch tracker: [DOC-IMPLEMENTATION-MANIFEST.md](./DOC-IMPLEMENTATION-MANIFEST.md) · remediation: [AUDIT-REMEDIATION.md](./AUDIT-REMEDIATION.md) · open work: [STATUS.md](../STATUS.md)
 
 ---
 
@@ -13,8 +23,8 @@ Every markdown file that **was** at `docs/` root (or created during reorg) — v
 | File | Verdict | Action |
 |------|---------|--------|
 | `README.md` | **Keep + update** | Stays at root — index links to subfolders, STATUS, SECURITY-PUBLIC |
-| `STATUS.md` | **Keep + update** | Stays at root — open-work tracker; media-uploads line → Supabase Phase 1 |
-| `SECURITY-PUBLIC.md` | **Keep + update** | Stays at root (renamed from `PUBLIC-SAFE.md`) — public-safe policy + placeholders |
+| `STATUS.md` | **Keep + update** | Stays at root — open-work tracker |
+| `SECURITY-PUBLIC.md` | **Keep** | Stays at root — public-safe policy + placeholders |
 
 No other markdown files remain at `docs/` root.
 
@@ -22,56 +32,56 @@ No other markdown files remain at `docs/` root.
 
 ## Former root files — moved / archived
 
-| Former path | Verdict | Action |
-|-------------|---------|--------|
-| `audit.md` | **Keep + update** | → `audits/site-audit.md` |
-| `ghost-audit.md` | **Keep + update** | → `audits/ghost-audit.md` |
-| `saleor-audit.md` | **Keep + update** | → `audits/saleor-audit.md`; Saleor host → placeholder |
-| `auth-oauth.md` | **Keep + update** | → `auth/oauth.md` |
-| `auth-discord.md` | **Keep + update** | → `auth/discord.md`; production URLs sanitized |
-| `auth-microsoft.md` | **Keep + update** | → `auth/microsoft.md`; production URLs sanitized |
-| `saleor.md` | **Keep + update** | → `commerce/saleor.md`; redeem marked wired |
-| `cookies.md` | **Keep + update** | → `commerce/cookies.md` |
-| `ghost.md` | **Keep + update** | → `content/ghost.md` |
-| `build-submissions.md` | **Keep + update** | → `content/build-submissions.md` |
-| `infrastructure.md` | **Keep + update** | → `infrastructure/overview.md`; bucket/CDN placeholders |
-| `supabase.md` | **Keep + update** | → `integrations/supabase.md` |
-| `decisions.md` | **Keep + update** | → `meta/decisions.md`; org mirror prose sanitized |
-| `inspiration.md` | **Keep + update** | → `meta/inspiration.md`; Phase 3 P0 marked done |
-| `polish-plan.md` | **Keep + update** | → `meta/polish-plan.md` |
-| `phase3-plan.md` | **Stale** | → `archive/phase3-plan.md` — banner + workstreams marked done |
-| `animation-media.md` | **Stale** | → `archive/animation-media.md` |
-| `daisyui.md` | **Stale** | → `archive/daisyui.md` |
-| `dashboard-adoption-plan.md` | **Stale** | → `archive/dashboard-adoption-plan.md` — partial shell shipped |
-| `media-cdn-plan.md` | **Stale** | → `archive/media-cdn-plan.md` — superseded by `plans/active/media-uploads.md` |
-| `plans/account-flow-fix.md` | **Keep + update** | → `plans/active/account-flow-fix.md` |
-| `plans/market-readiness.md` | **Keep + update** | → `plans/active/market-readiness.md` |
-| `plans/media-uploads.md` | **Keep + update** | → `plans/active/media-uploads.md` — Phase 1 open (no code) |
+| Former path | Verdict | Final location |
+|-------------|---------|----------------|
+| `audit.md` | **Keep** | `audits/site-audit.md` |
+| `ghost-audit.md` | **Keep** | `audits/ghost-audit.md` |
+| `saleor-audit.md` | **Keep** | `audits/saleor-audit.md` |
+| `auth-oauth.md` | **Keep** | `auth/oauth.md` |
+| `auth-discord.md` | **Keep** | `auth/discord.md` |
+| `auth-microsoft.md` | **Keep** | `auth/microsoft.md` |
+| `saleor.md` | **Keep** | `commerce/saleor.md` |
+| `cookies.md` | **Keep** | `commerce/cookies.md` |
+| `ghost.md` | **Keep** | `content/ghost.md` |
+| `build-submissions.md` | **Keep** | `content/build-submissions.md` |
+| `infrastructure.md` | **Keep** | `infrastructure/overview.md` |
+| `supabase.md` | **Keep** | `integrations/supabase.md` |
+| `decisions.md` | **Keep** | `meta/decisions.md` |
+| `inspiration.md` | **Keep** | `meta/inspiration.md` |
+| `polish-plan.md` | **Keep** | `meta/polish-plan.md` |
+| `phase3-plan.md` | **Archived** | `archive/phase3-plan.md` — workstreams A–D done |
+| `animation-media.md` | **Archived** | `archive/animation-media.md` |
+| `daisyui.md` | **Archived** | `archive/daisyui.md` |
+| `dashboard-adoption-plan.md` | **Archived** | `archive/dashboard-adoption-plan.md` |
+| `media-cdn-plan.md` | **Archived** | `archive/media-cdn-plan.md` — superseded by `plans/active/media-uploads.md` |
+| `plans/account-flow-fix.md` | **Keep** | `plans/active/account-flow-fix.md` |
+| `plans/market-readiness.md` | **Keep** | `plans/active/market-readiness.md` |
+| `plans/media-uploads.md` | **Keep** | `plans/active/media-uploads.md` — Phase 1 open |
 
 ---
 
 ## Plan / code triage (`plans/active/*`)
 
-See also the detailed table below (from prior pass). Headlines unchanged:
-
 | Area | Headline |
 |------|----------|
-| **Auth (Phase 0)** | Code paths exist; production session = **Ops-only** (Netlify env + Supabase redirect URLs) |
-| **Security hardening** | `isProductionHostname()` + `guardMockCatalogFallback()` **Done**; mock `ag-session` on prod HTTPS + `supabaseReady` UI **Open** |
-| **Saleor catalog** | Loaders wired with production guard; live catalog on Netlify **Ops-only** |
+| **Auth (Phase 0)** | Production guards **Done** (`ag-session` refusal, sign-in misconfig banner); session on Netlify = **Ops-only** (env + redirect URLs) |
+| **Security hardening** | `isProductionHostname()` + `guardMockCatalogFallback()` + production `ag-session` block **Done** |
+| **Saleor catalog** | Loaders + shop filters wired; production mock guard **Done**; live catalog on Netlify **Ops-only** |
 | **Checkout / payment** | Placeholder — **Open** |
 | **Media uploads** | Plan + admin prototype — **Open** (Supabase Storage Phase 1; no `/api/media/*`) |
-| **UGC / content** | Testimonials CRUD **Done**; homepage UGC wall mock — **Open** |
-| **Admin dashboard** | Shell + moderation **Done**; daisyUI, route isolation, nav targets **Open** |
-| **Archived plans** | `phase3-plan` largely delivered; `media-cdn-plan` superseded for v1 |
+| **UGC / content** | Testimonials CRUD + homepage UGC from approved rows **Done** (mock fallback when Supabase unset); public `/builds` gallery **Open** |
+| **Admin dashboard** | Shell + moderation **Done**; daisyUI adoption, route isolation polish **Open** (low priority) |
+| **Archived plans** | `phase3-plan` delivered; `media-cdn-plan` superseded for v1 |
 
-### Recommended next code tasks (small, doc-aligned)
+### Recommended next code tasks (doc-aligned)
 
-1. Render `supabaseReady` warning on `/auth/sign-in` when keys missing on production hostname.
-2. Refuse `ag-session` mock cookie when `isProductionHostname(event.url.hostname)`.
-3. Wire homepage `ugc` prop to `listFeaturedTestimonials` (replace `mockUGC` in `+page.server.ts`).
+1. Wire public `/builds` from approved `build_submissions` (replace `mock/builds.ts` loader).
+2. Saleor checkout: line qty/remove, shipping, `CHECKOUT_COMPLETE`.
+3. Media uploads Phase 1 — Supabase Storage bucket + `/api/media/*`.
+4. YouTube `sync.ts` — replace stub with Data API.
+5. Extend `scripts/check-secrets.sh` for client-bundle secret patterns.
 
-*Out of scope: S3/Garage CDN full pipeline, checkout payment, media-uploads Phase 1 implementation.*
+*Out of scope for next small PR: full S3/Garage CDN pipeline, CI Prettier sweep (~221 files).*
 
 ---
 
@@ -79,44 +89,49 @@ See also the detailed table below (from prior pass). Headlines unchanged:
 
 | Plan | Item | Verdict | Evidence path |
 |------|------|---------|---------------|
-| **account-flow-fix** | Set Netlify Supabase env vars | Ops-only | `docs/plans/active/account-flow-fix.md` §1 |
+| **account-flow-fix** | Set Netlify Supabase env vars | Ops-only | `plans/active/account-flow-fix.md` §1 |
 | **account-flow-fix** | Set `PUBLIC_SITE_URL` to active deploy URL | Ops-only | `src/lib/config/env.ts` |
 | **account-flow-fix** | Supabase redirect URL allowlist | Ops-only | `src/routes/auth/callback/+server.ts` |
 | **account-flow-fix** | Admin bootstrap via `promote-admin.ts` | Ops-only | `scripts/promote-admin.ts` |
 | **account-flow-fix** | Session hydration (`@supabase/ssr`) | Done | `src/hooks.server.ts` |
 | **account-flow-fix** | Account menu vs Sign In header | Done | `AccountMenu.svelte`, `Header.svelte` |
 | **account-flow-fix** | `isProductionHostname()` includes `*.netlify.app` | Done | `src/lib/server/auth/local-dev.ts` |
-| **account-flow-fix** | Refuse mock `ag-session` on production HTTPS | Open | `src/hooks.server.ts` |
+| **account-flow-fix** | Refuse mock `ag-session` on production HTTPS | Done | `src/hooks.server.ts` |
 | **account-flow-fix** | OAuth/magic-link redirect from `event.url.origin` | Open | `sign-in/+page.server.ts` uses `config.siteUrl` only |
-| **account-flow-fix** | Surface `supabaseReady` on sign-in UI | Open | Loaded in `+page.server.ts`; not in `+page.svelte` |
+| **account-flow-fix** | Surface `productionAuthMisconfigured` on sign-in UI | Done | `sign-in/+page.svelte` |
 | **market-readiness** | Phase 0 — account flow | Ops-only | account-flow-fix rows |
-| **market-readiness** | Phase 0 — `isProductionHostname` netlify guard | Done | `local-dev.ts` |
+| **market-readiness** | Phase 0 — production auth guards | Done | `hooks.server.ts`, `sign-in/+page.svelte` |
 | **market-readiness** | Phase 1 — Saleor env on Netlify | Ops-only | `saleor/client.ts` |
 | **market-readiness** | Phase 1 — gate silent Saleor→mock fallback | Done | `catalog/fallback.ts` |
+| **market-readiness** | Phase 1 — shop category filters from Saleor | Done | `catalog/shop-filters.ts`, `/api/catalog/shop-filters` |
 | **market-readiness** | Phase 1 — `/shop` ≠ 120 mock products | Open (ops) | Needs `PUBLIC_SALEOR_API_URL` on Netlify |
 | **market-readiness** | Phase 2 — checkout & payment | Open | `checkout/+page.svelte` |
-| **market-readiness** | Phase 3 — homepage UGC from `testimonials` | Open | `+page.server.ts` still `mockUGC` |
+| **market-readiness** | Phase 3 — homepage UGC from `testimonials` | Done | `+page.server.ts`, `testimonials/to-ugc.ts` |
+| **market-readiness** | Phase 3 — public `/builds` from submissions | Open | `mock/builds.ts` still source |
 | **media-uploads** | Phase 1 — bucket + `/api/media/*` | Open | No migration/routes |
 | **polish-plan** | Saleor redeem + cart promo | Done | `/account/redeem`, `checkout/promo.ts` |
+| **polish-plan** | CI Prettier (~221 files) | Open | Blocks green CI |
 | **phase3-plan** (archive) | Workstreams A–D | Done / partial | See archive banner |
 | **media-cdn-plan** (archive) | v1 upload strategy | Stale | Superseded by `media-uploads.md` |
 
 ---
 
-## Doc corrections (2026-06-30)
+## Doc corrections (2026-06-30 refresh)
 
 | File | Change |
 |------|--------|
-| `SECURITY-PUBLIC.md` | Created at root (replaces `PUBLIC-SAFE.md`) |
-| `deployment.md` | Org mirror + hostnames → placeholders |
-| `account-flow-fix.md` | Preview/custom hosts sanitized; `isProductionHostname` → Done |
-| `market-readiness.md` | DEV_ADMIN guard status fixed; URLs sanitized |
-| `readiness-report.md` | Live URL → placeholder; media Phase 1 → Supabase |
-| `auth/discord.md`, `auth/microsoft.md` | Production callback URLs → placeholders |
-| `archive/media-cdn-plan.md` | CDN/bucket names redacted |
+| `TRIAGE.md` | Stats + done rows for auth guards, UGC, shop filters |
+| `account-flow-fix.md` | Code hardening §5 — mark `ag-session` + sign-in banner Done |
+| `market-readiness.md` | UGC row hybrid; fix `../../` links from `plans/active/` |
+| `meta/decisions.md` | Fix style-guide link |
+| `archive/daisyui.md`, `archive/media-cdn-plan.md` | Fix post-reorg relative links |
+| `content/build-submissions.md` | Fix `../../src/` code paths |
+| `docs/README.md` | Add manifest to Plans index |
 
 ---
 
 ## Link updates
 
-Inbound links to old root paths were updated in `docs/README.md`, `docs/STATUS.md`, `docs/wiki-export/*`, and agent specs (`.cursor/agents/*`) during the reorg commit. Remaining references to old paths live only in `.cursor/commit-manifest.json` (historical manifest — update on next orchestrated commit split).
+Inbound links to old flat root paths (`docs/saleor.md`, `docs/supabase.md`, etc.) were migrated in the June 2026 reorg. Remaining historical references live in `.cursor/commit-manifest.json` only.
+
+From `plans/active/`, cross-folder links use `../../` (e.g. `../../audits/saleor-audit.md`).

@@ -11,8 +11,10 @@
 
 | Plan | Status | Notes |
 |------|--------|-------|
-| [account-flow-fix.md](./active/account-flow-fix.md) | Active — Ops | Netlify + Supabase env; not a code doc task |
+| [account-flow-fix.md](./active/account-flow-fix.md) | Active — Ops | Netlify + Supabase env; code guards Done |
 | [market-readiness.md](./active/market-readiness.md) | Active | Phased launch roadmap |
 | [media-uploads.md](./active/media-uploads.md) | Active — not implemented | Phase 1 Supabase Storage (`/api/media/*`) still open |
 
 Triage and moves: [TRIAGE.md](./TRIAGE.md) (June 2026 reorg + public-safe pass).
+
+**Audit open items:** [AUDIT-REMEDIATION.md](./AUDIT-REMEDIATION.md) — canonical P0/P1/P2 tracker (source audits in `docs/audits/` kept for detail until all items done).

@@ -3,7 +3,7 @@
 **Public documentation policy:** [SECURITY-PUBLIC.md](./SECURITY-PUBLIC.md)
 
 **Last updated:** 2026-06-30  
-**Canonical next-step docs:** [plans/DOC-IMPLEMENTATION-MANIFEST.md](./plans/DOC-IMPLEMENTATION-MANIFEST.md) · [meta/polish-plan.md](./meta/polish-plan.md) · [plans/active/market-readiness.md](./plans/active/market-readiness.md) · [plans/active/account-flow-fix.md](./plans/active/account-flow-fix.md)
+**Canonical next-step docs:** [plans/AUDIT-REMEDIATION.md](./plans/AUDIT-REMEDIATION.md) · [plans/DOC-IMPLEMENTATION-MANIFEST.md](./plans/DOC-IMPLEMENTATION-MANIFEST.md) · [meta/polish-plan.md](./meta/polish-plan.md) · [plans/active/market-readiness.md](./plans/active/market-readiness.md) · [plans/active/account-flow-fix.md](./plans/active/account-flow-fix.md)
 
 This file reconciles “next steps” across all `docs/` so nothing is orphaned. Items are **Done**, **Ops** (external dashboard/env), or **Open** (code work).
 
@@ -23,6 +23,9 @@ This file reconciles “next steps” across all `docs/` so nothing is orphaned.
 | Readiness probes | `scripts/test-readiness.ts`, `npm run test:readiness` |
 | `*.netlify.app` dev bypass block | `isProductionHostname()` in `local-dev.ts` |
 | Production catalog mock guard | `guardMockCatalogFallback()` in `catalog/fallback.ts` |
+| Production `ag-session` refusal + sign-in misconfig banner | `hooks.server.ts`, `sign-in/+page.svelte` |
+| Homepage UGC from approved testimonials | `+page.server.ts`, `testimonials/to-ugc.ts` (mock fallback when Supabase unset) |
+| Shop category filters from Saleor | `catalog/shop-filters.ts`, `GET /api/catalog/shop-filters` |
 | GitHub wiki | Published — [wiki home](https://github.com/jjheffernan/animalgaragenet/wiki); backup in `docs/wiki-export/` (sanitized for public — no infra/AWS/secret names) |
 | Org mirror sync | `scripts/sync-org-mirror.sh` on `main` |
 
@@ -54,10 +57,11 @@ These appear as unchecked boxes in plans but **cannot be completed in-repo**:
 |----------|------|---------|
 | P0 | Merge `dev` → `main` when Netlify env configured | [deployment.md](./style-guide/backend-ops/deployment.md) |
 | P0 | Fix CI Prettier (~221 files) — blocks green checks | [polish-plan.md](./meta/polish-plan.md) |
+| P1 | Public `/builds` from approved `build_submissions` | [build-submissions.md](./content/build-submissions.md) |
 | P1 | Saleor checkout: line qty/remove, shipping, `CHECKOUT_COMPLETE` | [saleor.md](./commerce/saleor.md), [saleor-audit.md](./audits/saleor-audit.md) |
 | P1 | YouTube live sync (replace stub) | [readiness-report.md](./testing/readiness-report.md) |
 | P1 | Media uploads phase 1 (Supabase Storage + `/api/media/*`) | [media-uploads.md](./plans/active/media-uploads.md) |
-| P1 | Ghost + Supabase UGC on homepage (Phase 3) | market-readiness Phase 3 |
+| P2 | Ghost + remaining homepage mock slices (videos, builds) | market-readiness Phase 3 |
 | P2 | `profiles` table contract test | readiness-report (testimonials + build_submissions done) |
 | P2 | `readiness-ci` optional Actions job | readiness-report |
 | P2 | OAuth Discord/Azure verification | polish-plan P2 |

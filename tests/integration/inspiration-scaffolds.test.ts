@@ -14,6 +14,10 @@ import {
 	subscribeNewsletter
 } from '$lib/server/newsletter/repository';
 import { createWholesaleInquiry, _resetMockStoreForTests as resetWholesale } from '$lib/server/wholesale/repository';
+import {
+	_resetMockStoreForTests as resetFeatured,
+	getFeaturedSection
+} from '$lib/server/featured-sections/repository';
 
 describe('inspiration scaffold repositories (mock fallback)', () => {
 	beforeEach(() => {
@@ -21,6 +25,7 @@ describe('inspiration scaffold repositories (mock fallback)', () => {
 		resetRestock();
 		resetNewsletter();
 		resetWholesale();
+		resetFeatured();
 	});
 
 	afterEach(() => {
@@ -56,5 +61,13 @@ describe('inspiration scaffold repositories (mock fallback)', () => {
 		});
 		expect(inquiry?.status).toBe('pending');
 		expect(inquiry?.businessName).toBe('Speed Shop LLC');
+	});
+
+	it('getFeaturedSection returns static hero fallback when no active campaign', async () => {
+		const hero = await getFeaturedSection('hero');
+		expect(hero?.sectionKey).toBe('hero');
+		expect(hero?.content.headline).toBe('Garage Culture Delivered');
+		expect(hero?.content.subheadline).toContain('Animal Garage');
+		expect(hero?.content.image).toBe('https://picsum.photos/seed/aghero/1920/1080');
 	});
 });

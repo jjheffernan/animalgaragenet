@@ -95,7 +95,7 @@ function product(opts: ProductOpts): Product {
 
 const agBrand: ProductBrand = { id: 'brand-ag', name: 'Animal Garage', slug: 'animal-garage' };
 
-export const mockProducts: Product[] = [
+const handcraftedMockProducts: Product[] = [
 	// Apparel
 	product({
 		id: '1',
@@ -608,16 +608,269 @@ export const mockProducts: Product[] = [
 	})
 ];
 
+const teeNames = [
+	'Grid Lock Tee',
+	'Drift Mode Tee',
+	'Redline Script Tee',
+	'Shop Floor Tee',
+	'Burnout Club Tee',
+	'Garage Nights Tee',
+	'Flag Wave Tee',
+	'Rev Limit Tee',
+	'Paddock Pass Tee',
+	'Torque Spec Tee',
+	'Flat Out Tee',
+	'Grip Lab Tee',
+	'Launch Control Tee',
+	'Sliding Doors Tee',
+	'Heat Cycle Tee'
+];
+
+const sweatNames = [
+	'Garage Crew Hoodie',
+	'Pit Stop Hoodie',
+	'Redline Pullover',
+	'Shop Warmup Crewneck',
+	'Midnight Wrench Hoodie',
+	'Garage Fleece Crew',
+	'Trackside Hoodie',
+	'Oil Stain Hoodie',
+	'Garage Layer Hoodie',
+	'Cold Start Hoodie',
+	'Boxer Engine Crew',
+	'Garage Heritage Hoodie',
+	'Dyno Room Hoodie',
+	'Garage Spec Crew',
+	'Oversteer Hoodie'
+];
+
+const jacketNames = [
+	'Garage Softshell Jacket',
+	'Track Day Shell',
+	'Redline Bomber',
+	'Shop Coach Jacket',
+	'Garage Parka',
+	'Paddock Shell Jacket',
+	'Garage Storm Jacket',
+	'Night Shift Jacket',
+	'Garage Utility Jacket',
+	'Spec R Jacket',
+	'Garage Rally Jacket',
+	'Cold Pit Jacket',
+	'Garage Work Jacket',
+	'Grid Walk Jacket',
+	'Garage Insulated Jacket'
+];
+
+const headwearNames = [
+	'Garage Trucker Cap',
+	'Redline Beanie',
+	'Shop Snapback',
+	'Garage Five Panel',
+	'Pit Crew Bucket Hat',
+	'Garage Wool Cap',
+	'Trackside Visor',
+	'Garage Mesh Cap',
+	'Redline Knit Cap',
+	'Shop Floor Cap',
+	'Garage Corduroy Cap',
+	'Burnout Bucket',
+	'Garage Flag Cap',
+	'Spec Visor',
+	'Garage Dad Cap'
+];
+
+const accessoryNames = [
+	'Garage Key Lanyard',
+	'Shop Wristband Set',
+	'Garage Patch Pack',
+	'Redline Keychain',
+	'Garage Bottle Opener',
+	'Shop Zip Pouch',
+	'Garage Carabiner',
+	'Redline Wallet',
+	'Garage Patch Hat',
+	'Shop Microfiber Cloth',
+	'Garage Desk Mat',
+	'Redline Cable Wrap',
+	'Garage Badge Set',
+	'Shop Pen Set',
+	'Garage Cord Organizer'
+];
+
+const homeNames = [
+	'Garage Wall Print',
+	'Shop Blueprint Poster',
+	'Garage Throw Blanket',
+	'Redline Pillow',
+	'Garage Desk Clock',
+	'Shop Sign Metal',
+	'Garage Candle',
+	'Redline Rug',
+	'Garage Photo Frame',
+	'Shop Blueprint Mug',
+	'Garage Shelf Block',
+	'Redline Tapestry',
+	'Garage Bar Mat',
+	'Shop Heritage Print',
+	'Garage LED Sign Mini'
+];
+
+const autoNames = [
+	'Garage Tire Valve Caps',
+	'Redline Mirror Tag',
+	'Garage Cup Holder Insert',
+	'Shop Floor Mats AG',
+	'Garage Trunk Organizer',
+	'Redline Seat Gap Filler',
+	'Garage Sun Strip',
+	'Shop Wheel Cleaner Towel',
+	'Garage Phone Mount',
+	'Redline Pedal Covers',
+	'Garage Rear View Charm',
+	'Shop Visor Clip',
+	'Garage Trunk Badge',
+	'Redline Steering Wrap',
+	'Garage Dash Tray'
+];
+
+function padShopCatalog(base: Product[]): Product[] {
+	const result = [...base];
+	let id = 100;
+
+	const addProduct = (opts: Omit<ProductOpts, 'id' | 'seed'>) => {
+		const nextId = id++;
+		result.push(product({ ...opts, id: String(nextId), seed: `ag-prod-gen-${nextId}` }));
+	};
+
+	const teeCount = () =>
+		result.filter((p) => p.name.toLowerCase().includes('tee') || p.category?.slug === 'apparel').length;
+	const sweatCount = () =>
+		result.filter(
+			(p) =>
+				p.name.toLowerCase().includes('hoodie') ||
+				p.name.toLowerCase().includes('sweat') ||
+				p.name.toLowerCase().includes('crew')
+		).length;
+	const jacketCount = () => result.filter((p) => p.name.toLowerCase().includes('jacket')).length;
+	const headwearCount = () =>
+		result.filter((p) => p.category?.slug === 'headwear').length;
+	const accessoryCount = () =>
+		result.filter((p) => ['accessories', 'stickers'].includes(p.category?.slug ?? '')).length;
+	const homeCount = () =>
+		result.filter((p) => ['posters', 'home', 'accessories'].includes(p.category?.slug ?? '')).length;
+	const autoCount = () =>
+		result.filter(
+			(p) =>
+				p.category?.slug === 'auto' ||
+				p.tags?.includes('auto') ||
+				p.name.toLowerCase().includes('air freshener') ||
+				p.name.toLowerCase().includes('license')
+		).length;
+
+	for (const name of teeNames) {
+		if (teeCount() >= 22) break;
+		addProduct({
+			name,
+			slug: name.toLowerCase().replace(/[^a-z0-9]+/g, '-'),
+			price: 34 + (id % 12),
+			description: `${name} — heavyweight cotton with AG motorsport graphics.`,
+			category: 'Apparel',
+			brand: agBrand
+		});
+	}
+
+	for (const name of sweatNames) {
+		if (sweatCount() >= 22) break;
+		addProduct({
+			name,
+			slug: name.toLowerCase().replace(/[^a-z0-9]+/g, '-'),
+			price: 58 + (id % 20),
+			description: `${name} — fleece-lined comfort for cold shop mornings.`,
+			category: 'Apparel',
+			brand: agBrand
+		});
+	}
+
+	for (const name of jacketNames) {
+		if (jacketCount() >= 22) break;
+		addProduct({
+			name,
+			slug: name.toLowerCase().replace(/[^a-z0-9]+/g, '-'),
+			price: 98 + (id % 40),
+			description: `${name} — weather-ready outerwear with AG redline details.`,
+			category: 'Apparel',
+			brand: agBrand
+		});
+	}
+
+	for (const name of headwearNames) {
+		if (headwearCount() >= 22) break;
+		addProduct({
+			name,
+			slug: name.toLowerCase().replace(/[^a-z0-9]+/g, '-'),
+			price: 24 + (id % 14),
+			description: `${name} — structured headwear with embroidered AG mark.`,
+			category: 'Headwear',
+			categorySlug: 'headwear',
+			brand: agBrand
+		});
+	}
+
+	for (const name of accessoryNames) {
+		if (accessoryCount() >= 22) break;
+		addProduct({
+			name,
+			slug: name.toLowerCase().replace(/[^a-z0-9]+/g, '-'),
+			price: 12 + (id % 45),
+			description: `${name} — everyday carry with garage-approved durability.`,
+			category: 'Accessories',
+			brand: agBrand
+		});
+	}
+
+	for (const name of homeNames) {
+		if (homeCount() >= 22) break;
+		addProduct({
+			name,
+			slug: name.toLowerCase().replace(/[^a-z0-9]+/g, '-'),
+			price: 18 + (id % 60),
+			description: `${name} — bring the shop vibe indoors.`,
+			category: 'Home',
+			brand: agBrand
+		});
+	}
+
+	for (const name of autoNames) {
+		if (autoCount() >= 22) break;
+		addProduct({
+			name,
+			slug: name.toLowerCase().replace(/[^a-z0-9]+/g, '-'),
+			price: 14 + (id % 35),
+			description: `${name} — interior upgrade with AG branding.`,
+			category: 'Auto',
+			brand: agBrand
+		});
+	}
+
+	while (result.length < 58) {
+		addProduct({
+			name: `Garage Essentials Pack ${id - 99}`,
+			slug: `garage-essentials-pack-${id - 99}`,
+			price: 28 + (id % 15),
+			description: 'Curated AG accessories bundle for new crew members.',
+			category: 'Accessories',
+			brand: agBrand
+		});
+	}
+
+	return result;
+}
+
+export const mockProducts: Product[] = padShopCatalog(handcraftedMockProducts);
+
 export function getProductBySlug(slug: string): Product | undefined {
 	return mockProducts.find((p) => p.slug === slug);
-}
-
-export function getProductById(id: string): Product | undefined {
-	return mockProducts.find((p) => p.id === id);
-}
-
-export function getFeaturedProducts(count = 4): Product[] {
-	return mockProducts.filter((p) => p.tags?.includes('staff-pick')).slice(0, count);
 }
 
 export function getStaffPickProducts(): Product[] {

@@ -14,6 +14,3 @@ export const mockUGC: UGCItem[] = [
 	{ id: 'ugc-11', image: 'https://picsum.photos/seed/agugc-11/400/400', caption: 'Sticker slaps on the toolbox', handle: '@toolbox_tuesday' },
 	{ id: 'ugc-12', image: 'https://picsum.photos/seed/agugc-12/400/400', caption: 'Garage Squad Level 5 unlocked 🎉', handle: '@loyalty_grind' }
 ];
-
-/** @deprecated Use mockUGC — kept for route compatibility */
-export const mockUgc = mockUGC;

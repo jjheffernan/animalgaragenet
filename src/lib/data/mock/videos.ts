@@ -147,6 +147,17 @@ export const mockVideos: Video[] = [
 	}
 ];
 
+export function getLatestVideo(): Video | undefined {
+	if (mockVideos.length === 0) return undefined;
+	return [...mockVideos].sort(
+		(a, b) => new Date(b.publishedAt ?? 0).getTime() - new Date(a.publishedAt ?? 0).getTime()
+	)[0];
+}
+
+export function getVideosExcluding(video: Video): Video[] {
+	return mockVideos.filter((v) => v.id !== video.id);
+}
+
 export function getVideoById(id: string): Video | undefined {
 	return mockVideos.find((v) => v.id === id);
 }

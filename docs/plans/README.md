@@ -13,7 +13,7 @@
 | --------------------------------------------------- | ------------------------ | ---------------------------------------------------- |
 | [account-flow-fix.md](./active/account-flow-fix.md) | Active — Ops             | Netlify + Supabase env; code guards Done             |
 | [market-readiness.md](./active/market-readiness.md) | Active                   | Phased launch roadmap                                |
-| [media-uploads.md](./active/media-uploads.md)       | Active — not implemented | Phase 1 Supabase Storage (`/api/media/*`) still open |
+| [media-uploads.md](./active/media-uploads.md)       | Active — partial         | Phase 1 API + migration in repo; apply on Supabase project |
 
 Triage and moves: [TRIAGE.md](./TRIAGE.md) (June 2026 reorg + public-safe pass).
 

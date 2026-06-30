@@ -24,6 +24,7 @@ Complete, superseded, or stale plans. Each file has a status banner.
 | [archive/animation-media.md](./archive/animation-media.md)                 | Stale — marketing strategy             |
 | [archive/dashboard-adoption-plan.md](./archive/dashboard-adoption-plan.md) | Complete — in-repo `/admin`            |
 | [archive/media-cdn-plan.md](./archive/media-cdn-plan.md)                   | Superseded — see media-uploads phase 1 |
+| [archive/doc-implementation-manifest.md](./archive/doc-implementation-manifest.md) | Superseded — June 2026 batch audit (`DOC-###`) |
 
 ---
 
@@ -103,11 +104,10 @@ Complete, superseded, or stale plans. Each file has a status banner.
 | ------------------------------------------------------------------------------ | --------------------------------------- |
 | [plans/README.md](./plans/README.md)                                           | Plan lifecycle                          |
 | [plans/AUDIT-REMEDIATION.md](./plans/AUDIT-REMEDIATION.md)                     | Consolidated audit remediation tracker  |
-| [plans/DOC-IMPLEMENTATION-MANIFEST.md](./plans/DOC-IMPLEMENTATION-MANIFEST.md) | Doc batch audit tracker (June 2026)     |
 | [plans/TRIAGE.md](./plans/TRIAGE.md)                                           | Plan vs codebase verification           |
 | [plans/active/account-flow-fix.md](./plans/active/account-flow-fix.md)         | Netlify + Supabase account ops          |
 | [plans/active/market-readiness.md](./plans/active/market-readiness.md)         | Phased launch roadmap                   |
-| [plans/active/media-uploads.md](./plans/active/media-uploads.md)               | UGC upload pipeline — phase 1 not wired |
+| [plans/active/media-uploads.md](./plans/active/media-uploads.md)               | UGC upload pipeline — Phase 1 wired; apply migration on Supabase |
 
 ---
 

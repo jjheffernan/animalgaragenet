@@ -172,7 +172,7 @@ For Svelte (not React), use `@stripe/stripe-js` directly instead of `@stripe/rea
 | **P2** | — | `/api/webhooks/saleor` handlers for `ORDER_CREATED` (email, analytics) | code |
 | **P2** | — | Automatic checkout completion channel setting + storefront handling deleted checkout | code |
 
-See [AUDIT-REMEDIATION.md](../plans/AUDIT-REMEDIATION.md) and [inspiration-polish-prod-setup.md](../plans/active/inspiration-polish-prod-setup.md) Phase 2.
+See [AUDIT-REMEDIATION.md](../plans/AUDIT-REMEDIATION.md) and [market-readiness.md](../plans/active/market-readiness.md) Phase 2.
 
 ---
 

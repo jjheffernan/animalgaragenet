@@ -12,7 +12,7 @@
 ## Root cause hypotheses (ranked)
 
 1. **Supabase env vars not set on Netlify** — `hooks.server.ts` falls back to `ag-session` mock cookie path only when keys are missing; sign-in page still renders OAuth buttons but server actions may use mock or fail silently.
-2. **`PUBLIC_SITE_URL` mismatch** — Magic link and OAuth `redirectTo` / `emailRedirectTo` are built from `config.siteUrl` (`PUBLIC_SITE_URL`), not `event.url.origin`. If set to `https://<your-site-host>` while browsing `<your-preview-host>`, email links and OAuth callbacks land on the wrong host → session cookies never set on the browsed domain.
+2. **`PUBLIC_SITE_URL` mismatch** — When `PUBLIC_SITE_URL` does not match the browsed host and the request origin is not in the allowlist, magic link and OAuth callbacks may land on the wrong host. **Mitigation (code):** `callback-url.ts` prefers `event.url.origin` when allowed; `PUBLIC_SITE_URL` remains the fallback and allowlist anchor.
 3. **Supabase redirect URL allowlist** — Callback `https://<your-preview-host>/auth/callback` not added in Supabase dashboard → `exchangeOAuthCode` / magic link verify fails.
 4. **No admin bootstrap** — Even with working auth, `/admin` requires `app_metadata.role` of `admin` or `editor` via `promote-admin.ts`.
 
@@ -28,7 +28,7 @@ Request → hooks.server.ts
             └─ event.locals.session → +layout.server.ts → Header.svelte
 
 Sign-in POST → sign-in/+page.server.ts
-            ├─ supabase → signInWithOtp(emailRedirectTo: PUBLIC_SITE_URL/auth/callback)
+            ├─ supabase → signInWithOtp(emailRedirectTo: buildAuthCallbackUrl(event.url.origin))
             └─ no supabase → createMockUser + setSessionCookie(ag-session)
 
 OAuth → /auth/callback?code=...
@@ -42,7 +42,8 @@ OAuth → /auth/callback?code=...
 | ----------------------------------------- | -------------------------------------------------------- |
 | `src/hooks.server.ts`                     | Session hydration every request                          |
 | `src/lib/config/env.ts`                   | `PUBLIC_SITE_URL` default `http://localhost:5173`        |
-| `src/routes/auth/sign-in/+page.server.ts` | Magic link `emailRedirectTo` uses `config.siteUrl`       |
+| `src/routes/auth/sign-in/+page.server.ts` | Magic link / OAuth redirect via `buildAuthCallbackUrl()` |
+| `src/lib/server/auth/callback-url.ts`    | Request-origin allowlist + callback URL builder          |
 | `src/routes/auth/callback/+server.ts`     | PKCE code exchange                                       |
 | `src/lib/components/Header.svelte`        | `session = $page.data.session` → Account menu vs Sign In |
 | `src/routes/account/+layout.server.ts`    | Redirect if `!locals.session`                            |

@@ -9,12 +9,12 @@
 
 | Category        | Count | Notes                                                                                                             |
 | --------------- | ----: | ----------------------------------------------------------------------------------------------------------------- |
-| **Open** (code) |     9 | Checkout, media Phase 1, builds gallery, YouTube sync, CI Prettier, `check-secrets` extend, OAuth redirect origin |
-| **Open** (ops)  |     8 | Netlify env, Supabase redirect URLs, Saleor catalog env, Ghost, OAuth providers, admin bootstrap                  |
-| **Done** (code) |    18 | Auth guards, homepage UGC, shop filters, redeem/promo, catalog production guard, Phase 3 shell                    |
-| **Archived**    |     6 | `docs/archive/*.md` — banners + pointers to active docs                                                           |
+| **Open** (code) |     6 | Checkout, YouTube sync, CI Prettier, `check-secrets` extend, Ghost fallback policy |
+| **Open** (ops)  |     8 | Netlify env, Supabase redirect URLs, Saleor catalog env, Ghost, OAuth providers, admin bootstrap, media migration apply |
+| **Done** (code) |    21 | Auth guards, homepage UGC, shop filters, redeem/promo, catalog production guard, Phase 3 shell, `/builds` Supabase loader, cart qty/remove, OAuth callback origin, media Phase 1 API |
+| **Archived**    |     7 | `docs/archive/*.md` — banners + pointers to active docs                                                           |
 
-Canonical batch tracker: [DOC-IMPLEMENTATION-MANIFEST.md](./DOC-IMPLEMENTATION-MANIFEST.md) · remediation: [AUDIT-REMEDIATION.md](./AUDIT-REMEDIATION.md) · open work: [STATUS.md](../STATUS.md)
+Canonical remediation: [AUDIT-REMEDIATION.md](./AUDIT-REMEDIATION.md) · open work: [STATUS.md](../STATUS.md)
 
 ---
 
@@ -68,18 +68,17 @@ No other markdown files remain at `docs/` root.
 | **Security hardening** | `isProductionHostname()` + `guardMockCatalogFallback()` + production `ag-session` block **Done**                                     |
 | **Saleor catalog**     | Loaders + shop filters wired; production mock guard **Done**; live catalog on Netlify **Ops-only**                                   |
 | **Checkout / payment** | Placeholder — **Open**                                                                                                               |
-| **Media uploads**      | Plan + admin prototype — **Open** (Supabase Storage Phase 1; no `/api/media/*`)                                                      |
-| **UGC / content**      | Testimonials CRUD + homepage UGC from approved rows **Done** (mock fallback when Supabase unset); public `/builds` gallery **Open**  |
+| **Media uploads**      | Plan + API wired — **Done** (code); apply migration on Supabase — **Ops**                                                      |
+| **UGC / content**      | Testimonials CRUD + homepage UGC + public `/builds` from approved rows **Done** (mock fallback when Supabase unset)              |
 | **Admin dashboard**    | Shell + moderation **Done**; daisyUI adoption, route isolation polish **Open** (low priority)                                        |
 | **Archived plans**     | `phase3-plan` delivered; `media-cdn-plan` superseded for v1                                                                          |
 
 ### Recommended next code tasks (doc-aligned)
 
-1. Wire public `/builds` from approved `build_submissions` (replace `mock/builds.ts` loader).
-2. Saleor checkout: line qty/remove, shipping, `CHECKOUT_COMPLETE`.
-3. Media uploads Phase 1 — Supabase Storage bucket + `/api/media/*`.
-4. YouTube `sync.ts` — replace stub with Data API.
-5. Extend `scripts/check-secrets.sh` for client-bundle secret patterns.
+1. Saleor checkout: shipping, `CHECKOUT_COMPLETE`, payment gateway.
+2. YouTube `sync.ts` — replace stub with Data API.
+3. Extend `scripts/check-secrets.sh` for client-bundle secret patterns.
+4. Apply `20250630120000_media_assets.sql` on production Supabase (ops).
 
 _Out of scope for next small PR: full S3/Garage CDN pipeline, CI Prettier sweep (~221 files)._
 
@@ -97,7 +96,7 @@ _Out of scope for next small PR: full S3/Garage CDN pipeline, CI Prettier sweep 
 | **account-flow-fix**         | Account menu vs Sign In header                      | Done           | `AccountMenu.svelte`, `Header.svelte`                  |
 | **account-flow-fix**         | `isProductionHostname()` includes `*.netlify.app`   | Done           | `src/lib/server/auth/local-dev.ts`                     |
 | **account-flow-fix**         | Refuse mock `ag-session` on production HTTPS        | Done           | `src/hooks.server.ts`                                  |
-| **account-flow-fix**         | OAuth/magic-link redirect from `event.url.origin`   | Open           | `sign-in/+page.server.ts` uses `config.siteUrl` only   |
+| **account-flow-fix**         | OAuth/magic-link redirect from `event.url.origin`   | Done           | `callback-url.ts`; sign-in/sign-up actions              |
 | **account-flow-fix**         | Surface `productionAuthMisconfigured` on sign-in UI | Done           | `sign-in/+page.svelte`                                 |
 | **market-readiness**         | Phase 0 — account flow                              | Ops-only       | account-flow-fix rows                                  |
 | **market-readiness**         | Phase 0 — production auth guards                    | Done           | `hooks.server.ts`, `sign-in/+page.svelte`              |
@@ -107,9 +106,10 @@ _Out of scope for next small PR: full S3/Garage CDN pipeline, CI Prettier sweep 
 | **market-readiness**         | Phase 1 — `/shop` ≠ 120 mock products               | Open (ops)     | Needs `PUBLIC_SALEOR_API_URL` on Netlify               |
 | **market-readiness**         | Phase 2 — checkout & payment                        | Open           | `checkout/+page.svelte`                                |
 | **market-readiness**         | Phase 3 — homepage UGC from `testimonials`          | Done           | `+page.server.ts`, `testimonials/to-ugc.ts`            |
-| **market-readiness**         | Phase 3 — public `/builds` from submissions         | Open           | `mock/builds.ts` still source                          |
-| **media-uploads**            | Phase 1 — bucket + `/api/media/*`                   | Open           | No migration/routes                                    |
+| **market-readiness**         | Phase 3 — public `/builds` from submissions         | Done           | `builds/public.ts` → approved `build_submissions`      |
+| **media-uploads**            | Phase 1 — bucket + `/api/media/*`                   | Done (code)    | Migration + API in repo; apply on Supabase project     |
 | **polish-plan**              | Saleor redeem + cart promo                          | Done           | `/account/redeem`, `checkout/promo.ts`                 |
+| **polish-plan**              | Cart line qty/remove when Saleor enabled            | Done           | `cart.svelte.ts`, `/cart/checkout` PATCH/DELETE        |
 | **polish-plan**              | CI Prettier (~221 files)                            | Open           | Blocks green CI                                        |
 | **phase3-plan** (archive)    | Workstreams A–D                                     | Done / partial | See archive banner                                     |
 | **media-cdn-plan** (archive) | v1 upload strategy                                  | Stale          | Superseded by `media-uploads.md`                       |
@@ -120,13 +120,15 @@ _Out of scope for next small PR: full S3/Garage CDN pipeline, CI Prettier sweep 
 
 | File                                              | Change                                                      |
 | ------------------------------------------------- | ----------------------------------------------------------- |
-| `TRIAGE.md`                                       | Stats + done rows for auth guards, UGC, shop filters        |
-| `account-flow-fix.md`                             | Code hardening §5 — mark `ag-session` + sign-in banner Done |
+| `TRIAGE.md`                                       | Stats + done rows: `/builds`, cart qty/remove, OAuth origin, media Phase 1 |
+| `account-flow-fix.md`                             | `callback-url.ts` redirect — mark Done                      |
 | `market-readiness.md`                             | UGC row hybrid; fix `../../` links from `plans/active/`     |
 | `meta/decisions.md`                               | Fix style-guide link                                        |
 | `archive/daisyui.md`, `archive/media-cdn-plan.md` | Fix post-reorg relative links                               |
-| `content/build-submissions.md`                    | Fix `../../src/` code paths                                 |
-| `docs/README.md`                                  | Add manifest to Plans index                                 |
+| `content/build-submissions.md`                    | Public gallery wired via `builds/public.ts`                 |
+| `docs/README.md`                                  | Archive manifest; media-uploads status                      |
+| `plans/DOC-IMPLEMENTATION-MANIFEST.md`          | Archived → `archive/doc-implementation-manifest.md`         |
+| `plans/active/inspiration-polish-prod-setup.md`   | **Deleted** — ops duplicated account-flow-fix + market-readiness |
 
 ---
 

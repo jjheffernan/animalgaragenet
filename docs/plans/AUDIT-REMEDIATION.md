@@ -4,17 +4,17 @@
 **Branch:** `dev`  
 **Policy:** [SECURITY-PUBLIC.md](../SECURITY-PUBLIC.md) — no infra hostnames or secrets in this doc.
 
-Canonical tracker for findings from `docs/audits/*`, [STATUS.md](../STATUS.md), [TRIAGE.md](./TRIAGE.md), and [DOC-IMPLEMENTATION-MANIFEST.md](./DOC-IMPLEMENTATION-MANIFEST.md). Source audit pages remain for historical detail until every item here is **done** (then the source file may be archived or deleted).
+Canonical tracker for findings from `docs/audits/*`, [STATUS.md](../STATUS.md), and [TRIAGE.md](./TRIAGE.md). Source audit pages remain for historical detail until every item here is **done** (then the source file may be archived or deleted).
 
 **Related trackers (do not duplicate work here):**
 
-| Tracker                                                            | Role                                     |
-| ------------------------------------------------------------------ | ---------------------------------------- |
-| [DOC-IMPLEMENTATION-MANIFEST.md](./DOC-IMPLEMENTATION-MANIFEST.md) | Doc-vs-code batch verdicts (`DOC-###`)   |
-| [TRIAGE.md](./TRIAGE.md)                                           | Doc reorg map + plan/code evidence table |
-| [STATUS.md](../STATUS.md)                                          | High-level open-work summary             |
-| [meta/polish-plan.md](../meta/polish-plan.md)                      | Session polish P0 checklist              |
-| [plans/active/market-readiness.md](./active/market-readiness.md)   | Phased launch roadmap                    |
+| Tracker                                                          | Role                                     |
+| ---------------------------------------------------------------- | ---------------------------------------- |
+| [TRIAGE.md](./TRIAGE.md)                                         | Doc reorg map + plan/code evidence table |
+| [STATUS.md](../STATUS.md)                                        | High-level open-work summary             |
+| [meta/polish-plan.md](../meta/polish-plan.md)                    | Session polish P0 checklist              |
+| [plans/active/market-readiness.md](./active/market-readiness.md) | Phased launch roadmap                    |
+| [archive/doc-implementation-manifest.md](../archive/doc-implementation-manifest.md) | Superseded June 2026 `DOC-###` batch |
 
 ---
 
@@ -23,9 +23,9 @@ Canonical tracker for findings from `docs/audits/*`, [STATUS.md](../STATUS.md), 
 | Priority  | Open   | Blocked (ops) | Done   |
 | --------- | ------ | ------------- | ------ |
 | **P0**    | 1      | 5             | 3      |
-| **P1**    | 8      | 1             | 4      |
+| **P1**    | 4      | 1             | 8      |
 | **P2**    | 23     | 0             | 6      |
-| **Total** | **32** | **6**         | **13** |
+| **Total** | **28** | **6**         | **17** |
 
 _Blocked = external dashboard/env; cannot close in-repo._
 
@@ -52,12 +52,12 @@ _Blocked = external dashboard/env; cannot close in-repo._
 | ID         | Item                                                      | Source                                | Status      | Owner      | Acceptance criteria                                                                                | Code / doc paths                                                                                        |
 | ---------- | --------------------------------------------------------- | ------------------------------------- | ----------- | ---------- | -------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- |
 | AUD-P1-001 | Saleor checkout complete + payment                        | saleor-audit, STATUS, saleor.md       | **open**    | saleor     | `CHECKOUT_COMPLETE` mutation; shipping address/methods; payment redirect replaces placeholder UI   | `src/routes/checkout/+page.svelte` · DOC-037                                                            |
-| AUD-P1-002 | Cart line remove / quantity when Saleor enabled           | saleor-audit, polish-plan             | **open**    | saleor     | `checkoutLinesUpdate` / `checkoutLinesDelete` + API routes; `cart.svelte.ts` mutates live checkout | `src/lib/stores/cart.svelte.ts` L186–198 · `src/routes/cart/checkout/`                                  |
+| AUD-P1-002 | Cart line remove / quantity when Saleor enabled           | saleor-audit, polish-plan             | **done**    | saleor     | `checkoutLinesUpdate` / `checkoutLinesDelete` + API routes; `cart.svelte.ts` mutates live checkout | `src/lib/stores/cart.svelte.ts` · `src/routes/cart/checkout/` · `src/lib/server/saleor/checkout.ts`     |
 | AUD-P1-003 | Add-to-cart from listing cards with `variantId`           | saleor-audit                          | **open**    | saleor     | `ProductCard` passes default variant; no mock `getCatalogProductById` on Saleor path               | `src/lib/components/catalog/ProductCard.svelte` · `cart.svelte.ts` `addItemSaleor`                      |
-| AUD-P1-004 | Media uploads Phase 1 (Supabase Storage + `/api/media/*`) | STATUS, media-uploads, polish-plan    | **open**    | supabase   | Migration, bucket RLS, presigned upload API, review photo wiring                                   | [media-uploads.md](./active/media-uploads.md) · DOC-025                                                 |
+| AUD-P1-004 | Media uploads Phase 1 (Supabase Storage + `/api/media/*`) | STATUS, media-uploads, polish-plan    | **done**    | supabase   | Migration + presigned API + `ReviewPhotoUpload`; apply migration on Supabase project (ops)         | [media-uploads.md](./active/media-uploads.md) · `src/routes/api/media/*`                               |
 | AUD-P1-005 | YouTube live sync (replace stub)                          | STATUS, polish-plan, readiness-report | **open**    | code       | `youtube/sync.ts` calls Data API + DB upsert; readiness `youtube` probe passes                     | `src/lib/server/youtube/sync.ts` · DOC-038                                                              |
-| AUD-P1-006 | `/builds` from `build_submissions` table                  | DOC manifest, build-submissions       | **open**    | supabase   | List + detail loaders query Supabase; mock only when env unset                                     | `src/routes/builds/+page.server.ts` · `src/routes/builds/[slug]/+page.server.ts` · DOC-039, DOC-014     |
-| AUD-P1-007 | OAuth/magic-link redirect from request origin on preview  | TRIAGE, account-flow-fix              | **open**    | auth       | Preview deploys use `event.url.origin` when `PUBLIC_SITE_URL` unset or mismatched                  | `src/routes/auth/sign-in/+page.server.ts` L43                                                           |
+| AUD-P1-006 | `/builds` from `build_submissions` table                  | build-submissions, TRIAGE             | **done**    | supabase   | List + detail loaders query approved rows; mock only when env unset                                | `src/lib/server/builds/public.ts` · `src/routes/builds/*`                                               |
+| AUD-P1-007 | OAuth/magic-link redirect from request origin on preview  | TRIAGE, account-flow-fix              | **done**    | auth       | Preview deploys use `event.url.origin` when allowed via `callback-url.ts`                          | `src/lib/server/auth/callback-url.ts` · sign-in/sign-up actions                                         |
 | AUD-P1-008 | Ghost site provisioned + tags `guide` / `blog`            | ghost-audit, STATUS                   | **blocked** | code / ops | Real posts on staging with `GHOST_URL` + `GHOST_CONTENT_API_KEY` set                               | [ghost-audit.md](../audits/ghost-audit.md) · [content/ghost.md](../content/ghost.md) · DOC-008, DOC-013 |
 | AUD-P1-009 | Ghost production fallback policy                          | ghost-audit                           | **open**    | code       | When Ghost env set but API down: hard error or metric (not silent mock)                            | `src/lib/server/ghost/posts.ts`                                                                         |
 | AUD-P1-010 | Homepage UGC from approved testimonials                   | TRIAGE, market-readiness              | **done**    | supabase   | `+page.server.ts` prefers `listFeaturedTestimonials` over `mockUGC` when configured                | `src/routes/+page.server.ts` · DOC-026                                                                  |

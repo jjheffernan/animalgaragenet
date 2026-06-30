@@ -3,7 +3,7 @@
 **Public documentation policy:** [SECURITY-PUBLIC.md](./SECURITY-PUBLIC.md)
 
 **Last updated:** 2026-06-30  
-**Canonical next-step docs:** [plans/AUDIT-REMEDIATION.md](./plans/AUDIT-REMEDIATION.md) · [plans/DOC-IMPLEMENTATION-MANIFEST.md](./plans/DOC-IMPLEMENTATION-MANIFEST.md) · [meta/polish-plan.md](./meta/polish-plan.md) · [plans/active/market-readiness.md](./plans/active/market-readiness.md) · [plans/active/account-flow-fix.md](./plans/active/account-flow-fix.md)
+**Canonical next-step docs:** [plans/AUDIT-REMEDIATION.md](./plans/AUDIT-REMEDIATION.md) · [meta/polish-plan.md](./meta/polish-plan.md) · [plans/active/market-readiness.md](./plans/active/market-readiness.md) · [plans/active/account-flow-fix.md](./plans/active/account-flow-fix.md)
 
 This file reconciles “next steps” across all `docs/` so nothing is orphaned. Items are **Done**, **Ops** (external dashboard/env), or **Open** (code work).
 
@@ -26,6 +26,10 @@ This file reconciles “next steps” across all `docs/` so nothing is orphaned.
 | Production `ag-session` refusal + sign-in misconfig banner | `hooks.server.ts`, `sign-in/+page.svelte`                                                                                                                      |
 | Homepage UGC from approved testimonials                    | `+page.server.ts`, `testimonials/to-ugc.ts` (mock fallback when Supabase unset)                                                                                |
 | Shop category filters from Saleor                          | `catalog/shop-filters.ts`, `GET /api/catalog/shop-filters`                                                                                                     |
+| Public `/builds` from approved `build_submissions`         | `src/lib/server/builds/public.ts` (mock fallback when Supabase unset)                                                                                            |
+| Cart line qty/remove when Saleor enabled                   | `cart.svelte.ts`, `saleor/checkout.ts`, `/cart/checkout`                                                                                                        |
+| OAuth/magic-link callback from request origin              | `callback-url.ts`, sign-in/sign-up actions                                                                                                                       |
+| Media uploads Phase 1 API + migration                      | `src/routes/api/media/*`, `ReviewPhotoUpload.svelte`, migration `20250630120000_media_assets.sql`                                                                |
 | GitHub wiki                                                | Published — [wiki home](https://github.com/jjheffernan/animalgaragenet/wiki); backup in `docs/wiki-export/` (sanitized for public — no infra/AWS/secret names) |
 | Org mirror sync                                            | `scripts/sync-org-mirror.sh` on `main`                                                                                                                         |
 
@@ -43,6 +47,7 @@ These appear as unchecked boxes in plans but **cannot be completed in-repo**:
 | Set `PUBLIC_SALEOR_API_URL` + `SALEOR_CHANNEL`   | [market-readiness.md](./plans/active/market-readiness.md) Phase 1    | Netlify env                                                             |
 | Verify `/shop` ≠ 120 mock products               | market-readiness                                                     | After Saleor env + redeploy                                             |
 | Populate `.env` and run readiness                | [readiness-report.md](./testing/readiness-report.md)                 | Local or CI secrets                                                     |
+| Apply media migration on production Supabase     | [media-uploads.md](./plans/active/media-uploads.md)                  | `supabase db push` or dashboard apply                                   |
 | Enable Discord/Microsoft OAuth                   | [discord.md](./auth/discord.md), [microsoft.md](./auth/microsoft.md) | Supabase + provider consoles                                            |
 | Ghost site + tags                                | [ghost-audit.md](./audits/ghost-audit.md)                            | Ghost admin                                                             |
 | `<org-sync-secret>` rotation docs                | readiness-report                                                     | Personal repo Actions secret                                            |
@@ -57,10 +62,8 @@ These appear as unchecked boxes in plans but **cannot be completed in-repo**:
 | -------- | --------------------------------------------------------------- | ------------------------------------------------------------------------------ |
 | P0       | Merge `dev` → `main` when Netlify env configured                | [deployment.md](./style-guide/backend-ops/deployment.md)                       |
 | P0       | Fix CI Prettier (~221 files) — blocks green checks              | [polish-plan.md](./meta/polish-plan.md)                                        |
-| P1       | Public `/builds` from approved `build_submissions`              | [build-submissions.md](./content/build-submissions.md)                         |
-| P1       | Saleor checkout: line qty/remove, shipping, `CHECKOUT_COMPLETE` | [saleor.md](./commerce/saleor.md), [saleor-audit.md](./audits/saleor-audit.md) |
+| P1       | Saleor checkout: shipping, `CHECKOUT_COMPLETE`, payment         | [saleor.md](./commerce/saleor.md), [saleor-audit.md](./audits/saleor-audit.md) |
 | P1       | YouTube live sync (replace stub)                                | [readiness-report.md](./testing/readiness-report.md)                           |
-| P1       | Media uploads phase 1 (Supabase Storage + `/api/media/*`)       | [media-uploads.md](./plans/active/media-uploads.md)                            |
 | P2       | Ghost + remaining homepage mock slices (videos, builds)         | market-readiness Phase 3                                                       |
 | P2       | `profiles` table contract test                                  | readiness-report (testimonials + build_submissions done)                       |
 | P2       | `readiness-ci` optional Actions job                             | readiness-report                                                               |

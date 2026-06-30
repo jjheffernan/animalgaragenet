@@ -65,22 +65,23 @@ Server writes use the service role so inserts succeed regardless of caller RLS; 
 
 Rejected rows stay in the table for audit; they are never shown on `/builds`.
 
-## Future: publish to builds
+## Public builds gallery
 
-Approved submissions should become public [`BuildThread`](../../src/lib/types/domain.ts) entries:
+Approved submissions surface on `/builds` and `/builds/[slug]` via [`src/lib/server/builds/public.ts`](../../src/lib/server/builds/public.ts):
 
-1. Generate unique `slug` from title (e.g. `project-redline-civic`).
-2. Set `status = 'approved'` and persist `slug` on the submission row.
-3. Create or sync a row in a `builds` table (or continue mock → CMS migration path documented in [mock-to-saleor.md](../style-guide/business-logic/mock-to-saleor.md)).
-4. Award garage XP to `user_id` when present (see loyalty flow).
-5. Invalidate or revalidate `/builds` cache.
+1. `listApprovedBuildLogs()` / `getApprovedBuildLogBySlug()` (service role).
+2. `buildLogsToThreads()` / `buildLogToThread()` map rows to [`BuildThread`](../../src/lib/types/domain.ts).
+3. When Supabase is unset or no approved rows exist, loaders fall back to [`mock/builds.ts`](../../src/lib/data/mock/builds.ts).
 
-Until that pipeline exists, [`src/lib/data/mock/builds.ts`](../../src/lib/data/mock/builds.ts) remains the source for the public builds gallery.
+**Ops:** Set `slug` on approved rows (admin or future moderation UI) so detail URLs resolve.
 
 ## Related code
 
-| File                                       | Role                   |
-| ------------------------------------------ | ---------------------- |
-| `src/routes/builds/submit/+page.server.ts` | Validation + action    |
-| `src/lib/server/forms/submit.ts`           | Insert + mock fallback |
-| `src/lib/server/supabase/admin.ts`         | Service-role client    |
+| File                                       | Role                              |
+| ------------------------------------------ | --------------------------------- |
+| `src/lib/server/builds/public.ts`          | Public list/detail loaders        |
+| `src/routes/builds/+page.server.ts`        | Paginated gallery                 |
+| `src/routes/builds/[slug]/+page.server.ts` | Detail page                     |
+| `src/routes/builds/submit/+page.server.ts` | Validation + action               |
+| `src/lib/server/forms/submit.ts`           | Insert + mock fallback            |
+| `src/lib/server/supabase/admin.ts`         | Service-role client               |

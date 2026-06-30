@@ -1,3 +1,9 @@
 # allow crawling everything by default
 User-agent: *
 Disallow:
+
+Sitemap: https://animalgarage.net/sitemap.xml
+
+Sitemap: https://animalgarage.net/sitemap.xml
+
+Sitemap: https://animalgarage.net/sitemap.xml

@@ -87,7 +87,7 @@ npm run test:readiness
 
 - [ ] `readiness-env`: Copy `.env.example` → `.env` with staging/prod secrets so `npm run test:readiness` produces live pass/fail signal in CI or pre-deploy
 - [ ] `youtube-live-sync`: Replace `fetchChannelVideos` stub with YouTube Data API v3 and Supabase `videos` upsert
-- [ ] `media-uploads-phase1`: Wire S3 presigned upload + `PUBLIC_CDN_BASE_URL` delivery per `docs/plans/active/media-uploads.md`
+- [ ] `media-uploads-phase1`: Supabase Storage signed upload per `docs/plans/active/media-uploads.md`
 - [ ] `saleor-readiness`: Run probes against live Saleor with real channel slug; confirm products, channel, and promo codes before enabling live checkout
 - [x] `supabase-contract-tests`: `testimonials` + `build_submissions` in `tests/contracts/supabase-payloads.test.ts` — **`profiles` still open**
 - [x] `ghost-contract-test`: Mapper contracts in `tests/contracts/ghost-mapper.test.ts` — raw API fetch test still open

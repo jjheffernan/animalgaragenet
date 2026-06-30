@@ -97,7 +97,8 @@ Complete, superseded, or stale plans. Each file has a status banner.
 
 | Doc | Purpose |
 |-----|---------|
-| [plans/TRIAGE.md](./TRIAGE.md) | Plan vs codebase verification |
+| [plans/README.md](./plans/README.md) | Plan lifecycle |
+| [plans/TRIAGE.md](./plans/TRIAGE.md) | Plan vs codebase verification |
 | [plans/active/account-flow-fix.md](./plans/active/account-flow-fix.md) | Netlify + Supabase account ops |
 | [plans/active/market-readiness.md](./plans/active/market-readiness.md) | Phased launch roadmap |
 | [plans/active/media-uploads.md](./plans/active/media-uploads.md) | UGC upload pipeline — phase 1 not wired |

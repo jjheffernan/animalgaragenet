@@ -55,10 +55,10 @@ The browser client passes `prompt: 'select_account'` for Azure so users can pick
 2. Paste **Application (client) ID** and **Secret** from Entra.
 3. **Azure Tenant URL** — set per table above (leave default/common for most apps).
 4. **Authentication** → **URL Configuration**:
-   - **Site URL**: `https://animalgarage.net` (or `http://localhost:5173` for local)
+   - **Site URL**: `https://<your-site-host>` (or `http://localhost:5173` for local)
    - **Redirect URLs**: add both:
      - `http://localhost:5173/auth/callback`
-     - `https://animalgarage.net/auth/callback`
+     - `https://<your-site-host>/auth/callback`
 
 ## Scopes
 

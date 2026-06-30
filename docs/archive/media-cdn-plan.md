@@ -262,7 +262,7 @@ s3://<media-bucket>/
 | Env | Bucket / prefix | CDN URL |
 |-----|-----------------|---------|
 | Local dev | MinIO/Garage Docker `ag-media-dev` or prefix `dev/` | `http://localhost:3900` or `http://cdn.localhost` |
-| Staging | `<media-bucket-staging>` | `https://cdn.staging.animalgarage.net` |
+| Staging | `<media-bucket-staging>` | `https://<your-cdn-staging-host>` |
 | Production | `<media-bucket-prod>` | `https://<your-cdn-host>` |
 
 ---
@@ -339,7 +339,7 @@ sequenceDiagram
 ### CDN / proxy settings
 
 - **Query strings:** ignore for cache key (no resize query params in v1).
-- **CORS:** `Access-Control-Allow-Origin: https://animalgarage.net` (and staging).
+- **CORS:** `Access-Control-Allow-Origin: https://<your-site-host>` (and staging).
 - **Compression:** gzip/brotli at edge for non-image assets; images served as WebP/AVIF already compressed.
 
 ### Invalidation

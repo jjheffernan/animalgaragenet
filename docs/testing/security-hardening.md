@@ -40,7 +40,7 @@ Mock promo state is non-sensitive (discount label/percent for dev catalog); http
 ## Local dev guards
 
 - `isLocalDevAuthEnabled`: localhost only + `isProductionSiteUrl()` false.
-- `isDevAdminEnabled`: requires `DEV_ADMIN=true`, blocks `animalgarage.net` hostnames, and blocks when `SITE_URL` points at production.
+- `isDevAdminEnabled`: requires `DEV_ADMIN=true`, blocks production hostnames via `isProductionHostname()`, and blocks when `SITE_URL` points at production.
 
 ## Production auth guards (DOC-021 / DOC-022)
 
@@ -52,6 +52,7 @@ Mock promo state is non-sensitive (discount label/percent for dev catalog); http
 - `src/lib/server/validation/limits.test.ts`
 - `src/lib/server/rate-limit.test.ts`
 - Existing `local-dev.test.ts` covers production hostname guards
+- `tests/integration/auth-actions.test.ts` — rejects mock sign-in on production hostname without Supabase
 
 ## Deferred
 

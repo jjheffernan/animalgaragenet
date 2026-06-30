@@ -21,8 +21,8 @@ Supabase always redirects through the project callback above. For local dev, use
 1. **Authentication** → **Providers** → **Discord** → Enable.
 2. Paste **Client ID** and **Client Secret** from Discord.
 3. **Authentication** → **URL Configuration**:
-   - **Site URL**: `https://animalgarage.net` (or `http://localhost:5173` for local)
-   - **Redirect URLs**: add `http://localhost:5173/auth/callback` and production `https://animalgarage.net/auth/callback`
+   - **Site URL**: `https://<your-site-host>` (or `http://localhost:5173` for local)
+   - **Redirect URLs**: add `http://localhost:5173/auth/callback` and production `https://<your-site-host>/auth/callback`
 
 ## Scopes
 

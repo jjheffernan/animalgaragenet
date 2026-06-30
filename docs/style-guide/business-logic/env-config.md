@@ -55,6 +55,7 @@ All values fall back to safe defaults or empty strings — missing vars won't cr
 | --------------------------- | ------------------------------------------------ |
 | `SALEOR_CHANNEL`            | Saleor channel slug (default: `default-channel`) |
 | `SUPABASE_SERVICE_ROLE_KEY` | Admin key — never expose to client               |
+| Object storage / CDN        | See `.env.example`                               |
 
 ## Missing var behavior
 

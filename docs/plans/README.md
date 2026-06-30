@@ -15,4 +15,4 @@
 | [market-readiness.md](./active/market-readiness.md) | Active | Phased launch roadmap |
 | [media-uploads.md](./active/media-uploads.md) | Active — not implemented | Phase 1 Supabase Storage (`/api/media/*`) still open |
 
-Triage and moves performed by docs reorganization pass (June 2026).
+Triage and moves: [TRIAGE.md](./TRIAGE.md) (June 2026 reorg + public-safe pass).

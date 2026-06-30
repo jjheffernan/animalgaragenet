@@ -40,7 +40,7 @@ All three must pass before opening a PR.
 
 ## Local auth shortcuts
 
-Server-only env vars for fast iteration on **localhost only**. Both are ignored when the request host is `animalgarage.net` (or a subdomain). **Never** set them on Netlify.
+Server-only env vars for fast iteration on **localhost only**. Both are ignored on production hostnames (see `isProductionHostname()`). **Never** set them on Netlify.
 
 | Variable | Purpose |
 |----------|---------|

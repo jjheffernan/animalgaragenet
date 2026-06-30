@@ -8,7 +8,7 @@ Server-only variables (never expose to the browser):
 
 | Variable | Description |
 |----------|-------------|
-| `GHOST_URL` | Ghost site URL, e.g. `https://content.animalgarage.net` (no trailing slash) |
+| `GHOST_URL` | Ghost site URL, e.g. `https://<your-ghost-host>` (no trailing slash) |
 | `GHOST_CONTENT_API_KEY` | Content API key from Ghost Admin |
 
 Copy from `.env.example` into `.env` for local development.

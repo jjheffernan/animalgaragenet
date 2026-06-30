@@ -191,6 +191,21 @@ export function isPaymentAppConfigured(shipping: CheckoutShippingDisplay | null)
 	return Boolean(shipping?.paymentGateways.length);
 }
 
+/** Map Stripe redirect query params for transactionProcess. */
+export function stripeReturnDataFromUrl(
+	searchParams: URLSearchParams
+): Record<string, unknown> | undefined {
+	const paymentIntent = searchParams.get('payment_intent');
+	if (!paymentIntent) return undefined;
+
+	const data: Record<string, unknown> = { paymentIntentId: paymentIntent };
+	const clientSecret = searchParams.get('payment_intent_client_secret');
+	if (clientSecret) data.paymentIntentClientSecret = clientSecret;
+	const redirectStatus = searchParams.get('redirect_status');
+	if (redirectStatus) data.redirectStatus = redirectStatus;
+	return data;
+}
+
 /** Create an empty Saleor checkout. Returns checkout ID, or null when Saleor is disabled. */
 export async function createCheckout(channel?: string): Promise<string | null> {
 	if (!isSaleorEnabled()) return null;

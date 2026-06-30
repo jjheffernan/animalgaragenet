@@ -9,11 +9,18 @@ import {
 	getCheckoutLines,
 	getCheckoutShipping,
 	initializePaymentGateway,
+	initializeTransaction,
 	isPaymentAppConfigured,
+	processTransaction,
 	setCheckoutId,
+	stripeReturnDataFromUrl,
 	updateDeliveryMethod,
 	updateShippingAddress
 } from './checkout';
+import {
+	readStripeClientSecret,
+	readStripePublishableKey
+} from '$lib/client/checkout/stripe-elements';
 
 vi.mock('./client', () => ({
 	isSaleorEnabled: vi.fn(() => true),
@@ -326,5 +333,89 @@ describe('completeCheckout', () => {
 
 		const result = await completeCheckout('checkout-1');
 		expect(result).toEqual({ ok: true, data: { orderId: 'order-99' } });
+	});
+});
+
+describe('initializeTransaction', () => {
+	beforeEach(() => {
+		vi.clearAllMocks();
+		vi.mocked(isSaleorEnabled).mockReturnValue(true);
+	});
+
+	it('returns transaction id and client secret data', async () => {
+		vi.mocked(saleorFetch).mockResolvedValue({
+			data: {
+				transactionInitialize: {
+					transaction: { id: 'tx-1' },
+					transactionEvent: { type: 'CHARGE_ACTION_REQUIRED' },
+					data: { stripeClientSecret: 'pi_secret_123' },
+					errors: []
+				}
+			}
+		});
+
+		const result = await initializeTransaction(
+			'checkout-1',
+			'saleor.app.payment.stripe',
+			68.48,
+			{},
+			'idempotency-1'
+		);
+		expect(result.ok).toBe(true);
+		if (!result.ok) return;
+		expect(result.data.transactionId).toBe('tx-1');
+		expect(result.data.eventType).toBe('CHARGE_ACTION_REQUIRED');
+		expect(readStripeClientSecret(result.data.data)).toBe('pi_secret_123');
+	});
+});
+
+describe('processTransaction', () => {
+	beforeEach(() => {
+		vi.clearAllMocks();
+		vi.mocked(isSaleorEnabled).mockReturnValue(true);
+	});
+
+	it('returns event type after 3DS redirect sync', async () => {
+		vi.mocked(saleorFetch).mockResolvedValue({
+			data: {
+				transactionProcess: {
+					transactionEvent: { type: 'CHARGE_SUCCESS' },
+					data: {},
+					errors: []
+				}
+			}
+		});
+
+		const result = await processTransaction('tx-1', { paymentIntentId: 'pi_abc' });
+		expect(result.ok).toBe(true);
+		if (!result.ok) return;
+		expect(result.data.eventType).toBe('CHARGE_SUCCESS');
+	});
+});
+
+describe('stripeReturnDataFromUrl', () => {
+	it('maps Stripe redirect query params', () => {
+		const params = new URLSearchParams({
+			payment_intent: 'pi_abc',
+			payment_intent_client_secret: 'pi_secret',
+			redirect_status: 'succeeded'
+		});
+
+		expect(stripeReturnDataFromUrl(params)).toEqual({
+			paymentIntentId: 'pi_abc',
+			paymentIntentClientSecret: 'pi_secret',
+			redirectStatus: 'succeeded'
+		});
+	});
+
+	it('returns undefined when payment_intent is missing', () => {
+		expect(stripeReturnDataFromUrl(new URLSearchParams())).toBeUndefined();
+	});
+});
+
+describe('readStripePublishableKey', () => {
+	it('extracts publishable key from gateway config', () => {
+		expect(readStripePublishableKey({ stripePublishableKey: 'pk_test_123' })).toBe('pk_test_123');
+		expect(readStripePublishableKey({})).toBeNull();
 	});
 });

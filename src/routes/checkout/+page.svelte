@@ -2,6 +2,12 @@
 	import { onMount } from 'svelte';
 	import { resolve } from '$app/paths';
 	import type { CheckoutShippingDisplay } from '$lib/types/checkout';
+	import {
+		mountPaymentElement,
+		readStripeClientSecret,
+		readStripePublishableKey,
+		type StripeElementsHandle
+	} from '$lib/client/checkout/stripe-elements';
 	import { cart } from '$lib/stores/cart.svelte';
 	import { locale } from '$lib/stores/locale.svelte';
 	import AnimatedReveal from '$lib/components/shared/AnimatedReveal.svelte';
@@ -21,6 +27,14 @@
 	let shippingSaving = $state(false);
 	let shippingError = $state('');
 	let addressSaved = $state(Boolean(data.shipping?.shippingMethods.length));
+	let paymentElementContainer = $state<HTMLDivElement | null>(null);
+	let stripeHandle = $state<StripeElementsHandle | null>(null);
+	let stripePublishableKey = $state<string | null>(null);
+	let gatewayInitializing = $state(false);
+	let gatewayInitialized = $state(false);
+	let gatewayError = $state('');
+	let paymentProcessing = $state(false);
+	let paymentError = $state('');
 
 	onMount(() => {
 		cart.init();
@@ -43,15 +57,115 @@
 		data.saleorEnabled ? (shipping?.paymentGateways.length ?? 0) > 0 : false
 	);
 	const shippingComplete = $derived(Boolean(shipping?.selectedShippingMethodId));
-	const canPay = $derived(
+	const shouldInitializeGateway = $derived(
 		data.saleorEnabled && paymentConfigured && shippingComplete && !isEmpty
+	);
+	const canPay = $derived(
+		shouldInitializeGateway && gatewayInitialized && !gatewayInitializing && !paymentProcessing
 	);
 
 	const payButtonLabel = $derived.by(() => {
 		if (!data.saleorEnabled) return 'Checkout unavailable — Saleor not configured';
 		if (!shippingComplete) return 'Select shipping to continue';
 		if (!paymentConfigured) return 'Payment unavailable — configure Payment App in Saleor';
+		if (gatewayInitializing) return 'Loading payment…';
+		if (!gatewayInitialized) return gatewayError || 'Initializing payment…';
+		if (paymentProcessing) return 'Processing…';
 		return 'Pay with Stripe';
+	});
+
+	$effect(() => {
+		if (!shouldInitializeGateway) {
+			stripePublishableKey = null;
+			gatewayInitialized = false;
+			gatewayError = '';
+			stripeHandle?.destroy();
+			stripeHandle = null;
+			return;
+		}
+
+		const amount = shipping?.total.amount;
+		let cancelled = false;
+
+		gatewayInitializing = true;
+		gatewayInitialized = false;
+		gatewayError = '';
+
+		void (async () => {
+			try {
+				const response = await fetch('/checkout/payment/initialize', {
+					method: 'POST',
+					headers: { 'Content-Type': 'application/json' },
+					body: JSON.stringify({ amount })
+				});
+				const payload = (await response.json()) as {
+					gateway?: Record<string, unknown>;
+					error?: string;
+				};
+
+				if (cancelled) return;
+
+				if (!response.ok) {
+					gatewayError = payload.error ?? 'Could not initialize payment gateway.';
+					return;
+				}
+
+				const publishableKey = readStripePublishableKey(payload.gateway);
+				if (!publishableKey) {
+					gatewayError = 'Payment gateway did not return a publishable key.';
+					return;
+				}
+
+				stripePublishableKey = publishableKey;
+			} catch {
+				if (!cancelled) gatewayError = 'Network error — try again.';
+			} finally {
+				if (!cancelled) gatewayInitializing = false;
+			}
+		})();
+
+		return () => {
+			cancelled = true;
+		};
+	});
+
+	$effect(() => {
+		const key = stripePublishableKey;
+		const container = paymentElementContainer;
+		if (!key || !container) return;
+
+		let cancelled = false;
+		let localHandle: StripeElementsHandle | null = null;
+
+		void (async () => {
+			stripeHandle?.destroy();
+			stripeHandle = null;
+
+			const handle = await mountPaymentElement(container, key);
+			if (cancelled) {
+				handle?.destroy();
+				return;
+			}
+			if (!handle) {
+				gatewayError = 'Could not load Stripe Payment Element.';
+				gatewayInitialized = false;
+				return;
+			}
+
+			localHandle = handle;
+			stripeHandle = handle;
+			gatewayInitialized = true;
+			gatewayError = '';
+		})();
+
+		return () => {
+			cancelled = true;
+			localHandle?.destroy();
+			if (stripeHandle === localHandle) {
+				stripeHandle = null;
+				gatewayInitialized = false;
+			}
+		};
 	});
 
 	const summarySubtotal = $derived(
@@ -136,6 +250,60 @@
 			shippingError = 'Network error — try again.';
 		} finally {
 			shippingSaving = false;
+		}
+	}
+
+	async function handlePay() {
+		if (!canPay || !stripeHandle || !shipping) return;
+
+		paymentProcessing = true;
+		paymentError = '';
+
+		try {
+			const { error: submitError } = await stripeHandle.elements.submit();
+			if (submitError) {
+				paymentError = submitError.message ?? 'Payment validation failed.';
+				return;
+			}
+
+			const initResponse = await fetch('/checkout/payment/initialize', {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify({
+					amount: shipping.total.amount,
+					startTransaction: true
+				})
+			});
+			const initPayload = (await initResponse.json()) as {
+				data?: unknown;
+				error?: string;
+			};
+
+			if (!initResponse.ok) {
+				paymentError = initPayload.error ?? 'Could not start payment.';
+				return;
+			}
+
+			const clientSecret = readStripeClientSecret(initPayload.data);
+			if (!clientSecret) {
+				paymentError = 'Payment provider did not return a client secret.';
+				return;
+			}
+
+			const returnUrl = new URL(resolve('/checkout/payment/complete'), window.location.origin).href;
+			const { error: confirmError } = await stripeHandle.stripe.confirmPayment({
+				elements: stripeHandle.elements,
+				clientSecret,
+				confirmParams: { return_url: returnUrl }
+			});
+
+			if (confirmError) {
+				paymentError = confirmError.message ?? 'Payment could not be confirmed.';
+			}
+		} catch {
+			paymentError = 'Network error — try again.';
+		} finally {
+			paymentProcessing = false;
 		}
 	}
 </script>
@@ -336,40 +504,35 @@
 										No Payment App is enabled on this Saleor channel. Install Stripe (or another
 										Payment App) in Saleor Dashboard → Apps, then enable it for your channel.
 									</p>
+								{:else if !shippingComplete}
+									<p class="text-sm text-zinc-400">
+										Select a shipping method to load Stripe Payment Element.
+									</p>
+								{:else if gatewayInitializing}
+									<p class="text-sm text-zinc-400">Connecting to payment gateway…</p>
+								{:else if gatewayError}
+									<p class="text-sm text-red-400" role="alert">{gatewayError}</p>
 								{:else}
 									<p class="text-sm text-zinc-400">
-										Stripe Payment Element will load here after gateway initialization. Card data
-										never touches this server — Saleor Payment Apps handle provider secrets.
+										Card data never touches this server — Saleor Payment Apps handle provider
+										secrets.
 									</p>
+									<div
+										class="mt-4 min-h-[3rem]"
+										bind:this={paymentElementContainer}
+										aria-label="Stripe payment form"
+									></div>
 								{/if}
-								<div class="mt-4 space-y-3 opacity-50" aria-hidden="true">
-									<input
-										type="text"
-										placeholder="Card number"
-										disabled
-										class="w-full rounded-sm border border-zinc-700 bg-zinc-900 px-4 py-3 text-zinc-600"
-									/>
-									<div class="grid gap-3 sm:grid-cols-2">
-										<input
-											type="text"
-											placeholder="MM / YY"
-											disabled
-											class="rounded-sm border border-zinc-700 bg-zinc-900 px-4 py-3 text-zinc-600"
-										/>
-										<input
-											type="text"
-											placeholder="CVC"
-											disabled
-											class="rounded-sm border border-zinc-700 bg-zinc-900 px-4 py-3 text-zinc-600"
-										/>
-									</div>
-								</div>
+								{#if paymentError}
+									<p class="mt-3 text-sm text-red-400" role="alert">{paymentError}</p>
+								{/if}
 							</div>
 						</fieldset>
 
 						<button
 							type="button"
 							disabled={!canPay}
+							onclick={handlePay}
 							class="w-full rounded-sm py-4 text-sm font-bold uppercase tracking-wider transition {canPay
 								? 'bg-red-600 text-white hover:bg-red-500'
 								: 'bg-zinc-800 text-zinc-500'}"

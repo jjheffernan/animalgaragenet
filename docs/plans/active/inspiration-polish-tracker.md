@@ -18,16 +18,16 @@ Markers: `@inspiration-scaffold` (Supabase/community/CMS) · `@saleor-migration`
 | IP-001 | polish / AUDIT      | Supabase auth on Netlify preview             | —                                                                                | **blocked**   | [§ Auth](#prod-auth)                                                |
 | IP-002 | inspiration / AUDIT | Live Saleor product catalog                    | `src/lib/server/catalog/*.ts` (`@saleor-migration`)                              | **blocked**   | [§ Saleor catalog](#prod-saleor-catalog)                            |
 | IP-003 | inspiration / AUDIT | Checkout + payment (Stripe via Saleor)       | `src/lib/server/saleor/checkout*.ts`, `routes/checkout/` (`@saleor-migration`)   | **partial**   | [§ Checkout](#prod-checkout)                                        |
-| IP-004 | inspiration         | Notify-me restocks → Supabase                | `src/lib/server/restock/repository.ts`, `POST /api/restock/notify`               | **scaffolded** | Apply `20250630210000_restock_alerts.sql`; Saleor stock webhook   |
-| IP-005 | inspiration         | Collection shop filters (`?collection=`)     | `src/lib/server/catalog/shop-collection.ts`                                      | **partial**   | Saleor `COLLECTION_PRODUCTS_QUERY` + mapper wired; mock fallback in dev |
-| IP-006 | inspiration         | Campaign hero / homepage CMS                 | `src/lib/server/featured-sections/repository.ts`, `/admin/featured`              | **partial**   | Admin saveHero wired; apply `20250630150000_content_metadata.sql`   |
+| IP-004 | inspiration         | Notify-me restocks → Supabase                | `src/lib/server/restock/repository.ts`, `POST /api/restock/notify`               | **live**      | Apply `20250630210000_restock_alerts.sql`; Saleor stock webhook   |
+| IP-005 | inspiration         | Collection shop filters (`?collection=`)     | `src/lib/server/catalog/shop-collection.ts`                                      | **done**      | Saleor `COLLECTION_PRODUCTS_QUERY` + shop ribbon; mock fallback in dev |
+| IP-006 | inspiration         | Campaign hero / homepage CMS                 | `src/lib/server/featured-sections/repository.ts`, `/admin/featured`              | **done**      | Admin `saveHero` + homepage `Hero` wired; apply `20250630150000_content_metadata.sql`   |
 | IP-007 | inspiration / AUDIT | YouTube channel auto-sync                    | `src/lib/server/youtube/repository.ts`, `youtube/sync.ts`, `/api/cron/youtube-sync` | **done**      | Apply `20250630160000_youtube_sync.sql`; cron header `x-youtube-sync-secret` — [§ Content](#prod-content) |
-| IP-008 | inspiration         | Newsletter → Supabase                        | `src/lib/server/newsletter/repository.ts`, `POST /api/newsletter/subscribe`      | **scaffolded** | `20250630140000_newsletter_subscribers.sql`                         |
+| IP-008 | inspiration         | Newsletter → Supabase                        | `src/lib/server/newsletter/repository.ts`, `POST /api/newsletter/subscribe`      | **live**      | `20250630140000_newsletter_subscribers.sql`                         |
 | IP-009 | inspiration         | Garage Squad XP (off localStorage)           | `src/lib/server/user-preferences/repository.ts`, `POST /api/account/garage`      | **done**      | `20250630230000_account_garage_xp.sql`; apply migration on Supabase |
 | IP-010 | inspiration         | Saved vehicle garage (persist YMM)           | `user-preferences/repository.ts`, `GET/PUT /api/account/garage`                  | **done**      | Same migration; guest localStorage fallback retained                |
 | IP-011 | inspiration         | Wholesale application workflow               | `src/lib/server/wholesale/repository.ts`, `/wholesale`                            | **live**      | `20250630220000_wholesale_inquiries.sql`; form → repository wired   |
-| IP-012 | inspiration / AUDIT | Account order history (Saleor mirror)        | `src/lib/server/orders/snapshots.ts`, `routes/account/orders/`                   | **partial**   | Mock upsert + account page wired; Saleor webhook + migration pending |
-| IP-013 | inspiration         | CDN Phase 2 (S3 + CloudFront)                | `src/lib/server/media/cdn.ts`                                                    | **partial**   | `resolveUgcPublicUrl` wired in media reads; presigned upload deferred |
+| IP-012 | inspiration / AUDIT | Account order history (Saleor mirror)        | `src/lib/server/orders/snapshots.ts`, `routes/account/orders/`                   | **partial**   | Account page + empty state wired; Saleor webhook + migration pending |
+| IP-013 | inspiration         | CDN Phase 2 (S3 + CloudFront)                | `src/lib/server/media/cdn.ts`                                                    | **partial**   | **Read URLs done** — `resolveUgcPublicUrl` in media reads; presigned upload deferred |
 | IP-014 | inspiration         | Watch hub — DB videos + shoppable            | `src/routes/watch/+page.server.ts`                                               | **done**      | `/watch` prefers Supabase `videos` when rows exist; mock fallback retained |
 | IP-015 | inspiration / AUDIT | Ghost blog + guides (live CMS)               | `src/lib/server/ghost/posts.ts`                                                  | **blocked**   | [§ Content](#prod-content)                                          |
 | IP-016 | polish              | Review photo uploads (media Phase 1)         | `src/lib/server/media/repository.ts`, `ReviewPhotoUpload.svelte`                 | **done**      | [§ Media uploads](#prod-media-uploads)                                |
@@ -36,7 +36,7 @@ Markers: `@inspiration-scaffold` (Supabase/community/CMS) · `@saleor-migration`
 | IP-019 | polish / AUDIT      | CI Prettier / format drift                   | —                                                                                | **done**      | Commit `63eb20a` — `npm run lint` green on `dev`                    |
 | IP-020 | inspiration         | Build thread submit → Supabase               | `src/lib/server/build-logs/repository.ts`, `/admin/builds`                       | **live**      | Apply `build_submissions` migration                                 |
 | IP-021 | inspiration         | UGC testimonials + moderation                | `testimonials/repository.ts`, `/admin/testimonials`                              | **live**      | Supabase Storage bucket `ugc`                                       |
-| IP-022 | inspiration         | Featured sections admin editor               | `/admin/featured`                                                                  | **partial**   | Staff JWT (`editor`/`admin`); saveHero action wired                 |
+| IP-022 | inspiration         | Featured sections admin editor               | `/admin/featured`                                                                  | **done**      | Staff JWT (`editor`/`admin`); `saveHero` + homepage hero load verified |
 | IP-023 | inspiration         | Multi-channel international pricing          | `src/lib/server/saleor/channels.ts` (`@saleor-migration`)                        | **scaffolded** | Map locales in Saleor admin                                         |
 | IP-024 | inspiration         | Shipping zones + threshold promos            | —                                                                                | **not started** | Saleor shipping + promotion rules                                   |
 | IP-025 | inspiration         | Supabase-backed admin user CRUD              | `src/lib/server/supabase/admin-users.ts`, `/admin/users`                         | **partial**   | Service role + `promote-admin.ts`                                   |
@@ -148,8 +148,10 @@ See [saleor-payments.md](../../commerce/saleor-payments.md).
 
 | Variable              | Notes                                     |
 | --------------------- | ----------------------------------------- |
-| `PUBLIC_CDN_BASE_URL` | CloudFront or Supabase public URL         |
-| `S3_*`, `AWS_*`       | Presigned upload + invalidation (IP-013)  |
+| `PUBLIC_CDN_BASE_URL` | CloudFront or Supabase public URL — **read URLs wired** via `resolveUgcPublicUrl` |
+| `S3_*`, `AWS_*`       | Presigned upload + invalidation (deferred) |
+
+**Code done (read path):** `src/lib/server/media/cdn.ts` — `resolveCdnUrl`, `resolveUgcPublicUrl`, `isCdnPublicReadConfigured`. Media repository uses CDN URLs when `PUBLIC_CDN_BASE_URL` is set. Presigned PUT + CloudFront invalidation remain commented (`@migration`).
 
 v1 uses Supabase Storage; migrate when traffic warrants.
 

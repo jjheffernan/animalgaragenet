@@ -1,7 +1,7 @@
 import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 import { createUploadSlot } from '$lib/server/media/repository';
-import { validateUploadRequest } from '$lib/server/media/validation';
+import { isAllowedImageMime, validateUploadRequest } from '$lib/server/media/validation';
 import { isSupabaseConfigured } from '$lib/server/supabase/client';
 
 interface UploadSlotBody {
@@ -21,8 +21,8 @@ export const POST: RequestHandler = async ({ request, locals }) => {
 	const mimeType = String(body.mimeType ?? '').trim();
 	const byteSize = Number(body.byteSize);
 	const validationError = validateUploadRequest(mimeType, byteSize);
-	if (validationError) {
-		return json({ error: validationError }, { status: 400 });
+	if (validationError || !isAllowedImageMime(mimeType)) {
+		return json({ error: validationError ?? 'Invalid image type.' }, { status: 400 });
 	}
 
 	const result = await createUploadSlot(locals.supabase, locals.session.id, mimeType, byteSize);

@@ -4,7 +4,20 @@
 	import AnimatedReveal from '$lib/components/shared/AnimatedReveal.svelte';
 	import type { ActionData } from './$types';
 
-	let { form }: { form: ActionData } = $props();
+	type SubmitForm = ActionData & {
+		success?: boolean;
+		message?: string;
+		errors?: Record<string, string>;
+		title?: string;
+		year?: string;
+		make?: string;
+		model?: string;
+		email?: string;
+		description?: string;
+		modList?: string;
+	};
+
+	let { form }: { form: SubmitForm } = $props();
 
 	let submitting = $state(false);
 

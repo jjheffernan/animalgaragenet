@@ -5,7 +5,7 @@
 
 	let syncingId = $state<string | null>(null);
 
-	function formatSynced(iso?: string): string {
+	function formatSynced(iso?: string | null): string {
 		if (!iso) return 'Never';
 		return new Date(iso).toLocaleString();
 	}

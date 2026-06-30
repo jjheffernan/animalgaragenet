@@ -21,7 +21,7 @@ describe('promo store', () => {
 		vi.mocked(isPromoDismissed).mockReturnValue(false);
 		vi.mocked(setPromoDismissed).mockClear();
 		(promo as { dismissed: boolean; visible: boolean }).dismissed = false;
-		(promo as { initialized?: boolean }).initialized = false;
+		(promo as unknown as { initialized?: boolean }).initialized = false;
 	});
 
 	afterEach(() => {

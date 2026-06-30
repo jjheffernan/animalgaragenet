@@ -37,7 +37,7 @@
 					{#each section.items as item (item.href)}
 						<li>
 							<a
-								href={resolve(item.href)}
+								href={resolve(item.href as '/admin')}
 								class="block rounded-sm px-2 py-1.5 text-sm transition {linkClass(
 									item.href,
 									item.exact

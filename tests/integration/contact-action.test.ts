@@ -18,8 +18,9 @@ describe('contact form action', () => {
 
 		expect(isActionFailure(result)).toBe(true);
 		if (isActionFailure(result)) {
+			const data = result.data as unknown as { errors?: Record<string, string> };
 			expect(result.status).toBe(400);
-			expect(result.data.errors).toMatchObject({
+			expect(data.errors).toMatchObject({
 				name: expect.any(String),
 				email: expect.any(String),
 				subject: expect.any(String),
@@ -40,8 +41,9 @@ describe('contact form action', () => {
 
 		expect(isActionFailure(result)).toBe(true);
 		if (isActionFailure(result)) {
-			expect(result.data.errors?.email).toBeTruthy();
-			expect(result.data.errors?.message).toBeTruthy();
+			const data = result.data as unknown as { errors?: Record<string, string> };
+			expect(data.errors?.email).toBeTruthy();
+			expect(data.errors?.message).toBeTruthy();
 		}
 	});
 

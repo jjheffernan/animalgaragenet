@@ -12,7 +12,9 @@ test.describe('smoke', () => {
 		await page.goto('/');
 		await dismissCookieBanner(page);
 		await expect(page.getByRole('navigation', { name: 'Main' })).toBeVisible();
-		await expect(page.getByRole('link', { name: 'Shop', exact: true })).toBeVisible();
+		await expect(
+			page.getByRole('navigation', { name: 'Main' }).getByRole('link', { name: 'Shop', exact: true })
+		).toBeVisible();
 	});
 
 	test('shop page loads products', async ({ page }) => {

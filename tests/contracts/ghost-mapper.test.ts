@@ -47,9 +47,9 @@ const BLOG_POST_KEYS: (keyof BlogPost)[] = [
 	'tags'
 ];
 
-function assertDomainShape<T extends Record<string, unknown>>(value: T, keys: (keyof T)[]): void {
+function assertDomainShape<T extends object>(value: T, keys: (keyof T)[]): void {
 	for (const key of keys) {
-		expect(value).toHaveProperty(key as string);
+		expect(key in value).toBe(true);
 	}
 }
 
@@ -57,7 +57,7 @@ describe('ghost-cms mapper contracts', () => {
 	it('mapGhostPostToGuide maps GhostPost response to Guide domain shape', () => {
 		const guide = mapGhostPostToGuide(ghostPostFixture);
 
-		assertDomainShape(guide, GUIDE_KEYS);
+		assertDomainShape(guide as unknown as Record<string, unknown>, GUIDE_KEYS);
 		expect(typeof guide.id).toBe('string');
 		expect(typeof guide.slug).toBe('string');
 		expect(typeof guide.category).toBe('string');
@@ -74,7 +74,7 @@ describe('ghost-cms mapper contracts', () => {
 			]
 		} satisfies GhostPost);
 
-		assertDomainShape(post, BLOG_POST_KEYS);
+		assertDomainShape(post as unknown as Record<string, unknown>, BLOG_POST_KEYS);
 		expect(Array.isArray(post.tags)).toBe(true);
 		expect(post.tags.every((tag) => typeof tag === 'string')).toBe(true);
 		expect(post.publishedAt).toMatch(/^\d{4}-\d{2}-\d{2}$/);

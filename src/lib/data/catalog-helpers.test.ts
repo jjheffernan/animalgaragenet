@@ -28,7 +28,7 @@ describe('getProductPath', () => {
 	});
 
 	it('falls back to parts category when missing', () => {
-		const part = { ...mockParts[0], category: undefined };
+		const part = { ...mockParts[0], category: null };
 		expect(getProductPath(part)).toBe(`/parts/parts/${part.slug}`);
 	});
 });

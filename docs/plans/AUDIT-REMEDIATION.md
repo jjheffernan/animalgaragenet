@@ -24,9 +24,9 @@ Canonical tracker for findings from `docs/audits/*`, [STATUS.md](../STATUS.md), 
 | Priority  | Open   | Blocked (ops) | Done   |
 | --------- | ------ | ------------- | ------ |
 | **P0**    | 0      | 5             | 4      |
-| **P1**    | 0      | 1             | 11     |
+| **P1**    | 0      | 1             | 12     |
 | **P2**    | 11     | 0             | 27     |
-| **Total** | **11** | **6**         | **42** |
+| **Total** | **11** | **6**         | **43** |
 
 _Blocked = external dashboard/env; cannot close in-repo._
 
@@ -65,6 +65,7 @@ _Blocked = external dashboard/env; cannot close in-repo._
 | AUD-P1-011 | Saleor redeem + cart promo                                | saleor-audit, STATUS                  | **done**    | saleor     | `/account/redeem`, `checkoutAddPromoCode`, httpOnly promo cookie                                   | `src/routes/account/redeem/` · `src/lib/server/saleor/checkout/promo.ts`                                |
 | AUD-P1-012 | `isProductionHostname()` includes `*.netlify.app`         | TRIAGE, account-flow-fix              | **done**    | auth       | Dev bypass blocked on Netlify preview hosts                                                        | `src/lib/server/auth/local-dev.ts`                                                                      |
 | AUD-P1-013 | Primary Saleor catalog loaders env-gated                  | saleor-audit                          | **done**    | saleor     | Shop, parts, gift cards, deals, collections use `$lib/server/catalog/*` swap                       | `src/lib/server/catalog/products.ts`                                                                    |
+| AUD-SEC-001 | CDN invalidation path allowlist (no `/*` or traversal)   | security-audit-2026-07                | **done**    | code       | `POST /api/admin/media/invalidate` accepts only `media/admin/{uuid}/{filename}`; ≤10 paths; `invalidateCdnPaths` re-validates | `src/routes/api/admin/media/invalidate/+server.ts` · `src/lib/server/media/cdn.ts` · `tests/integration/cdn-invalidate.test.ts` |
 
 **Next (partial P1 items):**
 
@@ -128,6 +129,7 @@ _Blocked = external dashboard/env; cannot close in-repo._
 | [audits/ghost-audit.md](../audits/ghost-audit.md)             | P1-008, P2-011           | All Ghost AUD rows **done**   |
 | [meta/agents-skills-audit.md](../meta/agents-skills-audit.md) | —                                    | AUD-P2-020–022 **done**       |
 | [audits/component-route-audit.md](../audits/component-route-audit.md) | — | AUD-P2-034–038 **done** |
+| [audits/security-audit-2026-07.md](../audits/security-audit-2026-07.md) | — | AUD-SEC-001 **done** |
 
 _Do not delete source audits until the row above is satisfied._
 

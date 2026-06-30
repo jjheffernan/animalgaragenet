@@ -55,6 +55,86 @@ export function isCdnInvalidationConfigured(): boolean {
 	return Boolean(isCdnUploadConfigured() && env.AWS_CLOUDFRONT_DISTRIBUTION_ID?.trim());
 }
 
+/** Max CloudFront paths per invalidation request (API + SDK guard). */
+export const MAX_CDN_INVALIDATION_PATHS = 10;
+
+/**
+ * Admin upload-slot object keys: `media/admin/{uuid}/{filename}`.
+ * Rejects wildcards (`*`), traversal (`..`), and keys outside the admin media prefix.
+ */
+const ADMIN_MEDIA_OBJECT_KEY =
+	/^media\/admin\/[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}\/[a-zA-Z0-9._-]+$/i;
+
+export function isAllowedCdnInvalidationKey(input: string): boolean {
+	const trimmed = String(input).trim();
+	if (!trimmed || trimmed.includes('*') || trimmed.includes('..')) return false;
+
+	const key = trimmed.startsWith('/') ? trimmed.slice(1) : trimmed;
+	if (!key.startsWith('media/admin/')) return false;
+
+	return ADMIN_MEDIA_OBJECT_KEY.test(key);
+}
+
+export function normalizeCdnInvalidationKey(input: string): string | null {
+	const trimmed = String(input).trim();
+	if (!isAllowedCdnInvalidationKey(trimmed)) return null;
+	return trimmed.startsWith('/') ? trimmed.slice(1) : trimmed;
+}
+
+export interface CdnInvalidationRequest {
+	paths?: unknown;
+	objectKey?: unknown;
+}
+
+export type AdminInvalidationKeyResult =
+	| { ok: true; keys: string[] }
+	| { ok: false; error: string };
+
+/** Collect and validate admin CDN invalidation keys (`objectKey` first, then `paths`). */
+export function collectAdminInvalidationKeys(
+	body: CdnInvalidationRequest
+): AdminInvalidationKeyResult {
+	const raw: string[] = [];
+
+	if (body.objectKey != null) {
+		raw.push(String(body.objectKey));
+	}
+	if (Array.isArray(body.paths)) {
+		raw.push(...body.paths.map((path) => String(path)));
+	}
+
+	if (!raw.length) {
+		return { ok: false, error: 'Provide at least one CDN path or objectKey.' };
+	}
+
+	const keys: string[] = [];
+	const seen = new Set<string>();
+
+	for (const item of raw) {
+		const key = normalizeCdnInvalidationKey(item);
+		if (!key) {
+			return {
+				ok: false,
+				error:
+					'Invalid CDN path. Only admin media object keys from the upload-slot flow are allowed.'
+			};
+		}
+		if (!seen.has(key)) {
+			seen.add(key);
+			keys.push(key);
+		}
+	}
+
+	if (keys.length > MAX_CDN_INVALIDATION_PATHS) {
+		return {
+			ok: false,
+			error: `At most ${MAX_CDN_INVALIDATION_PATHS} paths per invalidation request.`
+		};
+	}
+
+	return { ok: true, keys };
+}
+
 /** Presigned PUT for admin `/admin/media` upload UI when S3 env is set. */
 export async function createPresignedUploadUrl(
 	key: string,
@@ -91,8 +171,11 @@ export async function createPresignedUploadUrl(
 export async function invalidateCdnPaths(paths: string[]): Promise<boolean> {
 	if (!isCdnInvalidationConfigured() || !paths.length) return false;
 
+	const keys = paths.map((path) => normalizeCdnInvalidationKey(path)).filter(Boolean) as string[];
+	if (!keys.length || keys.length > MAX_CDN_INVALIDATION_PATHS) return false;
+
 	const distributionId = env.AWS_CLOUDFRONT_DISTRIBUTION_ID!.trim();
-	const items = paths.map((path) => (path.startsWith('/') ? path : `/${path}`));
+	const items = keys.map((key) => `/${key}`);
 
 	const client = new CloudFrontClient({
 		region: 'us-east-1',

@@ -1,7 +1,11 @@
 import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 import { resolveAdminGate } from '$lib/server/auth/admin-gate';
-import { invalidateCdnPaths, isCdnInvalidationConfigured } from '$lib/server/media/cdn';
+import {
+	collectAdminInvalidationKeys,
+	invalidateCdnPaths,
+	isCdnInvalidationConfigured
+} from '$lib/server/media/cdn';
 
 interface InvalidateBody {
 	paths?: string[];
@@ -32,17 +36,16 @@ export const POST: RequestHandler = async ({ request, locals }) => {
 	}
 
 	const body = (await request.json()) as InvalidateBody;
-	const paths = [
-		...(Array.isArray(body.paths) ? body.paths : []),
-		...(body.objectKey ? [String(body.objectKey)] : [])
-	]
-		.map((path) => String(path).trim())
-		.filter(Boolean);
+	const collected = collectAdminInvalidationKeys({
+		objectKey: body.objectKey,
+		paths: body.paths
+	});
 
-	if (!paths.length) {
-		return json({ error: 'Provide at least one CDN path or objectKey.' }, { status: 400 });
+	if (!collected.ok) {
+		return json({ error: collected.error }, { status: 400 });
 	}
 
+	const paths = collected.keys;
 	const invalidated = await invalidateCdnPaths(paths);
 	if (!invalidated) {
 		return json({ error: 'Could not invalidate CDN paths.' }, { status: 502 });

@@ -239,7 +239,55 @@ export const CHECKOUT_ADD_PROMO_CODE = `
 //   }
 // `;
 
-// @saleor-migration: intentional — uncomment for payment redirect; see docs/commerce/saleor.md#quick-migration
+// @saleor-migration: intentional — uncomment for shipping method step; see docs/commerce/saleor-payments.md
+// export const CHECKOUT_DELIVERY_METHOD_UPDATE = `
+//   mutation CheckoutDeliveryMethodUpdate($id: ID!, $deliveryMethodId: ID!) {
+//     checkoutDeliveryMethodUpdate(id: $id, deliveryMethodId: $deliveryMethodId) {
+//       checkout {
+//         id
+//         totalPrice { gross { amount currency } }
+//         availablePaymentGateways { id name currencies config }
+//       }
+//       errors { field message code }
+//     }
+//   }
+// `;
+
+// @saleor-migration: intentional — uncomment for payment gateway init; see docs/commerce/saleor-payments.md
+// export const PAYMENT_GATEWAY_INITIALIZE = `
+//   mutation PaymentGatewayInitialize($id: ID!, $amount: PositiveDecimal, $paymentGateways: [PaymentGatewayToInitialize!]) {
+//     paymentGatewayInitialize(id: $id, amount: $amount, paymentGateways: $paymentGateways) {
+//       gatewayConfigs { id data errors { field message code } }
+//       errors { field message code }
+//     }
+//   }
+// `;
+
+// @saleor-migration: intentional — uncomment for transaction start; see docs/commerce/saleor-payments.md
+// export const TRANSACTION_INITIALIZE = `
+//   mutation TransactionInitialize($id: ID!, $amount: PositiveDecimal, $paymentGateway: PaymentGatewayToInitialize!, $idempotencyKey: String) {
+//     transactionInitialize(id: $id, amount: $amount, paymentGateway: $paymentGateway, idempotencyKey: $idempotencyKey) {
+//       transaction { id }
+//       transactionEvent { type pspReference }
+//       data
+//       errors { field message code }
+//     }
+//   }
+// `;
+
+// @saleor-migration: intentional — uncomment after 3DS / redirect; see docs/commerce/saleor-payments.md
+// export const TRANSACTION_PROCESS = `
+//   mutation TransactionProcess($id: ID!, $data: JSON) {
+//     transactionProcess(id: $id, data: $data) {
+//       transaction { id }
+//       transactionEvent { type pspReference }
+//       data
+//       errors { field message code }
+//     }
+//   }
+// `;
+
+// @saleor-migration: intentional — uncomment for payment redirect; see docs/commerce/saleor-payments.md
 // export const CHECKOUT_COMPLETE = `
 //   mutation CheckoutComplete($id: ID!) {
 //     checkoutComplete(id: $id) {

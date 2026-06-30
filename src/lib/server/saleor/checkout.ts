@@ -199,13 +199,84 @@ export async function deleteCheckoutLine(
 	return checkout ? mapCheckout(checkout) : null;
 }
 
-// @saleor-migration: intentional — uncomment for payment redirect; see docs/commerce/saleor.md#quick-migration
+// @saleor-migration: intentional — uncomment PAYMENT_GATEWAY_INITIALIZE in checkout-queries.ts first; see docs/commerce/saleor-payments.md
+// export async function initializePaymentGateway(
+// 	checkoutId: string,
+// 	gatewayId: string,
+// 	amount?: number
+// ): Promise<Record<string, unknown> | null> {
+// 	if (!isSaleorEnabled()) return null;
+// 	const result = await saleorFetch<{
+// 		paymentGatewayInitialize: {
+// 			gatewayConfigs: Array<{ id: string; data: Record<string, unknown> | null; errors: Array<{ message: string }> }>;
+// 			errors: Array<{ message: string }>;
+// 		};
+// 	}>(PAYMENT_GATEWAY_INITIALIZE, {
+// 		id: checkoutId,
+// 		amount,
+// 		paymentGateways: [{ id: gatewayId }]
+// 	});
+// 	if (result.errors?.length || result.data?.paymentGatewayInitialize.errors?.length) return null;
+// 	return result.data?.paymentGatewayInitialize.gatewayConfigs.find((g) => g.id === gatewayId)?.data ?? null;
+// }
+
+// @saleor-migration: intentional — uncomment TRANSACTION_INITIALIZE in checkout-queries.ts; see docs/commerce/saleor-payments.md
+// export async function initializeTransaction(
+// 	checkoutId: string,
+// 	gatewayId: string,
+// 	amount: number,
+// 	gatewayData?: Record<string, unknown>,
+// 	idempotencyKey?: string
+// ): Promise<{ transactionId: string; data: unknown; eventType: string | null } | null> {
+// 	if (!isSaleorEnabled()) return null;
+// 	const result = await saleorFetch<{
+// 		transactionInitialize: {
+// 			transaction: { id: string } | null;
+// 			transactionEvent: { type: string } | null;
+// 			data: unknown;
+// 			errors: Array<{ message: string }>;
+// 		};
+// 	}>(TRANSACTION_INITIALIZE, {
+// 		id: checkoutId,
+// 		amount,
+// 		paymentGateway: { id: gatewayId, data: gatewayData ?? {} },
+// 		idempotencyKey
+// 	});
+// 	if (result.errors?.length || result.data?.transactionInitialize.errors?.length) return null;
+// 	const tx = result.data?.transactionInitialize.transaction;
+// 	if (!tx) return null;
+// 	return {
+// 		transactionId: tx.id,
+// 		data: result.data?.transactionInitialize.data,
+// 		eventType: result.data?.transactionInitialize.transactionEvent?.type ?? null
+// 	};
+// }
+
+// @saleor-migration: intentional — uncomment TRANSACTION_PROCESS in checkout-queries.ts; see docs/commerce/saleor-payments.md
+// export async function processTransaction(
+// 	transactionId: string,
+// 	data?: Record<string, unknown>
+// ): Promise<{ eventType: string | null } | null> {
+// 	if (!isSaleorEnabled()) return null;
+// 	const result = await saleorFetch<{
+// 		transactionProcess: {
+// 			transactionEvent: { type: string } | null;
+// 			errors: Array<{ message: string }>;
+// 		};
+// 	}>(TRANSACTION_PROCESS, { id: transactionId, data: data ?? {} });
+// 	if (result.errors?.length || result.data?.transactionProcess.errors?.length) return null;
+// 	return { eventType: result.data?.transactionProcess.transactionEvent?.type ?? null };
+// }
+
+// @saleor-migration: intentional — uncomment CHECKOUT_COMPLETE in checkout-queries.ts; see docs/commerce/saleor-payments.md
 // export async function completeCheckout(checkoutId: string): Promise<{ orderId: string } | null> {
 // 	if (!isSaleorEnabled()) return null;
-// 	const result = await saleorFetch<{ checkoutComplete: { order: { id: string } | null; errors: Array<{ message: string }> } }>(
-// 		CHECKOUT_COMPLETE,
-// 		{ id: checkoutId }
-// 	);
+// 	const result = await saleorFetch<{
+// 		checkoutComplete: {
+// 			order: { id: string } | null;
+// 			errors: Array<{ message: string }>;
+// 		};
+// 	}>(CHECKOUT_COMPLETE, { id: checkoutId });
 // 	if (result.errors?.length || result.data?.checkoutComplete.errors?.length) return null;
 // 	const orderId = result.data?.checkoutComplete.order?.id;
 // 	return orderId ? { orderId } : null;

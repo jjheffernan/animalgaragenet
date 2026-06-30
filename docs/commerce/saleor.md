@@ -22,7 +22,7 @@ Saleor runs on a **separate domain**. This repo is the storefront frontend only.
 
 **Cart:** Create checkout, add line, and read lines work when Saleor is enabled (`ag-checkout-id` cookie). Remove/qty mutations and checkout completion are not wired.
 
-**Checkout:** `/checkout` is a UI placeholder — no payment, shipping, or `CHECKOUT_COMPLETE`.
+**Checkout:** `/checkout` is a UI placeholder — no payment, shipping, or `CHECKOUT_COMPLETE`. Payment architecture, env vars, and flow: [saleor-payments.md](./saleor-payments.md).
 
 | Area                | Location                                                        |
 | ------------------- | --------------------------------------------------------------- |
@@ -167,6 +167,7 @@ Mappers live in `src/lib/server/saleor/mappers.ts` (`mapProduct`, `mapProductLis
 - GraphQL endpoint is public for catalog reads
 - Checkout mutations may require app tokens — use server-side loaders/actions only
 - Never expose Saleor app secret to the browser
+- Payment provider secrets live in Saleor Payment App config, not storefront env — see [saleor-payments.md](./saleor-payments.md) and [SECURITY-PUBLIC.md](../SECURITY-PUBLIC.md)
 
 ## Quick migration
 

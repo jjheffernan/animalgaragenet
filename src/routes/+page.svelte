@@ -11,7 +11,6 @@
 	import TrustBlocks from '$lib/components/TrustBlocks.svelte';
 	import ManifestoBlock from '$lib/components/ManifestoBlock.svelte';
 	import CountdownTimer from '$lib/components/CountdownTimer.svelte';
-	import NewsletterSignup from '$lib/components/NewsletterSignup.svelte';
 	import BuildCard from '$lib/components/BuildCard.svelte';
 	import GuideCard from '$lib/components/GuideCard.svelte';
 	import BrandCard from '$lib/components/BrandCard.svelte';
@@ -158,5 +157,3 @@
 		</div>
 	</div>
 </section>
-
-<NewsletterSignup />

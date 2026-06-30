@@ -71,7 +71,7 @@ export const mockBuilds: BuildThread[] = [
 		modList: ['Widebody Kit', 'Supercharger', 'Coilovers', 'Forged Wheels', 'Big Brake Kit'],
 		featured: true,
 		description: '700 WHP widebody Coyote — show car and weekend warrior.',
-		linkedProductIds: []
+		linkedProductIds: ['p4', 'p14', 'p16', 'p1']
 	},
 	{
 		id: 'b6',
@@ -85,7 +85,7 @@ export const mockBuilds: BuildThread[] = [
 		modList: ['Downpipe + Tune', 'Coilovers', 'Aero Package', 'Lightweight Wheels'],
 		featured: false,
 		description: 'B58 tuned to 500 WHP with full track aero.',
-		linkedProductIds: []
+		linkedProductIds: ['p17', 'p4', 'p1']
 	},
 	{
 		id: 'b7',
@@ -99,7 +99,7 @@ export const mockBuilds: BuildThread[] = [
 		modList: ['Air Suspension', 'Work Meister Wheels', 'Custom Exhaust', 'Fender Roll'],
 		featured: false,
 		description: 'Static-ish stance BRZ with perfect fitment.',
-		linkedProductIds: []
+		linkedProductIds: ['p2', 'p9', 'p10']
 	},
 	{
 		id: 'b8',
@@ -113,7 +113,7 @@ export const mockBuilds: BuildThread[] = [
 		modList: ['SR20DET Swap', 'Coilovers', 'Roll Cage', 'Bucket Seats'],
 		featured: false,
 		description: 'Classic S14 with modern power and old-school style.',
-		linkedProductIds: []
+		linkedProductIds: ['p4', 'p10', 'p16']
 	},
 	{
 		id: 'b9',
@@ -127,7 +127,7 @@ export const mockBuilds: BuildThread[] = [
 		modList: ['Intake', 'Exhaust', 'Lowering Springs', 'Lightweight Wheels'],
 		featured: true,
 		description: 'Three-cylinder fury with rally roots.',
-		linkedProductIds: []
+		linkedProductIds: ['p11', 'p9', 'p6', 'p1']
 	},
 	{
 		id: 'b10',
@@ -141,7 +141,7 @@ export const mockBuilds: BuildThread[] = [
 		modList: ['Coilovers', 'Carbon Aero', 'Exhaust', 'Track Pads'],
 		featured: false,
 		description: 'The last great small BMW M car, dialed for the canyons.',
-		linkedProductIds: []
+		linkedProductIds: ['p4', 'p8', 'p14', 'p15']
 	},
 	{
 		id: 'b11',
@@ -154,7 +154,7 @@ export const mockBuilds: BuildThread[] = [
 		modList: ['Roll Bar', 'Coilovers', 'Bucket Seat', '6-Speed Swap'],
 		featured: false,
 		description: '1.8L NA Miata built purely for HPDE weekends.',
-		linkedProductIds: []
+		linkedProductIds: ['p4', 'p6', 'p22']
 	},
 	{
 		id: 'b12',
@@ -168,7 +168,7 @@ export const mockBuilds: BuildThread[] = [
 		modList: ['Supercharger', 'Coilovers', 'Big Brake Kit', 'Hardtop'],
 		featured: true,
 		description: 'The F22C screamer — supercharged and canyon ready.',
-		linkedProductIds: []
+		linkedProductIds: ['p4', 'p14', 'p16', 'p8']
 	}
 ];
 

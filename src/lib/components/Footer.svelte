@@ -2,7 +2,6 @@
 	import { resolvePath } from '$lib/utils/paths';
 	import NewsletterSignup from './NewsletterSignup.svelte';
 	import SocialLinks from './SocialLinks.svelte';
-	import ManifestoBlock from './ManifestoBlock.svelte';
 	import SupportCTA from './SupportCTA.svelte';
 
 	const columns = {
@@ -50,9 +49,9 @@
 		<div class="grid gap-10 lg:grid-cols-6">
 			<div class="lg:col-span-2">
 				<p class="font-display text-lg font-bold uppercase tracking-widest text-white">Animal Garage</p>
-				<div class="mt-4">
-					<ManifestoBlock />
-				</div>
+				<p class="mt-4 text-sm text-zinc-500">
+					Built different. Wrench harder. Send it louder.
+				</p>
 				<div class="mt-6">
 					<SupportCTA />
 				</div>

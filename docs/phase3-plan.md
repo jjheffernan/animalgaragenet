@@ -96,7 +96,7 @@ Execution plan for bug fixes, content completion, auth, admin, and YouTube integ
 ### Tasks
 
 1. **Auth routes** — `/auth/sign-in`, `/auth/sign-up`, `/auth/callback`, `/auth/sign-out`
-   - Supabase magic link + Google OAuth UI (client placeholder until keys set)
+   - Supabase magic link + OAuth (Google, Discord, Microsoft) — live when keys set; mock fallback without
    - Redirect to `/account` on success
 2. **Account** — `/account` dashboard: profile, orders placeholder, saved vehicles, garage XP
 3. **Admin shell** — `/admin` layout with role guard (mock admin session for dev)
@@ -109,7 +109,7 @@ Execution plan for bug fixes, content completion, auth, admin, and YouTube integ
 
 - Sign-in flow UI complete (Supabase-ready)
 - Admin can access user + media management (mock OK)
-- RBAC roles defined and enforced in hooks stub
+- RBAC roles defined and enforced in `hooks.server.ts` + `canAccessAdmin`
 
 ---
 

@@ -8,6 +8,7 @@
 	import CartActions from './CartActions.svelte';
 	import CatalogKindBadge from './CatalogKindBadge.svelte';
 	import PriceDisplay from './PriceDisplay.svelte';
+	import PromoCodeForm from './PromoCodeForm.svelte';
 
 	interface Props {
 		open?: boolean;
@@ -155,11 +156,35 @@
 				</div>
 			{/if}
 		{/if}
+
+		{#if cart.itemCount > 0}
+			<div class="mt-6 border-t border-zinc-800 pt-4">
+				<p class="text-xs font-bold uppercase tracking-widest text-zinc-500">Promo code</p>
+				<PromoCodeForm
+					compact
+					appliedCode={cart.checkout?.voucherCodes?.[0] ?? cart.mockPromo?.code ?? null}
+					appliedLabel={cart.checkout?.discountName ?? cart.mockPromo?.label ?? null}
+					onapplied={(detail) => cart.applyPromoResponse(detail)}
+				/>
+			</div>
+		{/if}
 	</div>
 {/snippet}
 
 {#snippet drawerFooter()}
 	<div class="shrink-0 border-t border-zinc-800 px-5 py-4">
+		{#if cart.saleorDiscountAmount > 0}
+			<div class="flex justify-between text-sm text-emerald-400">
+				<span>Discount</span>
+				<span>-{locale.formatPrice(cart.saleorDiscountAmount)}</span>
+			</div>
+		{/if}
+		{#if cart.mockDiscountAmount > 0}
+			<div class="flex justify-between text-sm text-emerald-400">
+				<span>{cart.mockPromo?.label ?? 'Discount'}</span>
+				<span>-{locale.formatPrice(cart.mockDiscountAmount)}</span>
+			</div>
+		{/if}
 		<div class="flex justify-between text-sm">
 			<span class="text-zinc-400">Subtotal</span>
 			<span class="font-medium text-white">{locale.formatPrice(cart.subtotal)}</span>

@@ -13,6 +13,8 @@
 		cart.init();
 		if (data.saleorEnabled) {
 			cart.hydrateCheckout(data.checkout);
+		} else {
+			cart.hydrateMockPromo(data.mockPromo);
 		}
 	});
 

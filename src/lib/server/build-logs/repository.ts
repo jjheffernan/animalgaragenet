@@ -1,4 +1,5 @@
 import { createAdminClient } from '$lib/server/supabase/admin';
+import { LIMITS, trimToMax } from '$lib/server/validation/limits';
 import type { BuildLog, BuildLogStatus } from '$lib/types/build-log';
 
 const mockStore = new Map<string, BuildLog>();
@@ -18,6 +19,25 @@ function rowToLog(row: Record<string, unknown>): BuildLog {
 		slug: row.slug ? String(row.slug) : null,
 		createdAt: String(row.created_at),
 		updatedAt: String(row.updated_at ?? row.created_at)
+	};
+}
+
+function sanitizeBuildLogFields(fields: {
+	title: string;
+	year: number;
+	make: string;
+	model: string;
+	description: string;
+	modList: string;
+}) {
+	const limits = LIMITS.buildLog;
+	return {
+		title: trimToMax(fields.title, limits.title),
+		year: fields.year,
+		make: trimToMax(fields.make, limits.make),
+		model: trimToMax(fields.model, limits.model),
+		description: trimToMax(fields.description, limits.description),
+		modList: trimToMax(fields.modList, limits.modList)
 	};
 }
 
@@ -76,22 +96,25 @@ export async function createBuildLogDraft(
 		modList: string;
 	}
 ): Promise<BuildLog> {
+	const sanitized = sanitizeBuildLogFields(fields);
+	const safeEmail = trimToMax(email, LIMITS.buildLog.email);
+
 	const admin = createAdminClient();
 	if (!admin) {
-		return mockLog(userId, email, { ...fields, status: 'draft', slug: null });
+		return mockLog(userId, safeEmail, { ...sanitized, status: 'draft', slug: null });
 	}
 
 	const { data, error } = await admin
 		.from('build_submissions')
 		.insert({
 			user_id: userId,
-			email,
-			title: fields.title,
-			year: fields.year,
-			make: fields.make,
-			model: fields.model,
-			description: fields.description,
-			mod_list: fields.modList,
+			email: safeEmail,
+			title: sanitized.title,
+			year: sanitized.year,
+			make: sanitized.make,
+			model: sanitized.model,
+			description: sanitized.description,
+			mod_list: sanitized.modList,
 			status: 'draft',
 			slug: null
 		})
@@ -115,13 +138,15 @@ export async function updateBuildLog(
 	},
 	status: BuildLogStatus
 ): Promise<BuildLog | null> {
+	const sanitized = sanitizeBuildLogFields(fields);
+
 	const admin = createAdminClient();
 	if (!admin) {
 		const existing = mockStore.get(id);
 		if (!existing || existing.userId !== userId) return null;
 		const updated: BuildLog = {
 			...existing,
-			...fields,
+			...sanitized,
 			status,
 			updatedAt: new Date().toISOString()
 		};
@@ -132,12 +157,12 @@ export async function updateBuildLog(
 	const { data, error } = await admin
 		.from('build_submissions')
 		.update({
-			title: fields.title,
-			year: fields.year,
-			make: fields.make,
-			model: fields.model,
-			description: fields.description,
-			mod_list: fields.modList,
+			title: sanitized.title,
+			year: sanitized.year,
+			make: sanitized.make,
+			model: sanitized.model,
+			description: sanitized.description,
+			mod_list: sanitized.modList,
 			status,
 			updated_at: new Date().toISOString()
 		})

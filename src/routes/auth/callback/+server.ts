@@ -6,11 +6,7 @@ import {
 	oauthDisplayName,
 	OAUTH_PROVIDER_LABELS
 } from '$lib/auth/oauth';
-import {
-	createMockUser,
-	exchangeOAuthCode,
-	setSessionCookie
-} from '$lib/server/supabase/auth';
+import { createMockUser, exchangeOAuthCode, setSessionCookie } from '$lib/server/supabase/auth';
 import { isSupabaseConfigured } from '$lib/server/supabase/client';
 
 export const GET: RequestHandler = async ({ url, cookies, locals }) => {
@@ -24,13 +20,10 @@ export const GET: RequestHandler = async ({ url, cookies, locals }) => {
 		if (!result.ok) {
 			throw redirect(303, `/auth/sign-in?error=${encodeURIComponent(result.message)}`);
 		}
-		if (result.user) {
-			setSessionCookie(cookies, result.user);
-		}
 		throw redirect(303, redirectTo);
 	}
 
-	if (isMock || !isSupabaseConfigured()) {
+	if (!isSupabaseConfigured()) {
 		const provider = isOAuthProvider(providerParam) ? providerParam : 'google';
 		const email = url.searchParams.get('email') ?? mockOAuthEmail(provider);
 		const user = createMockUser(email, email.split('@')[0]);

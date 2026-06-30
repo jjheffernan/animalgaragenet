@@ -91,7 +91,7 @@ See [phase3-plan.md](./phase3-plan.md).
 
 | Capability | Notes |
 |------------|-------|
-| Supabase auth (magic link + OAuth) | UI at `/auth/sign-in`, `/auth/sign-up` — stub until keys set |
+| Supabase auth (magic link + OAuth) | Wired at `/auth/*` — live with keys; mock `ag-session` without. Local quick-login on localhost (`docs/supabase.md`) |
 | User account dashboard | **Done** — `/account` (profile, XP, vehicles, orders placeholder) |
 | Build thread submit → Supabase | `/builds/submit` backend |
 | Build of the Month voting | Gamification |

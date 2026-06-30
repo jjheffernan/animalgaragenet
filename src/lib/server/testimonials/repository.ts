@@ -1,4 +1,5 @@
 import { createAdminClient } from '$lib/server/supabase/admin';
+import { LIMITS, trimToMax } from '$lib/server/validation/limits';
 import type { Testimonial, TestimonialStatus } from '$lib/types/testimonial';
 
 const mockStore = new Map<string, Testimonial>();
@@ -129,10 +130,23 @@ export async function createTestimonial(
 		loyaltyTier: string | null;
 	}
 ): Promise<Testimonial> {
+	const sanitized = {
+		displayName: trimToMax(fields.displayName, LIMITS.testimonial.displayName),
+		vehicleSummary: fields.vehicleSummary
+			? trimToMax(fields.vehicleSummary, LIMITS.testimonial.vehicleSummary)
+			: null,
+		rating: fields.rating,
+		title: trimToMax(fields.title, LIMITS.testimonial.title),
+		body: trimToMax(fields.body, LIMITS.testimonial.body),
+		loyaltyTier: fields.loyaltyTier
+			? trimToMax(fields.loyaltyTier, LIMITS.testimonial.loyaltyTier)
+			: null
+	};
+
 	const admin = createAdminClient();
 	if (!admin) {
 		return mockTestimonial(userId, {
-			...fields,
+			...sanitized,
 			status: 'pending',
 			featured: false
 		});
@@ -142,12 +156,12 @@ export async function createTestimonial(
 		.from('testimonials')
 		.insert({
 			user_id: userId,
-			display_name: fields.displayName,
-			vehicle_summary: fields.vehicleSummary,
-			rating: fields.rating,
-			title: fields.title,
-			body: fields.body,
-			loyalty_tier: fields.loyaltyTier,
+			display_name: sanitized.displayName,
+			vehicle_summary: sanitized.vehicleSummary,
+			rating: sanitized.rating,
+			title: sanitized.title,
+			body: sanitized.body,
+			loyalty_tier: sanitized.loyaltyTier,
 			status: 'pending',
 			featured: false
 		})

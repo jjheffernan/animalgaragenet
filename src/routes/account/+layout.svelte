@@ -4,6 +4,7 @@
 
 	const navItems = [
 		{ href: '/account', label: 'Overview', disabled: false },
+		{ href: '/account/redeem', label: 'Redeem', disabled: false },
 		{ href: '/account/builds', label: 'Build Logs', disabled: false },
 		{ href: '/account/orders', label: 'Orders', disabled: true },
 		{ href: '/account/vehicles', label: 'Vehicles', disabled: true }
@@ -24,7 +25,8 @@
 						<a
 							href={resolvePath(item.href)}
 							class="block rounded-sm px-3 py-2 text-sm transition {$page.url.pathname === item.href ||
-							(item.href === '/account/builds' && $page.url.pathname.startsWith('/account/builds'))
+							(item.href === '/account/builds' && $page.url.pathname.startsWith('/account/builds')) ||
+							(item.href === '/account/redeem' && $page.url.pathname.startsWith('/account/redeem'))
 								? 'bg-zinc-800 text-white'
 								: 'text-zinc-400 hover:bg-zinc-900 hover:text-white'}"
 						>

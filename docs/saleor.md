@@ -16,13 +16,21 @@ animalgarage.net (SvelteKit)          commerce.animalgarage.net (Saleor)
 
 Saleor runs on a **separate domain**. This repo is the storefront frontend only.
 
-## Current state
+## Current state (June 2026)
 
-- GraphQL client: `src/lib/server/saleor/client.ts`
-- Query definitions: `src/lib/server/saleor/queries.ts`
-- Type definitions mirroring Saleor shape: `src/lib/types/saleor.ts`
-- Mock data: `src/lib/data/mock/products.ts`
-- Shop routes load mock data; server loaders have comments for API swap
+**Catalog:** Primary shop, parts, gift cards, deals, collections, and homepage product slices use env-gated Saleor loaders with mock fallback when `PUBLIC_SALEOR_API_URL` is unset. See [saleor-audit.md](./saleor-audit.md) for the full wired vs mock inventory.
+
+**Cart:** Create checkout, add line, and read lines work when Saleor is enabled (`ag-checkout-id` cookie). Remove/qty mutations and checkout completion are not wired.
+
+**Checkout:** `/checkout` is a UI placeholder — no payment, shipping, or `CHECKOUT_COMPLETE`.
+
+| Area | Location |
+|------|----------|
+| GraphQL client | `src/lib/server/saleor/client.ts` |
+| Queries + mappers | `src/lib/server/saleor/queries.ts`, `mappers.ts` |
+| Catalog swap points | `src/lib/server/catalog/*.ts` |
+| Checkout scaffold | `src/lib/server/saleor/checkout.ts`, `cart/checkout/+server.ts` |
+| Mock fallback | `src/lib/data/mock/products.ts` |
 
 ## Environment
 
@@ -62,12 +70,28 @@ Use `COLLECTIONS_QUERY` for homepage and `/shop?collection=` filtering.
 
 ### 4. Cart & checkout
 
-- Saleor Checkout API for cart mutations
-- Store checkout ID in cookie or local storage
-- Redirect to Saleor-hosted checkout OR embed Payment App
-- Webhook handlers for order confirmation (separate API route)
+**Done (partial):** create checkout, add line, read lines — `src/lib/server/saleor/checkout.ts`, `cart/checkout/+server.ts`, `ag-checkout-id` cookie.
 
-### 5. International shipping
+**Remaining:**
+
+- Line remove / quantity (`checkoutLinesUpdate`, `checkoutLinesDelete`)
+- Shipping address and `availableShippingMethods`
+- Payment + `CHECKOUT_COMPLETE`
+- `/checkout` page (currently placeholder)
+
+### 5. Vouchers, promo codes & gift cards (planned)
+
+Redeem UX is not implemented yet. Planned scope (see `.cursor/agents/saleor-redeem.md`):
+
+| Surface | Route / component | Saleor API |
+|---------|-------------------|------------|
+| Account redeem | `/account/redeem` | `checkoutAddPromoCode` / `checkoutRemovePromoCode` |
+| Cart / checkout inline | `CartDrawer.svelte`, `/checkout` | Same mutations on active checkout cookie |
+| Gift card balance | Checkout summary | `checkout { giftCards { ... } }` |
+
+When Saleor is unset, mock validation may use `src/lib/data/mock/promo-codes.ts` (dev only) or a "connect Saleor" message.
+
+### 6. International shipping
 
 Saleor shipping zones define available countries and rates.
 
@@ -83,24 +107,25 @@ Frontend readiness (already scaffolded):
 
 **Next steps:**
 
-1. Map locale → Saleor channel
+1. ~~Map locale → Saleor channel~~ — done in `src/lib/server/saleor/channels.ts`
 2. Pass shipping address country to checkout
 3. Display shipping rates from `checkout.availableShippingMethods`
-4. Currency from channel pricing, not hardcoded USD in mock data
+4. Currency from channel pricing when env set (mock still hardcodes USD)
 
 ## GraphQL queries
 
-Defined in `src/lib/server/saleor/queries.ts`:
+Defined in `src/lib/server/saleor/queries.ts` and `checkout-queries.ts`:
 
 - `PRODUCTS_QUERY` — paginated product list
 - `PRODUCT_BY_SLUG_QUERY` — single product with variants/media
 - `COLLECTIONS_QUERY` — collection list for homepage
+- Checkout create / add line — in `checkout-queries.ts` (wired)
 
-Add as needed:
+Still needed:
 
-- `CHECKOUT_CREATE_MUTATION`
-- `CHECKOUT_LINES_ADD_MUTATION`
-- `CHECKOUT_COMPLETE_MUTATION`
+- `CHECKOUT_LINES_UPDATE` / `CHECKOUT_LINES_DELETE`
+- `CHECKOUT_COMPLETE`
+- `checkoutAddPromoCode` / `checkoutRemovePromoCode` (redeem — planned)
 
 ## Type mapping
 
@@ -117,14 +142,14 @@ pricing: {
 }
 ```
 
-Create a mapper in `src/lib/server/saleor/mappers.ts` when integrating.
+Mappers live in `src/lib/server/saleor/mappers.ts` (`mapProduct`, `mapProductListNode`, `mapCollection`).
 
 ## Testing against Saleor
 
 1. Spin up Saleor (Docker or Saleor Cloud)
 2. Set `PUBLIC_SALEOR_API_URL` in `.env`
 3. Create products matching mock slugs for parity testing
-4. Swap one loader at a time (shop list first, then detail)
+4. Enable env and test loaders — catalog swap points already call Saleor when `isSaleorEnabled()`
 
 ## Security
 

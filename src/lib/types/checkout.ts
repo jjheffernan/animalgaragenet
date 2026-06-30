@@ -19,4 +19,15 @@ export interface CheckoutDisplay {
 	id: string;
 	lines: CheckoutLineDisplay[];
 	subtotal: Money;
+	/** Saleor voucher / promo discount when applied. */
+	discount?: Money | null;
+	discountName?: string | null;
+	voucherCodes?: string[];
+}
+
+/** Mock promo applied to localStorage cart when Saleor is off. */
+export interface MockPromoState {
+	code: string;
+	label: string;
+	percentOff: number;
 }

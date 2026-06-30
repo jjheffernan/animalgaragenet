@@ -38,6 +38,34 @@ npm run build
 
 All three must pass before opening a PR.
 
+## Local auth shortcuts
+
+Server-only env vars for fast iteration on **localhost only**. Both are ignored when the request host is `animalgarage.net` (or a subdomain). **Never** set them on Netlify.
+
+| Variable | Purpose |
+|----------|---------|
+| `DEV_ADMIN=true` | Bypass admin role check — access `/admin` without `app_metadata.role` |
+| `LOCAL_DEV_AUTH=true` | Show quick-login buttons on `/auth/sign-in` when not in Vite `DEV` mode (e.g. `npm run preview`) |
+
+With `npm run dev`, quick-login is enabled automatically on localhost without `LOCAL_DEV_AUTH`.
+
+### Predefined dev accounts
+
+Defined in `src/lib/server/auth/local-dev-accounts.ts` (emails + roles only — no passwords in repo):
+
+| Email | Role |
+|-------|------|
+| `admin@local.dev` | admin |
+| `editor@local.dev` | editor |
+| `customer@local.dev` | customer |
+
+Guard logic: `src/lib/server/auth/local-dev.ts` (`isLocalDevAuthEnabled`, `isDevAdminEnabled`).
+
+- **Without Supabase keys:** quick-login sets a mock `ag-session` cookie with the chosen role.
+- **With Supabase + service role:** upserts the user with `app_metadata.role` and signs in via server-side OTP.
+
+Full auth reference: [docs/supabase.md](../../supabase.md).
+
 ## Project structure (quick reference)
 
 ```
@@ -74,6 +102,7 @@ Cursor/VS Code with Svelte extension recommended. Project includes `.cursor/` co
 | Stale `.svelte-kit` cache       | Delete `.svelte-kit/` and rebuild               |
 | Port 5173 in use                | `npm run dev -- --port 5174`                    |
 | Missing types for routes        | Run `svelte-kit sync` (part of `npm run check`) |
+| Admin denied locally            | Set `DEV_ADMIN=true` or use quick-login as admin |
 
 ## Agent context
 

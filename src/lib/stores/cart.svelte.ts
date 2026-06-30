@@ -1,4 +1,4 @@
-import type { CheckoutDisplay } from '$lib/types/checkout';
+	import type { CheckoutDisplay, MockPromoState } from '$lib/types/checkout';
 import type { CartItem } from '$lib/types/domain';
 import type { Product } from '$lib/types/saleor';
 import { config } from '$lib/config/env';
@@ -43,6 +43,7 @@ class CartState {
 	items = $state<CartItem[]>([]);
 	drawerOpen = $state(false);
 	checkout = $state<CheckoutDisplay | null>(null);
+	mockPromo = $state<MockPromoState | null>(null);
 	private initialized = false;
 
 	init() {
@@ -56,6 +57,22 @@ class CartState {
 	/** Hydrate Saleor checkout from server load (read-only display). */
 	hydrateCheckout(checkout: CheckoutDisplay | null) {
 		this.checkout = checkout;
+	}
+
+	hydrateMockPromo(promo: MockPromoState | null) {
+		this.mockPromo = promo;
+	}
+
+	applyPromoResponse(payload: {
+		checkout?: CheckoutDisplay | null;
+		mockPromo?: MockPromoState | null;
+	}) {
+		if (payload.checkout) {
+			this.checkout = payload.checkout;
+		}
+		if (payload.mockPromo !== undefined) {
+			this.mockPromo = payload.mockPromo;
+		}
 	}
 
 	get saleorEnabled() {
@@ -73,12 +90,31 @@ class CartState {
 		if (this.checkout) {
 			return this.checkout.subtotal.amount;
 		}
-		return this.items.reduce((sum, item) => {
+		const raw = this.items.reduce((sum, item) => {
 			const product = getCatalogProductById(item.productId);
 			if (!product) return sum;
 			const variant = product.variants.find((v) => v.id === item.variantId) ?? product.variants[0];
 			return sum + variant.pricing.price.amount * item.quantity;
 		}, 0);
+		if (this.mockPromo?.percentOff) {
+			return raw * (1 - this.mockPromo.percentOff / 100);
+		}
+		return raw;
+	}
+
+	get mockDiscountAmount() {
+		if (!this.mockPromo?.percentOff) return 0;
+		const raw = this.items.reduce((sum, item) => {
+			const product = getCatalogProductById(item.productId);
+			if (!product) return sum;
+			const variant = product.variants.find((v) => v.id === item.variantId) ?? product.variants[0];
+			return sum + variant.pricing.price.amount * item.quantity;
+		}, 0);
+		return raw - this.subtotal;
+	}
+
+	get saleorDiscountAmount() {
+		return this.checkout?.discount?.amount ?? 0;
 	}
 
 	openDrawer() {
@@ -174,6 +210,7 @@ class CartState {
 	clear() {
 		this.items = [];
 		this.checkout = null;
+		this.mockPromo = null;
 		if (!isSaleorCartEnabled()) {
 			saveCart(this.items);
 		}

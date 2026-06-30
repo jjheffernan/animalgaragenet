@@ -3,9 +3,11 @@ import type { CheckoutDisplay, CheckoutLineDisplay } from '$lib/types/checkout';
 import { getChannelForLocale } from '$lib/server/saleor/channels';
 import { isSaleorEnabled, saleorFetch } from '$lib/server/saleor/client';
 import {
+	CHECKOUT_ADD_PROMO_CODE,
 	CHECKOUT_CREATE,
 	CHECKOUT_GET,
-	CHECKOUT_LINES_ADD
+	CHECKOUT_LINES_ADD,
+	CHECKOUT_REMOVE_PROMO_CODE
 } from '$lib/server/saleor/checkout-queries';
 import { config } from '$lib/config/env';
 
@@ -36,6 +38,8 @@ interface SaleorCheckoutNode {
 	id: string;
 	lines: SaleorCheckoutLineNode[];
 	totalPrice: SaleorMoneyGross;
+	discount?: { amount: number; currency: string } | null;
+	discountName?: string | null;
 }
 
 function mapCheckoutLine(line: SaleorCheckoutLineNode): CheckoutLineDisplay {
@@ -59,15 +63,25 @@ function mapCheckoutLine(line: SaleorCheckoutLineNode): CheckoutLineDisplay {
 	};
 }
 
-function mapCheckout(node: SaleorCheckoutNode): CheckoutDisplay {
+function mapCheckout(node: SaleorCheckoutNode, voucherCodes: string[] = []): CheckoutDisplay {
 	return {
 		id: node.id,
 		lines: node.lines.map(mapCheckoutLine),
 		subtotal: {
 			amount: node.totalPrice.gross.amount,
 			currency: node.totalPrice.gross.currency
-		}
+		},
+		discount: node.discount
+			? { amount: node.discount.amount, currency: node.discount.currency }
+			: null,
+		discountName: node.discountName ?? null,
+		voucherCodes
 	};
+}
+
+function saleorErrorsMessage(errors: Array<{ message: string }> | undefined): string | null {
+	if (!errors?.length) return null;
+	return errors.map((e) => e.message).join('; ');
 }
 
 export function getCheckoutId(cookies: Cookies): string | undefined {
@@ -145,4 +159,70 @@ export async function getCheckoutLines(checkoutId: string): Promise<CheckoutDisp
 	}
 
 	return mapCheckout(result.data.checkout);
+}
+
+/** Ensure a Saleor checkout exists for promo / redeem flows. */
+export async function ensureCheckout(
+	cookies: Cookies,
+	channel?: string
+): Promise<{ checkoutId: string } | { error: string }> {
+	let checkoutId = getCheckoutId(cookies);
+	if (!checkoutId) {
+		checkoutId = (await createCheckout(channel)) ?? undefined;
+		if (!checkoutId) return { error: 'Could not start checkout.' };
+		setCheckoutId(cookies, checkoutId);
+	}
+	return { checkoutId };
+}
+
+/** Apply a Saleor voucher or gift card code to the active checkout. */
+export async function applyPromoCode(
+	checkoutId: string,
+	promoCode: string,
+	existingCodes: string[] = []
+): Promise<{ checkout: CheckoutDisplay } | { error: string }> {
+	if (!isSaleorEnabled()) return { error: 'Saleor not configured' };
+
+	const result = await saleorFetch<{
+		checkoutAddPromoCode: {
+			checkout: SaleorCheckoutNode | null;
+			errors: Array<{ message: string }>;
+		};
+	}>(CHECKOUT_ADD_PROMO_CODE, { id: checkoutId, promoCode });
+
+	const message = saleorErrorsMessage(result.errors) ?? saleorErrorsMessage(result.data?.checkoutAddPromoCode.errors);
+	if (message) return { error: message };
+
+	const checkout = result.data?.checkoutAddPromoCode.checkout;
+	if (!checkout) return { error: 'Invalid or expired code.' };
+
+	const codes = [...new Set([...existingCodes, promoCode.trim().toUpperCase()])];
+	return { checkout: mapCheckout(checkout, codes) };
+}
+
+/** Remove a promo code from checkout. */
+export async function removePromoCode(
+	checkoutId: string,
+	promoCode: string,
+	existingCodes: string[] = []
+): Promise<{ checkout: CheckoutDisplay } | { error: string }> {
+	if (!isSaleorEnabled()) return { error: 'Saleor not configured' };
+
+	const result = await saleorFetch<{
+		checkoutRemovePromoCode: {
+			checkout: SaleorCheckoutNode | null;
+			errors: Array<{ message: string }>;
+		};
+	}>(CHECKOUT_REMOVE_PROMO_CODE, { id: checkoutId, promoCode });
+
+	const message =
+		saleorErrorsMessage(result.errors) ?? saleorErrorsMessage(result.data?.checkoutRemovePromoCode.errors);
+	if (message) return { error: message };
+
+	const checkout = result.data?.checkoutRemovePromoCode.checkout;
+	if (!checkout) return { error: 'Could not remove code.' };
+
+	const normalized = promoCode.trim().toUpperCase();
+	const codes = existingCodes.filter((c) => c !== normalized);
+	return { checkout: mapCheckout(checkout, codes) };
 }

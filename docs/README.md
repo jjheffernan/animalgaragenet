@@ -33,7 +33,7 @@ A highly animated, media-heavy automotive brand site — merchandising-forward d
 - [x] Channel-aware pricing — partial: locale → channel map in `src/lib/server/saleor/channels.ts`
 - [ ] Stripe/payment flow via Saleor
 - [ ] International shipping zones and rate calculation
-- [ ] Replace mock data with live API calls (mock fallback when `PUBLIC_SALEOR_API_URL` unset)
+- [x] Env-gated catalog loaders with mock fallback (`docs/saleor-audit.md`)
 
 ### Phase 3 — Media & CDN
 
@@ -99,5 +99,24 @@ Copy `.env.example` to `.env`. See [infrastructure.md](./infrastructure.md) for 
 - **[Style guide](./style-guide/README.md)** — comprehensive dev reference
 - [Site audit](./audit.md) — security, gaps, and fix log
 - [Infrastructure (CDN, S3, Supabase)](./infrastructure.md)
-- [Saleor integration](./saleor.md)
+- [Saleor integration](./saleor.md) · [Saleor audit](./saleor-audit.md)
+- [Supabase](./supabase.md)
+- [Media uploads plan](./plans/media-uploads.md)
 - [Animation & media strategy](./animation-media.md)
+
+## Cursor agent specs
+
+Specialized agents live in `.cursor/agents/` (invoke by name in Cursor):
+
+| Agent | Purpose |
+| ----- | ------- |
+| `local-dev-auth` | Local-only test accounts; never production |
+| `account-nav` | Header account dropdown and signed-in UX |
+| `production-admin` | Promote admins, `SITE_LOCKED`, live `/admin` |
+| `media-uploads` | Review/build file upload pipeline plan |
+| `saleor-redeem` | Redeem section + Saleor voucher/promo codes |
+| `saleor-readiness` | Audit mock vs live Saleor gaps before launch |
+| `polish-sweep` | Find unfinished session work; execute polish plan |
+| `docs-updater` | Refresh `docs/` (not root README) |
+| `ui-consistency` | Nav ribbons, pills, shared component patterns |
+| `git-commit-orchestrator` | Split large diffs into ordered commits |

@@ -63,6 +63,27 @@
 			</button>
 		</form>
 
+		{#if data.localDevAuthEnabled}
+			<div class="mt-8 rounded-sm border border-dashed border-zinc-700 bg-zinc-900/40 p-4">
+				<p class="text-xs font-bold uppercase tracking-widest text-zinc-500">Local dev quick login</p>
+				<p class="mt-1 text-xs text-zinc-600">Localhost only — never enabled on production.</p>
+				<div class="mt-4 flex flex-wrap gap-2">
+					{#each data.devAccounts as account (account.email)}
+						<form method="POST" action="?/devSignIn" use:enhance>
+							<input type="hidden" name="email" value={account.email} />
+							<input type="hidden" name="redirect" value={data.redirectTo} />
+							<button
+								type="submit"
+								class="rounded-sm border border-zinc-700 px-3 py-2 text-xs font-bold uppercase tracking-wider text-zinc-300 transition hover:border-red-600 hover:text-white"
+							>
+								{account.label}
+							</button>
+						</form>
+					{/each}
+				</div>
+			</div>
+		{/if}
+
 		<div class="relative my-8">
 			<div class="absolute inset-0 flex items-center">
 				<div class="w-full border-t border-zinc-800"></div>

@@ -1,6 +1,8 @@
 import { fail, redirect } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
 import { config } from '$lib/config/env';
+import { LOCAL_DEV_ACCOUNTS } from '$lib/server/auth/local-dev-accounts';
+import { devSignInAccount, isLocalDevAuthEnabled } from '$lib/server/auth/local-dev';
 import {
 	createMockUser,
 	setSessionCookie,
@@ -16,6 +18,8 @@ export const load: PageServerLoad = async ({ locals, url }) => {
 
 	return {
 		supabaseReady: isSupabaseConfigured(),
+		localDevAuthEnabled: isLocalDevAuthEnabled({ url }),
+		devAccounts: LOCAL_DEV_ACCOUNTS,
 		redirectTo: url.searchParams.get('redirect') ?? '/account'
 	};
 };
@@ -50,6 +54,30 @@ export const actions: Actions = {
 
 		const user = createMockUser(email, name);
 		setSessionCookie(cookies, user);
+		throw redirect(303, redirectTo);
+	},
+
+	devSignIn: async (event) => {
+		if (!isLocalDevAuthEnabled(event)) {
+			return fail(403, { error: 'Dev sign-in is not available.' });
+		}
+
+		const form = await event.request.formData();
+		const email = String(form.get('email') ?? '').trim();
+		const redirectTo = String(
+			form.get('redirect') ?? event.url.searchParams.get('redirect') ?? '/account'
+		);
+
+		const account = LOCAL_DEV_ACCOUNTS.find((a) => a.email === email);
+		if (!account) {
+			return fail(400, { error: 'Unknown dev account.' });
+		}
+
+		const result = await devSignInAccount(event, event.locals.supabase, account);
+		if (!result.ok) {
+			return fail(400, { error: result.message });
+		}
+
 		throw redirect(303, redirectTo);
 	}
 };

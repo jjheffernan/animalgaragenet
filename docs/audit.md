@@ -60,7 +60,7 @@ Audit of animalgaragenet prototype on `dev` branch. Run after infrastructure/doc
 
 ### Remaining notes
 
-- `@supabase/supabase-js` not installed — placeholder client returns stub (expected for Phase 1)
+- `@supabase/supabase-js` and `@supabase/ssr` installed — mock `ag-session` fallback when env unset
 - Saleor client gracefully handles missing API URL (returns error object, no throw)
 
 ---

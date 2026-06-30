@@ -15,7 +15,7 @@ Persistent memory for major choices made during build-out. Minor implementation 
 | Layer | Choice | Rationale |
 |-------|--------|-----------|
 | Frontend | SvelteKit 2 / Svelte 5 / Tailwind v4 | Already scaffolded; best-in-class for animated UX |
-| Commerce | Saleor GraphQL (mock data until wired) | Headless, international channels, gift cards, attributes for fitment |
+| Commerce | Saleor GraphQL (env-gated catalog + cart scaffold) | Headless, international channels, gift cards, attributes for fitment; mock fallback without env |
 | Auth / CMS | Supabase (`@supabase/ssr`, PKCE OAuth) | Auth, builds, garage XP, newsletter; mock fallback without env |
 | Media | S3 + CloudFront (env placeholders) | CDN URLs via `PUBLIC_CDN_BASE_URL`; picsum for prototype |
 | Motion | CSS transitions + `AnimatedReveal`; no Motion One yet | Avoid new deps until needed; CSS sufficient for Phase 2 |
@@ -97,7 +97,11 @@ Grid + detail panel with extended description and shoppable products. YouTube ch
 
 Supabase auth at `/auth/*`. Admin RBAC at `/admin` with roles: admin, editor, contributor, customer.
 
-**OAuth architecture (June 2026):** Generic provider union (`google` | `discord` | `azure`) in `src/lib/auth/oauth.ts`. Browser sign-in uses `@supabase/ssr` PKCE via `signInWithOAuth` in `auth-client.ts`; `/auth/callback` exchanges the authorization code with `exchangeOAuthCode`. Mock `ag-session` cookie when env vars are unset; live sessions use Supabase auth cookies + `getUser()` in `hooks.server.ts`. See [auth-oauth.md](./auth-oauth.md).
+**OAuth architecture (June 2026):** Generic provider union (`google` | `discord` | `azure`) in `src/lib/auth/oauth.ts`. Browser sign-in uses `@supabase/ssr` PKCE via `signInWithOAuth` in `auth-client.ts`; `/auth/callback` exchanges the authorization code with `exchangeOAuthCode`. Mock `ag-session` cookie when env vars are unset; live sessions use Supabase auth cookies. Provider secrets configured in Supabase Dashboard. See [auth-oauth.md](./auth-oauth.md).
+
+**Local-only dev auth (June 2026):** Quick-login accounts (`admin@local.dev`, etc.) and `DEV_ADMIN` bypass run only on localhost when `import.meta.env.DEV` or `LOCAL_DEV_AUTH=true`, and never when `PUBLIC_SITE_URL` or request host is production. Predefined accounts in `src/lib/server/auth/local-dev-accounts.ts`; guards in `local-dev.ts`. Production admin uses `scripts/promote-admin.ts` + `app_metadata.role`. See [supabase.md](./supabase.md).
+
+**Org deploy mirror (June 2026):** Netlify deploys from `heff-industries/animalgaragenet` @ `main`, synced from personal `jjheffernan/animalgaragenet` via deploy key (`ORG_REPO_DEPLOY_KEY`). Mirror script excludes `.github/workflows` because deploy keys cannot push workflow files; CI stays on the personal repo only. Sync workflow lives on **`main`** branch. See [deployment.md](./style-guide/backend-ops/deployment.md).
 
 ---
 
@@ -125,11 +129,11 @@ Helpers in `catalog-helpers.ts` (`getCatalogKind`, `getProductPath`, `getCatalog
 
 ## Deferred
 
-- Real Saleor API wiring
-- Real Supabase auth — OAuth foundation wired; magic link live when keys set
+- Checkout completion, payment, shipping (Saleor)
+- Promo / voucher redeem UX (`saleor-redeem` agent)
 - `@motionone/svelte`
-- Real payment checkout
 - PIM / 100k SKU parts catalog
+- UGC media uploads (plan in [plans/media-uploads.md](./plans/media-uploads.md))
 
 See [inspiration.md](./inspiration.md) for full backlog.
 

@@ -1,34 +1,32 @@
 # Mock → Saleor Swap
 
-How server loaders work today and how to replace mock data with live Saleor GraphQL.
+How catalog loaders use env-gated Saleor with mock fallback. Full inventory: [saleor-audit.md](../../saleor-audit.md).
 
-## Current loaders
+## Current pattern (wired)
 
-### Shop list — `src/routes/shop/+page.server.ts`
+Routes call helpers in `src/lib/server/catalog/` — not mock imports directly:
 
 ```typescript
-import { mockProducts } from '$lib/data/mock/products';
+// src/routes/shop/+page.server.ts
+import { getShopProducts } from '$lib/server/catalog/products';
 
 export const load: PageServerLoad = async () => {
-	return { products: mockProducts };
+	const products = await getShopProducts();
+	return { products };
 };
 ```
 
-### Product detail — `src/routes/shop/[slug]/+page.server.ts`
+`getShopProducts()`, `getShopProductBySlug()`, `getPartsProducts()`, `getCollections()`, etc. call Saleor when `isSaleorEnabled()` and fall back to `src/lib/data/mock/*` on error or missing env.
 
-```typescript
-import { getProductBySlug } from '$lib/data/mock/products';
+### Still mock-only
 
-export const load: PageServerLoad = async ({ params }) => {
-	const product = getProductBySlug(params.slug);
-	if (!product) error(404, 'Product not found');
-	return { product };
-};
-```
+- Homepage videos, UGC, builds, brands, campaigns
+- Deal promo banners, blog, guides (Ghost when enabled)
+- Related products on PDP, parts YMM filter against Saleor metadata
 
-### Homepage — `src/routes/+page.svelte`
+### Homepage — `src/routes/+page.server.ts`
 
-Imports mock data directly in the page component (no server loader). Acceptable for static prototype; consider moving to `+page.server.ts` before Saleor swap.
+Product slices (staff picks, clearance) use catalog helpers; other sections remain mock.
 
 ## Saleor client
 
@@ -60,71 +58,31 @@ PUBLIC_SALEOR_API_URL=https://commerce.animalgarage.net/graphql/
 SALEOR_CHANNEL=default-channel
 ```
 
-### Step 2: Create mapper (recommended)
+### Step 2: Mappers (done)
 
-```typescript
-// src/lib/server/saleor/mappers.ts
-export function mapProduct(node: SaleorProductNode): Product {
-	return {
-		id: node.id,
-		name: node.name,
-		slug: node.slug,
-		// map gross.amount → amount
-		pricing: {
-			priceRange: {
-				start: {
-					amount: node.pricing.priceRange.start.gross.amount,
-					currency: node.pricing.priceRange.start.gross.currency
-				},
-				stop: {/* same pattern */}
-			}
-		}
-		// ...
-	};
-}
-```
+`src/lib/server/saleor/mappers.ts` — `mapProduct`, `mapProductListNode`, `mapCollection`.
 
-### Step 3: Replace shop loader
+### Step 3: Extend swap points
 
-```typescript
-import { saleorFetch } from '$lib/server/saleor/client';
-import { PRODUCTS_QUERY } from '$lib/server/saleor/queries';
-import { env } from '$env/dynamic/private';
-import { mapProduct } from '$lib/server/saleor/mappers';
+Add new catalog surfaces in `src/lib/server/catalog/*.ts` following the `isSaleorEnabled()` + mock fallback pattern. Do not import mock data directly in route loaders.
 
-export const load: PageServerLoad = async () => {
-	const channel = env.SALEOR_CHANNEL ?? 'default-channel';
-	const result = await saleorFetch(PRODUCTS_QUERY, { channel, first: 24 });
-
-	if (result.errors?.length) {
-		error(502, 'Failed to load products');
-	}
-
-	const products = result.data.products.edges.map((e) => mapProduct(e.node));
-	return { products };
-};
-```
-
-### Step 4: Replace product detail loader
-
-Same pattern with `PRODUCT_BY_SLUG_QUERY` and `params.slug`.
-
-### Step 5: Verify parity
+### Step 4: Verify parity
 
 Create Saleor products matching mock slugs (`garage-flag-tee`, etc.) for side-by-side testing.
 
-### Step 6: Remove mock imports
+### Step 5: Remaining commerce gaps
+
+See [saleor-audit.md](../../saleor-audit.md): checkout complete, cart line mutations, collection product edges, redeem/promo codes.
 
 Keep `src/lib/data/` for tests/fallback until fully confident. Delete when live.
 
 ## Incremental migration
 
-Swap one loader at a time:
+Catalog list/detail routes are done. Next surfaces:
 
-1. Shop list (`/shop`)
-2. Product detail (`/shop/[slug]`)
-3. Collections (homepage)
-4. Cart/checkout (Phase 2)
+1. Collection product edges on homepage
+2. Cart line remove/qty + checkout complete
+3. Promo / voucher redeem (`saleor-redeem` agent)
 
 ## Error handling
 

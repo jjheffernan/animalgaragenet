@@ -8,12 +8,14 @@
 	import LocaleSelector from './LocaleSelector.svelte';
 	import MobileNavDrawer from './MobileNavDrawer.svelte';
 	import DealBadge from './DealBadge.svelte';
+	import AccountMenu from './AccountMenu.svelte';
 	import { cart } from '$lib/stores/cart.svelte';
 	import { search } from '$lib/stores/search.svelte';
 	import { resolvePath } from '$lib/utils/paths';
 
 	let mobileOpen = $state(false);
 	let notificationsOpen = $state(false);
+	let accountMenuOpen = $state(false);
 	let shopMenuOpen = $state(false);
 	let partsMenuOpen = $state(false);
 	let communityMenuOpen = $state(false);
@@ -22,6 +24,7 @@
 	let communityMenuPinned = $state(false);
 	let closeTimer: ReturnType<typeof setTimeout> | undefined;
 	let headerShell = $state<HTMLDivElement | null>(null);
+	let accountMenuRoot = $state<HTMLDivElement | null>(null);
 
 	$effect(() => {
 		if (!headerShell) return;
@@ -127,6 +130,7 @@
 		closeMenus();
 		mobileOpen = false;
 		notificationsOpen = false;
+		accountMenuOpen = false;
 		cart.closeDrawer();
 	});
 
@@ -192,6 +196,7 @@
 			closeMenus();
 			closeMobileNav();
 			notificationsOpen = false;
+			accountMenuOpen = false;
 			cart.closeDrawer();
 		}
 	}}
@@ -385,7 +390,10 @@
 							aria-label="Notifications"
 							aria-expanded={notificationsOpen}
 							aria-haspopup="menu"
-							onclick={() => (notificationsOpen = !notificationsOpen)}
+							onclick={() => {
+								accountMenuOpen = false;
+								notificationsOpen = !notificationsOpen;
+							}}
 						>
 							<svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
 								<path
@@ -412,12 +420,48 @@
 							</div>
 						{/if}
 					</div>
-					<a
-						href={resolve('/account')}
-						class="hidden text-sm font-medium uppercase tracking-wider text-zinc-400 transition hover:text-white sm:block"
-					>
-						Account
-					</a>
+					<div class="relative" bind:this={accountMenuRoot}>
+						<button
+							type="button"
+							class="hidden p-1 text-zinc-400 transition hover:text-white sm:block"
+							aria-label="Account menu"
+							aria-expanded={accountMenuOpen}
+							aria-haspopup="menu"
+							aria-controls="account-menu"
+							onclick={() => {
+								notificationsOpen = false;
+								accountMenuOpen = !accountMenuOpen;
+							}}
+						>
+							<span class="text-sm font-medium uppercase tracking-wider">Account</span>
+						</button>
+						<button
+							type="button"
+							class="p-1 text-zinc-400 transition hover:text-white sm:hidden"
+							aria-label="Account menu"
+							aria-expanded={accountMenuOpen}
+							aria-haspopup="menu"
+							aria-controls="account-menu"
+							onclick={() => {
+								notificationsOpen = false;
+								accountMenuOpen = !accountMenuOpen;
+							}}
+						>
+							<svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+								<path
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									stroke-width="2"
+									d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+								/>
+							</svg>
+						</button>
+						<AccountMenu
+							open={accountMenuOpen}
+							onclose={() => (accountMenuOpen = false)}
+							container={accountMenuRoot}
+						/>
+					</div>
 				{:else}
 					<a
 						href={resolve('/auth/sign-in')}

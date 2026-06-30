@@ -47,10 +47,12 @@ Set all vars from `.env.example` in the hosting platform's env config:
 
 ## CI/CD
 
-| Workflow | Trigger | Purpose |
-| -------- | ------- | ------- |
-| `.github/workflows/ci.yml` | Push/PR to `dev` or `main` on **jjheffernan/animalgaragenet** | Lint, typecheck, unit/e2e tests, build |
-| `.github/workflows/sync-org-main.yml` | CI success on `main`, or manual | Mirror `main` → **heff-industries/animalgaragenet** for Netlify |
+| Workflow | Branch | Trigger | Purpose |
+| -------- | ------ | ------- | ------- |
+| `.github/workflows/ci.yml` | `dev` and `main` | Push/PR on **jjheffernan/animalgaragenet** | Lint, typecheck, unit/e2e tests, build |
+| `.github/workflows/sync-org-main.yml` | **`main` only** | CI success on `main` push, or manual | Mirror `main` → **heff-industries/animalgaragenet** for Netlify |
+
+> **Note:** The org-sync workflow and `scripts/sync-org-mirror.sh` live on **`main`**, not `dev`. Merging `dev` → `main` brings sync changes into the personal repo; only then does CI on `main` push to the org mirror.
 
 ### Branch flow
 
@@ -58,29 +60,32 @@ Set all vars from `.env.example` in the hosting platform's env config:
 feature/* → dev (CI) → merge to main (CI) → sync to heff-industries/animalgaragenet → Netlify deploy
 ```
 
-Personal repo (`jjheffernan/animalgaragenet`) is where you develop. The org repo is the production mirror only.
+Personal repo (`jjheffernan/animalgaragenet`) is where you develop and run GitHub Actions. The org repo is a **read-only deploy mirror** — it receives app source only, not workflow files.
 
-### One-time sync setup
+### Org mirror (deploy key)
 
-1. Create a fine-grained GitHub PAT with **Contents: Read and write** on `heff-industries/animalgaragenet` only.
-2. Add it to the personal repo as secret `ORG_REPO_SYNC_TOKEN`:
+Auth uses an **org-repo deploy key** (secret `ORG_REPO_DEPLOY_KEY` on the personal repo), not a PAT. Deploy keys cannot push `.github/workflows`, so the mirror builds an orphan snapshot **without** the workflows folder. Netlify does not need Actions on the org repo.
 
-   ```bash
-   gh secret set ORG_REPO_SYNC_TOKEN --repo jjheffernan/animalgaragenet
-   ```
+One-time setup:
 
-3. Connect Netlify to `heff-industries/animalgaragenet`, branch `main`.
-4. Re-run **Sync main to org** from Actions if you need to backfill without a new commit.
+```bash
+./scripts/setup-org-sync-auth.sh install   # creates key on heff-industries/animalgaragenet, stores secret
+./scripts/setup-org-sync-auth.sh verify    # list keys + secret names (values never shown)
+```
 
-Manual re-sync: GitHub → Actions → **Sync main to org** → Run workflow.
+Then connect Netlify to `heff-industries/animalgaragenet`, branch `main`.
+
+Manual re-sync: GitHub → Actions → **Sync main to org** → Run workflow (on `jjheffernan/animalgaragenet`).
+
+Obsolete: `ORG_REPO_SYNC_TOKEN` (PAT) — remove with `./scripts/setup-org-sync-auth.sh cleanup` if still present.
 
 ## Pre-launch checklist
 
 - [ ] Choose adapter and hosting platform
 - [ ] Configure production env vars
-- [ ] Connect Saleor (replace mock data)
+- [ ] Checkout completion and payment (Saleor)
 - [ ] Configure CDN (replace picsum images)
-- [ ] Wire Supabase auth/newsletter
+- [ ] Wire Supabase newsletter and remaining Phase 4 tables
 - [ ] Add error pages and SEO meta
 - [ ] Performance audit (LCP, CLS)
 - [ ] Accessibility audit

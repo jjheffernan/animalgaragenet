@@ -1,3 +1,5 @@
+import { LIMITS } from '$lib/server/validation/limits';
+
 export interface TestimonialFields {
 	displayName: string;
 	vehicleSummary: string;
@@ -8,15 +10,16 @@ export interface TestimonialFields {
 
 export function validateTestimonialFields(fields: TestimonialFields): Record<string, string> {
 	const errors: Record<string, string> = {};
+	const { displayName, vehicleSummary, title, body } = LIMITS.testimonial;
 
 	if (!fields.displayName.trim()) {
 		errors.displayName = 'Display name is required';
-	} else if (fields.displayName.trim().length > 80) {
-		errors.displayName = 'Display name must be 80 characters or less';
+	} else if (fields.displayName.trim().length > displayName) {
+		errors.displayName = `Display name must be ${displayName} characters or less`;
 	}
 
-	if (fields.vehicleSummary.trim().length > 120) {
-		errors.vehicleSummary = 'Vehicle / build summary must be 120 characters or less';
+	if (fields.vehicleSummary.trim().length > vehicleSummary) {
+		errors.vehicleSummary = `Vehicle / build summary must be ${vehicleSummary} characters or less`;
 	}
 
 	const rating = Number.parseInt(fields.rating, 10);
@@ -28,16 +31,16 @@ export function validateTestimonialFields(fields: TestimonialFields): Record<str
 
 	if (!fields.title.trim()) {
 		errors.title = 'Review title is required';
-	} else if (fields.title.trim().length > 100) {
-		errors.title = 'Title must be 100 characters or less';
+	} else if (fields.title.trim().length > title) {
+		errors.title = `Title must be ${title} characters or less`;
 	}
 
 	if (!fields.body.trim()) {
 		errors.body = 'Review text is required';
-	} else if (fields.body.trim().length < 20) {
-		errors.body = 'Review must be at least 20 characters';
-	} else if (fields.body.trim().length > 2000) {
-		errors.body = 'Review must be 2000 characters or less';
+	} else if (fields.body.trim().length < LIMITS.testimonial.bodyMin) {
+		errors.body = `Review must be at least ${LIMITS.testimonial.bodyMin} characters`;
+	} else if (fields.body.trim().length > body) {
+		errors.body = `Review must be ${body} characters or less`;
 	}
 
 	return errors;

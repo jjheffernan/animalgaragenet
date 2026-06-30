@@ -66,18 +66,20 @@ Personal repo (`jjheffernan/animalgaragenet`) is where you develop and run GitHu
 
 Auth uses an **org-repo deploy key** (secret `ORG_REPO_DEPLOY_KEY` on the personal repo), not a PAT. Deploy keys cannot push `.github/workflows`, so the mirror builds an orphan snapshot **without** the workflows folder. Netlify does not need Actions on the org repo.
 
-One-time setup:
+| Where | What you see |
+| ----- | ------------ |
+| `heff-industries/animalgaragenet` → Settings → Deploy keys | `personal-main-sync` (public key) |
+| `jjheffernan/animalgaragenet` → Settings → Secrets → Actions | Secret **name** `ORG_REPO_DEPLOY_KEY` only — GitHub never shows secret values |
 
 ```bash
-./scripts/setup-org-sync-auth.sh install   # creates key on heff-industries/animalgaragenet, stores secret
-./scripts/setup-org-sync-auth.sh verify    # list keys + secret names (values never shown)
+./scripts/setup-org-sync-auth.sh install   # first time, or rotate key
+./scripts/setup-org-sync-auth.sh verify    # list deploy keys + secret names
+./scripts/setup-org-sync-auth.sh cleanup   # remove obsolete ORG_REPO_SYNC_TOKEN if set
 ```
 
 Then connect Netlify to `heff-industries/animalgaragenet`, branch `main`.
 
-Manual re-sync: GitHub → Actions → **Sync main to org** → Run workflow (on `jjheffernan/animalgaragenet`).
-
-Obsolete: `ORG_REPO_SYNC_TOKEN` (PAT) — remove with `./scripts/setup-org-sync-auth.sh cleanup` if still present.
+Manual re-sync: GitHub → Actions → **Sync main to org** → Run workflow (`workflow_dispatch` does not wait for CI).
 
 ## Pre-launch checklist
 

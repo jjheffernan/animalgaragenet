@@ -60,14 +60,15 @@
 		</div>
 	{/snippet}
 
+	<div class="mt-10">
+		{@render eventsViewToggle()}
+	</div>
+
 	{#if viewMode === 'list'}
 		{#if data.upcomingEvents.length === 0}
-			<div class="mt-10">
-				{@render eventsViewToggle()}
-			</div>
 			<p class="mt-6 text-zinc-500">No upcoming events right now. Check back soon.</p>
 		{:else}
-			<PaginatedListCanvas pagination={data.pagination} filters={eventsViewToggle} class="mt-10">
+			<PaginatedListCanvas pagination={data.pagination} class="mt-6">
 				<div class="grid gap-6 sm:grid-cols-2">
 					{#each data.upcomingEvents as event (event.id)}
 						<article class="overflow-hidden rounded-sm border border-zinc-800 bg-zinc-900">
@@ -98,9 +99,6 @@
 			</PaginatedListCanvas>
 		{/if}
 	{:else}
-		<div class="mt-10">
-			{@render eventsViewToggle()}
-		</div>
 		<div class="mt-6">
 			<EventsCalendar events={data.allEvents} />
 		</div>

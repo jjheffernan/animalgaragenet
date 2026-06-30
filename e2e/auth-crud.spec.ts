@@ -42,13 +42,17 @@ test.describe('build log CRUD', () => {
 		await page.goto('/account/builds');
 		await expect(page.getByText(buildTitle)).toBeVisible();
 
-		await page.getByRole('link', { name: 'Edit' }).click();
+		await page
+			.getByRole('listitem')
+			.filter({ hasText: buildTitle })
+			.getByRole('link', { name: 'Edit' })
+			.click();
 		await page.getByRole('textbox', { name: 'Build Title' }).fill(`${buildTitle} Updated`);
 		await page.getByRole('button', { name: 'Save draft' }).click();
 		await expect(page.getByText('Draft saved.')).toBeVisible();
 
 		await page.getByRole('button', { name: 'Submit for review' }).click();
-		await expect(page.getByText(/submitted for review/i)).toBeVisible();
+		await expect(page.getByText('Build log submitted for review.')).toBeVisible();
 	});
 
 	test('admin approves pending build log', async ({ page }) => {

@@ -26,7 +26,7 @@ test.describe('account', () => {
 
 		await accountNav.getByRole('link', { name: 'Orders' }).click();
 		await expect(page).toHaveURL(/\/account\/orders/);
-		await expect(page.getByRole('heading', { name: 'Orders' })).toBeVisible();
+		await expect(page.getByRole('heading', { level: 1, name: 'Orders' })).toBeVisible();
 
 		await accountNav.getByRole('link', { name: 'Build Logs' }).click();
 		await expect(page).toHaveURL(/\/account\/builds/);

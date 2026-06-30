@@ -36,6 +36,14 @@
 	</div>
 {/if}
 
+{#if form?.errors?.form}
+	<div
+		class="mt-4 rounded-sm border border-red-900/50 bg-red-950/30 px-4 py-3 text-sm text-red-300"
+	>
+		{form.errors.form}
+	</div>
+{/if}
+
 <form
 	method="POST"
 	class="mt-8 space-y-6"

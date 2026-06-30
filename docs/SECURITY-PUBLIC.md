@@ -6,7 +6,8 @@ This repository is **public**. All files under `docs/` must be safe to read with
 
 | Category             | Examples (use placeholders instead)                                   |
 | -------------------- | --------------------------------------------------------------------- |
-| Production hostnames | Specific Saleor, CDN, or Netlify preview URLs                         |
+| Production hostnames | Specific Saleor, CDN, Ghost, or Netlify preview URLs (not public brand `animalgarage.net`) |
+| Internal hostnames   | `*.internal`, private cluster DNS, literal bucket names in archive docs                   |
 | Cloud resources      | Bucket names, regions, cluster names, IAM key variable names in prose |
 | Org topology         | Organization repo names, deploy-key secret names, key fingerprints    |
 | Live probes          | URLs pasted from production audits                                    |
@@ -39,6 +40,25 @@ This repository is **public**. All files under `docs/` must be safe to read with
 | Storefront custom domain | `https://<your-site-host>`           |
 | S3 bucket name           | `<your-media-bucket>`                |
 | Org deploy repo          | `<organization>/<deploy-repo>`       |
+| Personal fork            | `<your-github-user>/<repo-name>`     |
+| Org mirror Actions secret | `<org-sync-secret>`                 |
+| Internal S3 endpoint     | `http://localhost:3900` or `https://<s3-endpoint-host>` |
+
+## Pre-PR grep (docs/)
+
+Run from repo root before merging doc changes:
+
+```bash
+rg -i 'jjheffernan|heff-industries|ORG_REPO_DEPLOY_KEY|commerce\.animalgarage|cdn\.animalgarage|content\.animalgarage|animalgarage\.netlify|garage\.internal|ag-media|sk_live|sk_test|eyJ[A-Za-z0-9_-]+\.' docs/
+```
+
+Expect **no hits** except:
+
+- Historical audit rows in `meta/agents-skills-audit.md` (documenting past fixes)
+- Changelog rows in `testing/security-hardening.md` that name redacted patterns
+- This policy file's grep command block
+- This repo's public GitHub / wiki URLs (`github.com/.../animalgaragenet`)
+- Public brand domain `animalgarage.net` in index copy (marketing site, not infra map)
 
 ## When editing docs
 

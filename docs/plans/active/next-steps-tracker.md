@@ -59,7 +59,7 @@ _Audit ID rows (AUD-P*) also appear in [AUDIT-REMEDIATION.md](../AUDIT-REMEDIATI
 | NS-OPS-003 | Register Saleor webhook → `POST /api/webhooks/saleor`; set `SALEOR_WEBHOOK_SECRET` | inspiration IP-012, saleor-payments, [deployment.md](../../infrastructure/deployment.md) | Yes | Saleor Dashboard webhooks | saleor / ops | **blocked** |
 | NS-OPS-004 | Schedule YouTube sync: `POST /api/cron/youtube-sync` + header `x-youtube-sync-secret` | inspiration IP-007, [deployment.md](../../infrastructure/deployment.md) | Yes | External cron (GitHub Actions schedule, pg_cron, etc.) + `YOUTUBE_*` env | content / ops | **blocked** |
 | NS-OPS-005 | Populate GitHub Actions secrets for `readiness-ci.yml` | readiness-report, external-dependencies | Yes | Repo Settings → Secrets | CI / ops | **blocked** |
-| NS-OPS-006 | Verify org mirror sync after `main` merge (`sync-org-main.yml`) | [deployment.md](../../infrastructure/deployment.md), readiness-report | Yes | `ORG_REPO_DEPLOY_KEY` deploy key | maintainer | **blocked** |
+| NS-OPS-006 | Verify org mirror sync after `main` merge (`sync-org-main.yml`) | [deployment.md](../../infrastructure/deployment.md), readiness-report | Yes | `<org-sync-secret>` deploy key | maintainer | **blocked** |
 | NS-OPS-007 | CDN + CloudFront invalidation env (`S3_*`, `AWS_*`, `AWS_CLOUDFRONT_DISTRIBUTION_ID`, `PUBLIC_CDN_BASE_URL`) | inspiration IP-013, [deployment.md](../../infrastructure/deployment.md) | Yes | AWS console + Netlify env | media / ops | **blocked** |
 | NS-OPS-008 | Optional `BUG_REPORT_WEBHOOK_URL` for staff alerts | inspiration IP-031, `.env.example` | Yes | Netlify env | ops | **blocked** |
 | NS-OPS-009 | `SOCIAL_*_CLIENT_ID` for live account connections OAuth | inspiration IP-027, `.env.example` | Yes | IdP consoles + Netlify | auth / ops | **blocked** |
@@ -84,7 +84,10 @@ bash scripts/check-secrets.sh
 | Date | Change |
 | ---- | ------ |
 | 2026-06-30 | Initial tracker; deployment.md runbook gaps patched |
-| 2026-07-03 | Public-safe scrub; deployment runbook → `infrastructure/deployment.md` |
+| 2026-06-30 | PT-P3-003 done — dead `submitFormStub` generic branch removed |
+| 2026-06-30 | Linked canonical runbook at `infrastructure/deployment.md` |
+| 2026-07-03 | Canonical runbook → `infrastructure/deployment.md`; ops rows aligned (YouTube external cron, CloudFront invalidation) |
+| 2026-07-03 | Public-safe scrub per `SECURITY-PUBLIC.md` |
 
 ---
 
@@ -100,6 +103,3 @@ Record in private runbook / password manager only — never paste into `docs/`:
 | Stripe/Saleor Payment App secrets, webhook HMAC values, `YOUTUBE_SYNC_SECRET` | Credentials |
 
 `.env.example` may list example hostnames for local setup — scrub real values before open-sourcing template updates.
-| 2026-06-30 | PT-P3-003 done — dead `submitFormStub` generic branch removed |
-| 2026-06-30 | Linked canonical runbook at `infrastructure/deployment.md` |
-| 2026-07-03 | Canonical runbook → `infrastructure/deployment.md`; ops rows aligned (YouTube external cron, CloudFront invalidation) |

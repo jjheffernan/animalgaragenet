@@ -15,6 +15,7 @@ import {
 } from '$lib/server/catalog/collections';
 import { listGuides } from '$lib/server/ghost/posts';
 import { createAdminClient } from '$lib/server/supabase/admin';
+import { getFeaturedSection } from '$lib/server/featured-sections/repository';
 import {
 	listApprovedTestimonials,
 	listFeaturedTestimonials
@@ -23,14 +24,15 @@ import { testimonialsToUgcItems } from '$lib/server/testimonials/to-ugc';
 import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async () => {
-	const [collections, staffPicks, clearance, guides, featuredTestimonials, approvedTestimonials] =
+	const [collections, staffPicks, clearance, guides, featuredTestimonials, approvedTestimonials, heroSection] =
 		await Promise.all([
 			getCollections(),
 			getStaffPickProducts(),
 			getClearanceProducts(),
 			listGuides(),
 			listFeaturedTestimonials(3),
-			listApprovedTestimonials(12)
+			listApprovedTestimonials(12),
+			getFeaturedSection('hero')
 		]);
 
 	const ugcFromTestimonials = testimonialsToUgcItems(approvedTestimonials);
@@ -48,6 +50,7 @@ export const load: PageServerLoad = async () => {
 		brands: mockBrands.slice(0, 8),
 		popularModels: mockPopularModels,
 		activeCampaign: getActiveCampaign(),
-		featuredTestimonials
+		featuredTestimonials,
+		heroSection
 	};
 };

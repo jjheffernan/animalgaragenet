@@ -45,7 +45,8 @@ export const ADMIN_NAV: AdminNavSection[] = [
 		label: 'Settings',
 		items: [
 			{ href: '/admin/users', label: 'Users' },
-			{ href: '/admin/media', label: 'Media' }
+			{ href: '/admin/media', label: 'Media' },
+			{ href: '/admin/featured', label: 'Featured Sections' }
 		]
 	}
 ];

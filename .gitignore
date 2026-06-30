@@ -91,3 +91,6 @@ blob-report
 tmp
 *.tsbuildinfo
 .wiki-cache/
+
+# Vendored agent skills (repo uses agents/ + .cursor/skills symlinks)
+.agents/

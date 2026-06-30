@@ -16,19 +16,19 @@ A highly animated, media-heavy automotive brand site — merchandising-forward d
 
 Complete, superseded, or stale plans. Each file has a status banner.
 
-| Doc                                                                        | Notes                                  |
-| -------------------------------------------------------------------------- | -------------------------------------- |
-| [archive/README.md](./archive/README.md)                                   | Index of archived docs                 |
-| [archive/daisyui.md](./archive/daisyui.md)                                 | Stale — Tailwind zinc only             |
-| [archive/phase3-plan.md](./archive/phase3-plan.md)                         | Complete — workstreams A–D             |
-| [archive/animation-media.md](./archive/animation-media.md)                 | Stale — marketing strategy             |
-| [archive/dashboard-adoption-plan.md](./archive/dashboard-adoption-plan.md) | Complete — in-repo `/admin`            |
-| [archive/media-cdn-plan.md](./archive/media-cdn-plan.md)                   | Superseded — see media-uploads phase 1 |
-| [archive/polish-plan.md](./archive/polish-plan.md)                         | Complete — see inspiration-polish-tracker |
-| [archive/doc-implementation-manifest.md](./archive/doc-implementation-manifest.md) | Superseded — June 2026 batch audit (`DOC-###`) |
-| [archive/batch-2026-07-01.md](./archive/batch-2026-07-01.md) | Complete — July 1 implementer batch |
-| [archive/batch-2026-07-02.md](./archive/batch-2026-07-02.md) | Complete — July 2 implementer batch (BATCH-013–020) |
-| [archive/batch-2026-07-03-followups.md](./archive/batch-2026-07-03-followups.md) | Complete — BATCH-021 + ops apply checklist |
+| Doc                                                                                | Notes                                               |
+| ---------------------------------------------------------------------------------- | --------------------------------------------------- |
+| [archive/README.md](./archive/README.md)                                           | Index of archived docs                              |
+| [archive/daisyui.md](./archive/daisyui.md)                                         | Stale — Tailwind zinc only                          |
+| [archive/phase3-plan.md](./archive/phase3-plan.md)                                 | Complete — workstreams A–D                          |
+| [archive/animation-media.md](./archive/animation-media.md)                         | Stale — marketing strategy                          |
+| [archive/dashboard-adoption-plan.md](./archive/dashboard-adoption-plan.md)         | Complete — in-repo `/admin`                         |
+| [archive/media-cdn-plan.md](./archive/media-cdn-plan.md)                           | Superseded — see media-uploads phase 1              |
+| [archive/polish-plan.md](./archive/polish-plan.md)                                 | Complete — see inspiration-polish-tracker           |
+| [archive/doc-implementation-manifest.md](./archive/doc-implementation-manifest.md) | Superseded — June 2026 batch audit (`DOC-###`)      |
+| [archive/batch-2026-07-01.md](./archive/batch-2026-07-01.md)                       | Complete — July 1 implementer batch                 |
+| [archive/batch-2026-07-02.md](./archive/batch-2026-07-02.md)                       | Complete — July 2 implementer batch (BATCH-013–020) |
+| [archive/batch-2026-07-03-followups.md](./archive/batch-2026-07-03-followups.md)   | Complete — BATCH-021 + ops apply checklist          |
 
 ---
 
@@ -36,12 +36,12 @@ Complete, superseded, or stale plans. Each file has a status banner.
 
 Integration scorecards and archived one-time findings: [audits/README.md](./audits/README.md)
 
-| Doc | Purpose |
-| --- | ------- |
-| [audits/saleor-audit.md](./audits/saleor-audit.md) | Saleor integration scorecard |
-| [audits/ghost-audit.md](./audits/ghost-audit.md) | Ghost CMS wiring |
-| [audits/site-audit.md](./audits/site-audit.md) | Cross-cutting quality notes |
-| [meta/agents-skills-audit.md](./meta/agents-skills-audit.md) | Agent/skills hygiene |
+| Doc                                                          | Purpose                      |
+| ------------------------------------------------------------ | ---------------------------- |
+| [audits/saleor-audit.md](./audits/saleor-audit.md)           | Saleor integration scorecard |
+| [audits/ghost-audit.md](./audits/ghost-audit.md)             | Ghost CMS wiring             |
+| [audits/site-audit.md](./audits/site-audit.md)               | Cross-cutting quality notes  |
+| [meta/agents-skills-audit.md](./meta/agents-skills-audit.md) | Agent/skills hygiene         |
 
 ---
 
@@ -75,13 +75,13 @@ Integration scorecards and archived one-time findings: [audits/README.md](./audi
 
 ## Infrastructure
 
-| Doc                                                        | Purpose                        |
-| ---------------------------------------------------------- | ------------------------------ |
-| [infrastructure/deployment.md](./infrastructure/deployment.md) | **Production runbook** — Netlify env, Supabase push, webhooks, smoke |
-| [infrastructure/observability-lgtm.md](./infrastructure/observability-lgtm.md) | **LGTM** — Loki logs, Mimir metrics, Tempo traces |
-| [infrastructure/overview.md](./infrastructure/overview.md) | CDN, S3, Supabase architecture |
-| [infrastructure/migration-squash-notes.md](./infrastructure/migration-squash-notes.md) | Supabase migration squash (17 → 3) |
-| [infrastructure/supabase-schema.md](./infrastructure/supabase-schema.md) | Table inventory |
+| Doc                                                                                    | Purpose                                                              |
+| -------------------------------------------------------------------------------------- | -------------------------------------------------------------------- |
+| [infrastructure/deployment.md](./infrastructure/deployment.md)                         | **Production runbook** — Netlify env, Supabase push, webhooks, smoke |
+| [infrastructure/observability-lgtm.md](./infrastructure/observability-lgtm.md)         | **LGTM** — Loki logs, Mimir metrics, Tempo traces                    |
+| [infrastructure/overview.md](./infrastructure/overview.md)                             | CDN, S3, Supabase architecture                                       |
+| [infrastructure/migration-squash-notes.md](./infrastructure/migration-squash-notes.md) | Supabase migration squash (17 → 3)                                   |
+| [infrastructure/supabase-schema.md](./infrastructure/supabase-schema.md)               | Table inventory                                                      |
 
 ---
 
@@ -95,27 +95,27 @@ Integration scorecards and archived one-time findings: [audits/README.md](./audi
 
 ## Meta
 
-| Doc                                                          | Purpose                                                          |
-| ------------------------------------------------------------ | ---------------------------------------------------------------- |
-| [SECURITY-PUBLIC.md](./SECURITY-PUBLIC.md)                   | Public documentation policy — placeholders, no infra leaks       |
-| [meta/decisions.md](./meta/decisions.md)                     | Persistent product/tech choices                                  |
-| [meta/inspiration.md](./meta/inspiration.md)                 | Feature backlog — integrated vs remaining                        |
-| [meta/README.md](./meta/README.md)                           | Meta docs index                                                  |
-| [archive/polish-plan.md](./archive/polish-plan.md)           | Archived session polish (code complete)                          |
-| [meta/agents-skills-audit.md](./meta/agents-skills-audit.md) | Cursor agents/skills audit (detail — tracker: AUDIT-REMEDIATION) |
+| Doc                                                                | Purpose                                                    |
+| ------------------------------------------------------------------ | ---------------------------------------------------------- |
+| [SECURITY-PUBLIC.md](./SECURITY-PUBLIC.md)                         | Public documentation policy — placeholders, no infra leaks |
+| [meta/decisions.md](./meta/decisions.md)                           | Persistent product/tech choices                            |
+| [meta/inspiration.md](./meta/inspiration.md)                       | Feature backlog — integrated vs remaining                  |
+| [meta/README.md](./meta/README.md)                                 | Meta docs index                                            |
+| [archive/polish-plan.md](./archive/polish-plan.md)                 | Archived session polish (code complete)                    |
+| [archive/agents-skills-audit.md](./archive/agents-skills-audit.md) | June 2026 agents/skills hygiene                            |
 
 ---
 
 ## Plans
 
-| Doc | Purpose |
-| --- | ------- |
-| [CODER-FLOW.md](./CODER-FLOW.md) | **Start here** — dev workflow |
-| [BLOCKERS.md](./BLOCKERS.md) | Ops-only blockers (canonical) |
-| [plans/README.md](./plans/README.md) | Active vs archived plans |
-| [plans/active/inspiration-polish-tracker.md](./plans/active/inspiration-polish-tracker.md) | `IP-*` features + prod setup |
-| [plans/active/market-readiness.md](./plans/active/market-readiness.md) | Launch phases |
-| [plans/active/media-uploads.md](./plans/active/media-uploads.md) | UGC media architecture |
+| Doc                                                                                        | Purpose                       |
+| ------------------------------------------------------------------------------------------ | ----------------------------- |
+| [CODER-FLOW.md](./CODER-FLOW.md)                                                           | **Start here** — dev workflow |
+| [BLOCKERS.md](./BLOCKERS.md)                                                               | Ops-only blockers (canonical) |
+| [plans/README.md](./plans/README.md)                                                       | Active vs archived plans      |
+| [plans/active/inspiration-polish-tracker.md](./plans/active/inspiration-polish-tracker.md) | `IP-*` features + prod setup  |
+| [plans/active/market-readiness.md](./plans/active/market-readiness.md)                     | Launch phases                 |
+| [plans/active/media-uploads.md](./plans/active/media-uploads.md)                           | UGC media architecture        |
 
 ---
 
@@ -129,12 +129,12 @@ Subfolders: `frontend/`, `business-logic/`, `backend-ops/` (not restructured her
 
 ## Testing
 
-| Doc                                                                    | Purpose              |
-| ---------------------------------------------------------------------- | -------------------- |
-| [testing/e2e-policy.md](./testing/e2e-policy.md)                     | E2E scope — unit default; Playwright on explicit e2e only |
-| [testing/external-dependencies.md](./testing/external-dependencies.md) | Integration registry |
-| [testing/readiness-report.md](./testing/readiness-report.md)           | Live probe results   |
-| [testing/security-hardening.md](./testing/security-hardening.md)       | Security changelog   |
+| Doc                                                                    | Purpose                                                   |
+| ---------------------------------------------------------------------- | --------------------------------------------------------- |
+| [testing/e2e-policy.md](./testing/e2e-policy.md)                       | E2E scope — unit default; Playwright on explicit e2e only |
+| [testing/external-dependencies.md](./testing/external-dependencies.md) | Integration registry                                      |
+| [testing/readiness-report.md](./testing/readiness-report.md)           | Live probe results                                        |
+| [testing/security-hardening.md](./testing/security-hardening.md)       | Security changelog                                        |
 
 ---
 

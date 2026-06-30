@@ -1,3 +1,5 @@
+> **Status: Archived** — June 2026 audit; daisyUI tree removed (AUD-P2-021). See [archive/audits/zinc-only-deps-audit.md](./audits/zinc-only-deps-audit.md).
+
 # Agents & skills audit — 2026-06-30
 
 Audit of `.cursor/agents/`, `agents/`, `.cursor/skills/`, `skills-lock.json`, and the agent index in `docs/README.md` on branch `dev`.

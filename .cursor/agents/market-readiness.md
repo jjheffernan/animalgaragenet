@@ -15,7 +15,7 @@ description: Production market-readiness audit for Animal Garage. Browse live Ne
 ## Deliverables
 
 - `docs/plans/active/market-readiness.md` — phased roadmap to launch (full external hydration, zero mock)
-- `docs/plans/active/account-flow-fix.md` — Netlify + Supabase account menu/session fix plan
+- `docs/BLOCKERS.md` — Netlify + Supabase ops checklist (replaces account-flow-fix)
 - Update `docs/plans/active/inspiration-polish-tracker.md` from findings
 - Update `docs/testing/readiness-report.md` if live probes possible
 

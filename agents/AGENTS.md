@@ -12,7 +12,7 @@ Automotive brand merchandising/marketing site. Merch-forward digital touchpoint 
 - **TypeScript** (strict)
 - **Tailwind CSS v4** via `@tailwindcss/vite`
 - **Saleor** — GraphQL headless commerce (external backend)
-- **Supabase** — auth, build submissions, newsletter (planned)
+- **Supabase** — auth, build submissions, newsletter, user preferences
 - **S3 + CloudFront** — media CDN (planned)
 - **Adapter:** auto (via vite.config.ts)
 

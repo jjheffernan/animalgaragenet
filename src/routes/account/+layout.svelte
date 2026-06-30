@@ -4,6 +4,7 @@
 
 	const navItems = [
 		{ href: '/account', label: 'Overview', disabled: false },
+		{ href: '/account/connections', label: 'Connections', disabled: false },
 		{ href: '/account/redeem', label: 'Redeem', disabled: false },
 		{ href: '/account/builds', label: 'Build Logs', disabled: false },
 		{ href: '/account/orders', label: 'Orders', disabled: false },
@@ -33,7 +34,9 @@
 							(item.href === '/account/orders' &&
 								$page.url.pathname.startsWith('/account/orders')) ||
 							(item.href === '/account/vehicles' &&
-								$page.url.pathname.startsWith('/account/vehicles'))
+								$page.url.pathname.startsWith('/account/vehicles')) ||
+							(item.href === '/account/connections' &&
+								$page.url.pathname.startsWith('/account/connections'))
 								? 'bg-zinc-800 text-white'
 								: 'text-zinc-400 hover:bg-zinc-900 hover:text-white'}"
 						>

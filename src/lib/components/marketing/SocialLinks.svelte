@@ -1,10 +1,11 @@
 <script lang="ts">
-	const links = [
-		{ label: 'Instagram', href: 'https://instagram.com/animalgarage', icon: 'instagram' },
-		{ label: 'YouTube', href: 'https://youtube.com/@animalgarage', icon: 'youtube' },
-		{ label: 'TikTok', href: 'https://tiktok.com/@animalgarage', icon: 'tiktok' },
-		{ label: 'Discord', href: 'https://discord.gg/animalgarage', icon: 'discord' }
-	] as const;
+	import { SOCIAL_PLATFORMS } from '$lib/data/social-platforms';
+
+	const links = SOCIAL_PLATFORMS.map((p) => ({
+		label: p.label,
+		href: p.brandHref,
+		icon: p.icon
+	}));
 
 	interface Props {
 		class?: string;

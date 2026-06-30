@@ -51,12 +51,15 @@
 
 		<form
 			method="POST"
+			action="?/magicLink"
 			class="mt-8 space-y-6"
 			use:enhance={() => {
 				loading = true;
-				return async ({ update }) => {
+				return async ({ result, update }) => {
 					loading = false;
-					await update();
+					if (result.type !== 'redirect') {
+						await update();
+					}
 				};
 			}}
 		>

@@ -28,7 +28,7 @@ export const load: PageServerLoad = async ({ locals, url }) => {
 };
 
 export const actions: Actions = {
-	default: async ({ request, cookies, url }) => {
+	magicLink: async ({ request, cookies, url }) => {
 		const form = await request.formData();
 		const email = String(form.get('email') ?? '').trim();
 		const name = String(form.get('name') ?? '').trim();

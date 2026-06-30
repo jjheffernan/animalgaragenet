@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { MAX_FILES_PER_TESTIMONIAL } from '$lib/server/media/constants';
+	import { MAX_FILES_PER_TESTIMONIAL } from '$lib/media/constants';
 
 	export interface UploadedPhoto {
 		assetId: string;

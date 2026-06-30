@@ -42,7 +42,7 @@ function signUpRequest(fields: Record<string, string>): SignUpEvent {
 
 describe('auth sign-in action', () => {
 	it('rejects invalid email addresses', async () => {
-		const result = await signInActions.default(
+		const result = await signInActions.magicLink(
 			signInRequest({ email: 'not-an-email', name: 'Test' })
 		);
 
@@ -55,7 +55,7 @@ describe('auth sign-in action', () => {
 
 	it('redirects mock users when Supabase is not configured', async () => {
 		await expect(
-			signInActions.default(
+			signInActions.magicLink(
 				signInRequest({
 					email: 'driver@example.com',
 					name: 'Driver',
@@ -66,7 +66,7 @@ describe('auth sign-in action', () => {
 	});
 
 	it('rejects sign-in on production hostname when Supabase is not configured', async () => {
-		const result = await signInActions.default(
+		const result = await signInActions.magicLink(
 			signInRequest(
 				{
 					email: 'driver@example.com',

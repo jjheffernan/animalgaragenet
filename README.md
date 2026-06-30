@@ -21,4 +21,5 @@ Open [http://localhost:5173](http://localhost:5173).
 | `npm run check`   | Type-check               |
 | `npm run lint`    | ESLint + Prettier check  |
 
-See [docs/README.md](docs/README.md) for architecture, roadmap, and integration plans.
+See [docs/README.md](docs/README.md) for architecture, roadmap, and integration plans.  
+**Production deploy:** [docs/infrastructure/deployment.md](docs/infrastructure/deployment.md) · **Open work:** [docs/STATUS.md](docs/STATUS.md)

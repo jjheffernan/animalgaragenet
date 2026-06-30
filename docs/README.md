@@ -6,7 +6,7 @@ Architecture, integration plans, and developer reference for **animalgarage.net*
 
 A highly animated, media-heavy automotive brand site — merchandising-forward digital marketing with parts, community, and on-domain media. The frontend is a SvelteKit headless storefront; commerce runs on Saleor at a separate domain; media ships via CDN; non-commerce data lives in Supabase.
 
-**Open work tracker:** [STATUS.md](./STATUS.md) · **Audit remediation:** [plans/AUDIT-REMEDIATION.md](./plans/AUDIT-REMEDIATION.md) · **Public doc policy:** [SECURITY-PUBLIC.md](./SECURITY-PUBLIC.md) — no infra hostnames or secrets in `docs/`.
+**Open work tracker:** [STATUS.md](./STATUS.md) · **Implementer queue:** [plans/active/next-steps-tracker.md](./plans/active/next-steps-tracker.md) · **Audit remediation:** [plans/AUDIT-REMEDIATION.md](./plans/AUDIT-REMEDIATION.md) · **Public doc policy:** [SECURITY-PUBLIC.md](./SECURITY-PUBLIC.md) — no infra hostnames or secrets in `docs/`.
 
 **Developer how-to:** [style-guide/README.md](./style-guide/README.md) — Svelte patterns, deployment, env config.
 
@@ -79,6 +79,7 @@ Complete, superseded, or stale plans. Each file has a status banner.
 
 | Doc                                                        | Purpose                        |
 | ---------------------------------------------------------- | ------------------------------ |
+| [infrastructure/deployment.md](./infrastructure/deployment.md) | **Production runbook** — Netlify env, Supabase push, webhooks, smoke |
 | [infrastructure/overview.md](./infrastructure/overview.md) | CDN, S3, Supabase architecture |
 | [infrastructure/migration-squash-notes.md](./infrastructure/migration-squash-notes.md) | Supabase migration squash (17 → 3) |
 | [infrastructure/supabase-schema.md](./infrastructure/supabase-schema.md) | Table inventory |
@@ -113,6 +114,7 @@ Complete, superseded, or stale plans. Each file has a status banner.
 | [plans/README.md](./plans/README.md)                                           | Plan lifecycle                          |
 | [plans/AUDIT-REMEDIATION.md](./plans/AUDIT-REMEDIATION.md)                     | Consolidated audit remediation tracker  |
 | [plans/TRIAGE.md](./plans/TRIAGE.md)                                           | Plan vs codebase verification           |
+| [plans/active/next-steps-tracker.md](./plans/active/next-steps-tracker.md) | Consolidated unblocked vs ops-blocked queue |
 | [plans/active/inspiration-polish-tracker.md](./plans/active/inspiration-polish-tracker.md) | Open work — inspiration + polish + AUDIT IDs + prod setup |
 | [plans/active/ponytail-audit-tracker.md](./plans/active/ponytail-audit-tracker.md) | Server-side dedupe / guard tightening (no UI markup) |
 | [plans/active/account-flow-fix.md](./plans/active/account-flow-fix.md)         | Netlify + Supabase account ops          |

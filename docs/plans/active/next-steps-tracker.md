@@ -1,13 +1,13 @@
 # Next steps tracker
 
 **Created:** 2026-06-30  
-**Last updated:** 2026-06-30  
+**Last updated:** 2026-07-03  
 **Branch:** `dev`  
 **Policy:** [SECURITY-PUBLIC.md](../../SECURITY-PUBLIC.md) — no infra hostnames or secrets.
 
 Canonical implementer queue reconciled from [STATUS.md](../../STATUS.md), [AUDIT-REMEDIATION.md](../AUDIT-REMEDIATION.md), [inspiration-polish-tracker.md](./inspiration-polish-tracker.md), [ponytail-audit-tracker.md](./ponytail-audit-tracker.md), [market-readiness.md](./market-readiness.md), and [archive/batch-2026-07-03-followups.md](../../archive/batch-2026-07-03-followups.md).
 
-**Deployment runbook:** [deployment.md](../../style-guide/backend-ops/deployment.md) (patched 2026-06-30).
+**Deployment runbook:** [infrastructure/deployment.md](../../infrastructure/deployment.md) — Netlify env checklist, Supabase `db push`, webhooks, OAuth, smoke tests.
 
 ---
 
@@ -15,8 +15,8 @@ Canonical implementer queue reconciled from [STATUS.md](../../STATUS.md), [AUDIT
 
 | Bucket | Count | Meaning |
 | ------ | ----: | ------- |
-| **Unblocked** | 11 | Can land in-repo on `dev` without Netlify/Saleor/Stripe dashboard access |
-| **Ops-blocked** | 17 | Requires env vars, migrations on production Supabase, or external console work |
+| **Unblocked** | 12 | Can land in-repo on `dev` without Netlify/Saleor/Stripe dashboard access |
+| **Ops-blocked** | 19 | Requires env vars, migrations on production Supabase, or external console work |
 
 _Audit ID rows (AUD-P*) also appear in [AUDIT-REMEDIATION.md](../AUDIT-REMEDIATION.md). Do not close AUD rows here without updating that file._
 
@@ -56,14 +56,14 @@ _Audit ID rows (AUD-P*) also appear in [AUDIT-REMEDIATION.md](../AUDIT-REMEDIATI
 | AUD-P2-018 | Discord + Microsoft OAuth providers enabled in Supabase | AUDIT-REMEDIATION, auth/discord.md, auth/microsoft.md | Yes | Supabase + IdP consoles | auth / ops | **blocked** |
 | NS-OPS-001 | Apply squashed Supabase migrations (3 files) on production | migration-squash-notes, batch-2026-07-03-followups | Yes | `supabase db push` or dashboard | supabase / ops | **blocked** |
 | NS-OPS-002 | Verify Storage bucket `ugc` + policies (in `20250701020000_media_social.sql`) | media-uploads, batch-2026-07-03-followups | Yes | NS-OPS-001 | supabase / ops | **blocked** |
-| NS-OPS-003 | Register Saleor webhook → `POST /api/webhooks/saleor`; set `SALEOR_WEBHOOK_SECRET` | inspiration IP-012, saleor-payments, deployment.md | Yes | Saleor Dashboard webhooks | saleor / ops | **blocked** |
-| NS-OPS-004 | Schedule YouTube sync: `POST /api/cron/youtube-sync` + header `x-youtube-sync-secret` | inspiration IP-007, deployment.md | Yes | Netlify scheduled function or external cron + `YOUTUBE_*` env | content / ops | **blocked** |
+| NS-OPS-003 | Register Saleor webhook → `POST /api/webhooks/saleor`; set `SALEOR_WEBHOOK_SECRET` | inspiration IP-012, saleor-payments, [deployment.md](../../infrastructure/deployment.md) | Yes | Saleor Dashboard webhooks | saleor / ops | **blocked** |
+| NS-OPS-004 | Schedule YouTube sync: `POST /api/cron/youtube-sync` + header `x-youtube-sync-secret` | inspiration IP-007, [deployment.md](../../infrastructure/deployment.md) | Yes | External cron (GitHub Actions schedule, pg_cron, etc.) + `YOUTUBE_*` env | content / ops | **blocked** |
 | NS-OPS-005 | Populate GitHub Actions secrets for `readiness-ci.yml` | readiness-report, external-dependencies | Yes | Repo Settings → Secrets | CI / ops | **blocked** |
-| NS-OPS-006 | Verify org mirror sync after `main` merge (`sync-org-main.yml`) | deployment.md, readiness-report | Yes | `<org-sync-secret>` / deploy key | maintainer | **blocked** |
-| NS-OPS-007 | Optional CDN presigned upload env (`S3_*`, `AWS_*`, `PUBLIC_CDN_BASE_URL`) | inspiration IP-013, deployment.md | Yes | AWS console | media / ops | **blocked** |
+| NS-OPS-006 | Verify org mirror sync after `main` merge (`sync-org-main.yml`) | [deployment.md](../../infrastructure/deployment.md), readiness-report | Yes | `ORG_REPO_DEPLOY_KEY` deploy key | maintainer | **blocked** |
+| NS-OPS-007 | CDN + CloudFront invalidation env (`S3_*`, `AWS_*`, `AWS_CLOUDFRONT_DISTRIBUTION_ID`, `PUBLIC_CDN_BASE_URL`) | inspiration IP-013, [deployment.md](../../infrastructure/deployment.md) | Yes | AWS console + Netlify env | media / ops | **blocked** |
 | NS-OPS-008 | Optional `BUG_REPORT_WEBHOOK_URL` for staff alerts | inspiration IP-031, `.env.example` | Yes | Netlify env | ops | **blocked** |
 | NS-OPS-009 | `SOCIAL_*_CLIENT_ID` for live account connections OAuth | inspiration IP-027, `.env.example` | Yes | IdP consoles + Netlify | auth / ops | **blocked** |
-| NS-OPS-010 | Merge `dev` → `main` for production Netlify deploy | STATUS, deployment.md | Yes | NS-OPS-001–004 + AUD-P0-* complete | release | **blocked** |
+| NS-OPS-010 | Merge `dev` → `main` for production Netlify deploy | STATUS, [deployment.md](../../infrastructure/deployment.md) | Yes | NS-OPS-001–004 + AUD-P0-* complete | release | **blocked** |
 | NS-OPS-011 | Post-env QA: `/shop` count ≠ 120; readiness probes pass | market-readiness, readiness-report | Yes | AUD-P0-004 | saleor / ops | **blocked** |
 
 ---
@@ -84,4 +84,22 @@ bash scripts/check-secrets.sh
 | Date | Change |
 | ---- | ------ |
 | 2026-06-30 | Initial tracker; deployment.md runbook gaps patched |
+| 2026-07-03 | Public-safe scrub; deployment runbook → `infrastructure/deployment.md` |
+
+---
+
+## Maintainer-only (not in public docs)
+
+Record in private runbook / password manager only — never paste into `docs/`:
+
+| Item | Why private |
+| ---- | ----------- |
+| Organization deploy repo slug (`<organization>/<deploy-repo>` actual value) | Org topology |
+| GitHub Actions secret name for org mirror (workflow uses a fixed name; docs use `<org-sync-secret>`) | Deploy-key secret naming |
+| Production Supabase project ref, Saleor host, Ghost URL, CDN/S3 bucket names | Live infra map |
+| Stripe/Saleor Payment App secrets, webhook HMAC values, `YOUTUBE_SYNC_SECRET` | Credentials |
+
+`.env.example` may list example hostnames for local setup — scrub real values before open-sourcing template updates.
 | 2026-06-30 | PT-P3-003 done — dead `submitFormStub` generic branch removed |
+| 2026-06-30 | Linked canonical runbook at `infrastructure/deployment.md` |
+| 2026-07-03 | Canonical runbook → `infrastructure/deployment.md`; ops rows aligned (YouTube external cron, CloudFront invalidation) |

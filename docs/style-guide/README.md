@@ -56,7 +56,7 @@ Infrastructure, clients, workflow, and deployment.
 | [CDN & media](./backend-ops/cdn-media.md)           | S3/CloudFront env vars and URL patterns |
 | [Branch workflow](./backend-ops/branch-workflow.md) | feature → dev → main                    |
 | [Local dev](./backend-ops/local-dev.md)             | Setup, build, lint commands             |
-| [Deployment](./backend-ops/deployment.md)           | Production considerations               |
+| [Deployment](./backend-ops/deployment.md)           | Build adapter + CI summary → [runbook](../infrastructure/deployment.md) |
 
 ## Related docs
 

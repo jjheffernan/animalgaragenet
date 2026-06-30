@@ -67,6 +67,8 @@ Use separate hosts for frontend, commerce API, and media delivery.
 
 Set all vars from `.env.example` in the hosting provider's secret UI. See [Environment Variables](Environment-Variables).
 
+**Full runbook (repo):** `docs/infrastructure/deployment.md` — Netlify checklist by service, Supabase `db push`, Saleor webhook, Ghost, OAuth redirects, YouTube cron, CloudFront, post-deploy smoke.
+
 Do **not** set dev-only admin bypass flags on production.
 
 ## Security

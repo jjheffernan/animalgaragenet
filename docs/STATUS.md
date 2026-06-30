@@ -3,7 +3,7 @@
 **Public documentation policy:** [SECURITY-PUBLIC.md](./SECURITY-PUBLIC.md)
 
 **Last updated:** 2026-07-03  
-**Canonical next-step docs:** [plans/AUDIT-REMEDIATION.md](./plans/AUDIT-REMEDIATION.md) · [plans/active/inspiration-polish-tracker.md](./plans/active/inspiration-polish-tracker.md) · [plans/active/ponytail-audit-tracker.md](./plans/active/ponytail-audit-tracker.md) · [plans/active/market-readiness.md](./plans/active/market-readiness.md) · [plans/active/account-flow-fix.md](./plans/active/account-flow-fix.md) · [archive/batch-2026-07-03-followups.md](./archive/batch-2026-07-03-followups.md) (ops apply)
+**Canonical next-step docs:** [infrastructure/deployment.md](./infrastructure/deployment.md) (production runbook) · [plans/active/next-steps-tracker.md](./plans/active/next-steps-tracker.md) (implementer queue) · [plans/AUDIT-REMEDIATION.md](./plans/AUDIT-REMEDIATION.md) · [plans/active/inspiration-polish-tracker.md](./plans/active/inspiration-polish-tracker.md) · [plans/active/ponytail-audit-tracker.md](./plans/active/ponytail-audit-tracker.md) · [plans/active/market-readiness.md](./plans/active/market-readiness.md) · [plans/active/account-flow-fix.md](./plans/active/account-flow-fix.md) · [archive/batch-2026-07-03-followups.md](./archive/batch-2026-07-03-followups.md) (ops apply)
 
 This file reconciles “next steps” across all `docs/` so nothing is orphaned. Items are **Done**, **Ops** (external dashboard/env), or **Open** (code work).
 
@@ -67,21 +67,24 @@ This file reconciles “next steps” across all `docs/` so nothing is orphaned.
 
 ## Ops — blocked on Netlify / Supabase / Saleor dashboard
 
-These appear as unchecked boxes in plans but **cannot be completed in-repo**:
+These appear as unchecked boxes in plans but **cannot be completed in-repo**. **Full checklist:** [infrastructure/deployment.md](./infrastructure/deployment.md).
 
 | Task                                             | Doc                                                                  | Action                                                                  |
 | ------------------------------------------------ | -------------------------------------------------------------------- | ----------------------------------------------------------------------- |
-| Set Supabase + `PUBLIC_SITE_URL` on Netlify      | [account-flow-fix.md](./plans/active/account-flow-fix.md)            | Netlify env UI                                                          |
-| Supabase redirect URLs (Netlify + custom domain) | account-flow-fix                                                     | Supabase Auth → URL config                                              |
-| Bootstrap first admin                            | account-flow-fix                                                     | `npx tsx --env-file=.env scripts/promote-admin.ts user@email.com admin` |
-| Set `PUBLIC_SALEOR_API_URL` + `SALEOR_CHANNEL`   | [market-readiness.md](./plans/active/market-readiness.md) Phase 1    | Netlify env                                                             |
-| Verify `/shop` ≠ 120 mock products               | market-readiness                                                     | After Saleor env + redeploy                                             |
-| Populate `.env` and run readiness                | [readiness-report.md](./testing/readiness-report.md)                 | Local or CI secrets                                                     |
-| Apply squashed Supabase migrations on production             | [migration-squash-notes.md](./infrastructure/migration-squash-notes.md) · [archive/batch-2026-07-03-followups.md](./archive/batch-2026-07-03-followups.md) | `supabase db push` or dashboard apply (3 files)                         |
-| Apply media migration on production Supabase     | [media-uploads.md](./plans/active/media-uploads.md)                  | `20250701020000_media_social.sql` via `supabase db push` or dashboard   |
-| Enable Discord/Microsoft OAuth                   | [discord.md](./auth/discord.md), [microsoft.md](./auth/microsoft.md) | Supabase + provider consoles                                            |
-| Ghost site + tags                                | [ghost-audit.md](./audits/ghost-audit.md)                            | Ghost admin                                                             |
-| `<org-sync-secret>` rotation docs                | readiness-report                                                     | Personal repo Actions secret                                            |
+| Set Supabase + `PUBLIC_SITE_URL` on Netlify      | [deployment.md](./infrastructure/deployment.md) · [account-flow-fix.md](./plans/active/account-flow-fix.md) | Netlify env UI                                                          |
+| Supabase redirect URLs (Netlify + custom domain) | [deployment.md](./infrastructure/deployment.md) § OAuth              | Supabase Auth → URL config                                              |
+| Bootstrap first admin                            | [deployment.md](./infrastructure/deployment.md) § Supabase             | `npx tsx --env-file=.env scripts/promote-admin.ts user@email.com admin` |
+| Set `PUBLIC_SALEOR_API_URL` + `SALEOR_CHANNEL`   | [deployment.md](./infrastructure/deployment.md) · [market-readiness.md](./plans/active/market-readiness.md) | Netlify env                                                             |
+| Saleor webhook + `SALEOR_WEBHOOK_SECRET`         | [deployment.md](./infrastructure/deployment.md) § Saleor             | Saleor Dashboard → webhook → `/api/webhooks/saleor`                     |
+| Stripe Payment App on Saleor channel             | [deployment.md](./infrastructure/deployment.md) § ops-blocked      | Saleor Dashboard — not storefront env                                   |
+| Verify `/shop` ≠ 120 mock products               | [deployment.md](./infrastructure/deployment.md) § post-deploy        | After Saleor env + redeploy                                             |
+| Populate `.env` and run readiness                | [deployment.md](./infrastructure/deployment.md) · [readiness-report.md](./testing/readiness-report.md) | Local or CI secrets                                                     |
+| Apply squashed Supabase migrations on production             | [deployment.md](./infrastructure/deployment.md) · [migration-squash-notes.md](./infrastructure/migration-squash-notes.md) | `supabase db push` (3 files)                                            |
+| YouTube cron + `YOUTUBE_SYNC_SECRET`             | [deployment.md](./infrastructure/deployment.md) § YouTube          | External scheduler → `POST /api/cron/youtube-sync`                      |
+| CloudFront invalidation env                      | [deployment.md](./infrastructure/deployment.md) § CDN                | `AWS_CLOUDFRONT_DISTRIBUTION_ID` + S3 creds on Netlify                  |
+| Enable Discord/Microsoft OAuth                   | [deployment.md](./infrastructure/deployment.md) § OAuth              | Supabase + provider consoles                                            |
+| Ghost site + tags                                | [deployment.md](./infrastructure/deployment.md) · [ghost-audit.md](./audits/ghost-audit.md) | Ghost admin + Content API env                                           |
+| Org mirror deploy key                            | [deployment.md](./infrastructure/deployment.md) § release flow     | `<org-sync-secret>` — `./scripts/setup-org-sync-auth.sh` (maintainer runbook) |
 
 **Do not** set `DEV_ADMIN` or `LOCAL_DEV_AUTH` on Netlify.
 
@@ -91,9 +94,11 @@ These appear as unchecked boxes in plans but **cannot be completed in-repo**:
 
 **Audit counts (see [AUDIT-REMEDIATION.md](./plans/AUDIT-REMEDIATION.md)):** 5 open · 6 blocked (ops) · 45 done — P1 checkout (`AUD-P1-001`) is **partial** (code done; ops gate only), not open.
 
+**Next-steps tracker (consolidated queue):** 12 unblocked · 19 ops-blocked — see [next-steps-tracker.md](./plans/active/next-steps-tracker.md) (includes scaffold items not in AUD rows, e.g. `IP-004-code` restock webhook).
+
 | Priority | Task                                                            | Tracker                                                                        |
 | -------- | --------------------------------------------------------------- | ------------------------------------------------------------------------------ |
-| P0       | Merge `dev` → `main` when Netlify env configured                | [deployment.md](./style-guide/backend-ops/deployment.md)                       |
+| P0       | Merge `dev` → `main` when Netlify env configured                | [deployment.md](./infrastructure/deployment.md)                                  |
 | P1       | Saleor checkout: Payment App enablement + live pay verify       | [archive/batch-2026-07-01.md](./archive/batch-2026-07-01.md) BATCH-001 · [saleor-payments.md](./commerce/saleor-payments.md) |
 | P2       | Live Saleor integration smoke tests (env-gated CI)              | AUD-P2-006 · `npm run test:readiness`                                         |
 | P2       | Ghost live CMS (fallback policy + detail SEO shipped)           | IP-015 · [ghost-audit.md](./audits/ghost-audit.md)                             |

@@ -4,11 +4,13 @@ Copy `.env.example` → `.env` for local values. Never commit `.env`.
 
 Typed public accessor: `src/lib/config/env.ts`. Private vars use `$env/dynamic/private` in server files only.
 
+> **Security:** Variable **names** for server-only secrets (database admin keys, object-storage credentials, sync tokens) live in `.env.example` inside the cloned repo — not repeated here to avoid publishing an attack checklist on the public wiki.
+
 ## Setup
 
 ```bash
 cp .env.example .env
-# Edit .env with local values
+# Edit .env with local values — see .env.example for the full list
 ```
 
 ## Public (browser-safe)
@@ -16,7 +18,7 @@ cp .env.example .env
 | Variable | Default | Description |
 |----------|---------|-------------|
 | `PUBLIC_SITE_URL` | `http://localhost:5173` | Canonical site URL (magic links, OAuth redirects) |
-| `PUBLIC_CDN_BASE_URL` | `''` | CloudFront media prefix |
+| `PUBLIC_CDN_BASE_URL` | `''` | CDN base URL for media |
 | `PUBLIC_SALEOR_API_URL` | `''` | Saleor GraphQL endpoint |
 | `PUBLIC_SUPABASE_URL` | `''` | Supabase project API URL |
 | `PUBLIC_SUPABASE_ANON_KEY` | `''` | Supabase anon key (RLS-protected) |
@@ -25,21 +27,16 @@ cp .env.example .env
 
 ## Private (server only)
 
-| Variable | Default | Description |
-|----------|---------|-------------|
-| `SALEOR_CHANNEL` | `default-channel` | Saleor channel slug |
-| `SUPABASE_SERVICE_ROLE_KEY` | — | Admin key — bypasses RLS; **never** expose to client |
-| `S3_BUCKET` | `animalgarage-media` | Media bucket name |
-| `S3_REGION` | `us-west-2` | AWS region |
-| `AWS_ACCESS_KEY_ID` | — | IAM credentials (CI/deploy) |
-| `AWS_SECRET_ACCESS_KEY` | — | IAM secret |
-| `GHOST_URL` | — | Ghost CMS base URL |
-| `GHOST_CONTENT_API_KEY` | — | Ghost Content API key |
-| `YOUTUBE_API_KEY` | — | YouTube Data API key |
-| `YOUTUBE_SYNC_SECRET` | — | Bearer token for cron webhook |
-| `SITE_LOCKED` | unset | `true` redirects non-admins to `/locked` (production preview) |
-| `DEV_ADMIN` | unset | `true` bypasses admin role on **localhost only** |
-| `LOCAL_DEV_AUTH` | unset | `true` shows quick-login on `/auth/sign-in` (localhost only) |
+| Category | Description |
+|----------|-------------|
+| Commerce channel | Saleor channel slug (server-only) |
+| Supabase admin | Service-role key — bypasses RLS; **never** in client bundles |
+| Object storage | Bucket/region and upload credentials for the media pipeline (when wired) |
+| CMS / APIs | Ghost, YouTube, and webhook sync secrets |
+| Dev-only flags | `DEV_ADMIN`, `LOCAL_DEV_AUTH` — **localhost only** |
+| Preview lockdown | `SITE_LOCKED` — restricts public routes during preview |
+
+See `.env.example` in the repo for exact variable names and placeholders.
 
 ## Missing var behavior
 
@@ -48,23 +45,23 @@ cp .env.example .env
 | No `.env` file | Public config uses defaults; app runs with mock data |
 | Empty `PUBLIC_SALEOR_API_URL` | `saleorFetch()` returns error object, doesn't throw |
 | Empty Supabase vars | `getSupabaseConfig()` returns `null`; mock `ag-session` cookie |
-| Empty CDN URL | Image URLs stay as-is (picsum in prototype) |
+| Empty CDN URL | Image URLs stay as-is (placeholder images in prototype) |
 
 ## Rules
 
 - Only `PUBLIC_` prefixed vars are available in client code
 - Do not put secrets in `PUBLIC_*` vars
 - Do not import private env in `env.ts` (shared with client)
-- **Never** set `DEV_ADMIN` or `LOCAL_DEV_AUTH` on Netlify/production
+- **Never** set dev-only admin bypass flags on production hosting
+- Rotate any credential that was ever committed or pasted into chat
 
-## Production (Netlify)
+## Production hosting
 
-Required for full functionality:
+Set values from `.env.example` in your host's environment UI (e.g. Netlify). Required groups:
 
-- `PUBLIC_SITE_URL=https://animalgarage.net`
-- `PUBLIC_SALEOR_API_URL`, `SALEOR_CHANNEL`
-- `PUBLIC_CDN_BASE_URL`
-- `PUBLIC_SUPABASE_URL`, `PUBLIC_SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY`
-- `S3_BUCKET`, `S3_REGION`, `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY` (media pipeline)
+- Site URL + Saleor public URL + channel
+- Supabase public URL + anon key + service role (server)
+- CDN base URL when media pipeline is live
+- Object-storage credentials when uploads are wired
 
-Optional: `SITE_LOCKED=true` during preview/maintenance.
+Optional: site lockdown flag during preview/maintenance.

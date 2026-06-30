@@ -14,7 +14,7 @@
 ```bash
 npm run test:unit
 npm run test:contracts
-cp .env.example .env   # fill values for live probes
+cp .env.example .env   # fill values for live probes (local only)
 npm run test:readiness
 ```
 
@@ -24,9 +24,10 @@ npm run test:readiness
 tests/
   integration/          # SvelteKit actions + API routes (mocked externals)
   contracts/            # Payload shape + mapper contracts
-  readiness/            # Opt-in live probes (scripts/test-readiness.ts)
 src/lib/server/**/**.test.ts   # Unit tests with mocks
 ```
+
+Readiness probes: `scripts/test-readiness.ts`
 
 ## Contract tests
 
@@ -34,44 +35,46 @@ src/lib/server/**/**.test.ts   # Unit tests with mocks
 
 | Contract | Coverage |
 |----------|----------|
-| `auth-session-shape.test.ts` | Session shape (4 tests) |
-| `supabase-payloads.test.ts` | DB payload shapes (8 tests) |
-| `saleor-checkout-shape.test.ts` | Checkout shapes (6 tests) |
-| `ghost-mapper.test.ts` | Ghost mapper (2 tests) |
+| `auth-session-shape.test.ts` | Session shape |
+| `supabase-payloads.test.ts` | DB payload shapes |
+| `saleor-checkout-shape.test.ts` | Checkout shapes |
+| `ghost-mapper.test.ts` | Ghost mapper |
 
 ## External dependencies registry
 
 Canonical list in repo: `docs/testing/external-dependencies.md`.
 
-| ID | Service | Mock fallback | Unit tests | Integration |
-|----|---------|---------------|------------|-------------|
-| `supabase-auth` | Supabase Auth | `ag-session` cookie | `local-dev.test.ts`, `roles.test.ts` | `auth-actions.test.ts` |
-| `supabase-db` | Supabase Postgres | In-memory maps | `repository.test.ts` | `crud-business-logic.test.ts` |
-| `saleor-catalog` | Saleor GraphQL | `src/lib/data/mock/*` | `mappers.test.ts`, `metadata.test.ts` | `shop-load.test.ts` |
-| `saleor-checkout` | Saleor checkout | localStorage cart | `checkout.test.ts` | `cart-checkout.test.ts` |
-| `ghost-cms` | Ghost Content API | `mock-blog.ts` | `posts.test.ts`, `mappers.test.ts` | — |
-| `youtube-sync` | YouTube Data API | mock videos | partial | admin sync (planned) |
-| `cdn-s3` | S3 / CloudFront | picsum / static | — | — |
-| `oauth-*` | Google/Discord/Microsoft | mock callback | `oauth.test.ts` | callback flow |
-| `netlify-deploy` | Org mirror sync | — | — | manual workflow |
+| ID | Service | Mock fallback |
+|----|---------|---------------|
+| `supabase-auth` | Supabase Auth | `ag-session` cookie |
+| `supabase-db` | Supabase Postgres | In-memory maps |
+| `saleor-catalog` | Saleor GraphQL | `src/lib/data/mock/*` |
+| `saleor-checkout` | Saleor checkout | localStorage cart |
+| `ghost-cms` | Ghost Content API | `mock-blog.ts` |
+| `youtube-sync` | YouTube Data API | mock videos |
+| `cdn-s3` | Object storage / CDN | placeholder images |
+| `oauth-*` | OAuth providers | mock callback |
+| `netlify-deploy` | Deploy mirror sync | manual workflow |
 
 ## Readiness probes
 
-`npm run test:readiness` runs read-only probes in `scripts/test-readiness.ts`. Each probe **skips** when required env vars are unset.
+`npm run test:readiness` runs read-only probes. Each probe **skips** when required env vars are unset.
 
-| Dependency | Required env |
-|------------|--------------|
-| `supabase-auth` | `PUBLIC_SUPABASE_URL`, `PUBLIC_SUPABASE_ANON_KEY` |
-| `supabase-db` | `PUBLIC_SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY` |
-| `saleor-catalog` | `PUBLIC_SALEOR_API_URL`, `SALEOR_CHANNEL` |
-| `saleor-checkout` | `PUBLIC_SALEOR_API_URL`, `SALEOR_CHANNEL` |
-| `ghost-cms` | `GHOST_URL`, `GHOST_CONTENT_API_KEY` |
-| `youtube-sync` | `YOUTUBE_API_KEY` |
+| Dependency | Required (summary) |
+|------------|-------------------|
+| `supabase-auth` | Supabase public URL + anon key |
+| `supabase-db` | Supabase URL + server admin key |
+| `saleor-catalog` | Saleor public URL + channel |
+| `saleor-checkout` | Saleor public URL + channel |
+| `ghost-cms` | Ghost URL + content API key |
+| `youtube-sync` | YouTube API key |
 | `oauth-*` | Supabase public keys + dashboard OAuth |
-| `cdn-s3` | `PUBLIC_CDN_BASE_URL`, `S3_*`, AWS keys |
-| `netlify-deploy` | `ORG_REPO_DEPLOY_KEY` (manual) |
+| `cdn-s3` | CDN base URL + storage config (see `.env.example`) |
+| `netlify-deploy` | Deploy-mirror secret (maintainers) |
 
-Report output: `docs/testing/readiness-report.md`.
+Exact variable names: `.env.example` in the repo. Do not paste probe output containing live URLs or keys into public issues.
+
+Report template: `docs/testing/readiness-report.md`.
 
 ## Pre-PR checks
 
@@ -84,4 +87,4 @@ npm run test:unit
 
 ## Mock vs live testing
 
-With env unset, auth/catalog/checkout flows use mock fallbacks. With env set, test against real Supabase/Saleor projects or local stacks.
+With env unset, auth/catalog/checkout flows use mock fallbacks locally. With env set, test against your staging Supabase/Saleor projects.

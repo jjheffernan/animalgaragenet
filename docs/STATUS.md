@@ -21,7 +21,7 @@ This file reconciles “next steps” across all `docs/` so nothing is orphaned.
 | Readiness probes | `scripts/test-readiness.ts`, `npm run test:readiness` |
 | `*.netlify.app` dev bypass block | `isProductionHostname()` in `local-dev.ts` |
 | Production catalog mock guard | `guardMockCatalogFallback()` in `catalog/fallback.ts` |
-| GitHub wiki | Published — [wiki home](https://github.com/jjheffernan/animalgaragenet/wiki); backup in `docs/wiki-export/` |
+| GitHub wiki | Published — [wiki home](https://github.com/jjheffernan/animalgaragenet/wiki); backup in `docs/wiki-export/` (sanitized for public — no infra/AWS/secret names) |
 | Org mirror sync | `scripts/sync-org-mirror.sh` on `main` |
 
 ---

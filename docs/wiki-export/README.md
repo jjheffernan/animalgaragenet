@@ -2,7 +2,18 @@
 
 Nine developer wiki pages derived from `docs/`. Kept in-repo as the source of truth for wiki content.
 
-**Live wiki:** https://github.com/jjheffernan/animalgaragenet/wiki (published 2026-06-30)
+**Live wiki:** https://github.com/jjheffernan/animalgaragenet/wiki
+
+## Security policy (public repo)
+
+Wiki pages intentionally **omit**:
+
+- Production hostnames and subdomain maps (Saleor, CDN, commerce)
+- Cloud provider account details (bucket names, regions, IAM variable names)
+- GitHub org/repo mirror names and deploy-key secret names
+- Copy-pasteable credential examples
+
+Contributors: use `.env.example` and `docs/style-guide/backend-ops/deployment.md` in the cloned repo for full ops detail. Do not copy those values back into the public wiki.
 
 ## Pages
 

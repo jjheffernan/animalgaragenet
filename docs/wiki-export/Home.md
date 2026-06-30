@@ -1,6 +1,8 @@
 # Animal Garage — Developer Wiki
 
-SvelteKit storefront for **animalgarage.net**. Headless commerce (Saleor), auth/content (Supabase), mock fallbacks for local dev.
+SvelteKit storefront for the Animal Garage brand site. Headless commerce (Saleor), auth/content (Supabase), mock fallbacks for local dev.
+
+> **Public wiki notice:** This wiki is intentionally high-level. It does **not** list production hostnames, cloud account names, bucket names, regions, or secret/credential variable names. Clone the repo and use `.env.example` plus team-maintained ops docs for environment-specific values.
 
 ## Pages
 
@@ -12,7 +14,7 @@ SvelteKit storefront for **animalgarage.net**. Headless commerce (Saleor), auth/
 | [Editing the Site](Editing-the-Site) | Components, routes, mock vs live swap points |
 | [Saleor Integration](Saleor-Integration) | Catalog, checkout scaffold, redeem |
 | [Supabase](Supabase) | Migrations, RLS, repositories |
-| [Deployment and CI](Deployment-and-CI) | Branches, GitHub Actions, org mirror, Netlify |
+| [Deployment and CI](Deployment-and-CI) | Branches, GitHub Actions, deploy mirror |
 | [Testing](Testing) | Unit, contracts, readiness probes |
 
 ## Stack
@@ -22,16 +24,16 @@ SvelteKit storefront for **animalgarage.net**. Headless commerce (Saleor), auth/
 | Framework | SvelteKit 2 + Svelte 5 (runes) |
 | Language | TypeScript (strict) |
 | Styling | Tailwind CSS v4 (`@tailwindcss/vite`) |
-| Commerce | Saleor GraphQL (`commerce.animalgarage.net`) |
+| Commerce | Saleor GraphQL (separate backend host) |
 | Auth / data | Supabase (`@supabase/ssr`) |
-| Media CDN | S3 + CloudFront (planned) |
+| Media CDN | Object storage + CDN (planned) |
 | CMS | Ghost Content API (guides/blog) |
 | Adapter | `@sveltejs/adapter-auto` |
-| Hosting | Netlify via org mirror repo |
+| Hosting | Netlify (via deploy mirror repo) |
 
 ## Branch workflow
 
-`feature/*` → `dev` (CI) → `main` (CI) → sync to `heff-industries/animalgaragenet` → Netlify deploy.
+`feature/*` → `dev` (CI) → `main` (CI) → organization deploy mirror → Netlify.
 
 ## Repo layout
 
@@ -41,5 +43,5 @@ src/lib/components/   # Shared UI
 src/lib/server/       # Saleor, Supabase, Ghost (server-only)
 src/lib/data/mock/    # Mock catalog when env unset
 supabase/migrations/  # SQL + RLS
-docs/                 # Source docs (this wiki is derived from docs/)
+docs/                 # Source docs (wiki derived from docs/wiki-export/)
 ```

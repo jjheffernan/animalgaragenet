@@ -24,7 +24,7 @@ When `PUBLIC_SUPABASE_URL` or `PUBLIC_SUPABASE_ANON_KEY` is unset, the site uses
 npm run dev
 ```
 
-Sign-in/sign-up create a mock `ag-session` cookie. OAuth buttons use mock callback (`?mock=1`).
+- OAuth buttons use a mock callback when Supabase is unset (local dev only).
 
 ### With Supabase
 
@@ -58,7 +58,7 @@ Predefined accounts in `src/lib/server/auth/local-dev-accounts.ts`:
 
 Guard logic: `src/lib/server/auth/local-dev.ts` (`isLocalDevAuthEnabled`, `isDevAdminEnabled`).
 
-Disabled when request host is `animalgarage.net` or not localhost.
+Disabled on production hostnames (custom domain and hosting preview URLs) and anywhere except localhost.
 
 ## Production admin
 

@@ -77,4 +77,50 @@ describe('ghost posts client', () => {
 		const posts = await listBlogPosts();
 		expect(posts.length).toBeGreaterThan(0);
 	});
+
+	it('maps blog posts from Ghost API responses', async () => {
+		vi.mocked(isGhostEnabled).mockReturnValue(true);
+		vi.mocked(ghostFetch).mockResolvedValue({
+			posts: [{ ...ghostPostFixture, tags: [{ id: 't1', name: 'Blog', slug: 'blog' }] }]
+		});
+
+		const posts = await listBlogPosts();
+
+		expect(ghostFetch).toHaveBeenCalledWith(
+			expect.objectContaining({
+				path: '/posts/',
+				searchParams: expect.objectContaining({ filter: 'tag:blog' })
+			})
+		);
+		expect(posts[0]).toMatchObject({
+			slug: ghostPostFixture.slug,
+			title: ghostPostFixture.title
+		});
+	});
+
+	it('loads a single blog post by slug when tagged correctly', async () => {
+		vi.mocked(isGhostEnabled).mockReturnValue(true);
+		vi.mocked(ghostFetch).mockResolvedValue({
+			posts: [{ ...ghostPostFixture, tags: [{ id: 't1', name: 'Blog', slug: 'blog' }] }]
+		});
+
+		const post = await getBlogPost(ghostPostFixture.slug);
+		expect(post).toMatchObject({ slug: ghostPostFixture.slug });
+	});
+
+	it('returns undefined for guide slugs without the guide tag', async () => {
+		vi.mocked(isGhostEnabled).mockReturnValue(true);
+		vi.mocked(ghostFetch).mockResolvedValue({
+			posts: [
+				{
+					...ghostPostFixture,
+					slug: 'blog-only-post',
+					tags: [{ id: 't1', name: 'Blog', slug: 'blog' }]
+				}
+			]
+		});
+
+		const guide = await getGuide('blog-only-post');
+		expect(guide).toBeUndefined();
+	});
 });

@@ -8,7 +8,8 @@
 			{ label: 'Our Story', href: '/about' },
 			{ label: 'Contact', href: '/contact' },
 			{ label: 'Order Status', href: '/account/orders' },
-			{ label: 'Wholesale', href: '/wholesale' }
+			{ label: 'Wholesale', href: '/wholesale' },
+			{ label: 'Military Discount', href: '/military' }
 		],
 		[
 			{ label: 'Shop', href: '/shop' },

@@ -598,7 +598,7 @@
 						</span>
 					{/if}
 				</button>
-				<div class="hidden shrink-0 sm:block">
+				<div class="hidden shrink-0 lg:block">
 					<LocaleSelector />
 				</div>
 			</div>

@@ -1,21 +1,45 @@
 <script lang="ts">
-	import { mockAdminUsers, type MockAdminUser } from '$lib/data/mock/admin-users';
+	import { enhance } from '$app/forms';
+	import type { AdminUserRow } from '$lib/server/supabase/admin-users';
 	import { ROLE_OPTIONS, type Role } from '$lib/auth/roles';
+	import type { PageData } from './$types';
 
-	let users = $state<MockAdminUser[]>([...mockAdminUsers]);
+	let {
+		data,
+		form
+	}: {
+		data: PageData;
+		form: { error?: string; success?: boolean; message?: string } | null;
+	} = $props();
+
+	let users = $state<AdminUserRow[]>([...data.users]);
 	let email = $state('');
 	let name = $state('');
 	let role = $state<Role>('customer');
 	let message = $state('');
 
+	const isLive = $derived(data.source === 'supabase');
+
+	$effect(() => {
+		users = [...data.users];
+	});
+
+	$effect(() => {
+		if (form?.error) message = form.error;
+		else if (form?.message) message = form.message;
+		else if (form?.success) message = 'Role updated.';
+	});
+
 	function createUser(event: SubmitEvent) {
 		event.preventDefault();
+		if (isLive) return;
+
 		if (!email.includes('@') || !name.trim()) {
 			message = 'Enter a valid name and email.';
 			return;
 		}
 
-		const newUser: MockAdminUser = {
+		const newUser: AdminUserRow = {
 			id: `u${Date.now()}`,
 			email: email.trim(),
 			name: name.trim(),
@@ -31,7 +55,8 @@
 		message = `Created ${newUser.name} (${newUser.role}).`;
 	}
 
-	function updateRole(userId: string, newRole: Role) {
+	function updateRoleLocal(userId: string, newRole: Role) {
+		if (isLive) return;
 		users = users.map((u) => (u.id === userId ? { ...u, role: newRole } : u));
 	}
 </script>
@@ -42,7 +67,13 @@
 
 <h1 class="font-display text-2xl font-bold uppercase text-white">Users</h1>
 <p class="mt-1 text-zinc-400">
-	Create accounts and assign roles. Prototype uses in-memory mock data until Supabase sync.
+	{#if isLive}
+		Auth users from Supabase. Role changes write to <code class="text-zinc-500">app_metadata.role</code
+		>; invite new accounts via email.
+	{:else}
+		Create accounts and assign roles. Prototype uses in-memory mock data until Supabase service role is
+		configured.
+	{/if}
 </p>
 
 {#if message}
@@ -52,44 +83,93 @@
 {/if}
 
 <section class="mt-8 rounded-sm border border-zinc-800 bg-zinc-900/50 p-6">
-	<h2 class="text-xs font-bold uppercase tracking-widest text-zinc-500">Create User</h2>
-	<form class="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4" onsubmit={createUser}>
-		<label class="block">
-			<span class="text-xs text-zinc-600">Name</span>
-			<input
-				type="text"
-				bind:value={name}
-				class="mt-1 w-full rounded-sm border border-zinc-700 bg-zinc-900 px-3 py-2 text-sm text-white"
-			/>
-		</label>
-		<label class="block">
-			<span class="text-xs text-zinc-600">Email</span>
-			<input
-				type="email"
-				bind:value={email}
-				class="mt-1 w-full rounded-sm border border-zinc-700 bg-zinc-900 px-3 py-2 text-sm text-white"
-			/>
-		</label>
-		<label class="block">
-			<span class="text-xs text-zinc-600">Role</span>
-			<select
-				bind:value={role}
-				class="mt-1 w-full rounded-sm border border-zinc-700 bg-zinc-900 px-3 py-2 text-sm text-white"
-			>
-				{#each ROLE_OPTIONS as opt (opt.value)}
-					<option value={opt.value}>{opt.label}</option>
-				{/each}
-			</select>
-		</label>
-		<div class="flex items-end">
-			<button
-				type="submit"
-				class="w-full rounded-sm bg-red-600 py-2 text-sm font-bold uppercase tracking-wider text-white hover:bg-red-500"
-			>
-				Create
-			</button>
-		</div>
-	</form>
+	<h2 class="text-xs font-bold uppercase tracking-widest text-zinc-500">
+		{isLive ? 'Invite User' : 'Create User'}
+	</h2>
+	{#if isLive}
+		<form
+			method="POST"
+			action="?/invite"
+			use:enhance
+			class="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4"
+		>
+			<label class="block">
+				<span class="text-xs text-zinc-600">Name</span>
+				<input
+					type="text"
+					name="name"
+					required
+					class="mt-1 w-full rounded-sm border border-zinc-700 bg-zinc-900 px-3 py-2 text-sm text-white"
+				/>
+			</label>
+			<label class="block">
+				<span class="text-xs text-zinc-600">Email</span>
+				<input
+					type="email"
+					name="email"
+					required
+					class="mt-1 w-full rounded-sm border border-zinc-700 bg-zinc-900 px-3 py-2 text-sm text-white"
+				/>
+			</label>
+			<label class="block">
+				<span class="text-xs text-zinc-600">Role</span>
+				<select
+					name="role"
+					class="mt-1 w-full rounded-sm border border-zinc-700 bg-zinc-900 px-3 py-2 text-sm text-white"
+				>
+					{#each ROLE_OPTIONS as opt (opt.value)}
+						<option value={opt.value}>{opt.label}</option>
+					{/each}
+				</select>
+			</label>
+			<div class="flex items-end">
+				<button
+					type="submit"
+					class="w-full rounded-sm bg-red-600 py-2 text-sm font-bold uppercase tracking-wider text-white hover:bg-red-500"
+				>
+					Invite
+				</button>
+			</div>
+		</form>
+	{:else}
+		<form class="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4" onsubmit={createUser}>
+			<label class="block">
+				<span class="text-xs text-zinc-600">Name</span>
+				<input
+					type="text"
+					bind:value={name}
+					class="mt-1 w-full rounded-sm border border-zinc-700 bg-zinc-900 px-3 py-2 text-sm text-white"
+				/>
+			</label>
+			<label class="block">
+				<span class="text-xs text-zinc-600">Email</span>
+				<input
+					type="email"
+					bind:value={email}
+					class="mt-1 w-full rounded-sm border border-zinc-700 bg-zinc-900 px-3 py-2 text-sm text-white"
+				/>
+			</label>
+			<label class="block">
+				<span class="text-xs text-zinc-600">Role</span>
+				<select
+					bind:value={role}
+					class="mt-1 w-full rounded-sm border border-zinc-700 bg-zinc-900 px-3 py-2 text-sm text-white"
+				>
+					{#each ROLE_OPTIONS as opt (opt.value)}
+						<option value={opt.value}>{opt.label}</option>
+					{/each}
+				</select>
+			</label>
+			<div class="flex items-end">
+				<button
+					type="submit"
+					class="w-full rounded-sm bg-red-600 py-2 text-sm font-bold uppercase tracking-wider text-white hover:bg-red-500"
+				>
+					Create
+				</button>
+			</div>
+		</form>
+	{/if}
 </section>
 
 <section class="mt-8 overflow-x-auto rounded-sm border border-zinc-800">
@@ -111,15 +191,31 @@
 					<td class="px-4 py-3 text-white">{user.name}</td>
 					<td class="px-4 py-3 text-zinc-400">{user.email}</td>
 					<td class="px-4 py-3">
-						<select
-							value={user.role}
-							onchange={(e) => updateRole(user.id, e.currentTarget.value as Role)}
-							class="rounded-sm border border-zinc-700 bg-zinc-900 px-2 py-1 text-xs text-white"
-						>
-							{#each ROLE_OPTIONS as opt (opt.value)}
-								<option value={opt.value}>{opt.label}</option>
-							{/each}
-						</select>
+						{#if isLive}
+							<form method="POST" action="?/updateRole" use:enhance class="inline">
+								<input type="hidden" name="userId" value={user.id} />
+								<select
+									name="role"
+									value={user.role}
+									onchange={(e) => e.currentTarget.form?.requestSubmit()}
+									class="rounded-sm border border-zinc-700 bg-zinc-900 px-2 py-1 text-xs text-white"
+								>
+									{#each ROLE_OPTIONS as opt (opt.value)}
+										<option value={opt.value}>{opt.label}</option>
+									{/each}
+								</select>
+							</form>
+						{:else}
+							<select
+								value={user.role}
+								onchange={(e) => updateRoleLocal(user.id, e.currentTarget.value as Role)}
+								class="rounded-sm border border-zinc-700 bg-zinc-900 px-2 py-1 text-xs text-white"
+							>
+								{#each ROLE_OPTIONS as opt (opt.value)}
+									<option value={opt.value}>{opt.label}</option>
+								{/each}
+							</select>
+						{/if}
 					</td>
 					<td class="px-4 py-3 text-zinc-500">{user.createdAt}</td>
 					<td class="px-4 py-3 text-zinc-500">{user.lastActive}</td>

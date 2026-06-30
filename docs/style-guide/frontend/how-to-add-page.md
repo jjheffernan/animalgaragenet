@@ -18,7 +18,7 @@ Minimal static page:
 
 ```svelte
 <script lang="ts">
-	import SectionHeading from '$lib/components/SectionHeading.svelte';
+	import SectionHeading from '$lib/components/shared/SectionHeading.svelte';
 </script>
 
 <svelte:head>
@@ -67,8 +67,8 @@ Or use the traditional pattern with `export let data` — but this project prefe
 
 Update both:
 
-- `src/lib/components/Header.svelte` — add to `links` array
-- `src/lib/components/Footer.svelte` — add to Explore list
+- `src/lib/components/layout/Header.svelte` — add to `links` array
+- `src/lib/components/layout/Footer.svelte` — add to Explore list
 
 ## 5. Dynamic routes
 

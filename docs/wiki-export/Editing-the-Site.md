@@ -1,10 +1,10 @@
 # Editing the Site
 
-Copy-paste recipes for common changes. Routes live in `src/routes/`; shared UI in `src/lib/components/`.
+Copy-paste recipes for common changes. Routes live in `src/routes/`; shared UI in `src/lib/components/<domain>/` (see `src/lib/components/README.md` in the repo).
 
 ## Change hero text
 
-**File:** `src/lib/components/Hero.svelte`
+**File:** `src/lib/components/marketing/Hero.svelte`
 
 Edit eyebrow, headline, or subtext. CTA labels/links in same file (`Shop the Drop` → `/shop`, `Watch Builds` → `/media`).
 
@@ -20,8 +20,8 @@ When `PUBLIC_SALEOR_API_URL` is set, catalog loaders in `src/lib/server/catalog/
 
 ## Update footer / header links
 
-- **Footer:** `src/lib/components/Footer.svelte` — Explore column
-- **Header:** `src/lib/components/Header.svelte` — `links` array
+- **Footer:** `src/lib/components/layout/Footer.svelte` — Explore column
+- **Header:** `src/lib/components/layout/Header.svelte` — `links` array
 
 Keep header and footer nav consistent.
 
@@ -42,7 +42,7 @@ Section headings use `SectionHeading`. Brand story paragraph inline in same file
 
 ```svelte
 <script lang="ts">
-	import SectionHeading from '$lib/components/SectionHeading.svelte';
+	import SectionHeading from '$lib/components/shared/SectionHeading.svelte';
 </script>
 
 <svelte:head>
@@ -62,13 +62,13 @@ Root layout wraps all pages with Header + Footer automatically.
 
 ## Add a new component
 
-1. Create `src/lib/components/MyComponent.svelte` (PascalCase).
+1. Create `src/lib/components/<domain>/MyComponent.svelte` (PascalCase; see README for folders).
 2. Use Svelte 5 `$props()` with typed interface.
 3. Style with Tailwind (dark surfaces: `bg-zinc-900`, accent: `text-red-500`).
-4. Import in page: `import MyComponent from '$lib/components/MyComponent.svelte'`.
+4. Import in page: `import MyComponent from '$lib/components/<domain>/MyComponent.svelte'`.
 5. Extract when used on 2+ pages or complex; keep single-use markup inline.
 
-Reference components: `SectionHeading.svelte`, `ProductCard.svelte`, `ProductGrid.svelte`, `AnimatedReveal.svelte`.
+Reference components: `shared/SectionHeading.svelte`, `catalog/ProductCard.svelte`, `catalog/ProductGrid.svelte`, `shared/AnimatedReveal.svelte`.
 
 ## Mock vs live swap points
 

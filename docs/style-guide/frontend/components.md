@@ -2,32 +2,17 @@
 
 ## Location
 
-All shared UI components live in:
+Shared UI components live under domain folders:
 
 ```
 src/lib/components/
+  layout/ navigation/ catalog/ cart/ commerce/ content/
+  marketing/ search/ video/ forms/ shared/ admin/
 ```
 
-Current components:
+**Index:** `src/lib/components/README.md` (full list by folder).
 
-| Component               | Purpose                    |
-| ----------------------- | -------------------------- |
-| `AnimatedReveal.svelte` | Fade/slide reveal wrapper  |
-| `CollectionCard.svelte` | Collection tile with image |
-| `Footer.svelte`         | Site footer                |
-| `Header.svelte`         | Fixed nav header           |
-| `Hero.svelte`           | Homepage hero section      |
-| `LocaleSelector.svelte` | Locale/currency picker     |
-| `MediaGallery.svelte`   | Media grid                 |
-| `ProductCard.svelte`    | Product tile for grids     |
-| `ProductGrid.svelte`    | Responsive product grid    |
-| `SectionHeading.svelte` | Section title + subtitle   |
-| `CategoryPill.svelte`   | Catalog ribbon category link pill |
-| `CatalogRibbonShell.svelte` | Sticky shop/parts ribbon wrapper |
-| `PartsShoppingRibbon.svelte` | Parts PLP shopping ribbon |
-| `PartsNavSections.svelte` | Shared parts nav panels (mega menu, ribbon, mobile) |
-
-See [catalog-ribbons.md](./catalog-ribbons.md) for ribbon + pill styling rules.
+Legacy flat imports (`$lib/components/Foo.svelte`) were removed in June 2026 — always import with the folder path, e.g. `$lib/components/catalog/ProductCard.svelte`.
 
 Route-specific markup stays in `src/routes/**/+page.svelte`. Extract to `$lib/components/` when reused on 2+ pages.
 
@@ -75,7 +60,7 @@ let { children, class: className = '', delay = 0 }: Props = $props();
 ## Imports
 
 ```svelte
-import ProductCard from '$lib/components/ProductCard.svelte'; import {locale} from '$lib/stores/locale.svelte';
+import ProductCard from '$lib/components/catalog/ProductCard.svelte';
 import type {Product} from '$lib/types/saleor';
 ```
 

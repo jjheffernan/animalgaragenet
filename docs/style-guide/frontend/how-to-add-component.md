@@ -2,11 +2,15 @@
 
 ## 1. Create the file
 
+Pick a **domain folder** under `src/lib/components/` (see `src/lib/components/README.md`):
+
 ```
-src/lib/components/MyComponent.svelte
+src/lib/components/marketing/MyComponent.svelte   # homepage / promo
+src/lib/components/catalog/MyComponent.svelte     # shop / parts UI
+src/lib/components/shared/MyComponent.svelte      # tiny cross-route primitives
 ```
 
-PascalCase name matching the component's purpose.
+PascalCase filename matching the component's purpose.
 
 ## 2. Scaffold with Svelte 5 patterns
 
@@ -58,7 +62,7 @@ Add scoped `<style>` only for animations (see `AnimatedReveal.svelte`).
 
 ```svelte
 <script lang="ts">
-	import MyComponent from '$lib/components/MyComponent.svelte';
+	import MyComponent from '$lib/components/marketing/MyComponent.svelte';
 </script>
 
 <MyComponent title="Hello" subtitle="World" />
@@ -93,8 +97,8 @@ npm run lint
 
 Study these for patterns:
 
-- **Simple presentational:** `SectionHeading.svelte`
-- **Domain object display:** `ProductCard.svelte`
-- **List wrapper:** `ProductGrid.svelte`
-- **Animation wrapper:** `AnimatedReveal.svelte`
-- **Layout chrome:** `Header.svelte`, `Footer.svelte`
+- **Simple presentational:** `shared/SectionHeading.svelte`
+- **Domain object display:** `catalog/ProductCard.svelte`
+- **List wrapper:** `catalog/ProductGrid.svelte`
+- **Animation wrapper:** `shared/AnimatedReveal.svelte`
+- **Layout chrome:** `layout/Header.svelte`, `layout/Footer.svelte`

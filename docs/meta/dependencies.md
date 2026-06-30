@@ -21,7 +21,7 @@ SvelteKit (`@sveltejs/kit`), Vitest, Playwright, and `@stripe/stripe-js` were al
 
 | Package       | Current                | Latest | Reason                                                                 |
 | ------------- | ---------------------- | ------ | ---------------------------------------------------------------------- |
-| `@types/node` | 22.x (`^22` → 22.20.0) | 26.x   | Major jump; align with declared Node LTS and CI runtime before bumping |
+| `@types/node` | 24.x (`^24`)            | 26.x   | Align with Node 24 LTS (`engines`, CI, `.nvmrc`) before bumping to 26 |
 
 ### Follow-up
 

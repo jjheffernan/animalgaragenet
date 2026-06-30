@@ -37,7 +37,7 @@ Do **not** push directly to the org deploy repo.
 | Production branch | `main`                                              |
 | Build command     | `npm run build`                                     |
 | Publish directory | _(auto — `@sveltejs/adapter-auto` detects Netlify)_ |
-| Node version      | `22` (match CI)                                     |
+| Node version      | `24` (match CI — see `.nvmrc`)                      |
 
 `adapter-auto` is configured in `vite.config.ts`. For explicit Netlify control, switch to `@sveltejs/adapter-netlify` — see [style-guide/backend-ops/deployment.md](../style-guide/backend-ops/deployment.md).
 

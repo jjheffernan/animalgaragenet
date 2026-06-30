@@ -2,7 +2,7 @@
 
 ## Prerequisites
 
-- **Node.js** 20+ (LTS recommended)
+- **Node.js** 24+ (Active LTS — see `.nvmrc`)
 - **npm** 10+
 
 ## First-time setup

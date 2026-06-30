@@ -147,7 +147,7 @@ Audit of animalgaragenet prototype on `dev` branch. Run after infrastructure/doc
 
 ### `engines` field
 
-- **Note:** `package.json` has no `engines` field — CI uses Node 22 LTS
+- **Note:** `package.json` `engines.node` is `>=24.0.0`; CI uses Node 24 LTS (`.nvmrc`)
 
 ---
 

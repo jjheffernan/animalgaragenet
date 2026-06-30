@@ -1,0 +1,98 @@
+# Animal Garage — Development Roadmap
+
+Architecture, phases, and integration plans for **animalgarage.net**.
+
+## Vision
+
+A highly animated, media-heavy automotive brand site — merchandising-forward like Hoonigan, BigTime, or Speeed. The frontend is a SvelteKit headless storefront; commerce runs on Saleor at a separate domain; media ships via CDN; non-commerce data lives in Supabase.
+
+## Stack
+
+| Layer | Technology | Role |
+| ----- | ---------- | ---- |
+| Frontend | SvelteKit 2, Svelte 5, Tailwind v4 | SSR/SSG storefront & marketing |
+| Commerce | Saleor (GraphQL) | Products, cart, checkout, shipping |
+| Auth & content | Supabase | Auth, newsletter, CMS metadata, preferences |
+| Media | S3 + CloudFront | Images, video thumbnails, static assets |
+| Hosting | TBD (adapter-auto) | Deploy target selected per environment |
+
+## Project phases
+
+### Phase 1 — Prototype (current)
+
+- [x] SvelteKit scaffold with TypeScript, ESLint, Prettier, Tailwind
+- [x] Click-through pages: Home, Shop, Product, About, Media
+- [x] Mock Saleor-shaped product data
+- [x] Locale/currency hooks for international readiness
+- [x] GraphQL client structure (placeholder)
+- [x] Documentation & agent compatibility
+
+### Phase 2 — Commerce integration
+
+- [ ] Connect Saleor GraphQL (products, collections, cart, checkout)
+- [ ] Channel-aware pricing and inventory
+- [ ] Stripe/payment flow via Saleor
+- [ ] International shipping zones and rate calculation
+- [ ] Replace mock data with live API calls
+
+### Phase 3 — Media & CDN
+
+- [ ] S3 bucket for media uploads
+- [ ] CloudFront distribution in front of S3
+- [ ] Migrate placeholder images to CDN URLs
+- [ ] Video thumbnail pipeline
+- [ ] Responsive image srcset helpers
+
+### Phase 4 — Supabase services
+
+- [ ] Auth (magic link / OAuth)
+- [ ] Newsletter signups
+- [ ] User preferences (locale, favorites)
+- [ ] Content metadata for dynamic homepage sections
+- [ ] Featured media/collection pre-selection
+
+### Phase 5 — Polish & launch
+
+- [ ] Advanced animations (scroll-driven, page transitions)
+- [ ] SEO, OG tags, structured data
+- [ ] Analytics
+- [ ] Performance audit (LCP, CLS)
+- [ ] Production deploy pipeline
+
+## Branch workflow
+
+See [CONTRIBUTING.md](../CONTRIBUTING.md):
+
+- Feature branches from `dev`
+- Merge to `dev` for staging
+- Merge `dev` → `main` for production
+
+## Directory structure
+
+```
+animalgaragenet/
+├── agents/           # AGENTS.md + symlinked Cursor skills
+├── docs/             # Architecture & planning
+├── src/
+│   ├── lib/
+│   │   ├── components/
+│   │   ├── config/
+│   │   ├── data/         # Mock data (temporary)
+│   │   ├── i18n/
+│   │   ├── server/       # Saleor, Supabase clients
+│   │   ├── stores/
+│   │   └── types/
+│   └── routes/
+├── static/
+└── .cursor/skills/   # Symlinks to agents skills
+```
+
+## Environment variables
+
+Copy `.env.example` to `.env`. See [infrastructure.md](./infrastructure.md) for details.
+
+## Related docs
+
+- [Infrastructure (CDN, S3, Supabase)](./infrastructure.md)
+- [Saleor integration](./saleor.md)
+- [Animation & media strategy](./animation-media.md)

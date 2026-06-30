@@ -127,6 +127,12 @@ Helpers in `catalog-helpers.ts` (`getCatalogKind`, `getProductPath`, `getCatalog
 
 ---
 
+## Migration scaffolds (`@inspiration-scaffold` / `@migration`)
+
+Commented code and stub handlers tagged `@inspiration-scaffold`, `@migration`, or scoped `@saleor-migration` are **intentional** — they mark swap points for Saleor catalog/checkout, CDN/S3, YouTube sync, and related backlog items from [inspiration.md](./inspiration.md). Agents (especially `polish-sweep`) must **not** delete these blocks during cleanup; uncomment when the linked env or gateway is ready. Open items: [AUDIT-REMEDIATION.md](../plans/AUDIT-REMEDIATION.md).
+
+---
+
 ## Deferred
 
 - Checkout completion, payment, shipping (Saleor)

@@ -1,7 +1,7 @@
 import { resolveAdminGate } from '$lib/server/auth/admin-gate';
 import { getCollections } from '$lib/server/catalog/collections';
 import { getPartsNavData } from '$lib/server/catalog/parts-nav';
-import { hasCookieConsentAnswer } from '$lib/server/cookies';
+import { hasAnalyticsConsent, hasCookieConsentAnswer } from '$lib/server/cookies';
 import { countActiveDeals } from '$lib/server/deals/repository';
 import type { LayoutServerLoad } from './$types';
 
@@ -24,6 +24,7 @@ export const load: LayoutServerLoad = async ({ cookies, locals }) => {
 		dealCount: await countActiveDeals(),
 		shopCollections,
 		partsNav: await getPartsNavData(),
-		showCookieConsent: !hasCookieConsentAnswer(cookies)
+		showCookieConsent: !hasCookieConsentAnswer(cookies),
+		analyticsConsent: hasAnalyticsConsent(cookies)
 	};
 };

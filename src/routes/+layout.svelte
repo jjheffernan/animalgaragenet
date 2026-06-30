@@ -2,6 +2,7 @@
 	import './layout.css';
 	import { page } from '$app/state';
 	import favicon from '$lib/assets/favicon.svg';
+	import { setAnalyticsEnabled, trackPageView } from '$lib/analytics';
 	import CookieConsent from '$lib/components/layout/CookieConsent.svelte';
 	import Header from '$lib/components/layout/Header.svelte';
 	import Footer from '$lib/components/layout/Footer.svelte';
@@ -34,6 +35,16 @@
 		if (code && isSupportedLocale(code) && code !== locale.code) {
 			locale.setLocale(code);
 		}
+	});
+
+	$effect(() => {
+		setAnalyticsEnabled(data.analyticsConsent);
+	});
+
+	$effect(() => {
+		if (!data.analyticsConsent) return;
+		const path = page.url.pathname;
+		trackPageView(path);
 	});
 </script>
 

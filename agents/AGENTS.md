@@ -61,6 +61,34 @@ feature/* → dev → main
 
 Project skills are symlinked in this directory and `.cursor/skills/`. Read the relevant `SKILL.md` before working on Supabase, PR workflows, etc.
 
+### Fresh clone — symlink onboarding
+
+After `git clone`, several `agents/*` entries are **symlinks to machine-local paths** and may show as broken until Cursor is installed:
+
+| Kind | Examples | Target | Fix |
+| ---- | -------- | ------ | --- |
+| **Repo-owned** | `ponytail`, `caveman` | Real directories in `agents/` | Always works |
+| **Vendored reference** | `daisyui` | `.agents/skills/daisyui/` | Always works |
+| **Cursor IDE defaults** | `automate`, `babysit`, `sdk`, `review-*`, … | `~/.cursor/skills-cursor/<name>` | Install [Cursor](https://cursor.com); run repair script below |
+| **Plugin cache** | `supabase`, `svelte-code-writer`, `svelte-core-bestpractices` | Cursor plugin cache under `~/.cursor/plugins/` | Enable plugins in `.cursor/settings.json` (`plugins.*.enabled: true`) |
+
+**Repair symlinks** (safe to re-run):
+
+```bash
+bash scripts/link-agent-skills.sh
+```
+
+**Verify:**
+
+```bash
+ls -la agents/ponytail agents/automate .cursor/skills/ponytail
+test -f agents/ponytail/SKILL.md && echo OK
+```
+
+Broken `agents/automate` with missing `~/.cursor/skills-cursor/automate` is expected on machines without Cursor — agents still work; only those skill files are unavailable.
+
+Optional upstream refresh: `npx skills add supabase/agent-skills`
+
 ### Project-specific agent skills
 
 | Skill              | Purpose                                                      |
@@ -74,7 +102,7 @@ Symlinks: `.cursor/skills/ponytail` → `../../agents/ponytail`, `.cursor/skills
 
 **Svelte plugin** (`svelte-code-writer`, `svelte-core-bestpractices`) and **Supabase plugin** (`supabase`, `supabase-postgres-best-practices`) — see `.cursor/settings.json` (`plugins.*.enabled: true`). Svelte MCP: `list-sections`, `get-documentation`, `svelte-autofixer`. Supabase MCP: schema, migrations, SQL, logs.
 
-Canvas, babysit, review-bugbot, review-security, sdk, and other Cursor default skills live under `agents/` with matching `.cursor/skills/` symlinks.
+Canvas, babysit, review-bugbot, review-security, sdk, and other Cursor default skills live under `agents/` with matching `.cursor/skills/` symlinks (see **Fresh clone** above).
 
 **daisyUI skill** (`.agents/skills/daisyui/`) is vendored for reference only — the app uses Tailwind zinc/red with no daisyUI dependency. Do not auto-trigger it for UI work.
 

@@ -17,7 +17,7 @@ No external site names — this doc is the canonical reference for what was rese
 | YMM vehicle selector          | Done   | `VehicleSelector.svelte`, homepage         |
 | Shop by popular model         | Done   | `ModelPicker.svelte`                       |
 | Build thread gallery + detail | Done   | `/builds`, `/builds/[slug]`                |
-| Guides + blog                 | Done   | `/guides`, `/blog`                         |
+| Guides + blog                 | Done   | `/guides`, `/blog` — guide category/topic filters wired |
 | Brand lanes                   | Done   | `/brands`                                  |
 | Pit Lane Deals (never empty)  | Done   | `/deals`                                   |
 | Gift cards                    | Done   | `/gift-cards`                              |
@@ -29,7 +29,7 @@ No external site names — this doc is the canonical reference for what was rese
 | Cart drawer + search modal    | Done   | `CartDrawer.svelte`, `SearchModal.svelte`  |
 | Trust blocks                  | Done   | `TrustBlocks.svelte`                       |
 | Tire + fitment calculators    | Done   | `/tools/*`                                 |
-| International locale selector | Done   | `LocaleSelector.svelte`                    |
+| International locale selector | Done   | `LocaleSelector.svelte` — Saleor channel + `currency.ts` when live |
 | Policy page stubs             | Done   | `/policies/*`                              |
 
 ---
@@ -49,9 +49,9 @@ Full rows, scaffolds, and prod steps live in the [tracker](../plans/active/inspi
 | Area        | Examples still open                                      |
 | ----------- | -------------------------------------------------------- |
 | Commerce    | Live Saleor catalog, checkout/payment, gift card checkout |
-| Media & CDN | `featured_sections` CMS, S3/CloudFront Phase 2, YouTube sync |
+| Media & CDN | S3/CloudFront Phase 2, YouTube sync live (scaffold in repo) |
 | Community   | XP + vehicles in Supabase, build moderation, newsletter  |
-| Admin       | Real CDN upload, featured sections editor, deal scheduler |
+| Admin       | Real CDN upload, deal scheduler — featured sections editor scaffolded (`/admin/featured`) |
 | Discovery   | Faceted parts search, YMM fitment on PLPs, 100k SKU PIM  |
 | Motion      | Motion One, view transitions, cart micro-animations      |
 

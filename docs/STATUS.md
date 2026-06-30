@@ -28,8 +28,14 @@ This file reconciles “next steps” across all `docs/` so nothing is orphaned.
 | Shop category filters from Saleor                          | `catalog/shop-filters.ts`, `GET /api/catalog/shop-filters`                                                                                                     |
 | Public `/builds` from approved `build_submissions`         | `src/lib/server/builds/public.ts` (mock fallback when Supabase unset)                                                                                            |
 | Cart line qty/remove when Saleor enabled                   | `cart.svelte.ts`, `saleor/checkout.ts`, `/cart/checkout`                                                                                                        |
-| OAuth/magic-link callback from request origin              | `callback-url.ts`, sign-in/sign-up actions                                                                                                                       |
-| Media uploads Phase 1 API + migration                      | `src/routes/api/media/*`, `ReviewPhotoUpload.svelte`, migration `20250630120000_media_assets.sql`                                                                |
+| OAuth/magic-link callback from request origin              | `callback-url.ts`, sign-in/sign-up actions                                                                                                                     |
+| Media uploads Phase 1 API + migration                      | `src/routes/api/media/*`, `ReviewPhotoUpload.svelte`, migration `20250630120000_media_assets.sql`                                                              |
+| CI Prettier / format drift                                 | Commit `63eb20a` — `npm run lint` green on `dev`                                                                                                               |
+| `check-secrets.sh` bundle + deploy config scan             | Commit `ce05185` — client bundle `SERVICE_ROLE` grep; `DEV_ADMIN` in tracked deploy config                                                                     |
+| Ghost guide category/topic filters                         | `guide-filters.ts`, `/guides?category=` + `?topic=`, `/api/content/guide-filters`                                                                              |
+| Locale currency + Saleor channel pricing                   | `currency.ts`, `locale.svelte.ts`, `channels.ts` — channel-native amounts when Saleor on                                                                       |
+| Featured sections CMS scaffold                             | `featured-sections/repository.ts`, `/admin/featured`, homepage `+page.server.ts`                                                                               |
+| Shop collection filter scaffold (`?collection=`)             | `shop-collection.ts`, `shop/+page.server.ts` — mock/Saleor swap point                                                                                        |
 | GitHub wiki                                                | Published — [wiki home](https://github.com/jjheffernan/animalgaragenet/wiki); backup in `docs/wiki-export/` (sanitized for public — no infra/AWS/secret names) |
 | Org mirror sync                                            | `scripts/sync-org-mirror.sh` on `main`                                                                                                                         |
 
@@ -61,7 +67,6 @@ These appear as unchecked boxes in plans but **cannot be completed in-repo**:
 | Priority | Task                                                            | Tracker                                                                        |
 | -------- | --------------------------------------------------------------- | ------------------------------------------------------------------------------ |
 | P0       | Merge `dev` → `main` when Netlify env configured                | [deployment.md](./style-guide/backend-ops/deployment.md)                       |
-| P0       | Fix CI Prettier (~221 files) — blocks green checks              | [AUDIT-REMEDIATION.md](./plans/AUDIT-REMEDIATION.md) AUD-P0-006 |
 | P1       | Saleor checkout: shipping, `CHECKOUT_COMPLETE`, payment         | [saleor.md](./commerce/saleor.md), [saleor-audit.md](./audits/saleor-audit.md) |
 | P1       | YouTube live sync (replace stub)                                | [readiness-report.md](./testing/readiness-report.md)                           |
 | P2       | Ghost + remaining homepage mock slices (videos, builds)         | market-readiness Phase 3                                                       |

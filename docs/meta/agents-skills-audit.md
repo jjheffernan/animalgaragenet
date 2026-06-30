@@ -78,7 +78,7 @@ All 26 entries are symlinks → `agents/*` (which may further symlink to plugin 
 | `agents/*` → `~/.cursor/skills-cursor/*`       | 17 symlinks are machine-local; break on fresh clone                                                        | None (by design)                                                    | Document in onboarding or vendor Cursor skills into repo       |
 | `agents/supabase`, `svelte-*` → plugin cache   | Same portability issue                                                                                     | None                                                                | Rely on Cursor plugins (`plugins.*.enabled`)                   |
 | `.cursor/agents/*` (doc paths)                 | Grep for flat `docs/saleor.md`, `docs/supabase.md`, `PUBLIC-SAFE.md`                                       | **No hits** — paths already migrated                                | —                                                              |
-| `polish-sweep.md`                              | Session-specific Prettier failure count                                                                    | Not changed                                                         | Refresh on next polish run                                     |
+| `polish-sweep.md`                              | Session-specific Prettier failure count                                                                    | Updated — Prettier resolved (`63eb20a`)                             | —                                                              |
 
 ---
 

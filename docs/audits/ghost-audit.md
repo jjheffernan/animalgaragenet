@@ -20,6 +20,7 @@ See [content/ghost.md](../content/ghost.md) for setup and tag conventions.
 | HTML rendering (DOMPurify)                     | Done                        |
 | Per-page `<title>`                             | Done                        |
 | Per-page meta description                      | Done (detail pages)         |
+| Guide category/topic filters                   | Done (`guide-filters.ts`)   |
 | Open Graph / Twitter cards                     | Missing                     |
 | Ghost `meta_title` / `meta_description` fields | Not mapped                  |
 | Integration tests (`posts.ts`, `client.ts`)    | Missing                     |

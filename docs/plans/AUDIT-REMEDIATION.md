@@ -23,10 +23,10 @@ Canonical tracker for findings from `docs/audits/*`, [STATUS.md](../STATUS.md), 
 
 | Priority  | Open   | Blocked (ops) | Done   |
 | --------- | ------ | ------------- | ------ |
-| **P0**    | 1      | 5             | 3      |
+| **P0**    | 0      | 5             | 4      |
 | **P1**    | 4      | 1             | 8      |
-| **P2**    | 23     | 0             | 6      |
-| **Total** | **28** | **6**         | **17** |
+| **P2**    | 20     | 0             | 12     |
+| **Total** | **24** | **6**         | **24** |
 
 _Blocked = external dashboard/env; cannot close in-repo._
 
@@ -41,7 +41,7 @@ _Blocked = external dashboard/env; cannot close in-repo._
 | AUD-P0-003 | Supabase redirect URL allowlist (preview + custom domain)                                             | STATUS, account-flow-fix                 | **blocked** | auth / ops   | `/auth/callback` succeeds on Netlify preview and production domain                 | `src/routes/auth/callback/+server.ts` · DOC-023                                                        |
 | AUD-P0-004 | `PUBLIC_SALEOR_API_URL` + `SALEOR_CHANNEL` on Netlify                                                 | saleor-audit, market-readiness, STATUS   | **blocked** | saleor / ops | `/shop` product count ≠ 120 mock; images not placeholder CDN                       | `src/lib/server/saleor/client.ts` · DOC-024                                                            |
 | AUD-P0-005 | Bootstrap first admin                                                                                 | STATUS, account-flow-fix                 | **blocked** | auth / ops   | `promote-admin.ts` run; `/admin` accessible with real session                      | `scripts/promote-admin.ts`                                                                             |
-| AUD-P0-006 | CI Prettier drift (~221 files)                                                                        | STATUS, polish-plan, agents-skills-audit | **open**    | code         | `npm run lint` / CI format check green on `dev`                                    | DOC-036 · `.github/workflows/`                                                                         |
+| AUD-P0-006 | CI Prettier drift (~221 files)                                                                        | STATUS, polish-plan, agents-skills-audit | **done**    | code         | `npm run lint` / CI format check green on `dev`                                    | Commit `63eb20a` · `.github/workflows/`                                                                |
 | AUD-P0-007 | Refuse mock `ag-session` on production hostname                                                       | site-audit, TRIAGE, account-flow-fix     | **done**    | auth         | `hooks.server.ts` returns `null` session when Supabase unset on prod host          | `src/hooks.server.ts` L27–29 · DOC-022                                                                 |
 | AUD-P0-008 | Surface `productionAuthMisconfigured` on sign-in                                                      | TRIAGE, account-flow-fix                 | **done**    | auth         | Banner when prod host + missing Supabase keys                                      | `src/routes/auth/sign-in/+page.svelte` · DOC-021                                                       |
 | AUD-P0-009 | Gate silent Saleor→mock fallback on production                                                        | saleor-audit, market-readiness           | **done**    | saleor       | Production hostname throws/logs instead of silent mock catalog                     | `src/lib/server/catalog/fallback.ts`                                                                   |
@@ -73,7 +73,7 @@ _Blocked = external dashboard/env; cannot close in-repo._
 | ID         | Item                                            | Source                    | Status   | Owner      | Acceptance criteria                                                                | Code / doc paths                                                        |
 | ---------- | ----------------------------------------------- | ------------------------- | -------- | ---------- | ---------------------------------------------------------------------------------- | ----------------------------------------------------------------------- |
 | AUD-P2-001 | Collection product edges on homepage            | saleor-audit              | **open** | saleor     | `getCollections()` returns populated `products[]` from Saleor                      | `src/lib/server/catalog/collections.ts`                                 |
-| AUD-P2-002 | Shop category filter via Saleor taxonomy        | saleor-audit              | **open** | saleor     | Replace `filterProductsByShopCategory()` heuristics with collections/category tree | `src/lib/server/catalog/catalog-helpers.ts`                             |
+| AUD-P2-002 | Shop category filter via Saleor taxonomy        | saleor-audit              | **done** | saleor     | `getShopFilterOptions()` + `filterProductsByShopSlug()` use Saleor category tree when env set | `src/lib/server/catalog/shop-filters.ts` · `/api/catalog/shop-filters` |
 | AUD-P2-003 | Saleor catalog search at scale                  | saleor-audit              | **open** | saleor     | Server-side search API instead of fetch-100 + client filter                        | `src/lib/server/catalog/search.ts` · `src/routes/api/catalog/search/`   |
 | AUD-P2-004 | Parts YMM URL filter vs `fitment` metadata      | saleor-audit              | **open** | saleor     | Category route applies year/make/model query params to Saleor products             | `src/routes/parts/[category]/+page.server.ts`                           |
 | AUD-P2-005 | Product detail related products / linked builds | saleor-audit              | **open** | saleor     | Related slice from Saleor or CMS, not mock helpers only                            | `src/routes/shop/[slug]/+page.server.ts`                                |
@@ -90,10 +90,13 @@ _Blocked = external dashboard/env; cannot close in-repo._
 | AUD-P2-016 | `profiles` table contract test                  | STATUS, readiness-report  | **open** | code       | Payload contract in `tests/contracts/`                                             | DOC manifest backlog                                                    |
 | AUD-P2-017 | Optional `readiness-ci` GitHub Actions job      | STATUS                    | **open** | code       | Workflow runs `npm run test:readiness` with secrets                                | `.github/workflows/`                                                    |
 | AUD-P2-018 | Discord / Microsoft OAuth verification          | STATUS, polish-plan       | **open** | auth / ops | Providers enabled in Supabase; readiness probes pass                               | [auth/discord.md](../auth/discord.md) · DOC-010                         |
-| AUD-P2-019 | Extend `check-secrets.sh` for bundles           | DOC manifest              | **open** | code       | Script scans build output / bundles for secret patterns                            | `scripts/check-secrets.sh` · DOC-040                                    |
+| AUD-P2-019 | Extend `check-secrets.sh` for bundles           | DOC manifest              | **done** | code       | Script scans client bundles for `SERVICE_ROLE`; blocks `DEV_ADMIN` in deploy config | Commit `ce05185` · `scripts/check-secrets.sh` · DOC-040                 |
 | AUD-P2-020 | Machine-local agent skill symlinks documented   | agents-skills-audit       | **open** | docs       | Onboarding notes for `agents/*` → `~/.cursor/skills-cursor/`                       | `agents/AGENTS.md`                                                      |
 | AUD-P2-021 | daisyUI skill tree removal (post sign-off)      | agents-skills-audit       | **open** | docs       | Deprecation banner remains until tree deleted                                      | `.agents/skills/daisyui/` · `skills-lock.json`                          |
-| AUD-P2-022 | Refresh polish-sweep stale Prettier count       | agents-skills-audit       | **open** | docs       | `.cursor/agents/polish-sweep.md` matches current CI                                | `.cursor/agents/polish-sweep.md`                                        |
+| AUD-P2-022 | Refresh polish-sweep stale Prettier count       | agents-skills-audit       | **done** | docs       | `.cursor/agents/polish-sweep.md` matches current CI                                | `.cursor/agents/polish-sweep.md`                                        |
+| AUD-P2-030 | Ghost guide category/topic filters              | ghost-audit, content/ghost | **done** | code       | `getGuideFilterOptions()` hydrates from Ghost; `/guides?category=` + `?topic=`     | `src/lib/server/ghost/guide-filters.ts` · `/api/content/guide-filters` |
+| AUD-P2-031 | Locale currency respects Saleor channel           | saleor-audit, i18n        | **done** | saleor     | `formatDisplayPrice` + `getChannelForLocale()`; mock rates when Saleor off         | `src/lib/i18n/currency.ts` · `src/lib/stores/locale.svelte.ts`         |
+| AUD-P2-032 | Featured sections CMS scaffold                  | inspiration tracker       | **done** | supabase   | Repository + `/admin/featured` + homepage loader; mock when Supabase unset         | `src/lib/server/featured-sections/repository.ts` · migration `20250630150000` |
 | AUD-P2-023 | Newsletter / user preferences tables            | STATUS, supabase.md       | **open** | supabase   | Schema + RLS per roadmap                                                           | [integrations/supabase.md](../integrations/supabase.md)                 |
 | AUD-P2-024 | Site audit: unit test coverage                  | site-audit                | **done** | code       | 180+ tests; `npm run test:unit` in CI                                              | `tests/`                                                                |
 | AUD-P2-025 | Site audit: `+error.svelte`                     | site-audit                | **done** | code       | Branded error page exists                                                          | `src/routes/+error.svelte`                                              |
@@ -111,7 +114,7 @@ _Blocked = external dashboard/env; cannot close in-repo._
 | [audits/site-audit.md](../audits/site-audit.md)               | P2-012–014 (SEO, a11y, locale)       | All AUD-P2 site rows **done** |
 | [audits/saleor-audit.md](../audits/saleor-audit.md)           | P0-004 (ops), P1-001–003, P2-001–006 | All Saleor AUD rows **done**  |
 | [audits/ghost-audit.md](../audits/ghost-audit.md)             | P1-008–009, P2-007–011               | All Ghost AUD rows **done**   |
-| [meta/agents-skills-audit.md](../meta/agents-skills-audit.md) | P2-020–022                           | AUD-P2-020–022 **done**       |
+| [meta/agents-skills-audit.md](../meta/agents-skills-audit.md) | —                                    | AUD-P2-020–022 **done**       |
 
 _Do not delete source audits until the row above is satisfied._
 

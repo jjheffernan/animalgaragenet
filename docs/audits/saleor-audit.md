@@ -6,7 +6,7 @@ Readiness assessment for wiring animalgaragenet to the Saleor backend at `<your-
 
 Code verification pass (June 29, 2026). **All primary catalog loaders** (shop, parts, gift cards, deals, collections/homepage) use env-gated Saleor swap points with mock fallback. **Locale → channel mapping**, **catalog search API**, and **cart checkout scaffold** (read-only display + add-line) are wired. **Staff picks and clearance** homepage slices now filter Saleor products by `tags` metadata when env is set.
 
-Remaining gaps block production checkout: **line remove/qty mutations**, **`CHECKOUT_COMPLETE` / payment**, **collection product edges**, **shop category heuristics**, and **add-to-cart from listing cards** (no variantId — still needs mock catalog lookup). Non-catalog surfaces (blog, builds, events, deal banners) remain mock-only by design.
+Remaining gaps block production checkout: **line remove/qty mutations** (wired — see `cart.svelte.ts`), **`CHECKOUT_COMPLETE` / payment**, **collection product edges**, and **add-to-cart from listing cards** (no variantId — still needs mock catalog lookup). Non-catalog surfaces (blog, builds, events, deal banners) remain mock-only by design.
 
 ---
 
@@ -14,7 +14,7 @@ Remaining gaps block production checkout: **line remove/qty mutations**, **`CHEC
 
 | Surface                    | Swap point / route                                            | Saleor when env set | Mock fallback | Notes                                                                      |
 | -------------------------- | ------------------------------------------------------------- | ------------------- | ------------- | -------------------------------------------------------------------------- |
-| Shop list                  | `getShopProducts()` → `shop/+page.server.ts`                  | ✅                  | ✅            | Category filter is client-side heuristic, not Saleor collections           |
+| Shop list                  | `getShopProducts()` → `shop/+page.server.ts`                  | ✅                  | ✅            | Category filter via `shop-filters.ts` (Saleor taxonomy when env set)       |
 | Shop detail                | `getShopProductBySlug()` → `shop/[slug]/+page.server.ts`      | ✅                  | ✅            | Related products, linked builds still mock                                 |
 | Gift cards                 | `getGiftCardProducts()` → `gift-cards/+page.server.ts`        | ✅                  | ✅            | Filters by metadata `productType`, category slug, slug prefix              |
 | Deals products             | `getDealProducts()` → `deals/+page.server.ts`                 | ✅                  | ✅            | Deal promo banners (`getActiveDeals()`) still mock                         |
@@ -28,7 +28,7 @@ Remaining gaps block production checkout: **line remove/qty mutations**, **`CHEC
 | Search parts/builds/guides | `searchCatalog()`                                             | ❌                  | ✅            | Content not in Saleor — always mock                                        |
 | Cart display               | `getCheckoutLines()` → `cart/+page.server.ts`                 | ✅                  | localStorage  | Read-only when checkout cookie present                                     |
 | Cart add line              | `POST /cart/checkout`                                         | ✅                  | localStorage  | Detail pages pass Saleor `variantId`; listing cards still need mock lookup |
-| Cart remove/qty            | `cart.svelte.ts`                                              | ❌                  | ✅            | No-op when Saleor enabled                                                  |
+| Cart remove/qty            | `cart.svelte.ts`, `/cart/checkout` PATCH/DELETE               | ✅                  | ✅            | `checkoutLinesUpdate` / `checkoutLinesDelete` when Saleor enabled          |
 | Checkout page              | `/checkout`                                                   | ❌                  | placeholder   | No payment / `CHECKOUT_COMPLETE`                                           |
 | Homepage other             | videos, UGC, builds, brands, campaigns                        | ❌                  | ✅            | Not in Saleor scope                                                        |
 
@@ -53,10 +53,10 @@ Remaining gaps block production checkout: **line remove/qty mutations**, **`CHEC
 ## Top remaining gaps
 
 1. **Checkout completion & payment** — No `CHECKOUT_COMPLETE`, shipping address, shipping methods, or payment redirect. `/checkout` is a UI placeholder.
-2. **Cart line mutations** — Remove and quantity update are no-ops when Saleor is enabled; need `checkoutLinesUpdate` / `checkoutLinesDelete` mutations + API routes.
+2. **Cart line mutations** — ~~Remove and quantity update are no-ops when Saleor is enabled~~ **Done** — `checkoutLinesUpdate` / `checkoutLinesDelete` + `/cart/checkout` routes.
 3. **Add-to-cart from listing cards** — `ProductCard` calls `cart.addItem(product.id)` without `variantId`. Saleor path still falls back to mock `getCatalogProductById()` when variantId is missing (fixed for detail pages that pass variantId).
 4. **Collection product edges** — `getCollections()` returns metadata-only; `products[]` empty until collection product query is added.
-5. **Shop category filter** — `filterProductsByShopCategory()` uses name/slug heuristics (`tee`, `hoodie`, etc.); should use Saleor collections or category tree.
+5. ~~**Shop category filter**~~ — **Done** — `shop-filters.ts` + `/api/catalog/shop-filters` use Saleor category tree when env set.
 
 ### Additional gaps (lower priority)
 

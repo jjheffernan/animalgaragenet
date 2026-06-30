@@ -23,7 +23,7 @@ You close the gap between **intended work** and **landed code** after multi-agen
 | Media uploads    | `docs/plans/active/media-uploads.md`                       | Exists?                         |
 | Org sync         | deploy-key mirror on `main`                                | CI prettier blocking auto-sync? |
 | Saleor redeem    | `/account/redeem`                                          | Not started?                    |
-| Prettier CI      | formatting drift blocking CI                               | `npm run lint`                  |
+| Prettier CI      | formatting drift blocking CI                               | Resolved — commit `63eb20a`; run `npm run lint` before push |
 | Migration scaffolds | `@inspiration-scaffold` / `@saleor-migration` blocks      | Do not delete — inspiration-polish-tracker |
 
 ## Polishing plan output

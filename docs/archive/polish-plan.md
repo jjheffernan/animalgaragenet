@@ -44,7 +44,7 @@ From live probe and `docs/plans/active/account-flow-fix.md`:
 
 - Saleor-readiness before live checkout — **Ops**
 - Review photo uploads — **Done**
-- CI Prettier — **Open** (tracker IP-013)
+- CI Prettier — **Done** (tracker IP-019; commit `63eb20a`)
 - Checkout/payment — **Blocked** (tracker IP-003)
 - Ghost/YouTube — **Open** (tracker IP-009, IP-010)
 

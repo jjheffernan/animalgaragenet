@@ -96,7 +96,7 @@ Magic link / OAuth `redirectTo` is built from `config.siteUrl` (`PUBLIC_SITE_URL
 | Supabase redirect URLs                  | ❓ Unverified         | Must include preview and custom-domain `/auth/callback` URLs (see account-flow-fix)                                                                                                 |
 | RLS on tables                           | ✅ Migrations present | `profiles`, `build_submissions`, `testimonials` — all `enable row level security`                                                                                                   |
 | `build_submissions` insert policy       | ⚠️ Open               | `with check (true)` for anon — spam risk; reads are service-role only                                                                                                               |
-| `scripts/check-secrets.sh`              | ⚠️ Partial            | Blocks tracked `.env`, credential files, hardcoded secret assignments; does **not** scan client bundles for service role, verify Netlify env, or block `DEV_ADMIN` in deploy config |
+| `scripts/check-secrets.sh`              | ✅ Pass               | Client bundle `SERVICE_ROLE` scan; blocks `DEV_ADMIN` in tracked deploy config (commit `ce05185`) |
 | Silent mock fallback                    | ⚠️ Partial            | `guardMockCatalogFallback()` on catalog loaders + search; homepage and non-catalog surfaces still mock                                                                              |
 
 ---
@@ -233,7 +233,7 @@ See **[account-flow-fix.md](./account-flow-fix.md)** for the detailed plan.
 | Add production guard: refuse mock auth when `PUBLIC_SITE_URL` is HTTPS non-localhost                                | P0       |
 | Replace silent Saleor/Ghost mock fallback with explicit error boundary                                              | P0       |
 | Tighten `build_submissions` insert policy (rate limit / captcha / honeypot)                                         | P1       |
-| Extend `check-secrets.sh`: grep client bundle for `SERVICE_ROLE`, fail on `DEV_ADMIN=true` in tracked deploy config | P1       |
+| Extend `check-secrets.sh`: grep client bundle for `SERVICE_ROLE`, fail on `DEV_ADMIN=true` in tracked deploy config | Done     |
 | Optional: `readiness-ci` GitHub Action with Netlify secrets                                                         | P2       |
 | `SITE_LOCKED=true` during preview; admins pass through                                                              | Ops      |
 | Rotate `<org-sync-secret>` documented                                                                               | Ops      |
@@ -243,7 +243,7 @@ See **[account-flow-fix.md](./account-flow-fix.md)** for the detailed plan.
 **Acceptance criteria**
 
 - [ ] `DEV_ADMIN=true` on Netlify does **not** grant admin (even on `netlify.app`)
-- [ ] `scripts/check-secrets.sh` passes; extended checks added
+- [x] `scripts/check-secrets.sh` passes; extended checks added
 - [x] No mock session path reachable on production hostname (`hooks.server.ts`)
 - [ ] All `supabase/migrations/*` applied to production project
 - [ ] Security review agent sign-off

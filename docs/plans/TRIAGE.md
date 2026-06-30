@@ -9,9 +9,9 @@
 
 | Category        | Count | Notes                                                                                                             |
 | --------------- | ----: | ----------------------------------------------------------------------------------------------------------------- |
-| **Open** (code) |     6 | Checkout, YouTube sync, CI Prettier, `check-secrets` extend, Ghost fallback policy |
+| **Open** (code) |     4 | Checkout, YouTube sync, Ghost fallback policy, add-to-cart from listing cards |
 | **Open** (ops)  |     8 | Netlify env, Supabase redirect URLs, Saleor catalog env, Ghost, OAuth providers, admin bootstrap, media migration apply |
-| **Done** (code) |    21 | Auth guards, homepage UGC, shop filters, redeem/promo, catalog production guard, Phase 3 shell, `/builds` Supabase loader, cart qty/remove, OAuth callback origin, media Phase 1 API |
+| **Done** (code) |    28 | Auth guards, homepage UGC, shop filters, redeem/promo, catalog production guard, Phase 3 shell, `/builds` Supabase loader, cart qty/remove, OAuth callback origin, media Phase 1 API, CI Prettier, check-secrets extend, guide filters, locale currency, featured CMS scaffold, shop collection filter |
 | **Archived**    |     7 | `docs/archive/*.md` — banners + pointers to active docs                                                           |
 
 Canonical remediation: [AUDIT-REMEDIATION.md](./AUDIT-REMEDIATION.md) · open work: [STATUS.md](../STATUS.md)
@@ -56,7 +56,7 @@ No other markdown files remain at `docs/` root.
 | `media-cdn-plan.md`          | **Archived** | `archive/media-cdn-plan.md` — superseded by `plans/active/media-uploads.md` |
 | `plans/account-flow-fix.md`  | **Keep**     | `plans/active/account-flow-fix.md`                                          |
 | `plans/market-readiness.md`  | **Keep**     | `plans/active/market-readiness.md`                                          |
-| `plans/media-uploads.md`     | **Keep**     | `plans/active/media-uploads.md` — Phase 1 open                              |
+| `plans/media-uploads.md`     | **Keep**     | `plans/active/media-uploads.md` — Phase 1 wired; apply migration on Supabase |
 
 ---
 
@@ -77,10 +77,9 @@ No other markdown files remain at `docs/` root.
 
 1. Saleor checkout: shipping, `CHECKOUT_COMPLETE`, payment gateway.
 2. YouTube `sync.ts` — replace stub with Data API.
-3. Extend `scripts/check-secrets.sh` for client-bundle secret patterns.
-4. Apply `20250630120000_media_assets.sql` on production Supabase (ops).
+3. Apply `20250630120000_media_assets.sql` on production Supabase (ops).
 
-_Out of scope for next small PR: full S3/Garage CDN pipeline, CI Prettier sweep (~221 files)._
+_Out of scope for next small PR: full S3/Garage CDN pipeline._
 
 ---
 
@@ -110,7 +109,7 @@ _Out of scope for next small PR: full S3/Garage CDN pipeline, CI Prettier sweep 
 | **media-uploads**            | Phase 1 — bucket + `/api/media/*`                   | Done (code)    | Migration + API in repo; apply on Supabase project     |
 | **polish-plan**              | Saleor redeem + cart promo                          | Done           | `/account/redeem`, `checkout/promo.ts`                 |
 | **polish-plan**              | Cart line qty/remove when Saleor enabled            | Done           | `cart.svelte.ts`, `/cart/checkout` PATCH/DELETE        |
-| **polish-plan**              | CI Prettier (~221 files)                            | Open           | Blocks green CI                                        |
+| **polish-plan**              | CI Prettier (~221 files)                            | Done           | Commit `63eb20a`                                       |
 | **phase3-plan** (archive)    | Workstreams A–D                                     | Done / partial | See archive banner                                     |
 | **media-cdn-plan** (archive) | v1 upload strategy                                  | Stale          | Superseded by `media-uploads.md`                       |
 
@@ -120,7 +119,8 @@ _Out of scope for next small PR: full S3/Garage CDN pipeline, CI Prettier sweep 
 
 | File                                              | Change                                                      |
 | ------------------------------------------------- | ----------------------------------------------------------- |
-| `TRIAGE.md`                                       | Stats + done rows: `/builds`, cart qty/remove, OAuth origin, media Phase 1 |
+| `TRIAGE.md`                                       | Stats + done rows: Prettier, check-secrets, guide filters, currency, featured scaffold |
+| `AUDIT-REMEDIATION.md`                            | Mark AUD-P0-006, P2-002/019/022/030–032 done; recalc summary                          |
 | `account-flow-fix.md`                             | `callback-url.ts` redirect — mark Done                      |
 | `market-readiness.md`                             | UGC row hybrid; fix `../../` links from `plans/active/`     |
 | `meta/decisions.md`                               | Fix style-guide link                                        |

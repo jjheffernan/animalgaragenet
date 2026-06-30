@@ -2,6 +2,12 @@
 
 export const adminCard = 'rounded-sm border border-zinc-800 bg-zinc-900/50 p-6';
 
+export const adminQueueCard = 'rounded-sm border border-zinc-800 bg-zinc-900/50 p-5';
+
+export const adminKpiCard = 'rounded-sm border border-zinc-800 bg-zinc-900/50 p-5';
+
+export const adminKpiCardMuted = 'rounded-sm border border-dashed border-zinc-700 bg-zinc-900/50 p-5';
+
 export const adminCardFlush = 'overflow-hidden rounded-sm border border-zinc-800 bg-zinc-900/50';
 
 export const adminSectionTitle = 'text-xs font-bold uppercase tracking-widest text-zinc-500';
@@ -47,6 +53,11 @@ export const adminFilterChipActive =
 export const adminLabel = 'block text-xs font-bold uppercase tracking-widest text-zinc-500';
 
 export const adminBtnSm = 'px-3 py-1.5 text-xs';
+
+export const adminBtnGhost =
+	'rounded-sm border border-zinc-700 px-3 py-1.5 text-xs font-bold uppercase tracking-wider text-zinc-300 transition hover:border-zinc-500 hover:text-white';
+
+export const adminLink = 'text-xs text-red-400 transition hover:text-red-300';
 
 export const adminTableHead =
 	'border-b border-zinc-800 bg-zinc-900/50 text-xs uppercase tracking-wider text-zinc-500';

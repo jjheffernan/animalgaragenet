@@ -1,13 +1,13 @@
 # Active swarm execution tracker
 
 **Created:** 2026-06-30  
-**Last synced:** 2026-06-30 (`dev`)  
+**Last synced:** 2026-06-30 (`dev`, Slot B verify `dd32c00`)  
 **Policy:** Inventory + status sync — no implementation in this doc.  
 **Sources:** All files in `docs/plans/active/` reconciled 2026-06-30.
 
 Batch slots: **A** = API/webhooks/SEO/CI · **B** = admin UI · **C** = inspiration-polish code · **D** = ponytail/schema/docs-only
 
-**Recent `dev` landings reflected below:** `bbeecbe` (AUD-P2-020) · ponytail P1/P2/P3-002/P3-003 · `4e7d0a9` (admin shell/chrome) · `eba78ff` (LGTM observability)
+**Recent `dev` landings reflected below:** `bbeecbe` (AUD-P2-020) · ponytail P1/P2/P3-002/P3-003 · `4e7d0a9` (admin shell/chrome) · `dd32c00` (admin theme unify — zinc/red, daisyUI removed) · `eba78ff` (LGTM observability)
 
 ---
 
@@ -16,10 +16,10 @@ Batch slots: **A** = API/webhooks/SEO/CI · **B** = admin UI · **C** = inspirat
 | Batch | Scope | Open/partial | Done (in table) | Ops-blocked |
 |-------|--------|-------------:|----------------:|------------:|
 | **A** | API / webhooks / SEO / CI | 6 | 1 | 20 |
-| **B** | Admin UI | 9 | 0 | 2 |
+| **B** | Admin UI | 0 | 9 | 2 |
 | **C** | Inspiration-polish code | 4 | 3 | 0 |
 | **D** | Ponytail / schema / docs-only | 3 | 8 | 2 |
-| | **Grand total** | **22** | **12** | **24** |
+| | **Grand total** | **13** | **21** | **24** |
 | | | | **59 rows** | |
 
 _NS-OPS-010 (merge `dev` → `main`) has no batch slot._
@@ -37,15 +37,15 @@ _NS-OPS-010 (merge `dev` → `main`) has no batch slot._
 | next-steps | SEO-002 | `robots.txt` route — `Sitemap:` from `PUBLIC_SITE_URL` + static fallback | No | A | **done** |
 | next-steps | SEO-003 | Extend smoke tests beyond `/`, `/shop`, `/parts`, one PDP | No | A | open (optional) |
 | market-readiness | MR-SEC-001 | Tighten `build_submissions` insert policy (rate limit / captcha / honeypot) | No | A | open |
-| admin-dashboard | ADM-S1 | Live recent activity feed on `/admin/dashboard` (builds, bugs, YouTube sync) | No | B | partial (`4e7d0a9` shell/chrome + timeline UI; live rows pending) |
-| admin-dashboard | ADM-S2-builds | Builds moderation queue — daisyUI consistency | No | B | open |
-| admin-dashboard | ADM-S2-testimonials | Testimonials moderation queue — daisyUI consistency | No | B | open |
-| admin-dashboard | ADM-S2-youtube | YouTube admin — migrate zinc table to daisyUI `table` | No | B | open |
-| admin-dashboard | ADM-S2-media | Media browser — daisyUI `card`/`badge`/`btn` pass | No | B | open |
-| admin-dashboard | ADM-S3 | Sidebar pending-work badges (builds + testimonials counts) | No | B | open |
-| admin-dashboard | ADM-S4-users | Users list — client search filter above table | No | B | partial (`4e7d0a9` daisyUI table; search pending) |
-| admin-dashboard | ADM-S4-bugs | Bug reports — table view toggle or status filter chips | No | B | partial (`4e7d0a9` daisyUI inbox; table toggle pending) |
-| admin-dashboard | ADM-S5 | Runtime panel — Commerce/Content/Platform grouping + last-checked timestamp | No | B | partial (`4e7d0a9` daisyUI runtime; grouping pending) |
+| admin-dashboard | ADM-S1 | Live recent activity feed on `/admin/dashboard` (builds, bugs, YouTube sync) | No | B | **done** (`dd32c00` activity table + deep-links) |
+| admin-dashboard | ADM-S2-builds | Builds moderation queue — zinc/red consistency (`admin-ui.ts`) | No | B | **done** (`dd32c00`) |
+| admin-dashboard | ADM-S2-testimonials | Testimonials moderation queue — zinc/red consistency | No | B | **done** (`dd32c00`) |
+| admin-dashboard | ADM-S2-youtube | YouTube admin — zinc table + card form | No | B | **done** (`dd32c00`) |
+| admin-dashboard | ADM-S2-media | Media browser — zinc `card`/`badge`/`btn` pass | No | B | **done** (`dd32c00`) |
+| admin-dashboard | ADM-S3 | Sidebar pending-work badges (builds + testimonials + open bugs) | No | B | **done** (`navCounts` + `badgeKey`) |
+| admin-dashboard | ADM-S4-users | Users list — client search filter above table | No | B | **done** (`dd32c00` search + zinc table) |
+| admin-dashboard | ADM-S4-bugs | Bug reports — status filter chips + inbox/table | No | B | **done** (`dd32c00` status chips) |
+| admin-dashboard | ADM-S5 | Runtime panel — Commerce/Content/Platform grouping + last-checked timestamp | No | B | **done** (`dd32c00` grouped cards + `checkedAt`) |
 | next-steps | MR-PH3-001 | Remaining homepage mock slices (videos, campaigns, hero beyond CMS; UGC/watch wired) | No | C | open |
 | inspiration-polish | IP-023 | Multi-channel international pricing — `channels.ts` + `SALEOR_LOCALE_CHANNELS` / `listSaleorChannels()` | No | C | **done** |
 | inspiration-polish | IP-024 | Shipping threshold promos — `shipping-promo.ts` + cart/checkout loaders | No | C | **done** |
@@ -96,7 +96,8 @@ _NS-OPS-010 (merge `dev` → `main`) has no batch slot._
 
 | Area | Evidence |
 | ---- | -------- |
-| Admin shell daisyUI pass | `4e7d0a9` — `.admin-shell` plugin, sidebar/topbar, dashboard health strip + `stats` + `timeline`, `getDashboardStats()` |
+| Admin shell chrome (interim daisyUI) | `4e7d0a9` — `.admin-shell` plugin, sidebar/topbar, dashboard health strip + `stats` + `timeline` |
+| Admin theme unify (zinc/red) | `dd32c00` — removed daisyUI + `.admin-shell`; shared `admin-ui.ts`; storefront unchanged (plain Tailwind `@theme`) |
 | LGTM observability | `eba78ff` — request logging, metrics endpoint, OTLP hook point; [observability-lgtm.md](../../infrastructure/observability-lgtm.md) |
 | account-flow-fix | Code hardening done; remaining items are ops duplicates of AUD-P0-* |
 | Inspiration-polish slot C (IP-023, IP-024, IP-030) | `channels.ts`, `shipping-promo.ts`, `deals/repository.ts`, `pit_lane_deals` migration |

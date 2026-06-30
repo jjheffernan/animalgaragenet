@@ -3,7 +3,7 @@ import { getDashboardStats } from '$lib/server/admin/dashboard-stats';
 import { getRuntimeStatus } from '$lib/server/admin/runtime-status';
 import type { PageServerLoad } from './$types';
 
-/** Overview stats — commerce KPIs mock until Saleor queries ship. */
+/** Overview stats — commerce KPIs from order mirror when Supabase is configured. */
 export const load: PageServerLoad = async ({ parent }) => {
 	const parentData = await parent();
 

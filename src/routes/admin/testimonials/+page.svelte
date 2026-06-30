@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
 	import AdminPageHeader from '$lib/components/admin/AdminPageHeader.svelte';
-	import { adminBtnOutline, adminBtnPrimary } from '$lib/components/admin/admin-ui';
+	import { adminBtnOutline, adminBtnPrimary, adminQueueCard } from '$lib/components/admin/admin-ui';
 	import PaginatedListCanvas from '$lib/components/catalog/PaginatedListCanvas.svelte';
 	import type { PageData } from './$types';
 
@@ -23,7 +23,7 @@
 	<PaginatedListCanvas pagination={data.pagination} class="mt-8">
 		<ul class="space-y-4">
 			{#each data.pending as testimonial (testimonial.id)}
-				<li class="rounded-sm border border-zinc-800 bg-zinc-900/50 p-5">
+				<li class={adminQueueCard}>
 					<div class="flex flex-wrap items-start justify-between gap-4">
 						<div>
 							<h2 class="font-medium text-white">{testimonial.title}</h2>

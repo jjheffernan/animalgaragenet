@@ -3,11 +3,14 @@ import { listAdminUsers } from '$lib/server/supabase/admin-users';
 import { listBugReports } from '$lib/server/support/repository';
 import { createAdminClient } from '$lib/server/supabase/admin';
 
+export type CommerceKpiSource = 'mirror' | 'mock' | 'empty';
+
 export interface DashboardStats {
 	orders: number;
 	revenueLabel: string;
 	users: number;
 	openBugs: number;
+	commerceSource: CommerceKpiSource;
 }
 
 function formatRevenue(totalCents: number, currency: string): string {
@@ -18,10 +21,14 @@ function formatRevenue(totalCents: number, currency: string): string {
 	}).format(totalCents / 100);
 }
 
-async function getOrderMirrorKpis(): Promise<{ orders: number; revenueLabel: string }> {
+async function getOrderMirrorKpis(): Promise<{
+	orders: number;
+	revenueLabel: string;
+	source: CommerceKpiSource;
+}> {
 	const admin = createAdminClient();
 	if (!admin) {
-		return { orders: 12, revenueLabel: '—' };
+		return { orders: 12, revenueLabel: '—', source: 'mock' };
 	}
 
 	const monthStart = new Date();
@@ -34,7 +41,7 @@ async function getOrderMirrorKpis(): Promise<{ orders: number; revenueLabel: str
 		.gte('ordered_at', monthStart.toISOString());
 
 	if (error || !data?.length) {
-		return { orders: 0, revenueLabel: '—' };
+		return { orders: 0, revenueLabel: '—', source: 'empty' };
 	}
 
 	const totalCents = data.reduce((sum, row) => sum + Number(row.total_cents ?? 0), 0);
@@ -42,7 +49,8 @@ async function getOrderMirrorKpis(): Promise<{ orders: number; revenueLabel: str
 
 	return {
 		orders: data.length,
-		revenueLabel: formatRevenue(totalCents, currency)
+		revenueLabel: formatRevenue(totalCents, currency),
+		source: 'mirror'
 	};
 }
 
@@ -54,7 +62,7 @@ export async function getDashboardStats(): Promise<DashboardStats> {
 	const liveUsers = await listAdminUsers();
 	const users = liveUsers !== null ? liveUsers.length : mockAdminUsers.length;
 
-	const { orders, revenueLabel } = await getOrderMirrorKpis();
+	const { orders, revenueLabel, source: commerceSource } = await getOrderMirrorKpis();
 
-	return { orders, revenueLabel, users, openBugs };
+	return { orders, revenueLabel, users, openBugs, commerceSource };
 }

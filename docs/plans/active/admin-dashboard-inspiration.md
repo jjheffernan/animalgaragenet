@@ -144,6 +144,7 @@ Improve **existing routes** only. Do **not** scaffold `/admin/commerce/*`, `/adm
 | `getDashboardActivity()` from builds, bugs, YouTube | Done |
 | Type badges per row | Done |
 | Deep-links to moderation routes | Done |
+| Section “View all” links (builds / bugs / YouTube) | Done |
 | `@inspiration-scaffold` comment for future `admin_activity` view | Done |
 
 ### Slice 2 — Content route visual consistency **P1** — **shipped**
@@ -158,7 +159,7 @@ Improve **existing routes** only. Do **not** scaffold `/admin/commerce/*`, `/adm
 
 | Item | Status |
 | ---- | ------ |
-| `+layout.server.ts` pending counts | Done |
+| `+layout.server.ts` pending counts | Done (`builds`, `testimonials`, `openBugs`) |
 | Sidebar red count badges | Done |
 
 ### Slice 4 — List toolbar + table polish **P2** — **shipped**

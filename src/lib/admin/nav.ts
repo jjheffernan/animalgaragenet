@@ -8,7 +8,7 @@ export interface AdminNavItem {
 	/** Route not scaffolded yet — sidebar renders label without link */
 	disabled?: boolean;
 	/** Key into layout `navCounts` for pending-work badge */
-	badgeKey?: 'builds' | 'testimonials';
+	badgeKey?: 'builds' | 'testimonials' | 'openBugs';
 }
 
 export interface AdminNavSection {
@@ -46,7 +46,7 @@ export const ADMIN_NAV: AdminNavSection[] = [
 	},
 	{
 		label: 'Support',
-		items: [{ href: '/admin/bug-reports', label: 'Bug Reports' }]
+		items: [{ href: '/admin/bug-reports', label: 'Bug Reports', badgeKey: 'openBugs' }]
 	},
 	{
 		label: 'Runtime',

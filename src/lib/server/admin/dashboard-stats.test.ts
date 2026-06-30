@@ -12,5 +12,6 @@ describe('getDashboardStats', () => {
 		expect(stats.orders).toBeGreaterThanOrEqual(0);
 		expect(stats.users).toBeGreaterThanOrEqual(0);
 		expect(stats.openBugs).toBeGreaterThanOrEqual(0);
+		expect(['mirror', 'mock', 'empty']).toContain(stats.commerceSource);
 	});
 });

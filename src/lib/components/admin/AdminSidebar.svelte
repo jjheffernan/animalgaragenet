@@ -27,6 +27,7 @@
 	function pendingCount(item: AdminNavItem): number {
 		if (item.badgeKey === 'builds') return navCounts.builds;
 		if (item.badgeKey === 'testimonials') return navCounts.testimonials;
+		if (item.badgeKey === 'openBugs') return navCounts.openBugs;
 		return 0;
 	}
 </script>
@@ -76,6 +77,4 @@
 			</div>
 		{/each}
 	</nav>
-
-	<p class="mt-4 px-2 text-[10px] text-zinc-600">Staff admin — zinc theme</p>
 </aside>

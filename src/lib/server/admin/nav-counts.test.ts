@@ -7,5 +7,6 @@ describe('getAdminNavCounts', () => {
 
 		expect(counts.builds).toBeGreaterThanOrEqual(0);
 		expect(counts.testimonials).toBeGreaterThanOrEqual(0);
+		expect(counts.openBugs).toBeGreaterThanOrEqual(0);
 	});
 });

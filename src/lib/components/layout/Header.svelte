@@ -140,7 +140,12 @@
 	);
 
 	const session = $derived($page.data.session);
-	const notificationCount = 0;
+	const notificationCount = $derived($page.data.notificationCount ?? 0);
+
+	const headerIconBtn =
+		'relative inline-flex size-9 shrink-0 items-center justify-center rounded-sm text-zinc-400 transition hover:text-white';
+	const headerBadgeClass =
+		'pointer-events-none absolute end-0 top-0 flex h-4 min-w-4 translate-x-1/4 -translate-y-1/4 items-center justify-center rounded-full bg-red-600 px-0.5 text-[10px] font-bold leading-none text-white';
 	const activeMenu = $derived(shopMenuOpen ? 'shop' : partsMenuOpen ? 'parts' : null);
 	const dealsHref = $derived(
 		session ? resolve('/deals') : resolvePath('/auth/sign-in?redirect=/deals')
@@ -207,11 +212,11 @@
 
 	<header class="relative border-b border-zinc-800/80 bg-zinc-950/90 backdrop-blur-md">
 		<div
-			class="relative mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8"
+			class="relative mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:grid lg:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] lg:items-center lg:gap-x-4 lg:px-8"
 		>
 			<button
 				type="button"
-				class="z-10 p-1 text-zinc-300 transition hover:text-white lg:hidden"
+				class="z-10 inline-flex size-9 shrink-0 items-center justify-center text-zinc-300 transition hover:text-white lg:hidden"
 				aria-label="Open menu"
 				aria-expanded={mobileOpen}
 				onclick={openMobileNav}
@@ -234,7 +239,7 @@
 
 			<a
 				href={resolve('/')}
-				class="group absolute left-1/2 flex -translate-x-1/2 items-center gap-2 lg:relative lg:left-auto lg:translate-x-0"
+				class="group absolute left-1/2 flex -translate-x-1/2 items-center gap-2 lg:static lg:translate-x-0 lg:justify-self-start"
 			>
 				<span
 					class="flex h-9 w-9 items-center justify-center bg-red-600 text-sm font-black tracking-tighter text-white transition-transform group-hover:scale-105"
@@ -247,7 +252,7 @@
 				</span>
 			</a>
 
-			<nav class="hidden items-center gap-6 lg:flex" aria-label="Main">
+			<nav class="hidden items-center gap-6 lg:flex lg:justify-self-center" aria-label="Main">
 				<div
 					class="relative inline-flex items-center gap-0.5"
 					onmouseenter={openShopMenu}
@@ -431,109 +436,109 @@
 				</a>
 			</nav>
 
-			<div class="z-10 flex items-center gap-3 sm:gap-4">
+			<div class="z-10 flex shrink-0 items-center gap-2 sm:gap-3 lg:justify-self-end">
 				{#if session}
-					<div class="relative">
-						<button
-							type="button"
-							class="relative p-1 text-zinc-400 transition hover:text-white"
-							aria-label="Notifications"
-							aria-expanded={notificationsOpen}
-							aria-haspopup="menu"
-							onclick={() => {
-								accountMenuOpen = false;
-								notificationsOpen = !notificationsOpen;
-							}}
-						>
-							<svg
-								class="h-5 w-5"
-								fill="none"
-								stroke="currentColor"
-								viewBox="0 0 24 24"
-								aria-hidden="true"
+					<div class="flex shrink-0 items-center gap-2 sm:gap-3">
+						<div class="relative">
+							<button
+								type="button"
+								class={headerIconBtn}
+								aria-label="Notifications"
+								aria-expanded={notificationsOpen}
+								aria-haspopup="menu"
+								onclick={() => {
+									accountMenuOpen = false;
+									notificationsOpen = !notificationsOpen;
+								}}
 							>
-								<path
-									stroke-linecap="round"
-									stroke-linejoin="round"
-									stroke-width="2"
-									d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
-								/>
-							</svg>
-							{#if notificationCount > 0}
-								<span
-									class="absolute -right-1 -top-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-red-600 px-0.5 text-[10px] font-bold text-white"
+								<svg
+									class="h-5 w-5"
+									fill="none"
+									stroke="currentColor"
+									viewBox="0 0 24 24"
+									aria-hidden="true"
 								>
-									{notificationCount > 9 ? '9+' : notificationCount}
-								</span>
+									<path
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										stroke-width="2"
+										d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
+									/>
+								</svg>
+								{#if notificationCount > 0}
+									<span class={headerBadgeClass}>
+										{notificationCount > 9 ? '9+' : notificationCount}
+									</span>
+								{/if}
+							</button>
+							{#if notificationsOpen}
+								<div
+									class="absolute right-0 top-full z-50 mt-2 w-64 overflow-hidden rounded-sm border border-zinc-800 bg-zinc-950 py-3 shadow-2xl"
+									role="menu"
+								>
+									<p class="px-4 text-sm text-zinc-400">No notifications yet</p>
+								</div>
 							{/if}
-						</button>
-						{#if notificationsOpen}
-							<div
-								class="absolute right-0 top-full z-50 mt-2 w-64 overflow-hidden rounded-sm border border-zinc-800 bg-zinc-950 py-3 shadow-2xl"
-								role="menu"
+						</div>
+						<div class="relative" bind:this={accountMenuRoot}>
+							<button
+								type="button"
+								class="hidden min-h-9 shrink-0 items-center px-2 text-sm font-medium uppercase tracking-wider text-zinc-400 transition hover:text-white sm:inline-flex"
+								aria-label="Account menu"
+								aria-expanded={accountMenuOpen}
+								aria-haspopup="menu"
+								aria-controls="account-menu"
+								onclick={() => {
+									notificationsOpen = false;
+									accountMenuOpen = !accountMenuOpen;
+								}}
 							>
-								<p class="px-4 text-sm text-zinc-400">No notifications yet</p>
-							</div>
-						{/if}
-					</div>
-					<div class="relative" bind:this={accountMenuRoot}>
-						<button
-							type="button"
-							class="hidden p-1 text-zinc-400 transition hover:text-white sm:block"
-							aria-label="Account menu"
-							aria-expanded={accountMenuOpen}
-							aria-haspopup="menu"
-							aria-controls="account-menu"
-							onclick={() => {
-								notificationsOpen = false;
-								accountMenuOpen = !accountMenuOpen;
-							}}
-						>
-							<span class="text-sm font-medium uppercase tracking-wider">Account</span>
-						</button>
-						<button
-							type="button"
-							class="p-1 text-zinc-400 transition hover:text-white sm:hidden"
-							aria-label="Account menu"
-							aria-expanded={accountMenuOpen}
-							aria-haspopup="menu"
-							aria-controls="account-menu"
-							onclick={() => {
-								notificationsOpen = false;
-								accountMenuOpen = !accountMenuOpen;
-							}}
-						>
-							<svg
-								class="h-5 w-5"
-								fill="none"
-								stroke="currentColor"
-								viewBox="0 0 24 24"
-								aria-hidden="true"
+								Account
+							</button>
+							<button
+								type="button"
+								class="{headerIconBtn} sm:hidden"
+								aria-label="Account menu"
+								aria-expanded={accountMenuOpen}
+								aria-haspopup="menu"
+								aria-controls="account-menu"
+								onclick={() => {
+									notificationsOpen = false;
+									accountMenuOpen = !accountMenuOpen;
+								}}
 							>
-								<path
-									stroke-linecap="round"
-									stroke-linejoin="round"
-									stroke-width="2"
-									d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-								/>
-							</svg>
-						</button>
-						<AccountMenu
-							open={accountMenuOpen}
-							onclose={() => (accountMenuOpen = false)}
-							container={accountMenuRoot}
-						/>
+								<svg
+									class="h-5 w-5"
+									fill="none"
+									stroke="currentColor"
+									viewBox="0 0 24 24"
+									aria-hidden="true"
+								>
+									<path
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										stroke-width="2"
+										d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+									/>
+								</svg>
+							</button>
+							<AccountMenu
+								open={accountMenuOpen}
+								onclose={() => (accountMenuOpen = false)}
+								container={accountMenuRoot}
+							/>
+						</div>
 					</div>
 				{:else}
 					<a
 						href={resolve('/auth/sign-in')}
-						class="hidden text-sm font-medium uppercase tracking-wider text-zinc-400 transition hover:text-white sm:block"
+						class="hidden min-h-9 shrink-0 items-center px-2 text-sm font-medium uppercase tracking-wider text-zinc-400 transition hover:text-white sm:inline-flex"
 					>
 						Sign In
 					</a>
 					<a
 						href={resolve('/auth/sign-in')}
-						class="text-zinc-400 hover:text-white sm:hidden"
+						class="{headerIconBtn} sm:hidden"
 						aria-label="Sign In"
 					>
 						<svg
@@ -554,7 +559,7 @@
 				{/if}
 				<button
 					type="button"
-					class="p-1 text-zinc-400 transition hover:text-white"
+					class={headerIconBtn}
 					aria-label="Search"
 					onclick={() => search.openModal()}
 				>
@@ -569,7 +574,7 @@
 				</button>
 				<button
 					type="button"
-					class="relative p-1 text-zinc-400 transition hover:text-white"
+					class={headerIconBtn}
 					aria-label="Cart"
 					onclick={toggleCart}
 				>
@@ -582,14 +587,12 @@
 						/>
 					</svg>
 					{#if cart.itemCount > 0}
-						<span
-							class="absolute -right-2 -top-2 flex h-4 w-4 items-center justify-center rounded-full bg-red-600 text-[10px] font-bold text-white"
-						>
+						<span class={headerBadgeClass}>
 							{cart.itemCount > 9 ? '9+' : cart.itemCount}
 						</span>
 					{/if}
 				</button>
-				<div class="hidden sm:block">
+				<div class="hidden shrink-0 sm:block">
 					<LocaleSelector />
 				</div>
 			</div>

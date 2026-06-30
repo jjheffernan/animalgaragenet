@@ -10,6 +10,7 @@ export const load: LayoutServerLoad = async ({ cookies, locals }) => {
 
 	return {
 		session: locals.session,
+		notificationCount: 0,
 		shopCollections,
 		partsNav: await getPartsNavData(),
 		showCookieConsent: !hasCookieConsentAnswer(cookies)

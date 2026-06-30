@@ -66,6 +66,7 @@ Explicit follow-ups from the June 30 implementation batch (`67a150c`–`6837217`
 | IP-007 | batch `c0f1b80`     | YouTube cron on production                                           | ops          | `POST /api/cron/youtube-sync` runs on schedule; `/watch` shows synced `videos` rows | `YOUTUBE_API_KEY`, `YOUTUBE_SYNC_SECRET`; header `x-youtube-sync-secret`; apply `20250630160000_youtube_sync.sql` — [§ Content](#prod-content) |
 | IP-015 | AUD-P1-009 / batch  | Live Ghost CMS (fallback policy shipped)                             | code / ops   | `/blog` and `/guides` load real posts when env set; production never silently mocks | `GHOST_URL`, `GHOST_CONTENT_API_KEY`; Ghost tags `guide` / `blog`            |
 | —      | batch `5ca1b1f`     | Footer layout (shipped — no follow-up)                               | —            | Condensed Z1-inspired footer; mobile stack; e2e footer links pass                    | —                                                                          |
+| IP-BUG-001 | polish / UI      | Navbar spacing when logged in + notifications                        | code         | **done** — desktop grid keeps nav centered; icon buttons fixed `size-9`; badge overlays bell/cart | `src/lib/components/layout/Header.svelte` · `notificationCount` in layout load |
 
 ---
 

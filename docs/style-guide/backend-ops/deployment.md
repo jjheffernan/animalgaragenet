@@ -62,12 +62,22 @@ Personal repo (`jjheffernan/animalgaragenet`) is where you develop. The org repo
 
 ### One-time sync setup
 
-1. Create a fine-grained GitHub PAT with **Contents: Read and write** on `heff-industries/animalgaragenet` only.
-2. Add it to the personal repo as secret `ORG_REPO_SYNC_TOKEN`:
+GitHub **cannot mint fine-grained PATs via API** — use a deploy key (recommended for CI) or create a PAT in the browser.
 
-   ```bash
-   gh secret set ORG_REPO_SYNC_TOKEN --repo jjheffernan/animalgaragenet
-   ```
+**Deploy key (via `scripts/setup-org-sync-auth.sh`):**
+
+- Write deploy key on `heff-industries/animalgaragenet` (`personal-main-sync`)
+- Secret `ORG_REPO_DEPLOY_KEY` on `jjheffernan/animalgaragenet`
+- Re-run: `./scripts/setup-org-sync-auth.sh deploy-key`
+
+**Fine-grained PAT (manual alternative):**
+
+```bash
+./scripts/setup-org-sync-auth.sh pat-url   # prints pre-filled GitHub URL
+gh secret set ORG_REPO_SYNC_TOKEN --repo jjheffernan/animalgaragenet
+```
+
+Switch the sync workflow to HTTPS if you prefer PAT over deploy key.
 
 3. Connect Netlify to `heff-industries/animalgaragenet`, branch `main`.
 4. Re-run **Sync main to org** from Actions if you need to backfill without a new commit.

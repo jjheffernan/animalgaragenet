@@ -61,6 +61,8 @@ This file reconciles “next steps” across all `docs/` so nothing is orphaned.
 | CDN invalidation path allowlist (AUD-SEC-001)              | `invalidateCdnPaths` allowlist + admin API cap — `029498b` · [security-audit-2026-07.md](./audits/security-audit-2026-07.md)                                   |
 | Supabase migration squash (17 → 3)                         | `20250701000000` / `010000` / `020000` logical files — `65e9d52` · [migration-squash-notes.md](./infrastructure/migration-squash-notes.md)                     |
 | Ponytail audit (PT-P1/P2)                                  | Shared mock-fallback guard, API POST dedupe, store localStorage helpers — `f1d4ccf`, `2e7700f` · [ponytail-audit-tracker.md](./plans/active/ponytail-audit-tracker.md) |
+| Ponytail P3 catalog dedupe + form stub                     | `withSaleorCatalog` helper — `2f26fbc`; dead `submitFormStub` branch — `4481873` (PT-P3-003)                                                                      |
+| `check-secrets.sh` CI workflow allowlist                   | `readiness-ci.yml` may reference `SUPABASE_SERVICE_ROLE_KEY` by name — `0c82962`                                                                                |
 | July docs archive pass                                     | Batch plans → `docs/archive/`; STATUS/README/AUDIT sync; `meta/polish-plan.md` stub removed — `01b603e`                                                         |
 
 ---

@@ -1,6 +1,6 @@
 import { json } from '@sveltejs/kit';
+import { parseRateLimitedJsonPost } from '$lib/server/api/parse-rate-limited-json';
 import { createRestockAlert } from '$lib/server/restock/repository';
-import { checkRateLimit } from '$lib/server/rate-limit';
 import type { RequestHandler } from './$types';
 
 /**
@@ -10,18 +10,13 @@ import type { RequestHandler } from './$types';
  * see docs/plans/active/inspiration-polish-tracker.md#IP-004
  */
 export const POST: RequestHandler = async ({ request, locals, getClientAddress }) => {
-	const limited = checkRateLimit(`restock:${getClientAddress()}`, 10, 60_000);
-	if (!limited.ok) {
-		return json({ error: 'Too many requests' }, { status: 429 });
-	}
+	const parsed = await parseRateLimitedJsonPost(request, getClientAddress, {
+		key: 'restock',
+		limit: 10
+	});
+	if (!parsed.ok) return parsed.response;
 
-	let body: Record<string, unknown>;
-	try {
-		body = await request.json();
-	} catch {
-		return json({ error: 'Invalid JSON' }, { status: 400 });
-	}
-
+	const { body } = parsed;
 	const email = String(body.email ?? '').trim();
 	const productId = String(body.productId ?? '').trim();
 	const productSlug = body.productSlug ? String(body.productSlug) : undefined;

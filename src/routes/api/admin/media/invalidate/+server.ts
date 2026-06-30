@@ -1,6 +1,9 @@
 import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
-import { resolveAdminGate } from '$lib/server/auth/admin-gate';
+import {
+	adminGateJsonResponse,
+	resolveAdminGateFromLocals
+} from '$lib/server/auth/admin-gate';
 import {
 	collectAdminInvalidationKeys,
 	invalidateCdnPaths,
@@ -14,15 +17,8 @@ interface InvalidateBody {
 
 /** Admin CloudFront cache invalidation after S3 upload when distribution ID is set. */
 export const POST: RequestHandler = async ({ request, locals }) => {
-	const gate = resolveAdminGate({
-		hasSession: Boolean(locals.session),
-		role: locals.session?.role,
-		devAdmin: locals.devAdmin
-	});
-
-	if (gate !== 'allow') {
-		return json({ error: gate === 'sign-in' ? 'Sign in required.' : 'Forbidden.' }, { status: 403 });
-	}
+	const denied = adminGateJsonResponse(resolveAdminGateFromLocals(locals));
+	if (denied) return denied;
 
 	if (!isCdnInvalidationConfigured()) {
 		return json(

@@ -1,7 +1,7 @@
 import { json } from '@sveltejs/kit';
+import { parseRateLimitedJsonPost } from '$lib/server/api/parse-rate-limited-json';
 import { createBugReport } from '$lib/server/support/repository';
 import { validateBugReportPayload } from '$lib/server/support/bug-report-validation';
-import { checkRateLimit } from '$lib/server/rate-limit';
 import type { RequestHandler } from './$types';
 
 /**
@@ -11,19 +11,13 @@ import type { RequestHandler } from './$types';
  * see docs/plans/active/inspiration-polish-tracker.md#IP-031
  */
 export const POST: RequestHandler = async ({ request, locals, getClientAddress }) => {
-	const limited = checkRateLimit(`bug-report:${getClientAddress()}`, 5, 60_000);
-	if (!limited.ok) {
-		return json({ error: 'Too many requests' }, { status: 429 });
-	}
+	const parsed = await parseRateLimitedJsonPost(request, getClientAddress, {
+		key: 'bug-report',
+		limit: 5
+	});
+	if (!parsed.ok) return parsed.response;
 
-	let body: Record<string, unknown>;
-	try {
-		body = await request.json();
-	} catch {
-		return json({ error: 'Invalid JSON' }, { status: 400 });
-	}
-
-	const validated = validateBugReportPayload(body, { sessionEmail: locals.session?.email });
+	const validated = validateBugReportPayload(parsed.body, { sessionEmail: locals.session?.email });
 	if (!validated.ok) {
 		return json({ error: validated.error }, { status: 400 });
 	}

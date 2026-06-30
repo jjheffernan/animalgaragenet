@@ -2,6 +2,7 @@ import { json } from '@sveltejs/kit';
 import { env as privateEnv } from '$env/dynamic/private';
 import { listYouTubeChannels } from '$lib/server/youtube/repository';
 import { syncAllChannels } from '$lib/server/youtube/sync';
+import { verifySharedSecret } from '$lib/server/webhook-signature';
 import type { RequestHandler } from './$types';
 
 /**
@@ -11,8 +12,7 @@ import type { RequestHandler } from './$types';
 export const POST: RequestHandler = async ({ request }) => {
 	const secret = privateEnv.YOUTUBE_SYNC_SECRET;
 	if (secret) {
-		const provided = request.headers.get('x-youtube-sync-secret');
-		if (provided !== secret) {
+		if (!verifySharedSecret(request.headers.get('x-youtube-sync-secret'), secret)) {
 			return json({ error: 'Unauthorized' }, { status: 401 });
 		}
 	} else {

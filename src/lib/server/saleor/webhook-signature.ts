@@ -1,19 +1,19 @@
-import { createHmac, timingSafeEqual } from 'node:crypto';
+import { verifyHmacSha256Hex } from '$lib/server/webhook-signature';
+
+export function readSaleorEvent(request: Request): string {
+	return (
+		request.headers.get('saleor-event') ??
+		request.headers.get('Saleor-Event') ??
+		request.headers.get('x-saleor-event') ??
+		''
+	).trim();
+}
+
+export function readSaleorSignature(request: Request): string | null {
+	return (
+		request.headers.get('saleor-signature') ?? request.headers.get('Saleor-Signature')
+	)?.trim() ?? null;
+}
 
 /** Verify Saleor-Signature HMAC SHA-256 (secretKey webhooks). */
-export function verifySaleorWebhookSignature(
-	rawBody: string,
-	signatureHeader: string,
-	secret: string
-): boolean {
-	const expected = createHmac('sha256', secret).update(rawBody, 'utf8').digest('hex');
-	const provided = signatureHeader.trim();
-
-	if (expected.length !== provided.length) return false;
-
-	try {
-		return timingSafeEqual(Buffer.from(expected, 'utf8'), Buffer.from(provided, 'utf8'));
-	} catch {
-		return false;
-	}
-}
+export const verifySaleorWebhookSignature = verifyHmacSha256Hex;

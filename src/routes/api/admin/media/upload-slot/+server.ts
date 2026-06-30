@@ -1,21 +1,16 @@
 import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
-import { resolveAdminGate } from '$lib/server/auth/admin-gate';
-import { createPresignedUploadUrl, isCdnUploadConfigured } from '$lib/server/media/cdn';
 import {
-	ALLOWED_IMAGE_MIMES,
-	MAX_UPLOAD_BYTES,
-	type AllowedImageMime
-} from '$lib/server/media/constants';
+	adminGateJsonResponse,
+	resolveAdminGateFromLocals
+} from '$lib/server/auth/admin-gate';
+import { createPresignedUploadUrl, isCdnUploadConfigured } from '$lib/server/media/cdn';
+import { validateUploadRequest } from '$lib/server/media/validation';
 
 interface UploadSlotBody {
 	filename?: string;
 	mimeType?: string;
 	byteSize?: number;
-}
-
-function isAllowedAdminMime(mimeType: string): mimeType is AllowedImageMime {
-	return (ALLOWED_IMAGE_MIMES as readonly string[]).includes(mimeType);
 }
 
 function sanitizeFilename(filename: string): string {
@@ -24,15 +19,8 @@ function sanitizeFilename(filename: string): string {
 
 /** Admin presigned PUT slot for S3 + CloudFront when env is configured. */
 export const POST: RequestHandler = async ({ request, locals }) => {
-	const gate = resolveAdminGate({
-		hasSession: Boolean(locals.session),
-		role: locals.session?.role,
-		devAdmin: locals.devAdmin
-	});
-
-	if (gate !== 'allow') {
-		return json({ error: gate === 'sign-in' ? 'Sign in required.' : 'Forbidden.' }, { status: 403 });
-	}
+	const denied = adminGateJsonResponse(resolveAdminGateFromLocals(locals));
+	if (denied) return denied;
 
 	if (!isCdnUploadConfigured()) {
 		return json(
@@ -50,12 +38,9 @@ export const POST: RequestHandler = async ({ request, locals }) => {
 	const byteSize = Number(body.byteSize);
 	const filename = sanitizeFilename(String(body.filename ?? 'upload'));
 
-	if (!isAllowedAdminMime(mimeType)) {
-		return json({ error: 'Only JPEG, PNG, and WebP images are allowed.' }, { status: 400 });
-	}
-
-	if (!Number.isFinite(byteSize) || byteSize <= 0 || byteSize > MAX_UPLOAD_BYTES) {
-		return json({ error: `File must be between 1 byte and ${MAX_UPLOAD_BYTES} bytes.` }, { status: 400 });
+	const validationError = validateUploadRequest(mimeType, byteSize);
+	if (validationError) {
+		return json({ error: validationError }, { status: 400 });
 	}
 
 	const assetId = crypto.randomUUID();

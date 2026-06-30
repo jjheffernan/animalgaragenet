@@ -1,7 +1,7 @@
 import { json } from '@sveltejs/kit';
 import { config } from '$lib/config/env';
+import { parseRateLimitedJsonPost } from '$lib/server/api/parse-rate-limited-json';
 import { subscribeNewsletter } from '$lib/server/newsletter/repository';
-import { checkRateLimit } from '$lib/server/rate-limit';
 import type { RequestHandler } from './$types';
 
 /**
@@ -11,18 +11,13 @@ import type { RequestHandler } from './$types';
  * see docs/plans/active/inspiration-polish-tracker.md#IP-008
  */
 export const POST: RequestHandler = async ({ request, getClientAddress }) => {
-	const limited = checkRateLimit(`newsletter:${getClientAddress()}`, 5, 60_000);
-	if (!limited.ok) {
-		return json({ error: 'Too many requests' }, { status: 429 });
-	}
+	const parsed = await parseRateLimitedJsonPost(request, getClientAddress, {
+		key: 'newsletter',
+		limit: 5
+	});
+	if (!parsed.ok) return parsed.response;
 
-	let body: Record<string, unknown>;
-	try {
-		body = await request.json();
-	} catch {
-		return json({ error: 'Invalid JSON' }, { status: 400 });
-	}
-
+	const { body } = parsed;
 	const email = String(body.email ?? '').trim();
 	const locale = body.locale ? String(body.locale) : config.defaultLocale;
 	const source = body.source ? String(body.source) : 'footer';

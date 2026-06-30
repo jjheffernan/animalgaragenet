@@ -4,23 +4,12 @@ import {
 	isOrderMirrorEvent,
 	mirrorSaleorOrderPayload
 } from '$lib/server/saleor/order-webhook';
-import { verifySaleorWebhookSignature } from '$lib/server/saleor/webhook-signature';
+import {
+	readSaleorEvent,
+	readSaleorSignature,
+	verifySaleorWebhookSignature
+} from '$lib/server/saleor/webhook-signature';
 import type { RequestHandler } from './$types';
-
-function readSaleorEvent(request: Request): string {
-	return (
-		request.headers.get('saleor-event') ??
-		request.headers.get('Saleor-Event') ??
-		request.headers.get('x-saleor-event') ??
-		''
-	).trim();
-}
-
-function readSaleorSignature(request: Request): string | null {
-	return (
-		request.headers.get('saleor-signature') ?? request.headers.get('Saleor-Signature')
-	)?.trim() ?? null;
-}
 
 /**
  * Saleor → storefront webhooks (ORDER_CREATED, fulfillment, etc.).

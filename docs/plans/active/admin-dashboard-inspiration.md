@@ -45,7 +45,7 @@ We intentionally **do not** port demo-only routes (layouts playground, auth samp
 - Zinc/red site theme (`bg-zinc-950`); no `data-theme` or `.admin-shell`
 - Mobile drawer sidebar + sticky topbar
 - Storefront header offset: 73px
-- Layout load: `navBadges` for pending builds/testimonials
+- Layout load: `navCounts` for pending builds/testimonials (`badgeKey` on nav items)
 
 ### Components (`src/lib/components/admin/`)
 

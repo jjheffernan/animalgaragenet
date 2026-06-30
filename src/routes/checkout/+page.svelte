@@ -101,12 +101,15 @@
 				const payload = (await response.json()) as {
 					gateway?: Record<string, unknown>;
 					error?: string;
+					code?: string;
+					hint?: string;
 				};
 
 				if (cancelled) return;
 
 				if (!response.ok) {
-					gatewayError = payload.error ?? 'Could not initialize payment gateway.';
+					const detail = payload.hint ? `${payload.error ?? 'Could not initialize payment gateway.'} ${payload.hint}` : (payload.error ?? 'Could not initialize payment gateway.');
+					gatewayError = detail;
 					return;
 				}
 
@@ -500,10 +503,15 @@
 										checkout is enabled.
 									</p>
 								{:else if !paymentConfigured}
-									<p class="text-sm text-zinc-400">
-										No Payment App is enabled on this Saleor channel. Install Stripe (or another
-										Payment App) in Saleor Dashboard → Apps, then enable it for your channel.
-									</p>
+									<div class="space-y-2 text-sm text-zinc-400" role="status">
+										<p>
+											No Payment App is enabled on this Saleor channel. Shipping and cart sync work;
+											card payment unlocks after ops enables a provider in Saleor.
+										</p>
+										{#if data.paymentAppOpsHint}
+											<p class="text-zinc-500">{data.paymentAppOpsHint}</p>
+										{/if}
+									</div>
 								{:else if !shippingComplete}
 									<p class="text-sm text-zinc-400">
 										Select a shipping method to load Stripe Payment Element.

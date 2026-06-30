@@ -147,7 +147,15 @@ Stripe **publishable** key is returned by `paymentGatewayInitialize` at runtime 
 
 ---
 
-## Stripe headless pattern (SvelteKit)
+## Ops gate vs code complete
+
+| Layer | Status | Notes |
+| ----- | ------ | ----- |
+| **Code** | Complete | Shipping mutations, payment proxies, Stripe Elements, `checkoutComplete`, structured `PAYMENT_GATEWAY_UNAVAILABLE` + `PAYMENT_APP_OPS_HINT` when no Payment App |
+| **Ops** | Pending | Enable Stripe Payment App on Saleor channel — **no storefront Stripe secret or publishable env vars** |
+| **Verify** | Ops-only | `npm run test:readiness` → `saleor-checkout`; manual test card → order in Dashboard |
+
+---
 
 Saleor’s Stripe App uses manifest id `saleor.app.payment.stripe`. Storefront steps (adapted from [official guide](https://docs.saleor.io/developer/app-store/apps/stripe/storefront-integration)):
 
@@ -191,6 +199,19 @@ See [AUDIT-REMEDIATION.md](../plans/AUDIT-REMEDIATION.md) and [market-readiness.
 | GraphQL client auth | `client.ts` | No `SALEOR_APP_TOKEN` header yet |
 
 Uncomment `@saleor-migration` blocks when implementing each step — do not delete during polish sweeps.
+
+---
+
+## Ops gate — Payment App (no storefront Stripe keys)
+
+Storefront checkout code is **complete** without live Stripe credentials in Netlify env. Card payment unlocks when ops enables a Payment App on the Saleor channel:
+
+1. Saleor Dashboard → **Apps** → install Stripe Payment App (`saleor.app.payment.stripe`).
+2. Enable the app for the channel matching `SALEOR_CHANNEL`.
+3. Configure Stripe **secret** keys in the Payment App settings (Saleor-hosted), not in `.env` on the storefront.
+4. Verify: load `/checkout` with items in cart → `paymentGateways.length > 0` → Stripe Payment Element renders → test card → order in Saleor Dashboard.
+
+When the Payment App is missing, `/checkout` shows a structured ops hint (`PAYMENT_APP_OPS_HINT` in `checkout.ts`) and payment proxy routes return `PAYMENT_GATEWAY_UNAVAILABLE` with the same hint — no failed Stripe init loops.
 
 ---
 

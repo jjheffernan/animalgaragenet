@@ -135,22 +135,31 @@ export const COLLECTION_PRODUCTS_QUERY = `
   }
 `;
 
-// @saleor-migration: intentional — uncomment for Saleor-native search at scale; see docs/commerce/saleor.md#quick-migration
-// export const PRODUCT_SEARCH_QUERY = `
-//   query ProductSearch($channel: String!, $query: String!, $first: Int!) {
-//     products(channel: $channel, first: $first, filter: { search: $query }) {
-//       edges {
-//         node {
-//           id
-//           name
-//           slug
-//           description
-//           thumbnail { url alt }
-//           pricing { priceRange { start { gross { amount currency } } } }
-//           category { id name slug }
-//           isAvailableForPurchase
-//         }
-//       }
-//     }
-//   }
-// `;
+export const PRODUCT_SEARCH_QUERY = `
+  query ProductSearch($channel: String!, $query: String!, $first: Int!) {
+    products(channel: $channel, first: $first, filter: { search: $query }) {
+      edges {
+        node {
+          id
+          name
+          slug
+          description
+          thumbnail { url alt }
+          pricing {
+            priceRange {
+              start { gross { amount currency } }
+            }
+          }
+          category { id name slug }
+          variants(first: 1) {
+            id
+            name
+            sku
+            pricing { price { gross { amount currency } } }
+          }
+          isAvailableForPurchase${PRODUCT_METADATA_FIELDS}
+        }
+      }
+    }
+  }
+`;

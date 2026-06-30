@@ -25,8 +25,8 @@ Canonical tracker for findings from `docs/audits/*`, [STATUS.md](../STATUS.md), 
 | --------- | ------ | ------------- | ------ |
 | **P0**    | 0      | 5             | 4      |
 | **P1**    | 1      | 1             | 11     |
-| **P2**    | 21     | 0             | 17     |
-| **Total** | **22** | **6**         | **32** |
+| **P2**    | 15     | 0             | 23     |
+| **Total** | **16** | **6**         | **38** |
 
 _Blocked = external dashboard/env; cannot close in-repo._
 
@@ -52,7 +52,7 @@ _Blocked = external dashboard/env; cannot close in-repo._
 
 | ID         | Item                                                      | Source                                | Status      | Owner      | Acceptance criteria                                                                                | Code / doc paths                                                                                        |
 | ---------- | --------------------------------------------------------- | ------------------------------------- | ----------- | ---------- | -------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- |
-| AUD-P1-001 | Saleor checkout complete + payment                        | saleor-audit, STATUS, saleor.md       | **partial** | saleor     | Shipping + payment proxies wired; `/checkout` UI; Stripe Elements pending Payment App on channel | `src/routes/checkout/` · `src/lib/server/saleor/checkout.ts` · DOC-037 |
+| AUD-P1-001 | Saleor checkout complete + payment                        | saleor-audit, STATUS, saleor.md       | **partial** | saleor     | Code path complete (shipping, payment proxies, Stripe Elements); live pay gated on Payment App ops | `src/routes/checkout/` · `src/lib/server/saleor/checkout.ts` · DOC-037 |
 | AUD-P1-002 | Cart line remove / quantity when Saleor enabled           | saleor-audit, polish-plan             | **done**    | saleor     | `checkoutLinesUpdate` / `checkoutLinesDelete` + API routes; `cart.svelte.ts` mutates live checkout | `src/lib/stores/cart.svelte.ts` · `src/routes/cart/checkout/` · `src/lib/server/saleor/checkout.ts`     |
 | AUD-P1-003 | Add-to-cart from listing cards with `variantId`           | saleor-audit                          | **done**    | saleor     | `ProductCard` passes default variant; no mock `getCatalogProductById` on Saleor path               | `src/lib/components/catalog/ProductCard.svelte` · `cart.svelte.ts` `addItemSaleor`                      |
 | AUD-P1-004 | Media uploads Phase 1 (Supabase Storage + `/api/media/*`) | STATUS, media-uploads, polish-plan    | **done**    | supabase   | Migration + presigned API + `ReviewPhotoUpload`; apply migration on Supabase project (ops)         | [media-uploads.md](./active/media-uploads.md) · `src/routes/api/media/*`                               |
@@ -68,9 +68,9 @@ _Blocked = external dashboard/env; cannot close in-repo._
 
 **Next (partial P1 items):**
 
-- **AUD-P1-001 — Ops:** Install and enable Stripe Payment App (`saleor.app.payment.stripe`) on the Saleor channel so `paymentGateways` is non-empty on checkout load.
-- **AUD-P1-001 — Code:** Stripe Elements scaffold **done** (`583015d`); verify live pay when Payment App enabled per [saleor-payments.md](../commerce/saleor-payments.md).
-- **AUD-P1-001 — Verify:** `npm run test:readiness` → `saleor-checkout` pass; manual test card → order visible in Saleor Dashboard.
+- **AUD-P1-001 — Ops (only remaining gate):** Install and enable Stripe Payment App (`saleor.app.payment.stripe`) on the Saleor channel so `paymentGateways` is non-empty on checkout load. No storefront `STRIPE_*` env vars are required — publishable key comes from `paymentGatewayInitialize`.
+- **AUD-P1-001 — Code:** **done** — shipping, payment proxies, Stripe Elements, structured Payment App missing UX (`PAYMENT_APP_OPS_HINT`).
+- **AUD-P1-001 — Verify (ops):** `npm run test:readiness` → `saleor-checkout` pass; manual test card → order visible in Saleor Dashboard.
 
 ---
 
@@ -78,20 +78,20 @@ _Blocked = external dashboard/env; cannot close in-repo._
 
 | ID         | Item                                            | Source                    | Status   | Owner      | Acceptance criteria                                                                | Code / doc paths                                                        |
 | ---------- | ----------------------------------------------- | ------------------------- | -------- | ---------- | ---------------------------------------------------------------------------------- | ----------------------------------------------------------------------- |
-| AUD-P2-001 | Collection product edges on homepage            | saleor-audit              | **open** | saleor     | `getCollections()` returns populated `products[]` from Saleor                      | `src/lib/server/catalog/collections.ts`                                 |
+| AUD-P2-001 | Collection product edges on homepage            | saleor-audit              | **done** | saleor     | `getCollections()` returns populated `products[]` from Saleor                      | `src/lib/server/catalog/collections.ts` · BATCH-002                     |
 | AUD-P2-002 | Shop category filter via Saleor taxonomy        | saleor-audit              | **done** | saleor     | `getShopFilterOptions()` + `filterProductsByShopSlug()` use Saleor category tree when env set | `src/lib/server/catalog/shop-filters.ts` · `/api/catalog/shop-filters` |
-| AUD-P2-003 | Saleor catalog search at scale                  | saleor-audit              | **open** | saleor     | Server-side search API instead of fetch-100 + client filter                        | `src/lib/server/catalog/search.ts` · `src/routes/api/catalog/search/`   |
+| AUD-P2-003 | Saleor catalog search at scale                  | saleor-audit              | **done** | saleor     | Server-side `PRODUCT_SEARCH_QUERY` instead of fetch-100 + client filter            | `src/lib/server/catalog/search.ts` · BATCH-010                          |
 | AUD-P2-004 | Parts YMM URL filter vs `fitment` metadata      | saleor-audit              | **open** | saleor     | Category route applies year/make/model query params to Saleor products             | `src/routes/parts/[category]/+page.server.ts`                           |
 | AUD-P2-005 | Product detail related products / linked builds | saleor-audit              | **open** | saleor     | Related slice from Saleor or CMS, not mock helpers only                            | `src/routes/shop/[slug]/+page.server.ts`                                |
 | AUD-P2-006 | Live Saleor integration smoke tests             | saleor-audit              | **open** | saleor     | Optional CI job with env-gated live API contract                                   | `tests/` · `npm run test:readiness`                                     |
 | AUD-P2-007 | Ghost OG / Twitter cards on detail pages        | ghost-audit, STATUS       | **open** | code       | `og:title`, `og:description`, `og:image` from `heroImage`                          | `src/routes/guides/[slug]/` · `src/routes/blog/[slug]/`                 |
 | AUD-P2-008 | Map Ghost `meta_title` / `meta_description`     | ghost-audit               | **open** | code       | SEO fields override title/excerpt when present                                     | `src/lib/server/ghost/mappers.ts`                                       |
-| AUD-P2-009 | Ghost `posts.ts` integration tests              | ghost-audit               | **open** | code       | Mocked `fetch` covers list/slug + fallback paths                                   | `src/lib/server/ghost/posts.ts`                                         |
-| AUD-P2-010 | E2E smoke: `/guides`, `/blog`                   | ghost-audit, saleor-audit | **open** | code       | Playwright specs pass after `npx playwright install`                               | `tests/e2e/`                                                            |
+| AUD-P2-009 | Ghost `posts.ts` integration tests              | ghost-audit               | **done** | code       | Mocked `fetch` covers list/slug + fallback paths                                   | `src/lib/server/ghost/posts.test.ts`                                    |
+| AUD-P2-010 | E2E smoke: `/guides`, `/blog`                   | ghost-audit, saleor-audit | **done** | code       | Playwright specs pass after `npx playwright install`                               | `e2e/content.spec.ts`                                                 |
 | AUD-P2-011 | Ghost Content API cache headers                 | ghost-audit               | **open** | code       | `setHeaders` / `Cache-Control` on content routes                                   | `src/routes/guides/**` · `src/routes/blog/**`                           |
 | AUD-P2-012 | Site-wide SEO / OG / analytics                  | site-audit, STATUS        | **open** | code       | Per-route meta; analytics hook (Phase 5)                                           | `src/routes/**/+page.svelte`                                            |
 | AUD-P2-013 | `prefers-reduced-motion` support                | site-audit                | **open** | code       | Animations respect user preference per style guide                                 | `src/lib/components/shared/AnimatedReveal.svelte`                       |
-| AUD-P2-014 | `LocaleSelector` in header                      | site-audit                | **open** | code       | Component wired to nav                                                             | `src/lib/components/navigation/LocaleSelector.svelte` · `Header.svelte` |
+| AUD-P2-014 | `LocaleSelector` in header                      | site-audit                | **done** | code       | Component wired to nav                                                             | `src/lib/components/navigation/LocaleSelector.svelte` · `Header.svelte` |
 | AUD-P2-015 | `/media` UGC wall from Supabase                 | TRIAGE (related)          | **open** | supabase   | Replace `mockUGC` in `media/+page.server.ts` when testimonials configured          | `src/routes/media/+page.server.ts`                                      |
 | AUD-P2-016 | `profiles` table contract test                  | STATUS, readiness-report  | **open** | code       | Payload contract in `tests/contracts/`                                             | DOC manifest backlog                                                    |
 | AUD-P2-017 | Optional `readiness-ci` GitHub Actions job      | STATUS                    | **open** | code       | Workflow runs `npm run test:readiness` with secrets                                | `.github/workflows/`                                                    |
@@ -105,7 +105,7 @@ _Blocked = external dashboard/env; cannot close in-repo._
 | AUD-P2-032 | Featured sections CMS scaffold                  | inspiration tracker       | **done** | supabase   | Repository + `/admin/featured` + homepage loader; mock when Supabase unset         | `src/lib/server/featured-sections/repository.ts` · migration `20250630150000` |
 | AUD-P2-033 | Header utility cluster spacing (signed-in)      | polish / IP-BUG-001       | **done** | code       | Desktop `lg:grid` layout; fixed `size-9` icon targets; badge overlays on bell/cart | `src/lib/components/layout/Header.svelte`                               |
 | AUD-P2-034 | Remove orphan `SupportCTA.svelte`               | component-route-audit     | **done** | code       | Zero-import component deleted; README index updated                                | `src/lib/components/marketing/SupportCTA.svelte`                          |
-| AUD-P2-035 | `/military` discoverability                     | component-route-audit     | **open** | code       | Linked from footer or checkout/loyalty, or route archived with redirect            | `src/routes/military/+page.svelte`                                      |
+| AUD-P2-035 | `/military` discoverability                     | component-route-audit     | **done** | code       | Linked from footer or checkout/loyalty, or route archived with redirect            | `src/routes/military/+page.svelte` · `Footer.svelte`                  |
 | AUD-P2-036 | `/media` in community nav                       | component-route-audit     | **done** | code       | `media` added to `communityLinks` in `Header.svelte`                               | `src/lib/components/layout/Header.svelte`                                 |
 | AUD-P2-037 | Admin nav stub routes (6× 404)                  | component-route-audit     | **done** | code       | Six prototype links `disabled: true` until routes scaffolded; no 404 from sidebar | `src/lib/admin/nav.ts` · commit `847ba4b`                                 |
 | AUD-P2-038 | `/builds/submit` dead page shell                | component-route-audit     | **done** | code       | Unreachable `+page.svelte` removed; `+page.server.ts` redirect retained            | `src/routes/builds/submit/`                                             |
@@ -123,11 +123,11 @@ _Blocked = external dashboard/env; cannot close in-repo._
 
 | Source file                                                   | Open items remaining                 | Retire when                   |
 | ------------------------------------------------------------- | ------------------------------------ | ----------------------------- |
-| [audits/site-audit.md](../audits/site-audit.md)               | P2-012–014 (SEO, a11y, locale)       | All AUD-P2 site rows **done** |
+| [audits/site-audit.md](../audits/site-audit.md)               | P2-012–013 (SEO, a11y)               | All AUD-P2 site rows **done** |
 | [audits/saleor-audit.md](../audits/saleor-audit.md)           | P0-004 (ops), P1-001 (partial), P2-001–006 | All Saleor AUD rows **done**  |
-| [audits/ghost-audit.md](../audits/ghost-audit.md)             | P1-008, P2-007–011                   | All Ghost AUD rows **done**   |
+| [audits/ghost-audit.md](../audits/ghost-audit.md)             | P1-008, P2-007–008, P2-011           | All Ghost AUD rows **done**   |
 | [meta/agents-skills-audit.md](../meta/agents-skills-audit.md) | —                                    | AUD-P2-020–022 **done**       |
-| [audits/component-route-audit.md](../audits/component-route-audit.md) | P2-035 (`/military`) | AUD-P2-034–038 except P2-035 **done** |
+| [audits/component-route-audit.md](../audits/component-route-audit.md) | — | AUD-P2-034–038 **done** |
 
 _Do not delete source audits until the row above is satisfied._
 

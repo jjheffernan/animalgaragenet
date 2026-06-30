@@ -5,6 +5,7 @@ import {
 	getCheckoutId,
 	initializePaymentGateway,
 	initializeTransaction,
+	paymentGatewayUnavailablePayload,
 	setTransactionId
 } from '$lib/server/saleor/checkout';
 import { requireSaleorPaymentEnabled } from '$lib/server/saleor/checkout-route-helpers';
@@ -31,14 +32,7 @@ export const POST: RequestHandler = async ({ request, cookies }) => {
 
 	const gatewayResult = await initializePaymentGateway(checkoutId, gatewayId, body.amount);
 	if (!gatewayResult.ok) {
-		return json(
-			{
-				error: gatewayResult.error,
-				code: 'PAYMENT_GATEWAY_UNAVAILABLE',
-				hint: 'Install and enable a Payment App (e.g. Stripe) on the Saleor channel.'
-			},
-			{ status: 502 }
-		);
+		return json(paymentGatewayUnavailablePayload(gatewayResult.error), { status: 502 });
 	}
 
 	if (!body.startTransaction) {

@@ -32,6 +32,38 @@ export const TRANSACTION_COOKIE = 'ag-transaction-id';
 /** Default Saleor Stripe Payment App manifest id. */
 export const DEFAULT_PAYMENT_GATEWAY_ID = 'saleor.app.payment.stripe';
 
+/** Structured error code when Saleor channel has no Payment App enabled. */
+export const PAYMENT_GATEWAY_UNAVAILABLE_CODE = 'PAYMENT_GATEWAY_UNAVAILABLE';
+
+/**
+ * Ops hint for checkout UI and payment proxy responses.
+ * Storefront does not need Stripe keys — Payment App config lives in Saleor Dashboard.
+ */
+export const PAYMENT_APP_OPS_HINT =
+	'Install a Payment App in Saleor Dashboard → Apps, then enable it for your channel. No Stripe keys belong in storefront .env.';
+
+export interface PaymentGatewayUnavailablePayload {
+	error: string;
+	code: typeof PAYMENT_GATEWAY_UNAVAILABLE_CODE;
+	hint: string;
+}
+
+export function paymentGatewayUnavailablePayload(
+	error = 'Payment gateway not available on this channel. Install a Payment App in Saleor.'
+): PaymentGatewayUnavailablePayload {
+	return {
+		error,
+		code: PAYMENT_GATEWAY_UNAVAILABLE_CODE,
+		hint: PAYMENT_APP_OPS_HINT
+	};
+}
+
+export function isPaymentGatewayUnavailableCode(
+	code: string | undefined
+): code is typeof PAYMENT_GATEWAY_UNAVAILABLE_CODE {
+	return code === PAYMENT_GATEWAY_UNAVAILABLE_CODE;
+}
+
 interface SaleorMoneyGross {
 	gross: { amount: number; currency: string };
 }

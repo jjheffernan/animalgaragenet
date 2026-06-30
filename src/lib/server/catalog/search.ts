@@ -9,7 +9,7 @@ import { getChannelForLocale } from '$lib/server/saleor/channels';
 import { isSaleorEnabled, saleorFetch } from '$lib/server/saleor/client';
 import { mapProductListNode, type SaleorProductListNode } from '$lib/server/saleor/mappers';
 import { guardMockCatalogFallback } from '$lib/server/catalog/fallback';
-import { PRODUCTS_QUERY } from '$lib/server/saleor/queries';
+import { PRODUCT_SEARCH_QUERY } from '$lib/server/saleor/queries';
 
 export interface CatalogSearchResults {
 	products: Product[];
@@ -25,35 +25,21 @@ const EMPTY_RESULTS: CatalogSearchResults = {
 	guides: []
 };
 
-function filterProductsByQuery(products: Product[], query: string): Product[] {
-	const q = query.toLowerCase().trim();
-	if (!q) return [];
-	return products.filter(
-		(p) =>
-			p.name.toLowerCase().includes(q) ||
-			p.description.toLowerCase().includes(q) ||
-			p.category?.name.toLowerCase().includes(q) ||
-			p.brand?.name.toLowerCase().includes(q)
-	);
-}
-
 async function searchSaleorProducts(query: string, locale: string): Promise<Product[]> {
 	const channel = getChannelForLocale(locale);
-	// @saleor-migration: intentional — swap to PRODUCT_SEARCH_QUERY for scale; see docs/commerce/saleor.md#quick-migration
 	const result = await saleorFetch<{
 		products: { edges: { node: SaleorProductListNode }[] };
-	}>(PRODUCTS_QUERY, { channel, first: 100 });
+	}>(PRODUCT_SEARCH_QUERY, { channel, query, first: 24 });
 
 	if (result.errors?.length || !result.data) {
-		throw new Error(result.errors?.[0]?.message ?? 'Saleor products query failed');
+		throw new Error(result.errors?.[0]?.message ?? 'Saleor product search failed');
 	}
 
-	const products = result.data.products.edges.map(({ node }) => mapProductListNode(node));
-	return filterProductsByQuery(products, query);
+	return result.data.products.edges.map(({ node }) => mapProductListNode(node));
 }
 
 /**
- * Merged catalog search — mock default; Saleor merch when env is set (v1: client-side filter on fetched list).
+ * Merged catalog search — mock default; Saleor merch when env is set (server-side Saleor search filter).
  */
 // @saleor-migration: intentional — catalog swap point; see docs/commerce/saleor.md#quick-migration
 export async function searchCatalog(

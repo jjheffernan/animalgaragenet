@@ -11,6 +11,9 @@ import {
 	initializePaymentGateway,
 	initializeTransaction,
 	isPaymentAppConfigured,
+	paymentGatewayUnavailablePayload,
+	PAYMENT_APP_OPS_HINT,
+	PAYMENT_GATEWAY_UNAVAILABLE_CODE,
 	processTransaction,
 	setCheckoutId,
 	stripeReturnDataFromUrl,
@@ -88,6 +91,40 @@ function mockCookies() {
 		}
 	};
 }
+
+describe('payment app ops helpers', () => {
+	it('builds structured payload for missing Payment App', () => {
+		const payload = paymentGatewayUnavailablePayload();
+		expect(payload.code).toBe(PAYMENT_GATEWAY_UNAVAILABLE_CODE);
+		expect(payload.hint).toBe(PAYMENT_APP_OPS_HINT);
+		expect(payload.error).toContain('Payment gateway not available');
+	});
+
+	it('isPaymentAppConfigured reflects gateway list', () => {
+		expect(
+			isPaymentAppConfigured({
+				id: 'checkout-1',
+				subtotal: { amount: 10, currency: 'USD' },
+				shippingPrice: null,
+				total: { amount: 10, currency: 'USD' },
+				shippingMethods: [],
+				selectedShippingMethodId: null,
+				paymentGateways: []
+			})
+		).toBe(false);
+		expect(
+			isPaymentAppConfigured({
+				id: 'checkout-1',
+				subtotal: { amount: 10, currency: 'USD' },
+				shippingPrice: null,
+				total: { amount: 10, currency: 'USD' },
+				shippingMethods: [],
+				selectedShippingMethodId: null,
+				paymentGateways: [{ id: 'saleor.app.payment.stripe', name: 'Stripe', currencies: ['USD'] }]
+			})
+		).toBe(true);
+	});
+});
 
 describe('checkout cookie helpers', () => {
 	it('stores and clears checkout id in cookies', () => {
@@ -417,5 +454,38 @@ describe('readStripePublishableKey', () => {
 	it('extracts publishable key from gateway config', () => {
 		expect(readStripePublishableKey({ stripePublishableKey: 'pk_test_123' })).toBe('pk_test_123');
 		expect(readStripePublishableKey({})).toBeNull();
+	});
+});
+
+describe('payment app gate helpers', () => {
+	it('isPaymentAppConfigured reflects available gateways', () => {
+		expect(isPaymentAppConfigured(null)).toBe(false);
+		expect(
+			isPaymentAppConfigured({
+				subtotal: { amount: 10, currency: 'USD' },
+				shippingPrice: null,
+				total: { amount: 10, currency: 'USD' },
+				shippingMethods: [],
+				selectedShippingMethodId: null,
+				paymentGateways: []
+			})
+		).toBe(false);
+		expect(
+			isPaymentAppConfigured({
+				subtotal: { amount: 10, currency: 'USD' },
+				shippingPrice: null,
+				total: { amount: 10, currency: 'USD' },
+				shippingMethods: [],
+				selectedShippingMethodId: null,
+				paymentGateways: [{ id: 'saleor.app.payment.stripe', name: 'Stripe', currencies: ['USD'] }]
+			})
+		).toBe(true);
+	});
+
+	it('paymentGatewayUnavailablePayload includes ops hint without Stripe env', () => {
+		const payload = paymentGatewayUnavailablePayload();
+		expect(payload.code).toBe(PAYMENT_GATEWAY_UNAVAILABLE_CODE);
+		expect(payload.hint).toBe(PAYMENT_APP_OPS_HINT);
+		expect(payload.hint).not.toContain('STRIPE_');
 	});
 });

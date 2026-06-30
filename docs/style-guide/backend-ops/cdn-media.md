@@ -9,7 +9,7 @@ Public media delivery via CDN base URL. v1 uses Supabase Storage; Phase 2 adds S
 | Category              | Scope  | Notes                  |
 | --------------------- | ------ | ---------------------- |
 | `PUBLIC_CDN_BASE_URL` | Public | CDN base URL for media reads |
-| `S3_BUCKET`, `AWS_*`  | Server | Presigned upload (deferred) |
+| `S3_BUCKET`, `AWS_*`  | Server | Presigned upload (wired when env set) |
 
 ## Read URLs (wired)
 
@@ -25,9 +25,11 @@ resolveUgcPublicUrl('user-1/photo.jpg');
 
 `src/lib/server/media/repository.ts` calls `resolveUgcPublicUrl` when `isCdnPublicReadConfigured()` is true.
 
-## Presigned upload (deferred)
+## Presigned upload (wired)
 
-`createPresignedUploadUrl` and `invalidateCdnPaths` are stubbed in `cdn.ts` until S3 + CloudFront ops are ready. See [inspiration-polish-tracker.md](../../plans/active/inspiration-polish-tracker.md#IP-013).
+`createPresignedUploadUrl` in `cdn.ts` issues S3 presigned PUT URLs when `PUBLIC_CDN_BASE_URL`, `S3_BUCKET`, and `AWS_*` are set. Admin upload flow: `POST /api/admin/media/upload-slot` → client `PUT` to presigned URL.
+
+`invalidateCdnPaths` remains deferred until CloudFront invalidation ops are ready.
 
 ## Bucket layout (conceptual)
 

@@ -1,6 +1,6 @@
 import type { PageServerLoad } from './$types';
 import { isSaleorEnabled } from '$lib/server/saleor/client';
-import { getCheckoutId, getCheckoutShipping } from '$lib/server/saleor/checkout';
+import { getCheckoutId, getCheckoutShipping, PAYMENT_APP_OPS_HINT } from '$lib/server/saleor/checkout';
 
 export const load: PageServerLoad = async ({ cookies }) => {
 	const saleorEnabled = isSaleorEnabled();
@@ -11,7 +11,8 @@ export const load: PageServerLoad = async ({ cookies }) => {
 			checkout: null,
 			shipping: null,
 			paymentConfigured: false,
-			shippingComplete: false
+			shippingComplete: false,
+			paymentAppOpsHint: null
 		};
 	}
 
@@ -22,7 +23,8 @@ export const load: PageServerLoad = async ({ cookies }) => {
 			checkout: null,
 			shipping: null,
 			paymentConfigured: false,
-			shippingComplete: false
+			shippingComplete: false,
+			paymentAppOpsHint: PAYMENT_APP_OPS_HINT
 		};
 	}
 
@@ -33,7 +35,8 @@ export const load: PageServerLoad = async ({ cookies }) => {
 			checkout: null,
 			shipping: null,
 			paymentConfigured: false,
-			shippingComplete: false
+			shippingComplete: false,
+			paymentAppOpsHint: PAYMENT_APP_OPS_HINT
 		};
 	}
 
@@ -46,6 +49,7 @@ export const load: PageServerLoad = async ({ cookies }) => {
 		checkout,
 		shipping,
 		paymentConfigured,
-		shippingComplete
+		shippingComplete,
+		paymentAppOpsHint: paymentConfigured ? null : PAYMENT_APP_OPS_HINT
 	};
 };

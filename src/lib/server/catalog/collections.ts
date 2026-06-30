@@ -15,7 +15,11 @@ import {
 	type SaleorCollectionNode,
 	type SaleorProductListNode
 } from '$lib/server/saleor/mappers';
-import { COLLECTIONS_QUERY, PRODUCTS_QUERY } from '$lib/server/saleor/queries';
+import {
+	COLLECTION_PRODUCTS_QUERY,
+	COLLECTIONS_QUERY,
+	PRODUCTS_QUERY
+} from '$lib/server/saleor/queries';
 
 async function fetchSaleorProductsByTag(
 	tag: string,
@@ -35,12 +39,7 @@ async function fetchSaleorProductsByTag(
 		.filter((product) => product.tags?.includes(tag));
 }
 
-/**
- * Collections catalog — mock default, Saleor when env is set.
- *
- * Saleor `COLLECTIONS_QUERY` returns collection metadata only (no product edges yet);
- * `products` on each collection is empty until collection product queries are added.
- */
+/** Collections catalog — mock default, Saleor when env is set. */
 // @saleor-migration: intentional — catalog swap point; see docs/commerce/saleor.md#quick-migration
 export async function getCollections(locale: string = config.defaultLocale): Promise<Collection[]> {
 	if (isSaleorEnabled()) {
@@ -54,21 +53,23 @@ export async function getCollections(locale: string = config.defaultLocale): Pro
 				throw new Error(result.errors?.[0]?.message ?? 'Saleor collections query failed');
 			}
 
-			// @saleor-migration: intentional — uncomment COLLECTION_PRODUCTS_QUERY to populate products[]; see docs/commerce/saleor.md#quick-migration
-			// const collections = await Promise.all(
-			//   result.data.collections.edges.map(async ({ node }) => {
-			//     const base = mapCollection(node);
-			//     const productsResult = await saleorFetch<{ collection: { products: { edges: { node: SaleorProductListNode }[] } } | null }>(
-			//       COLLECTION_PRODUCTS_QUERY,
-			//       { slug: node.slug, channel, first: 12 }
-			//     );
-			//     const products = productsResult.data?.collection?.products.edges.map(({ node: p }) => mapProductListNode(p)) ?? [];
-			//     return { ...base, products };
-			//   })
-			// );
-			// return collections;
+			const collections = await Promise.all(
+				result.data.collections.edges.map(async ({ node }) => {
+					const base = mapCollection(node);
+					const productsResult = await saleorFetch<{
+						collection: { products: { edges: { node: SaleorProductListNode }[] } } | null;
+					}>(COLLECTION_PRODUCTS_QUERY, { slug: node.slug, channel, first: 12 });
 
-			return result.data.collections.edges.map(({ node }) => mapCollection(node));
+					const products =
+						productsResult.data?.collection?.products.edges.map(({ node: productNode }) =>
+							mapProductListNode(productNode)
+						) ?? [];
+
+					return { ...base, products };
+				})
+			);
+
+			return collections;
 		} catch (err) {
 			guardMockCatalogFallback({ saleorAttemptFailed: true, error: err });
 		}

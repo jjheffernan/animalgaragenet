@@ -1,14 +1,6 @@
-import type { GarageLevel } from '$lib/types/domain';
+import { garageLevels } from '$lib/data/garage-levels';
 
 const STORAGE_KEY = 'ag-garage-xp';
-
-const LEVELS: GarageLevel[] = [
-	{ level: 1, title: 'Parking Lot Rookie', xpRequired: 0, perks: ['Welcome sticker pack'] },
-	{ level: 2, title: 'Pit Crew', xpRequired: 100, perks: ['5% merch discount'] },
-	{ level: 3, title: 'Wrench Turner', xpRequired: 300, perks: ['Early drop access', 'Free shipping on parts'] },
-	{ level: 4, title: 'Grid Starter', xpRequired: 600, perks: ['10% merch discount', 'Exclusive colorways'] },
-	{ level: 5, title: 'Garage Squad OG', xpRequired: 1000, perks: ['15% sitewide', 'Build of the Month eligibility', 'VIP event access'] }
-];
 
 interface XpState {
 	xp: number;
@@ -43,19 +35,19 @@ class GarageXpState {
 		this.initialized = true;
 	}
 
-	get level(): GarageLevel {
+	get level() {
 		this.init();
-		let current = LEVELS[0];
-		for (const lvl of LEVELS) {
+		let current = garageLevels[0];
+		for (const lvl of garageLevels) {
 			if (this.xp >= lvl.xpRequired) current = lvl;
 		}
 		return current;
 	}
 
-	get nextLevel(): GarageLevel | undefined {
+	get nextLevel() {
 		this.init();
-		const idx = LEVELS.findIndex((l) => l.level === this.level.level);
-		return LEVELS[idx + 1];
+		const idx = garageLevels.findIndex((l) => l.level === this.level.level);
+		return garageLevels[idx + 1];
 	}
 
 	get progressToNext(): number {
@@ -74,10 +66,6 @@ class GarageXpState {
 		this.xp += amount;
 		if (actionId) this.completedActions = [...this.completedActions, actionId];
 		saveXp({ xp: this.xp, actions: this.completedActions });
-	}
-
-	get levels() {
-		return LEVELS;
 	}
 }
 

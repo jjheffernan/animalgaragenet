@@ -28,5 +28,16 @@ jobs:
       - name: Type check
         run: npm run check
 
+      - name: Unit tests
+        run: npm run test:unit
+
       - name: Build
         run: npm run build
+
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps chromium
+
+      - name: E2E tests
+        run: npm run test:e2e
+        env:
+          CI: true

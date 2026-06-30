@@ -35,6 +35,12 @@ pnpm-debug.log*
 coverage
 .nyc_output
 
+# Test artifacts
+test-results
+playwright-report
+playwright/.cache
+blob-report
+
 # IDE (keep committed .cursor config)
 .idea/
 .vscode/

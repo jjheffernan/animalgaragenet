@@ -1,7 +1,7 @@
 import { config } from '$lib/config/env';
 import { getLocaleConfig } from '$lib/i18n/locale';
 import { formatMoney } from '$lib/i18n/currency';
-import { getCurrencyForLocale } from '$lib/data/mock-locales';
+import { getCurrencyForLocale } from '$lib/data/mock/locales';
 import type { LocaleCode } from '$lib/types/locale';
 
 class LocaleState {

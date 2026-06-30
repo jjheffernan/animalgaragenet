@@ -1,5 +1,5 @@
 import type { Video } from '$lib/types/domain';
-import { mockVideos } from '$lib/data/mock-videos';
+import { mockVideos } from '$lib/data/mock/videos';
 
 /** Raw payload from YouTube Data API v3 (subset). */
 export interface YouTubeApiVideo {

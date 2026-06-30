@@ -36,6 +36,13 @@ jobs:
       - name: Unit tests
         run: npm run test:unit
 
+      - name: Live Saleor smoke (env-gated)
+        run: npm run test:unit -- tests/integration/saleor-live.test.ts
+        env:
+          PUBLIC_SALEOR_API_URL: ${{ secrets.PUBLIC_SALEOR_API_URL }}
+          SALEOR_CHANNEL: ${{ secrets.SALEOR_CHANNEL }}
+        continue-on-error: true
+
       - name: Build
         run: npm run build
 

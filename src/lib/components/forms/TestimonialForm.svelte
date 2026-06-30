@@ -10,7 +10,13 @@
 		disabled?: boolean;
 	}
 
-	let { displayName, loyaltyTier = '', errors = {}, fields = {}, disabled = false }: Props = $props();
+	let {
+		displayName,
+		loyaltyTier = '',
+		errors = {},
+		fields = {},
+		disabled = false
+	}: Props = $props();
 
 	let rating = $state('5');
 	$effect.pre(() => {
@@ -26,21 +32,27 @@
 		value={fields.displayName ?? displayName}
 		required
 		maxlength="80"
-		disabled={disabled}
-		class="mt-1 w-full rounded-sm border border-zinc-700 bg-zinc-900 px-3 py-2 text-sm text-white placeholder-zinc-500 focus:border-red-600 focus:outline-none {errors.displayName ? 'border-red-600' : ''}"
+		{disabled}
+		class="mt-1 w-full rounded-sm border border-zinc-700 bg-zinc-900 px-3 py-2 text-sm text-white placeholder-zinc-500 focus:border-red-600 focus:outline-none {errors.displayName
+			? 'border-red-600'
+			: ''}"
 	/>
 	{#if errors.displayName}<p class="mt-1 text-xs text-red-500">{errors.displayName}</p>{/if}
 </label>
 
 <label class="block">
-	<span class="text-xs font-bold uppercase tracking-widest text-zinc-500">Vehicle / Build (optional)</span>
+	<span class="text-xs font-bold uppercase tracking-widest text-zinc-500"
+		>Vehicle / Build (optional)</span
+	>
 	<input
 		type="text"
 		name="vehicleSummary"
 		value={fields.vehicleSummary ?? ''}
 		maxlength="120"
 		placeholder="2018 Civic Type R track build"
-		class="mt-1 w-full rounded-sm border border-zinc-700 bg-zinc-900 px-3 py-2 text-sm text-white placeholder-zinc-500 focus:border-red-600 focus:outline-none {errors.vehicleSummary ? 'border-red-600' : ''}"
+		class="mt-1 w-full rounded-sm border border-zinc-700 bg-zinc-900 px-3 py-2 text-sm text-white placeholder-zinc-500 focus:border-red-600 focus:outline-none {errors.vehicleSummary
+			? 'border-red-600'
+			: ''}"
 	/>
 	{#if errors.vehicleSummary}<p class="mt-1 text-xs text-red-500">{errors.vehicleSummary}</p>{/if}
 </label>
@@ -50,7 +62,13 @@
 	<div class="mt-2 flex gap-1" role="radiogroup" aria-label="Star rating">
 		{#each [1, 2, 3, 4, 5] as star (star)}
 			<label class="cursor-pointer">
-				<input type="radio" name="rating" value={String(star)} bind:group={rating} class="sr-only" />
+				<input
+					type="radio"
+					name="rating"
+					value={String(star)}
+					bind:group={rating}
+					class="sr-only"
+				/>
 				<svg
 					class="h-8 w-8 transition {Number(rating) >= star ? 'text-red-500' : 'text-zinc-700'}"
 					fill="currentColor"
@@ -77,7 +95,9 @@
 		required
 		maxlength="100"
 		placeholder="Why you ride with Animal Garage"
-		class="mt-1 w-full rounded-sm border border-zinc-700 bg-zinc-900 px-3 py-2 text-sm text-white placeholder-zinc-500 focus:border-red-600 focus:outline-none {errors.title ? 'border-red-600' : ''}"
+		class="mt-1 w-full rounded-sm border border-zinc-700 bg-zinc-900 px-3 py-2 text-sm text-white placeholder-zinc-500 focus:border-red-600 focus:outline-none {errors.title
+			? 'border-red-600'
+			: ''}"
 	/>
 	{#if errors.title}<p class="mt-1 text-xs text-red-500">{errors.title}</p>{/if}
 </label>
@@ -90,15 +110,18 @@
 		required
 		maxlength="2000"
 		placeholder="Tell the squad about your build, your experience, and what Garage Squad means to you."
-		class="mt-1 w-full rounded-sm border border-zinc-700 bg-zinc-900 px-3 py-2 text-sm text-white placeholder-zinc-500 focus:border-red-600 focus:outline-none {errors.body ? 'border-red-600' : ''}"
-	>{fields.body ?? ''}</textarea>
+		class="mt-1 w-full rounded-sm border border-zinc-700 bg-zinc-900 px-3 py-2 text-sm text-white placeholder-zinc-500 focus:border-red-600 focus:outline-none {errors.body
+			? 'border-red-600'
+			: ''}">{fields.body ?? ''}</textarea
+	>
 	{#if errors.body}<p class="mt-1 text-xs text-red-500">{errors.body}</p>{/if}
 </label>
 
 <ReviewPhotoUpload {disabled} />
 
 <p class="text-xs text-zinc-600">
-	Reviews are moderated before they appear publicly. Approved stories earn +50 XP toward your next level.
+	Reviews are moderated before they appear publicly. Approved stories earn +50 XP toward your next
+	level.
 </p>
 
 <input type="hidden" name="loyaltyTier" value={loyaltyTier} />

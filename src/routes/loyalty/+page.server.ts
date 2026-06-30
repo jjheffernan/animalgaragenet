@@ -54,7 +54,10 @@ export const actions: Actions = {
 		}
 
 		const loyaltyTier = String(data.get('loyaltyTier') ?? '').trim() || null;
-		const mediaAssetIds = data.getAll('mediaAssetIds').map((id) => String(id).trim()).filter(Boolean);
+		const mediaAssetIds = data
+			.getAll('mediaAssetIds')
+			.map((id) => String(id).trim())
+			.filter(Boolean);
 		const mediaError = validateMediaAssetIds(mediaAssetIds);
 		if (mediaError) {
 			return fail(400, { errors: { body: mediaError }, fields });

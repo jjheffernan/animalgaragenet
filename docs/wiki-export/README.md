@@ -29,6 +29,10 @@ Contributors: use `.env.example` and `docs/SECURITY-PUBLIC.md`. Do not copy infr
 | `Deployment-and-CI.md`     | Deployment and CI     |
 | `Testing.md`               | Testing               |
 
+## Last synced
+
+**2026-06-30** — Node 24 LTS, CI contract + e2e steps, Saleor/checkout status, Playwright coverage.
+
 ## Re-sync after doc changes
 
 ```bash

@@ -14,13 +14,13 @@ PUBLIC_SALEOR_API_URL=https://<your-saleor-host>/graphql/
 SALEOR_CHANNEL=<your-channel-slug>
 ```
 
-Channels map to market/locale in `src/lib/server/saleor/channels.ts`.
+Channels map to market/locale in `src/lib/server/saleor/channels.ts` (`resolveChannelForLocale`).
 
 When `PUBLIC_SALEOR_API_URL` is unset, catalog loaders use mock data locally. On production `PUBLIC_SITE_URL`, mock fallback is **disabled** — Saleor must be configured and healthy.
 
 ## Readiness
 
-Primary catalog loaders are wired with env gating. Checkout completion and payment are not fully wired.
+Primary catalog loaders, cart mutations, and checkout UI are wired with env gating. **Live payment** requires the Stripe Payment App enabled on your Saleor channel (ops).
 
 ### Wired (env set)
 
@@ -29,18 +29,20 @@ Primary catalog loaders are wired with env gating. Checkout completion and payme
 | Shop list/detail                    | `getShopProducts()`, `getShopProductBySlug()`                          |
 | Gift cards, deals, parts            | `getGiftCardProducts()`, `getDealProducts()`, `getPartsProducts()`     |
 | Collections, staff picks, clearance | `getCollections()`, `getStaffPickProducts()`, `getClearanceProducts()` |
+| Shop category filter                | `shop-filters.ts`, `/api/catalog/shop-filters`                         |
 | Catalog search (merch)              | `searchCatalog()` → `api/catalog/search`                               |
-| Cart read / add line                | `getCheckoutLines()`, `POST /cart/checkout`                            |
+| Cart read / add / update / remove   | `getCheckoutLines()`, `POST/PATCH/DELETE /cart/checkout`               |
+| Checkout page                       | `/checkout` — shipping, Stripe Elements scaffold                       |
 | Promo / redeem                      | `/account/redeem`, cart promo API                                      |
+| Webhooks                            | `POST /api/webhooks/saleor` (signature-verified when secret set)       |
 
-### Not wired
+### Remaining gaps
 
-| Gap                            | Status                            |
-| ------------------------------ | --------------------------------- |
-| Checkout completion / payment  | `/checkout` is UI placeholder     |
-| Cart remove / qty              | Limited when Saleor enabled       |
-| Add-to-cart from listing cards | Needs `variantId` on cards        |
-| Collection product edges       | `products[]` empty on collections |
+| Gap                           | Status                                                |
+| ----------------------------- | ----------------------------------------------------- |
+| Live card payment             | Ops — Stripe Payment App on channel                   |
+| Collection `products[]` edges | Metadata-only until collection product query expanded |
+| Catalog search at scale       | Client-side filter on first 100 products              |
 
 Detailed audit: `docs/audits/saleor-audit.md` in the repo.
 
@@ -77,4 +79,5 @@ export const load: PageServerLoad = async () => {
 
 - GraphQL catalog reads may be public on the Saleor endpoint — confirm with your Saleor deployment
 - Checkout mutations server-side only (`+page.server.ts`, `+server.ts`)
-- Never expose Saleor app tokens or secrets to the browser
+- Never expose Saleor app tokens or Stripe secret keys to the browser
+- Payment provider secrets belong in Saleor Dashboard Payment App config

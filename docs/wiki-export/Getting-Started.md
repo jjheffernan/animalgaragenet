@@ -2,8 +2,15 @@
 
 ## Prerequisites
 
-- **Node.js** 20+ (LTS recommended)
+- **Node.js** 24+ (Active LTS — use `.nvmrc` or `.node-version`)
 - **npm** 10+
+
+```bash
+nvm install 24
+nvm use          # reads .nvmrc
+```
+
+`package.json` declares `"engines": { "node": ">=24.0.0" }`.
 
 ## First-time setup
 
@@ -30,6 +37,7 @@ Dev server: http://localhost:5173
 | `npm run format`         | Auto-format with Prettier                    |
 | `npm run test:unit`      | Vitest unit + integration tests              |
 | `npm run test:contracts` | Payload / mapper contract tests              |
+| `npm run test:e2e`       | Playwright end-to-end tests                  |
 | `npm run test:readiness` | Live API smoke probes (skips when env unset) |
 
 ## Pre-PR checklist
@@ -37,10 +45,14 @@ Dev server: http://localhost:5173
 ```bash
 npm run lint
 npm run check
+npm run test:unit
+npm run test:contracts
 npm run build
+bash scripts/check-secrets.sh
+npx playwright test e2e/smoke.spec.ts   # optional quick e2e
 ```
 
-All three must pass before opening a PR.
+CI runs the full suite including Playwright on push to `dev` / `main`.
 
 ## Environment
 
@@ -54,7 +66,7 @@ For Saleor/Supabase testing, copy `.env.example` → `.env` and fill values. See
 src/
 ├── routes/           # Pages (+page.svelte, +page.server.ts)
 ├── lib/
-│   ├── components/   # Shared UI
+│   ├── components/   # Shared UI (catalog/, layout/, admin/, …)
 │   ├── config/       # env.ts
 │   ├── data/         # Mock catalog
 │   ├── i18n/         # Locale helpers
@@ -62,7 +74,7 @@ src/
 │   ├── stores/       # Svelte 5 state
 │   └── types/        # TypeScript interfaces
 static/               # Public assets
-docs/                 # Documentation
+docs/                 # Documentation (see docs/CODER-FLOW.md)
 agents/               # AI agent skills
 ```
 
@@ -70,6 +82,7 @@ agents/               # AI agent skills
 
 | Issue                           | Fix                                              |
 | ------------------------------- | ------------------------------------------------ |
+| `npm install` engine error      | Upgrade to Node 24 (`nvm use 24`)                |
 | Type errors after route changes | `npm run prepare` or `npx svelte-kit sync`       |
 | Stale `.svelte-kit` cache       | Delete `.svelte-kit/` and rebuild                |
 | Port 5173 in use                | `npm run dev -- --port 5174`                     |
@@ -78,4 +91,4 @@ agents/               # AI agent skills
 
 ## IDE
 
-Cursor/VS Code with Svelte extension recommended. Project includes `.cursor/` config (committed).
+Cursor/VS Code with Svelte extension recommended. Project includes `.cursor/` config (committed). Link agent skills: `scripts/link-agent-skills.sh`.

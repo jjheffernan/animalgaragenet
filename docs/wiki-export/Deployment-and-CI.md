@@ -22,16 +22,29 @@ feature/* → dev (CI) → main (CI) → organization deploy mirror → Netlify
 4. QA on staging after merge to `dev`
 5. Release: merge `dev` → `main` for production
 
-Rules: do not commit directly to `main` (except release merges). Run `npm run check && npm run lint && npm run build` before PR.
+Rules: do not commit directly to `main` (except release merges). Run the [pre-PR checklist](Getting-Started#pre-pr-checklist) before opening a PR.
 
 ## GitHub Actions
 
-| Workflow            | Branch        | Purpose                                              |
-| ------------------- | ------------- | ---------------------------------------------------- |
-| `ci.yml`            | `dev`, `main` | Lint, typecheck, unit/e2e tests, build               |
-| `sync-org-main.yml` | `main` only   | Mirror `main` to organization deploy repo (after CI) |
+| Workflow            | Branch / trigger            | Purpose                                                                  |
+| ------------------- | --------------------------- | ------------------------------------------------------------------------ |
+| `ci.yml`            | `dev`, `main` (push/PR)     | Lint, secrets guard, check, unit + contract tests, build, Playwright e2e |
+| `readiness-ci.yml`  | PR, weekly schedule, manual | Live API readiness probes (skips when secrets unset)                     |
+| `sync-org-main.yml` | `main` after CI             | Mirror `main` to organization deploy repo                                |
 
-CI steps: `npm ci`, `npm run lint`, `npm run check`, `npm run build`.
+### CI pipeline (`ci.yml`)
+
+Runs on **Node.js 24**. Steps:
+
+1. `npm ci`
+2. `bash scripts/check-secrets.sh`
+3. `npm run lint`
+4. `npm run check`
+5. `npm run test:unit`
+6. `npm run test:contracts`
+7. Optional live Saleor smoke (repository secrets; non-blocking)
+8. `npm run build`
+9. `npm run test:e2e` (Playwright, Chromium)
 
 The org-sync workflow runs on **`main`**, not `dev`. Merging `dev` → `main` brings sync changes into the development repo.
 
@@ -41,7 +54,7 @@ Development happens in the personal GitHub repo with Actions. A separate **organ
 
 Mirror authentication uses a **GitHub Actions secret** (deploy key or equivalent). Setup and rotation scripts live in the repo under `scripts/` — run only by maintainers with repo admin access.
 
-Connect Netlify to the organization deploy repo, branch `main`.
+Connect Netlify to the organization deploy repo, branch `main`. Set **Node 24** in Netlify build settings (or rely on `.nvmrc`).
 
 Manual re-sync: GitHub → Actions → **Sync main to org** → Run workflow (maintainers).
 
@@ -67,7 +80,7 @@ Use separate hosts for frontend, commerce API, and media delivery.
 
 Set all vars from `.env.example` in the hosting provider's secret UI. See [Environment Variables](Environment-Variables).
 
-**Full runbook (repo):** `docs/infrastructure/deployment.md` — Netlify checklist by service, Supabase `db push`, Saleor webhook, Ghost, OAuth redirects, YouTube cron, CloudFront, post-deploy smoke.
+**Full runbook (repo):** `docs/infrastructure/deployment.md` — Netlify checklist by service, Supabase `db push`, Saleor webhook, Ghost, OAuth redirects, YouTube cron, CDN invalidation, post-deploy smoke.
 
 Do **not** set dev-only admin bypass flags on production.
 

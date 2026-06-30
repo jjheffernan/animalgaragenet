@@ -1,3 +1,4 @@
+import { isPartProduct } from '$lib/data/catalog-helpers';
 import { searchBuilds } from '$lib/data/mock/builds';
 import { searchGuides } from '$lib/data/mock/guides';
 import { searchParts } from '$lib/data/mock/parts';
@@ -50,21 +51,26 @@ export async function searchCatalog(
 	if (!q) return EMPTY_RESULTS;
 
 	let products: Product[];
+	let parts: Product[];
 	if (isSaleorEnabled()) {
 		try {
-			products = await searchSaleorProducts(q, locale);
+			const saleorHits = await searchSaleorProducts(q, locale);
+			products = saleorHits.filter((p) => !isPartProduct(p));
+			parts = saleorHits.filter(isPartProduct);
 		} catch (err) {
 			guardMockCatalogFallback({ saleorAttemptFailed: true, error: err });
 			products = searchProducts(q);
+			parts = searchParts(q);
 		}
 	} else {
 		guardMockCatalogFallback();
 		products = searchProducts(q);
+		parts = searchParts(q);
 	}
 
 	return {
 		products,
-		parts: searchParts(q),
+		parts,
 		builds: searchBuilds(q),
 		guides: searchGuides(q)
 	};

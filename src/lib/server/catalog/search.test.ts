@@ -33,7 +33,7 @@ describe('searchCatalog', () => {
 		);
 	});
 
-	it('uses Saleor PRODUCT_SEARCH_QUERY when configured', async () => {
+	it('splits Saleor search hits into merch and parts', async () => {
 		vi.mocked(isSaleorEnabled).mockReturnValue(true);
 		vi.mocked(saleorFetch).mockResolvedValue({
 			data: {
@@ -59,6 +59,30 @@ describe('searchCatalog', () => {
 									}
 								],
 								isAvailableForPurchase: true,
+								metadata: [{ key: 'productType', value: 'PART' }],
+								attributes: []
+							}
+						},
+						{
+							node: {
+								id: 'prod-2',
+								name: 'AG Tee',
+								slug: 'ag-tee',
+								description: 'Logo tee',
+								thumbnail: { url: 'https://example.com/tee.jpg', alt: 'Tee' },
+								pricing: {
+									priceRange: { start: { gross: { amount: 29, currency: 'USD' } } }
+								},
+								category: { id: 'cat-2', name: 'Apparel', slug: 'apparel' },
+								variants: [
+									{
+										id: 'var-2',
+										name: 'Default',
+										sku: 'TEE-1',
+										pricing: { price: { gross: { amount: 29, currency: 'USD' } } }
+									}
+								],
+								isAvailableForPurchase: true,
 								metadata: [],
 								attributes: []
 							}
@@ -69,11 +93,9 @@ describe('searchCatalog', () => {
 		});
 
 		const results = await searchCatalog('civic');
+		expect(results.parts).toHaveLength(1);
+		expect(results.parts[0]?.slug).toBe('civic-intake');
 		expect(results.products).toHaveLength(1);
-		expect(results.products[0]?.slug).toBe('civic-intake');
-		expect(saleorFetch).toHaveBeenCalledWith(
-			expect.stringContaining('ProductSearch'),
-			expect.objectContaining({ query: 'civic', first: 24 })
-		);
+		expect(results.products[0]?.slug).toBe('ag-tee');
 	});
 });

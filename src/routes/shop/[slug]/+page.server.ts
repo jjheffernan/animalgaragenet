@@ -1,6 +1,9 @@
-import { getProductsForBuild, getRelatedProducts } from '$lib/data/catalog-helpers';
 import { config } from '$lib/config/env';
-import { mockBuilds } from '$lib/data/mock/builds';
+import {
+	getBuildLinkedProducts,
+	getLinkedBuildForProduct,
+	getRelatedCatalogProducts
+} from '$lib/server/catalog/related';
 import { getShopProductBySlug } from '$lib/server/catalog/products';
 import { error } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
@@ -10,12 +13,12 @@ export const load: PageServerLoad = async ({ params, url }) => {
 	const product = await getShopProductBySlug(params.slug, locale);
 	if (!product) error(404, 'Product not found');
 
-	const linkedBuild = mockBuilds.find((b) => b.linkedProductIds.includes(product.id));
+	const linkedBuild = await getLinkedBuildForProduct(product.id);
 
 	return {
 		product,
-		related: getRelatedProducts(product),
+		related: await getRelatedCatalogProducts(product, locale),
 		linkedBuild,
-		buildProducts: linkedBuild ? getProductsForBuild(linkedBuild) : []
+		buildProducts: linkedBuild ? await getBuildLinkedProducts(linkedBuild, locale) : []
 	};
 };

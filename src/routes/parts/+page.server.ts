@@ -1,16 +1,11 @@
-import {
-	filterPartsProducts,
-	formatPartsFilterLabel,
-	parsePartsFilters
-} from '$lib/data/parts-filters';
 import { paginateFromUrl, parseListView } from '$lib/pagination';
-import { getPartCategoriesForNav, getPartsProducts } from '$lib/server/catalog/parts';
+import { loadPartsCatalog } from '$lib/server/catalog/parts-filters';
+import { getPartCategoriesForNav } from '$lib/server/catalog/parts';
 import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({ url }) => {
-	const filters = parsePartsFilters(url);
-	const filterLabel = formatPartsFilterLabel(filters);
-	const allProducts = filterPartsProducts(await getPartsProducts(), filters);
+	const { products: allProducts, filters, filterLabel, filterOptions, filterSource } =
+		await loadPartsCatalog({ url });
 	const { items, pagination } = paginateFromUrl(url, allProducts);
 
 	return {
@@ -19,6 +14,8 @@ export const load: PageServerLoad = async ({ url }) => {
 		pagination,
 		filters,
 		filterLabel,
+		filterOptions,
+		filterSource,
 		view: parseListView(url)
 	};
 };

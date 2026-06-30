@@ -36,16 +36,25 @@
 				<ul class="space-y-0.5">
 					{#each section.items as item (item.href)}
 						<li>
-							<a
-								href={resolve(item.href as '/admin')}
-								class="block rounded-sm px-2 py-1.5 text-sm transition {linkClass(
-									item.href,
-									item.exact
-								)}"
-								onclick={onNavigate}
-							>
-								{item.label}
-							</a>
+							{#if item.disabled}
+								<span
+									class="block cursor-not-allowed rounded-sm px-2 py-1.5 text-sm text-zinc-600"
+									title="Coming soon"
+								>
+									{item.label}
+								</span>
+							{:else}
+								<a
+									href={resolve(item.href as '/admin')}
+									class="block rounded-sm px-2 py-1.5 text-sm transition {linkClass(
+										item.href,
+										item.exact
+									)}"
+									onclick={onNavigate}
+								>
+									{item.label}
+								</a>
+							{/if}
 						</li>
 					{/each}
 				</ul>

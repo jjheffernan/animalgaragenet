@@ -168,7 +168,8 @@
 		{ label: 'Guides', href: resolve('/guides') },
 		{ label: 'Events', href: resolve('/events') },
 		{ label: 'Watch', href: resolve('/watch') },
-		{ label: 'Builds', href: resolve('/builds') }
+		{ label: 'Builds', href: resolve('/builds') },
+		{ label: 'Media', href: resolve('/media') }
 	] as const);
 
 	function closeMobileNav() {

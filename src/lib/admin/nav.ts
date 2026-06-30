@@ -5,6 +5,8 @@ export interface AdminNavItem {
 	exact?: boolean;
 	/** Shown when daisyUI shell ships; optional until then */
 	icon?: string;
+	/** Route not scaffolded yet — sidebar renders label without link */
+	disabled?: boolean;
 }
 
 export interface AdminNavSection {
@@ -24,22 +26,23 @@ export const ADMIN_NAV: AdminNavSection[] = [
 		label: 'Social',
 		items: [
 			{ href: '/admin/youtube', label: 'YouTube' },
-			{ href: '/admin/social/ugc', label: 'UGC' },
-			{ href: '/admin/social/discord', label: 'Discord' }
+			// Scaffold pending — nav disabled until routes exist
+			{ href: '/admin/social/ugc', label: 'UGC', disabled: true },
+			{ href: '/admin/social/discord', label: 'Discord', disabled: true }
 		]
 	},
 	{
 		label: 'Commerce',
 		items: [
-			{ href: '/admin/commerce/channels', label: 'Saleor Channels' },
-			{ href: '/admin/commerce/orders', label: 'Orders' }
+			{ href: '/admin/commerce/channels', label: 'Saleor Channels', disabled: true },
+			{ href: '/admin/commerce/orders', label: 'Orders', disabled: true }
 		]
 	},
 	{
 		label: 'Operations',
 		items: [
-			{ href: '/admin/calendar', label: 'Calendar' },
-			{ href: '/admin/support', label: 'Support' },
+			{ href: '/admin/calendar', label: 'Calendar', disabled: true },
+			{ href: '/admin/support', label: 'Support', disabled: true },
 			{ href: '/admin/builds', label: 'Builds' },
 			{ href: '/admin/testimonials', label: 'Testimonials' }
 		]

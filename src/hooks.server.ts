@@ -1,12 +1,21 @@
 import { env } from '$env/dynamic/private';
 import { redirect, type Handle } from '@sveltejs/kit';
 import { canAccessAdmin } from '$lib/server/auth/roles';
-import { parseSessionCookie, SESSION_COOKIE } from '$lib/server/supabase/auth';
+import { getSession, parseSessionCookie, SESSION_COOKIE } from '$lib/server/supabase/auth';
+import { createServerClient, isSupabaseConfigured } from '$lib/server/supabase/client';
 
 export const handle: Handle = async ({ event, resolve }) => {
-	const raw = event.cookies.get(SESSION_COOKIE);
-	event.locals.session = parseSessionCookie(raw);
 	event.locals.devAdmin = env.DEV_ADMIN === 'true';
+
+	if (isSupabaseConfigured()) {
+		event.locals.supabase = createServerClient(event);
+		// Refresh session tokens on each request
+		await event.locals.supabase.auth.getSession();
+		event.locals.session = await getSession(event.locals.supabase);
+	} else {
+		event.locals.supabase = null;
+		event.locals.session = parseSessionCookie(event.cookies.get(SESSION_COOKIE));
+	}
 
 	if (event.url.pathname.startsWith('/admin')) {
 		const hasAccess =
@@ -18,5 +27,9 @@ export const handle: Handle = async ({ event, resolve }) => {
 		}
 	}
 
-	return resolve(event);
+	return resolve(event, {
+		filterSerializedResponseHeaders(name) {
+			return name === 'content-range' || name === 'x-supabase-api-version';
+		}
+	});
 };

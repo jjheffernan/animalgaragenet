@@ -1,78 +1,125 @@
 import type { Cookies } from '@sveltejs/kit';
-import { getSupabaseConfig } from '$lib/server/supabase/client';
+import type { SupabaseClient, User } from '@supabase/supabase-js';
+import { oauthDisplayName, type OAuthProvider } from '$lib/auth/oauth';
+import { isValidRole, type Role } from '$lib/auth/roles';
 
+/** Legacy mock session cookie — used when Supabase env vars are unset. */
 export const SESSION_COOKIE = 'ag-session';
 
 export interface SessionUser {
 	id: string;
 	email: string;
 	name: string;
-	role: import('$lib/auth/roles').Role;
+	role: Role;
 }
 
-export interface AuthClientStub {
-	url: string;
-	ready: boolean;
-	signInWithOtp: (email: string) => Promise<{ ok: boolean; message: string }>;
-	signInWithOAuth: (provider: 'google') => Promise<{ ok: boolean; url?: string; message: string }>;
-	signUp: (email: string, name: string) => Promise<{ ok: boolean; message: string }>;
-	signOut: () => Promise<void>;
-	getSession: () => Promise<SessionUser | null>;
-}
-
-function stubMessage(action: string): string {
-	return `Supabase not configured — ${action} uses mock session. Set PUBLIC_SUPABASE_URL and PUBLIC_SUPABASE_ANON_KEY.`;
-}
-
-export function createBrowserClient(): AuthClientStub | null {
-	const cfg = getSupabaseConfig();
-	if (!cfg) return null;
+export function mapSupabaseUser(user: User): SessionUser {
+	const rawRole = user.app_metadata?.role;
+	const name =
+		oauthDisplayName(user.user_metadata) ||
+		(typeof user.user_metadata?.name === 'string' && user.user_metadata.name) ||
+		(typeof user.user_metadata?.full_name === 'string' && user.user_metadata.full_name) ||
+		user.email?.split('@')[0] ||
+		'User';
 
 	return {
-		url: cfg.url,
-		ready: false,
-		signInWithOtp: async (email: string) => ({
-			ok: true,
-			message: stubMessage(`magic link for ${email}`)
-		}),
-		signInWithOAuth: async () => ({
-			ok: true,
-			url: '/auth/callback?provider=google&mock=1',
-			message: stubMessage('Google OAuth')
-		}),
-		signUp: async (email: string) => ({
-			ok: true,
-			message: stubMessage(`registration for ${email}`)
-		}),
-		signOut: async () => {},
-		getSession: async () => null
+		id: user.id,
+		email: user.email ?? '',
+		name,
+		role: typeof rawRole === 'string' && isValidRole(rawRole) ? rawRole : 'customer'
 	};
 }
 
-export function createServerClient(_cookies: Cookies): AuthClientStub | null {
-	const cfg = getSupabaseConfig();
-	if (!cfg) return null;
+/** Validates JWT via Auth server and maps to app session shape. */
+export async function getSession(supabase: SupabaseClient): Promise<SessionUser | null> {
+	const {
+		data: { user },
+		error
+	} = await supabase.auth.getUser();
+
+	if (error || !user) return null;
+	return mapSupabaseUser(user);
+}
+
+export async function signInWithOtp(
+	supabase: SupabaseClient,
+	email: string,
+	options?: { emailRedirectTo?: string; name?: string }
+): Promise<{ ok: boolean; message: string }> {
+	const { error } = await supabase.auth.signInWithOtp({
+		email,
+		options: {
+			emailRedirectTo: options?.emailRedirectTo,
+			data: options?.name ? { name: options.name } : undefined
+		}
+	});
+
+	if (error) {
+		return { ok: false, message: error.message };
+	}
+
+	return { ok: true, message: 'Check your email for the magic link.' };
+}
+
+export async function signUpWithOtp(
+	supabase: SupabaseClient,
+	email: string,
+	name: string,
+	options?: { emailRedirectTo?: string }
+): Promise<{ ok: boolean; message: string }> {
+	return signInWithOtp(supabase, email, { ...options, name });
+}
+
+/** Starts Supabase OAuth for google, discord, or azure (PKCE via @supabase/ssr). */
+export async function signInWithOAuth(
+	supabase: SupabaseClient,
+	provider: OAuthProvider,
+	options: { redirectTo: string; origin: string }
+): Promise<{ ok: boolean; url?: string; message: string }> {
+	const callbackUrl = new URL('/auth/callback', options.origin);
+	callbackUrl.searchParams.set('redirect', options.redirectTo);
+
+	const { data, error } = await supabase.auth.signInWithOAuth({
+		provider,
+		options: {
+			redirectTo: callbackUrl.toString(),
+			...(provider === 'azure' ? { queryParams: { prompt: 'select_account' } } : {})
+		}
+	});
+
+	if (error) {
+		return { ok: false, message: error.message };
+	}
 
 	return {
-		url: cfg.url,
-		ready: false,
-		signInWithOtp: async (email: string) => ({
-			ok: true,
-			message: stubMessage(`magic link for ${email}`)
-		}),
-		signInWithOAuth: async () => ({
-			ok: true,
-			url: '/auth/callback?provider=google&mock=1',
-			message: stubMessage('Google OAuth')
-		}),
-		signUp: async (email: string) => ({
-			ok: true,
-			message: stubMessage(`registration for ${email}`)
-		}),
-		signOut: async () => {},
-		getSession: async () => null
+		ok: true,
+		url: data.url,
+		message: `Redirecting to ${provider} sign-in`
 	};
 }
+
+/** Exchange OAuth authorization code for a Supabase session (callback route). */
+export async function exchangeOAuthCode(
+	supabase: SupabaseClient,
+	code: string
+): Promise<{ ok: boolean; message: string; user: SessionUser | null }> {
+	const { error } = await supabase.auth.exchangeCodeForSession(code);
+	if (error) {
+		return { ok: false, message: error.message, user: null };
+	}
+
+	const user = await getSession(supabase);
+	return { ok: true, message: 'Signed in', user };
+}
+
+export async function signOut(supabase: SupabaseClient | null, cookies: Cookies): Promise<void> {
+	if (supabase) {
+		await supabase.auth.signOut();
+	}
+	clearSessionCookie(cookies);
+}
+
+// --- Mock session fallback (no Supabase env) ---
 
 export function parseSessionCookie(raw: string | undefined): SessionUser | null {
 	if (!raw) return null;
@@ -99,7 +146,11 @@ export function clearSessionCookie(cookies: Cookies): void {
 	cookies.delete(SESSION_COOKIE, { path: '/' });
 }
 
-export function createMockUser(email: string, name: string, role: SessionUser['role'] = 'customer'): SessionUser {
+export function createMockUser(
+	email: string,
+	name: string,
+	role: SessionUser['role'] = 'customer'
+): SessionUser {
 	return {
 		id: `mock-${Date.now()}`,
 		email,

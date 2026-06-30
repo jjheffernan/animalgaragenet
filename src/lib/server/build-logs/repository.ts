@@ -166,6 +166,11 @@ export async function listPendingBuildLogs(): Promise<BuildLog[]> {
 	return data.map(rowToLog);
 }
 
+/** @internal test-only */
+export function _resetMockStoreForTests(): void {
+	mockStore.clear();
+}
+
 export async function moderateBuildLog(
 	id: string,
 	decision: 'approved' | 'rejected',

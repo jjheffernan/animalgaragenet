@@ -42,11 +42,12 @@ if git grep -n -E 'SUPABASE_SERVICE_ROLE_KEY\s*=\s*[^y\s]|AWS_SECRET_ACCESS_KEY\
 	fail=1
 fi
 
-# Service role must not appear outside server-only paths
+# Service role must not appear outside server-only paths (CI workflows pass secrets by name)
 if git grep -n 'SUPABASE_SERVICE_ROLE_KEY' -- \
 	':!src/lib/server/**' \
 	':!scripts/**' \
 	':!supabase/migrations/**' \
+	':!.github/workflows/**' \
 	':!*.md' ':!docs/' ':!*.example' ':!.env.test' \
 	2>/dev/null; then
 	echo "ERROR: SUPABASE_SERVICE_ROLE_KEY referenced outside server-only paths" >&2

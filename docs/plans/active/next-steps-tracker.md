@@ -15,7 +15,7 @@ Canonical implementer queue reconciled from [STATUS.md](../../STATUS.md), [AUDIT
 
 | Bucket | Count | Meaning |
 | ------ | ----: | ------- |
-| **Unblocked** | 7 | Can land in-repo on `dev` without Netlify/Saleor/Stripe dashboard access |
+| **Unblocked** | 1 | Can land in-repo on `dev` without Netlify/Saleor/Stripe dashboard access |
 | **Ops-blocked** | 19 | Requires env vars, migrations on production Supabase, or external console work |
 
 _Audit ID rows (AUD-P*) also appear in [AUDIT-REMEDIATION.md](../AUDIT-REMEDIATION.md). Do not close AUD rows here without updating that file._

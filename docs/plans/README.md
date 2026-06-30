@@ -11,7 +11,7 @@
 
 | Plan                                                | Status                   | Notes                                                |
 | --------------------------------------------------- | ------------------------ | ---------------------------------------------------- |
-| [ACTIVE-SWARM-EXECUTION.md](./active/ACTIVE-SWARM-EXECUTION.md) | Active — swarm batch slots A–D (52 rows; dev status sync) |
+| [ACTIVE-SWARM-EXECUTION.md](./active/ACTIVE-SWARM-EXECUTION.md) | Active — swarm inventory | 59 rows · batch slots A–D · ops-blocked flagged |
 | [next-steps-tracker.md](./active/next-steps-tracker.md) | Active — consolidated implementer queue (unblocked vs ops) |
 | [inspiration-polish-tracker.md](./active/inspiration-polish-tracker.md) | Active — canonical inspiration + polish + AUDIT tracker |
 | [ponytail-audit-tracker.md](./active/ponytail-audit-tracker.md) | Active — server LOC/dedupe audit (P3 open) |

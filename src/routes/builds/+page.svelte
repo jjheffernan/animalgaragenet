@@ -2,14 +2,16 @@
 	import { resolve } from '$app/paths';
 	import SectionHeading from '$lib/components/shared/SectionHeading.svelte';
 	import AnimatedReveal from '$lib/components/shared/AnimatedReveal.svelte';
+	import PageMeta from '$lib/components/shared/PageMeta.svelte';
 	import PaginatedListCanvas from '$lib/components/catalog/PaginatedListCanvas.svelte';
 
 	let { data } = $props();
 </script>
 
-<svelte:head>
-	<title>Builds — Animal Garage</title>
-</svelte:head>
+<PageMeta
+	title="Builds — Animal Garage"
+	description="Real cars, real mods, real stories from the squad."
+/>
 
 <section class="border-b border-zinc-800 bg-zinc-900/50 py-16">
 	<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">

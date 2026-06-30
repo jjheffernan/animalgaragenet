@@ -5,6 +5,7 @@
 	import { locale } from '$lib/stores/locale.svelte';
 	import LocaleSelector from '$lib/components/navigation/LocaleSelector.svelte';
 	import AnimatedReveal from '$lib/components/shared/AnimatedReveal.svelte';
+	import PageMeta from '$lib/components/shared/PageMeta.svelte';
 	import MiniProductRow from '$lib/components/catalog/MiniProductRow.svelte';
 	import VariantSelector from '$lib/components/catalog/VariantSelector.svelte';
 	import NotifyMeButton from '$lib/components/catalog/NotifyMeButton.svelte';
@@ -47,11 +48,20 @@
 	const images = $derived(
 		product.media.length > 0 ? product.media : product.thumbnail ? [product.thumbnail] : []
 	);
+
+	const productDescription = $derived(
+		product.description?.trim() || `${product.name} — shop Animal Garage merch.`
+	);
+	const productOgImage = $derived(
+		product.thumbnail?.url ?? product.media[0]?.url ?? undefined
+	);
 </script>
 
-<svelte:head>
-	<title>{product.name} — Animal Garage</title>
-</svelte:head>
+<PageMeta
+	title={`${product.name} — Animal Garage`}
+	description={productDescription}
+	image={productOgImage}
+/>
 
 <section class="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
 	<nav class="mb-8 text-sm text-zinc-500">

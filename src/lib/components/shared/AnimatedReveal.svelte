@@ -1,5 +1,6 @@
 <script lang="ts">
 	import type { Snippet } from 'svelte';
+	import { prefersReducedMotion } from '$lib/motion/prefers-reduced-motion';
 
 	interface Props {
 		children: Snippet;
@@ -11,6 +12,11 @@
 	let visible = $state(false);
 
 	$effect(() => {
+		if (prefersReducedMotion()) {
+			visible = true;
+			return;
+		}
+
 		const timer = setTimeout(() => {
 			visible = true;
 		}, delay);
@@ -34,5 +40,13 @@
 	.reveal-visible {
 		opacity: 1;
 		transform: translateY(0);
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.reveal {
+			opacity: 1;
+			transform: none;
+			transition: none;
+		}
 	}
 </style>

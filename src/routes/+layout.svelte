@@ -6,6 +6,11 @@
 	import Header from '$lib/components/layout/Header.svelte';
 	import Footer from '$lib/components/layout/Footer.svelte';
 	import { isSupportedLocale } from '$lib/i18n/locale';
+	import {
+		DEFAULT_SITE_DESCRIPTION,
+		SITE_NAME,
+		defaultOgImageUrl
+	} from '$lib/seo/site-meta';
 	import { garage } from '$lib/stores/garage.svelte';
 	import { garageXp } from '$lib/stores/garage-xp.svelte';
 	import { locale } from '$lib/stores/locale.svelte';
@@ -34,11 +39,12 @@
 
 <svelte:head>
 	<link rel="icon" href={favicon} />
-	<title>Animal Garage</title>
-	<meta
-		name="description"
-		content="Animal Garage — automotive brand merchandising, media, and culture."
-	/>
+	<title>{SITE_NAME}</title>
+	<meta name="description" content={DEFAULT_SITE_DESCRIPTION} />
+	<meta property="og:site_name" content={SITE_NAME} />
+	<meta property="og:type" content="website" />
+	<meta property="og:image" content={defaultOgImageUrl()} />
+	<meta name="twitter:card" content="summary_large_image" />
 </svelte:head>
 
 <div class="flex min-h-screen flex-col bg-zinc-950 text-zinc-100">

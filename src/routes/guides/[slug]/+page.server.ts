@@ -1,8 +1,10 @@
 import { error } from '@sveltejs/kit';
+import { setGhostDetailCacheHeaders } from '$lib/server/ghost/cache-headers';
 import { getGuide, listGuides } from '$lib/server/ghost/posts';
 import type { PageServerLoad } from './$types';
 
-export const load: PageServerLoad = async ({ params }) => {
+export const load: PageServerLoad = async ({ params, setHeaders }) => {
+	setGhostDetailCacheHeaders(setHeaders);
 	const guide = await getGuide(params.slug);
 	if (!guide) error(404, 'Guide not found');
 

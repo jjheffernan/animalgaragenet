@@ -2,14 +2,26 @@
 	import { resolve } from '$app/paths';
 	import MiniProductRow from '$lib/components/catalog/MiniProductRow.svelte';
 	import AnimatedReveal from '$lib/components/shared/AnimatedReveal.svelte';
+	import PageMeta from '$lib/components/shared/PageMeta.svelte';
+	import { metaDescriptionFromText } from '$lib/seo/site-meta';
 
 	let { data } = $props();
 	let selectedPhoto = $state(0);
+
+	const buildDescription = $derived(
+		metaDescriptionFromText(
+			data.build.description ||
+				`${data.build.year} ${data.build.make} ${data.build.model} build thread.`
+		)
+	);
+	const buildOgImage = $derived(data.build.photos[0] ?? undefined);
 </script>
 
-<svelte:head>
-	<title>{data.build.title} — Animal Garage Builds</title>
-</svelte:head>
+<PageMeta
+	title={`${data.build.title} — Animal Garage Builds`}
+	description={buildDescription}
+	image={buildOgImage}
+/>
 
 <section class="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
 	<nav class="mb-8 text-sm text-zinc-500">

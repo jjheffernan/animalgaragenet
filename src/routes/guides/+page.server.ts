@@ -1,4 +1,5 @@
 import { paginateFromUrl } from '$lib/pagination';
+import { setGhostListCacheHeaders } from '$lib/server/ghost/cache-headers';
 import {
 	ALL_GUIDE_FILTER,
 	filterGuidesByCategory,
@@ -9,7 +10,8 @@ import {
 import { listGuides } from '$lib/server/ghost/posts';
 import type { PageServerLoad } from './$types';
 
-export const load: PageServerLoad = async ({ url }) => {
+export const load: PageServerLoad = async ({ url, setHeaders }) => {
+	setGhostListCacheHeaders(setHeaders);
 	const filterOptions = await getGuideFilterOptions();
 	const category = resolveGuideFilter(url.searchParams.get('category'), filterOptions.categories);
 	const topicOptions =

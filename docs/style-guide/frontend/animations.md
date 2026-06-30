@@ -80,7 +80,11 @@ See [archive/animation-media.md](../../archive/animation-media.md) for planned e
 
 ## Reduced motion
 
-**Gap (planned):** Wrap animations in `@media (prefers-reduced-motion: reduce)` or skip `AnimatedReveal` delays. Not yet implemented — add when enhancing motion.
+`AnimatedReveal` and global `scroll-behavior: smooth` respect `prefers-reduced-motion: reduce`:
+
+- `AnimatedReveal` skips delay timers and shows content immediately when reduced motion is preferred.
+- Scoped CSS disables opacity/transform transitions under the media query.
+- `layout.css` sets `scroll-behavior: auto` when reduced motion is preferred.
 
 Guideline: when adding new animations, always respect `prefers-reduced-motion: reduce` by disabling transforms and reducing duration to 0.
 

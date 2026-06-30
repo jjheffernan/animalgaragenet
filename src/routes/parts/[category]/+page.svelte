@@ -5,13 +5,15 @@
 	import ProductGrid from '$lib/components/catalog/ProductGrid.svelte';
 	import PaginatedListCanvas from '$lib/components/catalog/PaginatedListCanvas.svelte';
 	import AnimatedReveal from '$lib/components/shared/AnimatedReveal.svelte';
+	import PageMeta from '$lib/components/shared/PageMeta.svelte';
 
 	let { data } = $props();
 </script>
 
-<svelte:head>
-	<title>{data.category.name} Parts — Animal Garage</title>
-</svelte:head>
+<PageMeta
+	title={`${data.category.name} Parts — Animal Garage`}
+	description={`Shop ${data.category.name.toLowerCase()} parts for your build.`}
+/>
 
 <section class="border-b border-zinc-800 bg-zinc-900/50 py-16">
 	<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">

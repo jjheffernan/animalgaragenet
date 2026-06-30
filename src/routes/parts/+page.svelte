@@ -4,13 +4,15 @@
 	import ProductGrid from '$lib/components/catalog/ProductGrid.svelte';
 	import PaginatedListCanvas from '$lib/components/catalog/PaginatedListCanvas.svelte';
 	import AnimatedReveal from '$lib/components/shared/AnimatedReveal.svelte';
+	import PageMeta from '$lib/components/shared/PageMeta.svelte';
 
 	let { data } = $props();
 </script>
 
-<svelte:head>
-	<title>Parts — Animal Garage</title>
-</svelte:head>
+<PageMeta
+	title="Parts — Animal Garage"
+	description="Wheels, suspension, exhaust, and everything in between."
+/>
 
 <section class="border-b border-zinc-800 bg-zinc-900/50 py-16">
 	<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">

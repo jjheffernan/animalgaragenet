@@ -5,6 +5,7 @@
 	import UGCWall from '$lib/components/content/UGCWall.svelte';
 	import VideoGrid from '$lib/components/video/VideoGrid.svelte';
 	import AnimatedReveal from '$lib/components/shared/AnimatedReveal.svelte';
+	import PageMeta from '$lib/components/shared/PageMeta.svelte';
 	import PaginatedListCanvas from '$lib/components/catalog/PaginatedListCanvas.svelte';
 	import MediaFilterTabs from '$lib/components/content/MediaFilterTabs.svelte';
 	import CatalogRibbonShell from '$lib/components/catalog/CatalogRibbonShell.svelte';
@@ -12,9 +13,10 @@
 	let { data } = $props();
 </script>
 
-<svelte:head>
-	<title>Media — Animal Garage</title>
-</svelte:head>
+<PageMeta
+	title="Media — Animal Garage"
+	description="Builds, events, and behind-the-scenes from the Animal Garage crew."
+/>
 
 <section class="border-b border-zinc-800 bg-zinc-900/50 py-16">
 	<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">

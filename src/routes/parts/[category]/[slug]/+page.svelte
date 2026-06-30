@@ -4,6 +4,8 @@
 	import { cart } from '$lib/stores/cart.svelte';
 	import LocaleSelector from '$lib/components/navigation/LocaleSelector.svelte';
 	import AnimatedReveal from '$lib/components/shared/AnimatedReveal.svelte';
+	import PageMeta from '$lib/components/shared/PageMeta.svelte';
+	import { metaDescriptionFromText } from '$lib/seo/site-meta';
 	import MiniProductRow from '$lib/components/catalog/MiniProductRow.svelte';
 	import PriceDisplay from '$lib/components/catalog/PriceDisplay.svelte';
 	import CatalogKindBadge from '$lib/components/catalog/CatalogKindBadge.svelte';
@@ -55,11 +57,20 @@
 		}
 		return [...groups.values()].map(formatFitmentGroup);
 	});
+
+	const productDescription = $derived(
+		metaDescriptionFromText(product.description || `${product.name} — Animal Garage parts.`)
+	);
+	const productOgImage = $derived(
+		product.thumbnail?.url ?? product.media[0]?.url ?? undefined
+	);
 </script>
 
-<svelte:head>
-	<title>{product.name} — Animal Garage Parts</title>
-</svelte:head>
+<PageMeta
+	title={`${product.name} — Animal Garage Parts`}
+	description={productDescription}
+	image={productOgImage}
+/>
 
 <section class="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
 	<nav class="mb-8 text-sm text-zinc-500">

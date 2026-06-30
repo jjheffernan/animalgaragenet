@@ -20,12 +20,16 @@
 			<span class="mx-2">/</span>
 			<span class="text-zinc-300">{data.category.name}</span>
 		</nav>
-		<h1 class="font-display text-4xl font-bold uppercase tracking-wider text-white">{data.category.name}</h1>
+		<h1 class="font-display text-4xl font-bold uppercase tracking-wider text-white">
+			{data.category.name}
+		</h1>
 		{#if data.category.description}
 			<p class="mt-2 max-w-2xl text-zinc-400">{data.category.description}</p>
 		{/if}
 		{#if data.filterLabel}
-			<p class="mt-4 rounded-sm border border-red-900/50 bg-red-950/20 px-4 py-2 text-sm text-red-400">
+			<p
+				class="mt-4 rounded-sm border border-red-900/50 bg-red-950/20 px-4 py-2 text-sm text-red-400"
+			>
 				Filtered by: <strong class="text-white">{data.filterLabel}</strong>
 			</p>
 		{/if}
@@ -39,7 +43,10 @@
 		</AnimatedReveal>
 		<div class="flex flex-wrap gap-3">
 			{#each data.category.children as child (child.id)}
-				<a href={resolve(`/parts/${child.slug}`)} class="rounded-sm border border-zinc-700 px-4 py-2 text-sm font-bold uppercase tracking-wider text-zinc-300 hover:border-red-600 hover:text-white">
+				<a
+					href={resolve(`/parts/${child.slug}`)}
+					class="rounded-sm border border-zinc-700 px-4 py-2 text-sm font-bold uppercase tracking-wider text-zinc-300 hover:border-red-600 hover:text-white"
+				>
 					{child.name}
 				</a>
 			{/each}
@@ -62,9 +69,9 @@
 				<AnimatedReveal>
 					<SectionHeading title="Products" subtitle="{data.pagination.total} items" />
 				</AnimatedReveal>
-			<ListControls pagination={data.pagination} view={data.view} placement="top" />
-			<ProductGrid products={data.products} view={data.view} />
-			<ListControls pagination={data.pagination} view={data.view} placement="bottom" />
+				<ListControls pagination={data.pagination} view={data.view} placement="top" />
+				<ProductGrid products={data.products} view={data.view} />
+				<ListControls pagination={data.pagination} view={data.view} placement="bottom" />
 			</div>
 		</div>
 	</section>

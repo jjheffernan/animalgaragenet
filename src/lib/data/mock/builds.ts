@@ -12,7 +12,13 @@ export const mockBuilds: BuildThread[] = [
 		model: 'Civic',
 		submodel: 'Type R',
 		photos: [photo('agbuild-1a'), photo('agbuild-1b'), photo('agbuild-1c'), photo('agbuild-1d')],
-		modList: ['BC Racing BR Coilovers', 'Enkei RPF1 18×9.5', 'Borla S-Type Exhaust', 'APR Carbon Lip', 'StopTech BBK'],
+		modList: [
+			'BC Racing BR Coilovers',
+			'Enkei RPF1 18×9.5',
+			'Borla S-Type Exhaust',
+			'APR Carbon Lip',
+			'StopTech BBK'
+		],
 		featured: true,
 		description: 'Full send FK8 build — track days, canyon runs, and daily duty.',
 		linkedProductIds: ['p1', 'p4', 'p8', 'p17']
@@ -26,7 +32,12 @@ export const mockBuilds: BuildThread[] = [
 		model: 'WRX',
 		submodel: 'Premium',
 		photos: [photo('agbuild-2a'), photo('agbuild-2b'), photo('agbuild-2c')],
-		modList: ['Invidia N1 Cat-Back', 'AEM Cold Air Intake', 'Mishimoto Intercooler', 'BC DS Coilovers'],
+		modList: [
+			'Invidia N1 Cat-Back',
+			'AEM Cold Air Intake',
+			'Mishimoto Intercooler',
+			'BC DS Coilovers'
+		],
 		featured: true,
 		description: '400 WHP daily driver that still gets 28 MPG on the highway.',
 		linkedProductIds: ['p5', 'p9', 'p12', 'p13']

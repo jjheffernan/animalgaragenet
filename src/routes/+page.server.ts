@@ -1,4 +1,8 @@
-import { getFeaturedPublicBuilds, listPublicBuilds, getPublicBuildBySlug } from '$lib/server/builds/public';
+import {
+	getFeaturedPublicBuilds,
+	listPublicBuilds,
+	getPublicBuildBySlug
+} from '$lib/server/builds/public';
 import { mockUGC } from '$lib/data/mock/ugc';
 import { mockVideos } from '$lib/data/mock/videos';
 import { mockBrands } from '$lib/data/mock/brands';
@@ -31,8 +35,7 @@ export const load: PageServerLoad = async () => {
 
 	const ugcFromTestimonials = testimonialsToUgcItems(approvedTestimonials);
 	const supabaseConfigured = createAdminClient() !== null;
-	const ugc =
-		supabaseConfigured && ugcFromTestimonials.length > 0 ? ugcFromTestimonials : mockUGC;
+	const ugc = supabaseConfigured && ugcFromTestimonials.length > 0 ? ugcFromTestimonials : mockUGC;
 
 	return {
 		collections,

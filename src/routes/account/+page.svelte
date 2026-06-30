@@ -89,7 +89,10 @@
 		</ul>
 	{:else}
 		<div class="mt-4">
-			<EmptyState title="No vehicles saved" description="Add your ride from the homepage vehicle selector." />
+			<EmptyState
+				title="No vehicles saved"
+				description="Add your ride from the homepage vehicle selector."
+			/>
 		</div>
 	{/if}
 </section>

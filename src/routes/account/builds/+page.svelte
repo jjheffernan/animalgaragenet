@@ -14,7 +14,9 @@
 <div class="flex flex-wrap items-center justify-between gap-4">
 	<div>
 		<h1 class="font-display text-2xl font-bold uppercase text-white">Build Logs</h1>
-		<p class="mt-1 text-sm text-zinc-400">Draft, edit, and submit builds for Garage Squad review.</p>
+		<p class="mt-1 text-sm text-zinc-400">
+			Draft, edit, and submit builds for Garage Squad review.
+		</p>
 	</div>
 	<a
 		href={resolve('/account/builds/new')}
@@ -36,7 +38,8 @@
 						<p class="mt-1 text-sm text-zinc-500">{log.year} {log.make} {log.model}</p>
 					</div>
 					<span
-						class="rounded-sm px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider {log.status === 'approved'
+						class="rounded-sm px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider {log.status ===
+						'approved'
 							? 'bg-emerald-950 text-emerald-400'
 							: log.status === 'pending'
 								? 'bg-amber-950 text-amber-400'
@@ -48,9 +51,13 @@
 					</span>
 				</div>
 				<div class="mt-3 flex flex-wrap gap-3 text-sm">
-					<a href={resolve(`/account/builds/${log.id}`)} class="text-red-500 hover:text-red-400">Edit</a>
+					<a href={resolve(`/account/builds/${log.id}`)} class="text-red-500 hover:text-red-400"
+						>Edit</a
+					>
 					{#if log.status === 'approved' && log.slug}
-						<a href={resolve(`/builds/${log.slug}`)} class="text-zinc-400 hover:text-white">View published</a>
+						<a href={resolve(`/builds/${log.slug}`)} class="text-zinc-400 hover:text-white"
+							>View published</a
+						>
 					{/if}
 				</div>
 			</li>

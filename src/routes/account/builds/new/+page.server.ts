@@ -47,7 +47,12 @@ export const actions: Actions = {
 			...fields,
 			year: Number.parseInt(fields.year, 10)
 		});
-		await updateBuildLog(log.id, user.id, { ...fields, year: Number.parseInt(fields.year, 10) }, 'pending');
+		await updateBuildLog(
+			log.id,
+			user.id,
+			{ ...fields, year: Number.parseInt(fields.year, 10) },
+			'pending'
+		);
 
 		return { success: true, message: 'Build log submitted for review.' };
 	}

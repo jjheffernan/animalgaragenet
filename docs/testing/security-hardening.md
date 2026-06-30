@@ -10,18 +10,18 @@ Audit and hardening pass (2026-06-30). Complements `docs/testing/external-depend
 
 ## Repository authorization
 
-| Path | userId source | Status |
-|------|---------------|--------|
-| `account/builds/*` | `locals.session.id` | OK — never from form body |
-| `loyalty` (testimonials) | `locals.session.id` | OK |
-| `forms/submit.ts` | `options.userId` only (server callers) | Documented; no route passes client-supplied userId today |
+| Path                     | userId source                          | Status                                                   |
+| ------------------------ | -------------------------------------- | -------------------------------------------------------- |
+| `account/builds/*`       | `locals.session.id`                    | OK — never from form body                                |
+| `loyalty` (testimonials) | `locals.session.id`                    | OK                                                       |
+| `forms/submit.ts`        | `options.userId` only (server callers) | Documented; no route passes client-supplied userId today |
 
 Build log updates use `.eq('user_id', userId)` on all Supabase writes.
 
 ## Cookies
 
-| Cookie | Change | Risk |
-|--------|--------|------|
+| Cookie          | Change           | Risk                                                                                                                  |
+| --------------- | ---------------- | --------------------------------------------------------------------------------------------------------------------- |
 | `ag-mock-promo` | `httpOnly: true` | Was readable by JS; client never read it (hydrated via server load + API response). Tightened without cart UX change. |
 
 Mock promo state is non-sensitive (discount label/percent for dev catalog); httpOnly prevents trivial XSS cookie tampering.
@@ -56,12 +56,12 @@ Mock promo state is non-sensitive (discount label/percent for dev catalog); http
 
 ## Deferred
 
-| Item | Reason |
-|------|--------|
-| Distributed rate limiting (Redis/Netlify edge) | In-memory limit is per-instance; sufficient for mock promo abuse |
-| OTP / magic-link rate limits | Auth provider responsibility; not in this pass |
-| `contact_submissions` / `wholesale_inquiries` DB persistence | Still stubbed in `submitFormStub` |
-| RLS contract integration tests | Planned in external-dependencies registry |
-| `scripts/check-secrets.sh` alignment | Separate ops task |
+| Item                                                         | Reason                                                           |
+| ------------------------------------------------------------ | ---------------------------------------------------------------- |
+| Distributed rate limiting (Redis/Netlify edge)               | In-memory limit is per-instance; sufficient for mock promo abuse |
+| OTP / magic-link rate limits                                 | Auth provider responsibility; not in this pass                   |
+| `contact_submissions` / `wholesale_inquiries` DB persistence | Still stubbed in `submitFormStub`                                |
+| RLS contract integration tests                               | Planned in external-dependencies registry                        |
+| `scripts/check-secrets.sh` alignment                         | Separate ops task                                                |
 
 Last updated: 2026-06-30

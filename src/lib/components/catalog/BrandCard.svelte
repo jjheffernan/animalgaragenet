@@ -20,16 +20,16 @@
 	<img
 		src={brand.logoUrl}
 		alt={brand.name}
-		class="{compact
+		class={compact
 			? 'h-9 w-9 shrink-0 rounded-full object-cover ring-1 ring-zinc-700'
-			: 'mx-auto h-16 w-16 rounded-full object-cover'}"
+			: 'mx-auto h-16 w-16 rounded-full object-cover'}
 		loading="lazy"
 	/>
 	<div class={compact ? 'min-w-0 flex-1' : ''}>
 		<h3
-			class="{compact
+			class={compact
 				? 'truncate text-xs font-bold uppercase tracking-wider text-white group-hover:text-red-400'
-				: 'mt-3 text-center text-sm font-bold uppercase tracking-wider text-white group-hover:text-red-400'}"
+				: 'mt-3 text-center text-sm font-bold uppercase tracking-wider text-white group-hover:text-red-400'}
 		>
 			{brand.name}
 		</h3>

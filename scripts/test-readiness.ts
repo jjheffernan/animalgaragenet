@@ -252,12 +252,17 @@ async function probeYoutubeSync(): Promise<ProbeResult> {
 	}
 }
 
-async function probeOAuthProvider(provider: (typeof OAUTH_PROVIDERS)[number]): Promise<ProbeResult> {
+async function probeOAuthProvider(
+	provider: (typeof OAUTH_PROVIDERS)[number]
+): Promise<ProbeResult> {
 	const id = `oauth-${provider}`;
 	const requiredEnv = ['PUBLIC_SUPABASE_URL', 'PUBLIC_SUPABASE_ANON_KEY'];
 	const unset = missing(...requiredEnv);
 	if (unset.length) {
-		return skip(id, `Missing: ${unset.join(', ')}`, [...requiredEnv, 'Supabase dashboard OAuth config']);
+		return skip(id, `Missing: ${unset.join(', ')}`, [
+			...requiredEnv,
+			'Supabase dashboard OAuth config'
+		]);
 	}
 
 	const url = env('PUBLIC_SUPABASE_URL').replace(/\/$/, '');
@@ -357,7 +362,9 @@ function printResults(results: ProbeResult[]): void {
 	const failed = results.filter((r) => r.status === 'fail').length;
 	const skipped = results.filter((r) => r.status === 'skip').length;
 
-	console.log(`\n${passed} passed, ${failed} failed, ${skipped} skipped (${results.length} total)\n`);
+	console.log(
+		`\n${passed} passed, ${failed} failed, ${skipped} skipped (${results.length} total)\n`
+	);
 }
 
 const isMain = process.argv[1] === fileURLToPath(import.meta.url);

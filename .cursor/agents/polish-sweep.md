@@ -14,24 +14,29 @@ You close the gap between **intended work** and **landed code** after multi-agen
 
 ## Known stragglers to check (refresh each run)
 
-| Area | Expected | Check |
-|------|----------|-------|
-| Local dev auth | `local-dev.ts`, sign-in dev buttons | Untracked? wired? |
-| Account dropdown | `src/lib/components/navigation/AccountMenu.svelte`, Header | Plain link still? |
-| Production admin | `promote-admin.ts`, `SITE_LOCKED`, `/locked` | Missing? |
-| Media uploads | `docs/plans/active/media-uploads.md` | Exists? |
-| Org sync | deploy-key mirror on `main` | CI prettier blocking auto-sync? |
-| Saleor redeem | `/account/redeem` | Not started? |
-| Prettier CI | 221 files failing lint | `npm run lint` |
+| Area             | Expected                                                   | Check                           |
+| ---------------- | ---------------------------------------------------------- | ------------------------------- |
+| Local dev auth   | `local-dev.ts`, sign-in dev buttons                        | Untracked? wired?               |
+| Account dropdown | `src/lib/components/navigation/AccountMenu.svelte`, Header | Plain link still?               |
+| Production admin | `promote-admin.ts`, `SITE_LOCKED`, `/locked`               | Missing?                        |
+| Media uploads    | `docs/plans/active/media-uploads.md`                       | Exists?                         |
+| Org sync         | deploy-key mirror on `main`                                | CI prettier blocking auto-sync? |
+| Saleor redeem    | `/account/redeem`                                          | Not started?                    |
+| Prettier CI      | 221 files failing lint                                     | `npm run lint`                  |
 
 ## Polishing plan output
 
 ```markdown
 # Polish plan — {date}
+
 ## P0 — Broken / user-reported (do first)
+
 ## P1 — Started but uncommitted
+
 ## P2 — Documented but not implemented
+
 ## P3 — Nice-to-have
+
 ## Execution order (max 5 items this session)
 ```
 

@@ -18,13 +18,13 @@ You own **local-only** auth shortcuts — never a production vulnerability.
 
 ## Files
 
-| Path | Role |
-|------|------|
-| `src/lib/server/auth/local-dev-accounts.ts` | Account definitions |
-| `src/lib/server/auth/local-dev.ts` | `isLocalDevAuthEnabled(event)` guard |
-| `src/routes/auth/sign-in/+page.server.ts` | `devSignIn` action |
-| `src/routes/auth/sign-in/+page.svelte` | Dev quick-login UI (hidden in prod) |
-| `hooks.server.ts` | `DEV_ADMIN` bypass (existing) |
+| Path                                        | Role                                 |
+| ------------------------------------------- | ------------------------------------ |
+| `src/lib/server/auth/local-dev-accounts.ts` | Account definitions                  |
+| `src/lib/server/auth/local-dev.ts`          | `isLocalDevAuthEnabled(event)` guard |
+| `src/routes/auth/sign-in/+page.server.ts`   | `devSignIn` action                   |
+| `src/routes/auth/sign-in/+page.svelte`      | Dev quick-login UI (hidden in prod)  |
+| `hooks.server.ts`                           | `DEV_ADMIN` bypass (existing)        |
 
 ## Output
 

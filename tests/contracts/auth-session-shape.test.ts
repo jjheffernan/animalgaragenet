@@ -29,9 +29,9 @@ describe('supabase-auth session mapping contracts', () => {
 
 	it('defaults to customer when app_metadata role is missing or invalid', () => {
 		expect(mapSupabaseUser(supabaseUserFixture()).role).toBe('customer');
-		expect(
-			mapSupabaseUser(supabaseUserFixture({ app_metadata: { role: 'superuser' } })).role
-		).toBe('customer');
+		expect(mapSupabaseUser(supabaseUserFixture({ app_metadata: { role: 'superuser' } })).role).toBe(
+			'customer'
+		);
 	});
 
 	it('still uses user_metadata for display name only', () => {

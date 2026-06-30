@@ -8,7 +8,8 @@ export const mockBrands: Brand[] = [
 		name: 'Enkei',
 		slug: 'enkei',
 		logoUrl: logo('agbrand-enkei'),
-		description: 'Japanese wheel manufacturer since 1950. Home of the legendary RPF1 and MAT Process forging.',
+		description:
+			'Japanese wheel manufacturer since 1950. Home of the legendary RPF1 and MAT Process forging.',
 		heroImage: 'https://picsum.photos/seed/agbrand-enkei-hero/1200/400'
 	},
 	{
@@ -16,7 +17,8 @@ export const mockBrands: Brand[] = [
 		name: 'BC Racing',
 		slug: 'bc-racing',
 		logoUrl: logo('agbrand-bc'),
-		description: 'Affordable coilovers with 30-way damping adjustment. BR, DS, and ER series for every budget.',
+		description:
+			'Affordable coilovers with 30-way damping adjustment. BR, DS, and ER series for every budget.',
 		heroImage: 'https://picsum.photos/seed/agbrand-bc-hero/1200/400'
 	},
 	{
@@ -24,7 +26,8 @@ export const mockBrands: Brand[] = [
 		name: 'Borla',
 		slug: 'borla',
 		logoUrl: logo('agbrand-borla'),
-		description: 'American exhaust pioneers. S-Type, ATAK, and Touring systems for street and track.',
+		description:
+			'American exhaust pioneers. S-Type, ATAK, and Touring systems for street and track.',
 		heroImage: 'https://picsum.photos/seed/agbrand-borla-hero/1200/400'
 	},
 	{
@@ -56,7 +59,8 @@ export const mockBrands: Brand[] = [
 		name: 'Mishimoto',
 		slug: 'mishimoto',
 		logoUrl: logo('agbrand-mishi'),
-		description: 'Performance cooling, intercoolers, radiators, and oil coolers for enthusiast platforms.',
+		description:
+			'Performance cooling, intercoolers, radiators, and oil coolers for enthusiast platforms.',
 		heroImage: 'https://picsum.photos/seed/agbrand-mishi-hero/1200/400'
 	},
 	{

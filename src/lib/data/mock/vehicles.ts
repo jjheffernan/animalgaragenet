@@ -80,7 +80,12 @@ export function getYears(): number[] {
 	return VEHICLE_YEARS;
 }
 
-export function formatYmmQuery(year: number, make: string, model: string, submodel?: string): string {
+export function formatYmmQuery(
+	year: number,
+	make: string,
+	model: string,
+	submodel?: string
+): string {
 	const parts = [String(year), make, model];
 	if (submodel) parts.push(submodel);
 	return parts.join('-').toLowerCase().replace(/\s+/g, '-');

@@ -91,7 +91,10 @@ function assertCheckoutDisplayShape(checkout: CheckoutDisplay): void {
 	for (const key of CHECKOUT_LINE_KEYS) {
 		expect(checkout.lines[0]).toHaveProperty(key);
 	}
-	expect(checkout.subtotal).toMatchObject({ amount: expect.any(Number), currency: expect.any(String) });
+	expect(checkout.subtotal).toMatchObject({
+		amount: expect.any(Number),
+		currency: expect.any(String)
+	});
 	expect(checkout.lines[0]?.unitPrice).toMatchObject({
 		amount: expect.any(Number),
 		currency: expect.any(String)

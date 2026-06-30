@@ -6,10 +6,10 @@ Media delivery via object storage + CDN (planned). Prototype uses picsum placeho
 
 ## Environment variables
 
-| Category | Scope | Notes |
-| -------- | ----- | ----- |
+| Category              | Scope  | Notes                  |
+| --------------------- | ------ | ---------------------- |
 | `PUBLIC_CDN_BASE_URL` | Public | CDN base URL for media |
-| Object storage | Server | See `.env.example` |
+| Object storage        | Server | See `.env.example`     |
 
 ## URL patterns (planned)
 

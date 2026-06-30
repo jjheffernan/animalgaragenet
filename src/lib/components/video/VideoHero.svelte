@@ -27,7 +27,10 @@
 		style="background: repeating-linear-gradient(-45deg, transparent, transparent 10px, rgba(220,38,38,0.12) 10px, rgba(220,38,38,0.12) 11px)"
 		aria-hidden="true"
 	></div>
-	<div class="absolute inset-0 bg-gradient-to-b from-zinc-950 via-zinc-950/95 to-zinc-900/80" aria-hidden="true"></div>
+	<div
+		class="absolute inset-0 bg-gradient-to-b from-zinc-950 via-zinc-950/95 to-zinc-900/80"
+		aria-hidden="true"
+	></div>
 
 	<div class="relative mx-auto max-w-7xl px-4 py-12 sm:px-6 sm:py-16 lg:px-8">
 		<AnimatedReveal>
@@ -46,7 +49,9 @@
 						alt=""
 						class="h-full w-full object-cover transition duration-500 group-hover:scale-[1.02]"
 					/>
-					<div class="absolute inset-0 bg-gradient-to-t from-zinc-950/80 via-transparent to-transparent"></div>
+					<div
+						class="absolute inset-0 bg-gradient-to-t from-zinc-950/80 via-transparent to-transparent"
+					></div>
 					<div class="absolute inset-0 flex items-center justify-center">
 						<span
 							class="flex h-16 w-16 items-center justify-center rounded-full bg-red-600/90 text-white shadow-lg shadow-red-900/40 transition group-hover:scale-110 group-hover:bg-red-500"

@@ -68,9 +68,6 @@ export async function syncToDatabase(channelId: string, apiKey = ''): Promise<Sy
 }
 
 /** Cron / webhook entry point — wire to Vercel cron or Supabase pg_cron. */
-export async function syncAllChannels(
-	channelIds: string[],
-	apiKey: string
-): Promise<SyncResult[]> {
+export async function syncAllChannels(channelIds: string[], apiKey: string): Promise<SyncResult[]> {
 	return Promise.all(channelIds.map((id) => syncToDatabase(id, apiKey)));
 }

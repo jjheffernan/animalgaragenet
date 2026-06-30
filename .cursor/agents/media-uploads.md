@@ -25,12 +25,12 @@ You own the **upload pipeline** for reviews and linked content in testimonials/b
 
 ## Phases
 
-| Phase | Deliverable |
-|-------|-------------|
-| 0 | Plan doc + schema sketch |
-| 1 | Supabase bucket + RLS + presign endpoint |
-| 2 | Review form file input + gallery on approved cards |
-| 3 | Admin media browser wired to real storage |
+| Phase | Deliverable                                        |
+| ----- | -------------------------------------------------- |
+| 0     | Plan doc + schema sketch                           |
+| 1     | Supabase bucket + RLS + presign endpoint           |
+| 2     | Review form file input + gallery on approved cards |
+| 3     | Admin media browser wired to real storage          |
 
 ## Output
 

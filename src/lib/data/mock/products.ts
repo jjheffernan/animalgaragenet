@@ -85,9 +85,7 @@ function product(opts: ProductOpts): Product {
 		availableQuantity: soldOut ? 0 : (availableQuantity ?? 50),
 		tags,
 		productType,
-		compareAtPrice: compareAtPrice
-			? { amount: compareAtPrice, currency: 'USD' }
-			: undefined,
+		compareAtPrice: compareAtPrice ? { amount: compareAtPrice, currency: 'USD' } : undefined,
 		brand,
 		fitment
 	};
@@ -208,7 +206,8 @@ const handcraftedMockProducts: Product[] = [
 		slug: 'pit-crew-cap',
 		price: 32,
 		seed: 'ag-prod-9',
-		description: 'Structured snapback with embroidered pit crew patch and moisture-wicking headband.',
+		description:
+			'Structured snapback with embroidered pit crew patch and moisture-wicking headband.',
 		category: 'Headwear',
 		categorySlug: 'accessories',
 		tags: ['staff-pick'],
@@ -744,7 +743,8 @@ function padShopCatalog(base: Product[]): Product[] {
 	};
 
 	const teeCount = () =>
-		result.filter((p) => p.name.toLowerCase().includes('tee') || p.category?.slug === 'apparel').length;
+		result.filter((p) => p.name.toLowerCase().includes('tee') || p.category?.slug === 'apparel')
+			.length;
 	const sweatCount = () =>
 		result.filter(
 			(p) =>
@@ -753,12 +753,12 @@ function padShopCatalog(base: Product[]): Product[] {
 				p.name.toLowerCase().includes('crew')
 		).length;
 	const jacketCount = () => result.filter((p) => p.name.toLowerCase().includes('jacket')).length;
-	const headwearCount = () =>
-		result.filter((p) => p.category?.slug === 'headwear').length;
+	const headwearCount = () => result.filter((p) => p.category?.slug === 'headwear').length;
 	const accessoryCount = () =>
 		result.filter((p) => ['accessories', 'stickers'].includes(p.category?.slug ?? '')).length;
 	const homeCount = () =>
-		result.filter((p) => ['posters', 'home', 'accessories'].includes(p.category?.slug ?? '')).length;
+		result.filter((p) => ['posters', 'home', 'accessories'].includes(p.category?.slug ?? ''))
+			.length;
 	const autoCount = () =>
 		result.filter(
 			(p) =>

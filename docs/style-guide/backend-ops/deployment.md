@@ -45,10 +45,10 @@ Set all vars from `.env.example` in the hosting platform's env config:
 
 ## CI/CD
 
-| Workflow | Branch | Trigger | Purpose |
-| -------- | ------ | ------- | ------- |
-| `.github/workflows/ci.yml` | `dev` and `main` | Push/PR on this repo | Lint, typecheck, unit/e2e tests, build |
-| `.github/workflows/sync-org-main.yml` | **`main` only** | CI success on `main` push, or manual | Mirror `main` → organization deploy repo for Netlify |
+| Workflow                              | Branch           | Trigger                              | Purpose                                              |
+| ------------------------------------- | ---------------- | ------------------------------------ | ---------------------------------------------------- |
+| `.github/workflows/ci.yml`            | `dev` and `main` | Push/PR on this repo                 | Lint, typecheck, unit/e2e tests, build               |
+| `.github/workflows/sync-org-main.yml` | **`main` only**  | CI success on `main` push, or manual | Mirror `main` → organization deploy repo for Netlify |
 
 > **Note:** The org-sync workflow and `scripts/sync-org-mirror.sh` live on **`main`**, not `dev`. Merging `dev` → `main` brings sync changes into the personal repo; only then does CI on `main` push to the org mirror.
 
@@ -64,10 +64,10 @@ Personal repo is where you develop and run GitHub Actions. The org repo is a **r
 
 Auth uses an **org-repo deploy key** (GitHub Actions secret on the personal repo), not a PAT. Deploy keys cannot push `.github/workflows`, so the mirror builds an orphan snapshot **without** the workflows folder. Netlify does not need Actions on the org repo.
 
-| Where | What you see |
-| ----- | ------------ |
-| Organization deploy repo → Settings → Deploy keys | Deploy key title (public key fingerprint) |
-| Personal repo → Settings → Secrets → Actions | Secret **name** only — GitHub never shows secret values |
+| Where                                             | What you see                                            |
+| ------------------------------------------------- | ------------------------------------------------------- |
+| Organization deploy repo → Settings → Deploy keys | Deploy key title (public key fingerprint)               |
+| Personal repo → Settings → Secrets → Actions      | Secret **name** only — GitHub never shows secret values |
 
 ```bash
 ./scripts/setup-org-sync-auth.sh install   # first time, or rotate key
@@ -102,11 +102,11 @@ See [STATUS.md](../../STATUS.md) for the live tracker. Summary:
 
 Configure separate hosts via env vars (not hardcoded in docs):
 
-| Role | Env var |
-| ---- | ------- |
-| Storefront | `PUBLIC_SITE_URL` |
+| Role           | Env var                 |
+| -------------- | ----------------------- |
+| Storefront     | `PUBLIC_SITE_URL`       |
 | Saleor GraphQL | `PUBLIC_SALEOR_API_URL` |
-| Media CDN | `PUBLIC_CDN_BASE_URL` |
+| Media CDN      | `PUBLIC_CDN_BASE_URL`   |
 
 ## Security
 

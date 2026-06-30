@@ -10,7 +10,10 @@ function signInRequest(fields: Record<string, string>, hostname = 'localhost'): 
 	for (const [key, value] of Object.entries(fields)) {
 		formData.set(key, value);
 	}
-	const request = new Request(`http://${hostname}/auth/sign-in`, { method: 'POST', body: formData });
+	const request = new Request(`http://${hostname}/auth/sign-in`, {
+		method: 'POST',
+		body: formData
+	});
 	const cookies = {
 		get: () => undefined,
 		set: () => {},
@@ -97,9 +100,7 @@ describe('auth sign-up action', () => {
 
 	it('redirects mock users to account after sign-up', async () => {
 		await expect(
-			signUpActions.default(
-				signUpRequest({ email: 'new@example.com', name: 'New Driver' })
-			)
+			signUpActions.default(signUpRequest({ email: 'new@example.com', name: 'New Driver' }))
 		).rejects.toSatisfy((error: unknown) => isRedirect(error));
 	});
 });

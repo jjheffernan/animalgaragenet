@@ -123,7 +123,10 @@ function attributePlainText(
 	return attributes?.find((a) => a.attribute.slug === slug)?.values[0]?.plainText ?? undefined;
 }
 
-function attributeValueSlugs(attributes: SaleorAttribute[] | null | undefined, slug: string): string[] {
+function attributeValueSlugs(
+	attributes: SaleorAttribute[] | null | undefined,
+	slug: string
+): string[] {
 	const attr = attributes?.find((a) => a.attribute.slug === slug);
 	return (attr?.values ?? [])
 		.map((v) => v.slug ?? v.name.toLowerCase().replace(/\s+/g, '-'))

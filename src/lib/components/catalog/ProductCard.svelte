@@ -59,7 +59,9 @@
 			</span>
 		{/if}
 		{#if isPartProduct(product) && !isList}
-			<span class="absolute left-2 {soldOut ? 'top-9' : 'top-2'} {isSmall ? 'left-1 scale-90' : ''}">
+			<span
+				class="absolute left-2 {soldOut ? 'top-9' : 'top-2'} {isSmall ? 'left-1 scale-90' : ''}"
+			>
 				<CatalogKindBadge {product} />
 			</span>
 		{/if}
@@ -98,7 +100,9 @@
 			{/if}
 		{/if}
 	</div>
-	<div class="{isList ? 'flex min-w-0 flex-1 flex-col justify-center py-2' : isSmall ? 'p-2.5' : 'p-4'}">
+	<div
+		class={isList ? 'flex min-w-0 flex-1 flex-col justify-center py-2' : isSmall ? 'p-2.5' : 'p-4'}
+	>
 		{#if isList && isPartProduct(product)}
 			<div class="mb-1">
 				<CatalogKindBadge {product} />
@@ -114,7 +118,9 @@
 			</p>
 		{:else if product.category}
 			<p
-				class="font-medium uppercase tracking-wider text-red-500 {isSmall ? 'text-[10px]' : 'text-xs'}"
+				class="font-medium uppercase tracking-wider text-red-500 {isSmall
+					? 'text-[10px]'
+					: 'text-xs'}"
 			>
 				{product.category.name}
 			</p>
@@ -135,7 +141,9 @@
 			<PriceDisplay {product} />
 			{#if isList}
 				{#if product.tags?.includes('staff-pick')}
-					<span class="rounded-sm bg-red-600/20 px-2 py-0.5 text-[10px] font-bold uppercase text-red-400">
+					<span
+						class="rounded-sm bg-red-600/20 px-2 py-0.5 text-[10px] font-bold uppercase text-red-400"
+					>
 						Staff Pick
 					</span>
 				{/if}

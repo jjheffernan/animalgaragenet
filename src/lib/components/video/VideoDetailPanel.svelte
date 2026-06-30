@@ -76,7 +76,12 @@
 					onclick={close}
 				>
 					<svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+						<path
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							stroke-width="2"
+							d="M6 18L18 6M6 6l12 12"
+						/>
 					</svg>
 				</button>
 			</div>
@@ -112,7 +117,8 @@
 							</h3>
 							<div class="mt-4 grid gap-4 sm:grid-cols-2">
 								{#each products as product (product.id)}
-									{@const soldOut = !product.isAvailableForPurchase || product.availableQuantity === 0}
+									{@const soldOut =
+										!product.isAvailableForPurchase || product.availableQuantity === 0}
 									<article class="overflow-hidden rounded-sm border border-zinc-800 bg-zinc-900">
 										<a href={resolvePath(getProductPath(product))} class="block">
 											{#if product.thumbnail}
@@ -147,7 +153,8 @@
 														Add
 													</button>
 												{:else}
-													<span class="text-[10px] font-bold uppercase text-zinc-500">Sold out</span>
+													<span class="text-[10px] font-bold uppercase text-zinc-500">Sold out</span
+													>
 												{/if}
 											</div>
 										</div>
@@ -159,10 +166,16 @@
 
 					{#if related.length > 0}
 						<div>
-							<h3 class="text-xs font-bold uppercase tracking-widest text-zinc-400">Related videos</h3>
+							<h3 class="text-xs font-bold uppercase tracking-widest text-zinc-400">
+								Related videos
+							</h3>
 							<div class="mt-4 grid gap-4 sm:grid-cols-2">
 								{#each related as relatedVideo (relatedVideo.id)}
-									<VideoCard video={relatedVideo} onclick={() => openRelated(relatedVideo)} compact />
+									<VideoCard
+										video={relatedVideo}
+										onclick={() => openRelated(relatedVideo)}
+										compact
+									/>
 								{/each}
 							</div>
 						</div>

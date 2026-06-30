@@ -15,37 +15,37 @@ cp .env.example .env
 
 ## Public (browser-safe)
 
-| Variable | Default | Description |
-|----------|---------|-------------|
-| `PUBLIC_SITE_URL` | `http://localhost:5173` | Canonical site URL (magic links, OAuth redirects) |
-| `PUBLIC_CDN_BASE_URL` | `''` | CDN base URL for media |
-| `PUBLIC_SALEOR_API_URL` | `''` | Saleor GraphQL endpoint |
-| `PUBLIC_SUPABASE_URL` | `''` | Supabase project API URL |
-| `PUBLIC_SUPABASE_ANON_KEY` | `''` | Supabase anon key (RLS-protected) |
-| `PUBLIC_DEFAULT_LOCALE` | `en-US` | Default locale code |
-| `PUBLIC_DEFAULT_CURRENCY` | `USD` | Default currency code |
+| Variable                   | Default                 | Description                                       |
+| -------------------------- | ----------------------- | ------------------------------------------------- |
+| `PUBLIC_SITE_URL`          | `http://localhost:5173` | Canonical site URL (magic links, OAuth redirects) |
+| `PUBLIC_CDN_BASE_URL`      | `''`                    | CDN base URL for media                            |
+| `PUBLIC_SALEOR_API_URL`    | `''`                    | Saleor GraphQL endpoint                           |
+| `PUBLIC_SUPABASE_URL`      | `''`                    | Supabase project API URL                          |
+| `PUBLIC_SUPABASE_ANON_KEY` | `''`                    | Supabase anon key (RLS-protected)                 |
+| `PUBLIC_DEFAULT_LOCALE`    | `en-US`                 | Default locale code                               |
+| `PUBLIC_DEFAULT_CURRENCY`  | `USD`                   | Default currency code                             |
 
 ## Private (server only)
 
-| Category | Description |
-|----------|-------------|
-| Commerce channel | Saleor channel slug (server-only) |
-| Supabase admin | Service-role key — bypasses RLS; **never** in client bundles |
-| Object storage | Bucket/region and upload credentials for the media pipeline (when wired) |
-| CMS / APIs | Ghost, YouTube, and webhook sync secrets |
-| Dev-only flags | `DEV_ADMIN`, `LOCAL_DEV_AUTH` — **localhost only** |
-| Preview lockdown | `SITE_LOCKED` — restricts public routes during preview |
+| Category         | Description                                                              |
+| ---------------- | ------------------------------------------------------------------------ |
+| Commerce channel | Saleor channel slug (server-only)                                        |
+| Supabase admin   | Service-role key — bypasses RLS; **never** in client bundles             |
+| Object storage   | Bucket/region and upload credentials for the media pipeline (when wired) |
+| CMS / APIs       | Ghost, YouTube, and webhook sync secrets                                 |
+| Dev-only flags   | `DEV_ADMIN`, `LOCAL_DEV_AUTH` — **localhost only**                       |
+| Preview lockdown | `SITE_LOCKED` — restricts public routes during preview                   |
 
 See `.env.example` in the repo for exact variable names and placeholders.
 
 ## Missing var behavior
 
-| Scenario | Behavior |
-|----------|----------|
-| No `.env` file | Public config uses defaults; app runs with mock data |
-| Empty `PUBLIC_SALEOR_API_URL` | `saleorFetch()` returns error object, doesn't throw |
-| Empty Supabase vars | `getSupabaseConfig()` returns `null`; mock `ag-session` cookie |
-| Empty CDN URL | Image URLs stay as-is (placeholder images in prototype) |
+| Scenario                      | Behavior                                                       |
+| ----------------------------- | -------------------------------------------------------------- |
+| No `.env` file                | Public config uses defaults; app runs with mock data           |
+| Empty `PUBLIC_SALEOR_API_URL` | `saleorFetch()` returns error object, doesn't throw            |
+| Empty Supabase vars           | `getSupabaseConfig()` returns `null`; mock `ag-session` cookie |
+| Empty CDN URL                 | Image URLs stay as-is (placeholder images in prototype)        |
 
 ## Rules
 

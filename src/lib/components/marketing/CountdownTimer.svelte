@@ -35,7 +35,11 @@
 </script>
 
 {#if !expired}
-	<div class="flex items-center gap-2 font-mono text-sm {className}" role="timer" aria-live="polite">
+	<div
+		class="flex items-center gap-2 font-mono text-sm {className}"
+		role="timer"
+		aria-live="polite"
+	>
 		<span class="rounded-sm bg-zinc-900 px-2 py-1 text-red-500">{pad(remaining.days)}d</span>
 		<span class="text-zinc-600">:</span>
 		<span class="rounded-sm bg-zinc-900 px-2 py-1 text-white">{pad(remaining.hours)}h</span>

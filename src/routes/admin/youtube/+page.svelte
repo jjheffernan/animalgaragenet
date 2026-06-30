@@ -17,29 +17,40 @@
 
 <div class="space-y-10">
 	<div>
-		<h2 class="font-display text-2xl font-bold uppercase tracking-wider text-white">YouTube Channels</h2>
+		<h2 class="font-display text-2xl font-bold uppercase tracking-wider text-white">
+			YouTube Channels
+		</h2>
 		<p class="mt-2 text-sm text-zinc-400">
-			Connect channels and sync uploads into the video catalog. Sync uses a mock fetch until the YouTube Data API key is configured.
+			Connect channels and sync uploads into the video catalog. Sync uses a mock fetch until the
+			YouTube Data API key is configured.
 		</p>
 	</div>
 
 	{#if form?.error}
-		<p class="rounded-sm border border-red-900/50 bg-red-950/30 px-4 py-3 text-sm text-red-400">{form.error}</p>
+		<p class="rounded-sm border border-red-900/50 bg-red-950/30 px-4 py-3 text-sm text-red-400">
+			{form.error}
+		</p>
 	{/if}
 	{#if form?.synced}
-		<p class="rounded-sm border border-emerald-900/50 bg-emerald-950/30 px-4 py-3 text-sm text-emerald-400">
+		<p
+			class="rounded-sm border border-emerald-900/50 bg-emerald-950/30 px-4 py-3 text-sm text-emerald-400"
+		>
 			Synced {form.upserted} videos from {form.channelId}.
 		</p>
 	{/if}
 	{#if form?.added}
-		<p class="rounded-sm border border-emerald-900/50 bg-emerald-950/30 px-4 py-3 text-sm text-emerald-400">
+		<p
+			class="rounded-sm border border-emerald-900/50 bg-emerald-950/30 px-4 py-3 text-sm text-emerald-400"
+		>
 			Channel added.
 		</p>
 	{/if}
 
 	<section class="overflow-hidden rounded-sm border border-zinc-800">
 		<table class="w-full text-left text-sm">
-			<thead class="border-b border-zinc-800 bg-zinc-900/50 text-xs uppercase tracking-wider text-zinc-500">
+			<thead
+				class="border-b border-zinc-800 bg-zinc-900/50 text-xs uppercase tracking-wider text-zinc-500"
+			>
 				<tr>
 					<th class="px-4 py-3">Channel</th>
 					<th class="px-4 py-3">Handle</th>

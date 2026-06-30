@@ -36,7 +36,10 @@
 			<button
 				type="button"
 				role="tab"
-				class="rounded-sm px-4 py-2 text-xs font-bold uppercase tracking-widest transition {viewMode === 'list' ? 'bg-red-600 text-white' : 'text-zinc-400 hover:bg-zinc-800 hover:text-white'}"
+				class="rounded-sm px-4 py-2 text-xs font-bold uppercase tracking-widest transition {viewMode ===
+				'list'
+					? 'bg-red-600 text-white'
+					: 'text-zinc-400 hover:bg-zinc-800 hover:text-white'}"
 				aria-selected={viewMode === 'list'}
 				onclick={() => (viewMode = 'list')}
 			>
@@ -45,7 +48,10 @@
 			<button
 				type="button"
 				role="tab"
-				class="rounded-sm px-4 py-2 text-xs font-bold uppercase tracking-widest transition {viewMode === 'calendar' ? 'bg-red-600 text-white' : 'text-zinc-400 hover:bg-zinc-800 hover:text-white'}"
+				class="rounded-sm px-4 py-2 text-xs font-bold uppercase tracking-widest transition {viewMode ===
+				'calendar'
+					? 'bg-red-600 text-white'
+					: 'text-zinc-400 hover:bg-zinc-800 hover:text-white'}"
 				aria-selected={viewMode === 'calendar'}
 				onclick={() => (viewMode = 'calendar')}
 			>
@@ -76,7 +82,9 @@
 									year: 'numeric'
 								})}
 							</p>
-							<h2 class="mt-2 font-display text-xl font-bold uppercase text-white">{event.title}</h2>
+							<h2 class="mt-2 font-display text-xl font-bold uppercase text-white">
+								{event.title}
+							</h2>
 							<p class="mt-2 text-sm text-zinc-500">{event.location}</p>
 							<p class="mt-3 text-zinc-400">{event.description}</p>
 						</div>

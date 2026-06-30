@@ -1,5 +1,8 @@
 import { mockBuilds, getBuildBySlug as getMockBuildBySlug } from '$lib/data/mock/builds';
-import { listApprovedBuildLogs, getApprovedBuildLogBySlug } from '$lib/server/build-logs/repository';
+import {
+	listApprovedBuildLogs,
+	getApprovedBuildLogBySlug
+} from '$lib/server/build-logs/repository';
 import { createAdminClient } from '$lib/server/supabase/admin';
 import { buildLogToThread, buildLogsToThreads } from '$lib/server/builds/to-thread';
 import type { BuildThread } from '$lib/types/domain';

@@ -1,9 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
-import {
-	COOKIE_CONSENT,
-	COOKIE_PROMO_BANNER_ID,
-	COOKIE_PROMO_DISMISSED
-} from '$lib/cookies';
+import { COOKIE_CONSENT, COOKIE_PROMO_BANNER_ID, COOKIE_PROMO_DISMISSED } from '$lib/cookies';
 import {
 	deleteClientCookie,
 	getClientCookie,

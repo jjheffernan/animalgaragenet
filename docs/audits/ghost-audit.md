@@ -11,20 +11,20 @@ See [content/ghost.md](../content/ghost.md) for setup and tag conventions.
 
 ## Summary
 
-| Area | Status |
-|------|--------|
-| Content API client + env gating | Done |
-| List/detail loaders + mock fallback | Done |
-| Tag convention (`guide`, `blog`) | Done |
-| Ghost → domain mappers | Done |
-| HTML rendering (DOMPurify) | Done |
-| Per-page `<title>` | Done |
-| Per-page meta description | Done (detail pages) |
-| Open Graph / Twitter cards | Missing |
-| Ghost `meta_title` / `meta_description` fields | Not mapped |
-| Integration tests (`posts.ts`, `client.ts`) | Missing |
-| E2E smoke for `/guides`, `/blog` | Missing |
-| API failure observability (when env is set) | Weak — silent mock fallback |
+| Area                                           | Status                      |
+| ---------------------------------------------- | --------------------------- |
+| Content API client + env gating                | Done                        |
+| List/detail loaders + mock fallback            | Done                        |
+| Tag convention (`guide`, `blog`)               | Done                        |
+| Ghost → domain mappers                         | Done                        |
+| HTML rendering (DOMPurify)                     | Done                        |
+| Per-page `<title>`                             | Done                        |
+| Per-page meta description                      | Done (detail pages)         |
+| Open Graph / Twitter cards                     | Missing                     |
+| Ghost `meta_title` / `meta_description` fields | Not mapped                  |
+| Integration tests (`posts.ts`, `client.ts`)    | Missing                     |
+| E2E smoke for `/guides`, `/blog`               | Missing                     |
+| API failure observability (when env is set)    | Weak — silent mock fallback |
 
 ---
 
@@ -32,13 +32,13 @@ See [content/ghost.md](../content/ghost.md) for setup and tag conventions.
 
 All content routes go through `$lib/server/ghost/posts.ts`, which gates on `isGhostEnabled()` before any network call.
 
-| Route | Loader | Ghost function | Mock fallback |
-|-------|--------|----------------|---------------|
-| `/` | `+page.server.ts` | `listGuides()` | `mockGuides` |
-| `/guides` | `guides/+page.server.ts` | `listGuides()` | `mockGuides` |
-| `/guides/[slug]` | `guides/[slug]/+page.server.ts` | `getGuide(slug)` | `getGuideBySlug(slug)` |
-| `/blog` | `blog/+page.server.ts` | `listBlogPosts()` | `mockBlogPosts` |
-| `/blog/[slug]` | `blog/[slug]/+page.server.ts` | `getBlogPost(slug)` | `getBlogPostBySlug(slug)` |
+| Route            | Loader                          | Ghost function      | Mock fallback             |
+| ---------------- | ------------------------------- | ------------------- | ------------------------- |
+| `/`              | `+page.server.ts`               | `listGuides()`      | `mockGuides`              |
+| `/guides`        | `guides/+page.server.ts`        | `listGuides()`      | `mockGuides`              |
+| `/guides/[slug]` | `guides/[slug]/+page.server.ts` | `getGuide(slug)`    | `getGuideBySlug(slug)`    |
+| `/blog`          | `blog/+page.server.ts`          | `listBlogPosts()`   | `mockBlogPosts`           |
+| `/blog/[slug]`   | `blog/[slug]/+page.server.ts`   | `getBlogPost(slug)` | `getBlogPostBySlug(slug)` |
 
 ### Gating layers
 
@@ -52,10 +52,10 @@ All content routes go through `$lib/server/ghost/posts.ts`, which gates on `isGh
 
 ## Tag convention
 
-| Section | Ghost tag slug | API filter | Slug fetch validation |
-|---------|----------------|------------|------------------------|
-| Guides | `guide` | `filter=tag:guide` | Post must include `guide` tag |
-| Blog | `blog` | `filter=tag:blog` | Post must include `blog` tag |
+| Section | Ghost tag slug | API filter         | Slug fetch validation         |
+| ------- | -------------- | ------------------ | ----------------------------- |
+| Guides  | `guide`        | `filter=tag:guide` | Post must include `guide` tag |
+| Blog    | `blog`         | `filter=tag:blog`  | Post must include `blog` tag  |
 
 **Category / chips**
 
@@ -68,12 +68,12 @@ Documented in [content/ghost.md](../content/ghost.md) and enforced in `mappers.t
 
 ## Error handling
 
-| Scenario | Behavior |
-|----------|----------|
-| Env vars unset | Mock only; no fetch |
-| HTTP 4xx/5xx | Log + `null` → mock fallback |
-| Network error | Log + `null` → mock fallback |
-| Empty post list | Mock fallback |
+| Scenario                   | Behavior                                         |
+| -------------------------- | ------------------------------------------------ |
+| Env vars unset             | Mock only; no fetch                              |
+| HTTP 4xx/5xx               | Log + `null` → mock fallback                     |
+| Network error              | Log + `null` → mock fallback                     |
+| Empty post list            | Mock fallback                                    |
 | Slug not found / wrong tag | `null` → mock slug lookup → 404 if still missing |
 
 **Production note:** When `GHOST_*` is set but the API is down or misconfigured, visitors may see stale mock content with no user-visible error. Consider logging/metrics or failing hard in production once Ghost is required.
@@ -90,12 +90,12 @@ Documented in [content/ghost.md](../content/ghost.md) and enforced in `mappers.t
 
 ## SEO / meta
 
-| Page | `<title>` | `<meta name="description">` | OG / Twitter |
-|------|-----------|-------------------------------|--------------|
-| `/guides` | Static | Layout default only | None |
-| `/guides/[slug]` | `{title} — Animal Garage Guides` | `{excerpt}` | None |
-| `/blog` | Static | Layout default only | None |
-| `/blog/[slug]` | `{title} — Animal Garage Blog` | `{excerpt}` | None |
+| Page             | `<title>`                        | `<meta name="description">` | OG / Twitter |
+| ---------------- | -------------------------------- | --------------------------- | ------------ |
+| `/guides`        | Static                           | Layout default only         | None         |
+| `/guides/[slug]` | `{title} — Animal Garage Guides` | `{excerpt}`                 | None         |
+| `/blog`          | Static                           | Layout default only         | None         |
+| `/blog/[slug]`   | `{title} — Animal Garage Blog`   | `{excerpt}`                 | None         |
 
 Excerpt mapping uses `custom_excerpt` → `excerpt` from Ghost. Dedicated Ghost SEO fields (`meta_title`, `meta_description`) are not read from the API yet.
 
@@ -150,14 +150,14 @@ Included in CI via `npm run test:unit` (`vitest run`).
 
 ## File map
 
-| File | Role |
-|------|------|
-| `src/lib/server/ghost/client.ts` | `isGhostEnabled()`, `ghostFetch()` |
-| `src/lib/server/ghost/posts.ts` | Public API for loaders |
-| `src/lib/server/ghost/mappers.ts` | Ghost post → `Guide` / `BlogPost` |
-| `src/lib/server/ghost/types.ts` | Ghost API shapes |
-| `src/lib/data/mock/guides.ts` | Mock guides |
-| `src/lib/data/mock/blog.ts` | Mock blog posts |
-| `src/lib/components/RichContent.svelte` | Sanitized HTML renderer |
-| `src/routes/guides/**` | Guides UI + loaders |
-| `src/routes/blog/**` | Blog UI + loaders |
+| File                                    | Role                               |
+| --------------------------------------- | ---------------------------------- |
+| `src/lib/server/ghost/client.ts`        | `isGhostEnabled()`, `ghostFetch()` |
+| `src/lib/server/ghost/posts.ts`         | Public API for loaders             |
+| `src/lib/server/ghost/mappers.ts`       | Ghost post → `Guide` / `BlogPost`  |
+| `src/lib/server/ghost/types.ts`         | Ghost API shapes                   |
+| `src/lib/data/mock/guides.ts`           | Mock guides                        |
+| `src/lib/data/mock/blog.ts`             | Mock blog posts                    |
+| `src/lib/components/RichContent.svelte` | Sanitized HTML renderer            |
+| `src/routes/guides/**`                  | Guides UI + loaders                |
+| `src/routes/blog/**`                    | Blog UI + loaders                  |

@@ -7,7 +7,8 @@ export const mockGuides: Guide[] = [
 		id: 'g1',
 		slug: 'how-to-choose-wheels',
 		title: 'How to Choose the Right Wheels',
-		excerpt: 'Offset, diameter, width, and bolt pattern — everything you need to pick the perfect wheel setup.',
+		excerpt:
+			'Offset, diameter, width, and bolt pattern — everything you need to pick the perfect wheel setup.',
 		category: 'Wheels',
 		heroImage: hero('agguide-wheels'),
 		readTimeMinutes: 12,
@@ -17,7 +18,8 @@ export const mockGuides: Guide[] = [
 		id: 'g2',
 		slug: 'tire-sizing-guide',
 		title: 'Tire Sizing & Compound Guide',
-		excerpt: 'Decode tire sizes, understand compound differences, and pick the right rubber for your build.',
+		excerpt:
+			'Decode tire sizes, understand compound differences, and pick the right rubber for your build.',
 		category: 'Tires',
 		heroImage: hero('agguide-tires'),
 		readTimeMinutes: 10,
@@ -73,6 +75,9 @@ export function searchGuides(query: string): Guide[] {
 	const q = query.toLowerCase().trim();
 	if (!q) return [];
 	return mockGuides.filter(
-		(g) => g.title.toLowerCase().includes(q) || g.excerpt.toLowerCase().includes(q) || g.category.toLowerCase().includes(q)
+		(g) =>
+			g.title.toLowerCase().includes(q) ||
+			g.excerpt.toLowerCase().includes(q) ||
+			g.category.toLowerCase().includes(q)
 	);
 }

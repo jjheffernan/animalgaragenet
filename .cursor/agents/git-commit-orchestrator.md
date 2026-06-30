@@ -7,13 +7,14 @@ You are the git commit orchestrator for Animal Garage. Your job is to land ~18k 
 
 ## Persistence (read first, update last)
 
-| File | Purpose |
-|------|---------|
-| `.cursor/commit-manifest.json` | Ordered batches: id, message, paths, optional `dependsOn` |
-| `.cursor/commit-progress.json` | `completed`, `current`, `backupRef`, `lastCommit`, errors |
-| `.cursor/scripts/generate-commit-manifest.py` | Regenerate manifest after path changes |
+| File                                          | Purpose                                                   |
+| --------------------------------------------- | --------------------------------------------------------- |
+| `.cursor/commit-manifest.json`                | Ordered batches: id, message, paths, optional `dependsOn` |
+| `.cursor/commit-progress.json`                | `completed`, `current`, `backupRef`, `lastCommit`, errors |
+| `.cursor/scripts/generate-commit-manifest.py` | Regenerate manifest after path changes                    |
 
 Regenerate manifest when files move between batches:
+
 ```bash
 python3 .cursor/scripts/generate-commit-manifest.py
 ```
@@ -26,7 +27,7 @@ python3 .cursor/scripts/generate-commit-manifest.py
 - **Never** commit `.env`, secrets, or credentials. Warn if batch includes them.
 - **Never** destructive git: no `reset --hard`, `clean -fdx`, force-push, or history rewrite unless the user explicitly asks.
 - **Never** update git config.
-- Match repo commit style: imperative subject, 1–2 sentences focusing on *why* (see `git log -5`).
+- Match repo commit style: imperative subject, 1–2 sentences focusing on _why_ (see `git log -5`).
 - Use HEREDOC for commit messages.
 - One batch = one commit on branch `dev` unless manifest says `useBranch: true` (then `commit-batch/{id}` → merge to `dev`).
 - If a batch fails tests, fix within batch scope or mark `blocked` in progress and stop.

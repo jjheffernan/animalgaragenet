@@ -15,13 +15,13 @@ description: Live and config readiness checks for all external APIs (Supabase, S
 
 ## Probes (safe, read-only)
 
-| ID | Probe |
-|----|-------|
-| supabase-auth | `GET /auth/v1/health` or list users count via service role (no writes) |
-| supabase-db | `select 1` on `testimonials` limit 0 via admin client |
-| saleor-catalog | GraphQL `{ shop { name } }` or products first:1 |
+| ID              | Probe                                                                      |
+| --------------- | -------------------------------------------------------------------------- |
+| supabase-auth   | `GET /auth/v1/health` or list users count via service role (no writes)     |
+| supabase-db     | `select 1` on `testimonials` limit 0 via admin client                      |
+| saleor-catalog  | GraphQL `{ shop { name } }` or products first:1                            |
 | saleor-checkout | checkoutCreate empty lines (optional — may create junk; prefer query only) |
-| ghost-cms | GET `/ghost/api/content/posts/?limit=1` |
-| youtube-sync | channels list with API key |
+| ghost-cms       | GET `/ghost/api/content/posts/?limit=1`                                    |
+| youtube-sync    | channels list with API key                                                 |
 
 Output gaps as actionable todos for implementation agents.

@@ -23,7 +23,9 @@
 				class="aspect-[16/10] w-full object-cover transition duration-500 group-hover:scale-105"
 				loading="lazy"
 			/>
-			<div class="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/40 to-transparent"></div>
+			<div
+				class="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/40 to-transparent"
+			></div>
 			<div class="absolute inset-x-0 bottom-0 p-4">
 				<p class="text-xs font-bold uppercase tracking-wider text-red-500">{m.make}</p>
 				<h3 class="font-display text-lg font-bold uppercase text-white">{m.model}</h3>

@@ -8,11 +8,11 @@
 feature/* → dev (CI) → main (CI) → organization deploy mirror → Netlify
 ```
 
-| Branch | Purpose |
-|--------|---------|
+| Branch      | Purpose                                 |
+| ----------- | --------------------------------------- |
 | `feature/*` | Individual features — branch from `dev` |
-| `dev` | Staging / integration |
-| `main` | Production releases |
+| `dev`       | Staging / integration                   |
+| `main`      | Production releases                     |
 
 ### Daily workflow
 
@@ -26,10 +26,10 @@ Rules: do not commit directly to `main` (except release merges). Run `npm run ch
 
 ## GitHub Actions
 
-| Workflow | Branch | Purpose |
-|----------|--------|---------|
-| `ci.yml` | `dev`, `main` | Lint, typecheck, unit/e2e tests, build |
-| `sync-org-main.yml` | `main` only | Mirror `main` to organization deploy repo (after CI) |
+| Workflow            | Branch        | Purpose                                              |
+| ------------------- | ------------- | ---------------------------------------------------- |
+| `ci.yml`            | `dev`, `main` | Lint, typecheck, unit/e2e tests, build               |
+| `sync-org-main.yml` | `main` only   | Mirror `main` to organization deploy repo (after CI) |
 
 CI steps: `npm ci`, `npm run lint`, `npm run check`, `npm run build`.
 
@@ -79,7 +79,7 @@ Do **not** set dev-only admin bypass flags on production.
 
 ## Branch protection (recommended)
 
-| Branch | Protection |
-|--------|------------|
+| Branch | Protection                                  |
+| ------ | ------------------------------------------- |
 | `main` | Require PR, require CI pass, no direct push |
-| `dev` | Require PR, require CI pass |
+| `dev`  | Require PR, require CI pass                 |

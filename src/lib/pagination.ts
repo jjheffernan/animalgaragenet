@@ -53,7 +53,10 @@ export function paginateArray<T>(
 	};
 }
 
-export function paginateFromUrl<T>(url: URL, items: T[]): { items: T[]; pagination: PaginationMeta } {
+export function paginateFromUrl<T>(
+	url: URL,
+	items: T[]
+): { items: T[]; pagination: PaginationMeta } {
 	const { page, perPage } = parsePagination(url);
 	return paginateArray(items, page, perPage);
 }

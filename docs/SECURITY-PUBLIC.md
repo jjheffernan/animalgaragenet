@@ -4,41 +4,41 @@ This repository is **public**. All files under `docs/` must be safe to read with
 
 ## Do not publish in `docs/`
 
-| Category | Examples (use placeholders instead) |
-|----------|-------------------------------------|
-| Production hostnames | Specific Saleor, CDN, or Netlify preview URLs |
-| Cloud resources | Bucket names, regions, cluster names, IAM key variable names in prose |
-| Org topology | Organization repo names, deploy-key secret names, key fingerprints |
-| Live probes | URLs pasted from production audits |
-| Credential shapes | JWT prefixes, example secret values |
+| Category             | Examples (use placeholders instead)                                   |
+| -------------------- | --------------------------------------------------------------------- |
+| Production hostnames | Specific Saleor, CDN, or Netlify preview URLs                         |
+| Cloud resources      | Bucket names, regions, cluster names, IAM key variable names in prose |
+| Org topology         | Organization repo names, deploy-key secret names, key fingerprints    |
+| Live probes          | URLs pasted from production audits                                    |
+| Credential shapes    | JWT prefixes, example secret values                                   |
 
 ## Where full detail lives
 
-| Audience | Location |
-|----------|----------|
-| Contributors (clone repo) | `.env.example` — variable **names** only, no real values |
-| Maintainers | Private runbook / password manager / host dashboards (not in git) |
-| Public wiki | `docs/wiki-export/` — already sanitized; sync from repo after edits |
+| Audience                  | Location                                                            |
+| ------------------------- | ------------------------------------------------------------------- |
+| Contributors (clone repo) | `.env.example` — variable **names** only, no real values            |
+| Maintainers               | Private runbook / password manager / host dashboards (not in git)   |
+| Public wiki               | `docs/wiki-export/` — already sanitized; sync from repo after edits |
 
 ## Doc categories
 
-| Area | Public-safe approach |
-|------|---------------------|
-| `style-guide/` | Patterns and code paths; env as categories not infra map |
-| `plans/active/` | Checklists with `<your-host>` placeholders |
-| `archive/` | Historical; may reference retired approaches (redact infra names) |
-| `testing/` | Probe IDs and skip reasons; no live URLs in reports |
+| Area            | Public-safe approach                                              |
+| --------------- | ----------------------------------------------------------------- |
+| `style-guide/`  | Patterns and code paths; env as categories not infra map          |
+| `plans/active/` | Checklists with `<your-host>` placeholders                        |
+| `archive/`      | Historical; may reference retired approaches (redact infra names) |
+| `testing/`      | Probe IDs and skip reasons; no live URLs in reports               |
 
 ## Placeholder conventions
 
-| Instead of | Use |
-|------------|-----|
-| Specific Saleor host | `<your-saleor-host>` |
-| CDN custom domain | `<your-cdn-host>` |
-| Netlify preview URL | `https://<preview-host>.netlify.app` |
-| Storefront custom domain | `https://<your-site-host>` |
-| S3 bucket name | `<your-media-bucket>` |
-| Org deploy repo | `<organization>/<deploy-repo>` |
+| Instead of               | Use                                  |
+| ------------------------ | ------------------------------------ |
+| Specific Saleor host     | `<your-saleor-host>`                 |
+| CDN custom domain        | `<your-cdn-host>`                    |
+| Netlify preview URL      | `https://<preview-host>.netlify.app` |
+| Storefront custom domain | `https://<your-site-host>`           |
+| S3 bucket name           | `<your-media-bucket>`                |
+| Org deploy repo          | `<organization>/<deploy-repo>`       |
 
 ## When editing docs
 

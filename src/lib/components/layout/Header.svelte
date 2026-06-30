@@ -206,7 +206,9 @@
 	<PromoBar />
 
 	<header class="relative border-b border-zinc-800/80 bg-zinc-950/90 backdrop-blur-md">
-		<div class="relative mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
+		<div
+			class="relative mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8"
+		>
 			<button
 				type="button"
 				class="z-10 p-1 text-zinc-300 transition hover:text-white lg:hidden"
@@ -214,8 +216,19 @@
 				aria-expanded={mobileOpen}
 				onclick={openMobileNav}
 			>
-				<svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+				<svg
+					class="h-6 w-6"
+					fill="none"
+					stroke="currentColor"
+					viewBox="0 0 24 24"
+					aria-hidden="true"
+				>
+					<path
+						stroke-linecap="round"
+						stroke-linejoin="round"
+						stroke-width="2"
+						d="M4 6h16M4 12h16M4 18h16"
+					/>
 				</svg>
 			</button>
 
@@ -225,8 +238,11 @@
 			>
 				<span
 					class="flex h-9 w-9 items-center justify-center bg-red-600 text-sm font-black tracking-tighter text-white transition-transform group-hover:scale-105"
-				>AG</span>
-				<span class="hidden font-display text-lg font-bold uppercase tracking-widest text-white sm:block">
+					>AG</span
+				>
+				<span
+					class="hidden font-display text-lg font-bold uppercase tracking-widest text-white sm:block"
+				>
 					Animal Garage
 				</span>
 			</a>
@@ -239,7 +255,8 @@
 				>
 					<a
 						href={resolve('/shop')}
-						class="text-sm font-medium uppercase tracking-wider transition-colors {activeMenu === 'shop'
+						class="text-sm font-medium uppercase tracking-wider transition-colors {activeMenu ===
+						'shop'
 							? 'text-white'
 							: 'text-zinc-400 hover:text-white'}"
 					>
@@ -247,7 +264,9 @@
 					</a>
 					<button
 						type="button"
-						class="rounded-sm p-0.5 text-zinc-500 transition hover:text-white {shopMenuOpen ? 'text-white' : ''}"
+						class="rounded-sm p-0.5 text-zinc-500 transition hover:text-white {shopMenuOpen
+							? 'text-white'
+							: ''}"
 						aria-expanded={shopMenuOpen}
 						aria-haspopup="menu"
 						aria-label="Open shop menu"
@@ -260,7 +279,12 @@
 							viewBox="0 0 24 24"
 							aria-hidden="true"
 						>
-							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+							<path
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								stroke-width="2"
+								d="M19 9l-7 7-7-7"
+							/>
 						</svg>
 					</button>
 				</div>
@@ -272,7 +296,8 @@
 				>
 					<a
 						href={resolve('/parts')}
-						class="text-sm font-medium uppercase tracking-wider transition-colors {activeMenu === 'parts'
+						class="text-sm font-medium uppercase tracking-wider transition-colors {activeMenu ===
+						'parts'
 							? 'text-white'
 							: 'text-zinc-400 hover:text-white'}"
 					>
@@ -280,7 +305,9 @@
 					</a>
 					<button
 						type="button"
-						class="rounded-sm p-0.5 text-zinc-500 transition hover:text-white {partsMenuOpen ? 'text-white' : ''}"
+						class="rounded-sm p-0.5 text-zinc-500 transition hover:text-white {partsMenuOpen
+							? 'text-white'
+							: ''}"
 						aria-expanded={partsMenuOpen}
 						aria-haspopup="menu"
 						aria-label="Open parts menu"
@@ -293,7 +320,12 @@
 							viewBox="0 0 24 24"
 							aria-hidden="true"
 						>
-							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+							<path
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								stroke-width="2"
+								d="M19 9l-7 7-7-7"
+							/>
 						</svg>
 					</button>
 				</div>
@@ -305,7 +337,8 @@
 				>
 					<a
 						href={resolve('/builds')}
-						class="text-sm font-medium uppercase tracking-wider transition-colors {communityMenuOpen || isCommunityActive
+						class="text-sm font-medium uppercase tracking-wider transition-colors {communityMenuOpen ||
+						isCommunityActive
 							? 'text-white'
 							: 'text-zinc-400 hover:text-white'}"
 					>
@@ -313,7 +346,9 @@
 					</a>
 					<button
 						type="button"
-						class="rounded-sm p-0.5 text-zinc-500 transition hover:text-white {communityMenuOpen ? 'text-white' : ''}"
+						class="rounded-sm p-0.5 text-zinc-500 transition hover:text-white {communityMenuOpen
+							? 'text-white'
+							: ''}"
 						aria-expanded={communityMenuOpen}
 						aria-haspopup="menu"
 						aria-label="Open community menu"
@@ -326,7 +361,12 @@
 							viewBox="0 0 24 24"
 							aria-hidden="true"
 						>
-							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+							<path
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								stroke-width="2"
+								d="M19 9l-7 7-7-7"
+							/>
 						</svg>
 					</button>
 
@@ -337,14 +377,17 @@
 							onmouseenter={cancelClose}
 							onmouseleave={scheduleClose}
 						>
-							<p class="px-4 pb-1 text-xs font-bold uppercase tracking-widest text-zinc-500">Community</p>
+							<p class="px-4 pb-1 text-xs font-bold uppercase tracking-widest text-zinc-500">
+								Community
+							</p>
 							<ul>
 								{#each communityLinks as link (link.href)}
 									<li role="none">
 										<a
 											href={link.href}
 											role="menuitem"
-											class="block px-4 py-2.5 text-sm font-medium uppercase tracking-wider text-zinc-300 transition hover:bg-zinc-900/80 hover:text-red-400 {$page.url.pathname === link.href ||
+											class="block px-4 py-2.5 text-sm font-medium uppercase tracking-wider text-zinc-300 transition hover:bg-zinc-900/80 hover:text-red-400 {$page
+												.url.pathname === link.href ||
 											$page.url.pathname.startsWith(`${link.href}/`)
 												? 'bg-zinc-900/50 text-red-400'
 												: ''}"
@@ -361,14 +404,21 @@
 
 				<a
 					href={dealsHref}
-					class="inline-flex items-center gap-1.5 text-sm font-medium uppercase tracking-wider transition-colors {$page.url.pathname === '/deals'
+					class="inline-flex items-center gap-1.5 text-sm font-medium uppercase tracking-wider transition-colors {$page
+						.url.pathname === '/deals'
 						? 'text-red-500'
 						: 'text-zinc-400 hover:text-white'}"
 					aria-label={session ? 'Pit Lane Deals' : 'Sign in to view Pit Lane Deals'}
 				>
 					Pit Lane Deals
 					{#if !session}
-						<svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+						<svg
+							class="h-3.5 w-3.5"
+							fill="none"
+							stroke="currentColor"
+							viewBox="0 0 24 24"
+							aria-hidden="true"
+						>
 							<path
 								stroke-linecap="round"
 								stroke-linejoin="round"
@@ -395,7 +445,13 @@
 								notificationsOpen = !notificationsOpen;
 							}}
 						>
-							<svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+							<svg
+								class="h-5 w-5"
+								fill="none"
+								stroke="currentColor"
+								viewBox="0 0 24 24"
+								aria-hidden="true"
+							>
 								<path
 									stroke-linecap="round"
 									stroke-linejoin="round"
@@ -447,7 +503,13 @@
 								accountMenuOpen = !accountMenuOpen;
 							}}
 						>
-							<svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+							<svg
+								class="h-5 w-5"
+								fill="none"
+								stroke="currentColor"
+								viewBox="0 0 24 24"
+								aria-hidden="true"
+							>
 								<path
 									stroke-linecap="round"
 									stroke-linejoin="round"
@@ -474,7 +536,13 @@
 						class="text-zinc-400 hover:text-white sm:hidden"
 						aria-label="Sign In"
 					>
-						<svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+						<svg
+							class="h-5 w-5"
+							fill="none"
+							stroke="currentColor"
+							viewBox="0 0 24 24"
+							aria-hidden="true"
+						>
 							<path
 								stroke-linecap="round"
 								stroke-linejoin="round"
@@ -491,7 +559,12 @@
 					onclick={() => search.openModal()}
 				>
 					<svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+						<path
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							stroke-width="2"
+							d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+						/>
 					</svg>
 				</button>
 				<button
@@ -501,10 +574,17 @@
 					onclick={toggleCart}
 				>
 					<svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+						<path
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							stroke-width="2"
+							d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"
+						/>
 					</svg>
 					{#if cart.itemCount > 0}
-						<span class="absolute -right-2 -top-2 flex h-4 w-4 items-center justify-center rounded-full bg-red-600 text-[10px] font-bold text-white">
+						<span
+							class="absolute -right-2 -top-2 flex h-4 w-4 items-center justify-center rounded-full bg-red-600 text-[10px] font-bold text-white"
+						>
 							{cart.itemCount > 9 ? '9+' : cart.itemCount}
 						</span>
 					{/if}
@@ -516,9 +596,21 @@
 		</div>
 
 		{#if shopMenuOpen}
-			<MegaMenu type="shop" open={shopMenuOpen} onclose={closeMenus} onhover={cancelClose} onleave={scheduleClose} />
+			<MegaMenu
+				type="shop"
+				open={shopMenuOpen}
+				onclose={closeMenus}
+				onhover={cancelClose}
+				onleave={scheduleClose}
+			/>
 		{:else if partsMenuOpen}
-			<MegaMenu type="parts" open={partsMenuOpen} onclose={closeMenus} onhover={cancelClose} onleave={scheduleClose} />
+			<MegaMenu
+				type="parts"
+				open={partsMenuOpen}
+				onclose={closeMenus}
+				onhover={cancelClose}
+				onleave={scheduleClose}
+			/>
 		{/if}
 	</header>
 

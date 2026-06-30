@@ -6,13 +6,13 @@ User-generated media for reviews (testimonials), build logs, and admin `/admin/m
 
 ## Current state
 
-| Area | Status |
-|------|--------|
-| `/admin/media` | Prototype UI — no real upload |
-| `testimonials` table | Text + `testimonial_media` join (migration `20250630120000_media_assets.sql`) |
-| `/api/media/upload-slot`, `/confirm`, `/[id]` | **Done** — requires migration applied + `ugc` bucket |
-| Review photo upload UI | **Partial** — `ReviewPhotoUpload.svelte` + loyalty form wiring |
-| `.env.example` | S3 + CloudFront vars stubbed for future CDN |
+| Area                                          | Status                                                                        |
+| --------------------------------------------- | ----------------------------------------------------------------------------- |
+| `/admin/media`                                | Prototype UI — no real upload                                                 |
+| `testimonials` table                          | Text + `testimonial_media` join (migration `20250630120000_media_assets.sql`) |
+| `/api/media/upload-slot`, `/confirm`, `/[id]` | **Done** — requires migration applied + `ugc` bucket                          |
+| Review photo upload UI                        | **Partial** — `ReviewPhotoUpload.svelte` + loyalty form wiring                |
+| `.env.example`                                | S3 + CloudFront vars stubbed for future CDN                                   |
 
 ## Setup (blocked until applied)
 
@@ -83,20 +83,20 @@ Alternative considered: `testimonials.media_urls jsonb` — rejected for v1; joi
 
 ## Phases
 
-| Phase | Deliverable |
-|-------|-------------|
-| **0** | This plan + schema sketch |
+| Phase | Deliverable                                                                                                    |
+| ----- | -------------------------------------------------------------------------------------------------------------- |
+| **0** | This plan + schema sketch                                                                                      |
 | **1** | Supabase bucket `ugc`, RLS, `media_assets` table, `POST /api/media/upload-slot` (signed URL), confirm endpoint |
-| **2** | Review submit form: file input, gallery on approved testimonial cards |
-| **3** | `/admin/media` wired to real storage list/delete; orphan cleanup job |
+| **2** | Review submit form: file input, gallery on approved testimonial cards                                          |
+| **3** | `/admin/media` wired to real storage list/delete; orphan cleanup job                                           |
 
 ## Server endpoints (Phase 1)
 
-| Route | Purpose |
-|-------|---------|
+| Route                         | Purpose                                                     |
+| ----------------------------- | ----------------------------------------------------------- |
 | `POST /api/media/upload-slot` | Auth check, mime/size, create row + `createSignedUploadUrl` |
-| `POST /api/media/confirm` | Verify object exists in bucket, set `status = ready` |
-| `DELETE /api/media/[id]` | Owner or admin delete |
+| `POST /api/media/confirm`     | Verify object exists in bucket, set `status = ready`        |
+| `DELETE /api/media/[id]`      | Owner or admin delete                                       |
 
 Use `createAdminClient()` only for moderation overrides; normal writes use user-scoped Supabase client + RLS.
 

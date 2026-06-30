@@ -83,9 +83,7 @@ function sortByStartDate(events: Event[]): Event[] {
 
 export function getUpcomingEvents(): Event[] {
 	const now = Date.now();
-	return sortByStartDate(
-		mockEvents.filter((e) => new Date(e.startDate).getTime() >= now)
-	);
+	return sortByStartDate(mockEvents.filter((e) => new Date(e.startDate).getTime() >= now));
 }
 
 export function getAllEvents(): Event[] {

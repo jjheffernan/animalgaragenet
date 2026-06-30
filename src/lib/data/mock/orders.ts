@@ -39,8 +39,18 @@ export const mockOrders: MockOrder[] = [
 		total: 1249.0,
 		trackingNumber: '9400111899223344556677',
 		lines: [
-			{ productName: 'Enkei RPF1 18×9.5 +35', variantName: 'Matte Bronze', quantity: 4, unitPrice: 299.0 },
-			{ productName: 'BC Racing BR Coilovers', variantName: 'FK8 Type R', quantity: 1, unitPrice: 1299.0 }
+			{
+				productName: 'Enkei RPF1 18×9.5 +35',
+				variantName: 'Matte Bronze',
+				quantity: 4,
+				unitPrice: 299.0
+			},
+			{
+				productName: 'BC Racing BR Coilovers',
+				variantName: 'FK8 Type R',
+				quantity: 1,
+				unitPrice: 1299.0
+			}
 		]
 	},
 	{
@@ -49,7 +59,9 @@ export const mockOrders: MockOrder[] = [
 		date: '2026-06-28',
 		status: 'processing',
 		total: 54.99,
-		lines: [{ productName: 'Redline Hoodie', variantName: 'M / Charcoal', quantity: 1, unitPrice: 54.99 }]
+		lines: [
+			{ productName: 'Redline Hoodie', variantName: 'M / Charcoal', quantity: 1, unitPrice: 54.99 }
+		]
 	}
 ];
 

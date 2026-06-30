@@ -84,22 +84,22 @@ Install or refresh optional skills: `npx skills add supabase/agent-skills`
 
 Specs in `.cursor/agents/` — see [docs/README.md](../docs/README.md#cursor-agent-specs) for the full index.
 
-| Agent | Use when |
-| ----- | -------- |
-| `local-dev-auth` | Local test sign-in, `DEV_ADMIN`, no prod exposure |
-| `account-nav` | Account menu dropdown, header auth UX |
-| `production-admin` | `promote-admin`, site lockdown, Netlify admin |
-| `media-uploads` | UGC/review uploads, Supabase Storage vs S3 |
-| `saleor-redeem` | `/account/redeem`, Saleor promo/gift codes |
-| `saleor-readiness` | Pre-launch Saleor gap audit |
-| `polish-sweep` | Finish straggling edits from multi-agent sessions |
-| `docs-updater` | Sync `docs/` with codebase |
-| `ui-consistency` | Ribbons, pills, mobile nav patterns |
-| `git-commit-orchestrator` | Large diff → ordered commits |
-| `market-readiness` | Live deploy audit; mock vs live gaps |
-| `saleor-readiness` | Pre-launch Saleor gap audit |
-| `external-api-readiness` | External API probe + readiness report |
-| `security-hardening` | AuthZ, validation, cookies, XSS audit |
+| Agent                     | Use when                                          |
+| ------------------------- | ------------------------------------------------- |
+| `local-dev-auth`          | Local test sign-in, `DEV_ADMIN`, no prod exposure |
+| `account-nav`             | Account menu dropdown, header auth UX             |
+| `production-admin`        | `promote-admin`, site lockdown, Netlify admin     |
+| `media-uploads`           | UGC/review uploads, Supabase Storage vs S3        |
+| `saleor-redeem`           | `/account/redeem`, Saleor promo/gift codes        |
+| `saleor-readiness`        | Pre-launch Saleor gap audit                       |
+| `polish-sweep`            | Finish straggling edits from multi-agent sessions |
+| `docs-updater`            | Sync `docs/` with codebase                        |
+| `ui-consistency`          | Ribbons, pills, mobile nav patterns               |
+| `git-commit-orchestrator` | Large diff → ordered commits                      |
+| `market-readiness`        | Live deploy audit; mock vs live gaps              |
+| `saleor-readiness`        | Pre-launch Saleor gap audit                       |
+| `external-api-readiness`  | External API probe + readiness report             |
+| `security-hardening`      | AuthZ, validation, cookies, XSS audit             |
 
 ## Commands
 

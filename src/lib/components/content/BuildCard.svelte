@@ -24,7 +24,9 @@
 			/>
 		{/if}
 		{#if build.featured}
-			<span class="absolute left-2 top-2 rounded-sm bg-red-600 px-2 py-0.5 text-[10px] font-bold uppercase text-white">
+			<span
+				class="absolute left-2 top-2 rounded-sm bg-red-600 px-2 py-0.5 text-[10px] font-bold uppercase text-white"
+			>
 				Featured
 			</span>
 		{/if}

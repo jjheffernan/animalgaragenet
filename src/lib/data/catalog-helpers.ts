@@ -62,8 +62,7 @@ export function filterProductsByShopCategory(
 	category: ShopCategory,
 	giftCardProducts?: Product[]
 ): Product[] {
-	const giftCards =
-		giftCardProducts ?? products.filter((p) => p.productType === 'GIFT_CARD');
+	const giftCards = giftCardProducts ?? products.filter((p) => p.productType === 'GIFT_CARD');
 	const all = products;
 	if (category === 'ALL') return all;
 	if (category === 'GIFT CARDS') return giftCards;
@@ -126,7 +125,8 @@ export function getProductsForVideo(video: Video): Product[] {
 
 export function getDealProducts(): Product[] {
 	const deals = getActiveDeals();
-	if (deals.length === 0) return mockProducts.filter((p) => p.tags?.includes('clearance')).slice(0, 8);
+	if (deals.length === 0)
+		return mockProducts.filter((p) => p.tags?.includes('clearance')).slice(0, 8);
 	const ids = new Set(deals.flatMap((d) => d.productIds));
 	return [...ids]
 		.map((id) => getCatalogProductById(id))

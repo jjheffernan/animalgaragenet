@@ -84,7 +84,10 @@
 				<div class="p-4">
 					<p class="font-medium text-white">{item.title}</p>
 					<p class="mt-1 text-xs text-zinc-500">{item.type} · {item.category}</p>
-					<p class="mt-2 truncate font-mono text-[10px] text-zinc-600" title={cdnUrl(`media/${item.id}`)}>
+					<p
+						class="mt-2 truncate font-mono text-[10px] text-zinc-600"
+						title={cdnUrl(`media/${item.id}`)}
+					>
 						{cdnUrl(`media/${item.id}`)}
 					</p>
 				</div>

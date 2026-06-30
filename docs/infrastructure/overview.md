@@ -74,9 +74,9 @@ s3://<your-media-bucket>/
 
 ### Env vars
 
-| Variable                | Scope  | Description                      |
-| ----------------------- | ------ | -------------------------------- |
-| `PUBLIC_CDN_BASE_URL`   | Public | CloudFront URL prefix            |
+| Variable              | Scope  | Description           |
+| --------------------- | ------ | --------------------- |
+| `PUBLIC_CDN_BASE_URL` | Public | CloudFront URL prefix |
 
 ## Supabase
 
@@ -215,16 +215,16 @@ create table videos (
 
 ### Cron schedule (recommended)
 
-| Job | Schedule | Notes |
-| --- | --- | --- |
-| `sync-all-youtube-channels` | `0 */6 * * *` (every 6h) | Full channel upload sync |
-| Manual sync | Admin “Sync now” | Same handler, single channel |
+| Job                         | Schedule                 | Notes                        |
+| --------------------------- | ------------------------ | ---------------------------- |
+| `sync-all-youtube-channels` | `0 */6 * * *` (every 6h) | Full channel upload sync     |
+| Manual sync                 | Admin “Sync now”         | Same handler, single channel |
 
 **Vercel:** add to `vercel.json`:
 
 ```json
 {
-  "crons": [{ "path": "/api/cron/youtube-sync", "schedule": "0 */6 * * *" }]
+	"crons": [{ "path": "/api/cron/youtube-sync", "schedule": "0 */6 * * *" }]
 }
 ```
 
@@ -232,10 +232,10 @@ create table videos (
 
 ### Env vars
 
-| Variable | Scope | Description |
-| --- | --- | --- |
-| `YOUTUBE_API_KEY` | Server | YouTube Data API v3 key (restricted to server IPs) |
-| `YOUTUBE_SYNC_SECRET` | Server | Bearer token for cron webhook authentication |
+| Variable              | Scope  | Description                                        |
+| --------------------- | ------ | -------------------------------------------------- |
+| `YOUTUBE_API_KEY`     | Server | YouTube Data API v3 key (restricted to server IPs) |
+| `YOUTUBE_SYNC_SECRET` | Server | Bearer token for cron webhook authentication       |
 
 ### API quota notes
 

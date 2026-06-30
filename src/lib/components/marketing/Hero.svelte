@@ -9,13 +9,12 @@
 		showCountdown?: boolean;
 	}
 
-	let {
-		campaignImage,
-		showCountdown = true
-	}: Props = $props();
+	let { campaignImage, showCountdown = true }: Props = $props();
 
 	const campaign = getHeroCampaign();
-	const bgImage = $derived(campaignImage ?? campaign?.heroImage ?? 'https://picsum.photos/seed/aghero/1920/1080');
+	const bgImage = $derived(
+		campaignImage ?? campaign?.heroImage ?? 'https://picsum.photos/seed/aghero/1920/1080'
+	);
 	const isUpcoming = $derived(
 		campaign ? new Date(campaign.availableFrom).getTime() > Date.now() : false
 	);

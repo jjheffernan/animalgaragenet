@@ -51,7 +51,10 @@ export function isDevAdminEnabled(event: Pick<RequestEvent, 'url'>): boolean {
 	return true;
 }
 
-async function ensureSupabaseDevUser(admin: NonNullable<ReturnType<typeof createAdminClient>>, account: LocalDevAccount): Promise<string> {
+async function ensureSupabaseDevUser(
+	admin: NonNullable<ReturnType<typeof createAdminClient>>,
+	account: LocalDevAccount
+): Promise<string> {
 	const { user: existingUser, error: lookupError } = await findUserByEmail(admin, account.email);
 	if (lookupError) throw lookupError;
 
@@ -88,7 +91,10 @@ export async function devSignInAccount(
 
 	const admin = createAdminClient();
 	if (!admin) {
-		return { ok: false, message: 'SUPABASE_SERVICE_ROLE_KEY required for dev sign-in with Supabase.' };
+		return {
+			ok: false,
+			message: 'SUPABASE_SERVICE_ROLE_KEY required for dev sign-in with Supabase.'
+		};
 	}
 
 	try {
@@ -112,7 +118,8 @@ export async function devSignInAccount(
 			data: { user },
 			error: userError
 		} = await supabase.auth.getUser();
-		if (userError || !user) return { ok: false, message: userError?.message ?? 'Dev sign-in failed.' };
+		if (userError || !user)
+			return { ok: false, message: userError?.message ?? 'Dev sign-in failed.' };
 
 		return { ok: true, user: mapSupabaseUser(user) };
 	} catch (err) {

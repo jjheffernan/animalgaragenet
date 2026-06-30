@@ -6,10 +6,10 @@ Animal Garage serves **guides** and **blog** posts from [Ghost](https://ghost.or
 
 Server-only variables (never expose to the browser):
 
-| Variable | Description |
-|----------|-------------|
-| `GHOST_URL` | Ghost site URL, e.g. `https://<your-ghost-host>` (no trailing slash) |
-| `GHOST_CONTENT_API_KEY` | Content API key from Ghost Admin |
+| Variable                | Description                                                          |
+| ----------------------- | -------------------------------------------------------------------- |
+| `GHOST_URL`             | Ghost site URL, e.g. `https://<your-ghost-host>` (no trailing slash) |
+| `GHOST_CONTENT_API_KEY` | Content API key from Ghost Admin                                     |
 
 Copy from `.env.example` into `.env` for local development.
 
@@ -17,10 +17,10 @@ Copy from `.env.example` into `.env` for local development.
 
 Posts are filtered by Ghost tag slug:
 
-| Site section | Required tag | Route |
-|--------------|--------------|-------|
-| Guides | `guide` | `/guides`, `/guides/[slug]` |
-| Blog | `blog` | `/blog`, `/blog/[slug]` |
+| Site section | Required tag | Route                       |
+| ------------ | ------------ | --------------------------- |
+| Guides       | `guide`      | `/guides`, `/guides/[slug]` |
+| Blog         | `blog`       | `/blog`, `/blog/[slug]`     |
 
 Additional tags on a post become:
 
@@ -43,12 +43,12 @@ Additional tags on a post become:
 
 ## App integration
 
-| Module | Role |
-|--------|------|
-| `$lib/server/ghost/client.ts` | Content API fetch, `isGhostEnabled()` |
-| `$lib/server/ghost/posts.ts` | `listGuides`, `getGuide`, `listBlogPosts`, `getBlogPost` |
-| `$lib/server/ghost/mappers.ts` | Ghost post → `Guide` / `BlogPost` |
-| `$lib/components/content/RichContent.svelte` | Renders sanitized Ghost `html` or mock plain content |
+| Module                                       | Role                                                     |
+| -------------------------------------------- | -------------------------------------------------------- |
+| `$lib/server/ghost/client.ts`                | Content API fetch, `isGhostEnabled()`                    |
+| `$lib/server/ghost/posts.ts`                 | `listGuides`, `getGuide`, `listBlogPosts`, `getBlogPost` |
+| `$lib/server/ghost/mappers.ts`               | Ghost post → `Guide` / `BlogPost`                        |
+| `$lib/components/content/RichContent.svelte` | Renders sanitized Ghost `html` or mock plain content     |
 
 Rendering uses Ghost’s pre-rendered `html` field, sanitized with `isomorphic-dompurify` before `{@html}` output.
 

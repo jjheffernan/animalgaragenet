@@ -28,8 +28,8 @@ Sign in with Microsoft work or personal accounts via Supabase Auth. The app uses
 
 Add only the Supabase Auth callback in Entra — not your SvelteKit `/auth/callback` URL:
 
-| URI | Purpose |
-|-----|---------|
+| URI                                                  | Purpose                          |
+| ---------------------------------------------------- | -------------------------------- |
 | `https://<project-ref>.supabase.co/auth/v1/callback` | Required — Supabase OAuth broker |
 
 Your app’s `/auth/callback` is configured in **Supabase** redirect URLs (see below), not in Entra.
@@ -38,12 +38,12 @@ Your app’s `/auth/callback` is configured in **Supabase** redirect URLs (see b
 
 Supabase Azure provider accepts a **Azure Tenant URL** (optional). Behavior:
 
-| Tenant URL | Entra setting | Who can sign in |
-|------------|---------------|-----------------|
-| *(empty)* or `https://login.microsoftonline.com/common` | Multitenant + personal | Work/school + personal Microsoft accounts |
-| `https://login.microsoftonline.com/organizations` | Multitenant, org only | Any Azure AD work/school account |
-| `https://login.microsoftonline.com/consumers` | Personal only | Outlook, Hotmail, Xbox, etc. |
-| `https://login.microsoftonline.com/<tenant-id>` | Single tenant | Only users in your directory |
+| Tenant URL                                              | Entra setting          | Who can sign in                           |
+| ------------------------------------------------------- | ---------------------- | ----------------------------------------- |
+| _(empty)_ or `https://login.microsoftonline.com/common` | Multitenant + personal | Work/school + personal Microsoft accounts |
+| `https://login.microsoftonline.com/organizations`       | Multitenant, org only  | Any Azure AD work/school account          |
+| `https://login.microsoftonline.com/consumers`           | Personal only          | Outlook, Hotmail, Xbox, etc.              |
+| `https://login.microsoftonline.com/<tenant-id>`         | Single tenant          | Only users in your directory              |
 
 Match this to the **Supported account types** you chose at registration. Mismatch causes `AADSTS50020` or “account does not exist in tenant” errors.
 
@@ -72,15 +72,15 @@ No custom Microsoft Graph scopes are required for basic sign-in.
 
 ## App behavior
 
-| Piece | Location |
-|-------|----------|
-| Provider type | `src/lib/auth/oauth.ts` (`azure`) |
-| Sign-in button | `src/routes/auth/sign-in/+page.svelte` |
-| Sign-up button | `src/routes/auth/sign-up/+page.svelte` |
-| Browser OAuth | `src/lib/supabase/auth-client.ts` → `signInWithOAuth('azure')` |
-| Server OAuth | `src/lib/server/supabase/auth.ts` → `signInWithOAuth` / `exchangeOAuthCode` |
-| Callback | `src/routes/auth/callback/+server.ts` |
-| Display name | `oauthDisplayName()` + `mapSupabaseUser()` |
+| Piece          | Location                                                                    |
+| -------------- | --------------------------------------------------------------------------- |
+| Provider type  | `src/lib/auth/oauth.ts` (`azure`)                                           |
+| Sign-in button | `src/routes/auth/sign-in/+page.svelte`                                      |
+| Sign-up button | `src/routes/auth/sign-up/+page.svelte`                                      |
+| Browser OAuth  | `src/lib/supabase/auth-client.ts` → `signInWithOAuth('azure')`              |
+| Server OAuth   | `src/lib/server/supabase/auth.ts` → `signInWithOAuth` / `exchangeOAuthCode` |
+| Callback       | `src/routes/auth/callback/+server.ts`                                       |
+| Display name   | `oauthDisplayName()` + `mapSupabaseUser()`                                  |
 
 ### Mock session label
 
@@ -146,11 +146,11 @@ Optional custom email:
 
 ## Troubleshooting
 
-| Error | Likely cause |
-|-------|----------------|
-| `AADSTS50011` redirect URI mismatch | Entra redirect URI must be Supabase callback, not app URL |
-| `AADSTS50020` user not in tenant | Single-tenant app but user from another org; use `common` or correct tenant URL |
-| Redirect to sign-in with error | Supabase redirect URLs missing `/auth/callback` for your origin |
-| Blank name on account | Microsoft account has no display name; falls back to email local-part |
+| Error                               | Likely cause                                                                    |
+| ----------------------------------- | ------------------------------------------------------------------------------- |
+| `AADSTS50011` redirect URI mismatch | Entra redirect URI must be Supabase callback, not app URL                       |
+| `AADSTS50020` user not in tenant    | Single-tenant app but user from another org; use `common` or correct tenant URL |
+| Redirect to sign-in with error      | Supabase redirect URLs missing `/auth/callback` for your origin                 |
+| Blank name on account               | Microsoft account has no display name; falls back to email local-part           |
 
 See also: [oauth.md](./oauth.md) for shared PKCE callback architecture.

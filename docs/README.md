@@ -16,14 +16,14 @@ A highly animated, media-heavy automotive brand site — merchandising-forward d
 
 Complete, superseded, or stale plans. Each file has a status banner.
 
-| Doc | Notes |
-|-----|-------|
-| [archive/README.md](./archive/README.md) | Index of archived docs |
-| [archive/daisyui.md](./archive/daisyui.md) | Stale — Tailwind zinc only |
-| [archive/phase3-plan.md](./archive/phase3-plan.md) | Complete — workstreams A–D |
-| [archive/animation-media.md](./archive/animation-media.md) | Stale — marketing strategy |
-| [archive/dashboard-adoption-plan.md](./archive/dashboard-adoption-plan.md) | Complete — in-repo `/admin` |
-| [archive/media-cdn-plan.md](./archive/media-cdn-plan.md) | Superseded — see media-uploads phase 1 |
+| Doc                                                                        | Notes                                  |
+| -------------------------------------------------------------------------- | -------------------------------------- |
+| [archive/README.md](./archive/README.md)                                   | Index of archived docs                 |
+| [archive/daisyui.md](./archive/daisyui.md)                                 | Stale — Tailwind zinc only             |
+| [archive/phase3-plan.md](./archive/phase3-plan.md)                         | Complete — workstreams A–D             |
+| [archive/animation-media.md](./archive/animation-media.md)                 | Stale — marketing strategy             |
+| [archive/dashboard-adoption-plan.md](./archive/dashboard-adoption-plan.md) | Complete — in-repo `/admin`            |
+| [archive/media-cdn-plan.md](./archive/media-cdn-plan.md)                   | Superseded — see media-uploads phase 1 |
 
 ---
 
@@ -31,82 +31,83 @@ Complete, superseded, or stale plans. Each file has a status banner.
 
 **Canonical open-item tracker:** [plans/AUDIT-REMEDIATION.md](./plans/AUDIT-REMEDIATION.md) (P0/P1/P2 — merges audits, STATUS, TRIAGE, DOC manifest).
 
-| Doc | Purpose |
-|-----|---------|
-| [plans/AUDIT-REMEDIATION.md](./plans/AUDIT-REMEDIATION.md) | **Tracker** — open/blocker items with acceptance criteria |
-| [audits/site-audit.md](./audits/site-audit.md) | Security, gaps, fix log (detail) |
-| [audits/ghost-audit.md](./audits/ghost-audit.md) | Ghost CMS wiring inventory (detail) |
-| [audits/saleor-audit.md](./audits/saleor-audit.md) | Saleor integration scorecard (detail) |
-| [meta/agents-skills-audit.md](./meta/agents-skills-audit.md) | Cursor agents/skills dead-reference audit |
+| Doc                                                          | Purpose                                                   |
+| ------------------------------------------------------------ | --------------------------------------------------------- |
+| [plans/AUDIT-REMEDIATION.md](./plans/AUDIT-REMEDIATION.md)   | **Tracker** — open/blocker items with acceptance criteria |
+| [audits/site-audit.md](./audits/site-audit.md)               | Security, gaps, fix log (detail)                          |
+| [audits/ghost-audit.md](./audits/ghost-audit.md)             | Ghost CMS wiring inventory (detail)                       |
+| [audits/saleor-audit.md](./audits/saleor-audit.md)           | Saleor integration scorecard (detail)                     |
+| [meta/agents-skills-audit.md](./meta/agents-skills-audit.md) | Cursor agents/skills dead-reference audit                 |
 
 ---
 
 ## Auth
 
-| Doc | Purpose |
-|-----|---------|
-| [auth/oauth.md](./auth/oauth.md) | Shared PKCE OAuth architecture |
-| [auth/discord.md](./auth/discord.md) | Discord provider setup |
-| [auth/microsoft.md](./auth/microsoft.md) | Microsoft / Azure AD setup |
+| Doc                                      | Purpose                        |
+| ---------------------------------------- | ------------------------------ |
+| [auth/oauth.md](./auth/oauth.md)         | Shared PKCE OAuth architecture |
+| [auth/discord.md](./auth/discord.md)     | Discord provider setup         |
+| [auth/microsoft.md](./auth/microsoft.md) | Microsoft / Azure AD setup     |
 
 ---
 
 ## Commerce
 
-| Doc | Purpose |
-|-----|---------|
-| [commerce/saleor.md](./commerce/saleor.md) | Saleor integration plan |
+| Doc                                          | Purpose                              |
+| -------------------------------------------- | ------------------------------------ |
+| [commerce/saleor.md](./commerce/saleor.md)   | Saleor integration plan              |
 | [commerce/cookies.md](./commerce/cookies.md) | Cookie consent and promo persistence |
 
 ---
 
 ## Content
 
-| Doc | Purpose |
-|-----|---------|
-| [content/ghost.md](./content/ghost.md) | Ghost CMS setup and tags |
+| Doc                                                            | Purpose                   |
+| -------------------------------------------------------------- | ------------------------- |
+| [content/ghost.md](./content/ghost.md)                         | Ghost CMS setup and tags  |
 | [content/build-submissions.md](./content/build-submissions.md) | Build log submission flow |
 
 ---
 
 ## Infrastructure
 
-| Doc | Purpose |
-|-----|---------|
+| Doc                                                        | Purpose                        |
+| ---------------------------------------------------------- | ------------------------------ |
 | [infrastructure/overview.md](./infrastructure/overview.md) | CDN, S3, Supabase architecture |
 
 ---
 
 ## Integrations
 
-| Doc | Purpose |
-|-----|---------|
+| Doc                                                    | Purpose                         |
+| ------------------------------------------------------ | ------------------------------- |
 | [integrations/supabase.md](./integrations/supabase.md) | Auth, RLS, local dev, site lock |
 
 ---
 
 ## Meta
 
-| Doc | Purpose |
-|-----|---------|
-| [SECURITY-PUBLIC.md](./SECURITY-PUBLIC.md) | Public documentation policy — placeholders, no infra leaks |
-| [meta/decisions.md](./meta/decisions.md) | Persistent product/tech choices |
-| [meta/inspiration.md](./meta/inspiration.md) | Feature backlog — integrated vs remaining |
-| [meta/polish-plan.md](./meta/polish-plan.md) | Active P0/P1 polish tracker |
+| Doc                                                          | Purpose                                                          |
+| ------------------------------------------------------------ | ---------------------------------------------------------------- |
+| [SECURITY-PUBLIC.md](./SECURITY-PUBLIC.md)                   | Public documentation policy — placeholders, no infra leaks       |
+| [meta/decisions.md](./meta/decisions.md)                     | Persistent product/tech choices                                  |
+| [meta/inspiration.md](./meta/inspiration.md)                 | Feature backlog — integrated vs remaining                        |
+| [meta/polish-plan.md](./meta/polish-plan.md)                 | Active P0/P1 polish tracker                                      |
 | [meta/agents-skills-audit.md](./meta/agents-skills-audit.md) | Cursor agents/skills audit (detail — tracker: AUDIT-REMEDIATION) |
+
 ---
 
 ## Plans
 
-| Doc | Purpose |
-|-----|---------|
-| [plans/README.md](./plans/README.md) | Plan lifecycle |
-| [plans/AUDIT-REMEDIATION.md](./plans/AUDIT-REMEDIATION.md) | Consolidated audit remediation tracker |
-| [plans/DOC-IMPLEMENTATION-MANIFEST.md](./plans/DOC-IMPLEMENTATION-MANIFEST.md) | Doc batch audit tracker (June 2026) |
-| [plans/TRIAGE.md](./plans/TRIAGE.md) | Plan vs codebase verification |
-| [plans/active/account-flow-fix.md](./plans/active/account-flow-fix.md) | Netlify + Supabase account ops |
-| [plans/active/market-readiness.md](./plans/active/market-readiness.md) | Phased launch roadmap |
-| [plans/active/media-uploads.md](./plans/active/media-uploads.md) | UGC upload pipeline — phase 1 not wired |
+| Doc                                                                            | Purpose                                 |
+| ------------------------------------------------------------------------------ | --------------------------------------- |
+| [plans/README.md](./plans/README.md)                                           | Plan lifecycle                          |
+| [plans/AUDIT-REMEDIATION.md](./plans/AUDIT-REMEDIATION.md)                     | Consolidated audit remediation tracker  |
+| [plans/DOC-IMPLEMENTATION-MANIFEST.md](./plans/DOC-IMPLEMENTATION-MANIFEST.md) | Doc batch audit tracker (June 2026)     |
+| [plans/TRIAGE.md](./plans/TRIAGE.md)                                           | Plan vs codebase verification           |
+| [plans/active/account-flow-fix.md](./plans/active/account-flow-fix.md)         | Netlify + Supabase account ops          |
+| [plans/active/market-readiness.md](./plans/active/market-readiness.md)         | Phased launch roadmap                   |
+| [plans/active/media-uploads.md](./plans/active/media-uploads.md)               | UGC upload pipeline — phase 1 not wired |
 
 ---
 
@@ -120,11 +121,11 @@ Subfolders: `frontend/`, `business-logic/`, `backend-ops/` (not restructured her
 
 ## Testing
 
-| Doc | Purpose |
-|-----|---------|
+| Doc                                                                    | Purpose              |
+| ---------------------------------------------------------------------- | -------------------- |
 | [testing/external-dependencies.md](./testing/external-dependencies.md) | Integration registry |
-| [testing/readiness-report.md](./testing/readiness-report.md) | Live probe results |
-| [testing/security-hardening.md](./testing/security-hardening.md) | Security changelog |
+| [testing/readiness-report.md](./testing/readiness-report.md)           | Live probe results   |
+| [testing/security-hardening.md](./testing/security-hardening.md)       | Security changelog   |
 
 ---
 
@@ -138,22 +139,22 @@ Public GitHub wiki source — [wiki-export/README.md](./wiki-export/README.md)
 
 Specialized agents live in `.cursor/agents/` (invoke by name in Cursor):
 
-| Agent | Purpose |
-| ----- | ------- |
-| `local-dev-auth` | Local-only test accounts; never production |
-| `account-nav` | Header account dropdown and signed-in UX |
-| `production-admin` | Promote admins, `SITE_LOCKED`, live `/admin` |
-| `media-uploads` | Review/build file upload pipeline plan |
-| `saleor-redeem` | Redeem section + Saleor voucher/promo codes |
-| `saleor-readiness` | Audit mock vs live Saleor gaps before launch |
-| `polish-sweep` | Find unfinished session work; execute polish plan |
-| `docs-updater` | Refresh `docs/` (not root README) |
-| `ui-consistency` | Nav ribbons, pills, shared component patterns |
-| `git-commit-orchestrator` | Split large diffs into ordered commits |
-| `market-readiness` | Live deploy audit; mock vs live gaps; launch roadmap |
-| `saleor-readiness` | Pre-launch Saleor integration scorecard |
-| `external-api-readiness` | Probe Supabase, Saleor, Ghost, OAuth, YouTube |
-| `security-hardening` | AuthZ, validation, cookies, service-role audit |
+| Agent                     | Purpose                                              |
+| ------------------------- | ---------------------------------------------------- |
+| `local-dev-auth`          | Local-only test accounts; never production           |
+| `account-nav`             | Header account dropdown and signed-in UX             |
+| `production-admin`        | Promote admins, `SITE_LOCKED`, live `/admin`         |
+| `media-uploads`           | Review/build file upload pipeline plan               |
+| `saleor-redeem`           | Redeem section + Saleor voucher/promo codes          |
+| `saleor-readiness`        | Audit mock vs live Saleor gaps before launch         |
+| `polish-sweep`            | Find unfinished session work; execute polish plan    |
+| `docs-updater`            | Refresh `docs/` (not root README)                    |
+| `ui-consistency`          | Nav ribbons, pills, shared component patterns        |
+| `git-commit-orchestrator` | Split large diffs into ordered commits               |
+| `market-readiness`        | Live deploy audit; mock vs live gaps; launch roadmap |
+| `saleor-readiness`        | Pre-launch Saleor integration scorecard              |
+| `external-api-readiness`  | Probe Supabase, Saleor, Ghost, OAuth, YouTube        |
+| `security-hardening`      | AuthZ, validation, cookies, service-role audit       |
 
 ---
 

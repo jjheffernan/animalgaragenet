@@ -7,11 +7,11 @@ You own **production admin** — real Supabase roles, not dev bypass.
 
 ## Local vs production
 
-| Mechanism | Where | Purpose |
-|-----------|-------|---------|
-| `DEV_ADMIN=true` + local dev auth | Local only | Fast iteration |
-| `app_metadata.role` on Supabase user | Production | Real admin/editor access |
-| `SITE_LOCKED=true` | Production preview | Lock public site; admins pass through |
+| Mechanism                            | Where              | Purpose                               |
+| ------------------------------------ | ------------------ | ------------------------------------- |
+| `DEV_ADMIN=true` + local dev auth    | Local only         | Fast iteration                        |
+| `app_metadata.role` on Supabase user | Production         | Real admin/editor access              |
+| `SITE_LOCKED=true`                   | Production preview | Lock public site; admins pass through |
 
 ## Tasks
 

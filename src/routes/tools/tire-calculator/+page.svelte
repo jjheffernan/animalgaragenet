@@ -32,7 +32,9 @@
 			<span class="mx-2">/</span>
 			<span class="text-zinc-300">Tire Calculator</span>
 		</nav>
-		<h1 class="font-display text-4xl font-bold uppercase tracking-wider text-white">Tire Size Calculator</h1>
+		<h1 class="font-display text-4xl font-bold uppercase tracking-wider text-white">
+			Tire Size Calculator
+		</h1>
 		<p class="mt-2 text-zinc-400">Width / aspect / rim → overall diameter and revs per mile.</p>
 	</div>
 </section>
@@ -44,23 +46,53 @@
 			<div class="mt-4 space-y-4">
 				<label class="block">
 					<span class="text-xs font-bold uppercase tracking-widest text-zinc-500">Width (mm)</span>
-					<input type="number" bind:value={width} min="135" max="355" class="mt-1 w-full rounded-sm border border-zinc-700 bg-zinc-900 px-4 py-3 text-white" />
+					<input
+						type="number"
+						bind:value={width}
+						min="135"
+						max="355"
+						class="mt-1 w-full rounded-sm border border-zinc-700 bg-zinc-900 px-4 py-3 text-white"
+					/>
 				</label>
 				<label class="block">
-					<span class="text-xs font-bold uppercase tracking-widest text-zinc-500">Aspect Ratio</span>
-					<input type="number" bind:value={aspect} min="25" max="80" class="mt-1 w-full rounded-sm border border-zinc-700 bg-zinc-900 px-4 py-3 text-white" />
+					<span class="text-xs font-bold uppercase tracking-widest text-zinc-500">Aspect Ratio</span
+					>
+					<input
+						type="number"
+						bind:value={aspect}
+						min="25"
+						max="80"
+						class="mt-1 w-full rounded-sm border border-zinc-700 bg-zinc-900 px-4 py-3 text-white"
+					/>
 				</label>
 				<label class="block">
-					<span class="text-xs font-bold uppercase tracking-widest text-zinc-500">Rim Diameter (in)</span>
-					<input type="number" bind:value={rim} min="13" max="24" class="mt-1 w-full rounded-sm border border-zinc-700 bg-zinc-900 px-4 py-3 text-white" />
+					<span class="text-xs font-bold uppercase tracking-widest text-zinc-500"
+						>Rim Diameter (in)</span
+					>
+					<input
+						type="number"
+						bind:value={rim}
+						min="13"
+						max="24"
+						class="mt-1 w-full rounded-sm border border-zinc-700 bg-zinc-900 px-4 py-3 text-white"
+					/>
 				</label>
 			</div>
 			<div class="mt-6 rounded-sm border border-zinc-800 bg-zinc-900/50 p-6">
 				<p class="text-2xl font-bold text-white">{width}/{aspect}R{rim}</p>
 				<dl class="mt-4 space-y-2 text-sm">
-					<div class="flex justify-between"><dt class="text-zinc-500">Sidewall height</dt><dd class="text-white">{sidewallMm.toFixed(1)} mm ({sidewallIn.toFixed(2)} in)</dd></div>
-					<div class="flex justify-between"><dt class="text-zinc-500">Overall diameter</dt><dd class="text-white">{diameterIn.toFixed(2)} in</dd></div>
-					<div class="flex justify-between"><dt class="text-zinc-500">Revs per mile</dt><dd class="text-white">{revsPerMile.toFixed(0)}</dd></div>
+					<div class="flex justify-between">
+						<dt class="text-zinc-500">Sidewall height</dt>
+						<dd class="text-white">{sidewallMm.toFixed(1)} mm ({sidewallIn.toFixed(2)} in)</dd>
+					</div>
+					<div class="flex justify-between">
+						<dt class="text-zinc-500">Overall diameter</dt>
+						<dd class="text-white">{diameterIn.toFixed(2)} in</dd>
+					</div>
+					<div class="flex justify-between">
+						<dt class="text-zinc-500">Revs per mile</dt>
+						<dd class="text-white">{revsPerMile.toFixed(0)}</dd>
+					</div>
 				</dl>
 			</div>
 		</AnimatedReveal>
@@ -70,24 +102,53 @@
 			<div class="mt-4 space-y-4">
 				<label class="block">
 					<span class="text-xs font-bold uppercase tracking-widest text-zinc-500">Width (mm)</span>
-					<input type="number" bind:value={width2} min="135" max="355" class="mt-1 w-full rounded-sm border border-zinc-700 bg-zinc-900 px-4 py-3 text-white" />
+					<input
+						type="number"
+						bind:value={width2}
+						min="135"
+						max="355"
+						class="mt-1 w-full rounded-sm border border-zinc-700 bg-zinc-900 px-4 py-3 text-white"
+					/>
 				</label>
 				<label class="block">
-					<span class="text-xs font-bold uppercase tracking-widest text-zinc-500">Aspect Ratio</span>
-					<input type="number" bind:value={aspect2} min="25" max="80" class="mt-1 w-full rounded-sm border border-zinc-700 bg-zinc-900 px-4 py-3 text-white" />
+					<span class="text-xs font-bold uppercase tracking-widest text-zinc-500">Aspect Ratio</span
+					>
+					<input
+						type="number"
+						bind:value={aspect2}
+						min="25"
+						max="80"
+						class="mt-1 w-full rounded-sm border border-zinc-700 bg-zinc-900 px-4 py-3 text-white"
+					/>
 				</label>
 				<label class="block">
-					<span class="text-xs font-bold uppercase tracking-widest text-zinc-500">Rim Diameter (in)</span>
-					<input type="number" bind:value={rim2} min="13" max="24" class="mt-1 w-full rounded-sm border border-zinc-700 bg-zinc-900 px-4 py-3 text-white" />
+					<span class="text-xs font-bold uppercase tracking-widest text-zinc-500"
+						>Rim Diameter (in)</span
+					>
+					<input
+						type="number"
+						bind:value={rim2}
+						min="13"
+						max="24"
+						class="mt-1 w-full rounded-sm border border-zinc-700 bg-zinc-900 px-4 py-3 text-white"
+					/>
 				</label>
 			</div>
 			<div class="mt-6 rounded-sm border border-zinc-800 bg-zinc-900/50 p-6">
 				<p class="text-2xl font-bold text-white">{width2}/{aspect2}R{rim2}</p>
 				<dl class="mt-4 space-y-2 text-sm">
-					<div class="flex justify-between"><dt class="text-zinc-500">Overall diameter</dt><dd class="text-white">{diameterIn2.toFixed(2)} in</dd></div>
-					<div class="flex justify-between"><dt class="text-zinc-500">Difference</dt>
-						<dd class="{Math.abs(diameterIn - diameterIn2) < 0.5 ? 'text-green-400' : 'text-yellow-400'}">
-							{(diameterIn - diameterIn2) >= 0 ? '+' : ''}{(diameterIn - diameterIn2).toFixed(2)} in
+					<div class="flex justify-between">
+						<dt class="text-zinc-500">Overall diameter</dt>
+						<dd class="text-white">{diameterIn2.toFixed(2)} in</dd>
+					</div>
+					<div class="flex justify-between">
+						<dt class="text-zinc-500">Difference</dt>
+						<dd
+							class={Math.abs(diameterIn - diameterIn2) < 0.5
+								? 'text-green-400'
+								: 'text-yellow-400'}
+						>
+							{diameterIn - diameterIn2 >= 0 ? '+' : ''}{(diameterIn - diameterIn2).toFixed(2)} in
 						</dd>
 					</div>
 				</dl>

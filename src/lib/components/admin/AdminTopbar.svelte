@@ -37,12 +37,18 @@
 		</button>
 		<h1 class="truncate font-display text-lg font-semibold uppercase text-white">{title}</h1>
 		{#if devAdmin}
-			<span class="hidden rounded-sm bg-amber-600/20 px-2 py-0.5 text-[10px] font-bold uppercase text-amber-400 sm:inline">Dev Admin</span>
+			<span
+				class="hidden rounded-sm bg-amber-600/20 px-2 py-0.5 text-[10px] font-bold uppercase text-amber-400 sm:inline"
+				>Dev Admin</span
+			>
 		{/if}
 	</div>
 
 	<div class="flex items-center gap-2">
-		<a href={resolve('/')} class="hidden text-xs text-zinc-400 transition hover:text-white sm:inline">
+		<a
+			href={resolve('/')}
+			class="hidden text-xs text-zinc-400 transition hover:text-white sm:inline"
+		>
 			← Storefront
 		</a>
 		<div class="relative">

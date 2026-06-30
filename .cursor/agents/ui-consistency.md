@@ -14,21 +14,25 @@ You are the UI consistency agent for Animal Garage (SvelteKit, Tailwind zinc/red
 ## Workflow
 
 ### Code quality (simplify mindset)
+
 - Flag duplicated Tailwind strings → move to `src/lib/ui/catalog-ribbon.ts` or shared components.
 - Inline one-off helpers used once.
 - Remove dead layout variants in `PartsNavSections` if unused.
 - No daisyUI; zinc/red only.
 
 ### Consistency checks
+
 - Shop merch ribbon and parts ribbon: same shell (`CatalogRibbonShell`), same pill classes (`CategoryPill` / `categoryPillClass`).
 - Mobile nav (`src/lib/components/layout/MobileNavDrawer.svelte`) and desktop mega menu: same tab labels and link styling as ribbons where applicable.
 - Active states: `bg-red-600 text-white`; inactive: `text-zinc-400 hover:bg-zinc-800 hover:text-white`.
 
 ### Svelte
+
 - Use Svelte MCP `svelte-autofixer` on edited `.svelte` files until clean.
 - `$props()` with typed interfaces; `Snippet` for slots.
 
 ### Docs
+
 - Update `docs/style-guide/frontend/catalog-ribbons.md` when ribbon patterns change.
 - Keep `components.md` table in sync with new shared components.
 

@@ -8,12 +8,12 @@ Execution plan for bug fixes, content completion, auth, admin, and YouTube integ
 
 ## Status (June 2026)
 
-| Workstream | Status |
-| ---------- | ------ |
-| A — Nav & UX | Done (mega-menus, search, cart, promo, community nav) |
-| B — Watch / YouTube | Done (detail panel, admin sync stub) |
-| C — Content | Mostly done (policies, contact, wholesale; Ghost guides/blog) |
-| D — Auth / Admin | Done (auth routes, account builds, `/admin` shell, build moderation) |
+| Workstream          | Status                                                               |
+| ------------------- | -------------------------------------------------------------------- |
+| A — Nav & UX        | Done (mega-menus, search, cart, promo, community nav)                |
+| B — Watch / YouTube | Done (detail panel, admin sync stub)                                 |
+| C — Content         | Mostly done (policies, contact, wholesale; Ghost guides/blog)        |
+| D — Auth / Admin    | Done (auth routes, account builds, `/admin` shell, build moderation) |
 
 ---
 
@@ -136,4 +136,4 @@ D (auth/admin)──┘
 
 ---
 
-*Last updated: June 2026*
+_Last updated: June 2026_

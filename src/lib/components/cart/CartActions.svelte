@@ -21,8 +21,8 @@
 	{#if empty}
 		<span
 			class="block w-full rounded-sm bg-zinc-800 {sizeClass} text-center {label} text-zinc-500"
-			aria-disabled="true"
-		>Checkout</span>
+			aria-disabled="true">Checkout</span
+		>
 	{:else}
 		<a
 			href={resolve('/checkout')}

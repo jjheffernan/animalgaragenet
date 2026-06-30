@@ -26,7 +26,10 @@ function ghostContentApiKey(): string {
 	return key;
 }
 
-export async function ghostFetch<T>({ path, searchParams = {} }: GhostFetchOptions): Promise<T | null> {
+export async function ghostFetch<T>({
+	path,
+	searchParams = {}
+}: GhostFetchOptions): Promise<T | null> {
 	if (!isGhostEnabled()) {
 		return null;
 	}

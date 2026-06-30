@@ -24,10 +24,20 @@
 	</AnimatedReveal>
 	<div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
 		{#each data.guides as guide (guide.id)}
-			<a href={resolve(`/guides/${guide.slug}`)} class="group block overflow-hidden rounded-sm border border-zinc-800 bg-zinc-900">
-				<img src={guide.heroImage} alt={guide.title} class="aspect-[16/9] w-full object-cover" loading="lazy" />
+			<a
+				href={resolve(`/guides/${guide.slug}`)}
+				class="group block overflow-hidden rounded-sm border border-zinc-800 bg-zinc-900"
+			>
+				<img
+					src={guide.heroImage}
+					alt={guide.title}
+					class="aspect-[16/9] w-full object-cover"
+					loading="lazy"
+				/>
 				<div class="p-4">
-					<p class="text-xs font-bold uppercase tracking-widest text-red-500">{guide.category} · {guide.readTimeMinutes} min read</p>
+					<p class="text-xs font-bold uppercase tracking-widest text-red-500">
+						{guide.category} · {guide.readTimeMinutes} min read
+					</p>
 					<h3 class="mt-1 font-medium text-white group-hover:text-red-400">{guide.title}</h3>
 					<p class="mt-2 text-sm text-zinc-500">{guide.excerpt}</p>
 				</div>

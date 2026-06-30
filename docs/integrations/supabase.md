@@ -6,24 +6,24 @@ Auth, content metadata, and form storage for Animal Garage. The SvelteKit app us
 
 Copy `.env.example` to `.env` and set:
 
-| Variable | Scope | Purpose |
-|----------|-------|---------|
-| `PUBLIC_SUPABASE_URL` | Public | Project API URL (`https://<ref>.supabase.co`) |
-| `PUBLIC_SUPABASE_ANON_KEY` | Public | Publishable/anon key — safe in browser with RLS |
-| `SUPABASE_SERVICE_ROLE_KEY` | **Server only** | Bypasses RLS; never expose to client bundles |
+| Variable                    | Scope           | Purpose                                         |
+| --------------------------- | --------------- | ----------------------------------------------- |
+| `PUBLIC_SUPABASE_URL`       | Public          | Project API URL (`https://<ref>.supabase.co`)   |
+| `PUBLIC_SUPABASE_ANON_KEY`  | Public          | Publishable/anon key — safe in browser with RLS |
+| `SUPABASE_SERVICE_ROLE_KEY` | **Server only** | Bypasses RLS; never expose to client bundles    |
 
 Optional (local dev):
 
-| Variable | Purpose |
-|----------|---------|
-| `DEV_ADMIN` | `true` bypasses admin role check on **localhost only** — ignored on production hostnames |
-| `LOCAL_DEV_AUTH` | `true` enables quick-login buttons on `/auth/sign-in` (localhost only) |
-| `PUBLIC_SITE_URL` | Magic-link and OAuth redirect URLs (default `http://localhost:5173`) |
+| Variable          | Purpose                                                                                  |
+| ----------------- | ---------------------------------------------------------------------------------------- |
+| `DEV_ADMIN`       | `true` bypasses admin role check on **localhost only** — ignored on production hostnames |
+| `LOCAL_DEV_AUTH`  | `true` enables quick-login buttons on `/auth/sign-in` (localhost only)                   |
+| `PUBLIC_SITE_URL` | Magic-link and OAuth redirect URLs (default `http://localhost:5173`)                     |
 
 Production only:
 
-| Variable | Purpose |
-|----------|---------|
+| Variable      | Purpose                                                                                |
+| ------------- | -------------------------------------------------------------------------------------- |
 | `SITE_LOCKED` | `true` redirects non-admins to `/locked` (allows `/auth/*`, `/admin/*`, static assets) |
 
 When `PUBLIC_SUPABASE_URL` or `PUBLIC_SUPABASE_ANON_KEY` is unset, the site uses a **mock session** (`ag-session` cookie) so local development works without a Supabase project.
@@ -61,10 +61,10 @@ Sign-in/sign-up create a mock `ag-session` cookie immediately. OAuth buttons use
 
 On `localhost` with `npm run dev` (or `LOCAL_DEV_AUTH=true`), `/auth/sign-in` shows quick-login buttons:
 
-| Account | Role |
-|---------|------|
-| `admin@local.dev` | admin |
-| `editor@local.dev` | editor |
+| Account              | Role     |
+| -------------------- | -------- |
+| `admin@local.dev`    | admin    |
+| `editor@local.dev`   | editor   |
 | `customer@local.dev` | customer |
 
 - **Without Supabase:** sets mock `ag-session` cookie with the correct role.
@@ -107,18 +107,18 @@ When `SITE_LOCKED=true`:
 
 ## Code layout
 
-| Path | Role |
-|------|------|
-| `src/lib/server/supabase/client.ts` | `createServerClient(event)` — SSR cookie client |
-| `src/lib/server/supabase/admin.ts` | `createAdminClient()` — service role, server only |
-| `src/lib/server/supabase/auth.ts` | `getSession`, `signInWithOtp`, `signOut`, mock fallbacks |
-| `src/lib/server/auth/local-dev.ts` | `isLocalDevAuthEnabled`, `devSignInAccount` |
-| `src/lib/server/auth/local-dev-accounts.ts` | Predefined local dev accounts |
-| `src/lib/supabase/browser.ts` | Browser singleton client |
-| `src/hooks.server.ts` | Session refresh, admin guard, site lockdown |
-| `src/routes/auth/callback/+server.ts` | PKCE code exchange for magic links / OAuth |
-| `scripts/promote-admin.ts` | CLI to set `app_metadata.role` |
-| `supabase/migrations/` | SQL migrations (RLS on all public tables) |
+| Path                                        | Role                                                     |
+| ------------------------------------------- | -------------------------------------------------------- |
+| `src/lib/server/supabase/client.ts`         | `createServerClient(event)` — SSR cookie client          |
+| `src/lib/server/supabase/admin.ts`          | `createAdminClient()` — service role, server only        |
+| `src/lib/server/supabase/auth.ts`           | `getSession`, `signInWithOtp`, `signOut`, mock fallbacks |
+| `src/lib/server/auth/local-dev.ts`          | `isLocalDevAuthEnabled`, `devSignInAccount`              |
+| `src/lib/server/auth/local-dev-accounts.ts` | Predefined local dev accounts                            |
+| `src/lib/supabase/browser.ts`               | Browser singleton client                                 |
+| `src/hooks.server.ts`                       | Session refresh, admin guard, site lockdown              |
+| `src/routes/auth/callback/+server.ts`       | PKCE code exchange for magic links / OAuth               |
+| `scripts/promote-admin.ts`                  | CLI to set `app_metadata.role`                           |
+| `supabase/migrations/`                      | SQL migrations (RLS on all public tables)                |
 
 `event.locals.supabase` is available in server loads and actions when configured. `event.locals.session` is the app-shaped user (`id`, `email`, `name`, `role`).
 
@@ -133,12 +133,12 @@ When `SITE_LOCKED=true`:
 
 Google, Discord, and Microsoft (Azure) sign-in is wired via Supabase Auth PKCE. Without Supabase env vars, OAuth buttons fall back to a mock callback (`(mock dev flow)`).
 
-| Concern | Location |
-|---------|----------|
-| Provider types | `src/lib/auth/oauth.ts` |
-| Browser `signInWithOAuth` | `src/lib/supabase/auth-client.ts` |
-| Callback `exchangeOAuthCode` | `src/routes/auth/callback/+server.ts` |
-| Provider dashboard setup | [oauth.md](../auth/oauth.md), [discord.md](../auth/discord.md), [microsoft.md](../auth/microsoft.md) |
+| Concern                      | Location                                                                                             |
+| ---------------------------- | ---------------------------------------------------------------------------------------------------- |
+| Provider types               | `src/lib/auth/oauth.ts`                                                                              |
+| Browser `signInWithOAuth`    | `src/lib/supabase/auth-client.ts`                                                                    |
+| Callback `exchangeOAuthCode` | `src/routes/auth/callback/+server.ts`                                                                |
+| Provider dashboard setup     | [oauth.md](../auth/oauth.md), [discord.md](../auth/discord.md), [microsoft.md](../auth/microsoft.md) |
 
 Enable each provider in Supabase Dashboard → **Authentication** → **Providers** with the IdP client ID/secret.
 

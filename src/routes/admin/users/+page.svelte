@@ -41,10 +41,14 @@
 </svelte:head>
 
 <h1 class="font-display text-2xl font-bold uppercase text-white">Users</h1>
-<p class="mt-1 text-zinc-400">Create accounts and assign roles. Prototype uses in-memory mock data until Supabase sync.</p>
+<p class="mt-1 text-zinc-400">
+	Create accounts and assign roles. Prototype uses in-memory mock data until Supabase sync.
+</p>
 
 {#if message}
-	<p class="mt-4 rounded-sm border border-zinc-700 bg-zinc-900 px-4 py-3 text-sm text-zinc-300">{message}</p>
+	<p class="mt-4 rounded-sm border border-zinc-700 bg-zinc-900 px-4 py-3 text-sm text-zinc-300">
+		{message}
+	</p>
 {/if}
 
 <section class="mt-8 rounded-sm border border-zinc-800 bg-zinc-900/50 p-6">
@@ -90,7 +94,9 @@
 
 <section class="mt-8 overflow-x-auto rounded-sm border border-zinc-800">
 	<table class="w-full min-w-[640px] text-left text-sm">
-		<thead class="border-b border-zinc-800 bg-zinc-900/50 text-xs uppercase tracking-widest text-zinc-500">
+		<thead
+			class="border-b border-zinc-800 bg-zinc-900/50 text-xs uppercase tracking-widest text-zinc-500"
+		>
 			<tr>
 				<th class="px-4 py-3">Name</th>
 				<th class="px-4 py-3">Email</th>

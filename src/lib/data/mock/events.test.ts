@@ -16,9 +16,9 @@ describe('events helpers', () => {
 
 		expect(upcoming.length).toBeGreaterThan(0);
 		expect(upcoming.map((e) => e.slug)).toEqual(
-			[...upcoming].sort(
-				(a, b) => new Date(a.startDate).getTime() - new Date(b.startDate).getTime()
-			).map((e) => e.slug)
+			[...upcoming]
+				.sort((a, b) => new Date(a.startDate).getTime() - new Date(b.startDate).getTime())
+				.map((e) => e.slug)
 		);
 	});
 

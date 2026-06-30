@@ -26,23 +26,23 @@ Phased rollout: (1) static marketing + admin upload path, (2) Saleor product syn
 
 ### How images are used today
 
-| Surface | Domain type | Source today | Components / routes |
-|--------|-------------|--------------|---------------------|
+| Surface              | Domain type                            | Source today                                                                     | Components / routes                                        |
+| -------------------- | -------------------------------------- | -------------------------------------------------------------------------------- | ---------------------------------------------------------- |
 | Shop & parts catalog | `Product.thumbnail`, `Product.media[]` | picsum in `mock/products.ts`, `mock/parts.ts`; Saleor mapper passes URLs through | `ProductCard`, `CartDrawer`, `parts/[slug]`, `shop/[slug]` |
-| Collections | `backgroundImage.url` | picsum in `mock/collections.ts` | `CollectionCard`, shop filters |
-| Brand pages | `logoUrl`, `heroImage` | picsum in `mock/brands.ts` | `BrandCard`, `/brands` |
-| Homepage hero | campaign / fallback URL | picsum in `Hero.svelte` | `Hero.svelte`, `mock/campaigns.ts` |
-| Builds gallery | `BuildThread.photos[]` | picsum in `mock/builds.ts` | `/builds`, `BuildCard` |
-| Build submissions | *(no photos yet)* | text-only in Supabase `build_submissions` | `BuildLogForm.svelte`, `/builds/submit` |
-| UGC wall | `UGCItem.image` | picsum in `mock/ugc.ts` | `UGCWall.svelte`, `/media` tab |
-| Media gallery | `MediaItem.thumbnail`, `.src` | picsum in `mock/media.ts` | `MediaGallery.svelte`, `/media` |
-| Watch / videos | `Video.thumbnail` | picsum in mock; YouTube sync stores external URL | `VideoCard`, `VideoHero`, `youtube/sync.ts` |
-| Guides & blog | `heroImage` | Ghost `feature_image` or picsum fallback | `GuideCard`, `/guides`, `/blog` |
-| Events | `imageUrl` | picsum in `mock/events.ts` | `EventsCalendar` |
-| Popular models | `heroImage` | picsum in `mock/popular-models.ts` | `ModelPicker` |
-| Part categories | `imageUrl` | picsum in `mock/part-categories.ts` | `PartCategoryNav`, mega-menu |
-| About / static | inline picsum | hardcoded in `about/+page.svelte` | marketing pages |
-| Admin media UI | preview only | mock list + upload stub | `/admin/media` |
+| Collections          | `backgroundImage.url`                  | picsum in `mock/collections.ts`                                                  | `CollectionCard`, shop filters                             |
+| Brand pages          | `logoUrl`, `heroImage`                 | picsum in `mock/brands.ts`                                                       | `BrandCard`, `/brands`                                     |
+| Homepage hero        | campaign / fallback URL                | picsum in `Hero.svelte`                                                          | `Hero.svelte`, `mock/campaigns.ts`                         |
+| Builds gallery       | `BuildThread.photos[]`                 | picsum in `mock/builds.ts`                                                       | `/builds`, `BuildCard`                                     |
+| Build submissions    | _(no photos yet)_                      | text-only in Supabase `build_submissions`                                        | `BuildLogForm.svelte`, `/builds/submit`                    |
+| UGC wall             | `UGCItem.image`                        | picsum in `mock/ugc.ts`                                                          | `UGCWall.svelte`, `/media` tab                             |
+| Media gallery        | `MediaItem.thumbnail`, `.src`          | picsum in `mock/media.ts`                                                        | `MediaGallery.svelte`, `/media`                            |
+| Watch / videos       | `Video.thumbnail`                      | picsum in mock; YouTube sync stores external URL                                 | `VideoCard`, `VideoHero`, `youtube/sync.ts`                |
+| Guides & blog        | `heroImage`                            | Ghost `feature_image` or picsum fallback                                         | `GuideCard`, `/guides`, `/blog`                            |
+| Events               | `imageUrl`                             | picsum in `mock/events.ts`                                                       | `EventsCalendar`                                           |
+| Popular models       | `heroImage`                            | picsum in `mock/popular-models.ts`                                               | `ModelPicker`                                              |
+| Part categories      | `imageUrl`                             | picsum in `mock/part-categories.ts`                                              | `PartCategoryNav`, mega-menu                               |
+| About / static       | inline picsum                          | hardcoded in `about/+page.svelte`                                                | marketing pages                                            |
+| Admin media UI       | preview only                           | mock list + upload stub                                                          | `/admin/media`                                             |
 
 ### Data model (image fields)
 
@@ -57,18 +57,18 @@ No shared `ImageSet` or srcset type exists yet; everything is a single URL strin
 
 ### External integrations
 
-| System | Image role | Storage owner |
-|--------|------------|---------------|
-| **Saleor** | Product thumbnails + gallery | Saleor dashboard upload → Saleor storage or custom S3 backend; storefront reads `thumbnail.url` / `media[].url` via GraphQL ([mappers.ts](../../src/lib/server/saleor/mappers.ts)) |
-| **Ghost** | Feature images + inline HTML `<img>` in post body | Ghost(Pro) CDN or self-hosted Ghost `content/images/`; mapped to `heroImage` ([ghost/mappers.ts](../../src/lib/server/ghost/mappers.ts)) |
-| **YouTube** | Video posters | `i.ytimg.com` — keep external; no need to mirror unless branding requires |
-| **Supabase** | Auth, `build_submissions`, future `media_assets` metadata | **No Storage buckets in use** — see [integrations/supabase.md](../integrations/supabase.md) |
+| System       | Image role                                                | Storage owner                                                                                                                                                                      |
+| ------------ | --------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Saleor**   | Product thumbnails + gallery                              | Saleor dashboard upload → Saleor storage or custom S3 backend; storefront reads `thumbnail.url` / `media[].url` via GraphQL ([mappers.ts](../../src/lib/server/saleor/mappers.ts)) |
+| **Ghost**    | Feature images + inline HTML `<img>` in post body         | Ghost(Pro) CDN or self-hosted Ghost `content/images/`; mapped to `heroImage` ([ghost/mappers.ts](../../src/lib/server/ghost/mappers.ts))                                           |
+| **YouTube**  | Video posters                                             | `i.ytimg.com` — keep external; no need to mirror unless branding requires                                                                                                          |
+| **Supabase** | Auth, `build_submissions`, future `media_assets` metadata | **No Storage buckets in use** — see [integrations/supabase.md](../integrations/supabase.md)                                                                                        |
 
 ### Prototype configuration
 
 ```typescript
 // src/lib/config/env.ts
-cdnBaseUrl: env.PUBLIC_CDN_BASE_URL ?? ''
+cdnBaseUrl: env.PUBLIC_CDN_BASE_URL ?? '';
 ```
 
 `.env.example` already defines `PUBLIC_CDN_BASE_URL`, `S3_BUCKET`, `S3_REGION`, and AWS keys (legacy naming from AWS-first plan). `/admin/media` simulates upload and previews `<your-cdn-host>/media/{id}` paths.
@@ -76,8 +76,7 @@ cdnBaseUrl: env.PUBLIC_CDN_BASE_URL ?? ''
 ### Placeholder pattern
 
 ```typescript
-const img = (seed: string, w = 800, h = 800) =>
-  `https://picsum.photos/seed/${seed}/${w}/${h}`;
+const img = (seed: string, w = 800, h = 800) => `https://picsum.photos/seed/${seed}/${w}/${h}`;
 ```
 
 Documented in [style-guide/frontend/media.md](../style-guide/frontend/media.md). Deterministic seeds keep dev stable but are unsuitable for production (third-party dependency, no alt control, no variants).
@@ -88,33 +87,33 @@ Documented in [style-guide/frontend/media.md](../style-guide/frontend/media.md).
 
 ### Mock catalog (today)
 
-| Asset class | Count | Image refs (approx.) | Notes |
-|-------------|------:|---------------------:|-------|
-| Shop products | 120 | 360 | 1 thumb + 2 gallery per SKU |
-| Parts SKUs | 727 | 2,181 | padded catalog (~20 per leaf category) |
-| Builds | 12 | 34 | 2–4 photos each |
-| UGC items | 12 | 12 | square thumbs |
-| Videos (mock) | 12 | 12 | 640×360 thumbs |
-| Brands | 10 | 20 | logo + hero |
-| Collections | 13 | 13 | background each |
-| Events | 6 | 6 | |
-| Guides / blog (mock) | 14 | 14 | hero each |
-| Media gallery items | 6 | 12 | thumb + full |
-| Part categories | 9+ | ~15 | nav / mega-menu |
-| **Mock subtotal** | **~900 entities** | **~2,700 URL refs** | all picsum |
+| Asset class          |             Count | Image refs (approx.) | Notes                                  |
+| -------------------- | ----------------: | -------------------: | -------------------------------------- |
+| Shop products        |               120 |                  360 | 1 thumb + 2 gallery per SKU            |
+| Parts SKUs           |               727 |                2,181 | padded catalog (~20 per leaf category) |
+| Builds               |                12 |                   34 | 2–4 photos each                        |
+| UGC items            |                12 |                   12 | square thumbs                          |
+| Videos (mock)        |                12 |                   12 | 640×360 thumbs                         |
+| Brands               |                10 |                   20 | logo + hero                            |
+| Collections          |                13 |                   13 | background each                        |
+| Events               |                 6 |                    6 |                                        |
+| Guides / blog (mock) |                14 |                   14 | hero each                              |
+| Media gallery items  |                 6 |                   12 | thumb + full                           |
+| Part categories      |                9+ |                  ~15 | nav / mega-menu                        |
+| **Mock subtotal**    | **~900 entities** |  **~2,700 URL refs** | all picsum                             |
 
 ### Production targets (12–24 months)
 
-| Asset class | Low | High | Variant multiplier |
-|-------------|----:|-----:|-------------------|
-| Product + parts SKUs | 500 | 3,000 | ×4 variants (original + 3 widths/formats) |
-| SKU image files | 1,500 | 9,000 | 3 source images/SKU avg |
-| **Derived variants** | **6,000** | **36,000** | after WebP + widths |
-| Brand / campaign / event heroes | 50 | 200 | ×3 variants |
-| Build photos (approved) | 100 | 2,000 | user growth |
-| UGC | 50 | 5,000 | moderation-gated |
-| CMS (Ghost) heroes | 20 | 200 | may stay on Ghost CDN |
-| Admin / static | 20 | 100 | logos, OG images |
+| Asset class                     |       Low |       High | Variant multiplier                        |
+| ------------------------------- | --------: | ---------: | ----------------------------------------- |
+| Product + parts SKUs            |       500 |      3,000 | ×4 variants (original + 3 widths/formats) |
+| SKU image files                 |     1,500 |      9,000 | 3 source images/SKU avg                   |
+| **Derived variants**            | **6,000** | **36,000** | after WebP + widths                       |
+| Brand / campaign / event heroes |        50 |        200 | ×3 variants                               |
+| Build photos (approved)         |       100 |      2,000 | user growth                               |
+| UGC                             |        50 |      5,000 | moderation-gated                          |
+| CMS (Ghost) heroes              |        20 |        200 | may stay on Ghost CDN                     |
+| Admin / static                  |        20 |        100 | logos, OG images                          |
 
 **Storage (rough):** assume 400 KB average per master JPEG → 3,000 masters ≈ **1.2 GB**; with variants ≈ **3–5 GB**. UGC at scale could add **10–50 GB**. Well within a single Garage node or small cluster.
 
@@ -184,12 +183,12 @@ flowchart TB
 
 ### Object storage (recommendation: **Garage**)
 
-| Option | Pros | Cons | Fit for AG |
-|--------|------|------|------------|
-| **[Garage](https://garagehq.deuxfleurs.fr/)** | Lightweight binary; S3 API; geo-replication; runs on modest hardware; AGPL | No versioning; simpler IAM; not for extreme QPS | **Primary recommendation** — matches self-hosted “garage S3” goal |
-| **MinIO** | Mature S3 parity; broad tooling; erasure coding | Heavier ops; JVM/resource hunger vs Garage | Good if team already runs MinIO |
-| **SeaweedFS** | Fast filer + S3; good for many small files | More moving parts (master/volume/filer) | Consider if mixing POSIX + S3 |
-| **AWS S3** | Managed durability; native CloudFront OAC | Vendor lock-in; cost at scale; conflicts with self-host goal | Fallback / hybrid for prod-only backup |
+| Option                                        | Pros                                                                       | Cons                                                         | Fit for AG                                                        |
+| --------------------------------------------- | -------------------------------------------------------------------------- | ------------------------------------------------------------ | ----------------------------------------------------------------- |
+| **[Garage](https://garagehq.deuxfleurs.fr/)** | Lightweight binary; S3 API; geo-replication; runs on modest hardware; AGPL | No versioning; simpler IAM; not for extreme QPS              | **Primary recommendation** — matches self-hosted “garage S3” goal |
+| **MinIO**                                     | Mature S3 parity; broad tooling; erasure coding                            | Heavier ops; JVM/resource hunger vs Garage                   | Good if team already runs MinIO                                   |
+| **SeaweedFS**                                 | Fast filer + S3; good for many small files                                 | More moving parts (master/volume/filer)                      | Consider if mixing POSIX + S3                                     |
+| **AWS S3**                                    | Managed durability; native CloudFront OAC                                  | Vendor lock-in; cost at scale; conflicts with self-host goal | Fallback / hybrid for prod-only backup                            |
 
 **Deployment sketch (Garage):**
 
@@ -199,11 +198,11 @@ flowchart TB
 
 ### CDN / cache layer (recommendation: **Caddy + optional Cloudflare**)
 
-| Layer | Role | Notes |
-|-------|------|-------|
-| **Caddy** (or nginx) | Reverse proxy to Garage; `cache` directive or `proxy_cache`; TLS for `<your-cdn-host>` | Same host or small VPS in front of Garage; full control |
-| **Cloudflare** (optional) | Global edge, DDoS, free tier cache | Orange-cloud `<your-cdn-host>`; origin = Caddy; cache everything for `/products/*`, `/ugc/*` |
-| **CloudFront** | AWS-native | Keep as doc-only alternative per [infrastructure/overview.md](../infrastructure/overview.md) if stack moves to AWS |
+| Layer                     | Role                                                                                   | Notes                                                                                                              |
+| ------------------------- | -------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ |
+| **Caddy** (or nginx)      | Reverse proxy to Garage; `cache` directive or `proxy_cache`; TLS for `<your-cdn-host>` | Same host or small VPS in front of Garage; full control                                                            |
+| **Cloudflare** (optional) | Global edge, DDoS, free tier cache                                                     | Orange-cloud `<your-cdn-host>`; origin = Caddy; cache everything for `/products/*`, `/ugc/*`                       |
+| **CloudFront**            | AWS-native                                                                             | Keep as doc-only alternative per [infrastructure/overview.md](../infrastructure/overview.md) if stack moves to AWS |
 
 **Why not Garage alone?** Garage serves S3 objects but does not provide aggressive HTTP caching, image optimization, or geographic edge POPs. A dedicated cache tier is required for storefront performance.
 
@@ -249,21 +248,21 @@ s3://<media-bucket>/
 
 ### Naming rules
 
-| Rule | Example |
-|------|---------|
-| Slugs lowercase, hyphenated | `garage-flag-tee` |
-| Content hash = SHA-256 first 12 chars of file bytes | `a3f9c2b1e8d0` |
+| Rule                                                    | Example                                                                     |
+| ------------------------------------------------------- | --------------------------------------------------------------------------- |
+| Slugs lowercase, hyphenated                             | `garage-flag-tee`                                                           |
+| Content hash = SHA-256 first 12 chars of file bytes     | `a3f9c2b1e8d0`                                                              |
 | Public URL = `{CDN}/{prefix}/{...}` without bucket name | `https://<your-cdn-host>/products/us/garage-flag-tee/a3f9c2b1e8d0/800.webp` |
-| Never overwrite catalog images — new hash = new URL | Enables `Cache-Control: immutable` |
-| `photoId` / `id` = UUID from Supabase | stable gallery ordering |
+| Never overwrite catalog images — new hash = new URL     | Enables `Cache-Control: immutable`                                          |
+| `photoId` / `id` = UUID from Supabase                   | stable gallery ordering                                                     |
 
 ### Environment separation
 
-| Env | Bucket / prefix | CDN URL |
-|-----|-----------------|---------|
-| Local dev | MinIO/Garage Docker `ag-media-dev` or prefix `dev/` | `http://localhost:3900` or `http://cdn.localhost` |
-| Staging | `<media-bucket-staging>` | `https://<your-cdn-staging-host>` |
-| Production | `<media-bucket-prod>` | `https://<your-cdn-host>` |
+| Env        | Bucket / prefix                                     | CDN URL                                           |
+| ---------- | --------------------------------------------------- | ------------------------------------------------- |
+| Local dev  | MinIO/Garage Docker `ag-media-dev` or prefix `dev/` | `http://localhost:3900` or `http://cdn.localhost` |
+| Staging    | `<media-bucket-staging>`                            | `https://<your-cdn-staging-host>`                 |
+| Production | `<media-bucket-prod>`                               | `https://<your-cdn-host>`                         |
 
 ---
 
@@ -271,21 +270,21 @@ s3://<media-bucket>/
 
 ### Recommendation: **on-upload** (not on-the-fly) for v1
 
-| Approach | Pros | Cons | Phase |
-|----------|------|------|-------|
-| **On-upload (sharp in worker)** | Predictable cost; simple CDN; easy cache headers | Storage for variants; reprocess on format changes | **MVP** |
-| On-the-fly (imgproxy / Thumbor) | Fewer stored files; arbitrary sizes | CPU on every cache miss; harder ops | Phase 2+ if needed |
-| Saleor / Ghost native | Zero custom code | Less control over WebP/srcset | Use for commerce/CMS where possible |
+| Approach                        | Pros                                             | Cons                                              | Phase                               |
+| ------------------------------- | ------------------------------------------------ | ------------------------------------------------- | ----------------------------------- |
+| **On-upload (sharp in worker)** | Predictable cost; simple CDN; easy cache headers | Storage for variants; reprocess on format changes | **MVP**                             |
+| On-the-fly (imgproxy / Thumbor) | Fewer stored files; arbitrary sizes              | CPU on every cache miss; harder ops               | Phase 2+ if needed                  |
+| Saleor / Ghost native           | Zero custom code                                 | Less control over WebP/srcset                     | Use for commerce/CMS where possible |
 
 ### Variant set (v1)
 
-| Name | Max width | Format | Use case |
-|------|----------|--------|----------|
-| `original` | as uploaded | JPEG/PNG | archive, zoom |
-| `400` | 400px | WebP (+ AVIF optional) | cards, cart thumbs |
-| `800` | 800px | WebP | product grid, UGC |
-| `1200` | 1200px | WebP | PDP hero, build gallery |
-| `1920` | 1920px | WebP | full-bleed heroes (optional) |
+| Name       | Max width   | Format                 | Use case                     |
+| ---------- | ----------- | ---------------------- | ---------------------------- |
+| `original` | as uploaded | JPEG/PNG               | archive, zoom                |
+| `400`      | 400px       | WebP (+ AVIF optional) | cards, cart thumbs           |
+| `800`      | 800px       | WebP                   | product grid, UGC            |
+| `1200`     | 1200px      | WebP                   | PDP hero, build gallery      |
+| `1920`     | 1920px      | WebP                   | full-bleed heroes (optional) |
 
 Generate AVIF only after WebP pipeline is stable (diminishing returns vs complexity).
 
@@ -315,13 +314,13 @@ sequenceDiagram
 
 **Integrations:**
 
-| Source | Upload entry | Notes |
-|--------|--------------|-------|
-| `/admin/media` | Presign action | Replace stub in [admin/media/+page.svelte](../../src/routes/admin/media/+page.svelte) |
-| Saleor | Saleor S3 plugin **or** sync job copying to Garage + URL rewrite in mapper | Prefer Saleor pointing at same Garage endpoint |
-| Build submissions | New multi-file field on `/builds/submit` → `submissions/` quarantine | Moderation moves to `builds/` on approve |
-| UGC | Moderated upload or Instagram-style submit | `ugc/` after approval |
-| Ghost | Stay on Ghost CDN initially | Optional later: mirror heroes to `static/guides/` |
+| Source            | Upload entry                                                               | Notes                                                                                 |
+| ----------------- | -------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- |
+| `/admin/media`    | Presign action                                                             | Replace stub in [admin/media/+page.svelte](../../src/routes/admin/media/+page.svelte) |
+| Saleor            | Saleor S3 plugin **or** sync job copying to Garage + URL rewrite in mapper | Prefer Saleor pointing at same Garage endpoint                                        |
+| Build submissions | New multi-file field on `/builds/submit` → `submissions/` quarantine       | Moderation moves to `builds/` on approve                                              |
+| UGC               | Moderated upload or Instagram-style submit                                 | `ugc/` after approval                                                                 |
+| Ghost             | Stay on Ghost CDN initially                                                | Optional later: mirror heroes to `static/guides/`                                     |
 
 ---
 
@@ -329,12 +328,12 @@ sequenceDiagram
 
 ### Cache-Control by prefix
 
-| Prefix | `Cache-Control` | Rationale |
-|--------|-----------------|-----------|
-| `products/`, `parts/` (hash in path) | `public, max-age=31536000, immutable` | URL changes when image changes |
-| `ugc/`, `builds/` | `public, max-age=86400, stale-while-revalidate=604800` | may edit caption; photo rarely changes |
-| `static/` | `public, max-age=2592000` | logos update infrequently |
-| `submissions/` | `private, no-store` | not public until approved |
+| Prefix                               | `Cache-Control`                                        | Rationale                              |
+| ------------------------------------ | ------------------------------------------------------ | -------------------------------------- |
+| `products/`, `parts/` (hash in path) | `public, max-age=31536000, immutable`                  | URL changes when image changes         |
+| `ugc/`, `builds/`                    | `public, max-age=86400, stale-while-revalidate=604800` | may edit caption; photo rarely changes |
+| `static/`                            | `public, max-age=2592000`                              | logos update infrequently              |
+| `submissions/`                       | `private, no-store`                                    | not public until approved              |
 
 ### CDN / proxy settings
 
@@ -344,12 +343,12 @@ sequenceDiagram
 
 ### Invalidation
 
-| Scenario | Action |
-|----------|--------|
-| New product image (new hash) | **No invalidation** — new URL |
-| Replace in-place (avoid) | Purge single path via Cloudflare API or `proxy_cache_purge` |
-| Bulk migration | Purge `/*` off-hours or version prefix `products/v2/` |
-| Ghost / Saleor URL change | App-level only — update DB/CMS |
+| Scenario                     | Action                                                      |
+| ---------------------------- | ----------------------------------------------------------- |
+| New product image (new hash) | **No invalidation** — new URL                               |
+| Replace in-place (avoid)     | Purge single path via Cloudflare API or `proxy_cache_purge` |
+| Bulk migration               | Purge `/*` off-hours or version prefix `products/v2/`       |
+| Ghost / Saleor URL change    | App-level only — update DB/CMS                              |
 
 Store `CLOUDFLARE_ZONE_ID` + `CLOUDFLARE_API_TOKEN` (cache purge) or nginx purge module if not using Cloudflare.
 
@@ -359,11 +358,11 @@ Store `CLOUDFLARE_ZONE_ID` + `CLOUDFLARE_API_TOKEN` (cache purge) or nginx purge
 
 ### Public vs signed URLs
 
-| Content | Access model |
-|---------|--------------|
-| Product, brand, campaign, public builds, approved UGC | **Public CDN URLs** — no signing |
-| Pending submissions, draft admin uploads | **Private prefix** — no CDN mapping; presigned GET for moderators only |
-| Presigned PUT | Short TTL (15 min), content-type constrained, max size enforced server-side |
+| Content                                               | Access model                                                                |
+| ----------------------------------------------------- | --------------------------------------------------------------------------- |
+| Product, brand, campaign, public builds, approved UGC | **Public CDN URLs** — no signing                                            |
+| Pending submissions, draft admin uploads              | **Private prefix** — no CDN mapping; presigned GET for moderators only      |
+| Presigned PUT                                         | Short TTL (15 min), content-type constrained, max size enforced server-side |
 
 Garage bucket policy: deny public listing; allow read only via CDN origin credentials or public-read on specific prefixes if using website mode (prefer proxy instead of public bucket).
 
@@ -388,15 +387,15 @@ Garage bucket policy: deny public listing; allow read only via CDN origin creden
 
 Extend `.env.example` (names can alias existing AWS vars for compatibility):
 
-| Variable | Scope | Purpose |
-|----------|-------|---------|
-| `PUBLIC_CDN_BASE_URL` | Public | `https://<your-cdn-host>` |
-| `S3_ENDPOINT` | Server | `https://garage.internal:3900` |
-| `S3_ACCESS_KEY_ID` | Server | Garage key |
-| `S3_SECRET_ACCESS_KEY` | Server | Garage secret |
-| `MEDIA_UPLOAD_MAX_BYTES` | Server | default 15728640 |
-| `CLOUDFLARE_ZONE_ID` | Server | optional purge |
-| `CLOUDFLARE_API_TOKEN` | Server | optional purge |
+| Variable                 | Scope  | Purpose                        |
+| ------------------------ | ------ | ------------------------------ |
+| `PUBLIC_CDN_BASE_URL`    | Public | `https://<your-cdn-host>`      |
+| `S3_ENDPOINT`            | Server | `https://garage.internal:3900` |
+| `S3_ACCESS_KEY_ID`       | Server | Garage key                     |
+| `S3_SECRET_ACCESS_KEY`   | Server | Garage secret                  |
+| `MEDIA_UPLOAD_MAX_BYTES` | Server | default 15728640               |
+| `CLOUDFLARE_ZONE_ID`     | Server | optional purge                 |
+| `CLOUDFLARE_API_TOKEN`   | Server | optional purge                 |
 
 ### Helper module (planned)
 
@@ -405,42 +404,42 @@ Extend `.env.example` (names can alias existing AWS vars for compatibility):
 import { config } from '$lib/config/env';
 
 export function cdnUrl(path: string): string {
-  if (!config.cdnBaseUrl) return path;
-  return `${config.cdnBaseUrl.replace(/\/$/, '')}/${path.replace(/^\//, '')}`;
+	if (!config.cdnBaseUrl) return path;
+	return `${config.cdnBaseUrl.replace(/\/$/, '')}/${path.replace(/^\//, '')}`;
 }
 
 export type ImageVariant = 400 | 800 | 1200;
 
 export function productImageUrl(
-  slug: string,
-  hash: string,
-  variant: ImageVariant,
-  channel = 'us'
+	slug: string,
+	hash: string,
+	variant: ImageVariant,
+	channel = 'us'
 ): string {
-  return cdnUrl(`products/${channel}/${slug}/${hash}/${variant}.webp`);
+	return cdnUrl(`products/${channel}/${slug}/${hash}/${variant}.webp`);
 }
 
 /** Build srcset from hash + slug when variants exist */
 export function productSrcSet(slug: string, hash: string, channel = 'us'): string {
-  const widths: ImageVariant[] = [400, 800, 1200];
-  return widths.map((w) => `${productImageUrl(slug, hash, w, channel)} ${w}w`).join(', ');
+	const widths: ImageVariant[] = [400, 800, 1200];
+	return widths.map((w) => `${productImageUrl(slug, hash, w, channel)} ${w}w`).join(', ');
 }
 ```
 
 ### Component touchpoints
 
-| Component | Change |
-|-----------|--------|
-| `ProductCard.svelte` | `src` → 400w WebP; add `srcset`/`sizes` when helper exists |
-| `parts/[slug]/+page.svelte` | Gallery thumbs + hero srcset |
-| `MediaGallery.svelte` | `item.thumbnail` + lightbox `src` from CDN |
-| `UGCWall.svelte` | square 400w |
-| `Hero.svelte` | campaign `heroImage` from CDN; fallback to static hero |
-| `BuildCard` / builds pages | `photos[]` URLs from `builds/` prefix |
-| `BrandCard`, `/brands` | `logoUrl`, `heroImage` |
-| `GuideCard`, blog cards | keep Ghost URL or `cdnUrl` if mirrored |
-| `CartDrawer` | thumbnail 400w |
-| `admin/media` | wire presign + list from `media_assets` table |
+| Component                   | Change                                                     |
+| --------------------------- | ---------------------------------------------------------- |
+| `ProductCard.svelte`        | `src` → 400w WebP; add `srcset`/`sizes` when helper exists |
+| `parts/[slug]/+page.svelte` | Gallery thumbs + hero srcset                               |
+| `MediaGallery.svelte`       | `item.thumbnail` + lightbox `src` from CDN                 |
+| `UGCWall.svelte`            | square 400w                                                |
+| `Hero.svelte`               | campaign `heroImage` from CDN; fallback to static hero     |
+| `BuildCard` / builds pages  | `photos[]` URLs from `builds/` prefix                      |
+| `BrandCard`, `/brands`      | `logoUrl`, `heroImage`                                     |
+| `GuideCard`, blog cards     | keep Ghost URL or `cdnUrl` if mirrored                     |
+| `CartDrawer`                | thumbnail 400w                                             |
+| `admin/media`               | wire presign + list from `media_assets` table              |
 
 **Saleor path:** continue using `product.thumbnail.url` from API — ensure Saleor stores Garage/CDN URLs (mapper unchanged in [saleor/mappers.ts](../../src/lib/server/saleor/mappers.ts)).
 
@@ -456,13 +455,13 @@ When `PUBLIC_CDN_BASE_URL` is empty, keep picsum fallbacks (current behavior). O
 
 ### Self-hosted (Garage + single cache VPS)
 
-| Item | Estimate |
-|------|----------|
+| Item                | Estimate                                            |
+| ------------------- | --------------------------------------------------- |
 | Garage storage node | existing homelab / $20–40/mo VPS + attached storage |
-| CDN proxy VPS | $5–20/mo or same host |
-| Cloudflare | $0 (free tier) for CDN |
-| Egress | Mostly cached; origin egress modest |
-| Ops time | ~2–4 h/mo updates, monitoring, backup verification |
+| CDN proxy VPS       | $5–20/mo or same host                               |
+| Cloudflare          | $0 (free tier) for CDN                              |
+| Egress              | Mostly cached; origin egress modest                 |
+| Ops time            | ~2–4 h/mo updates, monitoring, backup verification  |
 
 ### vs managed AWS
 
@@ -523,17 +522,17 @@ AWS S3 + CloudFront is simpler operationally but typically **$50–200+/mo** at 
 
 ### Mock → CDN mapping cheat sheet
 
-| Mock file | CDN prefix |
-|-----------|------------|
-| `mock/products.ts`, `mock/parts.ts` | Saleor + `products/`, `parts/` |
-| `mock/collections.ts` | `collections/` |
-| `mock/brands.ts` | `brands/` |
-| `mock/builds.ts` | `builds/` |
-| `mock/ugc.ts` | `ugc/` |
-| `mock/media.ts` | `media/` |
-| `mock/events.ts` | `events/` |
-| `mock/campaigns.ts` | `campaigns/` |
-| Ghost feature images | external or `static/editorial/` |
+| Mock file                           | CDN prefix                      |
+| ----------------------------------- | ------------------------------- |
+| `mock/products.ts`, `mock/parts.ts` | Saleor + `products/`, `parts/`  |
+| `mock/collections.ts`               | `collections/`                  |
+| `mock/brands.ts`                    | `brands/`                       |
+| `mock/builds.ts`                    | `builds/`                       |
+| `mock/ugc.ts`                       | `ugc/`                          |
+| `mock/media.ts`                     | `media/`                        |
+| `mock/events.ts`                    | `events/`                       |
+| `mock/campaigns.ts`                 | `campaigns/`                    |
+| Ghost feature images                | external or `static/editorial/` |
 
 ---
 

@@ -9,24 +9,24 @@ Generic OAuth architecture for Animal Garage sign-in. Providers are wired throug
 export type OAuthProvider = 'google' | 'discord' | 'azure';
 ```
 
-| App provider | Supabase Auth provider | Notes |
-|--------------|------------------------|-------|
-| `google` | `google` | Google OAuth 2.0 / OIDC |
-| `discord` | `discord` | Discord OAuth 2.0 |
-| `azure` | `azure` | Microsoft Entra ID (OIDC) |
+| App provider | Supabase Auth provider | Notes                     |
+| ------------ | ---------------------- | ------------------------- |
+| `google`     | `google`               | Google OAuth 2.0 / OIDC   |
+| `discord`    | `discord`              | Discord OAuth 2.0         |
+| `azure`      | `azure`                | Microsoft Entra ID (OIDC) |
 
 Add new providers by extending `OAuthProvider` and enabling the provider in the Supabase dashboard.
 
 ## Code map
 
-| Concern | Location |
-|---------|----------|
-| Provider types & mock URLs | `src/lib/auth/oauth.ts` |
-| Browser `signInWithOAuth` (PKCE) | `src/lib/supabase/auth-client.ts` |
-| Server `signInWithOAuth` / `exchangeOAuthCode` | `src/lib/server/supabase/auth.ts` |
-| Supabase SSR clients | `src/lib/server/supabase/client.ts`, `src/lib/supabase/browser.ts` |
-| OAuth callback | `src/routes/auth/callback/+server.ts` |
-| Shared button | `src/lib/components/OAuthButton.svelte` |
+| Concern                                        | Location                                                           |
+| ---------------------------------------------- | ------------------------------------------------------------------ |
+| Provider types & mock URLs                     | `src/lib/auth/oauth.ts`                                            |
+| Browser `signInWithOAuth` (PKCE)               | `src/lib/supabase/auth-client.ts`                                  |
+| Server `signInWithOAuth` / `exchangeOAuthCode` | `src/lib/server/supabase/auth.ts`                                  |
+| Supabase SSR clients                           | `src/lib/server/supabase/client.ts`, `src/lib/supabase/browser.ts` |
+| OAuth callback                                 | `src/routes/auth/callback/+server.ts`                              |
+| Shared button                                  | `src/lib/components/OAuthButton.svelte`                            |
 
 ## Callback flow
 
@@ -73,10 +73,10 @@ The callback sets a JSON `ag-session` cookie via `createMockUser()`. `hooks.serv
 
 Add these under **Authentication → URL configuration → Redirect URLs**:
 
-| Environment | URL |
-|-------------|-----|
-| Local dev | `http://localhost:5173/auth/callback` |
-| Production | `https://<your-site-host>/auth/callback` |
+| Environment | URL                                      |
+| ----------- | ---------------------------------------- |
+| Local dev   | `http://localhost:5173/auth/callback`    |
+| Production  | `https://<your-site-host>/auth/callback` |
 
 Also set **Site URL** to your primary origin (e.g. `https://<your-site-host>`).
 
@@ -84,11 +84,11 @@ Also set **Site URL** to your primary origin (e.g. `https://<your-site-host>`).
 
 **Authentication → Providers** — enable and configure each provider:
 
-| Provider | Dashboard section | Typical credentials |
-|----------|-------------------|---------------------|
-| Google | Google | OAuth client ID + secret (Google Cloud Console) |
-| Discord | Discord | Client ID + secret (Discord Developer Portal) |
-| Azure | Azure | Application (client) ID, secret, tenant URL |
+| Provider | Dashboard section | Typical credentials                             |
+| -------- | ----------------- | ----------------------------------------------- |
+| Google   | Google            | OAuth client ID + secret (Google Cloud Console) |
+| Discord  | Discord           | Client ID + secret (Discord Developer Portal)   |
+| Azure    | Azure             | Application (client) ID, secret, tenant URL     |
 
 For Azure, Supabase uses the `azure` provider ID (Microsoft Entra / OIDC).
 
@@ -117,8 +117,8 @@ Use `OAuthButton` with an icon snippet (provider-specific branding lives in the 
 
 ```svelte
 <OAuthButton provider="discord" redirectTo={data.redirectTo}>
-  {#snippet children()}
-    <!-- provider icon -->
-  {/snippet}
+	{#snippet children()}
+		<!-- provider icon -->
+	{/snippet}
 </OAuthButton>
 ```

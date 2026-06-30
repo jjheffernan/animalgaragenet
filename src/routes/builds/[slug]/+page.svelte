@@ -21,11 +21,21 @@
 	<div class="grid gap-12 lg:grid-cols-2">
 		<AnimatedReveal>
 			<div class="grid gap-4">
-				<img src={data.build.photos[selectedPhoto]} alt={data.build.title} class="aspect-[16/10] w-full rounded-sm border border-zinc-800 object-cover" />
+				<img
+					src={data.build.photos[selectedPhoto]}
+					alt={data.build.title}
+					class="aspect-[16/10] w-full rounded-sm border border-zinc-800 object-cover"
+				/>
 				{#if data.build.photos.length > 1}
 					<div class="grid grid-cols-4 gap-2">
 						{#each data.build.photos as photo, i (photo)}
-							<button type="button" onclick={() => (selectedPhoto = i)} class="overflow-hidden rounded-sm border {selectedPhoto === i ? 'border-red-600' : 'border-zinc-800'}">
+							<button
+								type="button"
+								onclick={() => (selectedPhoto = i)}
+								class="overflow-hidden rounded-sm border {selectedPhoto === i
+									? 'border-red-600'
+									: 'border-zinc-800'}"
+							>
 								<img src={photo} alt="" class="aspect-square w-full object-cover" loading="lazy" />
 							</button>
 						{/each}
@@ -35,7 +45,11 @@
 		</AnimatedReveal>
 
 		<AnimatedReveal delay={150}>
-			<p class="text-xs font-bold uppercase tracking-widest text-red-500">{data.build.year} {data.build.make} {data.build.model}{data.build.submodel ? ` ${data.build.submodel}` : ''}</p>
+			<p class="text-xs font-bold uppercase tracking-widest text-red-500">
+				{data.build.year}
+				{data.build.make}
+				{data.build.model}{data.build.submodel ? ` ${data.build.submodel}` : ''}
+			</p>
 			<h1 class="mt-2 font-display text-4xl font-bold uppercase text-white">{data.build.title}</h1>
 			<p class="mt-4 leading-relaxed text-zinc-400">{data.build.description}</p>
 

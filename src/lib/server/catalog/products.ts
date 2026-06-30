@@ -1,6 +1,15 @@
-import { filterShopProducts, getDealProducts as getMockDealProducts } from '$lib/data/catalog-helpers';
-import { filterProductsByShopSlug, filterSlugToShopCategory } from '$lib/server/catalog/shop-filters';
-import { getGiftCardProducts as getMockGiftCardProducts, getProductBySlug } from '$lib/data/mock/products';
+import {
+	filterShopProducts,
+	getDealProducts as getMockDealProducts
+} from '$lib/data/catalog-helpers';
+import {
+	filterProductsByShopSlug,
+	filterSlugToShopCategory
+} from '$lib/server/catalog/shop-filters';
+import {
+	getGiftCardProducts as getMockGiftCardProducts,
+	getProductBySlug
+} from '$lib/data/mock/products';
 import { config } from '$lib/config/env';
 import type { Product } from '$lib/types/saleor';
 import { getChannelForLocale } from '$lib/server/saleor/channels';
@@ -13,10 +22,7 @@ import {
 	type SaleorTaxedMoney
 } from '$lib/server/saleor/mappers';
 import { guardMockCatalogFallback } from '$lib/server/catalog/fallback';
-import {
-	PRODUCTS_QUERY,
-	PRODUCT_BY_SLUG_QUERY
-} from '$lib/server/saleor/queries';
+import { PRODUCTS_QUERY, PRODUCT_BY_SLUG_QUERY } from '$lib/server/saleor/queries';
 
 /** Extended list query — metadata + full price range for gift cards / deals. */
 const PRODUCTS_CATALOG_QUERY = `

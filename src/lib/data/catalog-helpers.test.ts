@@ -46,9 +46,7 @@ describe('filterShopProducts', () => {
 		const tees = filterShopProducts('TEES');
 		expect(tees.length).toBeGreaterThan(0);
 		expect(
-			tees.every(
-				(p) => p.name.toLowerCase().includes('tee') || p.category?.slug === 'apparel'
-			)
+			tees.every((p) => p.name.toLowerCase().includes('tee') || p.category?.slug === 'apparel')
 		).toBe(true);
 	});
 
@@ -81,6 +79,8 @@ describe('mock catalog size', () => {
 		expect(mockProducts.length).toBeGreaterThanOrEqual(50);
 		expect(mockParts.length).toBeGreaterThanOrEqual(40);
 		expect(filterShopProducts('TEES').length).toBeGreaterThanOrEqual(20);
-		expect(mockParts.filter((p) => p.category?.slug === 'coilovers').length).toBeGreaterThanOrEqual(20);
+		expect(mockParts.filter((p) => p.category?.slug === 'coilovers').length).toBeGreaterThanOrEqual(
+			20
+		);
 	});
 });

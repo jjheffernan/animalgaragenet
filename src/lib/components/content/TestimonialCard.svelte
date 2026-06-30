@@ -12,7 +12,9 @@
 <article class="rounded-sm border border-zinc-800 bg-zinc-900/50 p-6 {compact ? '' : 'h-full'}">
 	<div class="flex items-start justify-between gap-4">
 		<div>
-			<p class="text-xs font-bold uppercase tracking-widest text-red-500">{testimonial.displayName}</p>
+			<p class="text-xs font-bold uppercase tracking-widest text-red-500">
+				{testimonial.displayName}
+			</p>
 			{#if testimonial.vehicleSummary}
 				<p class="mt-0.5 text-xs text-zinc-500">{testimonial.vehicleSummary}</p>
 			{/if}

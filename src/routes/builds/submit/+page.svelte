@@ -22,7 +22,8 @@
 	<AnimatedReveal>
 		<h1 class="font-display text-3xl font-bold uppercase text-white">Submit Your Build</h1>
 		<p class="mt-4 text-zinc-400">
-			Share your ride with the Garage Squad. Approved builds earn XP and may be featured on the site.
+			Share your ride with the Garage Squad. Approved builds earn XP and may be featured on the
+			site.
 		</p>
 
 		{#if form?.success}
@@ -54,7 +55,11 @@
 						value={form?.title ?? ''}
 						required
 						placeholder="Project Fox"
-						class="mt-1 w-full rounded-sm border border-zinc-700 bg-zinc-900 px-4 py-3 text-white focus:border-red-600 focus:outline-none {fieldError('title') ? 'border-red-600' : ''}"
+						class="mt-1 w-full rounded-sm border border-zinc-700 bg-zinc-900 px-4 py-3 text-white focus:border-red-600 focus:outline-none {fieldError(
+							'title'
+						)
+							? 'border-red-600'
+							: ''}"
 					/>
 					{#if fieldError('title')}
 						<p class="mt-1 text-xs text-red-500">{fieldError('title')}</p>
@@ -72,7 +77,11 @@
 							min="1900"
 							max="2099"
 							placeholder="2020"
-							class="mt-1 w-full rounded-sm border border-zinc-700 bg-zinc-900 px-4 py-3 text-white focus:border-red-600 focus:outline-none {fieldError('year') ? 'border-red-600' : ''}"
+							class="mt-1 w-full rounded-sm border border-zinc-700 bg-zinc-900 px-4 py-3 text-white focus:border-red-600 focus:outline-none {fieldError(
+								'year'
+							)
+								? 'border-red-600'
+								: ''}"
 						/>
 						{#if fieldError('year')}
 							<p class="mt-1 text-xs text-red-500">{fieldError('year')}</p>
@@ -86,7 +95,11 @@
 							value={form?.make ?? ''}
 							required
 							placeholder="Honda"
-							class="mt-1 w-full rounded-sm border border-zinc-700 bg-zinc-900 px-4 py-3 text-white focus:border-red-600 focus:outline-none {fieldError('make') ? 'border-red-600' : ''}"
+							class="mt-1 w-full rounded-sm border border-zinc-700 bg-zinc-900 px-4 py-3 text-white focus:border-red-600 focus:outline-none {fieldError(
+								'make'
+							)
+								? 'border-red-600'
+								: ''}"
 						/>
 						{#if fieldError('make')}
 							<p class="mt-1 text-xs text-red-500">{fieldError('make')}</p>
@@ -102,7 +115,11 @@
 						value={form?.model ?? ''}
 						required
 						placeholder="Civic"
-						class="mt-1 w-full rounded-sm border border-zinc-700 bg-zinc-900 px-4 py-3 text-white focus:border-red-600 focus:outline-none {fieldError('model') ? 'border-red-600' : ''}"
+						class="mt-1 w-full rounded-sm border border-zinc-700 bg-zinc-900 px-4 py-3 text-white focus:border-red-600 focus:outline-none {fieldError(
+							'model'
+						)
+							? 'border-red-600'
+							: ''}"
 					/>
 					{#if fieldError('model')}
 						<p class="mt-1 text-xs text-red-500">{fieldError('model')}</p>
@@ -117,7 +134,11 @@
 						value={form?.email ?? ''}
 						required
 						placeholder="you@example.com"
-						class="mt-1 w-full rounded-sm border border-zinc-700 bg-zinc-900 px-4 py-3 text-white focus:border-red-600 focus:outline-none {fieldError('email') ? 'border-red-600' : ''}"
+						class="mt-1 w-full rounded-sm border border-zinc-700 bg-zinc-900 px-4 py-3 text-white focus:border-red-600 focus:outline-none {fieldError(
+							'email'
+						)
+							? 'border-red-600'
+							: ''}"
 					/>
 					{#if fieldError('email')}
 						<p class="mt-1 text-xs text-red-500">{fieldError('email')}</p>
@@ -131,8 +152,12 @@
 						rows="4"
 						required
 						placeholder="Tell us about your build..."
-						class="mt-1 w-full rounded-sm border border-zinc-700 bg-zinc-900 px-4 py-3 text-white focus:border-red-600 focus:outline-none {fieldError('description') ? 'border-red-600' : ''}"
-					>{form?.description ?? ''}</textarea>
+						class="mt-1 w-full rounded-sm border border-zinc-700 bg-zinc-900 px-4 py-3 text-white focus:border-red-600 focus:outline-none {fieldError(
+							'description'
+						)
+							? 'border-red-600'
+							: ''}">{form?.description ?? ''}</textarea
+					>
 					{#if fieldError('description')}
 						<p class="mt-1 text-xs text-red-500">{fieldError('description')}</p>
 					{/if}
@@ -145,8 +170,12 @@
 						rows="4"
 						required
 						placeholder="One mod per line"
-						class="mt-1 w-full rounded-sm border border-zinc-700 bg-zinc-900 px-4 py-3 text-white focus:border-red-600 focus:outline-none {fieldError('modList') ? 'border-red-600' : ''}"
-					>{form?.modList ?? ''}</textarea>
+						class="mt-1 w-full rounded-sm border border-zinc-700 bg-zinc-900 px-4 py-3 text-white focus:border-red-600 focus:outline-none {fieldError(
+							'modList'
+						)
+							? 'border-red-600'
+							: ''}">{form?.modList ?? ''}</textarea
+					>
 					{#if fieldError('modList')}
 						<p class="mt-1 text-xs text-red-500">{fieldError('modList')}</p>
 					{/if}
@@ -162,6 +191,10 @@
 			</form>
 		{/if}
 
-		<a href={resolve('/builds')} class="mt-8 inline-block text-sm font-bold uppercase tracking-widest text-red-500 hover:text-red-400">← Back to builds</a>
+		<a
+			href={resolve('/builds')}
+			class="mt-8 inline-block text-sm font-bold uppercase tracking-widest text-red-500 hover:text-red-400"
+			>← Back to builds</a
+		>
 	</AnimatedReveal>
 </section>

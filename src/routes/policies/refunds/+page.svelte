@@ -44,16 +44,16 @@
 			</div>
 
 			<div>
-				<h2 class="font-display text-lg font-bold uppercase text-white">Final Sale &amp; Clearance</h2>
+				<h2 class="font-display text-lg font-bold uppercase text-white">
+					Final Sale &amp; Clearance
+				</h2>
 				<p class="mt-3">
-					Items marked <strong class="text-white">Clearance</strong>, <strong class="text-white"
-						>Final Sale</strong
-					>, or sold at 40%+ off are not eligible for return or exchange. This includes end-of-season
-					merch, open-box parts, and limited-run drops sold as-is.
+					Items marked <strong class="text-white">Clearance</strong>,
+					<strong class="text-white">Final Sale</strong>, or sold at 40%+ off are not eligible for
+					return or exchange. This includes end-of-season merch, open-box parts, and limited-run
+					drops sold as-is.
 				</p>
-				<p class="mt-3">
-					Gift cards, digital products, and downloadables are non-refundable.
-				</p>
+				<p class="mt-3">Gift cards, digital products, and downloadables are non-refundable.</p>
 			</div>
 
 			<div>
@@ -72,7 +72,10 @@
 					<li>Ship the item back within 14 days of approval</li>
 					<li>Refunds process within 5–10 business days after we receive and inspect the return</li>
 				</ol>
-				<p class="mt-4">Refunds are issued to the original payment method. Shipping charges are non-refundable unless we made an error.</p>
+				<p class="mt-4">
+					Refunds are issued to the original payment method. Shipping charges are non-refundable
+					unless we made an error.
+				</p>
 			</div>
 		</div>
 	</AnimatedReveal>

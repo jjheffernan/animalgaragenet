@@ -42,9 +42,7 @@ async function fetchSaleorProductsByTag(
  * `products` on each collection is empty until collection product queries are added.
  */
 // @saleor-migration: intentional — catalog swap point; see docs/commerce/saleor.md#quick-migration
-export async function getCollections(
-	locale: string = config.defaultLocale
-): Promise<Collection[]> {
+export async function getCollections(locale: string = config.defaultLocale): Promise<Collection[]> {
 	if (isSaleorEnabled()) {
 		try {
 			const channel = getChannelForLocale(locale);

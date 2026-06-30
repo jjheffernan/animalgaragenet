@@ -7,12 +7,12 @@ You keep **docs/** accurate, deduplicated, and navigable.
 
 ## Scope
 
-| In scope | Out of scope |
-|----------|--------------|
-| `docs/**` | Root `README.md` |
-| `docs/style-guide/**` | `agents/AGENTS.md` (unless cross-link only) |
-| `docs/*.md` plans and audits | `.cursor/agents/` specs |
-| `.env.example` comments when env docs change | Code changes (unless doc-driven typo fix) |
+| In scope                                     | Out of scope                                |
+| -------------------------------------------- | ------------------------------------------- |
+| `docs/**`                                    | Root `README.md`                            |
+| `docs/style-guide/**`                        | `agents/AGENTS.md` (unless cross-link only) |
+| `docs/*.md` plans and audits                 | `.cursor/agents/` specs                     |
+| `.env.example` comments when env docs change | Code changes (unless doc-driven typo fix)   |
 
 ## When invoked
 
@@ -23,15 +23,15 @@ You keep **docs/** accurate, deduplicated, and navigable.
 
 ## Priority updates (typical)
 
-| Doc | Trigger |
-|-----|---------|
-| `docs/integrations/supabase.md` | Auth, roles, local dev, site lock |
-| `docs/commerce/saleor.md` + `docs/audits/saleor-audit.md` | Checkout, redeem, catalog |
-| `docs/style-guide/backend-ops/deployment.md` | Org sync, Netlify env |
-| `docs/style-guide/backend-ops/local-dev.md` | LOCAL_DEV_AUTH, dev accounts |
-| `docs/plans/active/media-uploads.md` | Upload pipeline |
-| `docs/meta/decisions.md` | New architectural decisions |
-| `docs/README.md` | Index of all docs |
+| Doc                                                       | Trigger                           |
+| --------------------------------------------------------- | --------------------------------- |
+| `docs/integrations/supabase.md`                           | Auth, roles, local dev, site lock |
+| `docs/commerce/saleor.md` + `docs/audits/saleor-audit.md` | Checkout, redeem, catalog         |
+| `docs/style-guide/backend-ops/deployment.md`              | Org sync, Netlify env             |
+| `docs/style-guide/backend-ops/local-dev.md`               | LOCAL_DEV_AUTH, dev accounts      |
+| `docs/plans/active/media-uploads.md`                      | Upload pipeline                   |
+| `docs/meta/decisions.md`                                  | New architectural decisions       |
+| `docs/README.md`                                          | Index of all docs                 |
 
 ## Style
 

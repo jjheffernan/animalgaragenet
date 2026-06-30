@@ -79,8 +79,8 @@ Until that pipeline exists, [`src/lib/data/mock/builds.ts`](../../src/lib/data/m
 
 ## Related code
 
-| File | Role |
-| ---- | ---- |
-| `src/routes/builds/submit/+page.server.ts` | Validation + action |
-| `src/lib/server/forms/submit.ts` | Insert + mock fallback |
-| `src/lib/server/supabase/admin.ts` | Service-role client |
+| File                                       | Role                   |
+| ------------------------------------------ | ---------------------- |
+| `src/routes/builds/submit/+page.server.ts` | Validation + action    |
+| `src/lib/server/forms/submit.ts`           | Insert + mock fallback |
+| `src/lib/server/supabase/admin.ts`         | Service-role client    |

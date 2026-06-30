@@ -66,7 +66,9 @@
 		<a href={resolve('/parts')} class="hover:text-red-500">Parts</a>
 		{#if product.category}
 			<span class="mx-2">/</span>
-			<a href={resolve(`/parts/${product.category.slug}`)} class="hover:text-red-500">{product.category.name}</a>
+			<a href={resolve(`/parts/${product.category.slug}`)} class="hover:text-red-500"
+				>{product.category.name}</a
+			>
 		{/if}
 		<span class="mx-2">/</span>
 		<span class="text-zinc-300">{product.name}</span>
@@ -77,14 +79,29 @@
 			<div class="grid gap-4">
 				<div class="overflow-hidden rounded-sm border border-zinc-800 bg-zinc-900">
 					{#if images[selectedImage]}
-						<img src={images[selectedImage].url} alt={images[selectedImage].alt} class="aspect-square w-full object-cover" />
+						<img
+							src={images[selectedImage].url}
+							alt={images[selectedImage].alt}
+							class="aspect-square w-full object-cover"
+						/>
 					{/if}
 				</div>
 				{#if images.length > 1}
 					<div class="grid grid-cols-4 gap-2">
 						{#each images as img, i (img.id)}
-							<button type="button" onclick={() => (selectedImage = i)} class="overflow-hidden rounded-sm border {selectedImage === i ? 'border-red-600' : 'border-zinc-800'}">
-								<img src={img.url} alt={img.alt} class="aspect-square w-full object-cover" loading="lazy" />
+							<button
+								type="button"
+								onclick={() => (selectedImage = i)}
+								class="overflow-hidden rounded-sm border {selectedImage === i
+									? 'border-red-600'
+									: 'border-zinc-800'}"
+							>
+								<img
+									src={img.url}
+									alt={img.alt}
+									class="aspect-square w-full object-cover"
+									loading="lazy"
+								/>
 							</button>
 						{/each}
 					</div>
@@ -95,15 +112,24 @@
 		<AnimatedReveal delay={150}>
 			<div class="flex items-center gap-2">
 				{#if product.category}
-					<p class="text-xs font-bold uppercase tracking-widest text-red-500">{product.category.name}</p>
+					<p class="text-xs font-bold uppercase tracking-widest text-red-500">
+						{product.category.name}
+					</p>
 				{/if}
 				<CatalogKindBadge {product} />
 			</div>
-			<h1 class="mt-2 font-display text-3xl font-bold uppercase tracking-wider text-white sm:text-4xl">{product.name}</h1>
+			<h1
+				class="mt-2 font-display text-3xl font-bold uppercase tracking-wider text-white sm:text-4xl"
+			>
+				{product.name}
+			</h1>
 
 			{#if product.brand}
 				<p class="mt-3">
-					<a href={resolve(`/brands/${product.brand.slug}`)} class="text-sm font-medium uppercase tracking-wider text-zinc-400 hover:text-red-400">
+					<a
+						href={resolve(`/brands/${product.brand.slug}`)}
+						class="text-sm font-medium uppercase tracking-wider text-zinc-400 hover:text-red-400"
+					>
 						{product.brand.name}
 					</a>
 				</p>
@@ -113,7 +139,10 @@
 				<PriceDisplay {product} />
 			</div>
 			{#if soldOut}
-				<span class="mt-2 inline-block rounded-sm bg-zinc-950 px-3 py-1 text-xs font-bold uppercase text-white">Sold Out</span>
+				<span
+					class="mt-2 inline-block rounded-sm bg-zinc-950 px-3 py-1 text-xs font-bold uppercase text-white"
+					>Sold Out</span
+				>
 			{/if}
 
 			<div class="mt-6 flex items-center gap-4">
@@ -128,7 +157,10 @@
 							<button
 								type="button"
 								onclick={() => (selectedVariantId = variant.id)}
-								class="rounded-sm border px-4 py-2 text-sm transition {selectedVariantId === variant.id ? 'border-red-600 bg-red-600/10 text-white' : 'border-zinc-700 text-zinc-400 hover:border-zinc-500'}"
+								class="rounded-sm border px-4 py-2 text-sm transition {selectedVariantId ===
+								variant.id
+									? 'border-red-600 bg-red-600/10 text-white'
+									: 'border-zinc-700 text-zinc-400 hover:border-zinc-500'}"
 							>
 								{variant.name}
 							</button>
@@ -154,11 +186,26 @@
 			{/if}
 
 			{#if soldOut}
-				<form class="mt-8 rounded-sm border border-zinc-800 bg-zinc-900/50 p-4" onsubmit={submitNotify}>
-					<p class="text-sm font-bold uppercase tracking-widest text-zinc-300">Notify Me When Available</p>
+				<form
+					class="mt-8 rounded-sm border border-zinc-800 bg-zinc-900/50 p-4"
+					onsubmit={submitNotify}
+				>
+					<p class="text-sm font-bold uppercase tracking-widest text-zinc-300">
+						Notify Me When Available
+					</p>
 					<div class="mt-3 flex gap-2">
-						<input type="email" bind:value={notifyEmail} required placeholder="Email" class="flex-1 rounded-sm border border-zinc-700 bg-zinc-900 px-3 py-2 text-white" />
-						<button type="submit" class="rounded-sm bg-red-600 px-4 py-2 text-sm font-bold uppercase text-white hover:bg-red-500">Notify</button>
+						<input
+							type="email"
+							bind:value={notifyEmail}
+							required
+							placeholder="Email"
+							class="flex-1 rounded-sm border border-zinc-700 bg-zinc-900 px-3 py-2 text-white"
+						/>
+						<button
+							type="submit"
+							class="rounded-sm bg-red-600 px-4 py-2 text-sm font-bold uppercase text-white hover:bg-red-500"
+							>Notify</button
+						>
 					</div>
 				</form>
 			{:else}

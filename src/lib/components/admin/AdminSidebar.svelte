@@ -38,7 +38,10 @@
 						<li>
 							<a
 								href={resolve(item.href)}
-								class="block rounded-sm px-2 py-1.5 text-sm transition {linkClass(item.href, item.exact)}"
+								class="block rounded-sm px-2 py-1.5 text-sm transition {linkClass(
+									item.href,
+									item.exact
+								)}"
 								onclick={onNavigate}
 							>
 								{item.label}
@@ -50,7 +53,5 @@
 		{/each}
 	</nav>
 
-	<p class="mt-4 px-2 text-[10px] text-zinc-600">
-		Admin shell — zinc palette, red accents.
-	</p>
+	<p class="mt-4 px-2 text-[10px] text-zinc-600">Admin shell — zinc palette, red accents.</p>
 </aside>

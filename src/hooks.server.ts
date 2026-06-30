@@ -30,16 +30,14 @@ export const handle: Handle = async ({ event, resolve }) => {
 	}
 
 	if (env.SITE_LOCKED === 'true' && !isLockdownExemptPath(event.url.pathname)) {
-		const isAdmin =
-			event.locals.devAdmin || canAccessAdmin(event.locals.session?.role ?? null);
+		const isAdmin = event.locals.devAdmin || canAccessAdmin(event.locals.session?.role ?? null);
 		if (!isAdmin) {
 			throw redirect(303, '/locked');
 		}
 	}
 
 	if (event.url.pathname.startsWith('/admin')) {
-		const hasAccess =
-			event.locals.devAdmin || canAccessAdmin(event.locals.session?.role ?? null);
+		const hasAccess = event.locals.devAdmin || canAccessAdmin(event.locals.session?.role ?? null);
 
 		if (!hasAccess) {
 			const redirectTo = encodeURIComponent(event.url.pathname);

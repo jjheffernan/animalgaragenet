@@ -23,14 +23,22 @@
 <section class="mx-auto max-w-md px-4 py-20 sm:px-6 lg:px-8">
 	<AnimatedReveal>
 		<h1 class="font-display text-3xl font-bold uppercase text-white">Create Account</h1>
-		<p class="mt-2 text-zinc-400">Join Garage Squad with email or Microsoft — Supabase-ready when keys are set.</p>
+		<p class="mt-2 text-zinc-400">
+			Join Garage Squad with email or Microsoft — Supabase-ready when keys are set.
+		</p>
 
 		{#if form?.error}
-			<p class="mt-4 rounded-sm border border-red-800 bg-red-950/30 px-4 py-3 text-sm text-red-400">{form.error}</p>
+			<p class="mt-4 rounded-sm border border-red-800 bg-red-950/30 px-4 py-3 text-sm text-red-400">
+				{form.error}
+			</p>
 		{/if}
 
 		{#if form?.success && form?.message}
-			<p class="mt-4 rounded-sm border border-emerald-800 bg-emerald-950/30 px-4 py-3 text-sm text-emerald-400">{form.message}</p>
+			<p
+				class="mt-4 rounded-sm border border-emerald-800 bg-emerald-950/30 px-4 py-3 text-sm text-emerald-400"
+			>
+				{form.message}
+			</p>
 		{/if}
 
 		<form

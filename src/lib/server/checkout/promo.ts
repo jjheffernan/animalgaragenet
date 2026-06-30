@@ -32,9 +32,7 @@ function parseMockPromoCookie(raw: string | undefined): MockPromoState | null {
 		return JSON.parse(raw) as MockPromoState;
 	} catch {
 		const promo = findMockPromoCode(raw);
-		return promo
-			? { code: promo.code, label: promo.label, percentOff: promo.percentOff }
-			: null;
+		return promo ? { code: promo.code, label: promo.label, percentOff: promo.percentOff } : null;
 	}
 }
 

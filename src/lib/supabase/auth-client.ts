@@ -1,7 +1,4 @@
-import {
-	mockCallbackUrl,
-	type OAuthProvider
-} from '$lib/auth/oauth';
+import { mockCallbackUrl, type OAuthProvider } from '$lib/auth/oauth';
 import { config } from '$lib/config/env';
 import { createBrowserClient } from '$lib/supabase/browser';
 
@@ -13,10 +10,7 @@ export interface OAuthSignInResult {
 
 export interface BrowserAuthClient {
 	ready: boolean;
-	signInWithOAuth: (
-		provider: OAuthProvider,
-		redirectTo?: string
-	) => Promise<OAuthSignInResult>;
+	signInWithOAuth: (provider: OAuthProvider, redirectTo?: string) => Promise<OAuthSignInResult>;
 }
 
 function oauthCallbackUrl(redirectTo: string): string {

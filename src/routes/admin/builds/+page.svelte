@@ -29,11 +29,19 @@
 						<input type="hidden" name="year" value={log.year} />
 						<input type="hidden" name="make" value={log.make} />
 						<input type="hidden" name="model" value={log.model} />
-						<button type="submit" class="rounded-sm bg-red-600 px-4 py-2 text-sm font-bold uppercase tracking-wider text-white transition hover:bg-red-500">Approve</button>
+						<button
+							type="submit"
+							class="rounded-sm bg-red-600 px-4 py-2 text-sm font-bold uppercase tracking-wider text-white transition hover:bg-red-500"
+							>Approve</button
+						>
 					</form>
 					<form method="POST" action="?/reject" use:enhance>
 						<input type="hidden" name="id" value={log.id} />
-						<button type="submit" class="rounded-sm border border-zinc-700 px-4 py-2 text-sm font-bold uppercase tracking-wider text-zinc-300 transition hover:border-red-600 hover:text-white">Reject</button>
+						<button
+							type="submit"
+							class="rounded-sm border border-zinc-700 px-4 py-2 text-sm font-bold uppercase tracking-wider text-zinc-300 transition hover:border-red-600 hover:text-white"
+							>Reject</button
+						>
 					</form>
 				</div>
 			</li>

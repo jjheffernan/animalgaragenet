@@ -28,22 +28,24 @@
 						(last four digits only — full card data handled by our payment processor)
 					</li>
 					<li>
-						<strong class="text-zinc-300">Garage preferences:</strong> saved vehicles, wishlists, and loyalty
-						program activity
+						<strong class="text-zinc-300">Garage preferences:</strong> saved vehicles, wishlists, and
+						loyalty program activity
 					</li>
 					<li>
 						<strong class="text-zinc-300">Communications:</strong> newsletter signups, contact form submissions,
 						wholesale inquiries
 					</li>
 					<li>
-						<strong class="text-zinc-300">Usage data:</strong> pages visited, device type, IP address, and
-						cookies for site functionality and analytics
+						<strong class="text-zinc-300">Usage data:</strong> pages visited, device type, IP address,
+						and cookies for site functionality and analytics
 					</li>
 				</ul>
 			</div>
 
 			<div>
-				<h2 class="font-display text-lg font-bold uppercase text-white">How We Use Your Information</h2>
+				<h2 class="font-display text-lg font-bold uppercase text-white">
+					How We Use Your Information
+				</h2>
 				<ul class="mt-4 list-inside list-disc space-y-2">
 					<li>Process and fulfill orders, including shipping notifications</li>
 					<li>Provide customer support and respond to inquiries</li>
@@ -55,16 +57,33 @@
 			</div>
 
 			<div>
-				<h2 class="font-display text-lg font-bold uppercase text-white">Sharing &amp; Third Parties</h2>
-				<p class="mt-3">We do not sell your personal information. We share data only with service providers who help us operate:</p>
+				<h2 class="font-display text-lg font-bold uppercase text-white">
+					Sharing &amp; Third Parties
+				</h2>
+				<p class="mt-3">
+					We do not sell your personal information. We share data only with service providers who
+					help us operate:
+				</p>
 				<ul class="mt-4 list-inside list-disc space-y-2">
-					<li><strong class="text-zinc-300">Saleor</strong> — e-commerce platform and order management</li>
-					<li><strong class="text-zinc-300">Supabase</strong> — authentication, database, and form storage</li>
-					<li><strong class="text-zinc-300">Payment processors</strong> — secure payment handling</li>
-					<li><strong class="text-zinc-300">Shipping carriers</strong> — delivery of your orders</li>
-					<li><strong class="text-zinc-300">Analytics providers</strong> — anonymized site usage metrics</li>
+					<li>
+						<strong class="text-zinc-300">Saleor</strong> — e-commerce platform and order management
+					</li>
+					<li>
+						<strong class="text-zinc-300">Supabase</strong> — authentication, database, and form storage
+					</li>
+					<li>
+						<strong class="text-zinc-300">Payment processors</strong> — secure payment handling
+					</li>
+					<li>
+						<strong class="text-zinc-300">Shipping carriers</strong> — delivery of your orders
+					</li>
+					<li>
+						<strong class="text-zinc-300">Analytics providers</strong> — anonymized site usage metrics
+					</li>
 				</ul>
-				<p class="mt-3">We may disclose information if required by law or to protect our rights and users.</p>
+				<p class="mt-3">
+					We may disclose information if required by law or to protect our rights and users.
+				</p>
 			</div>
 
 			<div>
@@ -77,7 +96,9 @@
 			</div>
 
 			<div>
-				<h2 class="font-display text-lg font-bold uppercase text-white">Data Retention &amp; Security</h2>
+				<h2 class="font-display text-lg font-bold uppercase text-white">
+					Data Retention &amp; Security
+				</h2>
 				<p class="mt-3">
 					We retain order and account data as long as your account is active or as needed to fulfill
 					legal obligations. We use industry-standard encryption and access controls to protect your
@@ -105,7 +126,10 @@
 			<div>
 				<h2 class="font-display text-lg font-bold uppercase text-white">Contact</h2>
 				<p class="mt-3">
-					Questions about this policy? Reach us through our <a href="/contact" class="text-red-500 hover:text-red-400">contact page</a>.
+					Questions about this policy? Reach us through our <a
+						href="/contact"
+						class="text-red-500 hover:text-red-400">contact page</a
+					>.
 				</p>
 			</div>
 		</div>

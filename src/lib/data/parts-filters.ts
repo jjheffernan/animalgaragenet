@@ -42,7 +42,12 @@ export function parsePartsFilters(url: URL): PartsFilterState {
 	const ymm = url.searchParams.get('ymm');
 	if (ymm) {
 		const parsed = parseYmmParam(ymm);
-		if (parsed) return { ...parsed, brand: url.searchParams.get('brand') ?? undefined, build: url.searchParams.get('build') ?? undefined };
+		if (parsed)
+			return {
+				...parsed,
+				brand: url.searchParams.get('brand') ?? undefined,
+				build: url.searchParams.get('build') ?? undefined
+			};
 	}
 
 	return {

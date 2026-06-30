@@ -12,13 +12,13 @@ Persistent memory for major choices made during build-out. Minor implementation 
 
 ## Stack (unchanged)
 
-| Layer | Choice | Rationale |
-|-------|--------|-----------|
-| Frontend | SvelteKit 2 / Svelte 5 / Tailwind v4 | Already scaffolded; best-in-class for animated UX |
-| Commerce | Saleor GraphQL (env-gated catalog + cart scaffold) | Headless, international channels, gift cards, attributes for fitment; mock fallback without env |
-| Auth / CMS | Supabase (`@supabase/ssr`, PKCE OAuth) | Auth, builds, garage XP, newsletter; mock fallback without env |
-| Media | S3 + CloudFront (env placeholders) | CDN URLs via `PUBLIC_CDN_BASE_URL`; picsum for prototype |
-| Motion | CSS transitions + `AnimatedReveal`; no Motion One yet | Avoid new deps until needed; CSS sufficient for Phase 2 |
+| Layer      | Choice                                                | Rationale                                                                                       |
+| ---------- | ----------------------------------------------------- | ----------------------------------------------------------------------------------------------- |
+| Frontend   | SvelteKit 2 / Svelte 5 / Tailwind v4                  | Already scaffolded; best-in-class for animated UX                                               |
+| Commerce   | Saleor GraphQL (env-gated catalog + cart scaffold)    | Headless, international channels, gift cards, attributes for fitment; mock fallback without env |
+| Auth / CMS | Supabase (`@supabase/ssr`, PKCE OAuth)                | Auth, builds, garage XP, newsletter; mock fallback without env                                  |
+| Media      | S3 + CloudFront (env placeholders)                    | CDN URLs via `PUBLIC_CDN_BASE_URL`; picsum for prototype                                        |
+| Motion     | CSS transitions + `AnimatedReveal`; no Motion One yet | Avoid new deps until needed; CSS sufficient for Phase 2                                         |
 
 ---
 
@@ -26,20 +26,20 @@ Persistent memory for major choices made during build-out. Minor implementation 
 
 ### Top-level nav (mega-menu)
 
-| Section | Pattern source | Route |
-|---------|----------------|-------|
-| Shop (Apparel, Accessories, Auto, Home, Clearance, Gift Cards) | Culture merch brands | `/shop`, `/shop?category=` |
-| Parts (Wheels, Suspension, Exhaust, Engine, …) | Parts retailers | `/parts`, `/parts/[category]` |
-| Media / Watch | Media-first brands | `/media`, `/watch` |
-| Builds | Community-first retailers | `/builds`, `/builds/[slug]` |
-| Guides & Blog | Education-led retailers | `/guides`, `/blog` |
-| Tools | Fitment retailers | `/tools/tire-calculator`, `/tools/fitment-visualizer` |
-| Deals (Pit Lane Deals) | Promotional deal modals | `/deals` |
-| Brands | Brand-lane discovery | `/brands`, `/brands/[slug]` |
-| Loyalty (Garage Squad) | Loyalty + gamification | `/loyalty` |
-| Events | Campaign-driven brands | `/events` |
-| Auth | Standard e-commerce | `/auth/sign-in`, `/account` |
-| Admin | Internal ops | `/admin` |
+| Section                                                        | Pattern source            | Route                                                 |
+| -------------------------------------------------------------- | ------------------------- | ----------------------------------------------------- |
+| Shop (Apparel, Accessories, Auto, Home, Clearance, Gift Cards) | Culture merch brands      | `/shop`, `/shop?category=`                            |
+| Parts (Wheels, Suspension, Exhaust, Engine, …)                 | Parts retailers           | `/parts`, `/parts/[category]`                         |
+| Media / Watch                                                  | Media-first brands        | `/media`, `/watch`                                    |
+| Builds                                                         | Community-first retailers | `/builds`, `/builds/[slug]`                           |
+| Guides & Blog                                                  | Education-led retailers   | `/guides`, `/blog`                                    |
+| Tools                                                          | Fitment retailers         | `/tools/tire-calculator`, `/tools/fitment-visualizer` |
+| Deals (Pit Lane Deals)                                         | Promotional deal modals   | `/deals`                                              |
+| Brands                                                         | Brand-lane discovery      | `/brands`, `/brands/[slug]`                           |
+| Loyalty (Garage Squad)                                         | Loyalty + gamification    | `/loyalty`                                            |
+| Events                                                         | Campaign-driven brands    | `/events`                                             |
+| Auth                                                           | Standard e-commerce       | `/auth/sign-in`, `/account`                           |
+| Admin                                                          | Internal ops              | `/admin`                                              |
 
 ### Footer programs
 
@@ -118,10 +118,10 @@ Supabase auth at `/auth/*`. Admin RBAC at `/admin` with roles: admin, editor, co
 
 Products share a single `Product` type but belong to one of two catalog kinds, derived from Saleor `productType`:
 
-| `productType` | `CatalogKind` | Route pattern |
-|---------------|---------------|---------------|
-| `PART` | `PARTS` | `/parts/[category]/[slug]` |
-| `STANDARD`, `GIFT_CARD`, or unset | `MERCH` | `/shop/[slug]` |
+| `productType`                     | `CatalogKind` | Route pattern              |
+| --------------------------------- | ------------- | -------------------------- |
+| `PART`                            | `PARTS`       | `/parts/[category]/[slug]` |
+| `STANDARD`, `GIFT_CARD`, or unset | `MERCH`       | `/shop/[slug]`             |
 
 Helpers in `catalog-helpers.ts` (`getCatalogKind`, `getProductPath`, `getCatalogProductById`, `filterByCatalogKind`) centralize path generation and cross-catalog lookups. Related products and cart upsells stay within the same catalog kind. UI badges (`CatalogKindBadge`) distinguish items in cart and search; product cards show a Part badge only for parts.
 
@@ -139,4 +139,4 @@ See [inspiration.md](./inspiration.md) for full backlog.
 
 ---
 
-*Last updated: June 2026 — Phase 3*
+_Last updated: June 2026 — Phase 3_

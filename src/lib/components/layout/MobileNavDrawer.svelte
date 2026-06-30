@@ -76,8 +76,11 @@
 		<a href={resolve('/')} class="group flex items-center gap-2" onclick={onclose}>
 			<span
 				class="flex h-9 w-9 items-center justify-center bg-red-600 text-sm font-black tracking-tighter text-white"
-			>AG</span>
-			<span class="font-display text-sm font-bold uppercase tracking-widest text-white">Animal Garage</span>
+				>AG</span
+			>
+			<span class="font-display text-sm font-bold uppercase tracking-widest text-white"
+				>Animal Garage</span
+			>
 		</a>
 		<button
 			type="button"
@@ -86,7 +89,12 @@
 			onclick={onclose}
 		>
 			<svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-				<path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12" />
+				<path
+					stroke-linecap="round"
+					stroke-linejoin="round"
+					stroke-width="1.5"
+					d="M6 18L18 6M6 6l12 12"
+				/>
 			</svg>
 		</button>
 	</div>
@@ -130,7 +138,8 @@
 					onclick={() => toggle('parts')}
 				>
 					Parts
-					<span class="text-2xl font-light leading-none text-zinc-500">{partsOpen ? '−' : '+'}</span>
+					<span class="text-2xl font-light leading-none text-zinc-500">{partsOpen ? '−' : '+'}</span
+					>
 				</button>
 				{#if partsOpen && partsNav}
 					<div class="pb-4 pl-1">
@@ -174,7 +183,9 @@
 					onclick={() => toggle('community')}
 				>
 					Community
-					<span class="text-2xl font-light leading-none text-zinc-500">{communityOpen ? '−' : '+'}</span>
+					<span class="text-2xl font-light leading-none text-zinc-500"
+						>{communityOpen ? '−' : '+'}</span
+					>
 				</button>
 				{#if communityOpen}
 					<ul class="space-y-1 pb-4 pl-1">
@@ -182,8 +193,8 @@
 							<li>
 								<a
 									href={link.href}
-									class="block py-2 text-sm font-medium uppercase tracking-wider text-zinc-400 transition hover:text-red-400 {$page.url.pathname === link.href ||
-									$page.url.pathname.startsWith(`${link.href}/`)
+									class="block py-2 text-sm font-medium uppercase tracking-wider text-zinc-400 transition hover:text-red-400 {$page
+										.url.pathname === link.href || $page.url.pathname.startsWith(`${link.href}/`)
 										? 'text-red-400'
 										: ''}"
 									onclick={onclose}
@@ -204,7 +215,13 @@
 				>
 					Pit Lane Deals
 					{#if !session}
-						<svg class="h-4 w-4 text-zinc-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+						<svg
+							class="h-4 w-4 text-zinc-500"
+							fill="none"
+							stroke="currentColor"
+							viewBox="0 0 24 24"
+							aria-hidden="true"
+						>
 							<path
 								stroke-linecap="round"
 								stroke-linejoin="round"

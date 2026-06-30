@@ -52,7 +52,9 @@ describe('pagination', () => {
 	it('builds pagination URLs while preserving filters', () => {
 		const params = new URLSearchParams('category=TEES&page=2');
 		expect(buildPaginationUrl('/shop', params, { page: 3 })).toBe('/shop?category=TEES&page=3');
-		expect(buildPaginationUrl('/shop', params, { perPage: 20 })).toBe('/shop?category=TEES&perPage=20');
+		expect(buildPaginationUrl('/shop', params, { perPage: 20 })).toBe(
+			'/shop?category=TEES&perPage=20'
+		);
 	});
 
 	it('preserves view param and omits default view', () => {

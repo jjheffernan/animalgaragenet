@@ -10,11 +10,7 @@
 		class?: string;
 	}
 
-	let {
-		categories = mockPartCategories,
-		activeSlug,
-		class: className = ''
-	}: Props = $props();
+	let { categories = mockPartCategories, activeSlug, class: className = '' }: Props = $props();
 
 	const currentSlug = $derived(activeSlug ?? $page.params.category ?? '');
 </script>
@@ -24,7 +20,8 @@
 		<div>
 			<a
 				href={resolve(`/parts/${cat.slug}`)}
-				class="block rounded-sm px-3 py-2 text-sm font-medium uppercase tracking-wider transition {currentSlug === cat.slug
+				class="block rounded-sm px-3 py-2 text-sm font-medium uppercase tracking-wider transition {currentSlug ===
+				cat.slug
 					? 'bg-red-600/10 text-red-500'
 					: 'text-zinc-400 hover:bg-zinc-900 hover:text-white'}"
 			>

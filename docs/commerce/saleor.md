@@ -24,13 +24,13 @@ Saleor runs on a **separate domain**. This repo is the storefront frontend only.
 
 **Checkout:** `/checkout` is a UI placeholder — no payment, shipping, or `CHECKOUT_COMPLETE`.
 
-| Area | Location |
-|------|----------|
-| GraphQL client | `src/lib/server/saleor/client.ts` |
-| Queries + mappers | `src/lib/server/saleor/queries.ts`, `mappers.ts` |
-| Catalog swap points | `src/lib/server/catalog/*.ts` |
-| Checkout scaffold | `src/lib/server/saleor/checkout.ts`, `cart/checkout/+server.ts` |
-| Mock fallback | `src/lib/data/mock/products.ts` |
+| Area                | Location                                                        |
+| ------------------- | --------------------------------------------------------------- |
+| GraphQL client      | `src/lib/server/saleor/client.ts`                               |
+| Queries + mappers   | `src/lib/server/saleor/queries.ts`, `mappers.ts`                |
+| Catalog swap points | `src/lib/server/catalog/*.ts`                                   |
+| Checkout scaffold   | `src/lib/server/saleor/checkout.ts`, `cart/checkout/+server.ts` |
+| Mock fallback       | `src/lib/data/mock/products.ts`                                 |
 
 ## Environment
 
@@ -72,11 +72,11 @@ Use `COLLECTIONS_QUERY` for homepage and `/shop?collection=` filtering.
 
 `/shop` category pills are hydrated from Saleor when `PUBLIC_SALEOR_API_URL` is set:
 
-| Piece | Location |
-| ----- | -------- |
+| Piece         | Location                                                            |
+| ------------- | ------------------------------------------------------------------- |
 | Filter loader | `src/lib/server/catalog/shop-filters.ts` — `getShopFilterOptions()` |
-| Shop page | `src/routes/shop/+page.server.ts` — server load |
-| JSON API | `GET /api/catalog/shop-filters` — `{ categories, source }` |
+| Shop page     | `src/routes/shop/+page.server.ts` — server load                     |
+| JSON API      | `GET /api/catalog/shop-filters` — `{ categories, source }`          |
 
 Saleor path uses `CATEGORIES_QUERY` (top-level category tree). Mock fallback derives from `SHOP_CATEGORIES` in `catalog-helpers.ts`. Product filtering uses legacy heuristics for mock slugs (`tees`, `gift-cards`) or matches Saleor `category.slug` / `tags` metadata when live.
 
@@ -95,11 +95,11 @@ Saleor path uses `CATEGORIES_QUERY` (top-level category tree). Mock fallback der
 
 **Done (partial):** Account redeem (`/account/redeem`), cart promo API (`/cart/checkout/promo`), `checkoutAddPromoCode` / `checkoutRemovePromoCode` in `checkout.ts`. Mock codes when Saleor unset (`GARAGE10`, `PITLANE15`).
 
-| Surface | Route / component | Status |
-|---------|-------------------|--------|
-| Account redeem | `/account/redeem` | Done |
-| Cart / checkout inline | `PromoCodeForm`, cart promo API | Done |
-| Gift card balance | Checkout summary | Not wired |
+| Surface                | Route / component               | Status    |
+| ---------------------- | ------------------------------- | --------- |
+| Account redeem         | `/account/redeem`               | Done      |
+| Cart / checkout inline | `PromoCodeForm`, cart promo API | Done      |
+| Gift card balance      | Checkout summary                | Not wired |
 
 ### 6. International shipping
 
@@ -172,18 +172,18 @@ Mappers live in `src/lib/server/saleor/mappers.ts` (`mapProduct`, `mapProductLis
 
 Set `PUBLIC_SALEOR_API_URL` (and optionally `SALEOR_CHANNEL`) — primary catalog loaders already swap at env gates. Remaining work is mostly **uncommenting scaffolded checkout/collection blocks** marked `@saleor-migration` in code.
 
-| Step | Action | Swap point |
-| ---- | ------ | ---------- |
-| 1 | Set env vars | `.env` — `PUBLIC_SALEOR_API_URL`, `SALEOR_CHANNEL` |
-| 2 | Verify gate | `src/lib/server/saleor/client.ts` — `isSaleorEnabled()` |
-| 3 | Catalog loads | `src/lib/server/catalog/products.ts`, `parts.ts`, `collections.ts`, `shop-filters.ts`, `search.ts` |
-| 4 | Channel per locale | `src/lib/server/saleor/channels.ts` — `getChannelForLocale()` |
-| 5 | Map responses | `src/lib/server/saleor/mappers.ts`, `metadata.ts` |
-| 6 | GraphQL strings | `src/lib/server/saleor/queries.ts`, `checkout-queries.ts` |
-| 7 | Cart add / read | `src/lib/server/saleor/checkout.ts`, `routes/cart/checkout/+server.ts`, `routes/cart/+page.server.ts` |
-| 8 | Cart remove/qty | Uncomment blocks in `checkout-queries.ts`, `checkout.ts`, `src/lib/stores/cart.svelte.ts` |
-| 9 | Checkout complete | Uncomment `CHECKOUT_COMPLETE` + shipping blocks in `checkout-queries.ts`, `checkout.ts` |
-| 10 | Collection products | Uncomment `COLLECTION_PRODUCTS_QUERY` in `queries.ts`, wire in `collections.ts` |
+| Step | Action              | Swap point                                                                                            |
+| ---- | ------------------- | ----------------------------------------------------------------------------------------------------- |
+| 1    | Set env vars        | `.env` — `PUBLIC_SALEOR_API_URL`, `SALEOR_CHANNEL`                                                    |
+| 2    | Verify gate         | `src/lib/server/saleor/client.ts` — `isSaleorEnabled()`                                               |
+| 3    | Catalog loads       | `src/lib/server/catalog/products.ts`, `parts.ts`, `collections.ts`, `shop-filters.ts`, `search.ts`    |
+| 4    | Channel per locale  | `src/lib/server/saleor/channels.ts` — `getChannelForLocale()`                                         |
+| 5    | Map responses       | `src/lib/server/saleor/mappers.ts`, `metadata.ts`                                                     |
+| 6    | GraphQL strings     | `src/lib/server/saleor/queries.ts`, `checkout-queries.ts`                                             |
+| 7    | Cart add / read     | `src/lib/server/saleor/checkout.ts`, `routes/cart/checkout/+server.ts`, `routes/cart/+page.server.ts` |
+| 8    | Cart remove/qty     | Uncomment blocks in `checkout-queries.ts`, `checkout.ts`, `src/lib/stores/cart.svelte.ts`             |
+| 9    | Checkout complete   | Uncomment `CHECKOUT_COMPLETE` + shipping blocks in `checkout-queries.ts`, `checkout.ts`               |
+| 10   | Collection products | Uncomment `COLLECTION_PRODUCTS_QUERY` in `queries.ts`, wire in `collections.ts`                       |
 
 **Mock fallback:** When env is unset, loaders call mock data via `guardMockCatalogFallback()` (`src/lib/server/catalog/fallback.ts`). Production requires Saleor — mock is dev-only.
 

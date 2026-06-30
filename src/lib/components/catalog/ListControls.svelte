@@ -72,10 +72,7 @@
 
 {#if showControls}
 	{#if placement === 'top' && showView}
-		<div
-			class="mb-6 flex justify-end {className}"
-			aria-label="List view options"
-		>
+		<div class="mb-6 flex justify-end {className}" aria-label="List view options">
 			{@render viewToggle()}
 		</div>
 	{:else if placement === 'bottom'}

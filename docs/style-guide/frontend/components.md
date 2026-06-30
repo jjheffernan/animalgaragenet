@@ -60,8 +60,7 @@ let { children, class: className = '', delay = 0 }: Props = $props();
 ## Imports
 
 ```svelte
-import ProductCard from '$lib/components/catalog/ProductCard.svelte';
-import type {Product} from '$lib/types/saleor';
+import ProductCard from '$lib/components/catalog/ProductCard.svelte'; import type {Product} from '$lib/types/saleor';
 ```
 
 Path alias `$lib` → `src/lib` (configured in SvelteKit).

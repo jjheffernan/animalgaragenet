@@ -31,7 +31,9 @@
 <section class="border-b border-zinc-800 bg-zinc-900/50 py-16">
 	<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 		<h1 class="font-display text-4xl font-bold uppercase tracking-wider text-white">Media</h1>
-		<p class="mt-2 text-zinc-400">Builds, events, and behind-the-scenes from the Animal Garage crew.</p>
+		<p class="mt-2 text-zinc-400">
+			Builds, events, and behind-the-scenes from the Animal Garage crew.
+		</p>
 	</div>
 </section>
 
@@ -44,7 +46,8 @@
 				{#each tabs as tab (tab.value)}
 					<a
 						href={tabHref(tab.value)}
-						class="rounded-sm px-4 py-2 text-xs font-bold uppercase tracking-widest transition {data.tab === tab.value
+						class="rounded-sm px-4 py-2 text-xs font-bold uppercase tracking-widest transition {data.tab ===
+						tab.value
 							? 'bg-red-600 text-white'
 							: 'text-zinc-400 hover:bg-zinc-800 hover:text-white'}"
 					>
@@ -58,7 +61,11 @@
 	<section class="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
 		{#if data.tab === 'ugc'}
 			<AnimatedReveal>
-				<SectionHeading title="UGC Wall" subtitle="From the squad — tag @animalgarage" align="center" />
+				<SectionHeading
+					title="UGC Wall"
+					subtitle="From the squad — tag @animalgarage"
+					align="center"
+				/>
 			</AnimatedReveal>
 			<UGCWall items={data.ugcItems} class="mt-8" />
 		{:else if data.tab === 'videos'}
@@ -82,6 +89,10 @@
 
 <section class="border-t border-zinc-800 bg-zinc-900/30 py-12">
 	<div class="mx-auto max-w-3xl px-4 text-center sm:px-6">
-		<a href={resolve('/watch')} class="text-sm font-bold uppercase tracking-widest text-red-500 hover:text-red-400">Full video hub →</a>
+		<a
+			href={resolve('/watch')}
+			class="text-sm font-bold uppercase tracking-widest text-red-500 hover:text-red-400"
+			>Full video hub →</a
+		>
 	</div>
 </section>

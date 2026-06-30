@@ -11,7 +11,9 @@
 </svelte:head>
 
 <h1 class="font-display text-2xl font-bold uppercase text-white">Testimonial Moderation</h1>
-<p class="mt-1 text-sm text-zinc-400">Approve Garage Squad reviews before they publish on /loyalty.</p>
+<p class="mt-1 text-sm text-zinc-400">
+	Approve Garage Squad reviews before they publish on /loyalty.
+</p>
 
 {#if data.pending.length === 0}
 	<p class="mt-8 text-zinc-500">No testimonials awaiting review.</p>
@@ -36,10 +38,19 @@
 					<p class="mt-2 text-xs text-zinc-600">Tier snapshot: {testimonial.loyaltyTier}</p>
 				{/if}
 				<div class="mt-4 flex flex-wrap items-center gap-4">
-					<form method="POST" action="?/approve" use:enhance class="flex flex-wrap items-center gap-3">
+					<form
+						method="POST"
+						action="?/approve"
+						use:enhance
+						class="flex flex-wrap items-center gap-3"
+					>
 						<input type="hidden" name="id" value={testimonial.id} />
 						<label class="flex items-center gap-2 text-sm text-zinc-400">
-							<input type="checkbox" name="featured" class="rounded border-zinc-600 bg-zinc-900 text-red-600 focus:ring-red-600" />
+							<input
+								type="checkbox"
+								name="featured"
+								class="rounded border-zinc-600 bg-zinc-900 text-red-600 focus:ring-red-600"
+							/>
 							Feature on homepage
 						</label>
 						<button

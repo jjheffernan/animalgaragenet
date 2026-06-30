@@ -71,25 +71,25 @@ Audit of animalgaragenet prototype on `dev` branch. Run after infrastructure/doc
 
 ### Fixed
 
-| Issue                         | Fix                                                    |
-| ----------------------------- | ------------------------------------------------------ |
-| Missing `+error.svelte`       | Added branded error page at `src/routes/+error.svelte` |
-| `SALEOR_CHANNEL` env mismatch | Server-only read in saleor client                      |
+| Issue                         | Fix                                                           |
+| ----------------------------- | ------------------------------------------------------------- |
+| Missing `+error.svelte`       | Added branded error page at `src/routes/+error.svelte`        |
+| `SALEOR_CHANNEL` env mismatch | Server-only read in saleor client                             |
 | ESLint navigation/each-key    | Links use `resolve()` from `$app/paths`; `{#each}` keys added |
-| Prettier formatting drift     | Formatted codebase for CI compatibility                |
+| Prettier formatting drift     | Formatted codebase for CI compatibility                       |
 
 ### Known gaps (not blocking prototype)
 
-| Issue                                                | Severity | Notes                                            |
-| ---------------------------------------------------- | -------- | ------------------------------------------------ |
-| No cart/checkout                                     | Expected | Phase 2 — Saleor integration                     |
-| Homepage imports mock data in component              | Low      | Move to `+page.server.ts` before Saleor swap     |
-| No `prefers-reduced-motion`                          | Medium   | Documented in style guide a11y section           |
-| No custom 404 page content for unknown products only | Low      | Generic error page handles 404                   |
-| `LocaleSelector` not in Header                       | Low      | Component exists, not wired to nav               |
-| No SEO/OG tags per page                              | Medium   | Phase 5                                          |
+| Issue                                                | Severity | Notes                                                      |
+| ---------------------------------------------------- | -------- | ---------------------------------------------------------- |
+| No cart/checkout                                     | Expected | Phase 2 — Saleor integration                               |
+| Homepage imports mock data in component              | Low      | Move to `+page.server.ts` before Saleor swap               |
+| No `prefers-reduced-motion`                          | Medium   | Documented in style guide a11y section                     |
+| No custom 404 page content for unknown products only | Low      | Generic error page handles 404                             |
+| `LocaleSelector` not in Header                       | Low      | Component exists, not wired to nav                         |
+| No SEO/OG tags per page                              | Medium   | Phase 5                                                    |
 | No tests                                             | **Done** | 180+ unit/contract/integration tests — `npm run test:unit` |
-| No `svelte.config.js` file                           | Info     | Config lives in `vite.config.ts` (valid for SK2) |
+| No `svelte.config.js` file                           | Info     | Config lives in `vite.config.ts` (valid for SK2)           |
 
 ### TODO/FIXME scan
 

@@ -57,7 +57,9 @@
 		</div>
 
 		{#if form?.success}
-			<p class="mt-10 rounded-sm border border-red-900/50 bg-red-950/30 px-4 py-3 text-sm text-red-400">
+			<p
+				class="mt-10 rounded-sm border border-red-900/50 bg-red-950/30 px-4 py-3 text-sm text-red-400"
+			>
 				{form.message}
 			</p>
 		{:else}
@@ -77,13 +79,19 @@
 				{/if}
 
 				<label class="block">
-					<span class="text-xs font-bold uppercase tracking-widest text-zinc-500">Business Name</span>
+					<span class="text-xs font-bold uppercase tracking-widest text-zinc-500"
+						>Business Name</span
+					>
 					<input
 						type="text"
 						name="businessName"
 						value={form?.businessName ?? ''}
 						required
-						class="mt-1 w-full rounded-sm border border-zinc-700 bg-zinc-900 px-4 py-3 text-white focus:border-red-600 focus:outline-none {fieldError('businessName') ? 'border-red-600' : ''}"
+						class="mt-1 w-full rounded-sm border border-zinc-700 bg-zinc-900 px-4 py-3 text-white focus:border-red-600 focus:outline-none {fieldError(
+							'businessName'
+						)
+							? 'border-red-600'
+							: ''}"
 					/>
 					{#if fieldError('businessName')}
 						<p class="mt-1 text-xs text-red-500">{fieldError('businessName')}</p>
@@ -91,13 +99,18 @@
 				</label>
 
 				<label class="block">
-					<span class="text-xs font-bold uppercase tracking-widest text-zinc-500">Contact Name</span>
+					<span class="text-xs font-bold uppercase tracking-widest text-zinc-500">Contact Name</span
+					>
 					<input
 						type="text"
 						name="contactName"
 						value={form?.contactName ?? ''}
 						required
-						class="mt-1 w-full rounded-sm border border-zinc-700 bg-zinc-900 px-4 py-3 text-white focus:border-red-600 focus:outline-none {fieldError('contactName') ? 'border-red-600' : ''}"
+						class="mt-1 w-full rounded-sm border border-zinc-700 bg-zinc-900 px-4 py-3 text-white focus:border-red-600 focus:outline-none {fieldError(
+							'contactName'
+						)
+							? 'border-red-600'
+							: ''}"
 					/>
 					{#if fieldError('contactName')}
 						<p class="mt-1 text-xs text-red-500">{fieldError('contactName')}</p>
@@ -112,7 +125,11 @@
 							name="email"
 							value={form?.email ?? ''}
 							required
-							class="mt-1 w-full rounded-sm border border-zinc-700 bg-zinc-900 px-4 py-3 text-white focus:border-red-600 focus:outline-none {fieldError('email') ? 'border-red-600' : ''}"
+							class="mt-1 w-full rounded-sm border border-zinc-700 bg-zinc-900 px-4 py-3 text-white focus:border-red-600 focus:outline-none {fieldError(
+								'email'
+							)
+								? 'border-red-600'
+								: ''}"
 						/>
 						{#if fieldError('email')}
 							<p class="mt-1 text-xs text-red-500">{fieldError('email')}</p>
@@ -120,7 +137,9 @@
 					</label>
 
 					<label class="block">
-						<span class="text-xs font-bold uppercase tracking-widest text-zinc-500">Phone (optional)</span>
+						<span class="text-xs font-bold uppercase tracking-widest text-zinc-500"
+							>Phone (optional)</span
+						>
 						<input
 							type="tel"
 							name="phone"
@@ -131,7 +150,9 @@
 				</div>
 
 				<label class="block">
-					<span class="text-xs font-bold uppercase tracking-widest text-zinc-500">Website (optional)</span>
+					<span class="text-xs font-bold uppercase tracking-widest text-zinc-500"
+						>Website (optional)</span
+					>
 					<input
 						type="url"
 						name="website"
@@ -142,14 +163,20 @@
 				</label>
 
 				<label class="block">
-					<span class="text-xs font-bold uppercase tracking-widest text-zinc-500">Tell Us About Your Business</span>
+					<span class="text-xs font-bold uppercase tracking-widest text-zinc-500"
+						>Tell Us About Your Business</span
+					>
 					<textarea
 						name="message"
 						rows="4"
 						required
 						placeholder="Retail shop, event organizer, distributor — what are you looking for?"
-						class="mt-1 w-full rounded-sm border border-zinc-700 bg-zinc-900 px-4 py-3 text-white focus:border-red-600 focus:outline-none {fieldError('message') ? 'border-red-600' : ''}"
-					>{form?.message ?? ''}</textarea>
+						class="mt-1 w-full rounded-sm border border-zinc-700 bg-zinc-900 px-4 py-3 text-white focus:border-red-600 focus:outline-none {fieldError(
+							'message'
+						)
+							? 'border-red-600'
+							: ''}">{form?.message ?? ''}</textarea
+					>
 					{#if fieldError('message')}
 						<p class="mt-1 text-xs text-red-500">{fieldError('message')}</p>
 					{/if}

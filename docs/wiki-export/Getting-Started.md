@@ -19,17 +19,17 @@ Dev server: http://localhost:5173
 
 ## Commands
 
-| Command | Purpose |
-|---------|---------|
-| `npm run dev` | Start Vite dev server with HMR |
-| `npm run build` | Production build to `.svelte-kit/` |
-| `npm run preview` | Serve production build locally |
-| `npm run check` | TypeScript + Svelte type checking |
-| `npm run check:watch` | Type check in watch mode |
-| `npm run lint` | Prettier check + ESLint |
-| `npm run format` | Auto-format with Prettier |
-| `npm run test:unit` | Vitest unit + integration tests |
-| `npm run test:contracts` | Payload / mapper contract tests |
+| Command                  | Purpose                                      |
+| ------------------------ | -------------------------------------------- |
+| `npm run dev`            | Start Vite dev server with HMR               |
+| `npm run build`          | Production build to `.svelte-kit/`           |
+| `npm run preview`        | Serve production build locally               |
+| `npm run check`          | TypeScript + Svelte type checking            |
+| `npm run check:watch`    | Type check in watch mode                     |
+| `npm run lint`           | Prettier check + ESLint                      |
+| `npm run format`         | Auto-format with Prettier                    |
+| `npm run test:unit`      | Vitest unit + integration tests              |
+| `npm run test:contracts` | Payload / mapper contract tests              |
 | `npm run test:readiness` | Live API smoke probes (skips when env unset) |
 
 ## Pre-PR checklist
@@ -68,13 +68,13 @@ agents/               # AI agent skills
 
 ## Troubleshooting
 
-| Issue | Fix |
-|-------|-----|
-| Type errors after route changes | `npm run prepare` or `npx svelte-kit sync` |
-| Stale `.svelte-kit` cache | Delete `.svelte-kit/` and rebuild |
-| Port 5173 in use | `npm run dev -- --port 5174` |
-| Missing types for routes | Run `svelte-kit sync` (part of `npm run check`) |
-| Admin denied locally | Set `DEV_ADMIN=true` or use quick-login as admin |
+| Issue                           | Fix                                              |
+| ------------------------------- | ------------------------------------------------ |
+| Type errors after route changes | `npm run prepare` or `npx svelte-kit sync`       |
+| Stale `.svelte-kit` cache       | Delete `.svelte-kit/` and rebuild                |
+| Port 5173 in use                | `npm run dev -- --port 5174`                     |
+| Missing types for routes        | Run `svelte-kit sync` (part of `npm run check`)  |
+| Admin denied locally            | Set `DEV_ADMIN=true` or use quick-login as admin |
 
 ## IDE
 

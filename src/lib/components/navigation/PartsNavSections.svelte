@@ -114,7 +114,9 @@
 {:else if isMegamenu && section === 'vehicle'}
 	<div class="grid gap-6 lg:grid-cols-2">
 		<div>
-			<p class="mb-3 text-xs font-bold uppercase tracking-widest text-zinc-500">Year · Make · Model</p>
+			<p class="mb-3 text-xs font-bold uppercase tracking-widest text-zinc-500">
+				Year · Make · Model
+			</p>
 			<VehicleSelector compact />
 		</div>
 		<div>
@@ -262,7 +264,11 @@
 	<p class="px-4 pb-2 {ribbonSectionLabelClass}">Categories</p>
 	<div class="flex max-h-80 flex-wrap gap-1 overflow-y-auto px-4 pb-3">
 		{#each categories as cat (cat.id)}
-			<CategoryPill href={resolve(`/parts/${cat.slug}`)} label={cat.name} onclick={handleNavigate} />
+			<CategoryPill
+				href={resolve(`/parts/${cat.slug}`)}
+				label={cat.name}
+				onclick={handleNavigate}
+			/>
 			{#if cat.children}
 				{#each cat.children as child (child.id)}
 					<CategoryPill
@@ -288,11 +294,15 @@
 		{/each}
 	</div>
 {:else if section === 'vehicle'}
-	<p class="mb-3 px-4 text-xs font-bold uppercase tracking-widest text-zinc-500">Year · Make · Model</p>
+	<p class="mb-3 px-4 text-xs font-bold uppercase tracking-widest text-zinc-500">
+		Year · Make · Model
+	</p>
 	<div class="px-4">
 		<VehicleSelector compact />
 	</div>
-	<p class="mb-2 mt-4 px-4 text-xs font-bold uppercase tracking-widest text-zinc-500">Popular Models</p>
+	<p class="mb-2 mt-4 px-4 text-xs font-bold uppercase tracking-widest text-zinc-500">
+		Popular Models
+	</p>
 	<ul class="grid gap-1 px-4">
 		{#each visibleModels as model (model.id)}
 			<li role="none">
@@ -320,13 +330,19 @@
 				<a
 					href={filterHref({ build: build.slug })}
 					role="menuitem"
-					class="block px-4 py-2.5 transition hover:bg-zinc-900/80 {isActiveFilter('build', build.slug)
+					class="block px-4 py-2.5 transition hover:bg-zinc-900/80 {isActiveFilter(
+						'build',
+						build.slug
+					)
 						? 'bg-zinc-900/50'
 						: ''}"
 					onclick={handleNavigate}
 				>
 					<span
-						class="block text-sm font-medium uppercase tracking-wider {isActiveFilter('build', build.slug)
+						class="block text-sm font-medium uppercase tracking-wider {isActiveFilter(
+							'build',
+							build.slug
+						)
 							? 'text-red-400'
 							: 'text-zinc-300'}"
 					>

@@ -36,14 +36,14 @@ No extra scopes are required for basic sign-in.
 
 ## App behavior
 
-| Piece | Location |
-|-------|----------|
-| Provider type | `src/lib/auth/oauth-providers.ts` (`discord`) |
-| Sign-in button | `src/routes/auth/sign-in/+page.svelte` |
-| Sign-up button | `src/routes/auth/sign-up/+page.svelte` |
-| Browser OAuth | `src/lib/supabase/auth-client.ts` → `signInWithOAuth({ provider: 'discord' })` |
-| Callback | `src/routes/auth/callback/+server.ts` |
-| Display name | `discordDisplayName()` in `oauth-providers.ts`; used in `mapSupabaseUser()` |
+| Piece          | Location                                                                       |
+| -------------- | ------------------------------------------------------------------------------ |
+| Provider type  | `src/lib/auth/oauth-providers.ts` (`discord`)                                  |
+| Sign-in button | `src/routes/auth/sign-in/+page.svelte`                                         |
+| Sign-up button | `src/routes/auth/sign-up/+page.svelte`                                         |
+| Browser OAuth  | `src/lib/supabase/auth-client.ts` → `signInWithOAuth({ provider: 'discord' })` |
+| Callback       | `src/routes/auth/callback/+server.ts`                                          |
+| Display name   | `discordDisplayName()` in `oauth-providers.ts`; used in `mapSupabaseUser()`    |
 
 ### Display name on first login
 

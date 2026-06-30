@@ -120,9 +120,7 @@ export function mapProduct(node: SaleorProductDetailNode): Product {
 		name: node.name,
 		slug: node.slug,
 		description: node.description ?? '',
-		thumbnail: node.thumbnail
-			? mapMedia(node.thumbnail, `${node.id}-thumb`, node.name)
-			: null,
+		thumbnail: node.thumbnail ? mapMedia(node.thumbnail, `${node.id}-thumb`, node.name) : null,
 		media,
 		pricing,
 		variants,

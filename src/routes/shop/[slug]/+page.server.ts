@@ -1,7 +1,4 @@
-import {
-	getProductsForBuild,
-	getRelatedProducts
-} from '$lib/data/catalog-helpers';
+import { getProductsForBuild, getRelatedProducts } from '$lib/data/catalog-helpers';
 import { config } from '$lib/config/env';
 import { mockBuilds } from '$lib/data/mock/builds';
 import { getShopProductBySlug } from '$lib/server/catalog/products';

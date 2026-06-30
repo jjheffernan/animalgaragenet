@@ -6,26 +6,26 @@ Auth, newsletter, content metadata, and user preferences — not commerce.
 
 **Wired:** `@supabase/supabase-js` and `@supabase/ssr` with cookie sessions in `hooks.server.ts`.
 
-| Concern | Location |
-|---------|----------|
-| SSR client | `src/lib/server/supabase/client.ts` |
-| Service role | `src/lib/server/supabase/admin.ts` |
-| Session helpers | `src/lib/server/supabase/auth.ts` |
-| Browser client | `src/lib/supabase/browser.ts` |
-| Local dev auth | `src/lib/server/auth/local-dev.ts` |
-| Migrations | `supabase/migrations/` |
+| Concern         | Location                            |
+| --------------- | ----------------------------------- |
+| SSR client      | `src/lib/server/supabase/client.ts` |
+| Service role    | `src/lib/server/supabase/admin.ts`  |
+| Session helpers | `src/lib/server/supabase/auth.ts`   |
+| Browser client  | `src/lib/supabase/browser.ts`       |
+| Local dev auth  | `src/lib/server/auth/local-dev.ts`  |
+| Migrations      | `supabase/migrations/`              |
 
 Without env vars, auth falls back to mock `ag-session` cookie. Full reference: [integrations/supabase.md](../../integrations/supabase.md).
 
 ## Env vars
 
-| Variable                    | Scope       | File           |
-| --------------------------- | ----------- | -------------- |
-| `PUBLIC_SUPABASE_URL`       | Public      | `.env.example` |
-| `PUBLIC_SUPABASE_ANON_KEY`  | Public      | `.env.example` |
-| `SUPABASE_SERVICE_ROLE_KEY` | Server only | `.env.example` |
-| `DEV_ADMIN`                 | Server only | Localhost admin bypass |
-| `LOCAL_DEV_AUTH`            | Server only | Local quick-login |
+| Variable                    | Scope       | File                        |
+| --------------------------- | ----------- | --------------------------- |
+| `PUBLIC_SUPABASE_URL`       | Public      | `.env.example`              |
+| `PUBLIC_SUPABASE_ANON_KEY`  | Public      | `.env.example`              |
+| `SUPABASE_SERVICE_ROLE_KEY` | Server only | `.env.example`              |
+| `DEV_ADMIN`                 | Server only | Localhost admin bypass      |
+| `LOCAL_DEV_AUTH`            | Server only | Local quick-login           |
 | `SITE_LOCKED`               | Server only | Production preview lockdown |
 
 ## Roadmap (remaining)

@@ -15,17 +15,20 @@ You verify whether the storefront is ready to connect to `<your-saleor-host>` (`
 ## Checklist (score each ✅ / ⚠️ / ❌)
 
 ### Environment
+
 - `PUBLIC_SALEOR_API_URL` documented and reachable
 - `SALEOR_CHANNEL` matches Saleor dashboard channel slug
 - Locale → channel map in `channels.ts` matches production markets
 
 ### Catalog
+
 - Shop, parts, gift cards, deals loaders use swap points
 - `isSaleorEnabled()` gates behave correctly when env unset
 - Product mappers handle metadata (`productType`, `tags`, `fitment`)
 - Collection product edges populated (if required for launch)
 
 ### Cart & checkout
+
 - Add line from detail pages with `variantId`
 - Add line from listing cards (ProductCard)
 - Line qty update / remove mutations
@@ -34,9 +37,11 @@ You verify whether the storefront is ready to connect to `<your-saleor-host>` (`
 - `checkoutComplete` / payment redirect
 
 ### Non-Saleor (expected mock)
+
 - Blog, builds, events, deal banners — document as intentional
 
 ### Tests
+
 - Unit tests for mappers, channels, checkout scaffold
 - Integration tests mock Saleor client — note live API gap
 
@@ -44,10 +49,15 @@ You verify whether the storefront is ready to connect to `<your-saleor-host>` (`
 
 ```markdown
 # Saleor Readiness — {date}
+
 ## Score: N/10 (was 7/10 in saleor-audit.md)
+
 ## Blockers (must fix before live checkout)
+
 ## Warnings (can ship catalog-only)
+
 ## Verified working
+
 ## Recommended next PRs (ordered)
 ```
 

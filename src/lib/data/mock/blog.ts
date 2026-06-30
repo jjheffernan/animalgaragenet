@@ -7,12 +7,14 @@ export const mockBlogPosts: BlogPost[] = [
 		id: 'blog-1',
 		slug: 'redline-drop-recap',
 		title: 'Redline Drop Recap: What Sold Out in 48 Hours',
-		excerpt: 'Our latest drop moved fast. Here is what flew off the shelves and what is coming next.',
+		excerpt:
+			'Our latest drop moved fast. Here is what flew off the shelves and what is coming next.',
 		author: 'AG Crew',
 		publishedAt: '2026-06-15',
 		heroImage: hero('agblog-1'),
 		tags: ['drops', 'merch'],
-		content: 'The Redline Drop was our biggest release yet. The Censor Bar Tee sold out in 6 hours...'
+		content:
+			'The Redline Drop was our biggest release yet. The Censor Bar Tee sold out in 6 hours...'
 	},
 	{
 		id: 'blog-2',
@@ -29,7 +31,8 @@ export const mockBlogPosts: BlogPost[] = [
 		id: 'blog-3',
 		slug: 'build-of-the-month-june',
 		title: 'Build of the Month: Project Redline Civic',
-		excerpt: 'FK8 Type R with full aero, coilovers, and 400 WHP — meet this month\'s featured build.',
+		excerpt:
+			"FK8 Type R with full aero, coilovers, and 400 WHP — meet this month's featured build.",
 		author: 'AG Crew',
 		publishedAt: '2026-06-01',
 		heroImage: hero('agblog-3'),
@@ -56,7 +59,8 @@ export const mockBlogPosts: BlogPost[] = [
 		publishedAt: '2026-05-20',
 		heroImage: hero('agblog-5'),
 		tags: ['parts', 'wheels'],
-		content: 'Civic Si: 17×9 +35 clears stock fenders with -1.5 camber. WRX: 18×9.5 +38 needs roll...'
+		content:
+			'Civic Si: 17×9 +35 clears stock fenders with -1.5 camber. WRX: 18×9.5 +38 needs roll...'
 	},
 	{
 		id: 'blog-6',
@@ -101,6 +105,9 @@ export function searchBlogPosts(query: string): BlogPost[] {
 	const q = query.toLowerCase().trim();
 	if (!q) return [];
 	return mockBlogPosts.filter(
-		(p) => p.title.toLowerCase().includes(q) || p.excerpt.toLowerCase().includes(q) || p.tags.some((t) => t.includes(q))
+		(p) =>
+			p.title.toLowerCase().includes(q) ||
+			p.excerpt.toLowerCase().includes(q) ||
+			p.tags.some((t) => t.includes(q))
 	);
 }

@@ -13,7 +13,11 @@
 
 <article>
 	<section class="relative border-b border-zinc-800 py-20">
-		<img src={data.post.heroImage} alt="" class="absolute inset-0 h-full w-full object-cover opacity-30" />
+		<img
+			src={data.post.heroImage}
+			alt=""
+			class="absolute inset-0 h-full w-full object-cover opacity-30"
+		/>
 		<div class="absolute inset-0 bg-gradient-to-b from-zinc-950/60 to-zinc-950"></div>
 		<div class="relative mx-auto max-w-3xl px-4 sm:px-6">
 			<nav class="mb-6 text-sm text-zinc-500">

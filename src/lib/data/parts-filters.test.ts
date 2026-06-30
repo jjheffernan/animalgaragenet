@@ -1,10 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { mockParts } from '$lib/data/mock/parts';
-import {
-	filterPartsProducts,
-	formatPartsFilterLabel,
-	parsePartsFilters
-} from './parts-filters';
+import { filterPartsProducts, formatPartsFilterLabel, parsePartsFilters } from './parts-filters';
 
 describe('parsePartsFilters', () => {
 	it('reads individual vehicle params', () => {
@@ -46,9 +42,9 @@ describe('filterPartsProducts', () => {
 	it('filters by vehicle fitment', () => {
 		const civic = filterPartsProducts(mockParts, { make: 'Honda', model: 'Civic' });
 		expect(civic.length).toBeGreaterThan(0);
-		expect(civic.every((p) => p.fitment?.some((f) => f.make === 'Honda' && f.model === 'Civic'))).toBe(
-			true
-		);
+		expect(
+			civic.every((p) => p.fitment?.some((f) => f.make === 'Honda' && f.model === 'Civic'))
+		).toBe(true);
 	});
 });
 

@@ -24,12 +24,25 @@
 	</AnimatedReveal>
 	<div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
 		{#each data.brands as brand (brand.id)}
-			<a href={resolve(`/brands/${brand.slug}`)} class="group flex flex-col overflow-hidden rounded-sm border border-zinc-800 bg-zinc-900 transition hover:border-red-600/50">
+			<a
+				href={resolve(`/brands/${brand.slug}`)}
+				class="group flex flex-col overflow-hidden rounded-sm border border-zinc-800 bg-zinc-900 transition hover:border-red-600/50"
+			>
 				{#if brand.heroImage}
-					<img src={brand.heroImage} alt={brand.name} class="aspect-[16/7] w-full object-cover" loading="lazy" />
+					<img
+						src={brand.heroImage}
+						alt={brand.name}
+						class="aspect-[16/7] w-full object-cover"
+						loading="lazy"
+					/>
 				{/if}
 				<div class="flex flex-1 items-start gap-4 p-6">
-					<img src={brand.logoUrl} alt={brand.name} class="h-14 w-14 rounded-full border border-zinc-700 object-cover" loading="lazy" />
+					<img
+						src={brand.logoUrl}
+						alt={brand.name}
+						class="h-14 w-14 rounded-full border border-zinc-700 object-cover"
+						loading="lazy"
+					/>
 					<div>
 						<h3 class="font-display font-bold uppercase tracking-wider text-white">{brand.name}</h3>
 						<p class="mt-1 text-sm text-zinc-500">{brand.description}</p>

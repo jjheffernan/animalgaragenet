@@ -38,15 +38,17 @@
 <div class="relative {className}" bind:this={root}>
 	<button
 		type="button"
-		class="{size === 'lg'
+		class={size === 'lg'
 			? 'flex min-h-12 w-full items-center justify-start gap-3 rounded-sm px-3 text-lg text-zinc-300 transition hover:text-white'
-			: 'flex min-h-9 items-center gap-1.5 rounded-sm px-2.5 text-base text-zinc-400 transition hover:text-white'}"
+			: 'flex min-h-9 items-center gap-1.5 rounded-sm px-2.5 text-base text-zinc-400 transition hover:text-white'}
 		aria-label="Region: {current.label}"
 		aria-expanded={open}
 		aria-haspopup="listbox"
 		onclick={toggle}
 	>
-		<span aria-hidden="true" class="{size === 'lg' ? 'text-2xl' : 'text-lg'} leading-none">{current.flag}</span>
+		<span aria-hidden="true" class="{size === 'lg' ? 'text-2xl' : 'text-lg'} leading-none"
+			>{current.flag}</span
+		>
 		<span class="{size === 'lg' ? 'text-xl' : 'text-base'} font-semibold">{symbol}</span>
 		{#if size === 'lg'}
 			<span class="text-base font-medium text-zinc-400">{current.label}</span>
@@ -55,9 +57,9 @@
 
 	{#if open}
 		<ul
-			class="{size === 'lg'
+			class={size === 'lg'
 				? 'absolute left-0 right-0 top-full z-50 mt-1 max-h-64 overflow-y-auto rounded-sm border border-zinc-800 bg-zinc-900 py-1 shadow-xl'
-				: 'absolute right-0 top-full z-50 mt-1 max-h-64 w-52 overflow-y-auto rounded-sm border border-zinc-800 bg-zinc-900 py-1 shadow-xl'}"
+				: 'absolute right-0 top-full z-50 mt-1 max-h-64 w-52 overflow-y-auto rounded-sm border border-zinc-800 bg-zinc-900 py-1 shadow-xl'}
 			role="listbox"
 			aria-label="Select region"
 		>
@@ -65,7 +67,10 @@
 				<li role="option" aria-selected={loc.code === locale.code}>
 					<button
 						type="button"
-						class="flex w-full items-center gap-2 px-3 py-2 text-left text-sm transition hover:bg-zinc-800 hover:text-white {loc.code === locale.code ? 'bg-zinc-800 text-white' : 'text-zinc-300'}"
+						class="flex w-full items-center gap-2 px-3 py-2 text-left text-sm transition hover:bg-zinc-800 hover:text-white {loc.code ===
+						locale.code
+							? 'bg-zinc-800 text-white'
+							: 'text-zinc-300'}"
 						onclick={() => select(loc.code)}
 					>
 						<span aria-hidden="true">{loc.flag}</span>

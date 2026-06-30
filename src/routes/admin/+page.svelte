@@ -18,7 +18,9 @@
 <p class="mt-1 text-zinc-400">Site administration overview.</p>
 
 {#if data.devAdmin}
-	<p class="mt-4 rounded-sm border border-amber-800/50 bg-amber-950/20 px-4 py-3 text-sm text-amber-400">
+	<p
+		class="mt-4 rounded-sm border border-amber-800/50 bg-amber-950/20 px-4 py-3 text-sm text-amber-400"
+	>
 		DEV_ADMIN mode active — admin access granted without session role.
 	</p>
 {/if}
@@ -50,16 +52,24 @@
 	<h2 class="text-xs font-bold uppercase tracking-widest text-zinc-500">Quick Links</h2>
 	<ul class="mt-4 space-y-2 text-sm">
 		<li>
-			<a href={resolve('/admin/users')} class="text-zinc-400 hover:text-red-400">→ Manage users and roles</a>
+			<a href={resolve('/admin/users')} class="text-zinc-400 hover:text-red-400"
+				>→ Manage users and roles</a
+			>
 		</li>
 		<li>
-			<a href={resolve('/admin/media')} class="text-zinc-400 hover:text-red-400">→ Browse and upload CDN assets</a>
+			<a href={resolve('/admin/media')} class="text-zinc-400 hover:text-red-400"
+				>→ Browse and upload CDN assets</a
+			>
 		</li>
 		<li>
-			<a href={resolve('/admin/builds')} class="text-zinc-400 hover:text-red-400">→ Moderate build log submissions</a>
+			<a href={resolve('/admin/builds')} class="text-zinc-400 hover:text-red-400"
+				>→ Moderate build log submissions</a
+			>
 		</li>
 		<li>
-			<a href={resolve('/admin/youtube')} class="text-zinc-400 hover:text-red-400">→ Sync YouTube channels ({mockYouTubeChannels.length} connected)</a>
+			<a href={resolve('/admin/youtube')} class="text-zinc-400 hover:text-red-400"
+				>→ Sync YouTube channels ({mockYouTubeChannels.length} connected)</a
+			>
 		</li>
 	</ul>
 </section>

@@ -17,17 +17,17 @@ Contributors: use `.env.example` and `docs/SECURITY-PUBLIC.md`. Do not copy infr
 
 ## Pages
 
-| File | Wiki title |
-|------|------------|
-| `Home.md` | Home |
-| `Getting-Started.md` | Getting Started |
+| File                       | Wiki title            |
+| -------------------------- | --------------------- |
+| `Home.md`                  | Home                  |
+| `Getting-Started.md`       | Getting Started       |
 | `Environment-Variables.md` | Environment Variables |
-| `Authentication.md` | Authentication |
-| `Editing-the-Site.md` | Editing the Site |
-| `Saleor-Integration.md` | Saleor Integration |
-| `Supabase.md` | Supabase |
-| `Deployment-and-CI.md` | Deployment and CI |
-| `Testing.md` | Testing |
+| `Authentication.md`        | Authentication        |
+| `Editing-the-Site.md`      | Editing the Site      |
+| `Saleor-Integration.md`    | Saleor Integration    |
+| `Supabase.md`              | Supabase              |
+| `Deployment-and-CI.md`     | Deployment and CI     |
+| `Testing.md`               | Testing               |
 
 ## Re-sync after doc changes
 

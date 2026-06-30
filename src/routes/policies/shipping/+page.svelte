@@ -19,14 +19,16 @@
 				<h2 class="font-display text-lg font-bold uppercase text-white">Free Shipping Threshold</h2>
 				<p class="mt-3">
 					Orders over <strong class="text-white">$75</strong> qualify for free standard shipping within
-					the contiguous United States. The discount applies automatically at checkout once your cart subtotal
-					reaches $75 before tax. Oversized parts (wheels, body kits, etc.) may require freight shipping
-					and are excluded from the free-shipping offer.
+					the contiguous United States. The discount applies automatically at checkout once your cart
+					subtotal reaches $75 before tax. Oversized parts (wheels, body kits, etc.) may require freight
+					shipping and are excluded from the free-shipping offer.
 				</p>
 			</div>
 
 			<div>
-				<h2 class="font-display text-lg font-bold uppercase text-white">Domestic Zones &amp; Times</h2>
+				<h2 class="font-display text-lg font-bold uppercase text-white">
+					Domestic Zones &amp; Times
+				</h2>
 				<p class="mt-3">Standard and expedited options are available at checkout.</p>
 				<ul class="mt-4 space-y-3">
 					<li>
@@ -42,8 +44,8 @@
 						days standard
 					</li>
 					<li>
-						<strong class="text-zinc-300">Zone 4 — Alaska &amp; Hawaii</strong>: 7–14 business days; rates
-						calculated at checkout
+						<strong class="text-zinc-300">Zone 4 — Alaska &amp; Hawaii</strong>: 7–14 business days;
+						rates calculated at checkout
 					</li>
 				</ul>
 				<p class="mt-4">
@@ -55,7 +57,9 @@
 			<div>
 				<h2 class="font-display text-lg font-bold uppercase text-white">Processing Times</h2>
 				<ul class="mt-4 list-inside list-disc space-y-2">
-					<li><strong class="text-zinc-300">Merch:</strong> ships within 1–2 business days when in stock</li>
+					<li>
+						<strong class="text-zinc-300">Merch:</strong> ships within 1–2 business days when in stock
+					</li>
 					<li>
 						<strong class="text-zinc-300">Parts:</strong> 2–5 business days for warehouse stock; 5–10
 						business days for vendor drop-ship items
@@ -76,8 +80,8 @@
 				</p>
 				<p class="mt-3">
 					<strong class="text-zinc-300">Duties, taxes, and import fees</strong> are the responsibility
-					of the recipient and are not included in our shipping charges. We cannot mark packages as
-					gifts or declare lower values.
+					of the recipient and are not included in our shipping charges. We cannot mark packages as gifts
+					or declare lower values.
 				</p>
 			</div>
 

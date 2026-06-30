@@ -30,7 +30,10 @@
 <section class="border-b border-zinc-800 bg-zinc-900/50 py-12">
 	<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 		<AnimatedReveal>
-			<SectionHeading title="Find Parts for Your Ride" subtitle="Year, make, model — shop what fits." />
+			<SectionHeading
+				title="Find Parts for Your Ride"
+				subtitle="Year, make, model — shop what fits."
+			/>
 		</AnimatedReveal>
 		<div class="mt-6">
 			<VehicleSelector />

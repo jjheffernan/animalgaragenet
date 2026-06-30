@@ -46,9 +46,7 @@ function mapSaleorCategoryToFilter(node: {
 	return { id: node.id, slug: node.slug, label: node.name };
 }
 
-async function fetchSaleorShopFilterOptions(
-	_locale: string
-): Promise<ShopFilterOption[]> {
+async function fetchSaleorShopFilterOptions(_locale: string): Promise<ShopFilterOption[]> {
 	const result = await saleorFetch<{
 		categories: { edges: { node: SaleorCategoryTreeNode }[] };
 	}>(CATEGORIES_QUERY, { first: 50, level: 0 });

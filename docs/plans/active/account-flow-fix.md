@@ -38,14 +38,14 @@ OAuth → /auth/callback?code=...
 
 **Key files**
 
-| File | Role |
-|------|------|
-| `src/hooks.server.ts` | Session hydration every request |
-| `src/lib/config/env.ts` | `PUBLIC_SITE_URL` default `http://localhost:5173` |
-| `src/routes/auth/sign-in/+page.server.ts` | Magic link `emailRedirectTo` uses `config.siteUrl` |
-| `src/routes/auth/callback/+server.ts` | PKCE code exchange |
-| `src/lib/components/Header.svelte` | `session = $page.data.session` → Account menu vs Sign In |
-| `src/routes/account/+layout.server.ts` | Redirect if `!locals.session` |
+| File                                      | Role                                                     |
+| ----------------------------------------- | -------------------------------------------------------- |
+| `src/hooks.server.ts`                     | Session hydration every request                          |
+| `src/lib/config/env.ts`                   | `PUBLIC_SITE_URL` default `http://localhost:5173`        |
+| `src/routes/auth/sign-in/+page.server.ts` | Magic link `emailRedirectTo` uses `config.siteUrl`       |
+| `src/routes/auth/callback/+server.ts`     | PKCE code exchange                                       |
+| `src/lib/components/Header.svelte`        | `session = $page.data.session` → Account menu vs Sign In |
+| `src/routes/account/+layout.server.ts`    | Redirect if `!locals.session`                            |
 
 ---
 
@@ -55,12 +55,12 @@ OAuth → /auth/callback?code=...
 
 Set in **Site settings → Environment variables** (all deploy contexts that serve users):
 
-| Variable | Value (staging) | Notes |
-|----------|-----------------|-------|
-| `PUBLIC_SUPABASE_URL` | `https://<ref>.supabase.co` | From Supabase → Settings → API |
-| `PUBLIC_SUPABASE_ANON_KEY` | `<from-dashboard>` | Publishable key — safe in client |
-| `SUPABASE_SERVICE_ROLE_KEY` | `<from-dashboard>` | **Server only** — scopes: all |
-| `PUBLIC_SITE_URL` | `https://<your-preview-host>` | **Must match browser URL** until custom domain cutover |
+| Variable                    | Value (staging)               | Notes                                                  |
+| --------------------------- | ----------------------------- | ------------------------------------------------------ |
+| `PUBLIC_SUPABASE_URL`       | `https://<ref>.supabase.co`   | From Supabase → Settings → API                         |
+| `PUBLIC_SUPABASE_ANON_KEY`  | `<from-dashboard>`            | Publishable key — safe in client                       |
+| `SUPABASE_SERVICE_ROLE_KEY` | `<from-dashboard>`            | **Server only** — scopes: all                          |
+| `PUBLIC_SITE_URL`           | `https://<your-preview-host>` | **Must match browser URL** until custom domain cutover |
 
 **Do not set:** `DEV_ADMIN`, `LOCAL_DEV_AUTH`
 
@@ -70,13 +70,13 @@ Set in **Site settings → Environment variables** (all deploy contexts that ser
 
 In **Supabase Dashboard → Authentication → URL configuration**:
 
-| Setting | Value |
-|---------|-------|
-| Site URL | `https://<your-preview-host>` (update to `https://<your-site-host>` at cutover) |
-| Redirect URLs | Add **both**: |
-| | `https://<your-preview-host>/auth/callback` |
-| | `https://<your-site-host>/auth/callback` |
-| | `http://localhost:5173/auth/callback` (local dev) |
+| Setting       | Value                                                                           |
+| ------------- | ------------------------------------------------------------------------------- |
+| Site URL      | `https://<your-preview-host>` (update to `https://<your-site-host>` at cutover) |
+| Redirect URLs | Add **both**:                                                                   |
+|               | `https://<your-preview-host>/auth/callback`                                     |
+|               | `https://<your-site-host>/auth/callback`                                        |
+|               | `http://localhost:5173/auth/callback` (local dev)                               |
 
 Enable **Email** provider (magic link / OTP).
 
@@ -120,12 +120,12 @@ Roles: `admin`, `editor`, `contributor`, `customer`.
 
 ### 5. Code hardening
 
-| Change | Status | Notes |
-|--------|--------|-------|
-| Add preview hosts to `isProductionHostname()` | **Done** | `src/lib/server/auth/local-dev.ts` |
-| Refuse mock `ag-session` when request host is non-localhost HTTPS | **Done** | `src/hooks.server.ts` returns `null` session on production hostname |
-| Surface `productionAuthMisconfigured` on sign-in when keys missing | **Done** | `sign-in/+page.svelte` banner |
-| Build OAuth/magic-link redirect from `event.url.origin` with `PUBLIC_SITE_URL` as allowlist fallback | **Done** | `callback-url.ts`; sign-in/sign-up actions |
+| Change                                                                                               | Status   | Notes                                                               |
+| ---------------------------------------------------------------------------------------------------- | -------- | ------------------------------------------------------------------- |
+| Add preview hosts to `isProductionHostname()`                                                        | **Done** | `src/lib/server/auth/local-dev.ts`                                  |
+| Refuse mock `ag-session` when request host is non-localhost HTTPS                                    | **Done** | `src/hooks.server.ts` returns `null` session on production hostname |
+| Surface `productionAuthMisconfigured` on sign-in when keys missing                                   | **Done** | `sign-in/+page.svelte` banner                                       |
+| Build OAuth/magic-link redirect from `event.url.origin` with `PUBLIC_SITE_URL` as allowlist fallback | **Done** | `callback-url.ts`; sign-in/sign-up actions                          |
 
 ---
 
@@ -174,14 +174,14 @@ npm run test:readiness   # expect supabase-auth + supabase-db pass
 
 ## Troubleshooting matrix
 
-| Symptom | Likely cause | Fix |
-|---------|--------------|-----|
-| Magic link goes to wrong domain | `PUBLIC_SITE_URL` wrong | Set to active deploy URL; redeploy |
-| Callback shows error query param | Redirect URL not in Supabase allowlist | Add `/auth/callback` for deploy host |
-| Session works once then lost | Cookie `Secure` / host mismatch | Ensure HTTPS on same host throughout flow |
-| Account menu never appears | Supabase keys unset → mock path broken on SSR | Set all three Supabase env vars |
-| Admin 403 / redirect | Role not in `app_metadata` | `promote-admin.ts` + re-login |
-| OAuth “provider not enabled” | Supabase provider off | Enable in dashboard |
+| Symptom                          | Likely cause                                  | Fix                                       |
+| -------------------------------- | --------------------------------------------- | ----------------------------------------- |
+| Magic link goes to wrong domain  | `PUBLIC_SITE_URL` wrong                       | Set to active deploy URL; redeploy        |
+| Callback shows error query param | Redirect URL not in Supabase allowlist        | Add `/auth/callback` for deploy host      |
+| Session works once then lost     | Cookie `Secure` / host mismatch               | Ensure HTTPS on same host throughout flow |
+| Account menu never appears       | Supabase keys unset → mock path broken on SSR | Set all three Supabase env vars           |
+| Admin 403 / redirect             | Role not in `app_metadata`                    | `promote-admin.ts` + re-login             |
+| OAuth “provider not enabled”     | Supabase provider off                         | Enable in dashboard                       |
 
 ---
 

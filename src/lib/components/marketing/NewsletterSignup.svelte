@@ -28,7 +28,10 @@
 				placeholder="you@email.com"
 				class="min-w-0 flex-1 rounded-sm border border-zinc-700 bg-zinc-900 px-3 py-2 text-sm text-white placeholder-zinc-500 focus:border-red-600 focus:outline-none"
 			/>
-			<button type="submit" class="shrink-0 rounded-sm bg-red-600 px-4 py-2 text-sm font-bold uppercase tracking-wider text-white transition hover:bg-red-500">
+			<button
+				type="submit"
+				class="shrink-0 rounded-sm bg-red-600 px-4 py-2 text-sm font-bold uppercase tracking-wider text-white transition hover:bg-red-500"
+			>
 				Join
 			</button>
 		</div>

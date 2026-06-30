@@ -33,7 +33,8 @@
 			<LocaleSelector />
 		</div>
 		<p class="mt-4 text-xs text-zinc-600">
-			Shipping regions: {locale.current.shippingRegions.join(', ')} · Prices in {locale.current.currency}
+			Shipping regions: {locale.current.shippingRegions.join(', ')} · Prices in {locale.current
+				.currency}
 		</p>
 	</div>
 </section>
@@ -52,14 +53,14 @@
 	</CatalogRibbonShell>
 
 	<section class="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
-	<AnimatedReveal>
-		<SectionHeading
-			title={data.category.slug === 'all' ? 'All Products' : data.category.label}
-			subtitle="{data.pagination.total} items"
-		/>
-	</AnimatedReveal>
-	<ListControls pagination={data.pagination} view={data.view} placement="top" />
-	<ProductGrid products={data.products} view={data.view} />
-	<ListControls pagination={data.pagination} view={data.view} placement="bottom" />
+		<AnimatedReveal>
+			<SectionHeading
+				title={data.category.slug === 'all' ? 'All Products' : data.category.label}
+				subtitle="{data.pagination.total} items"
+			/>
+		</AnimatedReveal>
+		<ListControls pagination={data.pagination} view={data.view} placement="top" />
+		<ProductGrid products={data.products} view={data.view} />
+		<ListControls pagination={data.pagination} view={data.view} placement="bottom" />
 	</section>
 </div>

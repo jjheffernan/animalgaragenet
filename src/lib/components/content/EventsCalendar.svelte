@@ -89,12 +89,18 @@
 </script>
 
 <div class="overflow-hidden rounded-sm border border-zinc-800 bg-zinc-900">
-	<div class="flex flex-wrap items-center justify-between gap-3 border-b border-zinc-800 px-4 py-4 sm:px-6">
+	<div
+		class="flex flex-wrap items-center justify-between gap-3 border-b border-zinc-800 px-4 py-4 sm:px-6"
+	>
 		<h3 class="font-display text-xl font-bold uppercase tracking-wider text-white">
 			{monthLabel}
 		</h3>
 		<div class="flex items-center gap-2">
-			<button type="button" class="rounded-sm px-3 py-1.5 text-sm font-bold uppercase tracking-wider text-zinc-400 transition hover:text-white" onclick={goToToday}>
+			<button
+				type="button"
+				class="rounded-sm px-3 py-1.5 text-sm font-bold uppercase tracking-wider text-zinc-400 transition hover:text-white"
+				onclick={goToToday}
+			>
 				Today
 			</button>
 			<button
@@ -103,7 +109,14 @@
 				aria-label="Previous month"
 				onclick={prevMonth}
 			>
-				<svg xmlns="http://www.w3.org/2000/svg" class="size-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+				<svg
+					xmlns="http://www.w3.org/2000/svg"
+					class="size-4"
+					fill="none"
+					viewBox="0 0 24 24"
+					stroke="currentColor"
+					stroke-width="2"
+				>
 					<path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
 				</svg>
 			</button>
@@ -113,7 +126,14 @@
 				aria-label="Next month"
 				onclick={nextMonth}
 			>
-				<svg xmlns="http://www.w3.org/2000/svg" class="size-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+				<svg
+					xmlns="http://www.w3.org/2000/svg"
+					class="size-4"
+					fill="none"
+					viewBox="0 0 24 24"
+					stroke="currentColor"
+					stroke-width="2"
+				>
 					<path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
 				</svg>
 			</button>
@@ -143,12 +163,24 @@
 					{inMonth ? '' : 'bg-zinc-950/50'}
 					{today ? 'ring-1 ring-inset ring-red-600/60' : ''}"
 				role="gridcell"
-				aria-label="{date.toLocaleDateString(undefined, { weekday: 'long', month: 'long', day: 'numeric' })}{dayEvents.length ? `, ${dayEvents.length} event${dayEvents.length === 1 ? '' : 's'}` : ''}"
+				aria-label="{date.toLocaleDateString(undefined, {
+					weekday: 'long',
+					month: 'long',
+					day: 'numeric'
+				})}{dayEvents.length
+					? `, ${dayEvents.length} event${dayEvents.length === 1 ? '' : 's'}`
+					: ''}"
 			>
 				<div class="mb-1 flex items-center justify-between gap-1">
 					<span
 						class="inline-flex size-6 items-center justify-center text-xs font-bold sm:text-sm
-							{!inMonth ? 'text-zinc-700' : today ? 'rounded-sm bg-red-600 text-white' : past ? 'text-zinc-600' : 'text-zinc-300'}"
+							{!inMonth
+							? 'text-zinc-700'
+							: today
+								? 'rounded-sm bg-red-600 text-white'
+								: past
+									? 'text-zinc-600'
+									: 'text-zinc-300'}"
 					>
 						{date.getDate()}
 					</span>
@@ -178,7 +210,9 @@
 		{/each}
 	</div>
 
-	<div class="flex flex-wrap items-center gap-4 border-t border-zinc-800 px-4 py-3 text-xs text-zinc-500 sm:px-6">
+	<div
+		class="flex flex-wrap items-center gap-4 border-t border-zinc-800 px-4 py-3 text-xs text-zinc-500 sm:px-6"
+	>
 		<span class="flex items-center gap-2">
 			<span class="inline-block size-3 rounded-sm border border-red-600/30 bg-red-600/15"></span>
 			Upcoming

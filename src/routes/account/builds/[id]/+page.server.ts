@@ -30,7 +30,7 @@ export const actions: Actions = {
 		const errors = validateBuildLogFields(fields);
 		if (Object.keys(errors).length > 0) return fail(400, { errors, intent: 'saveDraft' });
 
-			const existing = await getBuildLogForUser(params.id, user.id);
+		const existing = await getBuildLogForUser(params.id, user.id);
 		if (!existing || existing.status === 'pending' || existing.status === 'approved') {
 			return fail(400, { errors: { form: 'Cannot save as draft in current status.' } });
 		}

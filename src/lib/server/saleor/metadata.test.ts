@@ -14,9 +14,7 @@ describe('mapProductMetadata', () => {
 				},
 				{
 					key: 'fitment',
-					value: JSON.stringify([
-						{ year: 2018, make: 'Honda', model: 'Civic', submodel: 'Si' }
-					])
+					value: JSON.stringify([{ year: 2018, make: 'Honda', model: 'Civic', submodel: 'Si' }])
 				}
 			],
 			null,

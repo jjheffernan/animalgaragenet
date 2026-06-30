@@ -5,9 +5,7 @@
 
 	let dismissed = $state(false);
 
-	const needsConsent = $derived(
-		typeof window !== 'undefined' && getCookieConsent() === undefined
-	);
+	const needsConsent = $derived(typeof window !== 'undefined' && getCookieConsent() === undefined);
 
 	const visible = $derived(show && needsConsent && !dismissed);
 
@@ -28,11 +26,15 @@
 		role="dialog"
 		aria-label="Cookie consent"
 	>
-		<div class="mx-auto flex max-w-7xl flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+		<div
+			class="mx-auto flex max-w-7xl flex-col gap-3 sm:flex-row sm:items-center sm:justify-between"
+		>
 			<p>
-				We use essential cookies for cart and sign-in. Optional analytics cookies help us improve the
-				site.
-				<a href="/policies/privacy" class="text-red-400 underline hover:text-red-300">Privacy policy</a>
+				We use essential cookies for cart and sign-in. Optional analytics cookies help us improve
+				the site.
+				<a href="/policies/privacy" class="text-red-400 underline hover:text-red-300"
+					>Privacy policy</a
+				>
 			</p>
 			<div class="flex shrink-0 gap-2">
 				<button

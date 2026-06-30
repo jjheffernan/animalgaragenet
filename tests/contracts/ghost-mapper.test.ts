@@ -47,10 +47,7 @@ const BLOG_POST_KEYS: (keyof BlogPost)[] = [
 	'tags'
 ];
 
-function assertDomainShape<T extends Record<string, unknown>>(
-	value: T,
-	keys: (keyof T)[]
-): void {
+function assertDomainShape<T extends Record<string, unknown>>(value: T, keys: (keyof T)[]): void {
 	for (const key of keys) {
 		expect(value).toHaveProperty(key as string);
 	}

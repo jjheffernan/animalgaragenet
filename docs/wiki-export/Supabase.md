@@ -6,10 +6,10 @@ Uses `@supabase/ssr` for cookie sessions (server) and `@supabase/supabase-js` (b
 
 ## Environment
 
-| Variable | Scope | Purpose |
-|----------|-------|---------|
-| `PUBLIC_SUPABASE_URL` | Public | Project API URL |
-| `PUBLIC_SUPABASE_ANON_KEY` | Public | Anon key — RLS-protected |
+| Variable                    | Scope           | Purpose                                |
+| --------------------------- | --------------- | -------------------------------------- |
+| `PUBLIC_SUPABASE_URL`       | Public          | Project API URL                        |
+| `PUBLIC_SUPABASE_ANON_KEY`  | Public          | Anon key — RLS-protected               |
 | `SUPABASE_SERVICE_ROLE_KEY` | **Server only** | Bypasses RLS — never in client bundles |
 
 Without env vars, auth falls back to mock `ag-session` cookie.
@@ -39,25 +39,25 @@ Authorization roles (`admin`, `editor`, `contributor`, `customer`) are read from
 
 ## Repositories (server writes)
 
-| Table | Repository | AuthZ |
-|-------|------------|-------|
-| `build_submissions` | `build-logs/repository.ts`, `forms/submit.ts` | `user_id` from session only |
-| `testimonials` | `testimonials/repository.ts` | `user_id` from session; admin moderates |
-| `profiles` | migration | RLS per migration |
+| Table               | Repository                                    | AuthZ                                   |
+| ------------------- | --------------------------------------------- | --------------------------------------- |
+| `build_submissions` | `build-logs/repository.ts`, `forms/submit.ts` | `user_id` from session only             |
+| `testimonials`      | `testimonials/repository.ts`                  | `user_id` from session; admin moderates |
+| `profiles`          | migration                                     | RLS per migration                       |
 
 Insert columns use snake_case (`user_id`, `mod_list`, `status`).
 
 ## Code layout
 
-| Path | Role |
-|------|------|
-| `src/lib/server/supabase/client.ts` | `createServerClient(event)` — SSR cookie client |
-| `src/lib/server/supabase/admin.ts` | `createAdminClient()` — service role |
-| `src/lib/server/supabase/auth.ts` | `getSession`, `signInWithOtp`, `signOut`, mock fallbacks |
-| `src/lib/server/auth/local-dev.ts` | Local dev auth guards |
-| `src/lib/supabase/browser.ts` | Browser singleton |
-| `src/hooks.server.ts` | Session refresh, admin guard, site lockdown |
-| `scripts/promote-admin.ts` | CLI to set `app_metadata.role` |
+| Path                                | Role                                                     |
+| ----------------------------------- | -------------------------------------------------------- |
+| `src/lib/server/supabase/client.ts` | `createServerClient(event)` — SSR cookie client          |
+| `src/lib/server/supabase/admin.ts`  | `createAdminClient()` — service role                     |
+| `src/lib/server/supabase/auth.ts`   | `getSession`, `signInWithOtp`, `signOut`, mock fallbacks |
+| `src/lib/server/auth/local-dev.ts`  | Local dev auth guards                                    |
+| `src/lib/supabase/browser.ts`       | Browser singleton                                        |
+| `src/hooks.server.ts`               | Session refresh, admin guard, site lockdown              |
+| `scripts/promote-admin.ts`          | CLI to set `app_metadata.role`                           |
 
 `event.locals.supabase` available in server loads/actions when configured. `event.locals.session` is app-shaped user (`id`, `email`, `name`, `role`).
 

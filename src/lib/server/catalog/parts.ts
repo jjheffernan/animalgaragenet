@@ -93,9 +93,7 @@ export async function getPartCategoryBySlug(
  * Mock when `PUBLIC_SALEOR_API_URL` is unset; Saleor when set (falls back to mock on error).
  */
 // @saleor-migration: intentional — catalog swap point; see docs/commerce/saleor.md#quick-migration
-export async function getPartsProducts(
-	locale: string = config.defaultLocale
-): Promise<Product[]> {
+export async function getPartsProducts(locale: string = config.defaultLocale): Promise<Product[]> {
 	if (isSaleorEnabled()) {
 		try {
 			const channel = getChannelForLocale(locale);

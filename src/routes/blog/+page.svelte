@@ -24,11 +24,23 @@
 	</AnimatedReveal>
 	<div class="grid gap-8 sm:grid-cols-2">
 		{#each data.posts as post (post.id)}
-			<a href={resolve(`/blog/${post.slug}`)} class="group block overflow-hidden rounded-sm border border-zinc-800 bg-zinc-900">
-				<img src={post.heroImage} alt={post.title} class="aspect-[16/9] w-full object-cover" loading="lazy" />
+			<a
+				href={resolve(`/blog/${post.slug}`)}
+				class="group block overflow-hidden rounded-sm border border-zinc-800 bg-zinc-900"
+			>
+				<img
+					src={post.heroImage}
+					alt={post.title}
+					class="aspect-[16/9] w-full object-cover"
+					loading="lazy"
+				/>
 				<div class="p-6">
 					<p class="text-xs text-zinc-500">{post.publishedAt} · {post.author}</p>
-					<h3 class="mt-2 font-display text-xl font-bold uppercase text-white group-hover:text-red-400">{post.title}</h3>
+					<h3
+						class="mt-2 font-display text-xl font-bold uppercase text-white group-hover:text-red-400"
+					>
+						{post.title}
+					</h3>
 					<p class="mt-2 text-zinc-400">{post.excerpt}</p>
 					<div class="mt-3 flex gap-2">
 						{#each post.tags as tag (tag)}

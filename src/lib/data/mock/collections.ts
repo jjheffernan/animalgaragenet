@@ -10,7 +10,9 @@ export const mockCollections: Collection[] = [
 		slug: 'shop-essentials',
 		description: 'Gear built for the garage floor — tees, hoodies, and daily drivers.',
 		backgroundImage: { url: colImg('agcol-essentials'), alt: 'Shop Essentials collection' },
-		products: mockProducts.filter((p) => ['apparel', 'accessories'].includes(p.category?.slug ?? ''))
+		products: mockProducts.filter((p) =>
+			['apparel', 'accessories'].includes(p.category?.slug ?? '')
+		)
 	},
 	{
 		id: 'col-2',

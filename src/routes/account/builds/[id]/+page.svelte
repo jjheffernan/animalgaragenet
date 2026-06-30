@@ -15,17 +15,25 @@
 
 <div class="flex flex-wrap items-center justify-between gap-3">
 	<h1 class="font-display text-2xl font-bold uppercase text-white">Edit Build Log</h1>
-	<span class="text-xs font-bold uppercase tracking-wider text-zinc-500">{BUILD_LOG_STATUS_LABELS[data.log.status]}</span>
+	<span class="text-xs font-bold uppercase tracking-wider text-zinc-500"
+		>{BUILD_LOG_STATUS_LABELS[data.log.status]}</span
+	>
 </div>
 
 {#if data.log.status === 'pending'}
 	<p class="mt-2 text-sm text-amber-400/90">This build is awaiting admin approval.</p>
 {:else if data.log.status === 'approved'}
-	<p class="mt-2 text-sm text-zinc-400">Published edits require admin approval before going live.</p>
+	<p class="mt-2 text-sm text-zinc-400">
+		Published edits require admin approval before going live.
+	</p>
 {/if}
 
 {#if form?.success}
-	<div class="mt-4 rounded-sm border border-emerald-900/50 bg-emerald-950/30 px-4 py-3 text-sm text-emerald-300">{form.message}</div>
+	<div
+		class="mt-4 rounded-sm border border-emerald-900/50 bg-emerald-950/30 px-4 py-3 text-sm text-emerald-300"
+	>
+		{form.message}
+	</div>
 {/if}
 
 <form
@@ -50,9 +58,16 @@
 		>
 			Save draft
 		</button>
-		<button type="submit" formaction="?/submit" disabled={saving} class="rounded-sm bg-red-600 px-4 py-2 text-sm font-bold uppercase tracking-wider text-white transition hover:bg-red-500 disabled:opacity-50">
+		<button
+			type="submit"
+			formaction="?/submit"
+			disabled={saving}
+			class="rounded-sm bg-red-600 px-4 py-2 text-sm font-bold uppercase tracking-wider text-white transition hover:bg-red-500 disabled:opacity-50"
+		>
 			{data.log.status === 'approved' ? 'Submit edits for review' : 'Submit for review'}
 		</button>
-		<a href={resolve('/account/builds')} class="text-sm text-zinc-400 transition hover:text-white">Cancel</a>
+		<a href={resolve('/account/builds')} class="text-sm text-zinc-400 transition hover:text-white"
+			>Cancel</a
+		>
 	</div>
 </form>

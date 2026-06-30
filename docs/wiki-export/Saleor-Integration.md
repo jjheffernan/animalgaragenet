@@ -24,36 +24,36 @@ Primary catalog loaders are wired with env gating. Checkout completion and payme
 
 ### Wired (env set)
 
-| Surface | Swap point |
-|---------|------------|
-| Shop list/detail | `getShopProducts()`, `getShopProductBySlug()` |
-| Gift cards, deals, parts | `getGiftCardProducts()`, `getDealProducts()`, `getPartsProducts()` |
+| Surface                             | Swap point                                                             |
+| ----------------------------------- | ---------------------------------------------------------------------- |
+| Shop list/detail                    | `getShopProducts()`, `getShopProductBySlug()`                          |
+| Gift cards, deals, parts            | `getGiftCardProducts()`, `getDealProducts()`, `getPartsProducts()`     |
 | Collections, staff picks, clearance | `getCollections()`, `getStaffPickProducts()`, `getClearanceProducts()` |
-| Catalog search (merch) | `searchCatalog()` → `api/catalog/search` |
-| Cart read / add line | `getCheckoutLines()`, `POST /cart/checkout` |
-| Promo / redeem | `/account/redeem`, cart promo API |
+| Catalog search (merch)              | `searchCatalog()` → `api/catalog/search`                               |
+| Cart read / add line                | `getCheckoutLines()`, `POST /cart/checkout`                            |
+| Promo / redeem                      | `/account/redeem`, cart promo API                                      |
 
 ### Not wired
 
-| Gap | Status |
-|-----|--------|
-| Checkout completion / payment | `/checkout` is UI placeholder |
-| Cart remove / qty | Limited when Saleor enabled |
-| Add-to-cart from listing cards | Needs `variantId` on cards |
-| Collection product edges | `products[]` empty on collections |
+| Gap                            | Status                            |
+| ------------------------------ | --------------------------------- |
+| Checkout completion / payment  | `/checkout` is UI placeholder     |
+| Cart remove / qty              | Limited when Saleor enabled       |
+| Add-to-cart from listing cards | Needs `variantId` on cards        |
+| Collection product edges       | `products[]` empty on collections |
 
 Detailed audit: `docs/audits/saleor-audit.md` in the repo.
 
 ## Code layout
 
-| Path | Role |
-|------|------|
-| `src/lib/server/saleor/client.ts` | GraphQL fetch, `isSaleorEnabled()` |
-| `src/lib/server/saleor/queries.ts` | Product/collection queries |
-| `src/lib/server/saleor/checkout-queries.ts` | Checkout mutations |
-| `src/lib/server/saleor/mappers.ts` | Saleor → internal `Product` type |
-| `src/lib/server/catalog/*.ts` | Env-gated loaders |
-| `src/lib/stores/cart.svelte.ts` | Dual mode: Saleor POST vs localStorage |
+| Path                                        | Role                                   |
+| ------------------------------------------- | -------------------------------------- |
+| `src/lib/server/saleor/client.ts`           | GraphQL fetch, `isSaleorEnabled()`     |
+| `src/lib/server/saleor/queries.ts`          | Product/collection queries             |
+| `src/lib/server/saleor/checkout-queries.ts` | Checkout mutations                     |
+| `src/lib/server/saleor/mappers.ts`          | Saleor → internal `Product` type       |
+| `src/lib/server/catalog/*.ts`               | Env-gated loaders                      |
+| `src/lib/stores/cart.svelte.ts`             | Dual mode: Saleor POST vs localStorage |
 
 ## Catalog swap pattern
 

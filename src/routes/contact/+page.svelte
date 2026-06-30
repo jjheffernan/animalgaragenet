@@ -26,7 +26,9 @@
 		</p>
 
 		{#if form?.success}
-			<p class="mt-8 rounded-sm border border-red-900/50 bg-red-950/30 px-4 py-3 text-sm text-red-400">
+			<p
+				class="mt-8 rounded-sm border border-red-900/50 bg-red-950/30 px-4 py-3 text-sm text-red-400"
+			>
 				{form.message}
 			</p>
 		{:else}
@@ -52,7 +54,11 @@
 						name="name"
 						value={form?.name ?? ''}
 						required
-						class="mt-1 w-full rounded-sm border border-zinc-700 bg-zinc-900 px-4 py-3 text-white focus:border-red-600 focus:outline-none {fieldError('name') ? 'border-red-600' : ''}"
+						class="mt-1 w-full rounded-sm border border-zinc-700 bg-zinc-900 px-4 py-3 text-white focus:border-red-600 focus:outline-none {fieldError(
+							'name'
+						)
+							? 'border-red-600'
+							: ''}"
 					/>
 					{#if fieldError('name')}
 						<p class="mt-1 text-xs text-red-500">{fieldError('name')}</p>
@@ -66,7 +72,11 @@
 						name="email"
 						value={form?.email ?? ''}
 						required
-						class="mt-1 w-full rounded-sm border border-zinc-700 bg-zinc-900 px-4 py-3 text-white focus:border-red-600 focus:outline-none {fieldError('email') ? 'border-red-600' : ''}"
+						class="mt-1 w-full rounded-sm border border-zinc-700 bg-zinc-900 px-4 py-3 text-white focus:border-red-600 focus:outline-none {fieldError(
+							'email'
+						)
+							? 'border-red-600'
+							: ''}"
 					/>
 					{#if fieldError('email')}
 						<p class="mt-1 text-xs text-red-500">{fieldError('email')}</p>
@@ -77,11 +87,17 @@
 					<span class="text-xs font-bold uppercase tracking-widest text-zinc-500">Subject</span>
 					<select
 						name="subject"
-						class="mt-1 w-full rounded-sm border border-zinc-700 bg-zinc-900 px-4 py-3 text-white focus:border-red-600 focus:outline-none {fieldError('subject') ? 'border-red-600' : ''}"
+						class="mt-1 w-full rounded-sm border border-zinc-700 bg-zinc-900 px-4 py-3 text-white focus:border-red-600 focus:outline-none {fieldError(
+							'subject'
+						)
+							? 'border-red-600'
+							: ''}"
 					>
 						<option value="" disabled selected={!form?.subject}>Select a topic</option>
 						<option value="Order" selected={form?.subject === 'Order'}>Order question</option>
-						<option value="Returns" selected={form?.subject === 'Returns'}>Returns &amp; refunds</option>
+						<option value="Returns" selected={form?.subject === 'Returns'}
+							>Returns &amp; refunds</option
+						>
 						<option value="Parts" selected={form?.subject === 'Parts'}>Parts &amp; fitment</option>
 						<option value="Wholesale" selected={form?.subject === 'Wholesale'}>Wholesale</option>
 						<option value="Other" selected={form?.subject === 'Other'}>Other</option>
@@ -97,8 +113,12 @@
 						name="message"
 						rows="5"
 						required
-						class="mt-1 w-full rounded-sm border border-zinc-700 bg-zinc-900 px-4 py-3 text-white focus:border-red-600 focus:outline-none {fieldError('message') ? 'border-red-600' : ''}"
-					>{form?.message ?? ''}</textarea>
+						class="mt-1 w-full rounded-sm border border-zinc-700 bg-zinc-900 px-4 py-3 text-white focus:border-red-600 focus:outline-none {fieldError(
+							'message'
+						)
+							? 'border-red-600'
+							: ''}">{form?.message ?? ''}</textarea
+					>
 					{#if fieldError('message')}
 						<p class="mt-1 text-xs text-red-500">{fieldError('message')}</p>
 					{/if}

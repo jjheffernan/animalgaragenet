@@ -19,8 +19,9 @@
 				<h2 class="font-display text-lg font-bold uppercase text-white">How to Verify</h2>
 				<p class="mt-3">
 					When Saleor checkout goes live, you will verify once through our secure partner portal.
-					Your military status is stored on your account and the <strong class="text-zinc-300">15%
-					discount applies automatically</strong> at checkout — no promo code needed.
+					Your military status is stored on your account and the <strong class="text-zinc-300"
+						>15% discount applies automatically</strong
+					> at checkout — no promo code needed.
 				</p>
 				<div class="mt-6 flex flex-wrap gap-4">
 					<div class="rounded-sm border border-zinc-700 bg-zinc-900/50 px-6 py-4">
@@ -36,7 +37,9 @@
 						>
 							Verify at Checkout
 						</button>
-						<p class="mt-2 text-[10px] uppercase tracking-wider text-zinc-600">Saleor integration pending</p>
+						<p class="mt-2 text-[10px] uppercase tracking-wider text-zinc-600">
+							Saleor integration pending
+						</p>
 					</div>
 					<div class="rounded-sm border border-zinc-700 bg-zinc-900/50 px-6 py-4">
 						<p class="text-xs font-bold uppercase tracking-widest text-zinc-500">VerifyPass</p>
@@ -51,7 +54,9 @@
 						>
 							Verify at Checkout
 						</button>
-						<p class="mt-2 text-[10px] uppercase tracking-wider text-zinc-600">Saleor integration pending</p>
+						<p class="mt-2 text-[10px] uppercase tracking-wider text-zinc-600">
+							Saleor integration pending
+						</p>
 					</div>
 				</div>
 				<p class="mt-4 text-sm text-zinc-500">
@@ -74,7 +79,9 @@
 			<div>
 				<h2 class="font-display text-lg font-bold uppercase text-white">Discount Rules</h2>
 				<ul class="mt-4 list-inside list-disc space-y-2">
-					<li><strong class="text-zinc-300">15% off</strong> eligible merchandise and in-stock parts</li>
+					<li>
+						<strong class="text-zinc-300">15% off</strong> eligible merchandise and in-stock parts
+					</li>
 					<li>Cannot be combined with other promo codes or stackable offers</li>
 					<li>Excludes gift cards, clearance items, and final-sale products</li>
 					<li>Does not apply to shipping charges or taxes</li>
@@ -86,14 +93,18 @@
 				<h2 class="font-display text-lg font-bold uppercase text-white">FAQ</h2>
 				<dl class="mt-4 space-y-4">
 					<div>
-						<dt class="font-bold text-zinc-300">Can I use this with Garage Squad loyalty points?</dt>
-						<dd class="mt-1">Yes — military discount applies before loyalty redemption at checkout.</dd>
+						<dt class="font-bold text-zinc-300">
+							Can I use this with Garage Squad loyalty points?
+						</dt>
+						<dd class="mt-1">
+							Yes — military discount applies before loyalty redemption at checkout.
+						</dd>
 					</div>
 					<div>
 						<dt class="font-bold text-zinc-300">What if verification fails?</dt>
 						<dd class="mt-1">
-							Contact us with your DD-214 or military ID and we will manually verify within 2 business
-							days.
+							Contact us with your DD-214 or military ID and we will manually verify within 2
+							business days.
 						</dd>
 					</div>
 					<div>

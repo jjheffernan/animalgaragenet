@@ -19,7 +19,9 @@
 <section class="mx-auto max-w-md px-4 py-20 sm:px-6 lg:px-8">
 	<AnimatedReveal>
 		<h1 class="font-display text-3xl font-bold uppercase text-white">Sign In</h1>
-		<p class="mt-2 text-zinc-400">Magic link, Google, Discord, or Microsoft — Supabase-ready when keys are set.</p>
+		<p class="mt-2 text-zinc-400">
+			Magic link, Google, Discord, or Microsoft — Supabase-ready when keys are set.
+		</p>
 
 		{#if data.productionAuthMisconfigured}
 			<p
@@ -28,17 +30,23 @@
 			>
 				Authentication is not configured on this host. Set
 				<code class="text-amber-300">PUBLIC_SUPABASE_URL</code> and
-				<code class="text-amber-300">PUBLIC_SUPABASE_ANON_KEY</code> in the deployment environment
-				(plus the server-only Supabase secret for admin writes).
+				<code class="text-amber-300">PUBLIC_SUPABASE_ANON_KEY</code> in the deployment environment (plus
+				the server-only Supabase secret for admin writes).
 			</p>
 		{/if}
 
 		{#if form?.error}
-			<p class="mt-4 rounded-sm border border-red-800 bg-red-950/30 px-4 py-3 text-sm text-red-400">{form.error}</p>
+			<p class="mt-4 rounded-sm border border-red-800 bg-red-950/30 px-4 py-3 text-sm text-red-400">
+				{form.error}
+			</p>
 		{/if}
 
 		{#if form?.success && form?.message}
-			<p class="mt-4 rounded-sm border border-emerald-800 bg-emerald-950/30 px-4 py-3 text-sm text-emerald-400">{form.message}</p>
+			<p
+				class="mt-4 rounded-sm border border-emerald-800 bg-emerald-950/30 px-4 py-3 text-sm text-emerald-400"
+			>
+				{form.message}
+			</p>
 		{/if}
 
 		<form
@@ -79,7 +87,9 @@
 
 		{#if data.localDevAuthEnabled}
 			<div class="mt-8 rounded-sm border border-dashed border-zinc-700 bg-zinc-900/40 p-4">
-				<p class="text-xs font-bold uppercase tracking-widest text-zinc-500">Local dev quick login</p>
+				<p class="text-xs font-bold uppercase tracking-widest text-zinc-500">
+					Local dev quick login
+				</p>
 				<p class="mt-1 text-xs text-zinc-600">Localhost only — never enabled on production.</p>
 				<div class="mt-4 flex flex-wrap gap-2">
 					{#each data.devAccounts as account (account.email)}

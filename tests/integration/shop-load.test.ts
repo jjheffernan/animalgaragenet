@@ -4,7 +4,9 @@ import { load } from '../../src/routes/shop/+page.server';
 import type { PageServerLoadEvent } from '../../src/routes/shop/$types';
 
 function shopEvent(category?: string): PageServerLoadEvent {
-	const url = new URL(category ? `http://localhost/shop?category=${category}` : 'http://localhost/shop');
+	const url = new URL(
+		category ? `http://localhost/shop?category=${category}` : 'http://localhost/shop'
+	);
 	return { url } as PageServerLoadEvent;
 }
 

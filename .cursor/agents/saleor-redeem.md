@@ -15,11 +15,11 @@ You own the **redeem** experience — entering codes generated in Saleor admin.
 
 When `isSaleorEnabled()`:
 
-| Operation | Mutation / query | Notes |
-|-----------|------------------|-------|
-| Apply code | `checkoutAddPromoCode(checkoutId, promoCode)` | Voucher or gift card code |
-| Remove code | `checkoutRemovePromoCode(checkoutId, promoCodeId)` | |
-| Read applied | `checkout { discount { ... } giftCards { ... } }` | Extend `CHECKOUT_GET` |
+| Operation    | Mutation / query                                   | Notes                     |
+| ------------ | -------------------------------------------------- | ------------------------- |
+| Apply code   | `checkoutAddPromoCode(checkoutId, promoCode)`      | Voucher or gift card code |
+| Remove code  | `checkoutRemovePromoCode(checkoutId, promoCodeId)` |                           |
+| Read applied | `checkout { discount { ... } giftCards { ... } }`  | Extend `CHECKOUT_GET`     |
 
 Add mutations to `src/lib/server/saleor/checkout-queries.ts` and handlers in `checkout.ts`.
 
@@ -37,15 +37,15 @@ Add mutations to `src/lib/server/saleor/checkout-queries.ts` and handlers in `ch
 
 ## Files to touch
 
-| Path | Role |
-|------|------|
-| `src/routes/account/redeem/+page.svelte` | Redeem UI |
-| `src/routes/account/redeem/+page.server.ts` | `applyCode` action |
-| `src/lib/server/saleor/checkout-queries.ts` | Promo mutations |
-| `src/lib/server/saleor/checkout.ts` | `applyPromoCode`, `removePromoCode` |
-| `src/routes/cart/checkout/+server.ts` or new `/api/checkout/promo` | API for cart |
-| `src/lib/components/cart/CartDrawer.svelte` | Inline code entry |
-| `docs/commerce/saleor.md` | Redeem section |
+| Path                                                               | Role                                |
+| ------------------------------------------------------------------ | ----------------------------------- |
+| `src/routes/account/redeem/+page.svelte`                           | Redeem UI                           |
+| `src/routes/account/redeem/+page.server.ts`                        | `applyCode` action                  |
+| `src/lib/server/saleor/checkout-queries.ts`                        | Promo mutations                     |
+| `src/lib/server/saleor/checkout.ts`                                | `applyPromoCode`, `removePromoCode` |
+| `src/routes/cart/checkout/+server.ts` or new `/api/checkout/promo` | API for cart                        |
+| `src/lib/components/cart/CartDrawer.svelte`                        | Inline code entry                   |
+| `docs/commerce/saleor.md`                                          | Redeem section                      |
 
 ## Style
 

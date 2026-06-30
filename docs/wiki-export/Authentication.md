@@ -4,15 +4,15 @@ Supabase Auth with `@supabase/ssr` cookie sessions. Mock fallback when env vars 
 
 ## Environment variables
 
-| Variable | Scope | Purpose |
-|----------|-------|---------|
-| `PUBLIC_SUPABASE_URL` | Public | Project API URL |
-| `PUBLIC_SUPABASE_ANON_KEY` | Public | Anon key — safe in browser with RLS |
-| `SUPABASE_SERVICE_ROLE_KEY` | Server only | Bypasses RLS; never in client bundles |
-| `PUBLIC_SITE_URL` | Public | Magic-link and OAuth redirect URLs |
-| `DEV_ADMIN` | Server only | Admin bypass on **localhost only** |
-| `LOCAL_DEV_AUTH` | Server only | Quick-login buttons on `/auth/sign-in` |
-| `SITE_LOCKED` | Server only | Production preview lockdown |
+| Variable                    | Scope       | Purpose                                |
+| --------------------------- | ----------- | -------------------------------------- |
+| `PUBLIC_SUPABASE_URL`       | Public      | Project API URL                        |
+| `PUBLIC_SUPABASE_ANON_KEY`  | Public      | Anon key — safe in browser with RLS    |
+| `SUPABASE_SERVICE_ROLE_KEY` | Server only | Bypasses RLS; never in client bundles  |
+| `PUBLIC_SITE_URL`           | Public      | Magic-link and OAuth redirect URLs     |
+| `DEV_ADMIN`                 | Server only | Admin bypass on **localhost only**     |
+| `LOCAL_DEV_AUTH`            | Server only | Quick-login buttons on `/auth/sign-in` |
+| `SITE_LOCKED`               | Server only | Production preview lockdown            |
 
 When `PUBLIC_SUPABASE_URL` or `PUBLIC_SUPABASE_ANON_KEY` is unset, the site uses a mock `ag-session` cookie.
 
@@ -47,10 +47,10 @@ On `localhost` with `npm run dev` (or `LOCAL_DEV_AUTH=true`), `/auth/sign-in` sh
 
 Predefined accounts in `src/lib/server/auth/local-dev-accounts.ts`:
 
-| Email | Role |
-|-------|------|
-| `admin@local.dev` | admin |
-| `editor@local.dev` | editor |
+| Email                | Role     |
+| -------------------- | -------- |
+| `admin@local.dev`    | admin    |
+| `editor@local.dev`   | editor   |
 | `customer@local.dev` | customer |
 
 - **Without Supabase:** sets mock `ag-session` cookie with the chosen role.
@@ -85,25 +85,25 @@ When signed in, `Header.svelte` shows `AccountMenu.svelte` instead of a plain Ac
 
 Dropdown links (`src/lib/components/AccountMenu.svelte`):
 
-| Label | Route |
-|-------|-------|
-| Dashboard | `/account` |
-| Redeem | `/account/redeem` |
-| Loyalty & Balance | `/loyalty` |
-| Build Logs | `/account/builds` |
-| Sign out | `POST /auth/sign-out` |
+| Label             | Route                 |
+| ----------------- | --------------------- |
+| Dashboard         | `/account`            |
+| Redeem            | `/account/redeem`     |
+| Loyalty & Balance | `/loyalty`            |
+| Build Logs        | `/account/builds`     |
+| Sign out          | `POST /auth/sign-out` |
 
 ## Code layout
 
-| Path | Role |
-|------|------|
-| `src/lib/server/supabase/client.ts` | SSR cookie client |
-| `src/lib/server/supabase/admin.ts` | Service role client (server only) |
-| `src/lib/server/supabase/auth.ts` | Session helpers, mock fallbacks |
-| `src/lib/supabase/browser.ts` | Browser singleton |
-| `src/hooks.server.ts` | Session refresh, admin guard, site lockdown |
-| `src/routes/auth/callback/+server.ts` | PKCE code exchange |
-| `scripts/promote-admin.ts` | CLI to set `app_metadata.role` |
+| Path                                  | Role                                        |
+| ------------------------------------- | ------------------------------------------- |
+| `src/lib/server/supabase/client.ts`   | SSR cookie client                           |
+| `src/lib/server/supabase/admin.ts`    | Service role client (server only)           |
+| `src/lib/server/supabase/auth.ts`     | Session helpers, mock fallbacks             |
+| `src/lib/supabase/browser.ts`         | Browser singleton                           |
+| `src/hooks.server.ts`                 | Session refresh, admin guard, site lockdown |
+| `src/routes/auth/callback/+server.ts` | PKCE code exchange                          |
+| `scripts/promote-admin.ts`            | CLI to set `app_metadata.role`              |
 
 ## OAuth
 

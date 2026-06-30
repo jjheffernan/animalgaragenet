@@ -41,7 +41,11 @@ function sanitizeBuildLogFields(fields: {
 	};
 }
 
-function mockLog(userId: string, email: string, fields: Omit<BuildLog, 'id' | 'userId' | 'email' | 'createdAt' | 'updatedAt'>): BuildLog {
+function mockLog(
+	userId: string,
+	email: string,
+	fields: Omit<BuildLog, 'id' | 'userId' | 'email' | 'createdAt' | 'updatedAt'>
+): BuildLog {
 	const now = new Date().toISOString();
 	const id = crypto.randomUUID();
 	const log: BuildLog = {
@@ -59,7 +63,9 @@ function mockLog(userId: string, email: string, fields: Omit<BuildLog, 'id' | 'u
 export async function listBuildLogsForUser(userId: string): Promise<BuildLog[]> {
 	const admin = createAdminClient();
 	if (!admin) {
-		return [...mockStore.values()].filter((l) => l.userId === userId).sort((a, b) => b.updatedAt.localeCompare(a.updatedAt));
+		return [...mockStore.values()]
+			.filter((l) => l.userId === userId)
+			.sort((a, b) => b.updatedAt.localeCompare(a.updatedAt));
 	}
 
 	const { data, error } = await admin
@@ -79,7 +85,12 @@ export async function getBuildLogForUser(id: string, userId: string): Promise<Bu
 		return log?.userId === userId ? log : null;
 	}
 
-	const { data, error } = await admin.from('build_submissions').select('*').eq('id', id).eq('user_id', userId).maybeSingle();
+	const { data, error } = await admin
+		.from('build_submissions')
+		.select('*')
+		.eq('id', id)
+		.eq('user_id', userId)
+		.maybeSingle();
 	if (error || !data) return null;
 	return rowToLog(data);
 }
@@ -219,7 +230,9 @@ export async function getApprovedBuildLogBySlug(slug: string): Promise<BuildLog 
 export async function listPendingBuildLogs(): Promise<BuildLog[]> {
 	const admin = createAdminClient();
 	if (!admin) {
-		return [...mockStore.values()].filter((l) => l.status === 'pending').sort((a, b) => a.createdAt.localeCompare(b.createdAt));
+		return [...mockStore.values()]
+			.filter((l) => l.status === 'pending')
+			.sort((a, b) => a.createdAt.localeCompare(b.createdAt));
 	}
 
 	const { data, error } = await admin

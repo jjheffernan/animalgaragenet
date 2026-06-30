@@ -48,10 +48,10 @@
 	<div class="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
 		<div class="grid grid-cols-2 gap-x-6 gap-y-8 sm:gap-x-8 sm:gap-y-10 lg:grid-cols-6">
 			<div class="col-span-2 lg:col-span-2">
-				<p class="font-display text-lg font-bold uppercase tracking-widest text-white">Animal Garage</p>
-				<p class="mt-4 text-sm text-zinc-500">
-					Built different. Wrench harder. Send it louder.
+				<p class="font-display text-lg font-bold uppercase tracking-widest text-white">
+					Animal Garage
 				</p>
+				<p class="mt-4 text-sm text-zinc-500">Built different. Wrench harder. Send it louder.</p>
 				<div class="mt-6">
 					<SupportCTA />
 				</div>

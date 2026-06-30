@@ -14,15 +14,25 @@ DEPLOY_KEY_TITLE="personal-main-sync"
 
 usage() {
   cat <<EOF
-Usage: $(basename "$0") [install|verify]
+Usage: $(basename "$0") [install|verify|cleanup]
 
   install  Create deploy key on $ORG_REPO and store ORG_REPO_DEPLOY_KEY on $PERSONAL_REPO
   verify   List deploy keys + secrets (values are never visible)
+  cleanup  Remove obsolete ORG_REPO_SYNC_TOKEN secret (PAT no longer used)
 
 Secrets appear under: $PERSONAL_REPO → Settings → Secrets and variables → Actions
 You will only see names (ORG_REPO_DEPLOY_KEY), never the key value — that is normal.
 
 EOF
+}
+
+cleanup() {
+  if gh secret list --repo "$PERSONAL_REPO" --json name -q '.[].name' | grep -qx ORG_REPO_SYNC_TOKEN; then
+    gh secret delete ORG_REPO_SYNC_TOKEN --repo "$PERSONAL_REPO"
+    echo "Removed ORG_REPO_SYNC_TOKEN from $PERSONAL_REPO"
+  else
+    echo "ORG_REPO_SYNC_TOKEN not set (already clean)"
+  fi
 }
 
 install_deploy_key() {
@@ -59,6 +69,7 @@ verify() {
 case "${1:-install}" in
   install) install_deploy_key ;;
   verify) verify ;;
+  cleanup) cleanup ;;
   -h|--help|help) usage ;;
   *) usage; exit 1 ;;
 esac

@@ -62,7 +62,7 @@ Personal repo (`jjheffernan/animalgaragenet`) is where you develop. The org repo
 
 ### One-time sync setup
 
-**Use the deploy key only.** PATs (`ORG_REPO_SYNC_TOKEN`) are not used by the sync workflow.
+**Use the deploy key only.** Run `./scripts/setup-org-sync-auth.sh cleanup` to remove the obsolete `ORG_REPO_SYNC_TOKEN` secret if it was set during earlier attempts.
 
 | Where | What you see |
 | ----- | ------------ |

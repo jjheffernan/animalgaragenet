@@ -95,7 +95,7 @@ Magic link / OAuth `redirectTo` is built from `config.siteUrl` (`PUBLIC_SITE_URL
 | `LOCAL_DEV_AUTH` production guard       | ✅ Pass               | Localhost-only via `isLocalDevAuthEnabled()`; blocked when `isProductionSiteUrl()`                                                                                                  |
 | Supabase redirect URLs                  | ❓ Unverified         | Must include preview and custom-domain `/auth/callback` URLs (see account-flow-fix)                                                                                                 |
 | RLS on tables                           | ✅ Migrations present | `profiles`, `build_submissions`, `testimonials` — all `enable row level security`                                                                                                   |
-| `build_submissions` insert policy       | ⚠️ Open               | `with check (true)` for anon — spam risk; reads are service-role only                                                                                                               |
+| `build_submissions` insert policy       | ✅ Done               | RLS requires `auth.uid() = user_id`; server honeypot + rate limit on submit actions                                                                                                 |
 | `scripts/check-secrets.sh`              | ✅ Pass               | Client bundle `SERVICE_ROLE` scan; blocks `DEV_ADMIN` in tracked deploy config (commit `ce05185`) |
 | Silent mock fallback                    | ⚠️ Partial            | `guardMockCatalogFallback()` on catalog loaders + search; homepage and non-catalog surfaces still mock                                                                              |
 

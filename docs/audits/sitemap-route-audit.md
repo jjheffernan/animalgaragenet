@@ -40,6 +40,11 @@
 | `/shop` | Yes |
 | `/parts` | Yes |
 | `/shop/garage-flag-tee` | Yes (add-to-cart) |
+| `/builds` | Yes |
+| `/blog` | Yes |
+| `/about` | Yes |
+| `/sitemap.xml` | Yes (urlset) |
+| `/robots.txt` | Yes (Sitemap directive) |
 | All other routes | No |
 
 ---

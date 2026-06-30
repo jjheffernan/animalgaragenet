@@ -15,11 +15,11 @@ Batch slots: **A** = API/webhooks/SEO/CI · **B** = admin UI · **C** = inspirat
 
 | Batch | Scope | Open/partial | Done (in table) | Ops-blocked |
 |-------|--------|-------------:|----------------:|------------:|
-| **A** | API / webhooks / SEO / CI | 6 | 1 | 20 |
+| **A** | API / webhooks / SEO / CI | 0 | 7 | 20 |
 | **B** | Admin UI | 0 | 9 | 2 |
 | **C** | Inspiration-polish code | 4 | 3 | 0 |
 | **D** | Ponytail / schema / docs-only | 3 | 8 | 2 |
-| | **Grand total** | **13** | **21** | **24** |
+| | **Grand total** | **7** | **27** | **24** |
 | | | | **59 rows** | |
 
 _NS-OPS-010 (merge `dev` → `main`) has no batch slot._
@@ -31,12 +31,12 @@ _NS-OPS-010 (merge `dev` → `main`) has no batch slot._
 | Tracker | ID | Item | Blocked? | Batch slot | Status |
 | ------- | -- | ---- | -------- | ---------- | ------ |
 | next-steps | AUD-P2-006 | Live Saleor integration smoke tests (env-gated CI beyond readiness probes) | No | A | **done** |
-| next-steps | AUD-P2-012 | Site-wide analytics hook (SEO/OG baseline shipped; LGTM server hooks `eba78ff`; Phase 5 client telemetry deferred) | No | A | partial |
+| next-steps | AUD-P2-012 | Site-wide analytics hook (SEO/OG baseline shipped; consent-gated `trackPageView` in root layout) | No | A | **done** |
 | next-steps | IP-004-code | Saleor stock webhook → `restock_alerts` notify handler | No | A | **done** |
 | next-steps | SEO-001 | `sitemap.xml` — nav-linked static routes + dynamic content slugs | No | A | **done** |
 | next-steps | SEO-002 | `robots.txt` route — `Sitemap:` from `PUBLIC_SITE_URL` + static fallback | No | A | **done** |
-| next-steps | SEO-003 | Extend smoke tests beyond `/`, `/shop`, `/parts`, one PDP | No | A | open (optional) |
-| market-readiness | MR-SEC-001 | Tighten `build_submissions` insert policy (rate limit / captcha / honeypot) | No | A | open |
+| next-steps | SEO-003 | Extend smoke tests beyond `/`, `/shop`, `/parts`, one PDP | No | A | **done** |
+| market-readiness | MR-SEC-001 | Tighten `build_submissions` insert policy (rate limit / captcha / honeypot) | No | A | **done** |
 | admin-dashboard | ADM-S1 | Live recent activity feed on `/admin/dashboard` (builds, bugs, YouTube sync) | No | B | **done** (`dd32c00` activity table + deep-links) |
 | admin-dashboard | ADM-S2-builds | Builds moderation queue — zinc/red consistency (`admin-ui.ts`) | No | B | **done** (`dd32c00`) |
 | admin-dashboard | ADM-S2-testimonials | Testimonials moderation queue — zinc/red consistency | No | B | **done** (`dd32c00`) |

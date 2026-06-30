@@ -15,7 +15,7 @@ Canonical implementer queue reconciled from [STATUS.md](../../STATUS.md), [AUDIT
 
 | Bucket | Count | Meaning |
 | ------ | ----: | ------- |
-| **Unblocked** | 10 | Can land in-repo on `dev` without Netlify/Saleor/Stripe dashboard access |
+| **Unblocked** | 7 | Can land in-repo on `dev` without Netlify/Saleor/Stripe dashboard access |
 | **Ops-blocked** | 19 | Requires env vars, migrations on production Supabase, or external console work |
 
 _Audit ID rows (AUD-P*) also appear in [AUDIT-REMEDIATION.md](../AUDIT-REMEDIATION.md). Do not close AUD rows here without updating that file._
@@ -27,7 +27,7 @@ _Audit ID rows (AUD-P*) also appear in [AUDIT-REMEDIATION.md](../AUDIT-REMEDIATI
 | ID | Item | Source doc | Blocked? | Blocker | Owner batch | Status |
 | -- | ---- | ---------- | -------- | ------- | ----------- | ------ |
 | AUD-P2-006 | Live Saleor integration smoke tests (env-gated CI job beyond readiness probes) | AUDIT-REMEDIATION, STATUS | No | — | saleor / CI | **done** |
-| AUD-P2-012 | Site-wide analytics hook (SEO/OG baseline shipped; Phase 5 telemetry deferred) | AUDIT-REMEDIATION, STATUS | No | — | code | **partial** |
+| AUD-P2-012 | Site-wide analytics hook (SEO/OG baseline shipped; consent-gated page hook wired) | AUDIT-REMEDIATION, STATUS | No | — | code | **done** |
 | AUD-P2-020 | Machine-local agent skill symlink onboarding in `agents/AGENTS.md` | AUDIT-REMEDIATION, agents-skills-audit | No | — | docs | **done** |
 | AUD-P2-021 | Remove daisyUI skill tree after sign-off (deprecation banner remains) | AUDIT-REMEDIATION | No | — | docs | **open** |
 | AUD-P2-023 | Newsletter / user preferences tables (schema + RLS per roadmap) | AUDIT-REMEDIATION, integrations/supabase.md | No | — | supabase | **done** |
@@ -41,7 +41,7 @@ _Audit ID rows (AUD-P*) also appear in [AUDIT-REMEDIATION.md](../AUDIT-REMEDIATI
 | PT-P3-003 | `forms/submit.ts` — remove dead generic insert stub or wire one table | ponytail-audit | No | — | ponytail | **done** |
 | SEO-001 | `src/routes/sitemap.xml/+server.ts` — nav-linked static routes + dynamic content slugs | [sitemap-route-audit.md](../../audits/sitemap-route-audit.md) | No | — | code | **done** |
 | SEO-002 | `robots.txt` route — `Sitemap:` from `PUBLIC_SITE_URL` | sitemap-route-audit | No | — | code | **done** |
-| SEO-003 | Extend smoke tests beyond `/`, `/shop`, `/parts`, one PDP | sitemap-route-audit | No | — | code | **open** (optional) |
+| SEO-003 | Extend smoke tests beyond `/`, `/shop`, `/parts`, one PDP | sitemap-route-audit | No | — | code | **done** |
 
 ---
 
@@ -93,7 +93,7 @@ bash scripts/check-secrets.sh
 | 2026-07-03 | Public-safe scrub per `SECURITY-PUBLIC.md` |
 | 2026-06-30 | SEO-001–003 optional follow-ups from [sitemap-route-audit.md](../../audits/sitemap-route-audit.md) |
 | 2026-06-30 | Swarm slot D — PT-P3-001 YAGNI-deferred; AUD-P2-023 done (`20250701010000_commerce_content.sql`); counts synced |
-| 2026-06-30 | Slot A — AUD-P2-020 symlink onboarding; IP-004-code stock webhook; SEO-001/002 sitemap; AUD-P2-006 live Saleor CI smoke |
+| 2026-06-30 | Slot A follow-up — MR-SEC-001 build submit guard; SEO-003 smoke routes; AUD-P2-012 analytics hook |
 
 ---
 

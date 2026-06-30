@@ -24,9 +24,9 @@ Canonical tracker for findings from `docs/audits/*`, [STATUS.md](../STATUS.md), 
 | Priority  | Open   | Blocked (ops) | Done   |
 | --------- | ------ | ------------- | ------ |
 | **P0**    | 0      | 5             | 4      |
-| **P1**    | 2      | 1             | 10     |
+| **P1**    | 1      | 1             | 11     |
 | **P2**    | 20     | 0             | 12     |
-| **Total** | **22** | **6**         | **26** |
+| **Total** | **21** | **6**         | **27** |
 
 _Blocked = external dashboard/env; cannot close in-repo._
 
@@ -56,7 +56,7 @@ _Blocked = external dashboard/env; cannot close in-repo._
 | AUD-P1-002 | Cart line remove / quantity when Saleor enabled           | saleor-audit, polish-plan             | **done**    | saleor     | `checkoutLinesUpdate` / `checkoutLinesDelete` + API routes; `cart.svelte.ts` mutates live checkout | `src/lib/stores/cart.svelte.ts` · `src/routes/cart/checkout/` · `src/lib/server/saleor/checkout.ts`     |
 | AUD-P1-003 | Add-to-cart from listing cards with `variantId`           | saleor-audit                          | **done**    | saleor     | `ProductCard` passes default variant; no mock `getCatalogProductById` on Saleor path               | `src/lib/components/catalog/ProductCard.svelte` · `cart.svelte.ts` `addItemSaleor`                      |
 | AUD-P1-004 | Media uploads Phase 1 (Supabase Storage + `/api/media/*`) | STATUS, media-uploads, polish-plan    | **done**    | supabase   | Migration + presigned API + `ReviewPhotoUpload`; apply migration on Supabase project (ops)         | [media-uploads.md](./active/media-uploads.md) · `src/routes/api/media/*`                               |
-| AUD-P1-005 | YouTube live sync (replace stub)                          | STATUS, polish-plan, readiness-report | **open**    | code       | `youtube/sync.ts` calls Data API + DB upsert; readiness `youtube` probe passes                     | `src/lib/server/youtube/sync.ts` · DOC-038                                                              |
+| AUD-P1-005 | YouTube live sync (replace stub)                          | STATUS, polish-plan, readiness-report | **done**    | code       | `youtube/sync.ts` calls Data API + DB upsert; readiness `youtube` probe passes                     | `src/lib/server/youtube/sync.ts` · DOC-038                                                              |
 | AUD-P1-006 | `/builds` from `build_submissions` table                  | build-submissions, TRIAGE             | **done**    | supabase   | List + detail loaders query approved rows; mock only when env unset                                | `src/lib/server/builds/public.ts` · `src/routes/builds/*`                                               |
 | AUD-P1-007 | OAuth/magic-link redirect from request origin on preview  | TRIAGE, account-flow-fix              | **done**    | auth       | Preview deploys use `event.url.origin` when allowed via `callback-url.ts`                          | `src/lib/server/auth/callback-url.ts` · sign-in/sign-up actions                                         |
 | AUD-P1-008 | Ghost site provisioned + tags `guide` / `blog`            | ghost-audit, STATUS                   | **blocked** | code / ops | Real posts on staging with `GHOST_URL` + `GHOST_CONTENT_API_KEY` set                               | [ghost-audit.md](../audits/ghost-audit.md) · [content/ghost.md](../content/ghost.md) · DOC-008, DOC-013 |

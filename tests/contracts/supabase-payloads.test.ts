@@ -282,4 +282,22 @@ describe('supabase-db insert/update payload contracts', () => {
 			expect(payload.user_id).toBeNull();
 		});
 	});
+
+	describe('submitFormStub — contact_submissions', () => {
+		it('returns mock success without DB insert', async () => {
+			const mock = createSupabaseMock({});
+			vi.mocked(createAdminClient).mockReturnValue({ from: mock.from } as never);
+
+			const result = await submitFormStub('contact_submissions', {
+				name: 'Test User',
+				email: 'test@example.com',
+				subject: 'Hello',
+				message: 'A message long enough.'
+			});
+
+			expect(result.ok).toBe(true);
+			expect(result.message).toContain('Message received');
+			expect(mock.insert).not.toHaveBeenCalled();
+		});
+	});
 });

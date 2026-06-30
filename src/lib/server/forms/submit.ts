@@ -99,9 +99,6 @@ export async function submitFormStub(
 		};
 	}
 
-	if (!createAdminClient()) {
-		return { ok: true, message: mockSuccessMessage(table) };
-	}
-
+	// ponytail: contact_submissions has no table yet — mock success only
 	return { ok: true, message: mockSuccessMessage(table) };
 }

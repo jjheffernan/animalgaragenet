@@ -45,7 +45,7 @@ Server-side LOC / dedupe / guard tightening. **No** copy, layout, CSS, or visual
 | ----- | -- | ------- | ----- | ------------ | ------- | ------ |
 | P3 | PT-P3-001 | `saleor/checkout.ts` (624 LOC) | Monolithic checkout module | Split queries vs mutations only when a second caller needs it (YAGNI until then) | 0 | open |
 | P3 | PT-P3-002 | `catalog/parts.ts`, `products.ts`, `collections.ts` | Repeated `isSaleorEnabled` try/catch + `guardMockCatalogFallback` blocks | Inner `withSaleorCatalog` helper wrapping fetch fn | −40 | **done** |
-| P3 | PT-P3-003 | `forms/submit.ts` | `submitFormStub` generic path always mock-success; dead `createAdminClient` branch | Remove unreachable generic insert stub or wire one table | −10 | open |
+| P3 | PT-P3-003 | `forms/submit.ts` | `submitFormStub` generic path always mock-success; dead `createAdminClient` branch | Remove unreachable generic insert stub or wire one table | −10 | **done** |
 
 ---
 

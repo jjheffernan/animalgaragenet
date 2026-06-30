@@ -1,7 +1,7 @@
 # Active swarm execution tracker
 
 **Created:** 2026-06-30  
-**Last synced:** 2026-06-30 (`dev`, Slot B+C — bug inbox/table, MEDIA-P2/P3)  
+**Last synced:** 2026-06-30 (`dev`, swarm slots A–D continuation — build green)  
 **Policy:** Inventory + status sync — no implementation in this doc.  
 **Sources:** All files in `docs/plans/active/` reconciled 2026-06-30.
 
@@ -18,8 +18,8 @@ Batch slots: **A** = API/webhooks/SEO/CI · **B** = admin UI · **C** = inspirat
 | **A** | API / webhooks / SEO / CI | 0 | 7 | 20 |
 | **B** | Admin UI | 0 | 9 | 2 |
 | **C** | Inspiration-polish code | 1 | 6 | 0 |
-| **D** | Ponytail / schema / docs-only | 3 | 8 | 2 |
-| | **Grand total** | **7** | **27** | **24** |
+| **D** | Ponytail / schema / docs-only | 1 | 10 | 2 |
+| | **Grand total** | **2** | **29** | **24** |
 | | | | **59 rows** | |
 
 _NS-OPS-010 (merge `dev` → `main`) has no batch slot._
@@ -44,7 +44,7 @@ _NS-OPS-010 (merge `dev` → `main`) has no batch slot._
 | admin-dashboard | ADM-S2-media | Media browser — zinc `card`/`badge`/`btn` pass | No | B | **done** (`dd32c00`) |
 | admin-dashboard | ADM-S3 | Sidebar pending-work badges (builds + testimonials + open bugs) | No | B | **done** (`navCounts` + `badgeKey`) |
 | admin-dashboard | ADM-S4-users | Users list — client search filter above table | No | B | **done** (`dd32c00` search + zinc table) |
-| admin-dashboard | ADM-S4-bugs | Bug reports — status filter chips + inbox/table | No | B | **done** (`dd32c00` status chips) |
+| admin-dashboard | ADM-S4-bugs | Bug reports — status filter chips + inbox/table | No | B | **done** (inbox/table toggle + zinc chips) |
 | admin-dashboard | ADM-S5 | Runtime panel — Commerce/Content/Platform grouping + last-checked timestamp | No | B | **done** (`dd32c00` grouped cards + `checkedAt`) |
 | next-steps | MR-PH3-001 | Remaining homepage mock slices (videos, campaigns, hero beyond CMS; UGC/watch wired) | No | C | **done** |
 | inspiration-polish | IP-023 | Multi-channel international pricing — `channels.ts` + `SALEOR_LOCALE_CHANNELS` / `listSaleorChannels()` | No | C | **done** |
@@ -54,9 +54,9 @@ _NS-OPS-010 (merge `dev` → `main`) has no batch slot._
 | media-uploads | MEDIA-P2 | Review photo upload UI — complete Phase 2 wiring (`ReviewPhotoUpload.svelte`) | No | C | **done** |
 | media-uploads | MEDIA-P3 | `/admin/media` real storage list/delete + orphan cleanup job | No | C | **done** |
 | next-steps | AUD-P2-020 | Machine-local agent skill symlink onboarding in `agents/AGENTS.md` | No | D | **done** (`bbeecbe`) |
-| next-steps | AUD-P2-021 | Remove daisyUI skill tree after sign-off (deprecation banner remains) | No | D | open |
-| next-steps | AUD-P2-023 | Newsletter / user preferences tables (schema + RLS per roadmap) | No | D | open |
-| ponytail-audit | PT-P3-001 | Split `saleor/checkout.ts` (624 LOC) — defer until second caller (YAGNI) | No | D | open (defer) |
+| next-steps | AUD-P2-021 | Remove daisyUI skill tree after sign-off | No | D | **done** |
+| next-steps | AUD-P2-023 | Newsletter / user preferences tables (schema + RLS per roadmap) | No | D | **done** |
+| ponytail-audit | PT-P3-001 | Split `saleor/checkout.ts` (624 LOC) — defer until second caller (YAGNI) | No | D | deferred |
 | ponytail-audit | PT-P1-001 | Shared `guardProductionMockFallback` — catalog + Ghost mock-fallback guard | No | D | **done** |
 | ponytail-audit | PT-P1-002 | Remove dead validation aliases in `limits.ts` | No | D | **done** |
 | ponytail-audit | PT-P2-001 | Shared `parseRateLimitedJsonPost` for public POST APIs | No | D | **done** |

@@ -17,8 +17,10 @@
 	let { data }: { data: PageData } = $props();
 
 	type StatusFilter = 'all' | 'open' | 'resolved';
+	type ViewMode = 'inbox' | 'table';
 
 	let statusFilter = $state<StatusFilter>('all');
+	let viewMode = $state<ViewMode>('inbox');
 
 	const categoryLabels = Object.fromEntries(
 		BUG_REPORT_CATEGORIES.map((category) => [category.value, category.label])
@@ -43,6 +45,10 @@
 	function filterClass(filter: StatusFilter): string {
 		return statusFilter === filter ? adminFilterChipActive : adminFilterChip;
 	}
+
+	function viewClass(mode: ViewMode): string {
+		return viewMode === mode ? adminFilterChipActive : adminFilterChip;
+	}
 </script>
 
 <svelte:head>
@@ -66,26 +72,60 @@
 			<p class="text-sm text-zinc-500">No bug reports yet.</p>
 		</div>
 	{:else}
-		<div class="flex flex-wrap gap-2">
-			<button type="button" class={filterClass('all')} onclick={() => (statusFilter = 'all')}>
-				All ({data.reports.length})
-			</button>
-			<button type="button" class={filterClass('open')} onclick={() => (statusFilter = 'open')}>
-				Open ({data.reports.filter((r) => r.status === 'open').length})
-			</button>
-			<button
-				type="button"
-				class={filterClass('resolved')}
-				onclick={() => (statusFilter = 'resolved')}
-			>
-				Resolved ({data.reports.filter((r) => r.status === 'resolved').length})
-			</button>
+		<div class="flex flex-wrap items-center justify-between gap-3">
+			<div class="flex flex-wrap gap-2">
+				<button type="button" class={filterClass('all')} onclick={() => (statusFilter = 'all')}>
+					All ({data.reports.length})
+				</button>
+				<button type="button" class={filterClass('open')} onclick={() => (statusFilter = 'open')}>
+					Open ({data.reports.filter((r) => r.status === 'open').length})
+				</button>
+				<button
+					type="button"
+					class={filterClass('resolved')}
+					onclick={() => (statusFilter = 'resolved')}
+				>
+					Resolved ({data.reports.filter((r) => r.status === 'resolved').length})
+				</button>
+			</div>
+			<div class="flex gap-2" role="tablist" aria-label="Bug report layout">
+				<button type="button" class={viewClass('inbox')} onclick={() => (viewMode = 'inbox')}>
+					Inbox
+				</button>
+				<button type="button" class={viewClass('table')} onclick={() => (viewMode = 'table')}>
+					Table
+				</button>
+			</div>
 		</div>
 
 		{#if filteredReports.length === 0}
 			<div class={adminCard}>
 				<p class="text-sm text-zinc-500">No {statusFilter} bug reports.</p>
 			</div>
+		{:else if viewMode === 'inbox'}
+			<ul class="space-y-4">
+				{#each filteredReports as report (report.id)}
+					<li class={adminCard}>
+						<div class="flex flex-wrap items-start justify-between gap-3">
+							<div>
+								<span class="{statusBadgeClass(report.status)} uppercase">{report.status}</span>
+								<p class="mt-2 font-medium text-white">{report.description}</p>
+								<p class="mt-1 text-xs text-zinc-500">
+									{categoryLabels[report.category] ?? report.category}
+									· {report.email ?? 'Anonymous'}
+									· {formatWhen(report.createdAt)}
+								</p>
+							</div>
+						</div>
+						<p class="mt-3 text-sm whitespace-pre-wrap text-zinc-400">{report.steps}</p>
+						{#if report.pageUrl}
+							<p class="mt-3 truncate font-mono text-xs text-zinc-600" title={report.pageUrl}>
+								{report.pageUrl}
+							</p>
+						{/if}
+					</li>
+				{/each}
+			</ul>
 		{:else}
 			<div class={adminCardFlush}>
 				<div class="overflow-x-auto">

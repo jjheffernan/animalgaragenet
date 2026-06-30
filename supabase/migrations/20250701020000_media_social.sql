@@ -1,4 +1,5 @@
--- Phase 1: UGC media assets (Supabase Storage bucket + metadata tables)
+-- UGC media assets, testimonial gallery joins, and Storage bucket policies
+-- Squashed from: media_assets, admin_moderation_policies (media policies)
 
 insert into storage.buckets (id, name, public, file_size_limit, allowed_mime_types)
 values (
@@ -58,6 +59,34 @@ create policy "Users manage own media assets"
 	to authenticated
 	using (auth.uid() = user_id)
 	with check (auth.uid() = user_id);
+
+create policy "Public read media for approved testimonials"
+	on public.media_assets
+	for select
+	to anon, authenticated
+	using (
+		status = 'ready'
+		and exists (
+			select 1
+			from public.testimonial_media tm
+			join public.testimonials t on t.id = tm.testimonial_id
+			where tm.media_asset_id = media_assets.id
+				and t.status = 'approved'
+		)
+	);
+
+create policy "Staff read all media assets"
+	on public.media_assets
+	for select
+	to authenticated
+	using (public.is_staff());
+
+create policy "Staff update media assets"
+	on public.media_assets
+	for update
+	to authenticated
+	using (public.is_staff())
+	with check (public.is_staff());
 
 create policy "Users manage own testimonial media links"
 	on public.testimonial_media

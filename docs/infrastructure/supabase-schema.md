@@ -68,7 +68,10 @@ supabase migration new <descriptive_name>
 | `youtube_channels` | Connected channels for sync | `youtube/sync.ts`, `api/cron/youtube-sync` |
 | `videos` | Synced YouTube catalog for `/watch` | `youtube/repository.ts`, `/watch` |
 | `order_snapshots` | Saleor order mirror for `/account` | `orders/snapshots.ts`, `api/webhooks/saleor` |
-| `social_connections` | Account-linked social platforms | `social-connections/`, `api/account/connections` |
+| `social_connections` | Social handles on `user_preferences.social_connections` | `social-connections/`, `api/account/connections` |
+| `restock_alerts` | PDP back-in-stock signups | `api/restock/subscribe` |
+| `wholesale_inquiries` | B2B wholesale form queue | `/wholesale` |
+| `bug_reports` | Site bug reports from `/support/report-bug` | `bug-reports/`, `admin/bug-reports` |
 
 **Commerce** (products, cart, checkout) stays in **Saleor** — not Supabase.
 
@@ -163,25 +166,15 @@ Server-minted signed upload URLs: see [media-uploads.md](../plans/active/media-u
 
 ---
 
-## Migration inventory
+## Migration inventory (apply order)
 
-| File | Creates / changes |
-| --- | --- |
-| `20250629120000_build_submissions.sql` | `build_submissions` |
-| `20250629130000_build_logs_account.sql` | draft status + owner RLS |
-| `20250629140000_testimonials.sql` | `testimonials` |
-| `20250630120000_media_assets.sql` | `media_assets`, `testimonial_media`, `ugc` bucket |
-| `20250630125000_updated_at_helper.sql` | `set_updated_at()` |
-| `20250630140000_newsletter_subscribers.sql` | `newsletter_subscribers` |
-| `20250630150000_content_metadata.sql` | `featured_sections`, `user_preferences` |
-| `20250630160000_youtube_sync.sql` | `youtube_channels`, `videos` |
-| `20250630170000_order_snapshots.sql` | `order_snapshots` |
-| `20250630180000_admin_moderation_policies.sql` | `is_staff()` + staff policies |
-| `20260629120000_initial_profiles.sql` | `profiles` |
-| `20260629130000_profiles_signup_trigger.sql` | `handle_new_user` trigger |
-| `20250630240000_social_connections.sql` | `social_connections` |
+Squashed 2026-07-01 — see [migration-squash-notes.md](./migration-squash-notes.md) for before/after list and reset guidance.
 
-> **Note:** `initial_profiles` timestamp sorts last on fresh `db reset`; signup trigger migration (`20260629130000`) runs immediately after it.
+| # | File | Creates / changes |
+| --- | --- | --- |
+| 1 | `20250701000000_core_auth_profiles.sql` | `set_updated_at()`, `profiles`, `handle_new_user` trigger, `is_staff()` |
+| 2 | `20250701010000_commerce_content.sql` | `build_submissions`, `testimonials`, `newsletter_subscribers`, `featured_sections`, `user_preferences`, `youtube_channels`, `videos`, `order_snapshots`, `restock_alerts`, `wholesale_inquiries`, `bug_reports`, staff RLS |
+| 3 | `20250701020000_media_social.sql` | `media_assets`, `testimonial_media`, `ugc` Storage bucket + policies |
 
 ---
 

@@ -18,7 +18,7 @@ function assertSnakeCasePayload(payload: Record<string, unknown>): void {
 describe('profiles signup trigger contract', () => {
 	it('migration trigger inserts id and display_name only', () => {
 		const sql = readFileSync(
-			join(process.cwd(), 'supabase/migrations/20260629130000_profiles_signup_trigger.sql'),
+			join(process.cwd(), 'supabase/migrations/20250701000000_core_auth_profiles.sql'),
 			'utf8'
 		);
 		expect(sql).toMatch(/insert into public\.profiles \(id, display_name\)/i);

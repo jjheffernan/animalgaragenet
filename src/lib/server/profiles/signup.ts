@@ -1,4 +1,4 @@
-/** Columns inserted by `handle_new_user` — keep in sync with `20260629130000_profiles_signup_trigger.sql`. */
+/** Columns inserted by `handle_new_user` — keep in sync with `20250701000000_core_auth_profiles.sql`. */
 export const PROFILE_SIGNUP_COLUMNS = ['id', 'display_name'] as const;
 
 export type ProfileSignupPayload = {

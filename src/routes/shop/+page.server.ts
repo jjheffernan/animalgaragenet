@@ -16,7 +16,7 @@ export const load: PageServerLoad = async ({ url }) => {
 	const category = resolveShopFilter(url.searchParams.get('category'), filterOptions.categories);
 	const collection = resolveShopCollection(url.searchParams.get('collection'), collectionOptions);
 
-	// @inspiration-scaffold: intentional — ?collection= takes precedence over category when set
+	// ?collection= takes precedence over category when set
 	const allProducts = collection
 		? await getShopProductsByCollection(collection.slug, locale)
 		: await getShopProducts(category.slug, locale);

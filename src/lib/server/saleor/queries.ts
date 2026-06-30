@@ -100,29 +100,40 @@ export const COLLECTIONS_QUERY = `
   }
 `;
 
-// @saleor-migration: intentional — uncomment for collection product edges; see docs/commerce/saleor.md#quick-migration
-// export const COLLECTION_PRODUCTS_QUERY = `
-//   query CollectionProducts($slug: String!, $channel: String!, $first: Int!) {
-//     collection(slug: $slug, channel: $channel) {
-//       id
-//       name
-//       slug
-//       products(first: $first) {
-//         edges {
-//           node {
-//             id
-//             name
-//             slug
-//             thumbnail { url alt }
-//             pricing { priceRange { start { gross { amount currency } } } }
-//             category { id name slug }
-//             isAvailableForPurchase
-//           }
-//         }
-//       }
-//     }
-//   }
-// `;
+/** Shop `?collection=` filter — used by `shop-collection.ts` when Saleor is live. */
+export const COLLECTION_PRODUCTS_QUERY = `
+  query CollectionProducts($slug: String!, $channel: String!, $first: Int!) {
+    collection(slug: $slug, channel: $channel) {
+      id
+      name
+      slug
+      products(first: $first) {
+        edges {
+          node {
+            id
+            name
+            slug
+            description
+            thumbnail { url alt }
+            pricing {
+              priceRange {
+                start { gross { amount currency } }
+              }
+            }
+            category { id name slug }
+            variants(first: 1) {
+              id
+              name
+              sku
+              pricing { price { gross { amount currency } } }
+            }
+            isAvailableForPurchase${PRODUCT_METADATA_FIELDS}
+          }
+        }
+      }
+    }
+  }
+`;
 
 // @saleor-migration: intentional — uncomment for Saleor-native search at scale; see docs/commerce/saleor.md#quick-migration
 // export const PRODUCT_SEARCH_QUERY = `

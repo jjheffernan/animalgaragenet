@@ -10,6 +10,11 @@ export function getSaleorChannel(): string {
 	return privateEnv.SALEOR_CHANNEL ?? 'default-channel';
 }
 
+/** True when `PUBLIC_SALEOR_API_URL` is set — live catalog reads are allowed. */
+export function isSaleorEnabled(): boolean {
+	return Boolean(config.saleorApiUrl);
+}
+
 export async function saleorFetch<T>(
 	query: string,
 	variables: Record<string, unknown> = {}

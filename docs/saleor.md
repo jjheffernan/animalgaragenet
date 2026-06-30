@@ -21,7 +21,7 @@ Saleor runs on a **separate domain**. This repo is the storefront frontend only.
 - GraphQL client: `src/lib/server/saleor/client.ts`
 - Query definitions: `src/lib/server/saleor/queries.ts`
 - Type definitions mirroring Saleor shape: `src/lib/types/saleor.ts`
-- Mock data: `src/lib/data/mock-products.ts`
+- Mock data: `src/lib/data/mock/products.ts`
 - Shop routes load mock data; server loaders have comments for API swap
 
 ## Environment

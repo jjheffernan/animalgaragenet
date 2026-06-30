@@ -1,3 +1,10 @@
+const PRODUCT_METADATA_FIELDS = `
+          metadata { key value }
+          attributes {
+            attribute { slug name }
+            values { name slug plainText }
+          }`;
+
 export const PRODUCTS_QUERY = `
   query Products($channel: String!, $first: Int!) {
     products(channel: $channel, first: $first) {
@@ -14,7 +21,7 @@ export const PRODUCTS_QUERY = `
             }
           }
           category { id name slug }
-          isAvailableForPurchase
+          isAvailableForPurchase${PRODUCT_METADATA_FIELDS}
         }
       }
     }
@@ -43,7 +50,30 @@ export const PRODUCT_BY_SLUG_QUERY = `
         pricing { price { gross { amount currency } } }
       }
       category { id name slug }
-      isAvailableForPurchase
+      isAvailableForPurchase${PRODUCT_METADATA_FIELDS}
+    }
+  }
+`;
+
+export const CATEGORIES_QUERY = `
+  query Categories($first: Int!, $level: Int) {
+    categories(first: $first, level: $level) {
+      edges {
+        node {
+          id
+          name
+          slug
+          children(first: 50) {
+            edges {
+              node {
+                id
+                name
+                slug
+              }
+            }
+          }
+        }
+      }
     }
   }
 `;

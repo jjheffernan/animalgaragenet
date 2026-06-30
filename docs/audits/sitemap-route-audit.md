@@ -15,7 +15,7 @@
 | **Stubs** | **6** (+1 partial) | Admin mock/scaffold pages + account mock modes |
 | **Orphan routes** | **9** | Static public routes not in header/footer/account/admin nav |
 | **Dead nav links** | **0** | All enabled nav `href`s resolve; admin stubs use `disabled: true` |
-| **Sitemap gaps** | **24+** | No sitemap generator — every nav/footer-linked public route is a gap |
+| **Sitemap gaps** | **24** | No sitemap generator — every nav/footer-linked public route is a gap |
 
 ---
 
@@ -148,7 +148,7 @@ Reachable by URL, not in header/footer/account/admin nav:
 
 Dynamic catalog/content routes (`/shop/[slug]`, `/parts/*`, `/builds/[slug]`, `/guides/[slug]`, `/watch/[id]`, etc.) are intentionally listing-driven, not nav orphans.
 
-### Sitemap gaps (24+)
+### Sitemap gaps (24)
 
 With **no sitemap**, all nav/footer-linked public static routes are gaps, including:
 

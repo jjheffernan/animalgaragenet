@@ -50,6 +50,7 @@ This file reconciles “next steps” across all `docs/` so nothing is orphaned.
 | Account social connections (IP-027)                        | `/account/connections`, `api/account/connections`, migration `20250630240000` — `ed1465d`                                                                    |
 | Saleor order mirror webhook (IP-012)                       | `api/webhooks/saleor`, `order-webhook.ts` — `7649a9e`                                                                                                          |
 | Component-route audit cleanup (AUD-P2-034–038)             | SupportCTA removed, `/media` nav, admin stubs disabled, builds/submit shell — `847ba4b`                                                                        |
+| Sitemap & route navigation audit                           | [sitemap-route-audit.md](./audits/sitemap-route-audit.md) — stubs, orphans, 24 sitemap gaps; SEO-001–003 optional                                            |
 | July 1 batch (BATCH-002–012)                               | Commerce search, collections, CMS sections, UGC wall, Ghost SEO, profiles contract, admin users, locale, Ghost tests — `4d0d0fd`–`a895eb7`                   |
 | QoL polish pass (IP-BUG-003–004, list canvas)              | Shop filters, sign-out, parts ribbon, mobile footer, `PaginatedListCanvas` — `acd03ad`–`7513c34`                                                               |
 | Pagination + sticky catalog toolbars                       | `86affdd` — mobile pagination layout; sticky shop/parts ribbons                                                                                                  |
@@ -96,7 +97,7 @@ These appear as unchecked boxes in plans but **cannot be completed in-repo**. **
 
 **Audit counts (see [AUDIT-REMEDIATION.md](./plans/AUDIT-REMEDIATION.md)):** 5 open · 6 blocked (ops) · 45 done — P1 checkout (`AUD-P1-001`) is **partial** (code done; ops gate only), not open.
 
-**Next-steps tracker (consolidated queue):** 12 unblocked · 19 ops-blocked — see [next-steps-tracker.md](./plans/active/next-steps-tracker.md) (includes scaffold items not in AUD rows, e.g. `IP-004-code` restock webhook).
+**Next-steps tracker (consolidated queue):** 15 unblocked · 19 ops-blocked — see [next-steps-tracker.md](./plans/active/next-steps-tracker.md) (includes scaffold items not in AUD rows, e.g. `IP-004-code` restock webhook, SEO-001–003 sitemap follow-ups).
 
 | Priority | Task                                                            | Tracker                                                                        |
 | -------- | --------------------------------------------------------------- | ------------------------------------------------------------------------------ |
@@ -129,6 +130,7 @@ These appear as unchecked boxes in plans but **cannot be completed in-repo**. **
 
 ## Intentionally future (not launch blockers)
 
+- Sitemap generator + `robots.txt` `Sitemap:` directive (SEO-001, SEO-002) — unblocked; see [sitemap-route-audit.md](./audits/sitemap-route-audit.md)
 - Advanced animations, scroll-driven motion — [animations.md](./style-guide/frontend/animations.md)
 - Full media CDN (Garage/S3) — [media-cdn-plan.md](./archive/media-cdn-plan.md) (superseded by media-uploads phase 1)
 - Dashboard submodule — [dashboard-adoption-plan.md](./archive/dashboard-adoption-plan.md) (stay in-repo `/admin`)

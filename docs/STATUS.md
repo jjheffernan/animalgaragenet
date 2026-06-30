@@ -2,8 +2,8 @@
 
 **Public documentation policy:** [SECURITY-PUBLIC.md](./SECURITY-PUBLIC.md)
 
-**Last updated:** 2026-07-03  
-**Canonical next-step docs:** [infrastructure/deployment.md](./infrastructure/deployment.md) (production runbook) · [plans/active/next-steps-tracker.md](./plans/active/next-steps-tracker.md) (implementer queue) · [plans/AUDIT-REMEDIATION.md](./plans/AUDIT-REMEDIATION.md) · [plans/active/inspiration-polish-tracker.md](./plans/active/inspiration-polish-tracker.md) · [plans/active/ponytail-audit-tracker.md](./plans/active/ponytail-audit-tracker.md) · [plans/active/market-readiness.md](./plans/active/market-readiness.md) · [plans/active/account-flow-fix.md](./plans/active/account-flow-fix.md) · [archive/batch-2026-07-03-followups.md](./archive/batch-2026-07-03-followups.md) (ops apply)
+**Last updated:** 2026-06-30  
+**Canonical next-step docs:** [infrastructure/deployment.md](./infrastructure/deployment.md) (production runbook) · [plans/active/ACTIVE-SWARM-EXECUTION.md](./plans/active/ACTIVE-SWARM-EXECUTION.md) (swarm batch slots A–D) · [plans/active/next-steps-tracker.md](./plans/active/next-steps-tracker.md) (implementer queue) · [plans/AUDIT-REMEDIATION.md](./plans/AUDIT-REMEDIATION.md) · [plans/active/inspiration-polish-tracker.md](./plans/active/inspiration-polish-tracker.md) · [plans/active/ponytail-audit-tracker.md](./plans/active/ponytail-audit-tracker.md) · [plans/active/market-readiness.md](./plans/active/market-readiness.md) · [plans/active/account-flow-fix.md](./plans/active/account-flow-fix.md) · [archive/batch-2026-07-03-followups.md](./archive/batch-2026-07-03-followups.md) (ops apply)
 
 This file reconciles “next steps” across all `docs/` so nothing is orphaned. Items are **Done**, **Ops** (external dashboard/env), or **Open** (code work).
 
@@ -63,6 +63,8 @@ This file reconciles “next steps” across all `docs/` so nothing is orphaned.
 | Supabase migration squash (17 → 3)                         | `20250701000000` / `010000` / `020000` logical files — `65e9d52` · [migration-squash-notes.md](./infrastructure/migration-squash-notes.md)                     |
 | Ponytail audit (PT-P1/P2)                                  | Shared mock-fallback guard, API POST dedupe, store localStorage helpers — `f1d4ccf`, `2e7700f` · [ponytail-audit-tracker.md](./plans/active/ponytail-audit-tracker.md) |
 | Ponytail P3 catalog dedupe + form stub                     | `withSaleorCatalog` helper — `2f26fbc`; dead `submitFormStub` branch — `4481873` (PT-P3-003)                                                                      |
+| Ponytail P3 checkout split (YAGNI-deferred)                | PT-P3-001 closed — single caller; no `checkout.ts` split until second consumer · [ponytail-audit-tracker.md](./plans/active/ponytail-audit-tracker.md)              |
+| Newsletter + user preferences schema (AUD-P2-023)            | `newsletter_subscribers` + `user_preferences` RLS in `20250701010000_commerce_content.sql`                                                                       |
 | `check-secrets.sh` CI workflow allowlist                   | `readiness-ci.yml` may reference `SUPABASE_SERVICE_ROLE_KEY` by name — `0c82962`                                                                                |
 | July docs archive pass                                     | Batch plans → `docs/archive/`; STATUS/README/AUDIT sync; `meta/polish-plan.md` stub removed — `01b603e`                                                         |
 
@@ -95,21 +97,18 @@ These appear as unchecked boxes in plans but **cannot be completed in-repo**. **
 
 ## Open — code / CI work
 
-**Audit counts (see [AUDIT-REMEDIATION.md](./plans/AUDIT-REMEDIATION.md)):** 5 open · 6 blocked (ops) · 45 done — P1 checkout (`AUD-P1-001`) is **partial** (code done; ops gate only), not open.
+**Audit counts (see [AUDIT-REMEDIATION.md](./plans/AUDIT-REMEDIATION.md)):** 2 open · 7 blocked (ops) · 48 done — P1 checkout (`AUD-P1-001`) is **partial** (code done; ops gate only), not open.
 
-**Next-steps tracker (consolidated queue):** 15 unblocked · 19 ops-blocked — see [next-steps-tracker.md](./plans/active/next-steps-tracker.md) (includes scaffold items not in AUD rows, e.g. `IP-004-code` restock webhook, SEO-001–003 sitemap follow-ups).
+**Next-steps tracker (consolidated queue):** 11 unblocked · 19 ops-blocked — see [next-steps-tracker.md](./plans/active/next-steps-tracker.md) (includes scaffold items not in AUD rows, e.g. SEO-001–003 sitemap follow-ups).
 
 | Priority | Task                                                            | Tracker                                                                        |
 | -------- | --------------------------------------------------------------- | ------------------------------------------------------------------------------ |
 | P0       | Merge `dev` → `main` when Netlify env configured                | [deployment.md](./infrastructure/deployment.md)                                  |
 | P1       | Saleor checkout: Payment App enablement + live pay verify       | [archive/batch-2026-07-01.md](./archive/batch-2026-07-01.md) BATCH-001 · [saleor-payments.md](./commerce/saleor-payments.md) |
-| P2       | Live Saleor integration smoke tests (env-gated CI)              | AUD-P2-006 · `npm run test:readiness`                                         |
 | P2       | Ghost live CMS (fallback policy + detail SEO shipped)           | IP-015 · [ghost-audit.md](./audits/ghost-audit.md)                             |
 | P2       | Remaining homepage mock slices (non-watch)                        | market-readiness Phase 3                                                       |
-| P2       | OAuth Discord/Azure verification                                | [inspiration-polish-tracker.md](./plans/active/inspiration-polish-tracker.md) |
+| P2       | OAuth Discord/Azure verification                                | [inspiration-polish-tracker.md](./plans/active/inspiration-polish-tracker.md) (ops-blocked) |
 | P2       | Site-wide analytics (SEO/OG baseline shipped)                     | AUD-P2-012 partial · Phase 5                                                   |
-| P2       | Newsletter / user preferences tables                            | [supabase.md](./integrations/supabase.md) roadmap                              |
-| P2       | Agent skill symlink onboarding docs                             | AUD-P2-020 · `agents/AGENTS.md`                                                |
 | P2       | daisyUI skill tree removal (post sign-off)                      | AUD-P2-021                                                                     |
 
 ---

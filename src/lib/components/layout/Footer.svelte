@@ -35,8 +35,8 @@
 </script>
 
 <footer class="border-t border-zinc-800 bg-zinc-950">
-	<div class="mx-auto max-w-7xl px-4 py-10 sm:px-6 sm:py-12 lg:px-8">
-		<div class="grid gap-8 lg:grid-cols-12 lg:gap-x-8 lg:gap-y-10">
+	<div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 sm:py-12 lg:px-8">
+		<div class="grid gap-5 lg:grid-cols-12 lg:gap-x-8 lg:gap-y-10">
 			<!-- Brand: logo, address, hours -->
 			<div class="lg:col-span-4">
 				<a href={resolvePath('/')} class="inline-flex items-center gap-3">
@@ -46,15 +46,15 @@
 					</span>
 				</a>
 
-				<address class="mt-5 space-y-1 text-sm not-italic leading-relaxed text-zinc-500">
+				<address class="mt-3 space-y-0.5 text-sm not-italic leading-relaxed text-zinc-500 lg:mt-5 lg:space-y-1">
 					<p class="text-zinc-400">Animal Garage HQ</p>
 					<p>123 Redline Drive</p>
 					<p>Los Angeles, CA 90001</p>
 				</address>
 
-				<div class="mt-5">
+				<div class="mt-3 lg:mt-5">
 					<p class="text-xs font-bold uppercase tracking-widest text-zinc-400">Business Hours</p>
-					<ul class="mt-3 space-y-2 text-sm text-zinc-500">
+					<ul class="mt-2 space-y-1 text-sm text-zinc-500 lg:mt-3 lg:space-y-2">
 						{#each businessHours as row (row.days)}
 							<li class="flex justify-between gap-4">
 								<span>{row.days}</span>
@@ -64,7 +64,7 @@
 					</ul>
 				</div>
 
-				<div class="mt-6 w-full lg:max-w-sm">
+				<div class="mt-4 w-full lg:mt-6 lg:max-w-sm [&_form]:space-y-2 lg:[&_form]:space-y-3">
 					<NewsletterSignup />
 				</div>
 			</div>
@@ -72,11 +72,11 @@
 			<!-- Contact + social -->
 			<div class="lg:col-span-2">
 				<p class="text-xs font-bold uppercase tracking-widest text-zinc-400">Get in Touch</p>
-				<ul class="mt-4 space-y-1 text-sm">
+				<ul class="mt-3 space-y-0 text-sm lg:mt-4 lg:space-y-1">
 					<li>
 						<a
 							href="tel:+15558675309"
-							class="block py-2.5 text-zinc-500 transition hover:text-red-500"
+							class="block py-1.5 text-zinc-500 transition hover:text-red-500 lg:py-2.5"
 						>
 							(555) 867-5309
 						</a>
@@ -84,16 +84,16 @@
 					<li>
 						<a
 							href="mailto:support@animalgarage.com"
-							class="block py-2.5 text-zinc-500 transition hover:text-red-500"
+							class="block py-1.5 text-zinc-500 transition hover:text-red-500 lg:py-2.5"
 						>
 							support@animalgarage.com
 						</a>
 					</li>
 				</ul>
 
-				<div class="mt-6">
+				<div class="mt-4 lg:mt-6">
 					<p class="text-xs font-bold uppercase tracking-widest text-zinc-400">Follow Us</p>
-					<div class="mt-3 [&_a]:h-11 [&_a]:w-11">
+					<div class="mt-2 [&_a]:h-9 [&_a]:w-9 lg:mt-3 lg:[&_a]:h-11 lg:[&_a]:w-11">
 						<SocialLinks />
 					</div>
 				</div>
@@ -123,12 +123,12 @@
 			<!-- Helpful links — mobile (always visible) -->
 			<div class="w-full lg:hidden">
 				<p class="text-xs font-bold uppercase tracking-widest text-zinc-400">Helpful Links</p>
-				<ul class="mt-4 grid grid-cols-2 gap-x-4">
+				<ul class="mt-3 grid grid-cols-2 gap-x-4">
 					{#each helpfulLinks as link (link.href)}
 						<li>
 							<a
 								href={resolvePath(link.href)}
-								class="block py-2.5 text-sm text-zinc-500 transition hover:text-red-500"
+								class="block py-1.5 text-sm text-zinc-500 transition hover:text-red-500"
 							>
 								{link.label}
 							</a>
@@ -138,19 +138,9 @@
 			</div>
 		</div>
 
-		<!-- Trust strip -->
-		<div
-			class="mt-10 flex flex-col items-center gap-4 border-t border-zinc-800 pt-8 text-center sm:flex-row sm:justify-center sm:gap-6 sm:text-left"
-		>
-			<div class="flex items-center gap-3 text-zinc-600">
-				<img src="/logo.svg" alt="" width="28" height="28" class="h-7 w-7 opacity-60" />
-				<p class="text-xs uppercase tracking-widest">Performance lifestyle brand since 2019</p>
-			</div>
-		</div>
-
 		<!-- Bottom bar -->
 		<div
-			class="mt-6 flex flex-col items-center justify-between gap-3 border-t border-zinc-800 pt-6 text-center text-xs text-zinc-600 sm:flex-row sm:text-left"
+			class="mt-5 flex flex-col items-center justify-between gap-2 border-t border-zinc-800 pt-4 text-center text-xs text-zinc-600 sm:mt-6 sm:flex-row sm:gap-3 sm:pt-6 sm:text-left"
 		>
 			<p>&copy; {new Date().getFullYear()} Animal Garage. All rights reserved.</p>
 			<p class="flex items-center gap-1.5 text-zinc-500">

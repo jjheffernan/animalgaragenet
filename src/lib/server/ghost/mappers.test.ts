@@ -33,6 +33,8 @@ describe('mapGhostPostToGuide', () => {
 			html: '<p>Offset, diameter, width.</p>',
 			content: '',
 			category: 'Wheels',
+			categorySlug: 'wheels',
+			topicSlugs: [],
 			heroImage: 'https://cdn.example.com/wheels.jpg',
 			readTimeMinutes: 12
 		});

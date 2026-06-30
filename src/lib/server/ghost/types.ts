@@ -26,6 +26,16 @@ export interface GhostPost {
 	authors: GhostAuthor[];
 }
 
+export interface GhostTagSummary {
+	id: string;
+	name: string;
+	slug: string;
+}
+
+export interface GhostTagsResponse {
+	tags: GhostTagSummary[];
+}
+
 export interface GhostPostsResponse {
 	posts: GhostPost[];
 }

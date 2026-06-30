@@ -66,6 +66,10 @@ export interface Guide {
 	/** Sanitized Ghost HTML body when loaded from CMS. */
 	html?: string;
 	category: string;
+	/** Ghost tag slug for `category` (mock derives from label). */
+	categorySlug?: string;
+	/** Additional Ghost tag slugs beyond the primary category. */
+	topicSlugs?: string[];
 	heroImage: string;
 	readTimeMinutes: number;
 }

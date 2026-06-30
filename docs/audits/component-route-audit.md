@@ -26,13 +26,13 @@ All other 62 components under `src/lib/components/` have at least one importer (
 
 | Path | Issue | Action | Priority |
 | ---- | ----- | ------ | -------- |
-| `src/routes/military/` | `/military` has no nav, footer, or internal links | Keep; add link or archive | P2 |
+| `src/routes/military/` | `/military` has no nav, footer, or internal links | Keep; add footer or loyalty/checkout link, or archive | P2 |
 | `src/routes/media/` | Linked from `UGCWall` only; in `communityPaths` but omitted from `communityLinks` dropdown | Keep; add to community nav | P2 |
 | `src/routes/tools/tire-calculator/` | Cross-linked with fitment-visualizer only; not in nav/footer | Keep (per `docs/meta/decisions.md`) | P3 |
 | `src/routes/tools/fitment-visualizer/` | Same as above | Keep | P3 |
 | `src/routes/builds/submit/+page.svelte` | `+page.server.ts` always redirects to `/account/builds`; page never renders | Delete page shell | P2 |
 | `src/routes/builds/submit/+page.server.ts` | Redirect-only bookmark handler | Keep | — |
-| `src/routes/locked/` | Ops-only (`SITE_LOCKED` in `hooks.server.ts`) | Keep | — |
+| `src/routes/locked/` | Reached via `SITE_LOCKED` in `hooks.server.ts` only | Keep (ops feature) | — |
 | `src/routes/brands/` | Homepage `BrandLanes` + PDP breadcrumbs; not in main nav | Keep | — |
 | `src/routes/blog/` | Footer only; not in header community menu | Keep | P3 |
 
@@ -71,16 +71,16 @@ All other 62 components under `src/lib/components/` have at least one importer (
 | `api/newsletter/subscribe` | `NewsletterSignup.svelte` + tests | Keep | — |
 | `api/restock/notify` | `NotifyMeButton.svelte` + tests | Keep | — |
 
-**Note (outside `api/` scope):** `src/routes/checkout/payment/+server.ts` is a deprecated 400 responder; `checkout/payment/process` and `checkout/complete` have no `fetch` callers (logic lives in `checkout/payment/complete/+page.server.ts` load). Document for future checkout cleanup, not delete yet.
+**Outside `api/` scope:** `checkout/payment/+server.ts` is a deprecated 400 responder; `checkout/payment/process` and `checkout/complete` have no `fetch` callers (logic in `checkout/payment/complete/+page.server.ts` load). Document for future checkout cleanup — do not delete yet.
 
-## Recommended deletions (evidence-based)
+## Remediation applied (same PR)
 
-| # | File | Evidence |
-| - | ---- | -------- |
-| 1 | `src/lib/components/marketing/SupportCTA.svelte` | 0 importers |
-| 2 | `src/routes/builds/submit/+page.svelte` | Load always redirects; page never renders |
-
-Also update `src/lib/components/README.md` (remove SupportCTA row).
+| Item | Change |
+| ---- | ------ |
+| AUD-P2-034 | Deleted `SupportCTA.svelte`; updated `src/lib/components/README.md` |
+| AUD-P2-036 | Added Media to `communityLinks` in `Header.svelte` |
+| AUD-P2-037 | Marked 6 admin nav stubs `disabled: true` until scaffolded |
+| AUD-P2-038 | Deleted unreachable `builds/submit/+page.svelte`; kept redirect server |
 
 ## Verification
 

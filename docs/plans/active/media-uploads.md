@@ -1,4 +1,4 @@
-**Status:** Active — Phase 1 not wired
+**Status:** Partial — Phase 1 API + migration wired; apply migration + bucket on Supabase project; Phase 2 review form started
 
 # Media uploads plan
 
@@ -9,8 +9,16 @@ User-generated media for reviews (testimonials), build logs, and admin `/admin/m
 | Area | Status |
 |------|--------|
 | `/admin/media` | Prototype UI — no real upload |
-| `testimonials` table | Text only (`supabase/migrations/20250629140000_testimonials.sql`) |
+| `testimonials` table | Text + `testimonial_media` join (migration `20250630120000_media_assets.sql`) |
+| `/api/media/upload-slot`, `/confirm`, `/[id]` | **Done** — requires migration applied + `ugc` bucket |
+| Review photo upload UI | **Partial** — `ReviewPhotoUpload.svelte` + loyalty form wiring |
 | `.env.example` | S3 + CloudFront vars stubbed for future CDN |
+
+## Setup (blocked until applied)
+
+1. Run `supabase db push` (or apply `20250630120000_media_assets.sql`) on the production project.
+2. Confirm Storage bucket `ugc` exists (migration inserts it) with 5 MB / image mime limits.
+3. Netlify must have all three Supabase env vars set (upload endpoints return 503 without them).
 
 ## Architecture (v1)
 

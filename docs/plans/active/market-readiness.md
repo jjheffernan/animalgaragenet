@@ -1,3 +1,5 @@
+**Status:** Partial — Phase 0 code done (ops pending); Phase 3 UGC/builds wired; Phases 1–2 ops-only
+
 # Market readiness roadmap
 
 **Audit date:** 2026-06-30  
@@ -45,7 +47,7 @@
 |---------|----------|-------|
 | Homepage UGC wall | `+page.server.ts`, `UGCWall.svelte` | Approved `testimonials` when Supabase set; else `mockUGC` |
 | Homepage videos | `+page.server.ts`, `mock/videos.ts` | picsum thumbnails |
-| Build threads (public) | `routes/builds/*` | `mock/builds.ts` |
+| Build threads (public) | `routes/builds/*` | Approved `build_submissions` when Supabase set; else `mock/builds.ts` |
 | Brands / parts nav | `brands/*`, `parts-nav.ts` | `mock/brands.ts`, `mockPartCategories` |
 | Events | `routes/events/*` | `mock/events.ts` |
 | Blog / guides | `server/ghost/posts.ts` | Ghost when `GHOST_*` set; else mock + picsum fallback |
@@ -215,7 +217,7 @@ See **[account-flow-fix.md](./account-flow-fix.md)** for the detailed plan.
 
 - [ ] `/guides` and `/blog` posts from Ghost; mock titles absent
 - [x] Homepage UGC from `testimonials` where `status = 'approved'` (mock fallback when Supabase unset)
-- [ ] `/builds` from approved `build_submissions` (or hybrid until migration)
+- [x] `/builds` from approved `build_submissions` (mock fallback when Supabase unset or empty)
 - [ ] No picsum URLs on homepage, shop, or guides in production
 - [ ] `npm run test:readiness` → `ghost-cms`, `supabase-db`, `cdn-s3` pass
 

@@ -1,5 +1,7 @@
 # Account flow fix — Netlify + Supabase
 
+**Status:** Partial — code hardening done; Netlify/Supabase ops remain
+
 **Priority:** P0 (blocks loyalty, account menu, admin, UGC submissions)  
 **Production symptom:** Header shows “Sign In” on https://<your-preview-host> even after users attempt magic link / OAuth. `/account` and `/loyalty` gate correctly but session never persists.
 
@@ -123,7 +125,7 @@ Roles: `admin`, `editor`, `contributor`, `customer`.
 | Add preview hosts to `isProductionHostname()` | **Done** | `src/lib/server/auth/local-dev.ts` |
 | Refuse mock `ag-session` when request host is non-localhost HTTPS | **Done** | `src/hooks.server.ts` returns `null` session on production hostname |
 | Surface `productionAuthMisconfigured` on sign-in when keys missing | **Done** | `sign-in/+page.svelte` banner |
-| Build OAuth/magic-link redirect from `event.url.origin` with `PUBLIC_SITE_URL` as allowlist fallback | **Open** | `sign-in/+page.server.ts` still uses `config.siteUrl` only |
+| Build OAuth/magic-link redirect from `event.url.origin` with `PUBLIC_SITE_URL` as allowlist fallback | **Done** | `callback-url.ts`; sign-in/sign-up actions |
 
 ---
 

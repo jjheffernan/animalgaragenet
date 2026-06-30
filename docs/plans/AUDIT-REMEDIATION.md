@@ -24,9 +24,9 @@ Canonical tracker for findings from `docs/audits/*`, [STATUS.md](../STATUS.md), 
 | Priority  | Open   | Blocked (ops) | Done   |
 | --------- | ------ | ------------- | ------ |
 | **P0**    | 0      | 5             | 4      |
-| **P1**    | 1      | 1             | 11     |
-| **P2**    | 15     | 0             | 23     |
-| **Total** | **16** | **6**         | **38** |
+| **P1**    | 0      | 1             | 11     |
+| **P2**    | 11     | 0             | 27     |
+| **Total** | **11** | **6**         | **42** |
 
 _Blocked = external dashboard/env; cannot close in-repo._
 
@@ -84,16 +84,16 @@ _Blocked = external dashboard/env; cannot close in-repo._
 | AUD-P2-004 | Parts YMM URL filter vs `fitment` metadata      | saleor-audit              | **open** | saleor     | Category route applies year/make/model query params to Saleor products             | `src/routes/parts/[category]/+page.server.ts`                           |
 | AUD-P2-005 | Product detail related products / linked builds | saleor-audit              | **open** | saleor     | Related slice from Saleor or CMS, not mock helpers only                            | `src/routes/shop/[slug]/+page.server.ts`                                |
 | AUD-P2-006 | Live Saleor integration smoke tests             | saleor-audit              | **open** | saleor     | Optional CI job with env-gated live API contract                                   | `tests/` · `npm run test:readiness`                                     |
-| AUD-P2-007 | Ghost OG / Twitter cards on detail pages        | ghost-audit, STATUS       | **open** | code       | `og:title`, `og:description`, `og:image` from `heroImage`                          | `src/routes/guides/[slug]/` · `src/routes/blog/[slug]/`                 |
-| AUD-P2-008 | Map Ghost `meta_title` / `meta_description`     | ghost-audit               | **open** | code       | SEO fields override title/excerpt when present                                     | `src/lib/server/ghost/mappers.ts`                                       |
+| AUD-P2-007 | Ghost OG / Twitter cards on detail pages        | ghost-audit, STATUS       | **done** | code       | `og:title`, `og:description`, `og:image` from `heroImage`                          | `src/routes/guides/[slug]/` · `src/routes/blog/[slug]/` · BATCH-005 · `a895eb7` |
+| AUD-P2-008 | Map Ghost `meta_title` / `meta_description`     | ghost-audit               | **done** | code       | SEO fields override title/excerpt when present                                     | `src/lib/server/ghost/mappers.ts` · BATCH-005                               |
 | AUD-P2-009 | Ghost `posts.ts` integration tests              | ghost-audit               | **done** | code       | Mocked `fetch` covers list/slug + fallback paths                                   | `src/lib/server/ghost/posts.test.ts`                                    |
 | AUD-P2-010 | E2E smoke: `/guides`, `/blog`                   | ghost-audit, saleor-audit | **done** | code       | Playwright specs pass after `npx playwright install`                               | `e2e/content.spec.ts`                                                 |
 | AUD-P2-011 | Ghost Content API cache headers                 | ghost-audit               | **open** | code       | `setHeaders` / `Cache-Control` on content routes                                   | `src/routes/guides/**` · `src/routes/blog/**`                           |
 | AUD-P2-012 | Site-wide SEO / OG / analytics                  | site-audit, STATUS        | **open** | code       | Per-route meta; analytics hook (Phase 5)                                           | `src/routes/**/+page.svelte`                                            |
 | AUD-P2-013 | `prefers-reduced-motion` support                | site-audit                | **open** | code       | Animations respect user preference per style guide                                 | `src/lib/components/shared/AnimatedReveal.svelte`                       |
 | AUD-P2-014 | `LocaleSelector` in header                      | site-audit                | **done** | code       | Component wired to nav                                                             | `src/lib/components/navigation/LocaleSelector.svelte` · `Header.svelte` |
-| AUD-P2-015 | `/media` UGC wall from Supabase                 | TRIAGE (related)          | **open** | supabase   | Replace `mockUGC` in `media/+page.server.ts` when testimonials configured          | `src/routes/media/+page.server.ts`                                      |
-| AUD-P2-016 | `profiles` table contract test                  | STATUS, readiness-report  | **open** | code       | Payload contract in `tests/contracts/`                                             | DOC manifest backlog                                                    |
+| AUD-P2-015 | `/media` UGC wall from Supabase                 | TRIAGE (related)          | **done** | supabase   | `loadMediaUgcItems()` from featured/approved testimonials when Supabase configured | `src/routes/media/+page.server.ts` · BATCH-004 · `a895eb7`              |
+| AUD-P2-016 | `profiles` table contract test                  | STATUS, readiness-report  | **done** | code       | Payload contract in `tests/contracts/`                                             | `tests/contracts/profiles-signup-trigger.test.ts` · BATCH-006            |
 | AUD-P2-017 | Optional `readiness-ci` GitHub Actions job      | STATUS                    | **open** | code       | Workflow runs `npm run test:readiness` with secrets                                | `.github/workflows/`                                                    |
 | AUD-P2-018 | Discord / Microsoft OAuth verification          | STATUS, polish-plan       | **open** | auth / ops | Providers enabled in Supabase; readiness probes pass                               | [auth/discord.md](../auth/discord.md) · DOC-010                         |
 | AUD-P2-019 | Extend `check-secrets.sh` for bundles           | DOC manifest              | **done** | code       | Script scans client bundles for `SERVICE_ROLE`; blocks `DEV_ADMIN` in deploy config | Commit `ce05185` · `scripts/check-secrets.sh` · DOC-040                 |
@@ -125,7 +125,7 @@ _Blocked = external dashboard/env; cannot close in-repo._
 | ------------------------------------------------------------- | ------------------------------------ | ----------------------------- |
 | [audits/site-audit.md](../audits/site-audit.md)               | P2-012–013 (SEO, a11y)               | All AUD-P2 site rows **done** |
 | [audits/saleor-audit.md](../audits/saleor-audit.md)           | P0-004 (ops), P1-001 (partial), P2-001–006 | All Saleor AUD rows **done**  |
-| [audits/ghost-audit.md](../audits/ghost-audit.md)             | P1-008, P2-007–008, P2-011           | All Ghost AUD rows **done**   |
+| [audits/ghost-audit.md](../audits/ghost-audit.md)             | P1-008, P2-011           | All Ghost AUD rows **done**   |
 | [meta/agents-skills-audit.md](../meta/agents-skills-audit.md) | —                                    | AUD-P2-020–022 **done**       |
 | [audits/component-route-audit.md](../audits/component-route-audit.md) | — | AUD-P2-034–038 **done** |
 

@@ -2,8 +2,8 @@
 
 **Public documentation policy:** [SECURITY-PUBLIC.md](./SECURITY-PUBLIC.md)
 
-**Last updated:** 2026-07-01  
-**Canonical next-step docs:** [plans/AUDIT-REMEDIATION.md](./plans/AUDIT-REMEDIATION.md) · [plans/active/inspiration-polish-tracker.md](./plans/active/inspiration-polish-tracker.md) · [plans/active/batch-2026-07-01.md](./plans/active/batch-2026-07-01.md) · [plans/active/market-readiness.md](./plans/active/market-readiness.md) · [plans/active/account-flow-fix.md](./plans/active/account-flow-fix.md)
+**Last updated:** 2026-07-02  
+**Canonical next-step docs:** [plans/AUDIT-REMEDIATION.md](./plans/AUDIT-REMEDIATION.md) · [plans/active/inspiration-polish-tracker.md](./plans/active/inspiration-polish-tracker.md) · [plans/active/batch-2026-07-02.md](./plans/active/batch-2026-07-02.md) · [plans/active/batch-2026-07-01.md](./plans/active/batch-2026-07-01.md) · [plans/active/market-readiness.md](./plans/active/market-readiness.md) · [plans/active/account-flow-fix.md](./plans/active/account-flow-fix.md)
 
 This file reconciles “next steps” across all `docs/` so nothing is orphaned. Items are **Done**, **Ops** (external dashboard/env), or **Open** (code work).
 
@@ -49,6 +49,8 @@ This file reconciles “next steps” across all `docs/` so nothing is orphaned.
 | Account social connections (IP-027)                        | `/account/connections`, `api/account/connections`, migration `20250630240000` — `ed1465d`                                                                    |
 | Saleor order mirror webhook (IP-012)                       | `api/webhooks/saleor`, `order-webhook.ts` — `7649a9e`                                                                                                          |
 | Component-route audit cleanup (AUD-P2-034–038)             | SupportCTA removed, `/media` nav, admin stubs disabled, builds/submit shell — `847ba4b`                                                                        |
+| July 1 batch (BATCH-002–012)                               | Commerce search, collections, CMS sections, UGC wall, Ghost SEO, profiles contract, admin users, locale, Ghost tests — `4d0d0fd`–`a895eb7`                   |
+| QoL polish pass (IP-BUG-003–004, list canvas)              | Shop filters, sign-out, parts ribbon, mobile footer, `PaginatedListCanvas` — `acd03ad`–`7513c34`                                                               |
 
 ---
 
@@ -75,20 +77,21 @@ These appear as unchecked boxes in plans but **cannot be completed in-repo**:
 
 ## Open — code / CI work
 
-**Audit counts (see [AUDIT-REMEDIATION.md](./plans/AUDIT-REMEDIATION.md)):** 22 open · 6 blocked (ops) · 32 done — P1 checkout (`AUD-P1-001`) is **partial**, not open.
+**Audit counts (see [AUDIT-REMEDIATION.md](./plans/AUDIT-REMEDIATION.md)):** 11 open · 6 blocked (ops) · 42 done — P1 checkout (`AUD-P1-001`) is **partial** (code done; ops gate only), not open.
 
 | Priority | Task                                                            | Tracker                                                                        |
 | -------- | --------------------------------------------------------------- | ------------------------------------------------------------------------------ |
 | P0       | Merge `dev` → `main` when Netlify env configured                | [deployment.md](./style-guide/backend-ops/deployment.md)                       |
 | P1       | Saleor checkout: Payment App enablement + live pay verify       | [batch-2026-07-01.md](./plans/active/batch-2026-07-01.md) BATCH-001 · [saleor-payments.md](./commerce/saleor-payments.md) |
-| P2       | July 1 code batch (featured sections, UGC wall, Ghost SEO, …)   | [batch-2026-07-01.md](./plans/active/batch-2026-07-01.md)                      |
-| P2       | Ghost live CMS (fallback policy shipped)                          | IP-015 · [ghost-audit.md](./audits/ghost-audit.md)                             |
+| P2       | July 2 code batch (YMM filter, related products, SEO, CI, …)    | [batch-2026-07-02.md](./plans/active/batch-2026-07-02.md)                      |
+| P2       | Ghost live CMS (fallback policy + detail SEO shipped)           | IP-015 · [ghost-audit.md](./audits/ghost-audit.md)                             |
 | P2       | Remaining homepage mock slices (non-watch)                        | market-readiness Phase 3                                                       |
-| P2       | `profiles` table contract test                                  | BATCH-006 · readiness-report                                                   |
-| P2       | `readiness-ci` optional Actions job                             | readiness-report                                                               |
+| P2       | `readiness-ci` optional Actions job                             | BATCH-018 · readiness-report                                                   |
 | P2       | OAuth Discord/Azure verification                                | [inspiration-polish-tracker.md](./plans/active/inspiration-polish-tracker.md) |
-| P2       | SEO/OG, analytics, performance audit                            | Phase 5 (see [README.md](./README.md))                                         |
+| P2       | Site-wide SEO/OG (non-Ghost routes), analytics                  | BATCH-016 · Phase 5 (see [README.md](./README.md))                             |
 | P2       | Newsletter / user preferences tables                            | [supabase.md](./integrations/supabase.md) roadmap                              |
+| P2       | Faceted parts search (IP-028)                                   | BATCH-019                                                                      |
+| P2       | CDN CloudFront invalidation (IP-013 remainder)                  | BATCH-020                                                                      |
 
 ---
 

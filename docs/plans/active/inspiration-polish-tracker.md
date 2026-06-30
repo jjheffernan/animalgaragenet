@@ -52,23 +52,46 @@ Markers: `@inspiration-scaffold` (Supabase/community/CMS) · `@saleor-migration`
 
 ---
 
-## Next steps (batch 2026-07-01)
+## Next steps (batch 2026-07-02)
 
-Canonical implementer table: [batch-2026-07-01.md](./batch-2026-07-01.md). Remaining code work from June 30 night batch (`057242a`–`7649a9e`) plus open AUD-P1/P2 rows.
+Canonical implementer table: [batch-2026-07-02.md](./batch-2026-07-02.md). July 1 code batch complete; remaining in-repo work is P2 polish, Saleor depth, and CI.
+
+| ID     | Source              | Task                                                                 | Owner        | Acceptance criteria                                                                 | Prod setup                                                                 |
+| ------ | ------------------- | -------------------------------------------------------------------- | ------------ | ----------------------------------------------------------------------------------- | -------------------------------------------------------------------------- |
+| AUD-P2-004 | BATCH-013         | Parts YMM URL filter vs Saleor fitment                               | code         | Category route applies `?year=&make=&model=` to Saleor products when env set          | `PUBLIC_SALEOR_API_URL` on Netlify                                         |
+| AUD-P2-005 | BATCH-014         | Product detail related products / linked builds                      | code         | Related slice from Saleor or CMS, not mock helpers only                             | Saleor catalog populated                                                   |
+| AUD-P2-011 | BATCH-015         | Ghost Content API cache headers                                      | code         | `setHeaders` / `Cache-Control` on guides + blog routes                              | —                                                                          |
+| AUD-P2-012 | BATCH-016         | Site-wide SEO / OG baseline (non-Ghost routes)                       | code         | Per-route meta on shop, parts, builds, media                                        | —                                                                          |
+| AUD-P2-013 | BATCH-017         | `prefers-reduced-motion` support                                     | code         | `AnimatedReveal` respects user preference                                         | —                                                                          |
+| AUD-P2-017 | BATCH-018         | Optional `readiness-ci` GitHub Actions job                           | code         | Workflow runs `npm run test:readiness` with secrets                                 | Repo Actions secrets                                                       |
+| IP-028 | BATCH-019           | Faceted parts search                                                 | code         | Saleor attribute filters + URL-synced facet state                                   | Saleor attributes configured                                               |
+| IP-013 | BATCH-020           | CDN CloudFront invalidation (Phase 2 remainder)                      | code / ops   | `invalidateCdnPath` after admin upload when `AWS_*` set                             | `PUBLIC_CDN_BASE_URL`, `S3_*`, `AWS_*` per [§ Prod CDN](#prod-cdn)        |
+
+### Ops-only (not in-repo)
 
 | ID     | Source              | Task                                                                 | Owner        | Acceptance criteria                                                                 | Prod setup                                                                 |
 | ------ | ------------------- | -------------------------------------------------------------------- | ------------ | ----------------------------------------------------------------------------------- | -------------------------------------------------------------------------- |
 | IP-003 | AUD-P1-001 / BATCH-001 | Payment App channel enablement + live pay verify                  | saleor / ops | `paymentGateways.length > 0`; test card → order in Saleor Dashboard                 | Stripe Payment App on channel; `PUBLIC_SALEOR_API_URL` + `SALEOR_CHANNEL`  |
-| IP-022 | BATCH-003           | Featured sections beyond hero                                        | code         | Admin edits UGC/campaign blocks; homepage loaders read all section types            | Apply `20250630150000_content_metadata.sql` on Supabase                      |
-| IP-013 | BATCH-011           | CDN presigned upload (Phase 2)                                       | code / ops   | Presigned PUT wired in `cdn.ts`; admin media upload uses S3 when env set              | `PUBLIC_CDN_BASE_URL`, `S3_BUCKET`, `AWS_*` per [§ Prod CDN](#prod-cdn)   |
-| IP-025 | BATCH-007           | Supabase-backed admin user CRUD                                      | code         | `/admin/users` lists auth users via service role; mock only when Supabase unset       | `SUPABASE_SERVICE_ROLE_KEY`; `promote-admin.ts` for roles                  |
 | IP-015 | AUD-P1-008          | Live Ghost CMS                                                       | code / ops   | `/blog` and `/guides` load real posts when env set                                  | `GHOST_URL`, `GHOST_CONTENT_API_KEY`; tags `guide` / `blog`                |
 | IP-005 | batch `6837217`     | Verify live collection filter on staging                             | saleor / ops | `/shop?collection={slug}` returns Saleor products when env set                      | `PUBLIC_SALEOR_API_URL` on Netlify                                         |
 | IP-006 | batch `67a150c`     | Apply homepage CMS migration                                         | supabase / ops | `featured_sections` table exists; admin save persists                              | Apply `20250630150000_content_metadata.sql`                                |
 | IP-012 | `7649a9e`           | Order mirror ops follow-up                                           | ops          | Webhook registered in Saleor; snapshots persist across deploys                      | Apply `20250630170000_order_snapshots.sql`; `SALEOR_WEBHOOK_SECRET`        |
 | IP-027 | `ed1465d`           | Social connections migration apply                                   | supabase / ops | `social_connections` table exists on project                                        | Apply `20250630240000_social_connections.sql`                              |
 | IP-007 | batch `c0f1b80`     | YouTube cron on production                                           | ops          | Scheduled `POST /api/cron/youtube-sync`                                             | `YOUTUBE_API_KEY`, `YOUTUBE_SYNC_SECRET`                                   |
-| AUD-P2-035 | BATCH-008         | `/military` discoverability                                          | code         | Footer or loyalty link to `/military`                                               | —                                                                          |
+
+---
+
+## Next steps (batch 2026-07-01) — archived
+
+Canonical implementer table: [batch-2026-07-01.md](./batch-2026-07-01.md). All code rows shipped 2026-07-01; BATCH-001 ops gate remains.
+
+| ID     | Source              | Task                                                                 | Owner        | Status                                                                              |
+| ------ | ------------------- | -------------------------------------------------------------------- | ------------ | ----------------------------------------------------------------------------------- |
+| IP-003 | AUD-P1-001 / BATCH-001 | Payment App channel enablement + live pay verify                  | saleor / ops | **ops** — code path done                                                            |
+| IP-022 | BATCH-003           | Featured sections beyond hero                                        | code         | **done** — `a895eb7`                                                                |
+| IP-013 | BATCH-011           | CDN presigned upload (Phase 2)                                       | code         | **done** — presigned PUT; CloudFront invalidation → BATCH-020                       |
+| IP-025 | BATCH-007           | Supabase-backed admin user CRUD                                      | code         | **done** — `9d4a2f6`                                                                |
+| AUD-P2-035 | BATCH-008         | `/military` discoverability                                          | code         | **done** — `9d4a2f6`                                                                |
 
 ---
 
@@ -91,7 +114,9 @@ Explicit follow-ups from the June 30 implementation batch (`67a150c`–`6837217`
 | IP-BUG-001 | polish / UI      | Navbar spacing when logged in + notifications                        | code         | **done** — desktop grid keeps nav centered; icon buttons fixed `size-9`; badge overlays bell/cart | `src/lib/components/layout/Header.svelte` · `notificationCount` in layout load |
 | IP-BUG-002 | polish / UI      | Header overlap + mobile account label + newsletter validation bleed  | code         | **done** — nav truncates before bell; Account text `lg+` only; footer form `novalidate` + JS validation | `Header.svelte` · `NewsletterSignup.svelte` · `Footer.svelte` · `e2e/navigation.spec.ts` |
 | IP-BUG-003 | polish / UI      | Sign-out dropdown + shop filter ribbons                              | code         | **done** — AccountMenu POST submit no longer unmounts form; collections dropdown in single categories ribbon | `AccountMenu.svelte` · `shop/+page.svelte` · `tests/integration/auth-actions.test.ts` |
-| IP-BUG-004 | polish / UI      | Parts ribbon scroll + desktop Community dropdown                       | code         | **done** — dropdown panels outside scroll track; nav `overflow-visible`; click-outside + hover bridge | `PartsShoppingRibbon.svelte` · `Header.svelte` · `catalog-ribbon.ts` |
+| IP-BUG-004 | polish / UI      | Parts ribbon scroll + desktop Community dropdown                       | code         | **done** — dropdown panels outside scroll track; nav `overflow-visible`; click-outside + hover bridge | `PartsShoppingRibbon.svelte` · `Header.svelte` · `catalog-ribbon.ts` · `b351b83`, `1fc45cb` |
+| —      | polish / UI      | Mobile footer parity with desktop helpful links                        | code         | **done** — accordion removed; 2-col link grid always visible                        | `Footer.svelte` · `60e9f52`                                                |
+| —      | polish / UI      | Paginated list canvas (dual filter bars)                               | code         | **done** — `PaginatedListCanvas` + top/bottom `ListControls` on catalog list routes | `PaginatedListCanvas.svelte` · `ListControls.svelte` · `7513c34`           |
 
 ---
 
@@ -192,4 +217,4 @@ npm run test:unit
 
 ---
 
-_Last updated: July 1, 2026 (batch 2026-07-01 defined)_
+_Last updated: July 2, 2026 (batch 2026-07-01 complete; batch 2026-07-02 defined)_

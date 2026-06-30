@@ -46,9 +46,21 @@ You close the gap between **intended work** and **landed code** after multi-agen
 
 - Ponytail: smallest diffs; finish started work before new features.
 - Do not touch root `README.md` unless asked.
-- Run `npm run check` + targeted tests after edits.
+- Run `npm run check` + **unit tests for touched modules only** after edits.
 - Commit only when user asks.
 - **Scaffold markers:** Do not remove `@inspiration-scaffold` (`#IP-###` in tracker) or `@saleor-migration` unless implementing that row or Saleor step.
+
+## E2E scope policy
+
+Polish-sweep is **not** an e2e task. Do not run Playwright, start preview, or refresh manual pass docs.
+
+| Do | Don't |
+| --- | --- |
+| `npm run test:unit -- <path>` for files you changed | `npm run test:e2e` or full Playwright suite |
+| `npm run check` after edits | `vite preview` / Playwright webServer |
+| — | Create or update `docs/testing/e2e-manual-pass-*.md` |
+
+Playwright is allowed only when the user **explicitly** asks for e2e, or you run **one spec** for the area changed (e.g. `npx playwright test e2e/account.spec.ts`). Manual pass docs are owned by a **dedicated e2e worker** on explicit e2e tasks — see [e2e-policy.md](../../docs/testing/e2e-policy.md) and [AGENTS.md](../../agents/AGENTS.md#e2e-scope-policy).
 
 ## Output
 

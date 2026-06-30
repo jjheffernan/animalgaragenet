@@ -113,6 +113,34 @@ npm run test:unit
 npm run test:e2e
 ```
 
+## E2E scope policy
+
+Subagents must not run back-to-back full Playwright or manual e2e audits. See [docs/testing/e2e-policy.md](../docs/testing/e2e-policy.md).
+
+### Default (most tasks)
+
+- **Unit tests for touched modules only** — e.g. `npm run test:unit -- src/lib/foo/bar.test.ts`
+- Run `npm run check` after substantive edits
+- Do **not** start `vite preview`, Playwright, or the preview webServer unless the task requires e2e
+
+### Playwright (when allowed)
+
+- Only when the user/task **explicitly** asks for **e2e** or end-to-end verification
+- **Or** run **one spec** for the area you changed — e.g. `npx playwright test e2e/account.spec.ts`
+- Do **not** run `npm run test:e2e` (full suite) unless explicitly requested
+
+### Never (unless dedicated e2e task)
+
+- Full manual audit passes or updating `docs/testing/e2e-manual-pass-*.md`
+- Running all e2e specs in sequence
+- Preview server for non-e2e work
+- Repeated full e2e passes in the same session or across subagents
+
+### Manual pass ownership
+
+- **One dedicated e2e worker** (explicit e2e / market-readiness task) owns `docs/testing/e2e-manual-pass-*.md`
+- Other agents must not create or refresh manual pass docs during polish or feature work
+
 ## Do not
 
 - Commit `.env`, `.env.local`, Supabase local state (`supabase/.temp`, `.branches`), DB dumps, or credential files — see `.gitignore` and `scripts/check-secrets.sh`

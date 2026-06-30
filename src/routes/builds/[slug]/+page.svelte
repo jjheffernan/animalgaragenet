@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
-	import ProductGrid from '$lib/components/catalog/ProductGrid.svelte';
+	import MiniProductRow from '$lib/components/catalog/MiniProductRow.svelte';
 	import AnimatedReveal from '$lib/components/shared/AnimatedReveal.svelte';
 
 	let { data } = $props();
@@ -71,8 +71,7 @@
 {#if data.products.length > 0}
 	<section class="border-t border-zinc-800 bg-zinc-900/30 py-16">
 		<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-			<h2 class="mb-8 font-display text-2xl font-bold uppercase text-white">Shop This Build</h2>
-			<ProductGrid products={data.products} />
+			<MiniProductRow products={data.products} title="Shop This Build" limit={4} />
 		</div>
 	</section>
 {/if}

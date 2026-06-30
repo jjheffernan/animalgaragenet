@@ -1,6 +1,7 @@
 import {
 	SHOP_CATEGORIES,
 	filterProductsByShopCategory,
+	getShopCategoryGroup,
 	type ShopCategory
 } from '$lib/data/catalog-helpers';
 import { config } from '$lib/config/env';
@@ -15,6 +16,13 @@ export interface ShopFilterOption {
 	id: string;
 	slug: string;
 	label: string;
+	/** Parent group label for ribbon grouping (mock taxonomy or Saleor parent category). */
+	group?: string;
+}
+
+export interface ShopFilterGroup {
+	label: string;
+	options: ShopFilterOption[];
 }
 
 export interface ShopFilterOptions {
@@ -32,18 +40,35 @@ function mockShopFilterOptions(): ShopFilterOptions {
 	return {
 		categories: SHOP_CATEGORIES.map((cat) => {
 			const slug = cat === 'ALL' ? 'all' : cat.toLowerCase().replace(/\s+/g, '-');
-			return { id: slug, slug, label: cat };
+			const group = getShopCategoryGroup(cat);
+			return { id: slug, slug, label: cat, ...(group ? { group } : {}) };
 		}),
 		source: 'mock'
 	};
 }
 
-function mapSaleorCategoryToFilter(node: {
-	id: string;
-	name: string;
-	slug: string;
-}): ShopFilterOption {
-	return { id: node.id, slug: node.slug, label: node.name };
+function mapSaleorCategoryToFilter(
+	node: { id: string; name: string; slug: string },
+	group?: string
+): ShopFilterOption {
+	return { id: node.id, slug: node.slug, label: node.name, ...(group ? { group } : {}) };
+}
+
+function flattenSaleorCategoryTree(nodes: SaleorCategoryTreeNode[]): ShopFilterOption[] {
+	const options: ShopFilterOption[] = [];
+
+	for (const node of nodes) {
+		const children = node.children?.edges ?? [];
+		if (children.length > 0) {
+			for (const { node: child } of children) {
+				options.push(mapSaleorCategoryToFilter(child, node.name));
+			}
+		} else {
+			options.push(mapSaleorCategoryToFilter(node));
+		}
+	}
+
+	return options;
 }
 
 async function fetchSaleorShopFilterOptions(_locale: string): Promise<ShopFilterOption[]> {
@@ -55,10 +80,37 @@ async function fetchSaleorShopFilterOptions(_locale: string): Promise<ShopFilter
 		throw new Error(result.errors?.[0]?.message ?? 'Saleor categories query failed');
 	}
 
-	const categories = result.data.categories.edges.map(({ node }) =>
-		mapSaleorCategoryToFilter(node)
-	);
+	const nodes = result.data.categories.edges.map(({ node }) => node);
+	const categories = flattenSaleorCategoryTree(nodes);
 	return [ALL_SHOP_FILTER, ...categories];
+}
+
+/** Group flat filter options by `group` for shop ribbon / dropdown UI. */
+export function groupShopFilterOptions(categories: ShopFilterOption[]): ShopFilterGroup[] {
+	const ungrouped: ShopFilterOption[] = [];
+	const byGroup = new Map<string, ShopFilterOption[]>();
+	const groupOrder: string[] = [];
+
+	for (const option of categories) {
+		if (!option.group) {
+			ungrouped.push(option);
+			continue;
+		}
+		if (!byGroup.has(option.group)) {
+			byGroup.set(option.group, []);
+			groupOrder.push(option.group);
+		}
+		byGroup.get(option.group)!.push(option);
+	}
+
+	const groups: ShopFilterGroup[] = [];
+	if (ungrouped.length > 0) {
+		groups.push({ label: '', options: ungrouped });
+	}
+	for (const label of groupOrder) {
+		groups.push({ label, options: byGroup.get(label)! });
+	}
+	return groups;
 }
 
 /**

@@ -1,10 +1,11 @@
 import { describe, expect, it, vi, beforeEach, afterEach } from 'vitest';
-import { SHOP_CATEGORIES } from '$lib/data/catalog-helpers';
+import { SHOP_CATEGORIES, getShopCategoryGroup } from '$lib/data/catalog-helpers';
 import {
 	ALL_SHOP_FILTER,
 	filterProductsByShopSlug,
 	filterSlugToShopCategory,
 	getShopFilterOptions,
+	groupShopFilterOptions,
 	resolveShopFilter,
 	type ShopFilterOption
 } from '$lib/server/catalog/shop-filters';
@@ -31,7 +32,12 @@ describe('getShopFilterOptions', () => {
 		expect(options.source).toBe('mock');
 		expect(options.categories).toHaveLength(SHOP_CATEGORIES.length);
 		expect(options.categories[0]).toEqual({ id: 'all', slug: 'all', label: 'ALL' });
-		expect(options.categories[1]).toEqual({ id: 'tees', slug: 'tees', label: 'TEES' });
+		expect(options.categories[1]).toEqual({
+			id: 'tees',
+			slug: 'tees',
+			label: 'TEES',
+			group: 'Apparel'
+		});
 		expect(saleorFetch).not.toHaveBeenCalled();
 	});
 
@@ -41,8 +47,22 @@ describe('getShopFilterOptions', () => {
 			data: {
 				categories: {
 					edges: [
-						{ node: { id: 'cat-1', name: 'Apparel', slug: 'apparel', children: null } },
-						{ node: { id: 'cat-2', name: 'Headwear', slug: 'headwear', children: null } }
+						{
+							node: {
+								id: 'cat-1',
+								name: 'Apparel',
+								slug: 'apparel',
+								children: {
+									edges: [
+										{ node: { id: 'cat-1a', name: 'Tees', slug: 'tees' } },
+										{ node: { id: 'cat-1b', name: 'Hoodies', slug: 'hoodies' } }
+									]
+								}
+							}
+						},
+						{
+							node: { id: 'cat-2', name: 'Headwear', slug: 'headwear', children: null }
+						}
 					]
 				}
 			}
@@ -53,7 +73,8 @@ describe('getShopFilterOptions', () => {
 		expect(options.source).toBe('saleor');
 		expect(options.categories).toEqual([
 			ALL_SHOP_FILTER,
-			{ id: 'cat-1', slug: 'apparel', label: 'Apparel' },
+			{ id: 'cat-1a', slug: 'tees', label: 'Tees', group: 'Apparel' },
+			{ id: 'cat-1b', slug: 'hoodies', label: 'Hoodies', group: 'Apparel' },
 			{ id: 'cat-2', slug: 'headwear', label: 'Headwear' }
 		]);
 		expect(saleorFetch).toHaveBeenCalledOnce();
@@ -133,5 +154,58 @@ describe('filterProductsByShopSlug', () => {
 		const filtered = filterProductsByShopSlug(products, 'staff-pick');
 		expect(filtered).toHaveLength(1);
 		expect(filtered[0].slug).toBe('ag-tee');
+	});
+});
+
+describe('getShopCategoryGroup', () => {
+	it('maps mock labels to parent groups', () => {
+		expect(getShopCategoryGroup('ALL')).toBeUndefined();
+		expect(getShopCategoryGroup('TEES')).toBe('Apparel');
+		expect(getShopCategoryGroup('tees')).toBe('Apparel');
+		expect(getShopCategoryGroup('ACCESSORIES')).toBe('Lifestyle');
+		expect(getShopCategoryGroup('GIFT CARDS')).toBe('Gift Cards');
+	});
+});
+
+describe('groupShopFilterOptions', () => {
+	it('groups options by parent label with ALL ungrouped first', () => {
+		const options: ShopFilterOption[] = [
+			ALL_SHOP_FILTER,
+			{ id: 'tees', slug: 'tees', label: 'TEES', group: 'Apparel' },
+			{ id: 'hoodies', slug: 'hoodies', label: 'HOODIES', group: 'Apparel' },
+			{ id: 'home', slug: 'home', label: 'HOME', group: 'Lifestyle' },
+			{ id: 'gift-cards', slug: 'gift-cards', label: 'GIFT CARDS', group: 'Gift Cards' }
+		];
+
+		expect(groupShopFilterOptions(options)).toEqual([
+			{ label: '', options: [ALL_SHOP_FILTER] },
+			{
+				label: 'Apparel',
+				options: [
+					{ id: 'tees', slug: 'tees', label: 'TEES', group: 'Apparel' },
+					{ id: 'hoodies', slug: 'hoodies', label: 'HOODIES', group: 'Apparel' }
+				]
+			},
+			{
+				label: 'Lifestyle',
+				options: [{ id: 'home', slug: 'home', label: 'HOME', group: 'Lifestyle' }]
+			},
+			{
+				label: 'Gift Cards',
+				options: [
+					{ id: 'gift-cards', slug: 'gift-cards', label: 'GIFT CARDS', group: 'Gift Cards' }
+				]
+			}
+		]);
+	});
+
+	it('preserves insertion order for new groups', () => {
+		const options: ShopFilterOption[] = [
+			{ id: 'a', slug: 'a', label: 'A', group: 'Beta' },
+			{ id: 'b', slug: 'b', label: 'B', group: 'Alpha' }
+		];
+
+		const groups = groupShopFilterOptions(options);
+		expect(groups.map((g) => g.label)).toEqual(['Beta', 'Alpha']);
 	});
 });

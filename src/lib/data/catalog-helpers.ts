@@ -62,6 +62,25 @@ export const SHOP_CATEGORIES = [
 
 export type ShopCategory = (typeof SHOP_CATEGORIES)[number];
 
+/** Mock shop filter hierarchy — parent group labels for ribbon grouping. */
+export const SHOP_CATEGORY_GROUPS: Record<Exclude<ShopCategory, 'ALL'>, string> = {
+	TEES: 'Apparel',
+	SWEATSHIRTS: 'Apparel',
+	JACKETS: 'Apparel',
+	HEADWEAR: 'Apparel',
+	ACCESSORIES: 'Lifestyle',
+	HOME: 'Lifestyle',
+	AUTO: 'Lifestyle',
+	'GIFT CARDS': 'Gift Cards'
+};
+
+/** Resolve mock taxonomy group for a category label (e.g. `TEES` → `Apparel`). */
+export function getShopCategoryGroup(label: string): string | undefined {
+	if (label === 'ALL') return undefined;
+	const normalized = label.toUpperCase() as Exclude<ShopCategory, 'ALL'>;
+	return SHOP_CATEGORY_GROUPS[normalized];
+}
+
 export function filterProductsByShopCategory(
 	products: Product[],
 	category: ShopCategory,

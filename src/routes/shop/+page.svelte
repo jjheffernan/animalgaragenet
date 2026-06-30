@@ -8,14 +8,13 @@
 	import PaginatedListCanvas from '$lib/components/catalog/PaginatedListCanvas.svelte';
 	import CatalogRibbonShell from '$lib/components/catalog/CatalogRibbonShell.svelte';
 	import CategoryPill from '$lib/components/catalog/CategoryPill.svelte';
-	import type { ShopFilterOption } from '$lib/server/catalog/shop-filters';
-	import { catalogRibbonNavClass } from '$lib/ui/catalog-ribbon';
+	import { groupShopFilterOptions, type ShopFilterOption } from '$lib/server/catalog/shop-filters';
+	import { catalogRibbonNavClass, ribbonSectionLabelClass } from '$lib/ui/catalog-ribbon';
 	import { locale } from '$lib/stores/locale.svelte';
-	import { resolvePath } from '$lib/utils/paths';
 
 	let { data } = $props();
 
-	function buildShopUrl(updates: { category?: string; collection?: string | null }) {
+	function getShopPath(updates: { category?: string; collection?: string | null }) {
 		const params = new URLSearchParams();
 		const categorySlug =
 			updates.category !== undefined
@@ -30,18 +29,18 @@
 		if (collectionSlug) params.set('collection', collectionSlug);
 
 		const query = params.toString();
-		return resolve(query ? `/shop?${query}` : '/shop');
+		return query ? `/shop?${query}` : '/shop';
 	}
 
 	function categoryHref(cat: ShopFilterOption) {
-		return buildShopUrl({ category: cat.slug === 'all' ? '' : cat.slug });
+		return resolve(getShopPath({ category: cat.slug === 'all' ? '' : cat.slug }));
 	}
 
 	const collectionValue = $derived(data.collection?.slug ?? '');
 
 	function onCollectionChange(event: Event) {
 		const value = (event.currentTarget as HTMLSelectElement).value;
-		goto(resolvePath(buildShopUrl({ collection: value || null })), {
+		goto(resolve(getShopPath({ collection: value || null })), {
 			keepFocus: true,
 			noScroll: true
 		});
@@ -54,6 +53,8 @@
 				? 'All Products'
 				: data.category.label
 	);
+
+	const categoryGroups = $derived(groupShopFilterOptions(data.categories));
 </script>
 
 <svelte:head>
@@ -79,12 +80,25 @@
 <div>
 	<CatalogRibbonShell ariaLabel="Shop categories" syncHeightVar>
 		<nav class="{catalogRibbonNavClass} items-center" aria-label="Shop categories">
-			{#each data.categories as cat (cat.slug)}
-				<CategoryPill
-					href={categoryHref(cat)}
-					label={cat.label}
-					active={data.category.slug === cat.slug}
-				/>
+			{#each categoryGroups as group, groupIndex (group.label || 'browse')}
+				{#if groupIndex > 0}
+					<span
+						class="mx-1 hidden h-6 shrink-0 self-center border-l border-zinc-800 sm:block"
+						aria-hidden="true"
+					></span>
+				{/if}
+				{#if group.label}
+					<span class="{ribbonSectionLabelClass} hidden shrink-0 self-center sm:inline"
+						>{group.label}</span
+					>
+				{/if}
+				{#each group.options as cat (cat.slug)}
+					<CategoryPill
+						href={categoryHref(cat)}
+						label={cat.label}
+						active={data.category.slug === cat.slug}
+					/>
+				{/each}
 			{/each}
 			{#if data.collections.length > 0}
 				<div class="ms-2 shrink-0 border-l border-zinc-800 pl-2">

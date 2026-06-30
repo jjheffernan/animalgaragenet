@@ -3,7 +3,7 @@
 	import { resolve } from '$app/paths';
 	import AnimatedReveal from '$lib/components/shared/AnimatedReveal.svelte';
 	import CartActions from '$lib/components/cart/CartActions.svelte';
-	import ProductGrid from '$lib/components/catalog/ProductGrid.svelte';
+	import MiniProductRow from '$lib/components/catalog/MiniProductRow.svelte';
 	import { cart } from '$lib/stores/cart.svelte';
 	import { locale } from '$lib/stores/locale.svelte';
 
@@ -180,8 +180,7 @@
 {#if !useSaleorDisplay && upsells.length > 0}
 	<section class="border-t border-zinc-800 bg-zinc-900/30 py-16">
 		<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-			<h2 class="mb-8 font-display text-xl font-bold uppercase text-white">You Might Also Like</h2>
-			<ProductGrid products={upsells} />
+			<MiniProductRow products={upsells} title="You Might Also Like" limit={4} />
 		</div>
 	</section>
 {/if}

@@ -4,7 +4,7 @@
 	import { cart } from '$lib/stores/cart.svelte';
 	import LocaleSelector from '$lib/components/navigation/LocaleSelector.svelte';
 	import AnimatedReveal from '$lib/components/shared/AnimatedReveal.svelte';
-	import ProductGrid from '$lib/components/catalog/ProductGrid.svelte';
+	import MiniProductRow from '$lib/components/catalog/MiniProductRow.svelte';
 	import PriceDisplay from '$lib/components/catalog/PriceDisplay.svelte';
 	import CatalogKindBadge from '$lib/components/catalog/CatalogKindBadge.svelte';
 	import type { Fitment } from '$lib/types/saleor';
@@ -231,6 +231,5 @@
 </section>
 
 <section class="mx-auto max-w-7xl px-4 pb-16 sm:px-6 lg:px-8">
-	<h2 class="mb-6 font-display text-xl font-bold uppercase text-white">Related Parts</h2>
-	<ProductGrid products={data.related} />
+	<MiniProductRow products={data.related} title="Related Parts" limit={4} />
 </section>

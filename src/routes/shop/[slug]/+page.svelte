@@ -5,7 +5,7 @@
 	import { locale } from '$lib/stores/locale.svelte';
 	import LocaleSelector from '$lib/components/navigation/LocaleSelector.svelte';
 	import AnimatedReveal from '$lib/components/shared/AnimatedReveal.svelte';
-	import ProductGrid from '$lib/components/catalog/ProductGrid.svelte';
+	import MiniProductRow from '$lib/components/catalog/MiniProductRow.svelte';
 	import VariantSelector from '$lib/components/catalog/VariantSelector.svelte';
 	import NotifyMeButton from '$lib/components/catalog/NotifyMeButton.svelte';
 	import TrustBlocks from '$lib/components/marketing/TrustBlocks.svelte';
@@ -194,12 +194,10 @@
 
 {#if recentProducts.length > 0}
 	<section class="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-		<h2 class="mb-6 font-display text-xl font-bold uppercase text-white">Recently Viewed</h2>
-		<ProductGrid products={recentProducts} />
+		<MiniProductRow products={recentProducts} title="Recently Viewed" limit={4} />
 	</section>
 {/if}
 
 <section class="mx-auto max-w-7xl px-4 pb-16 sm:px-6 lg:px-8">
-	<h2 class="mb-6 font-display text-xl font-bold uppercase text-white">You May Also Like</h2>
-	<ProductGrid products={data.related} />
+	<MiniProductRow products={data.related} title="You May Also Like" limit={4} />
 </section>

@@ -35,7 +35,12 @@ describe('shop/+page.server load', () => {
 	it('filters products when a valid category query is provided', async () => {
 		const data = await loadShop({ category: 'GIFT CARDS' });
 
-		expect(data.category).toEqual({ id: 'gift-cards', slug: 'gift-cards', label: 'GIFT CARDS' });
+		expect(data.category).toEqual({
+			id: 'gift-cards',
+			slug: 'gift-cards',
+			label: 'GIFT CARDS',
+			group: 'Gift Cards'
+		});
 		expect(data.products.length).toBeGreaterThan(0);
 		expect(data.products.every((p: Product) => p.productType === 'GIFT_CARD')).toBe(true);
 	});

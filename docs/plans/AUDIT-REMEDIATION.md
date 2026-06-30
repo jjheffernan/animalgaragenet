@@ -14,7 +14,9 @@ Canonical tracker for findings from `docs/audits/*`, [STATUS.md](../STATUS.md), 
 | [STATUS.md](../STATUS.md)                                        | High-level open-work summary             |
 | [archive/polish-plan.md](../archive/polish-plan.md)              | Complete — session polish (June 2026)      |
 | [plans/active/inspiration-polish-tracker.md](./active/inspiration-polish-tracker.md) | Canonical inspiration + polish open work |
-| [plans/active/ponytail-audit-tracker.md](./active/ponytail-audit-tracker.md) | Server LOC/dedupe — P1/P2 done; P3 deferred |
+| [plans/active/ponytail-audit-tracker.md](./active/ponytail-audit-tracker.md) | Server LOC/dedupe — P1/P2 done; P3 partial (PT-P3-002/003 done) |
+| [plans/active/next-steps-tracker.md](./active/next-steps-tracker.md) | Consolidated implementer queue — unblocked vs ops-blocked |
+| [plans/active/next-steps-tracker.md](./active/next-steps-tracker.md) | Consolidated implementer queue (unblocked vs ops-blocked) |
 | [plans/active/market-readiness.md](./active/market-readiness.md) | Phased launch roadmap                    |
 | [archive/doc-implementation-manifest.md](../archive/doc-implementation-manifest.md) | Superseded June 2026 `DOC-###` batch |
 

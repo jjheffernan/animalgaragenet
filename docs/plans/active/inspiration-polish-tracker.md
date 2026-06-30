@@ -64,7 +64,7 @@ July 1–3 implementer tables are **complete** and archived:
 | 2026-07-02 | [batch-2026-07-02.md](../../archive/batch-2026-07-02.md) | BATCH-013–020 shipped (`b4614c5`–`905f481`) |
 | 2026-07-03 | [batch-2026-07-03-followups.md](../../archive/batch-2026-07-03-followups.md) | BATCH-021 + ops apply checklist (squashed migrations) |
 
-**Current open work:** [AUDIT-REMEDIATION.md](../AUDIT-REMEDIATION.md) · ops rows below.
+**Current open work:** [next-steps-tracker.md](./next-steps-tracker.md) · [AUDIT-REMEDIATION.md](../AUDIT-REMEDIATION.md) · ops rows below.
 
 ---
 

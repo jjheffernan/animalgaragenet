@@ -11,6 +11,7 @@
 
 | Plan                                                | Status                   | Notes                                                |
 | --------------------------------------------------- | ------------------------ | ---------------------------------------------------- |
+| [next-steps-tracker.md](./active/next-steps-tracker.md) | Active — consolidated implementer queue (unblocked vs ops) |
 | [inspiration-polish-tracker.md](./active/inspiration-polish-tracker.md) | Active — canonical inspiration + polish + AUDIT tracker |
 | [ponytail-audit-tracker.md](./active/ponytail-audit-tracker.md) | Active — server LOC/dedupe audit (P3 open) |
 | [account-flow-fix.md](./active/account-flow-fix.md) | Active — Ops             | Netlify + Supabase env; code guards Done             |

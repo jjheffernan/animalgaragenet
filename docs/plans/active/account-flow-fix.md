@@ -120,7 +120,7 @@ Roles: `admin`, `editor`, `contributor`, `customer`.
 
 | Change | Why |
 |--------|-----|
-| ~~Add `<your-preview-host>` and `*.netlify.app` to `isProductionHostname()`~~ **Done** | `src/lib/server/auth/local-dev.ts` |
+| ~~Add preview hosts to `isProductionHostname()`~~ **Done** | `src/lib/server/auth/local-dev.ts` |
 | Refuse mock `ag-session` when request host is non-localhost HTTPS | Fail loud instead of fake auth on staging |
 | Build OAuth/magic-link redirect from `event.url.origin` with `PUBLIC_SITE_URL` as allowlist fallback | Safer multi-domain staging |
 | Surface `supabaseReady` on sign-in page when keys missing on production | Ops visibility |

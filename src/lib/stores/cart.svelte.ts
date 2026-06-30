@@ -1,4 +1,4 @@
-	import type { CheckoutDisplay, MockPromoState } from '$lib/types/checkout';
+import type { CheckoutDisplay, MockPromoState } from '$lib/types/checkout';
 import type { CartItem } from '$lib/types/domain';
 import type { Product } from '$lib/types/saleor';
 import { config } from '$lib/config/env';
@@ -289,9 +289,7 @@ class CartState {
 		const catalog = filterByCatalogKind(getAllCatalogProducts(), kind);
 		const related = catalog.filter(
 			(p) =>
-				!cartIds.has(p.id) &&
-				p.isAvailableForPurchase &&
-				cartCategories.has(p.category?.slug ?? '')
+				!cartIds.has(p.id) && p.isAvailableForPurchase && cartCategories.has(p.category?.slug ?? '')
 		);
 
 		if (related.length >= limit) return related.slice(0, limit);

@@ -255,7 +255,9 @@ export async function applyPromoCode(
 		};
 	}>(CHECKOUT_ADD_PROMO_CODE, { id: checkoutId, promoCode });
 
-	const message = saleorErrorsMessage(result.errors) ?? saleorErrorsMessage(result.data?.checkoutAddPromoCode.errors);
+	const message =
+		saleorErrorsMessage(result.errors) ??
+		saleorErrorsMessage(result.data?.checkoutAddPromoCode.errors);
 	if (message) return { error: message };
 
 	const checkout = result.data?.checkoutAddPromoCode.checkout;
@@ -281,7 +283,8 @@ export async function removePromoCode(
 	}>(CHECKOUT_REMOVE_PROMO_CODE, { id: checkoutId, promoCode });
 
 	const message =
-		saleorErrorsMessage(result.errors) ?? saleorErrorsMessage(result.data?.checkoutRemovePromoCode.errors);
+		saleorErrorsMessage(result.errors) ??
+		saleorErrorsMessage(result.data?.checkoutRemovePromoCode.errors);
 	if (message) return { error: message };
 
 	const checkout = result.data?.checkoutRemovePromoCode.checkout;

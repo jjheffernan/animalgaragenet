@@ -36,7 +36,12 @@
 			onclick={() => onclose?.()}
 		>
 			<svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-				<path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12" />
+				<path
+					stroke-linecap="round"
+					stroke-linejoin="round"
+					stroke-width="1.5"
+					d="M6 18L18 6M6 6l12 12"
+				/>
 			</svg>
 		</button>
 	</div>
@@ -72,13 +77,15 @@
 										type="button"
 										class="flex h-6 w-6 items-center justify-center rounded-sm border border-zinc-700 text-zinc-400 transition hover:border-zinc-500 hover:text-white"
 										onclick={() => cart.updateSaleorLineQuantity(line.id, line.quantity - 1)}
-									>−</button>
+										>−</button
+									>
 									<span class="text-sm text-white">{line.quantity}</span>
 									<button
 										type="button"
 										class="flex h-6 w-6 items-center justify-center rounded-sm border border-zinc-700 text-zinc-400 transition hover:border-zinc-500 hover:text-white"
 										onclick={() => cart.updateSaleorLineQuantity(line.id, line.quantity + 1)}
-									>+</button>
+										>+</button
+									>
 								</div>
 								<span class="text-sm text-zinc-400">
 									{locale.formatPrice(line.lineTotal.amount)}
@@ -98,7 +105,8 @@
 		{:else}
 			<ul class="space-y-4">
 				{#each cart.getCartProducts() as { item, product } (item.productId + item.variantId)}
-					{@const variant = product.variants.find((v) => v.id === item.variantId) ?? product.variants[0]}
+					{@const variant =
+						product.variants.find((v) => v.id === item.variantId) ?? product.variants[0]}
 					<li class="flex gap-3 border-b border-zinc-800 pb-4">
 						{#if product.thumbnail}
 							<img
@@ -124,14 +132,18 @@
 									<button
 										type="button"
 										class="flex h-6 w-6 items-center justify-center rounded-sm border border-zinc-700 text-zinc-400 transition hover:border-zinc-500 hover:text-white"
-										onclick={() => cart.updateQuantity(item.productId, item.variantId, item.quantity - 1)}
-									>−</button>
+										onclick={() =>
+											cart.updateQuantity(item.productId, item.variantId, item.quantity - 1)}
+										>−</button
+									>
 									<span class="text-sm text-white">{item.quantity}</span>
 									<button
 										type="button"
 										class="flex h-6 w-6 items-center justify-center rounded-sm border border-zinc-700 text-zinc-400 transition hover:border-zinc-500 hover:text-white"
-										onclick={() => cart.updateQuantity(item.productId, item.variantId, item.quantity + 1)}
-									>+</button>
+										onclick={() =>
+											cart.updateQuantity(item.productId, item.variantId, item.quantity + 1)}
+										>+</button
+									>
 								</div>
 								<span class="text-sm text-zinc-400">
 									{locale.formatPrice(variant.pricing.price.amount * item.quantity)}
@@ -154,10 +166,14 @@
 			{@const upsells = cart.getUpsellSuggestions(3)}
 			{#if upsells.length > 0}
 				<div class="mt-8">
-					<p class="text-xs font-bold uppercase tracking-widest text-zinc-500">You Might Also Like</p>
+					<p class="text-xs font-bold uppercase tracking-widest text-zinc-500">
+						You Might Also Like
+					</p>
 					<ul class="mt-3 space-y-2">
 						{#each upsells as product (product.id)}
-							<li class="flex items-center justify-between gap-2 rounded-sm border border-zinc-800 p-2">
+							<li
+								class="flex items-center justify-between gap-2 rounded-sm border border-zinc-800 p-2"
+							>
 								<div class="min-w-0 flex-1">
 									<p class="truncate text-xs text-white">{product.name}</p>
 									<PriceDisplay {product} />

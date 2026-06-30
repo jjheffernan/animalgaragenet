@@ -27,7 +27,9 @@
 
 	const checkoutLines = $derived(cart.checkout?.lines ?? []);
 	const useSaleorDisplay = $derived(cart.saleorEnabled && cart.checkout !== null);
-	const isEmpty = $derived(useSaleorDisplay ? checkoutLines.length === 0 : cartProducts.length === 0);
+	const isEmpty = $derived(
+		useSaleorDisplay ? checkoutLines.length === 0 : cartProducts.length === 0
+	);
 	const subtotal = $derived(cart.subtotal);
 	const upsells = $derived(cart.getUpsellSuggestions(4));
 
@@ -63,21 +65,44 @@
 				{#each checkoutLines as line (line.id)}
 					<div class="flex gap-4 rounded-sm border border-zinc-800 bg-zinc-900 p-4">
 						{#if line.thumbnail}
-							<img src={line.thumbnail.url} alt={line.productName} class="h-24 w-24 rounded-sm object-cover" />
+							<img
+								src={line.thumbnail.url}
+								alt={line.productName}
+								class="h-24 w-24 rounded-sm object-cover"
+							/>
 						{/if}
 						<div class="flex flex-1 flex-col justify-between">
 							<div>
-								<a href={resolve(`/shop/${line.productSlug}`)} class="font-medium text-white hover:text-red-400">{line.productName}</a>
+								<a
+									href={resolve(`/shop/${line.productSlug}`)}
+									class="font-medium text-white hover:text-red-400">{line.productName}</a
+								>
 								<p class="text-sm text-zinc-500">{line.variantName}</p>
 							</div>
 							<div class="flex items-center gap-4">
 								<div class="flex items-center gap-2">
-									<button type="button" onclick={() => updateSaleorQty(line.id, line.quantity - 1)} class="flex h-8 w-8 items-center justify-center rounded-sm border border-zinc-700 text-zinc-400 transition hover:border-zinc-500 hover:text-white">−</button>
+									<button
+										type="button"
+										onclick={() => updateSaleorQty(line.id, line.quantity - 1)}
+										class="flex h-8 w-8 items-center justify-center rounded-sm border border-zinc-700 text-zinc-400 transition hover:border-zinc-500 hover:text-white"
+										>−</button
+									>
 									<span class="w-8 text-center text-white">{line.quantity}</span>
-									<button type="button" onclick={() => updateSaleorQty(line.id, line.quantity + 1)} class="flex h-8 w-8 items-center justify-center rounded-sm border border-zinc-700 text-zinc-400 transition hover:border-zinc-500 hover:text-white">+</button>
+									<button
+										type="button"
+										onclick={() => updateSaleorQty(line.id, line.quantity + 1)}
+										class="flex h-8 w-8 items-center justify-center rounded-sm border border-zinc-700 text-zinc-400 transition hover:border-zinc-500 hover:text-white"
+										>+</button
+									>
 								</div>
-								<button type="button" onclick={() => cart.removeSaleorLine(line.id)} class="text-xs text-zinc-600 hover:text-red-500">Remove</button>
-								<p class="ml-auto font-medium text-white">{locale.formatPrice(line.lineTotal.amount)}</p>
+								<button
+									type="button"
+									onclick={() => cart.removeSaleorLine(line.id)}
+									class="text-xs text-zinc-600 hover:text-red-500">Remove</button
+								>
+								<p class="ml-auto font-medium text-white">
+									{locale.formatPrice(line.lineTotal.amount)}
+								</p>
 							</div>
 						</div>
 					</div>
@@ -86,20 +111,39 @@
 				{#each cartProducts as item (item.variant.id)}
 					<div class="flex gap-4 rounded-sm border border-zinc-800 bg-zinc-900 p-4">
 						{#if item.product.thumbnail}
-							<img src={item.product.thumbnail.url} alt={item.product.name} class="h-24 w-24 rounded-sm object-cover" />
+							<img
+								src={item.product.thumbnail.url}
+								alt={item.product.name}
+								class="h-24 w-24 rounded-sm object-cover"
+							/>
 						{/if}
 						<div class="flex flex-1 flex-col justify-between">
 							<div>
-								<a href={resolve(`/shop/${item.product.slug}`)} class="font-medium text-white hover:text-red-400">{item.product.name}</a>
+								<a
+									href={resolve(`/shop/${item.product.slug}`)}
+									class="font-medium text-white hover:text-red-400">{item.product.name}</a
+								>
 								<p class="text-sm text-zinc-500">{item.variant.name}</p>
 							</div>
 							<div class="flex items-center gap-4">
 								<div class="flex items-center gap-2">
-									<button type="button" onclick={() => updateQty(item.product.id, item.variant.id, -1)} class="flex h-8 w-8 items-center justify-center rounded-sm border border-zinc-700 text-zinc-400 transition hover:border-zinc-500 hover:text-white">−</button>
+									<button
+										type="button"
+										onclick={() => updateQty(item.product.id, item.variant.id, -1)}
+										class="flex h-8 w-8 items-center justify-center rounded-sm border border-zinc-700 text-zinc-400 transition hover:border-zinc-500 hover:text-white"
+										>−</button
+									>
 									<span class="w-8 text-center text-white">{item.quantity}</span>
-									<button type="button" onclick={() => updateQty(item.product.id, item.variant.id, 1)} class="flex h-8 w-8 items-center justify-center rounded-sm border border-zinc-700 text-zinc-400 transition hover:border-zinc-500 hover:text-white">+</button>
+									<button
+										type="button"
+										onclick={() => updateQty(item.product.id, item.variant.id, 1)}
+										class="flex h-8 w-8 items-center justify-center rounded-sm border border-zinc-700 text-zinc-400 transition hover:border-zinc-500 hover:text-white"
+										>+</button
+									>
 								</div>
-								<p class="ml-auto font-medium text-white">{locale.formatPrice(item.variant.pricing.price.amount * item.quantity)}</p>
+								<p class="ml-auto font-medium text-white">
+									{locale.formatPrice(item.variant.pricing.price.amount * item.quantity)}
+								</p>
 							</div>
 						</div>
 					</div>
@@ -107,14 +151,18 @@
 			{/if}
 		</div>
 
-		<div class="fixed bottom-0 left-0 right-0 z-40 border-t border-zinc-800 bg-zinc-950 p-4 lg:static lg:z-auto lg:rounded-sm lg:border lg:border-zinc-800 lg:bg-zinc-900/50 lg:p-6 h-fit">
+		<div
+			class="fixed bottom-0 left-0 right-0 z-40 border-t border-zinc-800 bg-zinc-950 p-4 lg:static lg:z-auto lg:rounded-sm lg:border lg:border-zinc-800 lg:bg-zinc-900/50 lg:p-6 h-fit"
+		>
 			<h2 class="font-display text-lg font-bold uppercase text-white">Order Summary</h2>
 			<div class="mt-4 flex justify-between text-zinc-400">
 				<span>Subtotal</span>
 				<span class="text-white">{locale.formatPrice(subtotal)}</span>
 			</div>
 			{#if subtotal < 75}
-				<p class="mt-2 text-xs text-zinc-500">Add {locale.formatPrice(75 - subtotal)} for free shipping</p>
+				<p class="mt-2 text-xs text-zinc-500">
+					Add {locale.formatPrice(75 - subtotal)} for free shipping
+				</p>
 			{:else}
 				<p class="mt-2 text-xs text-green-400">You qualify for free standard shipping</p>
 			{/if}

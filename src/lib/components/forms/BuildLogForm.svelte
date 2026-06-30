@@ -105,8 +105,7 @@
 		bind:value={description}
 		class="mt-1 w-full rounded-sm border border-zinc-700 bg-zinc-900 px-3 py-2 text-sm text-white focus:border-red-600 focus:outline-none {errors.description
 			? 'border-red-600'
-			: ''}"
-	></textarea>
+			: ''}"></textarea>
 	{#if errors.description}<p class="mt-1 text-xs text-red-500">{errors.description}</p>{/if}
 </label>
 
@@ -120,7 +119,6 @@
 		bind:value={modList}
 		class="mt-1 w-full rounded-sm border border-zinc-700 bg-zinc-900 px-3 py-2 text-sm text-white focus:border-red-600 focus:outline-none {errors.modList
 			? 'border-red-600'
-			: ''}"
-	></textarea>
+			: ''}"></textarea>
 	{#if errors.modList}<p class="mt-1 text-xs text-red-500">{errors.modList}</p>{/if}
 </label>

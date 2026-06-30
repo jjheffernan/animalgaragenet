@@ -127,7 +127,7 @@ async function saleorGraphql<T>(
 	return response.json() as Promise<{ data?: T; errors?: Array<{ message: string }> }>;
 }
 
-export export async function probeSaleorCatalog(): Promise<ProbeResult> {
+export async function probeSaleorCatalog(): Promise<ProbeResult> {
 	const requiredEnv = ['PUBLIC_SALEOR_API_URL', 'SALEOR_CHANNEL'];
 	const unset = missing('PUBLIC_SALEOR_API_URL');
 	if (unset.length) {
@@ -158,7 +158,7 @@ export export async function probeSaleorCatalog(): Promise<ProbeResult> {
 	);
 }
 
-export export async function probeSaleorCheckout(): Promise<ProbeResult> {
+export async function probeSaleorCheckout(): Promise<ProbeResult> {
 	const requiredEnv = ['PUBLIC_SALEOR_API_URL', 'SALEOR_CHANNEL'];
 	const unset = missing('PUBLIC_SALEOR_API_URL');
 	if (unset.length) {

@@ -45,7 +45,7 @@ Markers: `@inspiration-scaffold` (Supabase/community/CMS) · `@saleor-migration`
 | IP-028 | inspiration         | Faceted parts search                         | —                                                                                | **not started** | Saleor attributes                                                   |
 | IP-029 | inspiration         | `@motionone/svelte` scroll system            | —                                                                                | **not started** | animation-media.md                                                  |
 | IP-030 | inspiration         | Deal / campaign scheduler (Pit Lane CMS)     | `/deals` mock                                                                    | **not started** | CMS table TBD (formerly scoped as IP-026)                           |
-| IP-031 | inspiration         | Public bug report form                       | `src/lib/server/support/repository.ts`, `POST /api/support/bug-report`, `/support/report-bug` (`@inspiration-scaffold`) | **live**      | Apply `20250630250000_bug_reports.sql`; optional `BUG_REPORT_WEBHOOK_URL` |
+| IP-031 | inspiration         | Public bug report form                       | `src/lib/server/support/repository.ts`, `POST /api/support/bug-report`, `/support/report-bug` (`@inspiration-scaffold`) | **partial**   | Public form **live** (`24579e8`); staff inbox `/admin/support` → BATCH-021; apply `20250630250000_bug_reports.sql`; optional `BUG_REPORT_WEBHOOK_URL` |
 
 **Row count:** 31
 
@@ -67,6 +67,7 @@ Canonical implementer table: [batch-2026-07-02.md](./batch-2026-07-02.md). July 
 | AUD-P2-017 | BATCH-018         | Optional `readiness-ci` GitHub Actions job                           | code         | Workflow runs `npm run test:readiness` with secrets                                 | Repo Actions secrets                                                       |
 | IP-028 | BATCH-019           | Faceted parts search                                                 | code         | Saleor attribute filters + URL-synced facet state                                   | Saleor attributes configured                                               |
 | IP-013 | BATCH-020           | CDN CloudFront invalidation (Phase 2 remainder)                      | code / ops   | `invalidateCdnPath` after admin upload when `AWS_*` set                             | `PUBLIC_CDN_BASE_URL`, `S3_*`, `AWS_*` per [§ Prod CDN](#prod-cdn)        |
+| IP-031 | BATCH-021           | Admin bug report inbox                                               | code         | `/admin/support` lists `listBugReports()`; nav link; mock when Supabase unset       | —                                                                          |
 
 ### Ops-only (not in-repo)
 
@@ -79,6 +80,7 @@ Canonical implementer table: [batch-2026-07-02.md](./batch-2026-07-02.md). July 
 | IP-012 | `7649a9e`           | Order mirror ops follow-up                                           | ops          | Webhook registered in Saleor; snapshots persist across deploys                      | Apply `20250630170000_order_snapshots.sql`; `SALEOR_WEBHOOK_SECRET`        |
 | IP-027 | `ed1465d`           | Social connections migration apply                                   | supabase / ops | `social_connections` table exists on project                                        | Apply `20250630240000_social_connections.sql`                              |
 | IP-007 | batch `c0f1b80`     | YouTube cron on production                                           | ops          | Scheduled `POST /api/cron/youtube-sync`                                             | `YOUTUBE_API_KEY`, `YOUTUBE_SYNC_SECRET`                                   |
+| IP-031 | `24579e8`           | Bug reports migration apply                                          | supabase / ops | `bug_reports` table exists on project                                             | Apply `20250630250000_bug_reports.sql`                                     |
 
 ---
 
@@ -218,4 +220,4 @@ npm run test:unit
 
 ---
 
-_Last updated: July 2, 2026 (batch 2026-07-01 complete; batch 2026-07-02 defined)_
+_Last updated: July 3, 2026 (batch 2026-07-02 open; BATCH-021 follow-up; admin entry reconciled `1944119`)_

@@ -1,6 +1,6 @@
 # Documentation triage — root `docs/` audit
 
-**Date:** 2026-07-01 (refreshed)  
+**Date:** 2026-07-03 (refreshed)  
 **Branch:** `dev`  
 **Policy:** [SECURITY-PUBLIC.md](../SECURITY-PUBLIC.md)  
 **Open items:** [AUDIT-REMEDIATION.md](./AUDIT-REMEDIATION.md) (canonical P0/P1/P2 tracker — this file is the reorg/triage map)
@@ -9,7 +9,7 @@
 
 | Category        | Count | Notes                                                                                                             |
 | --------------- | ----: | ----------------------------------------------------------------------------------------------------------------- |
-| **Open** (code) |    12 | See [batch-2026-07-01.md](./active/batch-2026-07-01.md) — checkout verify, catalog edges, featured CMS, Ghost SEO, UGC wall, locale, military link |
+| **Open** (code) |    12 | See [batch-2026-07-02.md](./active/batch-2026-07-02.md) BATCH-013–020 + [batch-2026-07-03-followups.md](./active/batch-2026-07-03-followups.md) BATCH-021 |
 | **Open** (ops)  |     8 | Netlify env, Supabase redirect URLs, Saleor catalog env, Ghost, OAuth providers, admin bootstrap, migration apply |
 | **Done** (code) |    36 | June 30 batch + IP-012/026/027, navbar polish, component-route cleanup, order webhook, Stripe checkout scaffold |
 | **Archived**    |     7 | `docs/archive/*.md` — banners + pointers to active docs                                                           |
@@ -70,16 +70,17 @@ No other markdown files remain at `docs/` root.
 | **Checkout / payment** | Proxies + Stripe Elements scaffold **done**; live pay blocked on Payment App (ops)                                                   |
 | **Media uploads**      | Plan + API wired — **Done** (code); apply migration on Supabase — **Ops**                                                      |
 | **UGC / content**      | Testimonials CRUD + homepage UGC + public `/builds` from approved rows **Done** (mock fallback when Supabase unset)              |
-| **Admin dashboard**    | Overview **done** (`/admin/dashboard`, `3732fb9`); Integrations at `/admin/runtime` (IP-026); nav stubs disabled; user CRUD partial |
+| **Admin dashboard**    | Overview **done** (`/admin/dashboard`, `3732fb9`, `1944119`); Integrations at `/admin/runtime` (IP-026); AccountMenu → dashboard; nav stubs disabled |
 | **Archived plans**     | `phase3-plan` delivered; `media-cdn-plan` superseded for v1                                                                          |
 
 ### Recommended next code tasks (doc-aligned)
 
-See [batch-2026-07-01.md](./active/batch-2026-07-01.md) for the canonical July 1 implementer table.
+See [batch-2026-07-02.md](./active/batch-2026-07-02.md) Phase 2 for the canonical July 2 implementer table (slots A/B/C).
 
-1. Payment App on Saleor channel + checkout live verify (BATCH-001).
-2. Featured sections beyond hero + `/media` UGC wall (BATCH-003, BATCH-004).
-3. Ghost OG/meta mapping + contract/E2E tests (BATCH-005, BATCH-012).
+1. Parts YMM filter + related products + faceted search (BATCH-013, BATCH-014, BATCH-019).
+2. Ghost cache headers + site-wide SEO (BATCH-015, BATCH-016).
+3. `prefers-reduced-motion` + optional readiness CI (BATCH-017, BATCH-018).
+4. Admin bug report inbox (BATCH-021 — [batch-2026-07-03-followups.md](./active/batch-2026-07-03-followups.md)).
 
 _Out of scope for next small PR: full S3/Garage CDN pipeline._
 

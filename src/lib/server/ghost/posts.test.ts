@@ -62,9 +62,17 @@ describe('ghost posts client', () => {
 		expect(guide).toMatchObject({ slug: ghostPostFixture.slug });
 	});
 
-	it('falls back to mock blog posts when Ghost returns no results', async () => {
+	it('returns empty blog list when Ghost returns no results', async () => {
 		vi.mocked(isGhostEnabled).mockReturnValue(true);
 		vi.mocked(ghostFetch).mockResolvedValue({ posts: [] });
+
+		const posts = await listBlogPosts();
+		expect(posts).toEqual([]);
+	});
+
+	it('falls back to mock when Ghost fetch fails off production', async () => {
+		vi.mocked(isGhostEnabled).mockReturnValue(true);
+		vi.mocked(ghostFetch).mockResolvedValue(null);
 
 		const posts = await listBlogPosts();
 		expect(posts.length).toBeGreaterThan(0);

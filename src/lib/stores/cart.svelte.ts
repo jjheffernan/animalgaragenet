@@ -164,16 +164,8 @@ class CartState {
 		saveCart(this.items);
 	}
 
-	private async addItemSaleor(productId: string, variantId: string | undefined, quantity: number) {
-		let vid = variantId;
-
-		// Live Saleor variant IDs are not in the mock catalog — skip lookup when variantId is known.
-		if (!vid) {
-			const product = getCatalogProductById(productId);
-			if (!product || !product.isAvailableForPurchase) return;
-			vid = product.variants[0]?.id;
-		}
-
+	private async addItemSaleor(_productId: string, variantId: string | undefined, quantity: number) {
+		const vid = variantId?.trim();
 		if (!vid) return;
 
 		try {

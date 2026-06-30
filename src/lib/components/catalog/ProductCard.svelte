@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { Product } from '$lib/types/saleor';
 	import type { ListView } from '$lib/pagination';
-	import { getProductPath, isPartProduct } from '$lib/data/catalog-helpers';
+	import { getDefaultVariantId, getProductPath, isPartProduct } from '$lib/data/catalog-helpers';
 	import { cart } from '$lib/stores/cart.svelte';
 	import { resolvePath } from '$lib/utils/paths';
 	import CatalogKindBadge from '$lib/components/catalog/CatalogKindBadge.svelte';
@@ -15,16 +15,17 @@
 	let { product, view = 'grid-lg' }: Props = $props();
 
 	const soldOut = $derived(!product.isAvailableForPurchase || product.availableQuantity === 0);
+	const defaultVariantId = $derived(getDefaultVariantId(product));
+	const canQuickAdd = $derived(!soldOut && (!cart.saleorEnabled || Boolean(defaultVariantId)));
 	const isList = $derived(view === 'list');
 	const isSmall = $derived(view === 'grid-sm');
 
 	function handleQuickAdd(e: MouseEvent) {
 		e.preventDefault();
 		e.stopPropagation();
-		if (!soldOut) {
-			cart.addItem(product.id);
-			cart.openDrawer();
-		}
+		if (!canQuickAdd) return;
+		cart.addItem(product.id, defaultVariantId);
+		cart.openDrawer();
 	}
 </script>
 
@@ -87,7 +88,7 @@
 			<div
 				class="absolute inset-0 bg-gradient-to-t from-zinc-950/80 via-transparent to-transparent opacity-0 transition group-hover:opacity-100"
 			></div>
-			{#if !soldOut}
+			{#if canQuickAdd}
 				<button
 					type="button"
 					class="absolute bottom-3 right-3 rounded-sm bg-red-600 px-2.5 py-1 text-xs font-bold uppercase tracking-wider text-white opacity-0 transition hover:bg-red-500 group-hover:opacity-100 {isSmall
@@ -156,7 +157,7 @@
 				{/if}
 			{/if}
 		</div>
-		{#if isList && !soldOut}
+		{#if isList && canQuickAdd}
 			<button
 				type="button"
 				class="mt-3 w-fit rounded-sm border border-zinc-700 px-3 py-1.5 text-xs font-bold uppercase tracking-wider text-zinc-300 transition hover:border-red-600 hover:text-white"

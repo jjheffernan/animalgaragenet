@@ -1,6 +1,8 @@
 import { mockGuides } from '$lib/data/mock/guides';
 import type { Guide } from '$lib/types/domain';
+import { isProductionSiteUrl } from '$lib/server/auth/local-dev';
 import { ghostFetch, isGhostEnabled } from './client';
+import { guardMockGhostFallback } from './fallback';
 import type { GhostPostsResponse } from './types';
 
 export interface GuideFilterOption {
@@ -100,6 +102,9 @@ export async function getGuideFilterOptions(): Promise<GuideFilterOptions> {
 		const ghost = await fetchGhostGuideFilterOptions();
 		if (ghost && ghost.categories.length > 1) {
 			return ghost;
+		}
+		if (isProductionSiteUrl()) {
+			guardMockGhostFallback({ ghostAttemptFailed: ghost === null });
 		}
 	}
 

@@ -21,6 +21,12 @@ export const PRODUCTS_QUERY = `
             }
           }
           category { id name slug }
+          variants(first: 1) {
+            id
+            name
+            sku
+            pricing { price { gross { amount currency } } }
+          }
           isAvailableForPurchase${PRODUCT_METADATA_FIELDS}
         }
       }

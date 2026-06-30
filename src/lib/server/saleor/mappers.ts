@@ -45,17 +45,17 @@ export interface SaleorProductListNode {
 	isAvailableForPurchase?: boolean | null;
 	metadata?: SaleorMetadataEntry[] | null;
 	attributes?: SaleorAttribute[] | null;
-}
-
-/** Shape returned by PRODUCT_BY_SLUG_QUERY. */
-export interface SaleorProductDetailNode extends SaleorProductListNode {
-	media?: Array<SaleorImage & { id: string; type?: string | null }> | null;
 	variants?: Array<{
 		id: string;
 		name: string;
 		sku?: string | null;
 		pricing?: { price?: SaleorTaxedMoney | null } | null;
 	}> | null;
+}
+
+/** Shape returned by PRODUCT_BY_SLUG_QUERY. */
+export interface SaleorProductDetailNode extends SaleorProductListNode {
+	media?: Array<SaleorImage & { id: string; type?: string | null }> | null;
 }
 
 export interface SaleorCollectionNode {

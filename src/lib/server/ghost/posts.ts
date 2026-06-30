@@ -1,14 +1,37 @@
 import { getBlogPostBySlug, mockBlogPosts } from '$lib/data/mock/blog';
 import { getGuideBySlug, mockGuides } from '$lib/data/mock/guides';
 import type { BlogPost, Guide } from '$lib/types/domain';
+import { isProductionSiteUrl } from '$lib/server/auth/local-dev';
 import { ghostFetch, isGhostEnabled } from './client';
+import { guardMockGhostFallback } from './fallback';
 import { mapGhostPostToBlogPost, mapGhostPostToGuide } from './mappers';
 import type { GhostContentTag, GhostPostResponse, GhostPostsResponse } from './types';
 
 // @inspiration-scaffold: intentional — see docs/plans/active/inspiration-polish-tracker.md#IP-015
-// When Ghost env is set but API fails, prefer throw/metric over silent mock fallback (AUDIT-P1-009).
 
 const GHOST_INCLUDES = 'tags,authors';
+
+function allowMockGhostFallback(): boolean {
+	return !isGhostEnabled() || !isProductionSiteUrl();
+}
+
+function resolveGhostList<T>(result: T[] | null, mock: T[]): T[] {
+	if (result !== null) {
+		return result;
+	}
+	guardMockGhostFallback({ ghostAttemptFailed: true });
+	return mock;
+}
+
+function resolveGhostSlug<T>(result: T | null, mockLookup: () => T | undefined): T | undefined {
+	if (result) {
+		return result;
+	}
+	if (!allowMockGhostFallback()) {
+		return undefined;
+	}
+	return mockLookup();
+}
 
 async function fetchPostsByTag(tag: GhostContentTag): Promise<Guide[] | BlogPost[] | null> {
 	const data = await ghostFetch<GhostPostsResponse>({
@@ -22,7 +45,7 @@ async function fetchPostsByTag(tag: GhostContentTag): Promise<Guide[] | BlogPost
 	});
 
 	if (!data?.posts?.length) {
-		return null;
+		return data ? [] : null;
 	}
 
 	return tag === 'guide'
@@ -40,7 +63,11 @@ async function fetchPostBySlug<T extends Guide | BlogPost>(
 		searchParams: { include: GHOST_INCLUDES }
 	});
 
-	const post = data?.posts?.[0];
+	if (!data) {
+		return null;
+	}
+
+	const post = data.posts?.[0];
 	if (!post) {
 		return null;
 	}
@@ -59,7 +86,7 @@ export async function listGuides(): Promise<Guide[]> {
 	}
 
 	const guides = await fetchPostsByTag('guide');
-	return (guides as Guide[] | null) ?? mockGuides;
+	return resolveGhostList(guides as Guide[] | null, mockGuides) as Guide[];
 }
 
 export async function getGuide(slug: string): Promise<Guide | undefined> {
@@ -68,7 +95,7 @@ export async function getGuide(slug: string): Promise<Guide | undefined> {
 	}
 
 	const guide = await fetchPostBySlug('guide', slug, mapGhostPostToGuide);
-	return guide ?? getGuideBySlug(slug);
+	return resolveGhostSlug(guide, () => getGuideBySlug(slug));
 }
 
 export async function listBlogPosts(): Promise<BlogPost[]> {
@@ -77,7 +104,7 @@ export async function listBlogPosts(): Promise<BlogPost[]> {
 	}
 
 	const posts = await fetchPostsByTag('blog');
-	return (posts as BlogPost[] | null) ?? mockBlogPosts;
+	return resolveGhostList(posts as BlogPost[] | null, mockBlogPosts) as BlogPost[];
 }
 
 export async function getBlogPost(slug: string): Promise<BlogPost | undefined> {
@@ -86,5 +113,5 @@ export async function getBlogPost(slug: string): Promise<BlogPost | undefined> {
 	}
 
 	const post = await fetchPostBySlug('blog', slug, mapGhostPostToBlogPost);
-	return post ?? getBlogPostBySlug(slug);
+	return resolveGhostSlug(post, () => getBlogPostBySlug(slug));
 }

@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import {
+	getDefaultVariantId,
 	filterShopProducts,
 	getCatalogKind,
 	getProductPath,
@@ -52,6 +53,17 @@ describe('filterShopProducts', () => {
 
 	it('ignores invalid categories at the loader level but ALL is the default bucket', () => {
 		expect(filterShopProducts('ALL').length).toBeGreaterThan(filterShopProducts('JACKETS').length);
+	});
+});
+
+describe('getDefaultVariantId', () => {
+	it('returns the first variant id', () => {
+		const product = mockProducts[0];
+		expect(getDefaultVariantId(product)).toBe(product.variants[0]?.id);
+	});
+
+	it('returns undefined when no variants', () => {
+		expect(getDefaultVariantId({ ...mockProducts[0], variants: [] })).toBeUndefined();
 	});
 });
 

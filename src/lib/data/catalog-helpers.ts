@@ -39,6 +39,11 @@ export function getCatalogProductById(id: string): Product | undefined {
 	return catalogById().get(id);
 }
 
+/** First purchasable variant for quick-add from listing cards (Saleor + mock). */
+export function getDefaultVariantId(product: Product): string | undefined {
+	return product.variants[0]?.id;
+}
+
 export function filterByCatalogKind(products: Product[], kind: CatalogKind): Product[] {
 	return products.filter((p) => getCatalogKind(p) === kind);
 }

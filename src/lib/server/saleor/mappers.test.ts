@@ -73,6 +73,23 @@ describe('mapProductListNode', () => {
 		expect(product.variants).toEqual([]);
 	});
 
+	it('maps default variant on list nodes when present', () => {
+		const product = mapProductListNode({
+			...listNodeFixture,
+			variants: [
+				{
+					id: 'variant-list',
+					name: 'Default',
+					sku: 'SKU-1',
+					pricing: { price: { gross: { amount: 29.99, currency: 'USD' } } }
+				}
+			]
+		});
+
+		expect(product.variants).toHaveLength(1);
+		expect(product.variants[0].id).toBe('variant-list');
+	});
+
 	it('uses thumbnail as media when no media array is present', () => {
 		const product = mapProductListNode(listNodeFixture);
 

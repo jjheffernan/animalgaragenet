@@ -8,15 +8,15 @@
 
 | Category | Orphans / issues | Safe deletes |
 | -------- | ---------------- | ------------ |
-| Components | 1 unused | 1 |
-| Stale routes | 4 weak-link + 6 admin stubs + 1 redirect orphan | 1 page shell |
-| API routes | 0 dead (2 headless JSON, 1 external stub) | 0 |
+| Components | 0 unused (SupportCTA removed) | — |
+| Stale routes | 1 weak-link (`/military`) + 6 admin stubs disabled | — |
+| API routes | 0 dead | 0 |
 
 ## Unused components
 
 | Path | Issue | Action | Priority |
 | ---- | ----- | ------ | -------- |
-| `src/lib/components/marketing/SupportCTA.svelte` | Zero imports in `src/` or `tests/` | Delete | P2 |
+| `src/lib/components/marketing/SupportCTA.svelte` | Zero imports | **Deleted** (`847ba4b`) | P2 |
 
 All other 62 components under `src/lib/components/` have at least one importer (routes, other components, or tests).
 
@@ -27,10 +27,10 @@ All other 62 components under `src/lib/components/` have at least one importer (
 | Path | Issue | Action | Priority |
 | ---- | ----- | ------ | -------- |
 | `src/routes/military/` | `/military` has no nav, footer, or internal links | Keep; add footer or loyalty/checkout link, or archive | P2 |
-| `src/routes/media/` | Linked from `UGCWall` only; in `communityPaths` but omitted from `communityLinks` dropdown | Keep; add to community nav | P2 |
+| `src/routes/media/` | Was omitted from `communityLinks` dropdown | **Fixed** — added to community nav (`AUD-P2-036`) | — |
 | `src/routes/tools/tire-calculator/` | Cross-linked with fitment-visualizer only; not in nav/footer | Keep (per `docs/meta/decisions.md`) | P3 |
 | `src/routes/tools/fitment-visualizer/` | Same as above | Keep | P3 |
-| `src/routes/builds/submit/+page.svelte` | `+page.server.ts` always redirects to `/account/builds`; page never renders | Delete page shell | P2 |
+| `src/routes/builds/submit/+page.svelte` | Load always redirects | **Deleted**; redirect server kept (`AUD-P2-038`) | — |
 | `src/routes/builds/submit/+page.server.ts` | Redirect-only bookmark handler | Keep | — |
 | `src/routes/locked/` | Reached via `SITE_LOCKED` in `hooks.server.ts` only | Keep (ops feature) | — |
 | `src/routes/brands/` | Homepage `BrandLanes` + PDP breadcrumbs; not in main nav | Keep | — |
@@ -42,11 +42,11 @@ All other 62 components under `src/lib/components/` have at least one importer (
 
 | Path | Issue | Action | Priority |
 | ---- | ----- | ------ | -------- |
-| `/admin/social/ugc` | Nav link → 404 | Scaffold route or mark `disabled` in nav | P1 |
+| `/admin/social/ugc` | Nav link → 404 | **`disabled: true`** in nav until scaffolded | P1 |
 | `/admin/social/discord` | Nav link → 404 | Same | P1 |
 | `/admin/commerce/channels` | Nav link → 404 | Same | P1 |
 | `/admin/commerce/orders` | Nav link → 404 | Same | P1 |
-| `/admin/calendar` | Nav link → 404 | Same | P2 |
+| `/admin/calendar` | Nav link → 404 | Same (`AUD-P2-037` **done**) | P2 |
 | `/admin/support` | Nav link → 404 | Same | P2 |
 
 ### Admin — existing but mock/stub UI
@@ -63,7 +63,7 @@ All other 62 components under `src/lib/components/` have at least one importer (
 | ---- | ----- | ------ | -------- |
 | `api/catalog/shop-filters` | No in-app `fetch`; filters loaded server-side in `shop/+page.server.ts` | Keep (headless JSON API) | P3 |
 | `api/content/guide-filters` | No in-app `fetch`; filters in `guides/+page.server.ts` | Keep (headless JSON API) | P3 |
-| `api/webhooks/saleor` | 501 stub; external Saleor webhook target | Keep; wire per IP-012 | P1 |
+| `api/webhooks/saleor` | Saleor webhook target | **Wired** — `ORDER_CREATED` + fulfillment mirror (`7649a9e`); HMAC when `SALEOR_WEBHOOK_SECRET` set | — |
 | `api/cron/youtube-sync` | Cron/external (`x-youtube-sync-secret`) | Keep | — |
 | `api/catalog/search` | Called from `SearchModal.svelte` | Keep | — |
 | `api/account/garage` | `garage-api.ts` + tests | Keep | — |

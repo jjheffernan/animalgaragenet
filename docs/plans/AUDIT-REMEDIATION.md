@@ -25,8 +25,8 @@ Canonical tracker for findings from `docs/audits/*`, [STATUS.md](../STATUS.md), 
 | --------- | ------ | ------------- | ------ |
 | **P0**    | 0      | 5             | 4      |
 | **P1**    | 1      | 1             | 11     |
-| **P2**    | 21     | 0             | 15     |
-| **Total** | **22** | **6**         | **30** |
+| **P2**    | 21     | 0             | 17     |
+| **Total** | **22** | **6**         | **32** |
 
 _Blocked = external dashboard/env; cannot close in-repo._
 
@@ -69,7 +69,7 @@ _Blocked = external dashboard/env; cannot close in-repo._
 **Next (partial P1 items):**
 
 - **AUD-P1-001 — Ops:** Install and enable Stripe Payment App (`saleor.app.payment.stripe`) on the Saleor channel so `paymentGateways` is non-empty on checkout load.
-- **AUD-P1-001 — Code:** Wire client pay flow per [saleor-payments.md](../commerce/saleor-payments.md) — `@stripe/stripe-js` Payment Element, server `transactionInitialize` / `transactionProcess`, return URL → `checkoutComplete`.
+- **AUD-P1-001 — Code:** Stripe Elements scaffold **done** (`583015d`); verify live pay when Payment App enabled per [saleor-payments.md](../commerce/saleor-payments.md).
 - **AUD-P1-001 — Verify:** `npm run test:readiness` → `saleor-checkout` pass; manual test card → order visible in Saleor Dashboard.
 
 ---
@@ -107,7 +107,7 @@ _Blocked = external dashboard/env; cannot close in-repo._
 | AUD-P2-034 | Remove orphan `SupportCTA.svelte`               | component-route-audit     | **done** | code       | Zero-import component deleted; README index updated                                | `src/lib/components/marketing/SupportCTA.svelte`                          |
 | AUD-P2-035 | `/military` discoverability                     | component-route-audit     | **open** | code       | Linked from footer or checkout/loyalty, or route archived with redirect            | `src/routes/military/+page.svelte`                                      |
 | AUD-P2-036 | `/media` in community nav                       | component-route-audit     | **done** | code       | `media` added to `communityLinks` in `Header.svelte`                               | `src/lib/components/layout/Header.svelte`                                 |
-| AUD-P2-037 | Admin nav stub routes (6× 404)                  | component-route-audit     | **partial** | code    | Stubs scaffolded, nav items disabled, or `+error` guard in admin layout            | `src/lib/admin/nav.ts` · `src/lib/components/admin/AdminSidebar.svelte`   |
+| AUD-P2-037 | Admin nav stub routes (6× 404)                  | component-route-audit     | **done** | code       | Six prototype links `disabled: true` until routes scaffolded; no 404 from sidebar | `src/lib/admin/nav.ts` · commit `847ba4b`                                 |
 | AUD-P2-038 | `/builds/submit` dead page shell                | component-route-audit     | **done** | code       | Unreachable `+page.svelte` removed; `+page.server.ts` redirect retained            | `src/routes/builds/submit/`                                             |
 | AUD-P2-023 | Newsletter / user preferences tables            | STATUS, supabase.md       | **open** | supabase   | Schema + RLS per roadmap                                                           | [integrations/supabase.md](../integrations/supabase.md)                 |
 | AUD-P2-024 | Site audit: unit test coverage                  | site-audit                | **done** | code       | 180+ tests; `npm run test:unit` in CI                                              | `tests/`                                                                |
@@ -127,7 +127,7 @@ _Blocked = external dashboard/env; cannot close in-repo._
 | [audits/saleor-audit.md](../audits/saleor-audit.md)           | P0-004 (ops), P1-001 (partial), P2-001–006 | All Saleor AUD rows **done**  |
 | [audits/ghost-audit.md](../audits/ghost-audit.md)             | P1-008, P2-007–011                   | All Ghost AUD rows **done**   |
 | [meta/agents-skills-audit.md](../meta/agents-skills-audit.md) | —                                    | AUD-P2-020–022 **done**       |
-| [audits/component-route-audit.md](../audits/component-route-audit.md) | P2-035, P2-037 (partial) | AUD-P2-034–038 mostly **done** |
+| [audits/component-route-audit.md](../audits/component-route-audit.md) | P2-035 (`/military`) | AUD-P2-034–038 except P2-035 **done** |
 
 _Do not delete source audits until the row above is satisfied._
 

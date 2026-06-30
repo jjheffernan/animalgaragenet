@@ -1,6 +1,6 @@
 # Documentation triage — root `docs/` audit
 
-**Date:** 2026-06-30 (refreshed)  
+**Date:** 2026-07-01 (refreshed)  
 **Branch:** `dev`  
 **Policy:** [SECURITY-PUBLIC.md](../SECURITY-PUBLIC.md)  
 **Open items:** [AUDIT-REMEDIATION.md](./AUDIT-REMEDIATION.md) (canonical P0/P1/P2 tracker — this file is the reorg/triage map)
@@ -9,9 +9,9 @@
 
 | Category        | Count | Notes                                                                                                             |
 | --------------- | ----: | ----------------------------------------------------------------------------------------------------------------- |
-| **Open** (code) |     4 | Checkout, YouTube sync, Ghost fallback policy, add-to-cart from listing cards |
-| **Open** (ops)  |     8 | Netlify env, Supabase redirect URLs, Saleor catalog env, Ghost, OAuth providers, admin bootstrap, media migration apply |
-| **Done** (code) |    28 | Auth guards, homepage UGC, shop filters, redeem/promo, catalog production guard, Phase 3 shell, `/builds` Supabase loader, cart qty/remove, OAuth callback origin, media Phase 1 API, CI Prettier, check-secrets extend, guide filters, locale currency, featured CMS scaffold, shop collection filter |
+| **Open** (code) |    12 | See [batch-2026-07-01.md](./active/batch-2026-07-01.md) — checkout verify, catalog edges, featured CMS, Ghost SEO, UGC wall, locale, military link |
+| **Open** (ops)  |     8 | Netlify env, Supabase redirect URLs, Saleor catalog env, Ghost, OAuth providers, admin bootstrap, migration apply |
+| **Done** (code) |    36 | June 30 batch + IP-012/026/027, navbar polish, component-route cleanup, order webhook, Stripe checkout scaffold |
 | **Archived**    |     7 | `docs/archive/*.md` — banners + pointers to active docs                                                           |
 
 Canonical remediation: [AUDIT-REMEDIATION.md](./AUDIT-REMEDIATION.md) · open work: [STATUS.md](../STATUS.md)
@@ -67,17 +67,19 @@ No other markdown files remain at `docs/` root.
 | **Auth (Phase 0)**     | Production guards **Done** (`ag-session` refusal, sign-in misconfig banner); session on Netlify = **Ops-only** (env + redirect URLs) |
 | **Security hardening** | `isProductionHostname()` + `guardMockCatalogFallback()` + production `ag-session` block **Done**                                     |
 | **Saleor catalog**     | Loaders + shop filters wired; production mock guard **Done**; live catalog on Netlify **Ops-only**                                   |
-| **Checkout / payment** | Placeholder — **Open**                                                                                                               |
+| **Checkout / payment** | Proxies + Stripe Elements scaffold **done**; live pay blocked on Payment App (ops)                                                   |
 | **Media uploads**      | Plan + API wired — **Done** (code); apply migration on Supabase — **Ops**                                                      |
 | **UGC / content**      | Testimonials CRUD + homepage UGC + public `/builds` from approved rows **Done** (mock fallback when Supabase unset)              |
-| **Admin dashboard**    | Shell + moderation **Done**; daisyUI adoption, route isolation polish **Open** (low priority)                                        |
+| **Admin dashboard**    | Runtime dashboard **done** (`/admin/runtime`); nav stubs disabled; user CRUD partial                                                 |
 | **Archived plans**     | `phase3-plan` delivered; `media-cdn-plan` superseded for v1                                                                          |
 
 ### Recommended next code tasks (doc-aligned)
 
-1. Saleor checkout: shipping, `CHECKOUT_COMPLETE`, payment gateway.
-2. YouTube `sync.ts` — replace stub with Data API.
-3. Apply `20250630120000_media_assets.sql` on production Supabase (ops).
+See [batch-2026-07-01.md](./active/batch-2026-07-01.md) for the canonical July 1 implementer table.
+
+1. Payment App on Saleor channel + checkout live verify (BATCH-001).
+2. Featured sections beyond hero + `/media` UGC wall (BATCH-003, BATCH-004).
+3. Ghost OG/meta mapping + contract/E2E tests (BATCH-005, BATCH-012).
 
 _Out of scope for next small PR: full S3/Garage CDN pipeline._
 
@@ -103,7 +105,7 @@ _Out of scope for next small PR: full S3/Garage CDN pipeline._
 | **market-readiness**         | Phase 1 — gate silent Saleor→mock fallback          | Done           | `catalog/fallback.ts`                                  |
 | **market-readiness**         | Phase 1 — shop category filters from Saleor         | Done           | `catalog/shop-filters.ts`, `/api/catalog/shop-filters` |
 | **market-readiness**         | Phase 1 — `/shop` ≠ 120 mock products               | Open (ops)     | Needs `PUBLIC_SALEOR_API_URL` on Netlify               |
-| **market-readiness**         | Phase 2 — checkout & payment                        | Open           | `checkout/+page.svelte`                                |
+| **market-readiness**         | Phase 2 — checkout & payment                        | Partial        | Checkout UI + proxies wired; Payment App ops pending |
 | **market-readiness**         | Phase 3 — homepage UGC from `testimonials`          | Done           | `+page.server.ts`, `testimonials/to-ugc.ts`            |
 | **market-readiness**         | Phase 3 — public `/builds` from submissions         | Done           | `builds/public.ts` → approved `build_submissions`      |
 | **media-uploads**            | Phase 1 — bucket + `/api/media/*`                   | Done (code)    | Migration + API in repo; apply on Supabase project     |
@@ -119,8 +121,9 @@ _Out of scope for next small PR: full S3/Garage CDN pipeline._
 
 | File                                              | Change                                                      |
 | ------------------------------------------------- | ----------------------------------------------------------- |
-| `TRIAGE.md`                                       | Stats + done rows: Prettier, check-secrets, guide filters, currency, featured scaffold |
-| `AUDIT-REMEDIATION.md`                            | Mark AUD-P0-006, P2-002/019/022/030–032 done; recalc summary                          |
+| `TRIAGE.md`                                       | Stats + July 1 batch pointer; checkout/admin rows refreshed |
+| `batch-2026-07-01.md`                             | New — canonical July 1 implementer table                    |
+| `AUDIT-REMEDIATION.md`                            | AUD-P2-037 done; counts 22 open / 32 done                   |
 | `account-flow-fix.md`                             | `callback-url.ts` redirect — mark Done                      |
 | `market-readiness.md`                             | UGC row hybrid; fix `../../` links from `plans/active/`     |
 | `meta/decisions.md`                               | Fix style-guide link                                        |

@@ -60,14 +60,15 @@ supabase migration new <descriptive_name>
 | `profiles` | Display name per `auth.users` | Auth signup trigger |
 | `build_submissions` | Build log submit + account drafts | `src/lib/server/build-logs/`, `/builds/submit` |
 | `testimonials` | Garage Squad reviews / UGC text | `src/lib/server/testimonials/` |
-| `media_assets` | UGC image metadata (Storage `ugc` bucket) | Planned — [media-uploads.md](../plans/active/media-uploads.md) |
-| `testimonial_media` | Gallery join testimonials ↔ assets | Planned |
-| `newsletter_subscribers` | Footer newsletter opt-ins | Planned — `NewsletterSignup.svelte` mock |
-| `featured_sections` | Homepage section JSON (`hero`, `media`, …) | Planned |
-| `user_preferences` | Locale, currency, favorites | Planned |
-| `youtube_channels` | Connected channels for sync | `src/lib/server/youtube/sync.ts` (stub) |
-| `videos` | Synced YouTube catalog for `/watch` | Stub |
-| `order_snapshots` | Saleor order mirror for `/account` | Planned — replaces `mock/orders.ts` |
+| `media_assets` | UGC image metadata (Storage `ugc` bucket) | `src/lib/server/media/repository.ts`, `api/media/*` |
+| `testimonial_media` | Gallery join testimonials ↔ assets | `src/lib/server/media/repository.ts` |
+| `newsletter_subscribers` | Footer newsletter opt-ins | `NewsletterSignup.svelte`, `api/newsletter/subscribe` |
+| `featured_sections` | Homepage section JSON (`hero`, `media`, …) | `featured-sections/repository.ts`, `/admin/featured` |
+| `user_preferences` | Locale, currency, favorites, garage XP | `user-preferences/repository.ts`, `api/account/garage` |
+| `youtube_channels` | Connected channels for sync | `youtube/sync.ts`, `api/cron/youtube-sync` |
+| `videos` | Synced YouTube catalog for `/watch` | `youtube/repository.ts`, `/watch` |
+| `order_snapshots` | Saleor order mirror for `/account` | `orders/snapshots.ts`, `api/webhooks/saleor` |
+| `social_connections` | Account-linked social platforms | `social-connections/`, `api/account/connections` |
 
 **Commerce** (products, cart, checkout) stays in **Saleor** — not Supabase.
 
@@ -178,6 +179,7 @@ Server-minted signed upload URLs: see [media-uploads.md](../plans/active/media-u
 | `20250630180000_admin_moderation_policies.sql` | `is_staff()` + staff policies |
 | `20260629120000_initial_profiles.sql` | `profiles` |
 | `20260629130000_profiles_signup_trigger.sql` | `handle_new_user` trigger |
+| `20250630240000_social_connections.sql` | `social_connections` |
 
 > **Note:** `initial_profiles` timestamp sorts last on fresh `db reset`; signup trigger migration (`20260629130000`) runs immediately after it.
 

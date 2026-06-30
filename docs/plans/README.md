@@ -12,6 +12,7 @@
 | Plan                                                | Status                   | Notes                                                |
 | --------------------------------------------------- | ------------------------ | ---------------------------------------------------- |
 | [inspiration-polish-tracker.md](./active/inspiration-polish-tracker.md) | Active — canonical inspiration + polish + AUDIT tracker |
+| [batch-2026-07-01.md](./active/batch-2026-07-01.md) | Active — July 1 implementer batch (worker slots A/B/C) |
 | [account-flow-fix.md](./active/account-flow-fix.md) | Active — Ops             | Netlify + Supabase env; code guards Done             |
 | [market-readiness.md](./active/market-readiness.md) | Active                   | Phased launch roadmap                                |
 | [media-uploads.md](./active/media-uploads.md)       | Active — partial         | Phase 1 API + migration in repo; apply on Supabase project |

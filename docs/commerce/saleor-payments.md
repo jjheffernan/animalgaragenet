@@ -169,7 +169,7 @@ For Svelte (not React), use `@stripe/stripe-js` directly instead of `@stripe/rea
 | **P0** | AUD-P0-004 | `PUBLIC_SALEOR_API_URL` + `SALEOR_CHANNEL` on Netlify; payment app installed on channel | ops |
 | **P1** | AUD-P1-001 | Shipping address/method mutations; payment proxy routes; `/checkout` UI; `checkoutComplete` | saleor / code |
 | **P1** | AUD-P1-002 | Cart line PATCH/DELETE (largely wired — verify E2E) | saleor |
-| **P2** | — | `/api/webhooks/saleor` handlers for `ORDER_CREATED` (email, analytics) | code |
+| **P2** | — | `/api/webhooks/saleor` `ORDER_CREATED` mirror | code — **done** (`7649a9e`) |
 | **P2** | — | Automatic checkout completion channel setting + storefront handling deleted checkout | code |
 
 See [AUDIT-REMEDIATION.md](../plans/AUDIT-REMEDIATION.md) and [market-readiness.md](../plans/active/market-readiness.md) Phase 2.

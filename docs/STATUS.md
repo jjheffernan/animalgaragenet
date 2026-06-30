@@ -2,8 +2,8 @@
 
 **Public documentation policy:** [SECURITY-PUBLIC.md](./SECURITY-PUBLIC.md)
 
-**Last updated:** 2026-06-30  
-**Canonical next-step docs:** [plans/AUDIT-REMEDIATION.md](./plans/AUDIT-REMEDIATION.md) · [plans/active/inspiration-polish-tracker.md](./plans/active/inspiration-polish-tracker.md) · [plans/active/market-readiness.md](./plans/active/market-readiness.md) · [plans/active/account-flow-fix.md](./plans/active/account-flow-fix.md)
+**Last updated:** 2026-07-01  
+**Canonical next-step docs:** [plans/AUDIT-REMEDIATION.md](./plans/AUDIT-REMEDIATION.md) · [plans/active/inspiration-polish-tracker.md](./plans/active/inspiration-polish-tracker.md) · [plans/active/batch-2026-07-01.md](./plans/active/batch-2026-07-01.md) · [plans/active/market-readiness.md](./plans/active/market-readiness.md) · [plans/active/account-flow-fix.md](./plans/active/account-flow-fix.md)
 
 This file reconciles “next steps” across all `docs/` so nothing is orphaned. Items are **Done**, **Ops** (external dashboard/env), or **Open** (code work).
 
@@ -44,6 +44,11 @@ This file reconciles “next steps” across all `docs/` so nothing is orphaned.
 | Footer layout (Z1-inspired condense)                         | `Footer.svelte` — `5ca1b1f`                                                                                                                                  |
 | GitHub wiki                                                | Published — [wiki home](https://github.com/jjheffernan/animalgaragenet/wiki); backup in `docs/wiki-export/` (sanitized for public — no infra/AWS/secret names) |
 | Org mirror sync                                            | `scripts/sync-org-mirror.sh` on `main`                                                                                                                         |
+| Navbar polish (IP-BUG-001, IP-BUG-002)                     | `Header.svelte`, `Footer.svelte`, `NewsletterSignup.svelte` — `057242a`, `61b74c2`, `ec186a7`                                                                |
+| Admin runtime dashboard (IP-026)                           | `/admin/runtime`, `runtime-status.ts` — `d1d6823`                                                                                                              |
+| Account social connections (IP-027)                        | `/account/connections`, `api/account/connections`, migration `20250630240000` — `ed1465d`                                                                    |
+| Saleor order mirror webhook (IP-012)                       | `api/webhooks/saleor`, `order-webhook.ts` — `7649a9e`                                                                                                          |
+| Component-route audit cleanup (AUD-P2-034–038)             | SupportCTA removed, `/media` nav, admin stubs disabled, builds/submit shell — `847ba4b`                                                                        |
 
 ---
 
@@ -70,16 +75,16 @@ These appear as unchecked boxes in plans but **cannot be completed in-repo**:
 
 ## Open — code / CI work
 
-**Audit counts (see [AUDIT-REMEDIATION.md](./plans/AUDIT-REMEDIATION.md)):** 21 open · 6 blocked (ops) · 27 done — P1 checkout (`AUD-P1-001`) is **partial**, not open.
+**Audit counts (see [AUDIT-REMEDIATION.md](./plans/AUDIT-REMEDIATION.md)):** 22 open · 6 blocked (ops) · 32 done — P1 checkout (`AUD-P1-001`) is **partial**, not open.
 
 | Priority | Task                                                            | Tracker                                                                        |
 | -------- | --------------------------------------------------------------- | ------------------------------------------------------------------------------ |
 | P0       | Merge `dev` → `main` when Netlify env configured                | [deployment.md](./style-guide/backend-ops/deployment.md)                       |
-| P1       | Saleor checkout: Stripe Elements + Payment App (proxies shipped) | [saleor-payments.md](./commerce/saleor-payments.md), [inspiration-polish-tracker.md](./plans/active/inspiration-polish-tracker.md) § Next steps |
-| P1       | Order mirror webhook + `order_snapshots` migration              | IP-012 in [inspiration-polish-tracker.md](./plans/active/inspiration-polish-tracker.md) |
+| P1       | Saleor checkout: Payment App enablement + live pay verify       | [batch-2026-07-01.md](./plans/active/batch-2026-07-01.md) BATCH-001 · [saleor-payments.md](./commerce/saleor-payments.md) |
+| P2       | July 1 code batch (featured sections, UGC wall, Ghost SEO, …)   | [batch-2026-07-01.md](./plans/active/batch-2026-07-01.md)                      |
 | P2       | Ghost live CMS (fallback policy shipped)                          | IP-015 · [ghost-audit.md](./audits/ghost-audit.md)                             |
 | P2       | Remaining homepage mock slices (non-watch)                        | market-readiness Phase 3                                                       |
-| P2       | `profiles` table contract test                                  | readiness-report (testimonials + build_submissions done)                       |
+| P2       | `profiles` table contract test                                  | BATCH-006 · readiness-report                                                   |
 | P2       | `readiness-ci` optional Actions job                             | readiness-report                                                               |
 | P2       | OAuth Discord/Azure verification                                | [inspiration-polish-tracker.md](./plans/active/inspiration-polish-tracker.md) |
 | P2       | SEO/OG, analytics, performance audit                            | Phase 5 (see [README.md](./README.md))                                         |
@@ -95,7 +100,9 @@ These appear as unchecked boxes in plans but **cannot be completed in-repo**:
 | [saleor.md](./commerce/saleor.md) “redeem not implemented”               | Updated — redeem wired                         |
 | [site-audit.md](./audits/site-audit.md) “no tests”                       | Updated — 180+ unit/contract/integration tests |
 | [wiki-export/README.md](./wiki-export/README.md) “wiki not enabled”      | Updated — published                            |
-| [readiness-report.md](./testing/readiness-report.md) contract-test todos | Marked partial/done where applicable           |
+| `readiness-report.md` contract-test todos | Marked partial/done where applicable           |
+| [saleor-audit.md](./audits/saleor-audit.md) checkout/cart rows | Updated — proxies + Stripe scaffold wired |
+| [supabase-schema.md](./infrastructure/supabase-schema.md) “Planned” tables | Updated — wired migrations through `social_connections` |
 
 ---
 

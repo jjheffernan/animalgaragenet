@@ -52,9 +52,29 @@ Markers: `@inspiration-scaffold` (Supabase/community/CMS) · `@saleor-migration`
 
 ---
 
-## Next steps (batch 2026-06-30)
+## Next steps (batch 2026-07-01)
 
-Explicit follow-ups from the June 30 implementation batch (`67a150c`–`6837217`, plus `608d8e0` / `5ca1b1f`). Shipped rows are **done** in the tracker above; this table is for remaining code and ops work only.
+Canonical implementer table: [batch-2026-07-01.md](./batch-2026-07-01.md). Remaining code work from June 30 night batch (`057242a`–`7649a9e`) plus open AUD-P1/P2 rows.
+
+| ID     | Source              | Task                                                                 | Owner        | Acceptance criteria                                                                 | Prod setup                                                                 |
+| ------ | ------------------- | -------------------------------------------------------------------- | ------------ | ----------------------------------------------------------------------------------- | -------------------------------------------------------------------------- |
+| IP-003 | AUD-P1-001 / BATCH-001 | Payment App channel enablement + live pay verify                  | saleor / ops | `paymentGateways.length > 0`; test card → order in Saleor Dashboard                 | Stripe Payment App on channel; `PUBLIC_SALEOR_API_URL` + `SALEOR_CHANNEL`  |
+| IP-022 | BATCH-003           | Featured sections beyond hero                                        | code         | Admin edits UGC/campaign blocks; homepage loaders read all section types            | Apply `20250630150000_content_metadata.sql` on Supabase                      |
+| IP-013 | BATCH-011           | CDN presigned upload (Phase 2)                                       | code / ops   | Presigned PUT wired in `cdn.ts`; admin media upload uses S3 when env set              | `PUBLIC_CDN_BASE_URL`, `S3_BUCKET`, `AWS_*` per [§ Prod CDN](#prod-cdn)   |
+| IP-025 | BATCH-007           | Supabase-backed admin user CRUD                                      | code         | `/admin/users` lists auth users via service role; mock only when Supabase unset       | `SUPABASE_SERVICE_ROLE_KEY`; `promote-admin.ts` for roles                  |
+| IP-015 | AUD-P1-008          | Live Ghost CMS                                                       | code / ops   | `/blog` and `/guides` load real posts when env set                                  | `GHOST_URL`, `GHOST_CONTENT_API_KEY`; tags `guide` / `blog`                |
+| IP-005 | batch `6837217`     | Verify live collection filter on staging                             | saleor / ops | `/shop?collection={slug}` returns Saleor products when env set                      | `PUBLIC_SALEOR_API_URL` on Netlify                                         |
+| IP-006 | batch `67a150c`     | Apply homepage CMS migration                                         | supabase / ops | `featured_sections` table exists; admin save persists                              | Apply `20250630150000_content_metadata.sql`                                |
+| IP-012 | `7649a9e`           | Order mirror ops follow-up                                           | ops          | Webhook registered in Saleor; snapshots persist across deploys                      | Apply `20250630170000_order_snapshots.sql`; `SALEOR_WEBHOOK_SECRET`        |
+| IP-027 | `ed1465d`           | Social connections migration apply                                   | supabase / ops | `social_connections` table exists on project                                        | Apply `20250630240000_social_connections.sql`                              |
+| IP-007 | batch `c0f1b80`     | YouTube cron on production                                           | ops          | Scheduled `POST /api/cron/youtube-sync`                                             | `YOUTUBE_API_KEY`, `YOUTUBE_SYNC_SECRET`                                   |
+| AUD-P2-035 | BATCH-008         | `/military` discoverability                                          | code         | Footer or loyalty link to `/military`                                               | —                                                                          |
+
+---
+
+## Next steps (batch 2026-06-30) — archived
+
+Explicit follow-ups from the June 30 implementation batch (`67a150c`–`6837217`, plus `608d8e0` / `5ca1b1f`). Shipped rows are **done** in the tracker above.
 
 | ID     | Source              | Task                                                                 | Owner        | Acceptance criteria                                                                 | Prod setup                                                                 |
 | ------ | ------------------- | -------------------------------------------------------------------- | ------------ | ----------------------------------------------------------------------------------- | -------------------------------------------------------------------------- |
@@ -170,4 +190,4 @@ npm run test:unit
 
 ---
 
-_Last updated: June 30, 2026 (batch next-steps recorded)_
+_Last updated: July 1, 2026 (batch 2026-07-01 defined)_

@@ -16,6 +16,9 @@ Thumbs.db
 *.swo
 *~
 
+# Cursor agent local state (orchestrator progress — never commit)
+.cursor/commit-progress.json
+
 # Env — never commit real secrets (only templates / CI fixtures)
 .env
 .env.*

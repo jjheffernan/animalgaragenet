@@ -31,10 +31,9 @@ jobs:
       - name: Secret guard
         run: bash scripts/check-secrets.sh
 
-      - name: Audit GitHub secrets manifest
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: bash scripts/check-github-secrets.sh
+      - name: GitHub secrets audit (local maintainer)
+        run: |
+          echo "Actions cannot list repository secrets — run npm run secrets:audit locally."
 
       - name: Live readiness probes
         run: npm run test:readiness

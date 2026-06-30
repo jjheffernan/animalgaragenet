@@ -1,0 +1,9 @@
+# Gitleaks config — see .github/workflows/secrets-ci.yml
+title = "animalgaragenet gitleaks"
+
+[extend]
+useDefault = true
+
+[allowlist]
+description = "Agent commit orchestrator state — manifest IDs only, not credentials"
+paths = ['''\.cursor/commit-progress\.json$''']

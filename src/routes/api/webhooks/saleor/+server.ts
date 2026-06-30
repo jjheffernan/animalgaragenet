@@ -46,7 +46,7 @@ export const POST: RequestHandler = async ({ request }) => {
 		if (!result.ok) {
 			return json({ error: result.reason }, { status: 422 });
 		}
-		if ('skipped' in result && result.skipped) {
+		if ('skipped' in result) {
 			return json({ ok: true, skipped: result.reason });
 		}
 		return json({ ok: true, notified: result.notified, productId: result.productId });

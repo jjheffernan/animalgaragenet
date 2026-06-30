@@ -103,7 +103,7 @@ export async function inviteAdminUser(
 	const { error } = await admin.auth.admin.inviteUserByEmail(trimmedEmail, {
 		data: { name: trimmedName },
 		app_metadata: { role }
-	});
+	} as { data?: object; redirectTo?: string });
 
 	if (error) {
 		return { ok: false, error: error.message };

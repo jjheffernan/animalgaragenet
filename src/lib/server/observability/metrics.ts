@@ -15,11 +15,6 @@ function escapeLabel(value: string): string {
 	return value.replace(/\\/g, '\\\\').replace(/"/g, '\\"').replace(/\n/g, '\\n');
 }
 
-function formatLabels(labels: Record<string, string>): string {
-	const body = labelKey(labels);
-	return body ? `{${body}}` : '';
-}
-
 const requestTotals = new Map<MetricKey, number>();
 const durationCounts = new Map<MetricKey, number>();
 const durationSums = new Map<MetricKey, number>();

@@ -20,7 +20,8 @@ describe('validateBugReportPayload', () => {
 	});
 
 	it('uses session email when guest email omitted', () => {
-		const { email: _email, ...withoutEmail } = validBody;
+		const withoutEmail = { ...validBody };
+		delete (withoutEmail as { email?: string }).email;
 		const result = validateBugReportPayload(withoutEmail, {
 			sessionEmail: 'member@example.com'
 		});
@@ -31,7 +32,8 @@ describe('validateBugReportPayload', () => {
 	});
 
 	it('rejects missing email for guests', () => {
-		const { email: _email, ...withoutEmail } = validBody;
+		const withoutEmail = { ...validBody };
+		delete (withoutEmail as { email?: string }).email;
 		const result = validateBugReportPayload(withoutEmail);
 		expect(result.ok).toBe(false);
 		if (!result.ok) {

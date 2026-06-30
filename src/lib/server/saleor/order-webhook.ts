@@ -67,7 +67,7 @@ function readLines(value: unknown): OrderLineSnapshot[] {
 				unitPrice
 			};
 		})
-		.filter((line): line is OrderLineSnapshot => line != null);
+		.filter((line) => line != null) as OrderLineSnapshot[];
 }
 
 function readTrackingNumber(fulfillments: unknown): string | null {

@@ -57,7 +57,7 @@ async function fetchSaleorPartCategories(): Promise<PartCategory[]> {
  * Curated parts navigation taxonomy — Saleor category tree when configured, mock fallback otherwise.
  */
 export async function getPartCategoriesForNav(
-	locale: string = config.defaultLocale
+	_locale: string = config.defaultLocale
 ): Promise<PartCategory[]> {
 	return withSaleorCatalog(
 		async () => {

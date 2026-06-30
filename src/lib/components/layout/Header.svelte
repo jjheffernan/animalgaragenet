@@ -126,8 +126,8 @@
 
 	$effect(() => {
 		// Close menus on route change
-		$page.url.pathname;
-		$page.url.search;
+		void $page.url.pathname;
+		void $page.url.search;
 		closeMenus();
 		mobileOpen = false;
 		notificationsOpen = false;

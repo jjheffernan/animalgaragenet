@@ -461,6 +461,7 @@ describe('payment app gate helpers', () => {
 		expect(isPaymentAppConfigured(null)).toBe(false);
 		expect(
 			isPaymentAppConfigured({
+				id: 'chk-1',
 				subtotal: { amount: 10, currency: 'USD' },
 				shippingPrice: null,
 				total: { amount: 10, currency: 'USD' },
@@ -471,6 +472,7 @@ describe('payment app gate helpers', () => {
 		).toBe(false);
 		expect(
 			isPaymentAppConfigured({
+				id: 'chk-2',
 				subtotal: { amount: 10, currency: 'USD' },
 				shippingPrice: null,
 				total: { amount: 10, currency: 'USD' },

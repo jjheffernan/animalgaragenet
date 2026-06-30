@@ -9,6 +9,7 @@
 </script>
 
 {#if sanitizedHtml}
+	<!-- eslint-disable-next-line svelte/no-at-html-tags -- sanitized via sanitizeRichHtml -->
 	<div class="rich-content">{@html sanitizedHtml}</div>
 {:else if plainBlocks.length > 0}
 	<div class="rich-content rich-content--plain">

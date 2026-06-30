@@ -70,10 +70,14 @@ export const PUT: RequestHandler = async ({ request, locals }) => {
 		);
 	}
 
-	const next = await updateUserSocialConnection(locals.session.id, platform, {
-		action: parsed.action,
-		...(parsed.action === 'connect' ? { handle: parsed.handle!, mock: !oauthConfigured } : {})
-	});
+	const next =
+		parsed.action === 'connect'
+			? await updateUserSocialConnection(locals.session.id, platform, {
+					action: 'connect',
+					handle: parsed.handle!,
+					mock: !oauthConfigured
+				})
+			: await updateUserSocialConnection(locals.session.id, platform, { action: 'disconnect' });
 
 	if (!next) {
 		return json({ error: 'Unable to save connection' }, { status: 500 });

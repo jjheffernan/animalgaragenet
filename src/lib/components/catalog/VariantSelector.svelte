@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { resolve } from '$app/paths';
 	import type { Product } from '$lib/types/saleor';
 
 	interface Props {

@@ -116,7 +116,7 @@ export async function redeemCode(
 export async function clearCode(
 	cookies: Cookies,
 	rawCode: string,
-	locale = 'en-US'
+	_locale = 'en-US'
 ): Promise<PromoRedeemResult> {
 	const code = normalizePromoCode(rawCode);
 

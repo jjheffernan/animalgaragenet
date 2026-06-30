@@ -234,7 +234,6 @@ class CartState {
 	}
 
 	getCartProducts(): { item: CartItem; product: Product }[] {
-		this.init();
 		return this.items
 			.map((item) => {
 				const product = getCatalogProductById(item.productId);
@@ -244,7 +243,6 @@ class CartState {
 	}
 
 	getUpsellSuggestions(limit = 4): Product[] {
-		this.init();
 		const cartProducts = this.getCartProducts();
 		const cartIds = new Set(this.items.map((i) => i.productId));
 		const kind = dominantCatalogKind(cartProducts.map(({ product }) => product));
@@ -267,4 +265,12 @@ class CartState {
 	}
 }
 
-export const cart = new CartState();
+function createCartState(): CartState {
+	const state = new CartState();
+	if (typeof window !== 'undefined') {
+		state.init();
+	}
+	return state;
+}
+
+export const cart = createCartState();

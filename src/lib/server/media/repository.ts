@@ -352,7 +352,7 @@ export async function listApprovedUgcGalleryItems(limit = 100): Promise<UgcGalle
 
 	const items: UgcGalleryItem[] = [];
 	for (const row of data) {
-		const links = row.testimonial_media as Array<{
+		const links = row.testimonial_media as unknown as Array<{
 			testimonials: { status: string; title: string } | null;
 		}> | null;
 		const approved = links?.some((link) => link.testimonials?.status === 'approved');

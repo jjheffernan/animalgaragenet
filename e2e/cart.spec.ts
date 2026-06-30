@@ -20,8 +20,11 @@ test.describe('cart', () => {
 			return Boolean(raw && JSON.parse(raw).length > 0);
 		});
 
-		await page.goto('/cart');
-		await expect(page.getByRole('heading', { name: 'Cart' })).toBeVisible({ timeout: 10_000 });
+		await page.goto('/cart', { waitUntil: 'domcontentloaded' });
+		await dismissCookieBanner(page);
+		await expect(page.getByRole('heading', { level: 1, name: 'Cart' })).toBeVisible({
+			timeout: 10_000
+		});
 		await expect(page.getByRole('link', { name: 'Garage Flag Tee' })).toBeVisible({
 			timeout: 10_000
 		});

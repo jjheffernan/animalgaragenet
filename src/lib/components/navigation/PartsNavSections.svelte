@@ -7,7 +7,7 @@
 		PARTS_BUILD_TYPES,
 		type PartsFilterState
 	} from '$lib/data/parts-filters';
-	import { categoryPillClass, ribbonSectionLabelClass } from '$lib/ui/catalog-ribbon';
+	import { ribbonSectionLabelClass } from '$lib/ui/catalog-ribbon';
 	import type { Brand, PartCategory, PopularModel } from '$lib/types/domain';
 
 	type Layout = 'megamenu' | 'dropdown' | 'mobile';

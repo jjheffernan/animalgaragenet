@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { goto, invalidateAll } from '$app/navigation';
+	import { goto } from '$app/navigation';
 	import { page } from '$app/state';
 	import { config } from '$lib/config/env';
 	import { locales, type LocaleCode } from '$lib/types/locale';

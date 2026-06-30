@@ -73,7 +73,7 @@
 				if (!res.ok) throw new Error('Search request failed');
 				apiResults = await res.json();
 				useMockFallback = false;
-			} catch (err) {
+			} catch {
 				if (controller.signal.aborted) return;
 				useMockFallback = true;
 				apiResults = null;

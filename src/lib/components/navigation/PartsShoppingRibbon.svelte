@@ -97,8 +97,8 @@
 	});
 
 	$effect(() => {
-		page.url.pathname;
-		page.url.search;
+		void page.url.pathname;
+		void page.url.search;
 		closeMenus();
 	});
 

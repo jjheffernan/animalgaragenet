@@ -46,7 +46,7 @@ function dealToCampaign(deal: Deal): Campaign {
 	};
 }
 
-async function listScheduledDealsRaw(now = new Date()): Promise<Deal[]> {
+async function listScheduledDealsRaw(_now = new Date()): Promise<Deal[]> {
 	const admin = createAdminClient();
 	if (!admin) {
 		const source = mockStore.length > 0 ? mockStore : getMockActiveDeals();

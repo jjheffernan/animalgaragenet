@@ -17,14 +17,15 @@ import {
 	isCdnInvalidationConfigured
 } from '$lib/server/media/cdn';
 import { POST } from '../../src/routes/api/admin/media/invalidate/+server';
+import type { RequestEvent } from '../../src/routes/api/admin/media/invalidate/$types';
 
-function apiEvent(body: Record<string, unknown>, locals: App.Locals) {
+function apiEvent(body: Record<string, unknown>, locals: App.Locals): RequestEvent {
 	const request = new Request('http://localhost/api/admin/media/invalidate', {
 		method: 'POST',
 		headers: { 'content-type': 'application/json' },
 		body: JSON.stringify(body)
 	});
-	return { request, locals };
+	return { request, locals } as unknown as RequestEvent;
 }
 
 const staffLocals = {

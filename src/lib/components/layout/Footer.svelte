@@ -25,18 +25,18 @@
 		]
 	] as const;
 
+	const helpfulLinks = helpfulLinkColumns.flat();
+
 	const businessHours = [
 		{ days: 'Mon – Fri', hours: '9am – 6pm PT' },
 		{ days: 'Saturday', hours: '10am – 4pm PT' },
 		{ days: 'Sunday', hours: 'Closed' }
 	] as const;
-
-	let helpfulLinksOpen = $state(false);
 </script>
 
 <footer class="border-t border-zinc-800 bg-zinc-950">
 	<div class="mx-auto max-w-7xl px-4 py-10 sm:px-6 sm:py-12 lg:px-8">
-		<div class="grid gap-10 lg:grid-cols-12 lg:gap-x-8 lg:gap-y-10">
+		<div class="grid gap-8 lg:grid-cols-12 lg:gap-x-8 lg:gap-y-10">
 			<!-- Brand: logo, address, hours -->
 			<div class="lg:col-span-4">
 				<a href={resolvePath('/')} class="inline-flex items-center gap-3">
@@ -54,9 +54,9 @@
 
 				<div class="mt-5">
 					<p class="text-xs font-bold uppercase tracking-widest text-zinc-400">Business Hours</p>
-					<ul class="mt-2 space-y-1 text-sm text-zinc-500">
+					<ul class="mt-3 space-y-2 text-sm text-zinc-500">
 						{#each businessHours as row (row.days)}
-							<li class="flex justify-between gap-4 sm:max-w-xs">
+							<li class="flex justify-between gap-4">
 								<span>{row.days}</span>
 								<span class="text-zinc-400">{row.hours}</span>
 							</li>
@@ -64,7 +64,7 @@
 					</ul>
 				</div>
 
-				<div class="mt-6 max-w-sm">
+				<div class="mt-6 w-full lg:max-w-sm">
 					<NewsletterSignup />
 				</div>
 			</div>
@@ -72,11 +72,11 @@
 			<!-- Contact + social -->
 			<div class="lg:col-span-2">
 				<p class="text-xs font-bold uppercase tracking-widest text-zinc-400">Get in Touch</p>
-				<ul class="mt-4 space-y-3 text-sm">
+				<ul class="mt-4 space-y-1 text-sm">
 					<li>
 						<a
 							href="tel:+15558675309"
-							class="text-zinc-500 transition hover:text-red-500"
+							class="block py-2.5 text-zinc-500 transition hover:text-red-500"
 						>
 							(555) 867-5309
 						</a>
@@ -84,7 +84,7 @@
 					<li>
 						<a
 							href="mailto:support@animalgarage.com"
-							class="text-zinc-500 transition hover:text-red-500"
+							class="block py-2.5 text-zinc-500 transition hover:text-red-500"
 						>
 							support@animalgarage.com
 						</a>
@@ -120,52 +120,27 @@
 				</div>
 			</div>
 
-			<!-- Helpful links — mobile accordion -->
-			<div class="lg:hidden">
-				<button
-					type="button"
-					class="flex w-full items-center justify-between border-b border-zinc-800 py-3 text-left text-xs font-bold uppercase tracking-widest text-zinc-400"
-					aria-expanded={helpfulLinksOpen}
-					onclick={() => (helpfulLinksOpen = !helpfulLinksOpen)}
-				>
-					Helpful Links
-					<svg
-						class="h-4 w-4 shrink-0 text-zinc-500 transition-transform {helpfulLinksOpen
-							? 'rotate-180'
-							: ''}"
-						fill="none"
-						viewBox="0 0 24 24"
-						stroke="currentColor"
-						stroke-width="2"
-						aria-hidden="true"
-					>
-						<path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
-					</svg>
-				</button>
-				{#if helpfulLinksOpen}
-					<div class="grid grid-cols-2 gap-x-8 gap-y-1 py-4 sm:grid-cols-3">
-						{#each helpfulLinkColumns as column, columnIndex (columnIndex)}
-							<ul class="space-y-2">
-								{#each column as link (link.href)}
-									<li>
-										<a
-											href={resolvePath(link.href)}
-											class="text-sm text-zinc-500 transition hover:text-red-500"
-										>
-											{link.label}
-										</a>
-									</li>
-								{/each}
-							</ul>
-						{/each}
-					</div>
-				{/if}
+			<!-- Helpful links — mobile (always visible) -->
+			<div class="w-full lg:hidden">
+				<p class="text-xs font-bold uppercase tracking-widest text-zinc-400">Helpful Links</p>
+				<ul class="mt-4 grid grid-cols-2 gap-x-4">
+					{#each helpfulLinks as link (link.href)}
+						<li>
+							<a
+								href={resolvePath(link.href)}
+								class="block py-2.5 text-sm text-zinc-500 transition hover:text-red-500"
+							>
+								{link.label}
+							</a>
+						</li>
+					{/each}
+				</ul>
 			</div>
 		</div>
 
 		<!-- Trust strip -->
 		<div
-			class="mt-10 flex flex-col items-center gap-4 border-t border-zinc-800 pt-8 sm:flex-row sm:justify-center sm:gap-6"
+			class="mt-10 flex flex-col items-center gap-4 border-t border-zinc-800 pt-8 text-center sm:flex-row sm:justify-center sm:gap-6 sm:text-left"
 		>
 			<div class="flex items-center gap-3 text-zinc-600">
 				<img src="/logo.svg" alt="" width="28" height="28" class="h-7 w-7 opacity-60" />
@@ -175,7 +150,7 @@
 
 		<!-- Bottom bar -->
 		<div
-			class="mt-6 flex flex-col items-center justify-between gap-3 border-t border-zinc-800 pt-6 text-xs text-zinc-600 sm:flex-row"
+			class="mt-6 flex flex-col items-center justify-between gap-3 border-t border-zinc-800 pt-6 text-center text-xs text-zinc-600 sm:flex-row sm:text-left"
 		>
 			<p>&copy; {new Date().getFullYear()} Animal Garage. All rights reserved.</p>
 			<p class="flex items-center gap-1.5 text-zinc-500">

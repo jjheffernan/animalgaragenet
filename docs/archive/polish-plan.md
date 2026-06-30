@@ -1,7 +1,7 @@
 # Polish plan — June 30, 2026
 
 > **Status: Complete** — Session polish items landed on `dev` (June 30, 2026).  
-> **Replacement:** [inspiration-polish-coordination.md](../plans/active/inspiration-polish-coordination.md) · [inspiration-polish-prod-setup.md](../plans/active/inspiration-polish-prod-setup.md)
+> **Replacement:** [inspiration-polish-tracker.md](../plans/active/inspiration-polish-tracker.md)
 
 ---
 

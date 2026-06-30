@@ -24,9 +24,8 @@ Complete, superseded, or stale plans. Each file has a status banner.
 | [archive/animation-media.md](./archive/animation-media.md)                 | Stale — marketing strategy             |
 | [archive/dashboard-adoption-plan.md](./archive/dashboard-adoption-plan.md) | Complete — in-repo `/admin`            |
 | [archive/media-cdn-plan.md](./archive/media-cdn-plan.md)                   | Superseded — see media-uploads phase 1 |
-| [archive/polish-plan.md](./archive/polish-plan.md)                         | Complete — June 2026 session polish      |
+| [archive/polish-plan.md](./archive/polish-plan.md)                         | Complete — see inspiration-polish-tracker |
 | [archive/doc-implementation-manifest.md](./archive/doc-implementation-manifest.md) | Superseded — June 2026 batch audit (`DOC-###`) |
-| [archive/polish-plan.md](./archive/polish-plan.md)                                 | Complete — see inspiration-polish-coordination |
 
 ---
 
@@ -108,8 +107,7 @@ Complete, superseded, or stale plans. Each file has a status banner.
 | [plans/README.md](./plans/README.md)                                           | Plan lifecycle                          |
 | [plans/AUDIT-REMEDIATION.md](./plans/AUDIT-REMEDIATION.md)                     | Consolidated audit remediation tracker  |
 | [plans/TRIAGE.md](./plans/TRIAGE.md)                                           | Plan vs codebase verification           |
-| [plans/active/inspiration-polish-coordination.md](./plans/active/inspiration-polish-coordination.md) | Open work — inspiration + polish + AUDIT IDs |
-| [plans/active/inspiration-polish-prod-setup.md](./plans/active/inspiration-polish-prod-setup.md)   | Ops setup for Netlify / Supabase / Saleor    |
+| [plans/active/inspiration-polish-tracker.md](./plans/active/inspiration-polish-tracker.md) | Open work — inspiration + polish + AUDIT IDs + prod setup |
 | [plans/active/account-flow-fix.md](./plans/active/account-flow-fix.md)         | Netlify + Supabase account ops          |
 | [plans/active/market-readiness.md](./plans/active/market-readiness.md)         | Phased launch roadmap                   |
 | [plans/active/media-uploads.md](./plans/active/media-uploads.md)               | UGC upload pipeline — Phase 1 wired; apply migration on Supabase |
@@ -128,6 +126,7 @@ Subfolders: `frontend/`, `business-logic/`, `backend-ops/` (not restructured her
 
 | Doc                                                                    | Purpose              |
 | ---------------------------------------------------------------------- | -------------------- |
+| [testing/e2e-policy.md](./testing/e2e-policy.md)                     | E2E scope — unit default; Playwright on explicit e2e only |
 | [testing/external-dependencies.md](./testing/external-dependencies.md) | Integration registry |
 | [testing/readiness-report.md](./testing/readiness-report.md)           | Live probe results   |
 | [testing/security-hardening.md](./testing/security-hardening.md)       | Security changelog   |

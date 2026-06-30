@@ -2,7 +2,7 @@
 
 Living backlog of capabilities identified during Phase 2 research. Items marked **Done** ship in the prototype.
 
-**Open work:** [inspiration-polish-coordination.md](../plans/active/inspiration-polish-coordination.md) — canonical tracker with scaffold paths and prod setup.
+**Open work:** [inspiration-polish-tracker.md](../plans/active/inspiration-polish-tracker.md) — canonical tracker with scaffold paths and prod setup.
 
 No external site names — this doc is the canonical reference for what was researched.
 
@@ -44,7 +44,7 @@ Key fixes: nav buttons, search/cart drawers, promo dismiss, build detail, watch 
 
 ## Remaining work (summary)
 
-Full rows, scaffolds, and prod steps live in the [tracker](../plans/active/inspiration-polish-coordination.md). High-level buckets:
+Full rows, scaffolds, and prod steps live in the [tracker](../plans/active/inspiration-polish-tracker.md). High-level buckets:
 
 | Area        | Examples still open                                      |
 | ----------- | -------------------------------------------------------- |
@@ -68,4 +68,4 @@ Saleor migration swap points use `@saleor-migration` in code (not listed here). 
 
 ---
 
-_Last updated: June 30, 2026 — consolidated into inspiration-polish-coordination_
+_Last updated: June 30, 2026 — consolidated into inspiration-polish-tracker_

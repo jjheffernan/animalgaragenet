@@ -3,7 +3,7 @@
 **Public documentation policy:** [SECURITY-PUBLIC.md](./SECURITY-PUBLIC.md)
 
 **Last updated:** 2026-06-30  
-**Canonical next-step docs:** [plans/AUDIT-REMEDIATION.md](./plans/AUDIT-REMEDIATION.md) · [plans/active/inspiration-polish-coordination.md](./plans/active/inspiration-polish-coordination.md) · [plans/active/market-readiness.md](./plans/active/market-readiness.md) · [plans/active/account-flow-fix.md](./plans/active/account-flow-fix.md)
+**Canonical next-step docs:** [plans/AUDIT-REMEDIATION.md](./plans/AUDIT-REMEDIATION.md) · [plans/active/inspiration-polish-tracker.md](./plans/active/inspiration-polish-tracker.md) · [plans/active/market-readiness.md](./plans/active/market-readiness.md) · [plans/active/account-flow-fix.md](./plans/active/account-flow-fix.md)
 
 This file reconciles “next steps” across all `docs/` so nothing is orphaned. Items are **Done**, **Ops** (external dashboard/env), or **Open** (code work).
 
@@ -67,7 +67,7 @@ These appear as unchecked boxes in plans but **cannot be completed in-repo**:
 | P2       | Ghost + remaining homepage mock slices (videos, builds)         | market-readiness Phase 3                                                       |
 | P2       | `profiles` table contract test                                  | readiness-report (testimonials + build_submissions done)                       |
 | P2       | `readiness-ci` optional Actions job                             | readiness-report                                                               |
-| P2       | OAuth Discord/Azure verification                                | [inspiration-polish-coordination.md](./plans/active/inspiration-polish-coordination.md) |
+| P2       | OAuth Discord/Azure verification                                | [inspiration-polish-tracker.md](./plans/active/inspiration-polish-tracker.md) |
 | P2       | SEO/OG, analytics, performance audit                            | Phase 5 (see [README.md](./README.md))                                         |
 | P2       | Newsletter / user preferences tables                            | [supabase.md](./integrations/supabase.md) roadmap                              |
 

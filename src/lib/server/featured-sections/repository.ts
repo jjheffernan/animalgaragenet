@@ -5,6 +5,13 @@ import { getActiveCampaign } from '$lib/data/mock/campaigns';
 
 const mockSections = new Map<string, FeaturedSection>();
 
+const STATIC_HERO_FALLBACK = {
+	headline: 'Garage Culture Delivered',
+	subheadline:
+		'Merch, media, and the raw energy of the shop floor — Animal Garage is your automotive brand touchpoint.',
+	image: 'https://picsum.photos/seed/aghero/1920/1080'
+} as const;
+
 function rowToSection(row: Record<string, unknown>): FeaturedSection {
 	return {
 		id: String(row.id),
@@ -21,9 +28,9 @@ function mockHeroSection(): FeaturedSection {
 		id: 'mock-hero',
 		sectionKey: 'hero',
 		content: {
-			headline: campaign.name,
-			subheadline: campaign.description,
-			image: campaign.heroImage,
+			headline: campaign?.name ?? STATIC_HERO_FALLBACK.headline,
+			subheadline: campaign?.description ?? STATIC_HERO_FALLBACK.subheadline,
+			image: campaign?.heroImage ?? STATIC_HERO_FALLBACK.image,
 			ctaLabel: 'Shop Now',
 			ctaHref: '/shop'
 		},
@@ -32,7 +39,12 @@ function mockHeroSection(): FeaturedSection {
 	};
 }
 
-// @inspiration-scaffold: intentional — homepage CMS; see docs/plans/active/inspiration-polish-coordination.md#IP-006
+/** Default hero when CMS row or active campaign is unavailable */
+export function getDefaultHeroSection(): FeaturedSection {
+	return mockHeroSection();
+}
+
+// @inspiration-scaffold: intentional — homepage CMS; see docs/plans/active/inspiration-polish-tracker.md#IP-006
 export async function getFeaturedSection(sectionKey: string): Promise<FeaturedSection | null> {
 	const admin = createAdminClient();
 	if (!admin) {

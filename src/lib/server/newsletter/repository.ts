@@ -15,7 +15,7 @@ function rowToSubscriber(row: Record<string, unknown>): NewsletterSubscriber {
 	};
 }
 
-// @inspiration-scaffold: intentional — newsletter footer signup; see docs/plans/active/inspiration-polish-coordination.md#IP-008
+// @inspiration-scaffold: intentional — newsletter footer signup; see docs/plans/active/inspiration-polish-tracker.md#IP-008
 export async function subscribeNewsletter(
 	input: NewsletterSignupInput
 ): Promise<{ ok: boolean; subscriber?: NewsletterSubscriber }> {

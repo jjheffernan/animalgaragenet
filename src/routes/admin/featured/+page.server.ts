@@ -14,7 +14,7 @@ export const load: PageServerLoad = async () => {
 
 /**
  * @inspiration-scaffold: intentional — homepage CMS editor shell;
- * see docs/plans/active/inspiration-polish-coordination.md#IP-006
+ * see docs/plans/active/inspiration-polish-tracker.md#IP-006
  */
 export const actions: Actions = {
 	saveHero: async ({ request }) => {

@@ -40,7 +40,7 @@ function rowToVideo(row: Record<string, unknown>): Video {
 	};
 }
 
-// @inspiration-scaffold: intentional — YouTube channel manager; see docs/plans/active/inspiration-polish-coordination.md#IP-007
+// @inspiration-scaffold: intentional — YouTube channel manager; see docs/plans/active/inspiration-polish-tracker.md#IP-007
 export async function listYouTubeChannels(): Promise<YouTubeChannelRecord[]> {
 	const admin = createAdminClient();
 	if (!admin) {

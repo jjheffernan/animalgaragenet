@@ -10,4 +10,4 @@ Product decisions, feature backlog, and session polish history.
 
 **Archived:** [polish-plan.md](./polish-plan.md) → [archive/polish-plan.md](../archive/polish-plan.md) (June 2026; code items complete).
 
-**Open work coordination:** [plans/active/inspiration-polish-coordination.md](../plans/active/inspiration-polish-coordination.md) · [plans/AUDIT-REMEDIATION.md](../plans/AUDIT-REMEDIATION.md)
+**Open work coordination:** [plans/active/inspiration-polish-tracker.md](../plans/active/inspiration-polish-tracker.md) · [plans/AUDIT-REMEDIATION.md](../plans/AUDIT-REMEDIATION.md)

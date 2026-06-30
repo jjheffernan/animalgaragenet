@@ -8,7 +8,7 @@ import type { RequestHandler } from './$types';
  * POST /api/newsletter/subscribe — footer / marketing opt-in.
  *
  * @inspiration-scaffold: intentional — add double-opt-in email when ESP wired;
- * see docs/plans/active/inspiration-polish-coordination.md#IP-008
+ * see docs/plans/active/inspiration-polish-tracker.md#IP-008
  */
 export const POST: RequestHandler = async ({ request, getClientAddress }) => {
 	const limited = checkRateLimit(`newsletter:${getClientAddress()}`, 5, 60_000);

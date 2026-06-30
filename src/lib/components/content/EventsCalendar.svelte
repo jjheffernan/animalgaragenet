@@ -1,5 +1,12 @@
 <script lang="ts">
 	import type { Event } from '$lib/types/domain';
+	import {
+		buildCalendarDays,
+		isSameDay,
+		isUpcomingDay,
+		startOfMonth,
+		toDateKey
+	} from '$lib/events/calendar';
 
 	interface Props {
 		events: Event[];
@@ -28,52 +35,6 @@
 	);
 
 	const calendarDays = $derived(buildCalendarDays(viewDate));
-
-	function startOfMonth(date: Date): Date {
-		return new Date(date.getFullYear(), date.getMonth(), 1);
-	}
-
-	function toDateKey(date: Date): string {
-		const y = date.getFullYear();
-		const m = String(date.getMonth() + 1).padStart(2, '0');
-		const d = String(date.getDate()).padStart(2, '0');
-		return `${y}-${m}-${d}`;
-	}
-
-	function startOfDay(date: Date): Date {
-		return new Date(date.getFullYear(), date.getMonth(), date.getDate());
-	}
-
-	function isSameDay(a: Date, b: Date): boolean {
-		return (
-			a.getFullYear() === b.getFullYear() &&
-			a.getMonth() === b.getMonth() &&
-			a.getDate() === b.getDate()
-		);
-	}
-
-	function isUpcomingDay(date: Date): boolean {
-		return startOfDay(date).getTime() >= startOfDay(new Date()).getTime();
-	}
-
-	function buildCalendarDays(month: Date) {
-		const year = month.getFullYear();
-		const monthIndex = month.getMonth();
-		const firstDay = new Date(year, monthIndex, 1);
-		const lastDay = new Date(year, monthIndex + 1, 0);
-		const leading = firstDay.getDay();
-		const totalCells = Math.ceil((leading + lastDay.getDate()) / 7) * 7;
-
-		const days: { date: Date; inMonth: boolean }[] = [];
-		for (let i = 0; i < totalCells; i++) {
-			const dayNum = i - leading + 1;
-			days.push({
-				date: new Date(year, monthIndex, dayNum),
-				inMonth: dayNum >= 1 && dayNum <= lastDay.getDate()
-			});
-		}
-		return days;
-	}
 
 	function prevMonth() {
 		viewDate = new Date(viewDate.getFullYear(), viewDate.getMonth() - 1, 1);
@@ -158,6 +119,7 @@
 			{@const dayEvents = eventsByDate.get(key) ?? []}
 			{@const today = isSameDay(date, new Date())}
 			{@const upcoming = isUpcomingDay(date)}
+			{@const past = !upcoming}
 			<div
 				class="min-h-24 border-b border-r border-zinc-800 p-1.5 sm:min-h-28 sm:p-2
 					{inMonth ? '' : 'bg-zinc-950/50'}

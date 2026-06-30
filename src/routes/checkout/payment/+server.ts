@@ -5,7 +5,7 @@ import type { RequestHandler } from './$types';
  * Checkout payment proxy — Transaction API (Payment Apps).
  *
  * @saleor-migration: intentional — wire when Saleor payment app is on channel;
- * see docs/commerce/saleor-payments.md and docs/plans/active/inspiration-polish-coordination.md#IP-003
+ * see docs/commerce/saleor-payments.md and docs/plans/active/inspiration-polish-tracker.md#IP-003
  */
 
 // @migration: intentional — POST /checkout/payment?action=initialize

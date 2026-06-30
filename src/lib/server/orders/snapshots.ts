@@ -17,7 +17,7 @@ function rowToSnapshot(row: Record<string, unknown>): OrderSnapshot {
 	};
 }
 
-// @inspiration-scaffold: intentional — see docs/plans/active/inspiration-polish-coordination.md#IP-012
+// @inspiration-scaffold: intentional — see docs/plans/active/inspiration-polish-tracker.md#IP-012
 /** Account order history from Saleor mirror table (newest first). */
 export async function listOrderSnapshotsForUser(userId: string): Promise<OrderSnapshot[]> {
 	const admin = createAdminClient();
@@ -33,7 +33,7 @@ export async function listOrderSnapshotsForUser(userId: string): Promise<OrderSn
 	return data.map(rowToSnapshot);
 }
 
-// @inspiration-scaffold: intentional — see docs/plans/active/inspiration-polish-coordination.md#IP-012
+// @inspiration-scaffold: intentional — see docs/plans/active/inspiration-polish-tracker.md#IP-012
 /** Upsert from Saleor webhook / sync job (service role). */
 export async function upsertOrderSnapshot(
 	fields: Omit<OrderSnapshot, 'id' | 'syncedAt'> & { syncedAt?: string }

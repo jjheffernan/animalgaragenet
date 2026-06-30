@@ -129,19 +129,25 @@ Helpers in `catalog-helpers.ts` (`getCatalogKind`, `getProductPath`, `getCatalog
 
 ## Migration scaffolds (`@inspiration-scaffold` / `@migration`)
 
-Commented code tagged `@inspiration-scaffold`, `@migration`, or `@saleor-migration` is **intentional** — it marks swap points for inspiration backlog and Saleor catalog/checkout work tracked in [inspiration-polish-coordination.md](../plans/active/inspiration-polish-coordination.md) (`#IP-###`) and [AUDIT-REMEDIATION.md](../plans/AUDIT-REMEDIATION.md). Agents (especially `polish-sweep`) must **not** delete these blocks during cleanup; uncomment when the linked env, migration, or payment gateway is ready. `@saleor-migration` details: [commerce/saleor.md](../commerce/saleor.md).
+Commented code tagged `@inspiration-scaffold`, `@migration`, or `@saleor-migration` is **intentional** — it marks swap points for inspiration backlog and Saleor catalog/checkout work tracked in [inspiration-polish-tracker.md](../plans/active/inspiration-polish-tracker.md) (`#IP-###`) and [AUDIT-REMEDIATION.md](../plans/AUDIT-REMEDIATION.md). Agents (especially `polish-sweep`) must **not** delete these blocks during cleanup; uncomment when the linked env, migration, or payment gateway is ready. `@saleor-migration` details: [commerce/saleor.md](../commerce/saleor.md).
+
+---
+
+## E2E testing scope (June 2026)
+
+Agents default to **unit tests on touched modules only**. Full Playwright runs, preview server startup, and `docs/testing/e2e-manual-pass-*.md` updates are reserved for **explicit e2e tasks** with a single dedicated worker — not polish-sweep or routine feature work. Prevents back-to-back full e2e audits across subagents. See [e2e-policy.md](../testing/e2e-policy.md).
 
 ---
 
 ## Deferred
 
-- Checkout completion, payment, shipping (Saleor) — [IP-003](../plans/active/inspiration-polish-coordination.md#ip-003)
-- Promo / voucher redeem UX — **done** ([IP-018](../plans/active/inspiration-polish-coordination.md#ip-018))
+- Checkout completion, payment, shipping (Saleor) — [IP-003](../plans/active/inspiration-polish-tracker.md#ip-003)
+- Promo / voucher redeem UX — **done** ([IP-018](../plans/active/inspiration-polish-tracker.md#ip-018))
 - `@motionone/svelte`
 - PIM / 100k SKU parts catalog
 - UGC media uploads Phase 2+ (plan in [plans/active/media-uploads.md](../plans/active/media-uploads.md))
 
-See [inspiration-polish-coordination.md](../plans/active/inspiration-polish-coordination.md) for open work and [inspiration.md](./inspiration.md) for research backlog (built items only).
+See [inspiration-polish-tracker.md](../plans/active/inspiration-polish-tracker.md) for open work and [inspiration.md](./inspiration.md) for research backlog (built items only).
 
 ---
 

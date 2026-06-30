@@ -7,7 +7,7 @@ import type { RequestHandler } from './$types';
  * POST /api/restock/notify — PDP back-in-stock signup.
  *
  * @inspiration-scaffold: intentional — wire Saleor IN_STOCK webhook to listPendingRestockAlerts;
- * see docs/plans/active/inspiration-polish-coordination.md#IP-004
+ * see docs/plans/active/inspiration-polish-tracker.md#IP-004
  */
 export const POST: RequestHandler = async ({ request, locals, getClientAddress }) => {
 	const limited = checkRateLimit(`restock:${getClientAddress()}`, 10, 60_000);

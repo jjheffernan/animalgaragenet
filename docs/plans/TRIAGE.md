@@ -128,7 +128,7 @@ _Out of scope for next small PR: full S3/Garage CDN pipeline, CI Prettier sweep 
 | `content/build-submissions.md`                    | Public gallery wired via `builds/public.ts`                 |
 | `docs/README.md`                                  | Archive manifest; media-uploads status                      |
 | `plans/DOC-IMPLEMENTATION-MANIFEST.md`          | Archived → `archive/doc-implementation-manifest.md`         |
-| `plans/active/inspiration-polish-prod-setup.md`   | **Deleted** — ops duplicated account-flow-fix + market-readiness |
+| `plans/active/inspiration-polish-coordination.md`, `inspiration-polish-prod-setup.md` | **Merged** into `inspiration-polish-tracker.md` (prod appendix) |
 
 ---
 

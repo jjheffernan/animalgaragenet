@@ -9,7 +9,7 @@ import type { RequestHandler } from './$types';
  *
  * @inspiration-scaffold: intentional — protect with YOUTUBE_SYNC_SECRET header;
  * wire Netlify scheduled function or Supabase pg_cron.
- * see docs/plans/active/inspiration-polish-coordination.md#IP-007
+ * see docs/plans/active/inspiration-polish-tracker.md#IP-007
  */
 export const POST: RequestHandler = async ({ request }) => {
 	const secret = privateEnv.YOUTUBE_SYNC_SECRET;

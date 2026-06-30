@@ -15,7 +15,7 @@ import {
 } from '$lib/server/catalog/collections';
 import { listGuides } from '$lib/server/ghost/posts';
 import { createAdminClient } from '$lib/server/supabase/admin';
-import { getFeaturedSection } from '$lib/server/featured-sections/repository';
+import { getDefaultHeroSection, getFeaturedSection } from '$lib/server/featured-sections/repository';
 import {
 	listApprovedTestimonials,
 	listFeaturedTestimonials
@@ -49,8 +49,8 @@ export const load: PageServerLoad = async () => {
 		guides: guides.slice(0, 3),
 		brands: mockBrands.slice(0, 8),
 		popularModels: mockPopularModels,
-		activeCampaign: getActiveCampaign(),
+		activeCampaign: getActiveCampaign() ?? null,
 		featuredTestimonials,
-		heroSection
+		heroSection: heroSection ?? getDefaultHeroSection()
 	};
 };

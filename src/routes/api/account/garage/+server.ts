@@ -11,7 +11,7 @@ import type { RequestHandler } from './$types';
  * Account garage sync — vehicles + Garage Squad XP.
  *
  * @inspiration-scaffold: intentional — replace localStorage garage/garage-xp stores;
- * see docs/plans/active/inspiration-polish-coordination.md#IP-009
+ * see docs/plans/active/inspiration-polish-tracker.md#IP-009
  */
 export const GET: RequestHandler = async ({ locals }) => {
 	if (!locals.session) {

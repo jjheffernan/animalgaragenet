@@ -22,7 +22,7 @@ function mockKey(email: string, productId: string): string {
 	return `${email.toLowerCase()}:${productId}`;
 }
 
-// @inspiration-scaffold: intentional — restock alerts; see docs/plans/active/inspiration-polish-coordination.md#IP-004
+// @inspiration-scaffold: intentional — restock alerts; see docs/plans/active/inspiration-polish-tracker.md#IP-004
 export async function createRestockAlert(input: RestockAlertInput): Promise<RestockAlert | null> {
 	const email = trimToMax(input.email, LIMITS.contact.email);
 	const productId = trimToMax(input.productId, 120);

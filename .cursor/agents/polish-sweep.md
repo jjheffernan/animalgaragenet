@@ -11,7 +11,7 @@ You close the gap between **intended work** and **landed code** after multi-agen
 2. **Chat context** — user messages + agent summaries in the current thread; note promised but missing deliverables.
 3. **Code signals** — grep for `TODO`, `prototype`, `Awaiting Saleor`, `wire when`, empty stubs, untracked agent outputs.
 4. **Prior agent specs** — read `.cursor/agents/*.md` and check if implementation exists.
-5. **Scaffold markers** — never delete commented blocks tagged `@inspiration-scaffold`, `@migration`, or `@saleor-migration`. These are intentional migration hooks; see [inspiration-polish-coordination.md](../../docs/plans/active/inspiration-polish-coordination.md) and [decisions.md](../../docs/meta/decisions.md#migration-scaffolds-inspiration-scaffold--migration).
+5. **Scaffold markers** — never delete commented blocks tagged `@inspiration-scaffold`, `@migration`, or `@saleor-migration`. These are intentional migration hooks; see [inspiration-polish-tracker.md](../../docs/plans/active/inspiration-polish-tracker.md) and [decisions.md](../../docs/meta/decisions.md#migration-scaffolds-inspiration-scaffold--migration).
 
 ## Known stragglers to check (refresh each run)
 
@@ -24,7 +24,7 @@ You close the gap between **intended work** and **landed code** after multi-agen
 | Org sync         | deploy-key mirror on `main`                                | CI prettier blocking auto-sync? |
 | Saleor redeem    | `/account/redeem`                                          | Not started?                    |
 | Prettier CI      | formatting drift blocking CI                               | `npm run lint`                  |
-| Migration scaffolds | `@inspiration-scaffold` / `@saleor-migration` blocks      | Do not delete — inspiration-polish-coordination |
+| Migration scaffolds | `@inspiration-scaffold` / `@saleor-migration` blocks      | Do not delete — inspiration-polish-tracker |
 
 ## Polishing plan output
 
@@ -52,7 +52,7 @@ You close the gap between **intended work** and **landed code** after multi-agen
 
 ## Output
 
-- Polish plan markdown (in reply only — archived plan: `docs/archive/polish-plan.md`; open work: `docs/plans/active/inspiration-polish-coordination.md`)
+- Polish plan markdown (in reply only — archived plan: `docs/archive/polish-plan.md`; open work: `docs/plans/active/inspiration-polish-tracker.md`)
 - List of files changed if you implement P0/P1 items
 
 Do not commit unless asked.

@@ -1,4 +1,4 @@
-// @inspiration-scaffold: intentional — see docs/plans/active/inspiration-polish-coordination.md#IP-014
+// @inspiration-scaffold: intentional — see docs/plans/active/inspiration-polish-tracker.md#IP-014
 import { getLatestVideo, getVideosExcluding } from '$lib/data/mock/videos';
 import { paginateFromUrl } from '$lib/pagination';
 import type { PageServerLoad } from './$types';

@@ -10,6 +10,14 @@
 	let { log, errors = {}, email }: Props = $props();
 </script>
 
+<!-- Honeypot — hidden from users; bots often fill (MR-SEC-001) -->
+<div class="absolute -left-[9999px] h-0 w-0 overflow-hidden" aria-hidden="true">
+	<label>
+		Leave blank
+		<input type="text" name="_hp" tabindex="-1" autocomplete="off" />
+	</label>
+</div>
+
 <input type="hidden" name="email" value={email} />
 
 <label class="block">

@@ -1,5 +1,9 @@
 import { error, fail, redirect } from '@sveltejs/kit';
 import { getBuildLogForUser, updateBuildLog } from '$lib/server/build-logs/repository';
+import {
+	checkBuildSubmitRateLimit,
+	isBuildSubmitHoneypotTripped
+} from '$lib/server/build-logs/submit-guard';
 import { validateBuildLogFields } from '$lib/server/build-logs/validation';
 import type { Actions, PageServerLoad } from './$types';
 
@@ -44,11 +48,23 @@ export const actions: Actions = {
 		if (!log) return fail(404, { errors: { form: 'Build log not found' } });
 		return { success: true, message: 'Draft saved.' };
 	},
-	submit: async ({ request, params, locals }) => {
+	submit: async ({ request, params, locals, getClientAddress }) => {
 		const user = locals.session;
 		if (!user) throw redirect(303, `/auth/sign-in?redirect=/account/builds/${params.id}`);
 
-		const fields = parseFields(await request.formData());
+		const formData = await request.formData();
+		if (isBuildSubmitHoneypotTripped(formData)) {
+			return {
+				success: true,
+				message: 'Build log submitted for review.'
+			};
+		}
+		const rateKey = user.id || getClientAddress();
+		if (!checkBuildSubmitRateLimit(rateKey)) {
+			return fail(429, { errors: { form: 'Too many submissions. Try again later.' } });
+		}
+
+		const fields = parseFields(formData);
 		const errors = validateBuildLogFields(fields, { requireComplete: true });
 		if (Object.keys(errors).length > 0) return fail(400, { errors, intent: 'submit' });
 

@@ -1,14 +1,16 @@
 <script lang="ts">
 	import type { TestimonialFields } from '$lib/server/testimonials/validation';
+	import ReviewPhotoUpload from '$lib/components/forms/ReviewPhotoUpload.svelte';
 
 	interface Props {
 		displayName: string;
 		loyaltyTier?: string;
 		errors?: Record<string, string>;
 		fields?: Partial<TestimonialFields>;
+		disabled?: boolean;
 	}
 
-	let { displayName, loyaltyTier = '', errors = {}, fields = {} }: Props = $props();
+	let { displayName, loyaltyTier = '', errors = {}, fields = {}, disabled = false }: Props = $props();
 
 	let rating = $state('5');
 	$effect.pre(() => {
@@ -24,6 +26,7 @@
 		value={fields.displayName ?? displayName}
 		required
 		maxlength="80"
+		disabled={disabled}
 		class="mt-1 w-full rounded-sm border border-zinc-700 bg-zinc-900 px-3 py-2 text-sm text-white placeholder-zinc-500 focus:border-red-600 focus:outline-none {errors.displayName ? 'border-red-600' : ''}"
 	/>
 	{#if errors.displayName}<p class="mt-1 text-xs text-red-500">{errors.displayName}</p>{/if}
@@ -91,6 +94,8 @@
 	>{fields.body ?? ''}</textarea>
 	{#if errors.body}<p class="mt-1 text-xs text-red-500">{errors.body}</p>{/if}
 </label>
+
+<ReviewPhotoUpload {disabled} />
 
 <p class="text-xs text-zinc-600">
 	Reviews are moderated before they appear publicly. Approved stories earn +50 XP toward your next level.

@@ -1,4 +1,6 @@
 import { fail, redirect } from '@sveltejs/kit';
+import { linkMediaToTestimonial } from '$lib/server/media/repository';
+import { validateMediaAssetIds } from '$lib/server/media/validation';
 import {
 	createTestimonial,
 	listApprovedTestimonials,
@@ -52,8 +54,13 @@ export const actions: Actions = {
 		}
 
 		const loyaltyTier = String(data.get('loyaltyTier') ?? '').trim() || null;
+		const mediaAssetIds = data.getAll('mediaAssetIds').map((id) => String(id).trim()).filter(Boolean);
+		const mediaError = validateMediaAssetIds(mediaAssetIds);
+		if (mediaError) {
+			return fail(400, { errors: { body: mediaError }, fields });
+		}
 
-		await createTestimonial(user.id, {
+		const testimonial = await createTestimonial(user.id, {
 			displayName: fields.displayName,
 			vehicleSummary: fields.vehicleSummary || null,
 			rating: Number.parseInt(fields.rating, 10),
@@ -61,6 +68,8 @@ export const actions: Actions = {
 			body: fields.body,
 			loyaltyTier
 		});
+
+		await linkMediaToTestimonial(testimonial.id, mediaAssetIds, user.id);
 
 		return { success: true, message: 'Thanks! Your review is in the moderation queue.' };
 	}

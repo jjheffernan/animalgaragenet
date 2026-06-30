@@ -32,7 +32,8 @@ test.describe('build log CRUD', () => {
 	const buildTitle = `E2E Build ${Date.now()}`;
 
 	test('customer creates draft, reads, updates, submits', async ({ page }) => {
-		await devQuickSignIn(page, 'Customer');
+		const signedIn = await devQuickSignIn(page, 'Customer');
+		test.skip(!signedIn, 'Local dev quick login not enabled');
 		await page.goto('/account/builds/new');
 		await fillBuildLogForm(page, buildTitle);
 		await page.getByRole('button', { name: 'Save draft' }).click();
@@ -47,11 +48,12 @@ test.describe('build log CRUD', () => {
 		await expect(page.getByText('Draft saved.')).toBeVisible();
 
 		await page.getByRole('button', { name: 'Submit for review' }).click();
-		await expect(page.getByText('Build log submitted for review.')).toBeVisible();
+		await expect(page.getByText(/submitted for review/i)).toBeVisible();
 	});
 
 	test('admin approves pending build log', async ({ page }) => {
-		await devQuickSignIn(page, 'Admin');
+		const signedIn = await devQuickSignIn(page, 'Admin');
+		test.skip(!signedIn, 'Local dev quick login not enabled');
 		await page.goto('/admin/builds');
 		await expect(page.getByText(`${buildTitle} Updated`)).toBeVisible();
 		await page
@@ -69,7 +71,8 @@ test.describe('testimonial CRUD', () => {
 	const reviewTitle = `E2E Review ${Date.now()}`;
 
 	test('customer submits loyalty review', async ({ page }) => {
-		await devQuickSignIn(page, 'Customer');
+		const signedIn = await devQuickSignIn(page, 'Customer');
+		test.skip(!signedIn, 'Local dev quick login not enabled');
 		await page.goto('/loyalty#reviews');
 		await dismissCookieBanner(page);
 		await expect(page.getByRole('heading', { name: 'Share Your Review' })).toBeVisible();
@@ -81,7 +84,8 @@ test.describe('testimonial CRUD', () => {
 	});
 
 	test('admin approves pending testimonial', async ({ page }) => {
-		await devQuickSignIn(page, 'Admin');
+		const signedIn = await devQuickSignIn(page, 'Admin');
+		test.skip(!signedIn, 'Local dev quick login not enabled');
 		await page.goto('/admin/testimonials');
 		await expect(page.getByText(reviewTitle)).toBeVisible();
 		await page

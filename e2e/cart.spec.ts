@@ -15,9 +15,12 @@ test.describe('cart', () => {
 	test('cart page shows added mock line item', async ({ page }) => {
 		await addProductToCartFromDetail(page);
 		await page.getByLabel('Shopping cart').getByRole('button', { name: 'Close cart' }).click();
+		await page.waitForFunction(() => {
+			const raw = localStorage.getItem('ag-cart');
+			return Boolean(raw && JSON.parse(raw).length > 0);
+		});
 
 		await page.goto('/cart');
-		await page.waitForLoadState('networkidle');
 		await expect(page.getByRole('heading', { name: 'Cart' })).toBeVisible({ timeout: 10_000 });
 		await expect(page.getByRole('link', { name: 'Garage Flag Tee' })).toBeVisible({ timeout: 10_000 });
 	});

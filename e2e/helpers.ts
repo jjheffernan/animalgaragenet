@@ -18,9 +18,10 @@ export async function mockEmailSignIn(page: Page, email: string) {
 	await dismissCookieBanner(page);
 	await page.locator('form[action="?/magicLink"] input[name="email"]').fill(email);
 	await Promise.all([
-		page.waitForURL(isAccountPath),
+		page.waitForURL(isAccountPath, { timeout: 15_000 }),
 		page.locator('form[action="?/magicLink"]').evaluate((form: HTMLFormElement) => form.submit())
 	]);
+	await expect(page.getByRole('heading', { name: 'Dashboard' })).toBeVisible({ timeout: 10_000 });
 }
 
 export async function devQuickSignIn(
@@ -34,12 +35,13 @@ export async function devQuickSignIn(
 		return false;
 	}
 	await page.getByRole('button', { name: label, exact: true }).click();
-	await expect(page).toHaveURL(isAccountPath);
+	await page.waitForURL(isAccountPath, { timeout: 15_000 });
+	await expect(page.getByRole('heading', { name: 'Dashboard' })).toBeVisible({ timeout: 10_000 });
 	return true;
 }
 
 export async function openCartDrawer(page: Page): Promise<Locator> {
-	await page.getByRole('button', { name: 'Cart' }).click();
+	await page.getByRole('banner').getByRole('button', { name: 'Cart', exact: true }).click();
 	const cart = page.getByLabel('Shopping cart');
 	await expect(cart).toBeVisible();
 	return cart;

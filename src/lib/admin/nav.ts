@@ -3,7 +3,7 @@ export interface AdminNavItem {
 	href: string;
 	label: string;
 	exact?: boolean;
-	/** Shown when daisyUI shell ships; optional until then */
+	/** Shown when icon set ships; optional until then */
 	icon?: string;
 	/** Route not scaffolded yet — sidebar renders label without link */
 	disabled?: boolean;
@@ -17,40 +17,34 @@ export interface AdminNavSection {
 export const ADMIN_NAV: AdminNavSection[] = [
 	{
 		label: 'Overview',
-		items: [{ href: '/admin/runtime', label: 'Runtime', exact: true }]
-	},
-	{
-		label: 'Social',
-		items: [
-			{ href: '/admin/youtube', label: 'YouTube' },
-			// Scaffold pending — nav disabled until routes exist
-			{ href: '/admin/social/ugc', label: 'UGC', disabled: true },
-			{ href: '/admin/social/discord', label: 'Discord', disabled: true }
-		]
+		items: [{ href: '/admin/dashboard', label: 'Dashboard', exact: true }]
 	},
 	{
 		label: 'Commerce',
 		items: [
 			{ href: '/admin/commerce/channels', label: 'Saleor Channels', disabled: true },
-			{ href: '/admin/commerce/orders', label: 'Orders', disabled: true }
+			{ href: '/admin/commerce/orders', label: 'Orders', disabled: true },
+			{ href: '/admin/wholesale', label: 'Wholesale', disabled: true }
 		]
 	},
 	{
-		label: 'Operations',
+		label: 'Content',
 		items: [
-			{ href: '/admin/calendar', label: 'Calendar', disabled: true },
-			{ href: '/admin/support', label: 'Support', disabled: true },
+			{ href: '/admin/featured', label: 'Featured Sections' },
 			{ href: '/admin/builds', label: 'Builds' },
-			{ href: '/admin/testimonials', label: 'Testimonials' }
+			{ href: '/admin/testimonials', label: 'Testimonials' },
+			{ href: '/admin/youtube', label: 'YouTube' },
+			{ href: '/admin/media', label: 'Media' },
+			{ href: '/admin/social/ugc', label: 'UGC', disabled: true }
 		]
 	},
 	{
-		label: 'Settings',
-		items: [
-			{ href: '/admin/users', label: 'Users' },
-			{ href: '/admin/media', label: 'Media' },
-			{ href: '/admin/featured', label: 'Featured Sections' }
-		]
+		label: 'Users',
+		items: [{ href: '/admin/users', label: 'Users & Roles' }]
+	},
+	{
+		label: 'Runtime',
+		items: [{ href: '/admin/runtime', label: 'Integrations', exact: true }]
 	}
 ];
 

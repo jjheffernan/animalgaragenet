@@ -1,7 +1,6 @@
-import { redirect } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 
-/** Canonical overview lives at `/admin/runtime`. */
-export const load: PageServerLoad = async () => {
-	throw redirect(303, '/admin/runtime');
+/** Overview stats use mock counts until Saleor and Supabase admin queries ship. */
+export const load: PageServerLoad = async ({ parent }) => {
+	return parent();
 };

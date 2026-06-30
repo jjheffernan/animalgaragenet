@@ -1,3 +1,4 @@
+import { resolveAdminGate } from '$lib/server/auth/admin-gate';
 import { getCollections } from '$lib/server/catalog/collections';
 import { getPartsNavData } from '$lib/server/catalog/parts-nav';
 import { hasCookieConsentAnswer } from '$lib/server/cookies';
@@ -8,8 +9,16 @@ export const load: LayoutServerLoad = async ({ cookies, locals }) => {
 		.filter((c) => c.slug !== 'clearance')
 		.slice(0, 4);
 
+	const staffPanel =
+		resolveAdminGate({
+			hasSession: Boolean(locals.session),
+			role: locals.session?.role,
+			devAdmin: locals.devAdmin
+		}) === 'allow';
+
 	return {
 		session: locals.session,
+		staffPanel,
 		notificationCount: 0,
 		shopCollections,
 		partsNav: await getPartsNavData(),

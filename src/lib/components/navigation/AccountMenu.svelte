@@ -6,12 +6,15 @@
 		open = false,
 		onclose,
 		menuId = 'account-menu',
-		container = null
+		container = null,
+		showAdmin = false
 	}: {
 		open?: boolean;
 		onclose: () => void;
 		menuId?: string;
 		container?: HTMLElement | null;
+		/** Staff panel access — editor/admin or local dev bypass */
+		showAdmin?: boolean;
 	} = $props();
 
 	let menuEl = $state<HTMLDivElement | null>(null);
@@ -60,6 +63,18 @@
 					</a>
 				</li>
 			{/each}
+			{#if showAdmin}
+				<li role="none" class="mt-1 border-t border-zinc-800 pt-1">
+					<a
+						href={resolve('/admin/runtime')}
+						role="menuitem"
+						class="block px-4 py-2.5 text-sm font-medium uppercase tracking-wider text-red-400/90 transition hover:bg-zinc-900/80 hover:text-red-400"
+						onclick={onclose}
+					>
+						Admin
+					</a>
+				</li>
+			{/if}
 			<li role="none" class="mt-1 border-t border-zinc-800 pt-1">
 				<form method="POST" action={resolvePath('/auth/sign-out')}>
 					<button

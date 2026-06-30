@@ -16,7 +16,7 @@
 
 	const title = $derived.by(() => {
 		const path = $page.url.pathname;
-		if (path === '/admin') return 'Dashboard';
+		if (path === '/admin' || path === '/admin/dashboard') return 'Dashboard';
 		if (path === '/admin/runtime') return 'Runtime';
 		const segment = path.split('/').filter(Boolean).pop() ?? 'Admin';
 		return segment.charAt(0).toUpperCase() + segment.slice(1).replace(/-/g, ' ');

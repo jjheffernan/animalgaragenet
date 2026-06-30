@@ -155,6 +155,7 @@
 	);
 
 	const session = $derived($page.data.session);
+	const staffPanel = $derived($page.data.staffPanel ?? false);
 	const notificationCount = $derived($page.data.notificationCount ?? 0);
 
 	const headerIconBtn =
@@ -556,6 +557,7 @@
 								open={accountMenuOpen}
 								onclose={() => (accountMenuOpen = false)}
 								container={accountMenuRoot}
+								showAdmin={staffPanel}
 							/>
 						</div>
 					</div>

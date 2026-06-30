@@ -23,7 +23,7 @@
 </script>
 
 <aside class="flex h-full w-64 shrink-0 flex-col border-r border-zinc-800 bg-zinc-900/40 p-4">
-	<a href={resolve('/admin')} class="mb-6 flex items-center gap-2 px-2">
+	<a href={resolve('/admin/dashboard')} class="mb-6 flex items-center gap-2 px-2">
 		<span class="text-xs font-bold uppercase tracking-[0.3em] text-red-500">Animal Garage</span>
 	</a>
 

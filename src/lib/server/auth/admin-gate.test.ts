@@ -23,4 +23,12 @@ describe('resolveAdminGate (staff panel)', () => {
 			'forbidden'
 		);
 	});
+
+	it('returns forbidden when session exists but role is missing', () => {
+		expect(resolveAdminGate({ hasSession: true, role: null, devAdmin: false })).toBe('forbidden');
+	});
+
+	it('prefers allow when devAdmin is set even with customer role', () => {
+		expect(resolveAdminGate({ hasSession: true, role: 'customer', devAdmin: true })).toBe('allow');
+	});
 });

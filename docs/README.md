@@ -26,6 +26,9 @@ Complete, superseded, or stale plans. Each file has a status banner.
 | [archive/media-cdn-plan.md](./archive/media-cdn-plan.md)                   | Superseded — see media-uploads phase 1 |
 | [archive/polish-plan.md](./archive/polish-plan.md)                         | Complete — see inspiration-polish-tracker |
 | [archive/doc-implementation-manifest.md](./archive/doc-implementation-manifest.md) | Superseded — June 2026 batch audit (`DOC-###`) |
+| [archive/batch-2026-07-01.md](./archive/batch-2026-07-01.md) | Complete — July 1 implementer batch |
+| [archive/batch-2026-07-02.md](./archive/batch-2026-07-02.md) | Complete — July 2 implementer batch (BATCH-013–020) |
+| [archive/batch-2026-07-03-followups.md](./archive/batch-2026-07-03-followups.md) | Complete — BATCH-021 + ops apply checklist |
 
 ---
 
@@ -39,6 +42,7 @@ Complete, superseded, or stale plans. Each file has a status banner.
 | [audits/site-audit.md](./audits/site-audit.md)               | Security, gaps, fix log (detail)                          |
 | [audits/ghost-audit.md](./audits/ghost-audit.md)             | Ghost CMS wiring inventory (detail)                       |
 | [audits/saleor-audit.md](./audits/saleor-audit.md)           | Saleor integration scorecard (detail)                     |
+| [audits/security-audit-2026-07.md](./audits/security-audit-2026-07.md) | CDN invalidation hardening (detail)                 |
 | [meta/agents-skills-audit.md](./meta/agents-skills-audit.md) | Cursor agents/skills dead-reference audit                 |
 
 ---
@@ -76,6 +80,8 @@ Complete, superseded, or stale plans. Each file has a status banner.
 | Doc                                                        | Purpose                        |
 | ---------------------------------------------------------- | ------------------------------ |
 | [infrastructure/overview.md](./infrastructure/overview.md) | CDN, S3, Supabase architecture |
+| [infrastructure/migration-squash-notes.md](./infrastructure/migration-squash-notes.md) | Supabase migration squash (17 → 3) |
+| [infrastructure/supabase-schema.md](./infrastructure/supabase-schema.md) | Table inventory |
 
 ---
 
@@ -108,6 +114,7 @@ Complete, superseded, or stale plans. Each file has a status banner.
 | [plans/AUDIT-REMEDIATION.md](./plans/AUDIT-REMEDIATION.md)                     | Consolidated audit remediation tracker  |
 | [plans/TRIAGE.md](./plans/TRIAGE.md)                                           | Plan vs codebase verification           |
 | [plans/active/inspiration-polish-tracker.md](./plans/active/inspiration-polish-tracker.md) | Open work — inspiration + polish + AUDIT IDs + prod setup |
+| [plans/active/ponytail-audit-tracker.md](./plans/active/ponytail-audit-tracker.md) | Server-side dedupe / guard tightening (no UI markup) |
 | [plans/active/account-flow-fix.md](./plans/active/account-flow-fix.md)         | Netlify + Supabase account ops          |
 | [plans/active/market-readiness.md](./plans/active/market-readiness.md)         | Phased launch roadmap                   |
 | [plans/active/media-uploads.md](./plans/active/media-uploads.md)               | UGC upload pipeline — Phase 1 wired; apply migration on Supabase |

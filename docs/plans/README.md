@@ -12,10 +12,12 @@
 | Plan                                                | Status                   | Notes                                                |
 | --------------------------------------------------- | ------------------------ | ---------------------------------------------------- |
 | [inspiration-polish-tracker.md](./active/inspiration-polish-tracker.md) | Active — canonical inspiration + polish + AUDIT tracker |
-| [batch-2026-07-01.md](./active/batch-2026-07-01.md) | Active — July 1 implementer batch (worker slots A/B/C) |
+| [ponytail-audit-tracker.md](./active/ponytail-audit-tracker.md) | Active — server LOC/dedupe audit (P3 open) |
 | [account-flow-fix.md](./active/account-flow-fix.md) | Active — Ops             | Netlify + Supabase env; code guards Done             |
 | [market-readiness.md](./active/market-readiness.md) | Active                   | Phased launch roadmap                                |
 | [media-uploads.md](./active/media-uploads.md)       | Active — partial         | Phase 1 API + migration in repo; apply on Supabase project |
+
+**Archived implementer batches:** [batch-2026-07-01.md](../archive/batch-2026-07-01.md) · [batch-2026-07-02.md](../archive/batch-2026-07-02.md) · [batch-2026-07-03-followups.md](../archive/batch-2026-07-03-followups.md) (ops apply checklist)
 
 Triage and moves: [TRIAGE.md](./TRIAGE.md) (June 2026 reorg + public-safe pass).
 

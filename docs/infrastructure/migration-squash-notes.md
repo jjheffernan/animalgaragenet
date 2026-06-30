@@ -91,4 +91,4 @@ Data in the local stack is discarded. Re-seed test users if needed (`scripts/pro
 ## Related
 
 - [supabase-schema.md](./supabase-schema.md) — table reference and RLS templates
-- [batch-2026-07-03-followups.md](../plans/active/batch-2026-07-03-followups.md) — ops apply checklist (update migration filenames there when promoting to prod)
+- [batch-2026-07-03-followups.md](../archive/batch-2026-07-03-followups.md) — ops apply checklist (squashed filenames)

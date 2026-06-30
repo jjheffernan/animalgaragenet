@@ -25,8 +25,8 @@ Canonical tracker for findings from `docs/audits/*`, [STATUS.md](../STATUS.md), 
 | --------- | ------ | ------------- | ------ |
 | **P0**    | 0      | 5             | 4      |
 | **P1**    | 0      | 1             | 12     |
-| **P2**    | 11     | 0             | 27     |
-| **Total** | **11** | **6**         | **43** |
+| **P2**    | 5      | 0             | 29     |
+| **Total** | **5**  | **6**         | **45** |
 
 _Blocked = external dashboard/env; cannot close in-repo._
 
@@ -82,8 +82,8 @@ _Blocked = external dashboard/env; cannot close in-repo._
 | AUD-P2-001 | Collection product edges on homepage            | saleor-audit              | **done** | saleor     | `getCollections()` returns populated `products[]` from Saleor                      | `src/lib/server/catalog/collections.ts` · BATCH-002                     |
 | AUD-P2-002 | Shop category filter via Saleor taxonomy        | saleor-audit              | **done** | saleor     | `getShopFilterOptions()` + `filterProductsByShopSlug()` use Saleor category tree when env set | `src/lib/server/catalog/shop-filters.ts` · `/api/catalog/shop-filters` |
 | AUD-P2-003 | Saleor catalog search at scale                  | saleor-audit              | **done** | saleor     | Server-side `PRODUCT_SEARCH_QUERY` instead of fetch-100 + client filter            | `src/lib/server/catalog/search.ts` · BATCH-010                          |
-| AUD-P2-004 | Parts YMM URL filter vs `fitment` metadata      | saleor-audit              | **open** | saleor     | Category route applies year/make/model query params to Saleor products             | `src/routes/parts/[category]/+page.server.ts`                           |
-| AUD-P2-005 | Product detail related products / linked builds | saleor-audit              | **open** | saleor     | Related slice from Saleor or CMS, not mock helpers only                            | `src/routes/shop/[slug]/+page.server.ts`                                |
+| AUD-P2-004 | Parts YMM URL filter vs `fitment` metadata      | saleor-audit              | **done** | saleor     | Category route applies year/make/model query params to Saleor products             | `src/routes/parts/[category]/+page.server.ts` · BATCH-013               |
+| AUD-P2-005 | Product detail related products / linked builds | saleor-audit              | **done** | saleor     | Related slice from Saleor or CMS, not mock helpers only                            | `src/routes/shop/[slug]/+page.server.ts` · BATCH-014                    |
 | AUD-P2-006 | Live Saleor integration smoke tests             | saleor-audit              | **open** | saleor     | Optional CI job with env-gated live API contract                                   | `tests/` · `npm run test:readiness`                                     |
 | AUD-P2-007 | Ghost OG / Twitter cards on detail pages        | ghost-audit, STATUS       | **done** | code       | `og:title`, `og:description`, `og:image` from `heroImage`                          | `src/routes/guides/[slug]/` · `src/routes/blog/[slug]/` · BATCH-005 · `a895eb7` |
 | AUD-P2-008 | Map Ghost `meta_title` / `meta_description`     | ghost-audit               | **done** | code       | SEO fields override title/excerpt when present                                     | `src/lib/server/ghost/mappers.ts` · BATCH-005                               |
@@ -125,7 +125,7 @@ _Blocked = external dashboard/env; cannot close in-repo._
 | Source file                                                   | Open items remaining                 | Retire when                   |
 | ------------------------------------------------------------- | ------------------------------------ | ----------------------------- |
 | [audits/site-audit.md](../audits/site-audit.md)               | P2-012–013 (SEO, a11y)               | All AUD-P2 site rows **done** |
-| [audits/saleor-audit.md](../audits/saleor-audit.md)           | P0-004 (ops), P1-001 (partial), P2-001–006 | All Saleor AUD rows **done**  |
+| [audits/saleor-audit.md](../audits/saleor-audit.md)           | P0-004 (ops), P1-001 (partial), P2-006 | All Saleor AUD rows **done**  |
 | [audits/ghost-audit.md](../audits/ghost-audit.md)             | P1-008, P2-011           | All Ghost AUD rows **done**   |
 | [meta/agents-skills-audit.md](../meta/agents-skills-audit.md) | —                                    | AUD-P2-020–022 **done**       |
 | [audits/component-route-audit.md](../audits/component-route-audit.md) | — | AUD-P2-034–038 **done** |

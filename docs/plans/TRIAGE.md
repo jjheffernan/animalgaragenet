@@ -9,10 +9,10 @@
 
 | Category        | Count | Notes                                                                                                             |
 | --------------- | ----: | ----------------------------------------------------------------------------------------------------------------- |
-| **Open** (code) |    12 | See [batch-2026-07-02.md](./active/batch-2026-07-02.md) BATCH-013–020 + [batch-2026-07-03-followups.md](./active/batch-2026-07-03-followups.md) BATCH-021 |
-| **Open** (ops)  |     8 | Netlify env, Supabase redirect URLs, Saleor catalog env, Ghost, OAuth providers, admin bootstrap, migration apply |
-| **Done** (code) |    36 | June 30 batch + IP-012/026/027, navbar polish, component-route cleanup, order webhook, Stripe checkout scaffold |
-| **Archived**    |     7 | `docs/archive/*.md` — banners + pointers to active docs                                                           |
+| **Open** (code) |     5 | See [AUDIT-REMEDIATION.md](./AUDIT-REMEDIATION.md) — P2-006, P2-012 partial, P2-018, P2-020–023 |
+| **Open** (ops)  |     8 | Netlify env, Supabase redirect URLs, Saleor catalog env, Ghost, OAuth providers, admin bootstrap, squashed migration apply |
+| **Done** (code) |    45 | July batches complete; AUD-P2-004/005 done; CDN security hardening |
+| **Archived**    |    10 | `docs/archive/*.md` — banners + pointers to active docs                                                           |
 
 Canonical remediation: [AUDIT-REMEDIATION.md](./AUDIT-REMEDIATION.md) · open work: [STATUS.md](../STATUS.md)
 
@@ -48,7 +48,7 @@ No other markdown files remain at `docs/` root.
 | `supabase.md`                | **Keep**     | `integrations/supabase.md`                                                  |
 | `decisions.md`               | **Keep**     | `meta/decisions.md`                                                         |
 | `inspiration.md`             | **Keep**     | `meta/inspiration.md`                                                       |
-| `polish-plan.md`             | **Keep**     | `meta/polish-plan.md`                                                       |
+| `polish-plan.md`             | **Archived** | `archive/polish-plan.md` — stub at `meta/polish-plan.md` removed 2026-07-03 |
 | `phase3-plan.md`             | **Archived** | `archive/phase3-plan.md` — workstreams A–D done                             |
 | `animation-media.md`         | **Archived** | `archive/animation-media.md`                                                |
 | `daisyui.md`                 | **Archived** | `archive/daisyui.md`                                                        |
@@ -75,14 +75,14 @@ No other markdown files remain at `docs/` root.
 
 ### Recommended next code tasks (doc-aligned)
 
-See [batch-2026-07-02.md](./active/batch-2026-07-02.md) Phase 2 for the canonical July 2 implementer table (slots A/B/C).
+See [AUDIT-REMEDIATION.md](./AUDIT-REMEDIATION.md) and [inspiration-polish-tracker.md](./active/inspiration-polish-tracker.md). July 1–3 implementer batches are **archived** ([batch-2026-07-02.md](../archive/batch-2026-07-02.md)).
 
-1. Parts YMM filter + related products + faceted search (BATCH-013, BATCH-014, BATCH-019).
-2. Ghost cache headers + site-wide SEO (BATCH-015, BATCH-016).
-3. `prefers-reduced-motion` + optional readiness CI (BATCH-017, BATCH-018).
-4. Admin bug report inbox (BATCH-021 — [batch-2026-07-03-followups.md](./active/batch-2026-07-03-followups.md)).
+1. Ops: squashed Supabase migrations + Netlify/Saleor env ([migration-squash-notes.md](../infrastructure/migration-squash-notes.md), [batch-2026-07-03-followups.md](../archive/batch-2026-07-03-followups.md)).
+2. P1 ops gate: Payment App channel enablement (BATCH-001 / AUD-P1-001).
+3. P2: live Saleor smoke CI (AUD-P2-006), Ghost CMS provision (AUD-P1-008), OAuth verification (AUD-P2-018).
+4. P2 docs: agent skill symlink notes (AUD-P2-020), daisyUI tree removal (AUD-P2-021).
 
-_Out of scope for next small PR: full S3/Garage CDN pipeline._
+_Out of scope for next small PR: full S3/Garage CDN pipeline beyond current invalidation allowlist._
 
 ---
 
@@ -117,6 +117,15 @@ _Out of scope for next small PR: full S3/Garage CDN pipeline._
 | **media-cdn-plan** (archive) | v1 upload strategy                                  | Stale          | Superseded by `media-uploads.md`                       |
 
 ---
+
+## Doc corrections (2026-07-03 refresh)
+
+| File                                              | Change                                                      |
+| ------------------------------------------------- | ----------------------------------------------------------- |
+| `batch-2026-07-01.md` … `batch-2026-07-03-followups.md` | Moved to `archive/` — July batches complete                 |
+| `meta/polish-plan.md`                             | **Deleted** — redirect stub; use `archive/polish-plan.md`   |
+| `STATUS.md`, `AUDIT-REMEDIATION.md`               | Counts 5 open / 45 done; AUD-P2-004/005 closed              |
+| `docs/README.md`                                  | Archive index + security audit + migration squash links     |
 
 ## Doc corrections (2026-06-30 refresh)
 

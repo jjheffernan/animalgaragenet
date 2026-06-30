@@ -42,7 +42,7 @@ Markers: `@inspiration-scaffold` (Supabase/community/CMS) · `@saleor-migration`
 | IP-025 | inspiration         | Supabase-backed admin user CRUD              | `src/lib/server/supabase/admin-users.ts`, `/admin/users`                         | **done**      | Service role list/invite/role update; mock when unset               |
 | IP-026 | inspiration         | Admin runtime dashboard (staff integrations) | `src/lib/server/admin/runtime-status.ts`, `/admin/runtime` (`@inspiration-scaffold`) | **done**      | Staff landing `/admin/dashboard` (`3732fb9`); Integrations sidebar link; cron registry scaffold |
 | IP-027 | inspiration         | Account social connections (OAuth scaffold)  | `src/routes/account/connections/`, `GET/PUT /api/account/connections`, `social-oauth.ts` (`@inspiration-scaffold`) | **done**      | Apply `20250630240000_social_connections.sql`; set `SOCIAL_*_CLIENT_ID` for live OAuth |
-| IP-028 | inspiration         | Faceted parts search                         | —                                                                                | **not started** | Saleor attributes                                                   |
+| IP-028 | inspiration         | Faceted parts search                         | `src/lib/server/catalog/parts-facets.ts`, `src/routes/parts/`                    | **done**      | Saleor attribute filters + URL-synced facet state — BATCH-019              |
 | IP-029 | inspiration         | `@motionone/svelte` scroll system            | `AnimatedReveal.svelte`, `layout.css`                                            | **partial**   | Reduced-motion baseline done (BATCH-017); Motion One scroll system deferred |
 | IP-030 | inspiration         | Deal / campaign scheduler (Pit Lane CMS)     | `/deals` mock                                                                    | **not started** | CMS table TBD (formerly scoped as IP-026)                           |
 | IP-031 | inspiration         | Public bug report form                       | `src/lib/server/support/repository.ts`, `POST /api/support/bug-report`, `/support/report-bug`, `/admin/bug-reports` (`@inspiration-scaffold`) | **live**      | Staff read-only inbox scaffolded; apply `20250630250000_bug_reports.sql`; optional `BUG_REPORT_WEBHOOK_URL` |
@@ -53,21 +53,35 @@ Markers: `@inspiration-scaffold` (Supabase/community/CMS) · `@saleor-migration`
 
 ---
 
-## Next steps (batch 2026-07-02)
+## Next steps — archived batches
 
-Canonical implementer table: [batch-2026-07-02.md](./batch-2026-07-02.md). July 1 code batch complete; remaining in-repo work is P2 polish, Saleor depth, and CI.
+July 1–3 implementer tables are **complete** and archived:
+
+| Batch | Doc | Notes |
+| ----- | --- | ----- |
+| 2026-07-01 | [batch-2026-07-01.md](../../archive/batch-2026-07-01.md) | BATCH-002–012 shipped; BATCH-001 ops gate remains |
+| 2026-07-02 | [batch-2026-07-02.md](../../archive/batch-2026-07-02.md) | BATCH-013–020 shipped (`b4614c5`–`905f481`) |
+| 2026-07-03 | [batch-2026-07-03-followups.md](../../archive/batch-2026-07-03-followups.md) | BATCH-021 + ops apply checklist (squashed migrations) |
+
+**Current open work:** [AUDIT-REMEDIATION.md](../AUDIT-REMEDIATION.md) · ops rows below.
+
+---
+
+## Next steps (batch 2026-07-02) — archived
+
+Canonical implementer table: [batch-2026-07-02.md](../../archive/batch-2026-07-02.md). **All code rows shipped 2026-07-03.**
 
 | ID     | Source              | Task                                                                 | Owner        | Acceptance criteria                                                                 | Prod setup                                                                 |
 | ------ | ------------------- | -------------------------------------------------------------------- | ------------ | ----------------------------------------------------------------------------------- | -------------------------------------------------------------------------- |
-| AUD-P2-004 | BATCH-013         | Parts YMM URL filter vs Saleor fitment                               | code         | Category route applies `?year=&make=&model=` to Saleor products when env set          | `PUBLIC_SALEOR_API_URL` on Netlify                                         |
-| AUD-P2-005 | BATCH-014         | Product detail related products / linked builds                      | code         | Related slice from Saleor or CMS, not mock helpers only                             | Saleor catalog populated                                                   |
+| AUD-P2-004 | BATCH-013         | Parts YMM URL filter vs Saleor fitment                               | code         | **done** — category route applies `?year=&make=&model=` when Saleor env set           | —                                                                          |
+| AUD-P2-005 | BATCH-014         | Product detail related products / linked builds                      | code         | **done** — related slice from Saleor/CMS when configured                            | —                                                                          |
 | AUD-P2-011 | BATCH-015         | Ghost Content API cache headers                                      | code         | **done** — `setHeaders` on guides + blog list/detail loaders                        | —                                                                          |
 | AUD-P2-012 | BATCH-016         | Site-wide SEO / OG baseline (non-Ghost routes)                       | code         | **done** — `PageMeta` + layout defaults on shop, parts, builds, media               | —                                                                          |
 | AUD-P2-013 | BATCH-017         | `prefers-reduced-motion` support                                     | code         | **done** — `AnimatedReveal` + `layout.css` respect user preference                  | —                                                                          |
 | AUD-P2-017 | BATCH-018         | Optional `readiness-ci` GitHub Actions job                           | code         | **done** — `.github/workflows/readiness-ci.yml`; non-blocking on PRs                | Repo Actions secrets                                                       |
-| IP-028 | BATCH-019           | Faceted parts search                                                 | code         | Saleor attribute filters + URL-synced facet state                                   | Saleor attributes configured                                               |
-| IP-013 | BATCH-020           | CDN CloudFront invalidation (Phase 2 remainder)                      | code / ops   | **done** — `invalidateCdnPaths` + post-upload invalidation API                      | `PUBLIC_CDN_BASE_URL`, `S3_*`, `AWS_*`, `AWS_CLOUDFRONT_DISTRIBUTION_ID` |
-| IP-031 | BATCH-021           | Admin bug report inbox                                               | code         | `/admin/support` lists `listBugReports()`; nav link; mock when Supabase unset       | —                                                                          |
+| IP-028 | BATCH-019           | Faceted parts search                                                 | code         | **done** — Saleor attribute filters + URL-synced facet state                          | Saleor attributes configured                                               |
+| IP-013 | BATCH-020           | CDN CloudFront invalidation (Phase 2 remainder)                      | code / ops   | **done** — `invalidateCdnPaths` allowlist + post-upload invalidation (`029498b`)      | `PUBLIC_CDN_BASE_URL`, `S3_*`, `AWS_*`, `AWS_CLOUDFRONT_DISTRIBUTION_ID` |
+| IP-031 | BATCH-021           | Admin bug report inbox                                               | code         | **done** — `/admin/bug-reports` lists `listBugReports()`; mock when Supabase unset    | Apply squashed migration — [migration-squash-notes.md](../../infrastructure/migration-squash-notes.md) |
 
 ### Ops-only (not in-repo)
 
@@ -86,7 +100,7 @@ Canonical implementer table: [batch-2026-07-02.md](./batch-2026-07-02.md). July 
 
 ## Next steps (batch 2026-07-01) — archived
 
-Canonical implementer table: [batch-2026-07-01.md](./batch-2026-07-01.md). All code rows shipped 2026-07-01; BATCH-001 ops gate remains.
+Canonical implementer table: [batch-2026-07-01.md](../../archive/batch-2026-07-01.md). All code rows shipped 2026-07-01; BATCH-001 ops gate remains.
 
 | ID     | Source              | Task                                                                 | Owner        | Status                                                                              |
 | ------ | ------------------- | -------------------------------------------------------------------- | ------------ | ----------------------------------------------------------------------------------- |

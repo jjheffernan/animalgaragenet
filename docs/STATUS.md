@@ -3,7 +3,7 @@
 **Public documentation policy:** [SECURITY-PUBLIC.md](./SECURITY-PUBLIC.md)
 
 **Last updated:** 2026-07-03  
-**Canonical next-step docs:** [plans/AUDIT-REMEDIATION.md](./plans/AUDIT-REMEDIATION.md) · [plans/active/inspiration-polish-tracker.md](./plans/active/inspiration-polish-tracker.md) · [plans/active/batch-2026-07-02.md](./plans/active/batch-2026-07-02.md) · [plans/active/batch-2026-07-03-followups.md](./plans/active/batch-2026-07-03-followups.md) · [plans/active/batch-2026-07-01.md](./plans/active/batch-2026-07-01.md) · [plans/active/market-readiness.md](./plans/active/market-readiness.md) · [plans/active/account-flow-fix.md](./plans/active/account-flow-fix.md)
+**Canonical next-step docs:** [plans/AUDIT-REMEDIATION.md](./plans/AUDIT-REMEDIATION.md) · [plans/active/inspiration-polish-tracker.md](./plans/active/inspiration-polish-tracker.md) · [plans/active/market-readiness.md](./plans/active/market-readiness.md) · [plans/active/account-flow-fix.md](./plans/active/account-flow-fix.md) · [archive/batch-2026-07-03-followups.md](./archive/batch-2026-07-03-followups.md) (ops apply)
 
 This file reconciles “next steps” across all `docs/` so nothing is orphaned. Items are **Done**, **Ops** (external dashboard/env), or **Open** (code work).
 
@@ -56,6 +56,12 @@ This file reconciles “next steps” across all `docs/` so nothing is orphaned.
 | Shop filter grouping + product showcases                   | `9d4967a` — grouped category filters; compact product showcase blocks                                                                                          |
 | Public bug report form (IP-031 partial)                    | `/support/report-bug`, `POST /api/support/bug-report` — `24579e8`; admin inbox → BATCH-021                                                                       |
 | Admin entry reconciliation                                 | AccountMenu → `/admin/dashboard`; `/admin` redirect; Integrations → `/admin/runtime` — `3732fb9`, `1944119`                                                      |
+| July 2 batch (BATCH-013–020)                               | Parts YMM filter, related products, faceted search, Ghost cache headers, SEO baseline, reduced-motion, readiness CI, CDN invalidation — `b4614c5`–`905f481`   |
+| July 3 follow-up (BATCH-021)                               | Admin bug report inbox — `/admin/bug-reports` — `905f481`                                                                                                        |
+| CDN invalidation path allowlist (AUD-SEC-001)              | `invalidateCdnPaths` allowlist + admin API cap — `029498b` · [security-audit-2026-07.md](./audits/security-audit-2026-07.md)                                   |
+| Supabase migration squash (17 → 3)                         | `20250701000000` / `010000` / `020000` logical files — `65e9d52` · [migration-squash-notes.md](./infrastructure/migration-squash-notes.md)                     |
+| Ponytail audit (PT-P1/P2)                                  | Shared mock-fallback guard, API POST dedupe, store localStorage helpers — `f1d4ccf`, `2e7700f` · [ponytail-audit-tracker.md](./plans/active/ponytail-audit-tracker.md) |
+| Ponytail docs pass (July batches)                          | Archive stale batch plans; sync STATUS/README/AUDIT counts; remove `meta/polish-plan.md` stub                                                                   |
 
 ---
 
@@ -71,7 +77,8 @@ These appear as unchecked boxes in plans but **cannot be completed in-repo**:
 | Set `PUBLIC_SALEOR_API_URL` + `SALEOR_CHANNEL`   | [market-readiness.md](./plans/active/market-readiness.md) Phase 1    | Netlify env                                                             |
 | Verify `/shop` ≠ 120 mock products               | market-readiness                                                     | After Saleor env + redeploy                                             |
 | Populate `.env` and run readiness                | [readiness-report.md](./testing/readiness-report.md)                 | Local or CI secrets                                                     |
-| Apply media migration on production Supabase     | [media-uploads.md](./plans/active/media-uploads.md)                  | `supabase db push` or dashboard apply                                   |
+| Apply squashed Supabase migrations on production             | [migration-squash-notes.md](./infrastructure/migration-squash-notes.md) · [archive/batch-2026-07-03-followups.md](./archive/batch-2026-07-03-followups.md) | `supabase db push` or dashboard apply (3 files)                         |
+| Apply media migration on production Supabase     | [media-uploads.md](./plans/active/media-uploads.md)                  | `20250701020000_media_social.sql` via `supabase db push` or dashboard   |
 | Enable Discord/Microsoft OAuth                   | [discord.md](./auth/discord.md), [microsoft.md](./auth/microsoft.md) | Supabase + provider consoles                                            |
 | Ghost site + tags                                | [ghost-audit.md](./audits/ghost-audit.md)                            | Ghost admin                                                             |
 | `<org-sync-secret>` rotation docs                | readiness-report                                                     | Personal repo Actions secret                                            |
@@ -82,19 +89,20 @@ These appear as unchecked boxes in plans but **cannot be completed in-repo**:
 
 ## Open — code / CI work
 
-**Audit counts (see [AUDIT-REMEDIATION.md](./plans/AUDIT-REMEDIATION.md)):** 10 open · 6 blocked (ops) · 43 done — P1 checkout (`AUD-P1-001`) is **partial** (code done; ops gate only), not open.
+**Audit counts (see [AUDIT-REMEDIATION.md](./plans/AUDIT-REMEDIATION.md)):** 5 open · 6 blocked (ops) · 45 done — P1 checkout (`AUD-P1-001`) is **partial** (code done; ops gate only), not open.
 
 | Priority | Task                                                            | Tracker                                                                        |
 | -------- | --------------------------------------------------------------- | ------------------------------------------------------------------------------ |
 | P0       | Merge `dev` → `main` when Netlify env configured                | [deployment.md](./style-guide/backend-ops/deployment.md)                       |
-| P1       | Saleor checkout: Payment App enablement + live pay verify       | [batch-2026-07-01.md](./plans/active/batch-2026-07-01.md) BATCH-001 · [saleor-payments.md](./commerce/saleor-payments.md) |
-| P2       | July 2 code batch (YMM filter, related products, SEO, …)    | [batch-2026-07-02.md](./plans/active/batch-2026-07-02.md) — BATCH-013–019 open       |
+| P1       | Saleor checkout: Payment App enablement + live pay verify       | [archive/batch-2026-07-01.md](./archive/batch-2026-07-01.md) BATCH-001 · [saleor-payments.md](./commerce/saleor-payments.md) |
+| P2       | Live Saleor integration smoke tests (env-gated CI)              | AUD-P2-006 · `npm run test:readiness`                                         |
 | P2       | Ghost live CMS (fallback policy + detail SEO shipped)           | IP-015 · [ghost-audit.md](./audits/ghost-audit.md)                             |
 | P2       | Remaining homepage mock slices (non-watch)                        | market-readiness Phase 3                                                       |
 | P2       | OAuth Discord/Azure verification                                | [inspiration-polish-tracker.md](./plans/active/inspiration-polish-tracker.md) |
-| P2       | Site-wide SEO/OG (non-Ghost routes), analytics                  | BATCH-016 · Phase 5 (see [README.md](./README.md))                             |
+| P2       | Site-wide analytics (SEO/OG baseline shipped)                     | AUD-P2-012 partial · Phase 5                                                   |
 | P2       | Newsletter / user preferences tables                            | [supabase.md](./integrations/supabase.md) roadmap                              |
-| P2       | Faceted parts search (IP-028)                                   | BATCH-019                                                                      |
+| P2       | Agent skill symlink onboarding docs                             | AUD-P2-020 · `agents/AGENTS.md`                                                |
+| P2       | daisyUI skill tree removal (post sign-off)                      | AUD-P2-021                                                                     |
 
 ---
 

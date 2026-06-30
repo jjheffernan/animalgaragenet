@@ -11,5 +11,8 @@ Docs here are **not deleted** so git history and links can be redirected. Each f
 | `media-cdn-plan.md`          | Superseded | See `plans/active/media-uploads.md` for phase 1 |
 | `doc-implementation-manifest.md` | Superseded | June 2026 `DOC-###` batch — see `plans/AUDIT-REMEDIATION.md` |
 | `polish-plan.md`                 | Complete   | See `plans/active/inspiration-polish-tracker.md`              |
+| `batch-2026-07-01.md`            | Complete   | July 1 implementer batch — BATCH-002–012 shipped              |
+| `batch-2026-07-02.md`            | Complete   | July 2 batch — BATCH-013–020 shipped                          |
+| `batch-2026-07-03-followups.md`    | Complete   | BATCH-021 + ops apply checklist (squashed migrations)         |
 
 For open work, see [STATUS.md](../STATUS.md) and [plans/active/](../plans/active/).

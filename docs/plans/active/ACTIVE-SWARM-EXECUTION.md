@@ -15,12 +15,14 @@ Batch slots: **A** = API/webhooks/SEO/CI · **B** = admin UI · **C** = inspirat
 
 | Batch | Scope | Open/partial | Done (in table) | Ops-blocked |
 |-------|--------|-------------:|----------------:|------------:|
-| **A** | API / webhooks / SEO / CI | 7 | 1 | 16 |
-| **B** | Admin UI | 5 | 0 | 4 |
+| **A** | API / webhooks / SEO / CI | 6 | 1 | 20 |
+| **B** | Admin UI | 9 | 0 | 2 |
 | **C** | Inspiration-polish code | 4 | 3 | 0 |
-| **D** | Ponytail / schema / docs-only | 2 | 8 | 2 |
-| | **Grand total rows** | **18** | **12** | **22** |
-| | | | **53** | |
+| **D** | Ponytail / schema / docs-only | 3 | 8 | 2 |
+| | **Grand total** | **22** | **12** | **24** |
+| | | | **59 rows** | |
+
+_NS-OPS-010 (merge `dev` → `main`) has no batch slot._
 
 ---
 
@@ -28,11 +30,11 @@ Batch slots: **A** = API/webhooks/SEO/CI · **B** = admin UI · **C** = inspirat
 
 | Tracker | ID | Item | Blocked? | Batch slot | Status |
 | ------- | -- | ---- | -------- | ---------- | ------ |
-| next-steps | AUD-P2-006 | Live Saleor integration smoke tests (env-gated CI beyond readiness probes) | No | A | open |
+| next-steps | AUD-P2-006 | Live Saleor integration smoke tests (env-gated CI beyond readiness probes) | No | A | **done** |
 | next-steps | AUD-P2-012 | Site-wide analytics hook (SEO/OG baseline shipped; LGTM server hooks `eba78ff`; Phase 5 client telemetry deferred) | No | A | partial |
 | next-steps | IP-004-code | Saleor stock webhook → `restock_alerts` notify handler | No | A | **done** |
-| next-steps | SEO-001 | `sitemap.xml` — nav-linked static routes + dynamic content slugs | No | A | open (optional) |
-| next-steps | SEO-002 | Add `Sitemap:` directive to `static/robots.txt` | No | A | open (optional) |
+| next-steps | SEO-001 | `sitemap.xml` — nav-linked static routes + dynamic content slugs | No | A | **done** |
+| next-steps | SEO-002 | `robots.txt` route — `Sitemap:` from `PUBLIC_SITE_URL` + static fallback | No | A | **done** |
 | next-steps | SEO-003 | Extend smoke tests beyond `/`, `/shop`, `/parts`, one PDP | No | A | open (optional) |
 | market-readiness | MR-SEC-001 | Tighten `build_submissions` insert policy (rate limit / captcha / honeypot) | No | A | open |
 | admin-dashboard | ADM-S1 | Live recent activity feed on `/admin/dashboard` (builds, bugs, YouTube sync) | No | B | partial (`4e7d0a9` shell/chrome + timeline UI; live rows pending) |
@@ -105,7 +107,7 @@ Batch slots: **A** = API/webhooks/SEO/CI · **B** = admin UI · **C** = inspirat
 ## Verification
 
 ```bash
-# Row count (expect 53 data rows)
+# Row count (expect 59 data rows)
 awk -F'|' '/^\| (next-steps|market-readiness|admin-dashboard|inspiration-polish|media-uploads|ponytail-audit) / {c++} END{print c}' docs/plans/active/ACTIVE-SWARM-EXECUTION.md
 
 npm run lint

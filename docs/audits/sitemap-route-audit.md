@@ -21,14 +21,14 @@
 
 ## 1. Sitemap source
 
-**None found.**
+**Shipped (SEO-001, SEO-002 — 2026-06-30).**
 
 | Location | Finding |
 | -------- | ------- |
-| `src/routes/sitemap*` | Does not exist |
-| `+server.ts` sitemap generator | Does not exist |
-| `static/robots.txt` | Allows all crawlers; **no `Sitemap:` directive** |
-| Prior audit | [component-route-audit.md](./component-route-audit.md) notes “no sitemap in repo” |
+| `src/routes/sitemap.xml/+server.ts` | GET handler — static nav routes + dynamic catalog/content slugs |
+| `src/lib/server/seo/sitemap.ts` | URL collector + XML renderer |
+| `src/routes/robots.txt/+server.ts` | Dynamic `Sitemap:` from `PUBLIC_SITE_URL` |
+| `static/robots.txt` | Static fallback with production host |
 
 ---
 

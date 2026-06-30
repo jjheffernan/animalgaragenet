@@ -4,11 +4,18 @@
 	import RichContent from '$lib/components/content/RichContent.svelte';
 
 	let { data } = $props();
+
+	const pageTitle = $derived(data.post.metaTitle ?? data.post.title);
+	const pageDescription = $derived(data.post.metaDescription ?? data.post.excerpt);
 </script>
 
 <svelte:head>
-	<title>{data.post.title} — Animal Garage Blog</title>
-	<meta name="description" content={data.post.excerpt} />
+	<title>{pageTitle} — Animal Garage Blog</title>
+	<meta name="description" content={pageDescription} />
+	<meta property="og:title" content={pageTitle} />
+	<meta property="og:description" content={pageDescription} />
+	<meta property="og:image" content={data.post.heroImage} />
+	<meta property="og:type" content="article" />
 </svelte:head>
 
 <article>

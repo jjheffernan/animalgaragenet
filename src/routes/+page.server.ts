@@ -15,7 +15,7 @@ import {
 } from '$lib/server/catalog/collections';
 import { listGuides } from '$lib/server/ghost/posts';
 import { createAdminClient } from '$lib/server/supabase/admin';
-import { getDefaultHeroSection, getFeaturedSection } from '$lib/server/featured-sections/repository';
+import { getDefaultHeroSection, getHomepageFeaturedSections } from '$lib/server/featured-sections/repository';
 import {
 	listApprovedTestimonials,
 	listFeaturedTestimonials
@@ -24,7 +24,7 @@ import { testimonialsToUgcItems } from '$lib/server/testimonials/to-ugc';
 import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async () => {
-	const [collections, staffPicks, clearance, guides, featuredTestimonials, approvedTestimonials, heroSection] =
+	const [collections, staffPicks, clearance, guides, featuredTestimonials, approvedTestimonials, featuredSections] =
 		await Promise.all([
 			getCollections(),
 			getStaffPickProducts(),
@@ -32,7 +32,7 @@ export const load: PageServerLoad = async () => {
 			listGuides(),
 			listFeaturedTestimonials(3),
 			listApprovedTestimonials(12),
-			getFeaturedSection('hero')
+			getHomepageFeaturedSections()
 		]);
 
 	const ugcFromTestimonials = testimonialsToUgcItems(approvedTestimonials);
@@ -51,6 +51,8 @@ export const load: PageServerLoad = async () => {
 		popularModels: mockPopularModels,
 		activeCampaign: getActiveCampaign() ?? null,
 		featuredTestimonials,
-		heroSection: heroSection ?? getDefaultHeroSection()
+		heroSection: featuredSections.hero ?? getDefaultHeroSection(),
+		ugcSection: featuredSections.ugc,
+		campaignSection: featuredSections.campaign
 	};
 };

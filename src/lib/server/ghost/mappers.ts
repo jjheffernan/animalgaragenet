@@ -21,16 +21,30 @@ function guideCategory(post: GhostPost): string {
 	return categoryTag?.name ?? post.primary_tag?.name ?? 'General';
 }
 
+function ghostMetaTitle(post: GhostPost): string | undefined {
+	const value = post.meta_title?.trim();
+	return value || undefined;
+}
+
+function ghostMetaDescription(post: GhostPost): string | undefined {
+	const value = post.meta_description?.trim();
+	return value || undefined;
+}
+
 export function mapGhostPostToGuide(post: GhostPost): Guide {
 	const nonGuideTags = guideCategoryTags(post);
 	const categoryTag = nonGuideTags[0];
 	const topicTags = nonGuideTags.slice(1);
+	const metaTitle = ghostMetaTitle(post);
+	const metaDescription = ghostMetaDescription(post);
 
 	return {
 		id: post.id,
 		slug: post.slug,
 		title: post.title,
+		metaTitle,
 		excerpt: post.custom_excerpt?.trim() || post.excerpt?.trim() || '',
+		metaDescription,
 		content: '',
 		html: post.html,
 		category: guideCategory(post),
@@ -42,11 +56,16 @@ export function mapGhostPostToGuide(post: GhostPost): Guide {
 }
 
 export function mapGhostPostToBlogPost(post: GhostPost): BlogPost {
+	const metaTitle = ghostMetaTitle(post);
+	const metaDescription = ghostMetaDescription(post);
+
 	return {
 		id: post.id,
 		slug: post.slug,
 		title: post.title,
+		metaTitle,
 		excerpt: post.custom_excerpt?.trim() || post.excerpt?.trim() || '',
+		metaDescription,
 		content: '',
 		html: post.html,
 		author: post.authors[0]?.name ?? 'Animal Garage',

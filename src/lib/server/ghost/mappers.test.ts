@@ -10,6 +10,8 @@ export const ghostPostFixture: GhostPost = {
 	html: '<p>Offset, diameter, width.</p>',
 	excerpt: 'Offset, diameter, width — everything you need.',
 	custom_excerpt: 'Custom excerpt override.',
+	meta_title: null,
+	meta_description: null,
 	feature_image: 'https://cdn.example.com/wheels.jpg',
 	reading_time: 12,
 	published_at: '2026-06-15T10:00:00.000Z',
@@ -49,6 +51,18 @@ describe('mapGhostPostToGuide', () => {
 
 		expect(guide.category).toBe('Getting Started');
 	});
+
+	it('maps Ghost meta_title and meta_description when present', () => {
+		const guide = mapGhostPostToGuide({
+			...ghostPostFixture,
+			meta_title: 'SEO Wheel Guide',
+			meta_description: 'Pick the right offset and width.'
+		});
+
+		expect(guide.metaTitle).toBe('SEO Wheel Guide');
+		expect(guide.metaDescription).toBe('Pick the right offset and width.');
+		expect(guide.title).toBe('How to Choose the Right Wheels');
+	});
 });
 
 describe('mapGhostPostToBlogPost', () => {
@@ -72,5 +86,20 @@ describe('mapGhostPostToBlogPost', () => {
 			heroImage: 'https://cdn.example.com/wheels.jpg',
 			tags: ['Drops']
 		});
+	});
+
+	it('maps Ghost meta fields on blog posts', () => {
+		const post = mapGhostPostToBlogPost({
+			...ghostPostFixture,
+			meta_title: 'Blog SEO Title',
+			meta_description: 'Blog SEO description.',
+			tags: [
+				{ id: 't0', name: 'Blog', slug: 'blog' },
+				{ id: 't3', name: 'Drops', slug: 'drops' }
+			]
+		});
+
+		expect(post.metaTitle).toBe('Blog SEO Title');
+		expect(post.metaDescription).toBe('Blog SEO description.');
 	});
 });

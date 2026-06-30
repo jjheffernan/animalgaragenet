@@ -9,6 +9,7 @@ import {
 	_resetMockStoreForTests,
 	getDefaultHeroSection,
 	getFeaturedSection,
+	getHomepageFeaturedSections,
 	listFeaturedSections,
 	upsertFeaturedSection
 } from './repository';
@@ -53,5 +54,23 @@ describe('featured-sections repository', () => {
 
 		const loaded = await getFeaturedSection('hero');
 		expect(loaded?.content.headline).toBe('Fresh Drop');
+	});
+
+	it('upsertFeaturedSection persists ugc section in mock mode', async () => {
+		const saved = await upsertFeaturedSection('ugc', {
+			title: 'Squad Builds',
+			subtitle: 'Tag us @animalgarage'
+		});
+		expect(saved?.sectionKey).toBe('ugc');
+		expect(saved?.content.title).toBe('Squad Builds');
+	});
+
+	it('getHomepageFeaturedSections returns hero, ugc, and campaign keys', async () => {
+		await upsertFeaturedSection('ugc', { title: 'Custom UGC', subtitle: 'From the pit' });
+
+		const sections = await getHomepageFeaturedSections();
+		expect(sections.hero.sectionKey).toBe('hero');
+		expect(sections.ugc.content.title).toBe('Custom UGC');
+		expect(sections.campaign.sectionKey).toBe('campaign');
 	});
 });

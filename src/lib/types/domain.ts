@@ -60,7 +60,11 @@ export interface Guide {
 	id: string;
 	slug: string;
 	title: string;
+	/** Ghost `meta_title` when set; page title / OG use this over `title`. */
+	metaTitle?: string;
 	excerpt: string;
+	/** Ghost `meta_description` when set; meta / OG use this over `excerpt`. */
+	metaDescription?: string;
 	/** Plain-text / mock markdown body (fallback when Ghost is unset). */
 	content: string;
 	/** Sanitized Ghost HTML body when loaded from CMS. */
@@ -78,7 +82,11 @@ export interface BlogPost {
 	id: string;
 	slug: string;
 	title: string;
+	/** Ghost `meta_title` when set; page title / OG use this over `title`. */
+	metaTitle?: string;
 	excerpt: string;
+	/** Ghost `meta_description` when set; meta / OG use this over `excerpt`. */
+	metaDescription?: string;
 	/** Plain-text mock body (fallback when Ghost is unset). */
 	content: string;
 	/** Sanitized Ghost HTML body when loaded from CMS. */

@@ -8,8 +8,12 @@ import type { Actions, PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async () => {
 	const sections = await listFeaturedSections();
-	const hero = sections.find((s) => s.sectionKey === 'hero') ?? (await getFeaturedSection('hero'));
-	return { sections, hero };
+	const [hero, ugc, campaign] = await Promise.all([
+		sections.find((s) => s.sectionKey === 'hero') ?? getFeaturedSection('hero'),
+		sections.find((s) => s.sectionKey === 'ugc') ?? getFeaturedSection('ugc'),
+		sections.find((s) => s.sectionKey === 'campaign') ?? getFeaturedSection('campaign')
+	]);
+	return { sections, hero, ugc, campaign };
 };
 
 export const actions: Actions = {
@@ -37,6 +41,48 @@ export const actions: Actions = {
 			return fail(500, { error: 'Could not save hero section' });
 		}
 
-		return { saved: true };
+		return { saved: true, sectionKey: 'hero' };
+	},
+
+	saveUgc: async ({ request }) => {
+		const data = await request.formData();
+		const title = String(data.get('title') ?? '').trim();
+		const subtitle = String(data.get('subtitle') ?? '').trim();
+		const active = data.get('active') === 'on';
+
+		if (!title) {
+			return fail(400, { error: 'UGC section title is required' });
+		}
+
+		const section = await upsertFeaturedSection('ugc', { title, subtitle }, active);
+		if (!section) {
+			return fail(500, { error: 'Could not save UGC section' });
+		}
+
+		return { saved: true, sectionKey: 'ugc' };
+	},
+
+	saveCampaign: async ({ request }) => {
+		const data = await request.formData();
+		const title = String(data.get('title') ?? '').trim();
+		const subtitle = String(data.get('subtitle') ?? '').trim();
+		const badgeLabel = String(data.get('badgeLabel') ?? '').trim();
+		const endDate = String(data.get('endDate') ?? '').trim();
+		const active = data.get('active') === 'on';
+
+		if (active && !endDate) {
+			return fail(400, { error: 'End date is required when campaign block is active' });
+		}
+
+		const section = await upsertFeaturedSection(
+			'campaign',
+			{ title, subtitle, badgeLabel: badgeLabel || 'Drop Incoming', endDate },
+			active
+		);
+		if (!section) {
+			return fail(500, { error: 'Could not save campaign section' });
+		}
+
+		return { saved: true, sectionKey: 'campaign' };
 	}
 };

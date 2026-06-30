@@ -48,7 +48,22 @@
 	<ModelPicker models={data.popularModels} class="mt-6" />
 </section>
 
-{#if data.activeCampaign?.availableFrom}
+{#if data.campaignSection?.active && data.campaignSection.content.endDate}
+	<section class="border-y border-red-900/50 bg-red-950/30 py-10">
+		<div class="mx-auto max-w-7xl px-4 text-center sm:px-6 lg:px-8">
+			<AnimatedReveal>
+				<p class="text-xs font-bold uppercase tracking-[0.3em] text-red-500">
+					{String(data.campaignSection.content.badgeLabel ?? 'Drop Incoming')}
+				</p>
+				<h2 class="mt-2 font-display text-3xl font-bold uppercase text-white">
+					{String(data.campaignSection.content.title ?? '')}
+				</h2>
+				<p class="mt-2 text-zinc-400">{String(data.campaignSection.content.subtitle ?? '')}</p>
+				<CountdownTimer endDate={String(data.campaignSection.content.endDate)} class="mt-6" />
+			</AnimatedReveal>
+		</div>
+	</section>
+{:else if data.activeCampaign?.availableFrom}
 	<section class="border-y border-red-900/50 bg-red-950/30 py-10">
 		<div class="mx-auto max-w-7xl px-4 text-center sm:px-6 lg:px-8">
 			<AnimatedReveal>
@@ -108,7 +123,16 @@
 </section>
 
 <section class="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
-	<UGCWall items={data.ugc} />
+	{#if data.ugcSection?.active !== false}
+		<AnimatedReveal>
+			<SectionHeading
+				title={String(data.ugcSection?.content.title ?? 'Community Garage')}
+				subtitle={String(data.ugcSection?.content.subtitle ?? '')}
+				align="center"
+			/>
+		</AnimatedReveal>
+	{/if}
+	<UGCWall items={data.ugc} class={data.ugcSection?.active !== false ? 'mt-8' : ''} />
 </section>
 
 <section class="border-y border-zinc-800 bg-zinc-900/50 py-20">

@@ -1,26 +1,19 @@
 import type { SavedVehicle } from '$lib/types/domain';
 import { loadGarageFromApi, resetGarageApiCache, saveVehiclesToApi } from './garage-api';
+import { readStoredJson, removeStoredJson, writeStoredJson } from './storage';
 
 const STORAGE_KEY = 'ag-garage';
 
 function loadGarage(): SavedVehicle[] {
-	if (typeof window === 'undefined') return [];
-	try {
-		const raw = localStorage.getItem(STORAGE_KEY);
-		return raw ? (JSON.parse(raw) as SavedVehicle[]) : [];
-	} catch {
-		return [];
-	}
+	return readStoredJson<SavedVehicle[]>(STORAGE_KEY, []);
 }
 
 function saveGarage(vehicles: SavedVehicle[]) {
-	if (typeof window === 'undefined') return;
-	localStorage.setItem(STORAGE_KEY, JSON.stringify(vehicles));
+	writeStoredJson(STORAGE_KEY, vehicles);
 }
 
 function clearLocalGarage() {
-	if (typeof window === 'undefined') return;
-	localStorage.removeItem(STORAGE_KEY);
+	removeStoredJson(STORAGE_KEY);
 }
 
 function generateId(): string {

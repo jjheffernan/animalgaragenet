@@ -1,5 +1,6 @@
 import { garageLevels } from '$lib/data/garage-levels';
 import { addGarageXpToApi, loadGarageFromApi, resetGarageApiCache } from './garage-api';
+import { readStoredJson, removeStoredJson, writeStoredJson } from './storage';
 
 const STORAGE_KEY = 'ag-garage-xp';
 
@@ -8,24 +9,18 @@ interface XpState {
 	actions: string[];
 }
 
+const EMPTY_XP: XpState = { xp: 0, actions: [] };
+
 function loadXp(): XpState {
-	if (typeof window === 'undefined') return { xp: 0, actions: [] };
-	try {
-		const raw = localStorage.getItem(STORAGE_KEY);
-		return raw ? (JSON.parse(raw) as XpState) : { xp: 0, actions: [] };
-	} catch {
-		return { xp: 0, actions: [] };
-	}
+	return readStoredJson<XpState>(STORAGE_KEY, EMPTY_XP);
 }
 
 function saveXp(state: XpState) {
-	if (typeof window === 'undefined') return;
-	localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+	writeStoredJson(STORAGE_KEY, state);
 }
 
 function clearLocalXp() {
-	if (typeof window === 'undefined') return;
-	localStorage.removeItem(STORAGE_KEY);
+	removeStoredJson(STORAGE_KEY);
 }
 
 class GarageXpState {

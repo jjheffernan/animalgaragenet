@@ -9,6 +9,7 @@ import {
 } from '$lib/data/catalog-helpers';
 import { getAllCatalogProducts } from '$lib/data/mock/parts';
 import { locale } from '$lib/stores/locale.svelte';
+import { readStoredJson, writeStoredJson } from './storage';
 
 const STORAGE_KEY = 'ag-cart';
 
@@ -20,19 +21,31 @@ function checkoutApiUrl(path = '/cart/checkout'): string {
 	return `${path}?locale=${encodeURIComponent(locale.code)}`;
 }
 
-function loadCart(): CartItem[] {
-	if (typeof window === 'undefined') return [];
-	try {
-		const raw = localStorage.getItem(STORAGE_KEY);
-		return raw ? (JSON.parse(raw) as CartItem[]) : [];
-	} catch {
-		return [];
-	}
+function mockItemsRawSubtotal(items: CartItem[]): number {
+	return items.reduce((sum, item) => {
+		const product = getCatalogProductById(item.productId);
+		if (!product) return sum;
+		const variant = product.variants.find((v) => v.id === item.variantId) ?? product.variants[0];
+		return sum + variant.pricing.price.amount * item.quantity;
+	}, 0);
 }
 
-function saveCart(items: CartItem[]) {
-	if (typeof window === 'undefined') return;
-	localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
+async function mutateCheckout(
+	method: 'POST' | 'PATCH' | 'DELETE',
+	body: Record<string, unknown>
+): Promise<CheckoutDisplay | null> {
+	try {
+		const response = await fetch(checkoutApiUrl(), {
+			method,
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify(body)
+		});
+		if (!response.ok) return null;
+		const data = (await response.json()) as { checkout?: CheckoutDisplay };
+		return data.checkout ?? null;
+	} catch {
+		return null;
+	}
 }
 
 function dominantCatalogKind(products: Product[]): 'MERCH' | 'PARTS' {
@@ -54,7 +67,7 @@ class CartState {
 	init() {
 		if (this.initialized || typeof window === 'undefined') return;
 		if (!isSaleorCartEnabled()) {
-			this.items = loadCart();
+			this.items = readStoredJson<CartItem[]>(STORAGE_KEY, []);
 		}
 		this.initialized = true;
 	}
@@ -95,12 +108,7 @@ class CartState {
 		if (this.checkout) {
 			return this.checkout.subtotal.amount;
 		}
-		const raw = this.items.reduce((sum, item) => {
-			const product = getCatalogProductById(item.productId);
-			if (!product) return sum;
-			const variant = product.variants.find((v) => v.id === item.variantId) ?? product.variants[0];
-			return sum + variant.pricing.price.amount * item.quantity;
-		}, 0);
+		const raw = mockItemsRawSubtotal(this.items);
 		if (this.mockPromo?.percentOff) {
 			return raw * (1 - this.mockPromo.percentOff / 100);
 		}
@@ -114,13 +122,7 @@ class CartState {
 
 	get mockDiscountAmount() {
 		if (!this.mockPromo?.percentOff) return 0;
-		const raw = this.items.reduce((sum, item) => {
-			const product = getCatalogProductById(item.productId);
-			if (!product) return sum;
-			const variant = product.variants.find((v) => v.id === item.variantId) ?? product.variants[0];
-			return sum + variant.pricing.price.amount * item.quantity;
-		}, 0);
-		return raw - this.subtotal;
+		return mockItemsRawSubtotal(this.items) - this.subtotal;
 	}
 
 	get saleorDiscountAmount() {
@@ -161,29 +163,15 @@ class CartState {
 		} else {
 			this.items = [...this.items, { productId, variantId: vid, quantity }];
 		}
-		saveCart(this.items);
+		writeStoredJson(STORAGE_KEY, this.items);
 	}
 
 	private async addItemSaleor(_productId: string, variantId: string | undefined, quantity: number) {
 		const vid = variantId?.trim();
 		if (!vid) return;
 
-		try {
-			const response = await fetch(checkoutApiUrl(), {
-				method: 'POST',
-				headers: { 'Content-Type': 'application/json' },
-				body: JSON.stringify({ variantId: vid, quantity })
-			});
-
-			if (!response.ok) return;
-
-			const data = (await response.json()) as { checkout?: CheckoutDisplay };
-			if (data.checkout) {
-				this.checkout = data.checkout;
-			}
-		} catch {
-			// Saleor unavailable — cart stays on last known checkout snapshot.
-		}
+		const checkout = await mutateCheckout('POST', { variantId: vid, quantity });
+		if (checkout) this.checkout = checkout;
 	}
 
 	removeItem(productId: string, variantId: string) {
@@ -199,7 +187,7 @@ class CartState {
 		this.items = this.items.filter(
 			(i) => !(i.productId === productId && i.variantId === variantId)
 		);
-		saveCart(this.items);
+		writeStoredJson(STORAGE_KEY, this.items);
 	}
 
 	updateQuantity(productId: string, variantId: string, quantity: number) {
@@ -219,45 +207,21 @@ class CartState {
 		this.items = this.items.map((i) =>
 			i.productId === productId && i.variantId === variantId ? { ...i, quantity } : i
 		);
-		saveCart(this.items);
+		writeStoredJson(STORAGE_KEY, this.items);
 	}
 
 	updateSaleorLineQuantity(lineId: string, quantity: number) {
 		if (!isSaleorCartEnabled()) return;
-
-		void (async () => {
-			try {
-				const response = await fetch(checkoutApiUrl(), {
-					method: 'PATCH',
-					headers: { 'Content-Type': 'application/json' },
-					body: JSON.stringify({ lineId, quantity })
-				});
-				if (!response.ok) return;
-				const data = (await response.json()) as { checkout?: CheckoutDisplay };
-				if (data.checkout) this.checkout = data.checkout;
-			} catch {
-				// Saleor unavailable — cart stays on last known checkout snapshot.
-			}
-		})();
+		void mutateCheckout('PATCH', { lineId, quantity }).then((checkout) => {
+			if (checkout) this.checkout = checkout;
+		});
 	}
 
 	removeSaleorLine(lineId: string) {
 		if (!isSaleorCartEnabled()) return;
-
-		void (async () => {
-			try {
-				const response = await fetch(checkoutApiUrl(), {
-					method: 'DELETE',
-					headers: { 'Content-Type': 'application/json' },
-					body: JSON.stringify({ lineId })
-				});
-				if (!response.ok) return;
-				const data = (await response.json()) as { checkout?: CheckoutDisplay };
-				if (data.checkout) this.checkout = data.checkout;
-			} catch {
-				// Saleor unavailable — cart stays on last known checkout snapshot.
-			}
-		})();
+		void mutateCheckout('DELETE', { lineId }).then((checkout) => {
+			if (checkout) this.checkout = checkout;
+		});
 	}
 
 	clear() {
@@ -265,7 +229,7 @@ class CartState {
 		this.checkout = null;
 		this.mockPromo = null;
 		if (!isSaleorCartEnabled()) {
-			saveCart(this.items);
+			writeStoredJson(STORAGE_KEY, this.items);
 		}
 	}
 

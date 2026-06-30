@@ -1,5 +1,4 @@
 import { mockLocales } from '$lib/data/mock/locales';
-import { getCurrencyForLocale } from '$lib/data/mock/locales';
 
 export type LocaleCode = (typeof mockLocales)[number]['code'];
 
@@ -18,5 +17,3 @@ export const locales: LocaleConfig[] = mockLocales.map((l) => ({
 	flag: l.flag,
 	shippingRegions: [l.country.slice(0, 2).toUpperCase()]
 }));
-
-export { getCurrencyForLocale };

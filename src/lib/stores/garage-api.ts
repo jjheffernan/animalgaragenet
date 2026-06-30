@@ -1,6 +1,6 @@
 import type { SavedVehicle } from '$lib/types/domain';
 
-export interface GarageApiState {
+interface GarageApiState {
 	vehicles: SavedVehicle[];
 	garageXp: number;
 	completedActions: string[];

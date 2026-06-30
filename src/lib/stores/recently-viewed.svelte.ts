@@ -1,20 +1,7 @@
+import { readStoredJson, writeStoredJson } from './storage';
+
 const STORAGE_KEY = 'ag-recently-viewed';
 const MAX_ITEMS = 8;
-
-function loadRecent(): string[] {
-	if (typeof window === 'undefined') return [];
-	try {
-		const raw = localStorage.getItem(STORAGE_KEY);
-		return raw ? (JSON.parse(raw) as string[]) : [];
-	} catch {
-		return [];
-	}
-}
-
-function saveRecent(ids: string[]) {
-	if (typeof window === 'undefined') return;
-	localStorage.setItem(STORAGE_KEY, JSON.stringify(ids));
-}
 
 class RecentlyViewedState {
 	productIds = $state<string[]>([]);
@@ -22,7 +9,7 @@ class RecentlyViewedState {
 
 	init() {
 		if (this.initialized || typeof window === 'undefined') return;
-		this.productIds = loadRecent();
+		this.productIds = readStoredJson<string[]>(STORAGE_KEY, []);
 		this.initialized = true;
 	}
 
@@ -30,12 +17,12 @@ class RecentlyViewedState {
 		this.init();
 		const filtered = this.productIds.filter((id) => id !== productId);
 		this.productIds = [productId, ...filtered].slice(0, MAX_ITEMS);
-		saveRecent(this.productIds);
+		writeStoredJson(STORAGE_KEY, this.productIds);
 	}
 
 	clear() {
 		this.productIds = [];
-		saveRecent(this.productIds);
+		writeStoredJson(STORAGE_KEY, this.productIds);
 	}
 }
 

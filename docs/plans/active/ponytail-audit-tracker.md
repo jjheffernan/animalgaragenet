@@ -15,7 +15,7 @@ Server-side LOC / dedupe / guard tightening. **No** copy, layout, CSS, or visual
 | Batch | Items | Focus | Status |
 | ----- | ----- | ----- | ------ |
 | **P1** | 2 | Shared mock-fallback guard; dead validation aliases | **done** |
-| **P2** | 3 | API POST boilerplate; admin upload validation; store localStorage | open |
+| **P2** | 3 | API POST boilerplate; admin upload validation; store localStorage | partial |
 | **P3** | 3 | Oversized checkout module; catalog try/catch repetition; form stub dead paths | open |
 
 ---
@@ -33,9 +33,9 @@ Server-side LOC / dedupe / guard tightening. **No** copy, layout, CSS, or visual
 
 | Batch | ID | File(s) | Issue | Ponytail fix | LOC est | Status |
 | ----- | -- | ------- | ----- | ------------ | ------- | ------ |
-| P2 | PT-P2-001 | `routes/api/newsletter/subscribe`, `restock/notify`, `support/bug-report` | Repeated rate-limit + JSON parse + 429/400 responses | Shared `parseRateLimitedJsonPost` helper (existing `checkRateLimit` pattern) | −30 | open |
-| P2 | PT-P2-002 | `routes/api/admin/media/upload-slot`, `media/validation.ts` | Admin route re-implements mime/size checks already in `validateUploadRequest` | Reuse `isAllowedImageMime` + `validateUploadRequest` | −15 | open |
-| P2 | PT-P2-003 | `stores/garage.svelte.ts`, `garage-xp.svelte.ts`, `recently-viewed.svelte.ts`, `cart.svelte.ts` | Copy-paste localStorage load/save/clear | Extract `readStoredJson` / `writeStoredJson` in `$lib/stores/storage.ts` | −35 | open |
+| P2 | PT-P2-001 | `routes/api/newsletter/subscribe`, `restock/notify`, `support/bug-report` | Repeated rate-limit + JSON parse + 429/400 responses | Shared `parseRateLimitedJsonPost` helper (existing `checkRateLimit` pattern) | −30 | **done** |
+| P2 | PT-P2-002 | `routes/api/admin/media/upload-slot`, `media/validation.ts` | Admin route re-implements mime/size checks already in `validateUploadRequest` | Reuse `isAllowedImageMime` + `validateUploadRequest` | −15 | **done** |
+| P2 | PT-P2-003 | `stores/garage.svelte.ts`, `garage-xp.svelte.ts`, `recently-viewed.svelte.ts`, `cart.svelte.ts`, `locale.svelte.ts` | Copy-paste localStorage load/save/clear; cart mock subtotal + Saleor fetch dupes | `storage.ts` helpers; `mockItemsRawSubtotal` + `mutateCheckout`; locale uses `current.currency` | −35 | **done** |
 
 ---
 

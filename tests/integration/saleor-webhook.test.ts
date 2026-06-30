@@ -18,6 +18,11 @@ import { env } from '$env/dynamic/private';
 import { createAdminClient } from '$lib/server/supabase/admin';
 import { resolveUserIdByEmail } from '$lib/server/supabase/admin-users';
 import { _resetMockStoreForTests, listOrderSnapshotsForUser } from '$lib/server/orders/snapshots';
+import {
+	_resetMockStoreForTests as resetRestock,
+	createRestockAlert,
+	listPendingRestockAlerts
+} from '$lib/server/restock/repository';
 import { POST } from '../../src/routes/api/webhooks/saleor/+server';
 
 function sign(body: string, secret: string): string {
@@ -51,6 +56,7 @@ describe('POST /api/webhooks/saleor', () => {
 	beforeEach(() => {
 		vi.mocked(createAdminClient).mockReturnValue(null);
 		_resetMockStoreForTests();
+		resetRestock();
 		env.SALEOR_WEBHOOK_SECRET = 'saleor-test-secret';
 	});
 
@@ -89,6 +95,35 @@ describe('POST /api/webhooks/saleor', () => {
 			webhookEvent({ order: { id: 'x' } }, { signature: '' }) as Parameters<typeof POST>[0]
 		);
 		expect(response.status).toBe(401);
+	});
+
+	it('notifies restock alerts on PRODUCT_VARIANT_BACK_IN_STOCK', async () => {
+		await createRestockAlert({
+			email: 'fan@example.com',
+			productId: 'prod-42',
+			productSlug: 'garage-tee'
+		});
+
+		const payload = {
+			productVariant: {
+				id: 'variant-42',
+				quantity: 2,
+				product: { id: 'prod-42', slug: 'garage-tee', name: 'Garage Tee' }
+			}
+		};
+
+		const response = await POST(
+			webhookEvent(payload, { event: 'PRODUCT_VARIANT_BACK_IN_STOCK' }) as Parameters<
+				typeof POST
+			>[0]
+		);
+		const result = await response.json();
+
+		expect(response.status).toBe(200);
+		expect(result).toEqual({ ok: true, notified: 1, productId: 'prod-42' });
+
+		const pending = await listPendingRestockAlerts('prod-42');
+		expect(pending).toHaveLength(0);
 	});
 
 	it('ignores non-order events', async () => {

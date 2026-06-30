@@ -89,6 +89,35 @@ export async function listPendingRestockAlerts(productId: string): Promise<Resto
 	return data.map(rowToAlert);
 }
 
+/** Mark alerts as notified after restock webhook dispatch. */
+export async function markRestockAlertsNotified(ids: string[]): Promise<boolean> {
+	if (ids.length === 0) return true;
+
+	const notifiedAt = new Date().toISOString();
+	const admin = createAdminClient();
+	if (!admin) {
+		for (const alert of mockStore.values()) {
+			if (ids.includes(alert.id)) {
+				alert.notifiedAt = notifiedAt;
+			}
+		}
+		return true;
+	}
+
+	const { error } = await admin
+		.from('restock_alerts')
+		.update({ notified_at: notifiedAt })
+		.in('id', ids)
+		.is('notified_at', null);
+
+	if (error) {
+		console.error('restock_alerts mark notified failed:', error.message);
+		return false;
+	}
+
+	return true;
+}
+
 /** Test helper */
 export function _resetMockStoreForTests(): void {
 	mockStore.clear();

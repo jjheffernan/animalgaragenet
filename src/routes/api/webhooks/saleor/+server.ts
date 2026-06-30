@@ -5,6 +5,10 @@ import {
 	mirrorSaleorOrderPayload
 } from '$lib/server/saleor/order-webhook';
 import {
+	isStockRestockEvent,
+	processStockRestockPayload
+} from '$lib/server/saleor/stock-webhook';
+import {
 	readSaleorEvent,
 	readSaleorSignature,
 	verifySaleorWebhookSignature
@@ -41,6 +45,17 @@ export const POST: RequestHandler = async ({ request }) => {
 	const event = readSaleorEvent(request);
 	if (!event) {
 		return json({ error: 'Missing Saleor-Event' }, { status: 400 });
+	}
+
+	if (isStockRestockEvent(event)) {
+		const result = await processStockRestockPayload(payload);
+		if (!result.ok) {
+			return json({ error: result.reason }, { status: 422 });
+		}
+		if ('skipped' in result && result.skipped) {
+			return json({ ok: true, skipped: result.reason });
+		}
+		return json({ ok: true, notified: result.notified, productId: result.productId });
 	}
 
 	if (!isOrderMirrorEvent(event)) {

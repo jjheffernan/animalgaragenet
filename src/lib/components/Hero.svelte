@@ -2,7 +2,7 @@
 	import { resolve } from '$app/paths';
 	import AnimatedReveal from './AnimatedReveal.svelte';
 	import CountdownTimer from './CountdownTimer.svelte';
-	import { getHeroCampaign } from '$lib/data/mock-campaigns';
+	import { getHeroCampaign } from '$lib/data/mock/campaigns';
 
 	interface Props {
 		campaignImage?: string;
@@ -70,13 +70,13 @@
 			<div class="mt-10 flex flex-wrap gap-4">
 				<a
 					href={resolve('/shop')}
-					class="inline-block rounded-sm bg-red-600 px-8 py-3 text-sm font-bold uppercase tracking-wider text-white transition hover:bg-red-500 hover:shadow-lg hover:shadow-red-600/20"
+					class="rounded-sm bg-red-600 px-8 py-4 text-base font-bold uppercase tracking-wider text-white transition hover:bg-red-500"
 				>
 					Shop the Drop
 				</a>
 				<a
 					href={resolve('/watch')}
-					class="inline-block rounded-sm border border-zinc-600 px-8 py-3 text-sm font-bold uppercase tracking-wider text-zinc-300 transition hover:border-red-600 hover:text-white"
+					class="rounded-sm border border-zinc-700 px-8 py-4 text-base font-bold uppercase tracking-wider text-zinc-300 transition hover:border-red-600 hover:text-white"
 				>
 					Watch Builds
 				</a>

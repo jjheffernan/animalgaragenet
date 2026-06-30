@@ -1,24 +1,31 @@
 <script lang="ts">
 	import { promo } from '$lib/stores/promo.svelte';
-	import { getActiveBanners } from '$lib/data/mock-banners';
-	import { getActiveCampaign } from '$lib/data/mock-campaigns';
+	import { getPromoBannerId, setPromoBannerId } from '$lib/cookies/client';
+	import { getActiveBanners } from '$lib/data/mock/banners';
+	import { getActiveCampaign } from '$lib/data/mock/campaigns';
 	import { resolvePath } from '$lib/utils/paths';
 	import CountdownTimer from './CountdownTimer.svelte';
 
-	let bannerIndex = $state(0);
 	const banners = getActiveBanners();
 	const campaign = getActiveCampaign();
 
-	$effect(() => {
-		promo.init();
-	});
+	function pickBannerIndex(): number {
+		if (banners.length <= 1) return 0;
+		if (typeof window === 'undefined') return 0;
+		const stored = getPromoBannerId();
+		if (stored) {
+			const idx = banners.findIndex((b) => b.id === stored);
+			if (idx >= 0) return idx;
+		}
+		const idx = Math.floor(Math.random() * banners.length);
+		setPromoBannerId(banners[idx].id);
+		return idx;
+	}
+
+	const bannerIndex = pickBannerIndex();
 
 	$effect(() => {
-		if (banners.length <= 1) return;
-		const interval = setInterval(() => {
-			bannerIndex = (bannerIndex + 1) % banners.length;
-		}, 6000);
-		return () => clearInterval(interval);
+		promo.init();
 	});
 
 	const current = $derived(banners[bannerIndex] ?? banners[0]);

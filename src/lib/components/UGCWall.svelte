@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
 	import type { UGCItem } from '$lib/types/domain';
-	import { mockUGC } from '$lib/data/mock-ugc';
+	import { mockUGC } from '$lib/data/mock/ugc';
 
 	interface Props {
 		items?: UGCItem[];
@@ -9,9 +9,9 @@
 		class?: string;
 	}
 
-	let { items = mockUGC, limit = 12, class: className = '' }: Props = $props();
+	let { items = mockUGC, limit, class: className = '' }: Props = $props();
 
-	const display = $derived(items.slice(0, limit));
+	const display = $derived(limit ? items.slice(0, limit) : items);
 </script>
 
 <div class="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-4 {className}">

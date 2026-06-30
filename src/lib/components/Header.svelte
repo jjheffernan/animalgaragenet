@@ -6,50 +6,218 @@
 	import CartDrawer from './CartDrawer.svelte';
 	import SearchModal from './SearchModal.svelte';
 	import LocaleSelector from './LocaleSelector.svelte';
+	import MobileNavDrawer from './MobileNavDrawer.svelte';
 	import DealBadge from './DealBadge.svelte';
 	import { cart } from '$lib/stores/cart.svelte';
 	import { search } from '$lib/stores/search.svelte';
+	import { resolvePath } from '$lib/utils/paths';
 
 	let mobileOpen = $state(false);
+	let notificationsOpen = $state(false);
 	let shopMenuOpen = $state(false);
 	let partsMenuOpen = $state(false);
+	let communityMenuOpen = $state(false);
+	let shopMenuPinned = $state(false);
+	let partsMenuPinned = $state(false);
+	let communityMenuPinned = $state(false);
+	let closeTimer: ReturnType<typeof setTimeout> | undefined;
+	let headerShell = $state<HTMLDivElement | null>(null);
+
+	$effect(() => {
+		if (!headerShell) return;
+
+		const syncHeaderHeight = () => {
+			document.documentElement.style.setProperty(
+				'--site-header-height',
+				`${headerShell!.offsetHeight}px`
+			);
+		};
+
+		syncHeaderHeight();
+		const observer = new ResizeObserver(syncHeaderHeight);
+		observer.observe(headerShell);
+
+		return () => {
+			observer.disconnect();
+			document.documentElement.style.removeProperty('--site-header-height');
+		};
+	});
+
+	function closeMenus() {
+		shopMenuOpen = false;
+		partsMenuOpen = false;
+		communityMenuOpen = false;
+		shopMenuPinned = false;
+		partsMenuPinned = false;
+		communityMenuPinned = false;
+	}
+
+	function scheduleClose() {
+		if (shopMenuPinned || partsMenuPinned || communityMenuPinned) return;
+		clearTimeout(closeTimer);
+		closeTimer = setTimeout(closeMenus, 120);
+	}
+
+	function cancelClose() {
+		clearTimeout(closeTimer);
+	}
 
 	function openShopMenu() {
+		cancelClose();
 		partsMenuOpen = false;
+		partsMenuPinned = false;
+		communityMenuOpen = false;
+		communityMenuPinned = false;
 		shopMenuOpen = true;
 	}
 
 	function openPartsMenu() {
+		cancelClose();
 		shopMenuOpen = false;
+		shopMenuPinned = false;
+		communityMenuOpen = false;
+		communityMenuPinned = false;
 		partsMenuOpen = true;
 	}
 
-	function handleMenuFocusOut(e: FocusEvent, close: () => void) {
-		const container = e.currentTarget as HTMLElement;
-		const next = e.relatedTarget as Node | null;
-		if (!next || !container.contains(next)) close();
+	function openCommunityMenu() {
+		cancelClose();
+		shopMenuOpen = false;
+		shopMenuPinned = false;
+		partsMenuOpen = false;
+		partsMenuPinned = false;
+		communityMenuOpen = true;
+	}
+
+	function toggleShopMenu() {
+		if (shopMenuOpen && shopMenuPinned) {
+			closeMenus();
+		} else {
+			shopMenuPinned = true;
+			openShopMenu();
+		}
+	}
+
+	function togglePartsMenu() {
+		if (partsMenuOpen && partsMenuPinned) {
+			closeMenus();
+		} else {
+			partsMenuPinned = true;
+			openPartsMenu();
+		}
+	}
+
+	function toggleCommunityMenu() {
+		if (communityMenuOpen && communityMenuPinned) {
+			closeMenus();
+		} else {
+			communityMenuPinned = true;
+			openCommunityMenu();
+		}
 	}
 
 	$effect(() => {
 		cart.init();
 	});
 
-	const session = $derived($page.data.session);
+	$effect(() => {
+		// Close menus on route change
+		$page.url.pathname;
+		$page.url.search;
+		closeMenus();
+		mobileOpen = false;
+		notificationsOpen = false;
+		cart.closeDrawer();
+	});
 
-	const navLinks = [
-		{ href: '/builds', label: 'Builds' },
-		{ href: '/watch', label: 'Watch' },
-		{ href: '/guides', label: 'Guides' },
-		{ href: '/loyalty', label: 'Loyalty' }
+	const communityPaths = ['/loyalty', '/guides', '/events', '/watch', '/builds', '/media'];
+	const isCommunityActive = $derived(
+		communityPaths.some((p) => $page.url.pathname === p || $page.url.pathname.startsWith(`${p}/`))
+	);
+
+	const session = $derived($page.data.session);
+	const notificationCount = 0;
+	const activeMenu = $derived(shopMenuOpen ? 'shop' : partsMenuOpen ? 'parts' : null);
+	const dealsHref = $derived(
+		session ? resolve('/deals') : resolvePath('/auth/sign-in?redirect=/deals')
+	);
+
+	const shopCategories = [
+		{ label: 'All Shop', href: '/shop' },
+		{ label: 'Tees', href: '/shop?category=TEES' },
+		{ label: 'Hoodies', href: '/shop?category=SWEATSHIRTS' },
+		{ label: 'Jackets', href: '/shop?category=JACKETS' },
+		{ label: 'Headwear', href: '/shop?category=HEADWEAR' },
+		{ label: 'Accessories', href: '/shop?category=ACCESSORIES' },
+		{ label: 'Home', href: '/shop?category=HOME' },
+		{ label: 'Auto', href: '/shop?category=AUTO' },
+		{ label: 'Gift Cards', href: '/gift-cards' }
 	] as const;
+
+	const communityLinks = $derived([
+		{ label: 'Loyalty', href: resolve('/loyalty') },
+		{ label: 'Guides', href: resolve('/guides') },
+		{ label: 'Events', href: resolve('/events') },
+		{ label: 'Watch', href: resolve('/watch') },
+		{ label: 'Builds', href: resolve('/builds') }
+	] as const);
+
+	function closeMobileNav() {
+		mobileOpen = false;
+	}
+
+	function openMobileNav() {
+		cart.closeDrawer();
+		mobileOpen = true;
+	}
+
+	function openCart() {
+		closeMobileNav();
+		closeMenus();
+		cart.openDrawer();
+	}
+
+	function toggleCart() {
+		if (cart.drawerOpen) {
+			cart.closeDrawer();
+		} else {
+			openCart();
+		}
+	}
 </script>
 
-<div class="fixed inset-x-0 top-0 z-50">
+<svelte:window
+	onkeydown={(e) => {
+		if (e.key === 'Escape') {
+			closeMenus();
+			closeMobileNav();
+			notificationsOpen = false;
+			cart.closeDrawer();
+		}
+	}}
+/>
+
+<div class="fixed inset-x-0 top-0 z-50" bind:this={headerShell}>
 	<PromoBar />
 
 	<header class="relative border-b border-zinc-800/80 bg-zinc-950/90 backdrop-blur-md">
-		<div class="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
-			<a href={resolve('/')} class="group flex items-center gap-2">
+		<div class="relative mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
+			<button
+				type="button"
+				class="z-10 p-1 text-zinc-300 transition hover:text-white lg:hidden"
+				aria-label="Open menu"
+				aria-expanded={mobileOpen}
+				onclick={openMobileNav}
+			>
+				<svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+				</svg>
+			</button>
+
+			<a
+				href={resolve('/')}
+				class="group absolute left-1/2 flex -translate-x-1/2 items-center gap-2 lg:relative lg:left-auto lg:translate-x-0"
+			>
 				<span
 					class="flex h-9 w-9 items-center justify-center bg-red-600 text-sm font-black tracking-tighter text-white transition-transform group-hover:scale-105"
 				>AG</span>
@@ -60,62 +228,190 @@
 
 			<nav class="hidden items-center gap-6 lg:flex" aria-label="Main">
 				<div
-					role="group"
-					tabindex="-1"
-					class="relative"
+					class="relative inline-flex items-center gap-0.5"
 					onmouseenter={openShopMenu}
-					onmouseleave={() => (shopMenuOpen = false)}
-					onfocusin={openShopMenu}
-					onfocusout={(e) => handleMenuFocusOut(e, () => (shopMenuOpen = false))}
+					onmouseleave={scheduleClose}
 				>
 					<a
 						href={resolve('/shop')}
-						class="text-sm font-medium uppercase tracking-wider text-zinc-400 transition hover:text-white"
+						class="text-sm font-medium uppercase tracking-wider transition-colors {activeMenu === 'shop'
+							? 'text-white'
+							: 'text-zinc-400 hover:text-white'}"
 					>
 						Shop
 					</a>
-					<MegaMenu type="shop" open={shopMenuOpen} onclose={() => (shopMenuOpen = false)} />
+					<button
+						type="button"
+						class="rounded-sm p-0.5 text-zinc-500 transition hover:text-white {shopMenuOpen ? 'text-white' : ''}"
+						aria-expanded={shopMenuOpen}
+						aria-haspopup="menu"
+						aria-label="Open shop menu"
+						onclick={toggleShopMenu}
+					>
+						<svg
+							class="h-3.5 w-3.5 transition {shopMenuOpen ? 'rotate-180' : ''}"
+							fill="none"
+							stroke="currentColor"
+							viewBox="0 0 24 24"
+							aria-hidden="true"
+						>
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+						</svg>
+					</button>
 				</div>
+
 				<div
-					role="group"
-					tabindex="-1"
-					class="relative"
+					class="relative inline-flex items-center gap-0.5"
 					onmouseenter={openPartsMenu}
-					onmouseleave={() => (partsMenuOpen = false)}
-					onfocusin={openPartsMenu}
-					onfocusout={(e) => handleMenuFocusOut(e, () => (partsMenuOpen = false))}
+					onmouseleave={scheduleClose}
 				>
 					<a
 						href={resolve('/parts')}
-						class="text-sm font-medium uppercase tracking-wider text-zinc-400 transition hover:text-white"
+						class="text-sm font-medium uppercase tracking-wider transition-colors {activeMenu === 'parts'
+							? 'text-white'
+							: 'text-zinc-400 hover:text-white'}"
 					>
 						Parts
 					</a>
-					<MegaMenu type="parts" open={partsMenuOpen} onclose={() => (partsMenuOpen = false)} />
+					<button
+						type="button"
+						class="rounded-sm p-0.5 text-zinc-500 transition hover:text-white {partsMenuOpen ? 'text-white' : ''}"
+						aria-expanded={partsMenuOpen}
+						aria-haspopup="menu"
+						aria-label="Open parts menu"
+						onclick={togglePartsMenu}
+					>
+						<svg
+							class="h-3.5 w-3.5 transition {partsMenuOpen ? 'rotate-180' : ''}"
+							fill="none"
+							stroke="currentColor"
+							viewBox="0 0 24 24"
+							aria-hidden="true"
+						>
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+						</svg>
+					</button>
 				</div>
-				{#each navLinks as link (link.href)}
+
+				<div
+					class="relative inline-flex items-center gap-0.5"
+					onmouseenter={openCommunityMenu}
+					onmouseleave={scheduleClose}
+				>
 					<a
-						href={resolve(link.href)}
-						class="text-sm font-medium uppercase tracking-wider transition-colors {$page.url.pathname.startsWith(link.href)
-							? 'text-red-500'
+						href={resolve('/builds')}
+						class="text-sm font-medium uppercase tracking-wider transition-colors {communityMenuOpen || isCommunityActive
+							? 'text-white'
 							: 'text-zinc-400 hover:text-white'}"
 					>
-						{link.label}
+						Community
 					</a>
-				{/each}
+					<button
+						type="button"
+						class="rounded-sm p-0.5 text-zinc-500 transition hover:text-white {communityMenuOpen ? 'text-white' : ''}"
+						aria-expanded={communityMenuOpen}
+						aria-haspopup="menu"
+						aria-label="Open community menu"
+						onclick={toggleCommunityMenu}
+					>
+						<svg
+							class="h-3.5 w-3.5 transition {communityMenuOpen ? 'rotate-180' : ''}"
+							fill="none"
+							stroke="currentColor"
+							viewBox="0 0 24 24"
+							aria-hidden="true"
+						>
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+						</svg>
+					</button>
+
+					{#if communityMenuOpen}
+						<div
+							class="absolute left-0 top-full z-50 mt-1 min-w-[13rem] overflow-hidden rounded-sm border border-zinc-800 bg-zinc-950 py-2 shadow-2xl"
+							role="menu"
+							onmouseenter={cancelClose}
+							onmouseleave={scheduleClose}
+						>
+							<p class="px-4 pb-1 text-xs font-bold uppercase tracking-widest text-zinc-500">Community</p>
+							<ul>
+								{#each communityLinks as link (link.href)}
+									<li role="none">
+										<a
+											href={link.href}
+											role="menuitem"
+											class="block px-4 py-2.5 text-sm font-medium uppercase tracking-wider text-zinc-300 transition hover:bg-zinc-900/80 hover:text-red-400 {$page.url.pathname === link.href ||
+											$page.url.pathname.startsWith(`${link.href}/`)
+												? 'bg-zinc-900/50 text-red-400'
+												: ''}"
+											onclick={closeMenus}
+										>
+											{link.label}
+										</a>
+									</li>
+								{/each}
+							</ul>
+						</div>
+					{/if}
+				</div>
+
 				<a
-					href={resolve('/deals')}
+					href={dealsHref}
 					class="inline-flex items-center gap-1.5 text-sm font-medium uppercase tracking-wider transition-colors {$page.url.pathname === '/deals'
 						? 'text-red-500'
 						: 'text-zinc-400 hover:text-white'}"
+					aria-label={session ? 'Pit Lane Deals' : 'Sign in to view Pit Lane Deals'}
 				>
 					Pit Lane Deals
+					{#if !session}
+						<svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+							<path
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								stroke-width="2"
+								d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
+							/>
+						</svg>
+					{/if}
 					<DealBadge />
 				</a>
 			</nav>
 
-			<div class="flex items-center gap-3 sm:gap-4">
+			<div class="z-10 flex items-center gap-3 sm:gap-4">
 				{#if session}
+					<div class="relative">
+						<button
+							type="button"
+							class="relative p-1 text-zinc-400 transition hover:text-white"
+							aria-label="Notifications"
+							aria-expanded={notificationsOpen}
+							aria-haspopup="menu"
+							onclick={() => (notificationsOpen = !notificationsOpen)}
+						>
+							<svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+								<path
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									stroke-width="2"
+									d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
+								/>
+							</svg>
+							{#if notificationCount > 0}
+								<span
+									class="absolute -right-1 -top-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-red-600 px-0.5 text-[10px] font-bold text-white"
+								>
+									{notificationCount > 9 ? '9+' : notificationCount}
+								</span>
+							{/if}
+						</button>
+						{#if notificationsOpen}
+							<div
+								class="absolute right-0 top-full z-50 mt-2 w-64 overflow-hidden rounded-sm border border-zinc-800 bg-zinc-950 py-3 shadow-2xl"
+								role="menu"
+							>
+								<p class="px-4 text-sm text-zinc-400">No notifications yet</p>
+							</div>
+						{/if}
+					</div>
 					<a
 						href={resolve('/account')}
 						class="hidden text-sm font-medium uppercase tracking-wider text-zinc-400 transition hover:text-white sm:block"
@@ -129,10 +425,24 @@
 					>
 						Sign In
 					</a>
+					<a
+						href={resolve('/auth/sign-in')}
+						class="text-zinc-400 hover:text-white sm:hidden"
+						aria-label="Sign In"
+					>
+						<svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+							<path
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								stroke-width="2"
+								d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+							/>
+						</svg>
+					</a>
 				{/if}
 				<button
 					type="button"
-					class="text-zinc-400 hover:text-white"
+					class="p-1 text-zinc-400 transition hover:text-white"
 					aria-label="Search"
 					onclick={() => search.openModal()}
 				>
@@ -142,9 +452,9 @@
 				</button>
 				<button
 					type="button"
-					class="relative text-zinc-400 hover:text-white"
+					class="relative p-1 text-zinc-400 transition hover:text-white"
 					aria-label="Cart"
-					onclick={() => cart.toggleDrawer()}
+					onclick={toggleCart}
 				>
 					<svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
@@ -158,45 +468,25 @@
 				<div class="hidden sm:block">
 					<LocaleSelector />
 				</div>
-				<button
-					type="button"
-					class="lg:hidden text-zinc-300"
-					aria-label="Toggle menu"
-					onclick={() => (mobileOpen = !mobileOpen)}
-				>
-					<svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-						<path
-							stroke-linecap="round"
-							stroke-linejoin="round"
-							stroke-width="2"
-							d={mobileOpen ? 'M6 18L18 6M6 6l12 12' : 'M4 6h16M4 12h16M4 18h16'}
-						/>
-					</svg>
-				</button>
 			</div>
 		</div>
 
-		{#if mobileOpen}
-			<nav class="border-t border-zinc-800 bg-zinc-950 px-4 py-4 lg:hidden" aria-label="Mobile">
-				<a href={resolve('/shop')} class="block py-3 text-sm font-medium uppercase tracking-wider text-zinc-300" onclick={() => (mobileOpen = false)}>Shop</a>
-				<a href={resolve('/parts')} class="block py-3 text-sm font-medium uppercase tracking-wider text-zinc-300" onclick={() => (mobileOpen = false)}>Parts</a>
-				{#each navLinks as link (link.href)}
-					<a href={resolve(link.href)} class="block py-3 text-sm font-medium uppercase tracking-wider text-zinc-300" onclick={() => (mobileOpen = false)}>{link.label}</a>
-				{/each}
-				<a href={resolve('/deals')} class="flex items-center gap-2 py-3 text-sm font-medium uppercase tracking-wider text-zinc-300" onclick={() => (mobileOpen = false)}>
-					Pit Lane Deals <DealBadge />
-				</a>
-				{#if session}
-					<a href={resolve('/account')} class="block py-3 text-sm font-medium uppercase tracking-wider text-zinc-300" onclick={() => (mobileOpen = false)}>Account</a>
-				{:else}
-					<a href={resolve('/auth/sign-in')} class="block py-3 text-sm font-medium uppercase tracking-wider text-zinc-300" onclick={() => (mobileOpen = false)}>Sign In</a>
-				{/if}
-				<div class="mt-2 sm:hidden">
-					<LocaleSelector />
-				</div>
-			</nav>
+		{#if shopMenuOpen}
+			<MegaMenu type="shop" open={shopMenuOpen} onclose={closeMenus} onhover={cancelClose} onleave={scheduleClose} />
+		{:else if partsMenuOpen}
+			<MegaMenu type="parts" open={partsMenuOpen} onclose={closeMenus} onhover={cancelClose} onleave={scheduleClose} />
 		{/if}
 	</header>
+
+	<MobileNavDrawer
+		open={mobileOpen}
+		{session}
+		{dealsHref}
+		{shopCategories}
+		{communityLinks}
+		onclose={closeMobileNav}
+		onopencart={openCart}
+	/>
 </div>
 
 <CartDrawer open={cart.drawerOpen} onclose={() => cart.closeDrawer()} />

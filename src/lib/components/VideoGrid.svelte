@@ -2,7 +2,7 @@
 	import { goto } from '$app/navigation';
 	import { resolve } from '$app/paths';
 	import type { Video } from '$lib/types/domain';
-	import { mockVideos } from '$lib/data/mock-videos';
+	import { mockVideos } from '$lib/data/mock/videos';
 	import VideoCard from './VideoCard.svelte';
 
 	interface Props {

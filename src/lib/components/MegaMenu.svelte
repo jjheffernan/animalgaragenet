@@ -1,121 +1,142 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
+	import { page } from '$app/stores';
+	import PartsNavSections from '$lib/components/PartsNavSections.svelte';
+	import { buildPartsFilterUrl } from '$lib/data/parts-filters';
+	import { categoryPillClass } from '$lib/ui/catalog-ribbon';
 	import { resolvePath } from '$lib/utils/paths';
-	import { getShopCollections } from '$lib/data/mock-collections';
-	import { mockPartCategories } from '$lib/data/mock-part-categories';
 
 	interface Props {
 		type: 'shop' | 'parts';
 		open?: boolean;
 		onclose?: () => void;
+		onhover?: () => void;
+		onleave?: () => void;
 	}
 
-	let { type, open = false, onclose }: Props = $props();
+	type PartsTab = 'categories' | 'vehicle' | 'brands' | 'build';
 
-	const shopCategories = [
-		{ label: 'Apparel', href: '/shop?category=apparel', seed: 'agmenu-apparel' },
-		{ label: 'Accessories', href: '/shop?category=accessories', seed: 'agmenu-accessories' },
-		{ label: 'Auto', href: '/shop?category=auto', seed: 'agmenu-auto' },
-		{ label: 'Home', href: '/shop?category=home', seed: 'agmenu-home' },
-		{ label: 'Clearance', href: '/shop?collection=clearance', seed: 'agmenu-clearance' },
-		{ label: 'Gift Cards', href: '/gift-cards', seed: 'agmenu-gift' }
+	let { type, open = false, onclose, onhover, onleave }: Props = $props();
+
+	const partsTabs: { id: PartsTab; label: string }[] = [
+		{ id: 'categories', label: 'Shop by Category' },
+		{ id: 'vehicle', label: 'Shop by Vehicle' },
+		{ id: 'brands', label: 'Shop by Brand' },
+		{ id: 'build', label: 'Shop by Build' }
 	];
 
-	const collections = getShopCollections().slice(0, 4);
+	let activePartsTab = $state<PartsTab>('categories');
+
+	$effect(() => {
+		if (!open) {
+			activePartsTab = 'categories';
+		}
+	});
+
+	const shopCategories = [
+		{ label: 'All Shop', href: '/shop' },
+		{ label: 'Tees', href: '/shop?category=TEES' },
+		{ label: 'Hoodies', href: '/shop?category=SWEATSHIRTS' },
+		{ label: 'Jackets', href: '/shop?category=JACKETS' },
+		{ label: 'Headwear', href: '/shop?category=HEADWEAR' },
+		{ label: 'Accessories', href: '/shop?category=ACCESSORIES' },
+		{ label: 'Home', href: '/shop?category=HOME' },
+		{ label: 'Auto', href: '/shop?category=AUTO' },
+		{ label: 'Gift Cards', href: '/gift-cards' }
+	];
+
+	const collections = $derived($page.data.shopCollections ?? []);
+	const partsNav = $derived($page.data.partsNav);
+
+	function partsFilterHref(updates: Parameters<typeof buildPartsFilterUrl>[2]) {
+		return resolvePath(buildPartsFilterUrl('/parts', new URLSearchParams(), updates));
+	}
 </script>
 
 {#if open}
-	<div class="absolute left-0 right-0 top-full pt-2">
-		<div
-			class="border-b border-zinc-800 bg-zinc-950 shadow-xl"
-			role="menu"
-			tabindex="0"
-		>
-		<div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-			{#if type === 'shop'}
-				<div class="grid gap-6 md:grid-cols-2">
+	<div
+		class="absolute inset-x-0 top-full z-50 pt-1"
+		role="presentation"
+		onmouseenter={onhover}
+		onmouseleave={onleave}
+	>
+		<div class="border-b border-zinc-800 bg-zinc-950 shadow-2xl" role="menu">
+			<div class="mx-auto max-w-7xl px-4 py-3 sm:px-6 lg:px-8">
+				{#if type === 'shop'}
 					<div>
-						<p class="text-xs font-bold uppercase tracking-widest text-zinc-500">Categories</p>
-						<div class="mt-3 grid grid-cols-2 gap-3">
-							{#each shopCategories as cat (cat.href)}
-								<a
-									href={resolvePath(cat.href)}
-									class="group relative overflow-hidden rounded-sm border border-zinc-800"
-									role="menuitem"
-									onclick={() => onclose?.()}
-								>
-									<img
-										src="https://picsum.photos/seed/{cat.seed}/300/200"
-										alt={cat.label}
-										class="aspect-[3/2] w-full object-cover transition group-hover:scale-105"
-									/>
-									<span
-										class="absolute inset-0 flex items-end bg-gradient-to-t from-zinc-950/90 to-transparent p-3 text-xs font-bold uppercase tracking-wider text-white"
-									>
-										{cat.label}
-									</span>
-								</a>
-							{/each}
+						<div class="flex items-end justify-between gap-4">
+							<p class="text-xs font-bold uppercase tracking-widest text-zinc-500">Categories</p>
+							<a
+								href={resolve('/shop')}
+								class="text-[10px] font-bold uppercase tracking-widest text-red-500 hover:text-red-400"
+							>
+								All shop →
+							</a>
 						</div>
-					</div>
-					<div>
-						<p class="text-xs font-bold uppercase tracking-widest text-zinc-500">Collections</p>
-						<ul class="mt-3 space-y-2">
-							{#each collections as col (col.id)}
+						<ul class="mt-2 grid grid-cols-3 gap-x-4 gap-y-0.5 sm:grid-cols-4 lg:grid-cols-5">
+							{#each shopCategories as cat (cat.href)}
 								<li>
 									<a
-										href={resolve(`/shop?collection=${col.slug}`)}
-										class="flex items-center gap-3 rounded-sm p-2 hover:bg-zinc-900"
-										onclick={() => onclose?.()}
+										href={resolvePath(cat.href)}
+										class="block py-1 text-sm font-medium text-zinc-300 transition hover:text-red-400"
+										role="menuitem"
 									>
-										{#if col.backgroundImage}
-											<img
-												src={col.backgroundImage.url}
-												alt={col.name}
-												class="h-12 w-16 rounded-sm object-cover"
-											/>
-										{/if}
-										<div>
-											<p class="text-sm font-medium text-white">{col.name}</p>
-											<p class="text-xs text-zinc-500">{col.description.slice(0, 60)}…</p>
-										</div>
+										{cat.label}
 									</a>
 								</li>
 							{/each}
 						</ul>
-					</div>
-				</div>
-			{:else}
-				<div class="grid gap-4 sm:grid-cols-3 lg:grid-cols-5">
-					{#each mockPartCategories as cat (cat.id)}
-						<a
-							href={resolve(`/parts/${cat.slug}`)}
-							class="group overflow-hidden rounded-sm border border-zinc-800"
-							role="menuitem"
-							onclick={() => onclose?.()}
-						>
-							{#if cat.imageUrl}
-								<img
-									src={cat.imageUrl}
-									alt={cat.name}
-									class="aspect-[4/3] w-full object-cover transition group-hover:scale-105"
-								/>
-							{/if}
-							<div class="p-3">
-								<p class="text-xs font-bold uppercase tracking-wider text-white">{cat.name}</p>
-								{#if cat.children}
-									<ul class="mt-1 space-y-0.5">
-										{#each cat.children.slice(0, 3) as child (child.id)}
-											<li class="text-[10px] text-zinc-500">{child.name}</li>
-										{/each}
-									</ul>
-								{/if}
+
+						{#if collections.length > 0}
+							<div class="mt-3 border-t border-zinc-800/80 pt-3">
+								<p class="text-xs font-bold uppercase tracking-widest text-zinc-500">Collections</p>
+								<ul class="mt-2 flex gap-2 overflow-x-auto pb-1 scrollbar-thin">
+									{#each collections as col (col.id)}
+										<li class="shrink-0">
+											<a
+												href={resolvePath(`/shop?collection=${col.slug}`)}
+												class="block rounded-sm border border-zinc-800 bg-zinc-900/80 px-3 py-2 text-sm font-medium text-zinc-200 transition hover:border-red-600/40 hover:text-red-400"
+												role="menuitem"
+											>
+												{col.name}
+											</a>
+										</li>
+									{/each}
+								</ul>
 							</div>
-						</a>
-					{/each}
-				</div>
-			{/if}
-		</div>
+						{/if}
+					</div>
+				{:else if partsNav}
+					<div
+						class="mb-3 flex flex-wrap gap-1 border-b border-zinc-800 pb-3"
+						role="tablist"
+						aria-label="Parts shopping modes"
+					>
+						{#each partsTabs as tab (tab.id)}
+							<button
+								type="button"
+								role="tab"
+								aria-selected={activePartsTab === tab.id}
+								class={categoryPillClass(activePartsTab === tab.id)}
+								onclick={() => (activePartsTab = tab.id)}
+							>
+								{tab.label}
+							</button>
+						{/each}
+					</div>
+					<div role="tabpanel">
+						<PartsNavSections
+							layout="megamenu"
+							section={activePartsTab}
+							categories={partsNav.categories}
+							brands={partsNav.brands}
+							popularModels={partsNav.popularModels}
+							filterHref={partsFilterHref}
+							onNavigate={onclose}
+						/>
+					</div>
+				{/if}
+			</div>
 		</div>
 	</div>
 {/if}

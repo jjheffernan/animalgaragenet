@@ -1,17 +1,19 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
-	import { getStaffPickProducts } from '$lib/data/mock-products';
+	import { getStaffPickProducts } from '$lib/data/mock/products';
+	import type { Product } from '$lib/types/saleor';
 	import ProductCard from './ProductCard.svelte';
 	import SectionHeading from './SectionHeading.svelte';
 
 	interface Props {
+		products?: Product[];
 		limit?: number;
 		class?: string;
 	}
 
-	let { limit = 4, class: className = '' }: Props = $props();
+	let { products: productsProp, limit = 4, class: className = '' }: Props = $props();
 
-	const products = $derived(getStaffPickProducts().slice(0, limit));
+	const products = $derived((productsProp ?? getStaffPickProducts()).slice(0, limit));
 </script>
 
 <section class={className}>

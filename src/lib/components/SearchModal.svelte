@@ -1,10 +1,15 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
+	import { getProductPath } from '$lib/data/catalog-helpers';
 	import { search } from '$lib/stores/search.svelte';
-	import { searchProducts } from '$lib/data/mock-products';
-	import { searchParts } from '$lib/data/mock-parts';
-	import { searchBuilds } from '$lib/data/mock-builds';
-	import { searchGuides } from '$lib/data/mock-guides';
+	import { locale } from '$lib/stores/locale.svelte';
+	import { searchProducts } from '$lib/data/mock/products';
+	import { searchParts } from '$lib/data/mock/parts';
+	import { searchBuilds } from '$lib/data/mock/builds';
+	import { searchGuides } from '$lib/data/mock/guides';
+	import type { CatalogSearchResults } from '$lib/server/catalog/search';
+	import { resolvePath } from '$lib/utils/paths';
+	import CatalogKindBadge from './CatalogKindBadge.svelte';
 
 	function handleBackdrop(e: MouseEvent) {
 		if (e.target === e.currentTarget) search.closeModal();
@@ -18,10 +23,22 @@
 		if (e.key === 'Escape') search.closeModal();
 	}
 
-	const productResults = $derived(searchProducts(search.query).slice(0, 5));
-	const partResults = $derived(searchParts(search.query).slice(0, 5));
-	const buildResults = $derived(searchBuilds(search.query).slice(0, 3));
-	const guideResults = $derived(searchGuides(search.query).slice(0, 3));
+	let apiResults = $state<CatalogSearchResults | null>(null);
+	let useMockFallback = $state(false);
+	let searching = $state(false);
+
+	const productResults = $derived(
+		(useMockFallback ? searchProducts(search.query) : (apiResults?.products ?? [])).slice(0, 5)
+	);
+	const partResults = $derived(
+		(useMockFallback ? searchParts(search.query) : (apiResults?.parts ?? [])).slice(0, 5)
+	);
+	const buildResults = $derived(
+		(useMockFallback ? searchBuilds(search.query) : (apiResults?.builds ?? [])).slice(0, 3)
+	);
+	const guideResults = $derived(
+		(useMockFallback ? searchGuides(search.query) : (apiResults?.guides ?? [])).slice(0, 3)
+	);
 	const hasResults = $derived(
 		search.query.length > 0 &&
 			(productResults.length + partResults.length + buildResults.length + guideResults.length > 0)
@@ -33,6 +50,42 @@
 		if (search.open) {
 			inputEl?.focus();
 		}
+	});
+
+	$effect(() => {
+		const q = search.query.trim();
+		const localeCode = locale.code;
+
+		if (!q) {
+			apiResults = null;
+			useMockFallback = false;
+			searching = false;
+			return;
+		}
+
+		const controller = new AbortController();
+		searching = true;
+
+		const timer = setTimeout(async () => {
+			try {
+				const params = new URLSearchParams({ q, locale: localeCode });
+				const res = await fetch(`/api/catalog/search?${params}`, { signal: controller.signal });
+				if (!res.ok) throw new Error('Search request failed');
+				apiResults = await res.json();
+				useMockFallback = false;
+			} catch (err) {
+				if (controller.signal.aborted) return;
+				useMockFallback = true;
+				apiResults = null;
+			} finally {
+				if (!controller.signal.aborted) searching = false;
+			}
+		}, 200);
+
+		return () => {
+			clearTimeout(timer);
+			controller.abort();
+		};
 	});
 </script>
 
@@ -66,16 +119,18 @@
 			<div class="max-h-[50vh] overflow-y-auto p-4">
 				{#if search.query.length === 0}
 					<p class="text-sm text-zinc-500">Start typing to search the garage…</p>
+				{:else if searching && !useMockFallback && !apiResults}
+					<p class="text-sm text-zinc-500">Searching…</p>
 				{:else if !hasResults}
 					<p class="text-sm text-zinc-500">No results for "{search.query}"</p>
 				{:else}
 					{#if productResults.length > 0}
-						<p class="text-[10px] font-bold uppercase tracking-widest text-zinc-500">Shop</p>
+						<p class="text-[10px] font-bold uppercase tracking-widest text-zinc-500">Merch</p>
 						<ul class="mt-2 space-y-1">
 							{#each productResults as p (p.id)}
 								<li>
 									<a
-										href={resolve(`/shop/${p.slug}`)}
+										href={resolvePath(getProductPath(p))}
 										class="block rounded-sm px-2 py-1.5 text-sm text-zinc-300 hover:bg-zinc-900 hover:text-white"
 										onclick={() => search.closeModal()}
 									>
@@ -91,11 +146,12 @@
 							{#each partResults as p (p.id)}
 								<li>
 									<a
-										href={resolve(`/parts/${p.category?.slug}/${p.slug}`)}
-										class="block rounded-sm px-2 py-1.5 text-sm text-zinc-300 hover:bg-zinc-900 hover:text-white"
+										href={resolvePath(getProductPath(p))}
+										class="flex items-center gap-2 rounded-sm px-2 py-1.5 text-sm text-zinc-300 hover:bg-zinc-900 hover:text-white"
 										onclick={() => search.closeModal()}
 									>
-										{p.name}
+										<span class="min-w-0 flex-1 truncate">{p.name}</span>
+										<CatalogKindBadge product={p} />
 									</a>
 								</li>
 							{/each}

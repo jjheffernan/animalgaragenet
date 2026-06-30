@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
 	import type { PopularModel } from '$lib/types/domain';
-	import { mockPopularModels } from '$lib/data/mock-popular-models';
+	import { mockPopularModels } from '$lib/data/mock/popular-models';
 
 	interface Props {
 		models?: PopularModel[];

@@ -3,23 +3,27 @@
 	import { resolve } from '$app/paths';
 	import { page } from '$app/state';
 	import type { Video } from '$lib/types/domain';
+	import type { PaginationMeta } from '$lib/pagination';
 	import SectionHeading from './SectionHeading.svelte';
 	import AnimatedReveal from './AnimatedReveal.svelte';
 	import VideoGrid from './VideoGrid.svelte';
+	import VideoHero from './VideoHero.svelte';
 	import VideoDetailPanel from './VideoDetailPanel.svelte';
+	import ListControls from './ListControls.svelte';
 	import { videoPanel } from '$lib/stores/video-panel.svelte';
 
 	interface Props {
 		videos: Video[];
-		initialVideoId?: string;
+		pagination: PaginationMeta;
+		featuredVideo?: Video;
+		initialVideo?: Video;
 	}
 
-	let { videos, initialVideoId }: Props = $props();
+	let { videos, pagination, featuredVideo, initialVideo }: Props = $props();
 
 	$effect(() => {
-		if (initialVideoId) {
-			const match = videos.find((v) => v.id === initialVideoId);
-			if (match) videoPanel.openVideo(match);
+		if (initialVideo) {
+			videoPanel.openVideo(initialVideo);
 		}
 	});
 
@@ -42,11 +46,16 @@
 	</div>
 </section>
 
+{#if featuredVideo}
+	<VideoHero video={featuredVideo} onplay={() => handleVideoSelect(featuredVideo)} />
+{/if}
+
 <section class="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
 	<AnimatedReveal>
-		<SectionHeading title="All Videos" subtitle="{videos.length} videos" />
+		<SectionHeading title="All Videos" subtitle="{pagination.total} videos" />
 	</AnimatedReveal>
 	<VideoGrid {videos} onselect={handleVideoSelect} class="mt-8" />
+	<ListControls {pagination} />
 </section>
 
 <VideoDetailPanel onclose={handleClose} />

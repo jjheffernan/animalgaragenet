@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { getActiveDealCount } from '$lib/data/mock-deals';
+	import { getActiveDealCount } from '$lib/data/mock/deals';
 
 	interface Props {
 		class?: string;

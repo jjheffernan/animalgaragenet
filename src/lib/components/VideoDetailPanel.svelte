@@ -1,11 +1,11 @@
 <script lang="ts">
-	import { resolve } from '$app/paths';
 	import type { Video } from '$lib/types/domain';
 	import type { Product } from '$lib/types/saleor';
-	import { getProductsForVideo } from '$lib/data/catalog-helpers';
-	import { getRelatedVideos } from '$lib/data/mock-videos';
+	import { getProductPath, getProductsForVideo } from '$lib/data/catalog-helpers';
+	import { getRelatedVideos } from '$lib/data/mock/videos';
 	import { cart } from '$lib/stores/cart.svelte';
 	import { videoPanel } from '$lib/stores/video-panel.svelte';
+	import { resolvePath } from '$lib/utils/paths';
 	import PriceDisplay from './PriceDisplay.svelte';
 	import VideoCard from './VideoCard.svelte';
 
@@ -30,13 +30,6 @@
 	function close() {
 		videoPanel.close();
 		onclose?.();
-	}
-
-	function productHref(product: Product): string {
-		if (product.id.startsWith('p')) {
-			return resolve(`/parts/${product.category?.slug}/${product.slug}`);
-		}
-		return resolve(`/shop/${product.slug}`);
 	}
 
 	function formatDate(iso?: string): string | null {
@@ -121,7 +114,7 @@
 								{#each products as product (product.id)}
 									{@const soldOut = !product.isAvailableForPurchase || product.availableQuantity === 0}
 									<article class="overflow-hidden rounded-sm border border-zinc-800 bg-zinc-900">
-										<a href={productHref(product)} class="block">
+										<a href={resolvePath(getProductPath(product))} class="block">
 											{#if product.thumbnail}
 												<img
 													src={product.thumbnail.url}
@@ -138,7 +131,7 @@
 												</p>
 											{/if}
 											<a
-												href={productHref(product)}
+												href={resolvePath(getProductPath(product))}
 												class="mt-1 block text-sm font-medium text-white hover:text-red-400"
 											>
 												{product.name}

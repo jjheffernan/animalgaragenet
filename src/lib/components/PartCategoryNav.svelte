@@ -2,7 +2,7 @@
 	import { resolve } from '$app/paths';
 	import { page } from '$app/stores';
 	import type { PartCategory } from '$lib/types/domain';
-	import { mockPartCategories } from '$lib/data/mock-part-categories';
+	import { mockPartCategories } from '$lib/data/mock/part-categories';
 
 	interface Props {
 		categories?: PartCategory[];

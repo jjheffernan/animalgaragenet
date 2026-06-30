@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
 	import { goto } from '$app/navigation';
-	import { getYears, getMakes, getModels, getSubmodels, formatYmmQuery } from '$lib/data/mock-vehicles';
+	import { getYears, getMakes, getModels, getSubmodels } from '$lib/data/mock/vehicles';
 	import { garage } from '$lib/stores/garage.svelte';
 
 	let year = $state<number | ''>('');
@@ -37,8 +37,12 @@
 		e.preventDefault();
 		if (!year || !make || !model) return;
 		garage.addVehicle({ year: Number(year), make, model, submodel: submodel || undefined });
-		const ymm = formatYmmQuery(Number(year), make, model, submodel || undefined);
-		goto(resolve(`/parts?ymm=${ymm}`));
+		const params = new URLSearchParams();
+		params.set('year', String(year));
+		params.set('make', make);
+		params.set('model', model);
+		if (submodel) params.set('submodel', submodel);
+		goto(resolve(`/parts?${params.toString()}`));
 	}
 
 	interface Props {

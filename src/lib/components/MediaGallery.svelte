@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { MediaItem } from '$lib/data/mock-media';
+	import type { MediaItem } from '$lib/data/mock/media';
 
 	interface Props {
 		items: MediaItem[];

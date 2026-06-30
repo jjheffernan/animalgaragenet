@@ -3,7 +3,7 @@
 	"strategy": "sequential-commits",
 	"backupRef": "refs/backup/pre-commit-orchestrator-1782793316",
 	"current": null,
-	"lastCommit": "fd93bab",
+	"lastCommit": "87dd043",
 	"completed": [
 		"01-mock-data-layout",
 		"02-deps-and-tooling",
@@ -25,7 +25,8 @@
 		"18-layout-stores",
 		"19-unit-tests",
 		"20-e2e-ci",
-		"21-docs"
+		"21-docs",
+		"22-agent-tooling"
 	],
 	"blocked": [],
 	"notes": "22 batches / ~246 paths. Regenerate manifest: python3 .cursor/scripts/generate-commit-manifest.py. Invoke git-commit-orchestrator for next batch."

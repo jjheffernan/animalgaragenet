@@ -263,7 +263,7 @@ def git_paths() -> list[str]:
     for line in out:
         if not line.strip():
             continue
-        p = line[3:].strip()
+        p = line[2:].strip()
         if " -> " in p:
             p = p.split(" -> ")[1]
         paths.append(p)

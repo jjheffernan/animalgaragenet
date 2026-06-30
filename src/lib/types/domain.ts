@@ -132,6 +132,7 @@ export interface Deal {
 	discountLabel: string;
 	productIds: string[];
 	collectionId?: string;
+	startsAt?: string;
 	expiresAt?: string;
 	active: boolean;
 }

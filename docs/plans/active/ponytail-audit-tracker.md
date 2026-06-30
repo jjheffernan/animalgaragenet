@@ -16,7 +16,7 @@ Server-side LOC / dedupe / guard tightening. **No** copy, layout, CSS, or visual
 | ----- | ----- | ----- | ------ |
 | **P1** | 2 | Shared mock-fallback guard; dead validation aliases | **done** |
 | **P2** | 3 | API POST boilerplate; admin upload validation; store localStorage | **done** |
-| **P3** | 3 | Oversized checkout module; catalog try/catch repetition; form stub dead paths | partial — **PT-P3-001 open only** |
+| **P3** | 3 | Oversized checkout module; catalog try/catch repetition; form stub dead paths | **done** — PT-P3-001 YAGNI-deferred |
 
 ---
 
@@ -43,7 +43,7 @@ Server-side LOC / dedupe / guard tightening. **No** copy, layout, CSS, or visual
 
 | Batch | ID | File(s) | Issue | Ponytail fix | LOC est | Status |
 | ----- | -- | ------- | ----- | ------------ | ------- | ------ |
-| P3 | PT-P3-001 | `saleor/checkout.ts` (624 LOC) | Monolithic checkout module | Split queries vs mutations only when a second caller needs it (YAGNI until then) | 0 | open |
+| P3 | PT-P3-001 | `saleor/checkout.ts` (624 LOC) | Monolithic checkout module | Split queries vs mutations only when a second caller needs it (YAGNI until then) | 0 | **deferred** |
 | P3 | PT-P3-002 | `catalog/parts.ts`, `products.ts`, `collections.ts` | Repeated `isSaleorEnabled` try/catch + `guardMockCatalogFallback` blocks | Inner `withSaleorCatalog` helper wrapping fetch fn | −40 | **done** |
 | P3 | PT-P3-003 | `forms/submit.ts` | `submitFormStub` generic path always mock-success; dead `createAdminClient` branch | Remove unreachable generic insert stub or wire one table | −10 | **done** |
 
@@ -56,3 +56,4 @@ Server-side LOC / dedupe / guard tightening. **No** copy, layout, CSS, or visual
 - **API routes:** 16 handlers; public POST endpoints share rate-limit + JSON parse (P2). Filter GET routes are already thin wrappers.
 - **Stores:** Guest localStorage persistence duplicated across 4 stores (P2); session sync logic stays per-store.
 - **Security:** No new trust-boundary changes in P1; existing production gates preserved via shared guard.
+- **Ponytail (PT-P3-001):** YAGNI — `checkout.ts` has one caller graph today; speculative split adds files without a second consumer. Revisit when queries or mutations are imported independently elsewhere.

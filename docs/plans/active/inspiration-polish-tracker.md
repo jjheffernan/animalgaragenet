@@ -6,7 +6,7 @@
 **Replaces:** `inspiration-implementation-tracker.md`, `inspiration-polish-coordination.md`, `meta/polish-plan.md`, `inspiration-polish-prod-setup.md`  
 **Backlog (built items):** [inspiration.md](../../meta/inspiration.md)  
 **Audit / security:** [AUDIT-REMEDIATION.md](../AUDIT-REMEDIATION.md) — do not duplicate CI/security rows here  
-**Dedupe (server-only):** [ponytail-audit-tracker.md](./ponytail-audit-tracker.md) — P3 catalog/checkout refactors open
+**Dedupe (server-only):** [ponytail-audit-tracker.md](./ponytail-audit-tracker.md) — P3 **done** (PT-P3-001 checkout split YAGNI-deferred)
 
 Markers: `@inspiration-scaffold` (Supabase/community/CMS) · `@saleor-migration` (commerce) — [decisions.md](../../meta/decisions.md#migration-scaffolds-inspiration-scaffold--migration). Do not remove unless wiring that step.
 
@@ -38,14 +38,14 @@ Markers: `@inspiration-scaffold` (Supabase/community/CMS) · `@saleor-migration`
 | IP-020 | inspiration         | Build thread submit → Supabase               | `src/lib/server/build-logs/repository.ts`, `/admin/builds`                       | **live**      | Apply `build_submissions` migration                                 |
 | IP-021 | inspiration         | UGC testimonials + moderation                | `testimonials/repository.ts`, `/admin/testimonials`                              | **live**      | Supabase Storage bucket `ugc`                                       |
 | IP-022 | inspiration         | Featured sections admin editor               | `/admin/featured`                                                                  | **done**      | Staff JWT (`editor`/`admin`); `saveHero` + homepage hero load verified |
-| IP-023 | inspiration         | Multi-channel international pricing          | `src/lib/server/saleor/channels.ts` (`@saleor-migration`)                        | **scaffolded** | Map locales in Saleor admin                                         |
-| IP-024 | inspiration         | Shipping zones + threshold promos            | —                                                                                | **not started** | Saleor shipping + promotion rules                                   |
+| IP-023 | inspiration         | Multi-channel international pricing          | `src/lib/server/saleor/channels.ts` (`@saleor-migration`)                        | **done**      | Map locales in Saleor admin; optional `SALEOR_LOCALE_CHANNELS` env override |
+| IP-024 | inspiration         | Shipping zones + threshold promos            | `src/lib/server/saleor/shipping-promo.ts`, cart/checkout loaders                 | **done**      | Saleor shipping zones in admin; optional `SALEOR_FREE_SHIPPING_THRESHOLDS` env |
 | IP-025 | inspiration         | Supabase-backed admin user CRUD              | `src/lib/server/supabase/admin-users.ts`, `/admin/users`                         | **done**      | Service role list/invite/role update; mock when unset               |
 | IP-026 | inspiration         | Admin runtime dashboard (staff integrations) | `src/lib/server/admin/runtime-status.ts`, `/admin/runtime` (`@inspiration-scaffold`) | **done**      | Staff landing `/admin/dashboard` (`3732fb9`); Integrations sidebar link; cron registry scaffold |
 | IP-027 | inspiration         | Account social connections (OAuth scaffold)  | `src/routes/account/connections/`, `GET/PUT /api/account/connections`, `social-oauth.ts` (`@inspiration-scaffold`) | **done**      | Apply `20250630240000_social_connections.sql`; set `SOCIAL_*_CLIENT_ID` for live OAuth |
 | IP-028 | inspiration         | Faceted parts search                         | `src/lib/server/catalog/parts-facets.ts`, `src/routes/parts/`                    | **done**      | Saleor attribute filters + URL-synced facet state — BATCH-019              |
 | IP-029 | inspiration         | `@motionone/svelte` scroll system            | `AnimatedReveal.svelte`, `layout.css`                                            | **partial**   | Reduced-motion baseline done (BATCH-017); Motion One scroll system deferred |
-| IP-030 | inspiration         | Deal / campaign scheduler (Pit Lane CMS)     | `/deals` mock                                                                    | **not started** | CMS table TBD (formerly scoped as IP-026)                           |
+| IP-030 | inspiration         | Deal / campaign scheduler (Pit Lane CMS)     | `src/lib/server/deals/repository.ts`, `/deals`, `pit_lane_deals` migration       | **done**      | Apply `20250701030000_pit_lane_deals.sql`; staff seed rows in Supabase |
 | IP-031 | inspiration         | Public bug report form                       | `src/lib/server/support/repository.ts`, `POST /api/support/bug-report`, `/support/report-bug`, `/admin/bug-reports` (`@inspiration-scaffold`) | **live**      | Staff read-only inbox scaffolded; apply `20250630250000_bug_reports.sql`; optional `BUG_REPORT_WEBHOOK_URL` |
 
 **Row count:** 31

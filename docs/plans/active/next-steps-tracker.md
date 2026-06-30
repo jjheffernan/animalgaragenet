@@ -1,7 +1,7 @@
 # Next steps tracker
 
 **Created:** 2026-06-30  
-**Last updated:** 2026-07-03  
+**Last updated:** 2026-06-30  
 **Branch:** `dev`  
 **Policy:** [SECURITY-PUBLIC.md](../../SECURITY-PUBLIC.md) — no infra hostnames or secrets.
 
@@ -15,7 +15,7 @@ Canonical implementer queue reconciled from [STATUS.md](../../STATUS.md), [AUDIT
 
 | Bucket | Count | Meaning |
 | ------ | ----: | ------- |
-| **Unblocked** | 15 | Can land in-repo on `dev` without Netlify/Saleor/Stripe dashboard access |
+| **Unblocked** | 11 | Can land in-repo on `dev` without Netlify/Saleor/Stripe dashboard access |
 | **Ops-blocked** | 19 | Requires env vars, migrations on production Supabase, or external console work |
 
 _Audit ID rows (AUD-P*) also appear in [AUDIT-REMEDIATION.md](../AUDIT-REMEDIATION.md). Do not close AUD rows here without updating that file._
@@ -26,18 +26,18 @@ _Audit ID rows (AUD-P*) also appear in [AUDIT-REMEDIATION.md](../AUDIT-REMEDIATI
 
 | ID | Item | Source doc | Blocked? | Blocker | Owner batch | Status |
 | -- | ---- | ---------- | -------- | ------- | ----------- | ------ |
-| AUD-P2-006 | Live Saleor integration smoke tests (env-gated CI job beyond readiness probes) | AUDIT-REMEDIATION, STATUS | No | — | saleor / CI | **open** |
+| AUD-P2-006 | Live Saleor integration smoke tests (env-gated CI job beyond readiness probes) | AUDIT-REMEDIATION, STATUS | No | — | saleor / CI | **done** |
 | AUD-P2-012 | Site-wide analytics hook (SEO/OG baseline shipped; Phase 5 telemetry deferred) | AUDIT-REMEDIATION, STATUS | No | — | code | **partial** |
-| AUD-P2-020 | Machine-local agent skill symlink onboarding in `agents/AGENTS.md` | AUDIT-REMEDIATION, agents-skills-audit | No | — | docs | **open** |
+| AUD-P2-020 | Machine-local agent skill symlink onboarding in `agents/AGENTS.md` | AUDIT-REMEDIATION, agents-skills-audit | No | — | docs | **done** |
 | AUD-P2-021 | Remove daisyUI skill tree after sign-off (deprecation banner remains) | AUDIT-REMEDIATION | No | — | docs | **open** |
-| AUD-P2-023 | Newsletter / user preferences tables (schema + RLS per roadmap) | AUDIT-REMEDIATION, integrations/supabase.md | No | — | supabase | **open** |
+| AUD-P2-023 | Newsletter / user preferences tables (schema + RLS per roadmap) | AUDIT-REMEDIATION, integrations/supabase.md | No | — | supabase | **done** |
 | MR-PH3-001 | Remaining homepage mock slices (videos, campaigns, hero beyond CMS; UGC/watch wired) | market-readiness Phase 3, STATUS | No | — | code | **open** |
-| IP-004-code | Saleor stock webhook → `restock_alerts` notify handler (signup API live; webhook stub only) | inspiration-polish IP-004 | No | — | saleor | **open** |
-| IP-023 | Multi-channel international pricing — wire `channels.ts` to Saleor admin channel map | inspiration-polish | No | — | saleor | **scaffolded** |
-| IP-024 | Shipping zones + threshold promos (Saleor shipping + promotion rules) | inspiration-polish | No | — | saleor | **not started** |
+| IP-004-code | Saleor stock webhook → `restock_alerts` notify handler (signup API live; webhook stub only) | inspiration-polish IP-004 | No | — | saleor | **done** |
+| IP-023 | Multi-channel international pricing — wire `channels.ts` to Saleor admin channel map | inspiration-polish | No | — | saleor | **done** |
+| IP-024 | Shipping zones + threshold promos (Saleor shipping + promotion rules) | inspiration-polish | No | — | saleor | **done** |
 | IP-029 | `@motionone/svelte` scroll system (reduced-motion baseline done) | inspiration-polish | No | — | code | **partial** |
-| IP-030 | Deal / campaign scheduler (Pit Lane CMS; `/deals` mock) | inspiration-polish | No | — | code | **not started** |
-| PT-P3-001 | Split `saleor/checkout.ts` (624 LOC) — defer until second caller (YAGNI) | ponytail-audit | No | — | ponytail | **open** (defer) |
+| IP-030 | Deal / campaign scheduler (Pit Lane CMS; `/deals` mock) | inspiration-polish | No | — | code | **done** |
+| PT-P3-001 | Split `saleor/checkout.ts` (624 LOC) — defer until second caller (YAGNI) | ponytail-audit | No | — | ponytail | **deferred** |
 | PT-P3-003 | `forms/submit.ts` — remove dead generic insert stub or wire one table | ponytail-audit | No | — | ponytail | **done** |
 | SEO-001 | `src/routes/sitemap.xml/+server.ts` — nav-linked static routes + dynamic content slugs | [sitemap-route-audit.md](../../audits/sitemap-route-audit.md) | No | — | code | **open** (optional) |
 | SEO-002 | Add `Sitemap:` directive to `static/robots.txt` | sitemap-route-audit | No | — | code | **open** (optional) |
@@ -92,6 +92,7 @@ bash scripts/check-secrets.sh
 | 2026-07-03 | Canonical runbook → `infrastructure/deployment.md`; ops rows aligned (YouTube external cron, CloudFront invalidation) |
 | 2026-07-03 | Public-safe scrub per `SECURITY-PUBLIC.md` |
 | 2026-06-30 | SEO-001–003 optional follow-ups from [sitemap-route-audit.md](../../audits/sitemap-route-audit.md) |
+| 2026-06-30 | Swarm slot D — PT-P3-001 YAGNI-deferred; AUD-P2-023 done (`20250701010000_commerce_content.sql`); counts synced |
 
 ---
 

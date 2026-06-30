@@ -187,7 +187,7 @@ See [AUDIT-REMEDIATION.md](../plans/AUDIT-REMEDIATION.md) and [market-readiness.
 | `checkoutComplete` | `checkout-queries.ts`, `checkout.ts`, `routes/checkout/complete/` | Wired |
 | Checkout UI | `src/routes/checkout/+page.svelte` | Wired — Stripe Elements when Payment App on channel; pay gated on shipping + gateway init |
 | Payment proxy | `src/routes/checkout/payment/initialize`, `process`, `complete` | Wired — 501 when Saleor off; 502 when Payment App missing; GET `/payment/complete` for 3DS return |
-| Saleor webhooks | `src/routes/api/webhooks/saleor/+server.ts` | Stub (501 until wired) |
+| Saleor webhooks | `src/routes/api/webhooks/saleor/+server.ts` | Wired — ORDER_CREATED + fulfillment mirror with HMAC when secret set |
 | GraphQL client auth | `client.ts` | No `SALEOR_APP_TOKEN` header yet |
 
 Uncomment `@saleor-migration` blocks when implementing each step — do not delete during polish sweeps.

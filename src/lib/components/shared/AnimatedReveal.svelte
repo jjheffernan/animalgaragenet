@@ -6,10 +6,13 @@
 		children: Snippet;
 		class?: string;
 		delay?: number;
+		/** `mount` = on load (default); `scroll` = when entering viewport (IP-029 partial, no Motion One dep). */
+		trigger?: 'mount' | 'scroll';
 	}
 
-	let { children, class: className = '', delay = 0 }: Props = $props();
+	let { children, class: className = '', delay = 0, trigger = 'mount' }: Props = $props();
 	let visible = $state(false);
+	let root: HTMLDivElement | undefined = $state();
 
 	$effect(() => {
 		if (prefersReducedMotion()) {
@@ -17,14 +20,40 @@
 			return;
 		}
 
-		const timer = setTimeout(() => {
-			visible = true;
-		}, delay);
-		return () => clearTimeout(timer);
+		if (trigger === 'mount') {
+			const timer = setTimeout(() => {
+				visible = true;
+			}, delay);
+			return () => clearTimeout(timer);
+		}
+
+		const node = root;
+		if (!node) return;
+
+		const observer = new IntersectionObserver(
+			(entries) => {
+				if (entries.some((entry) => entry.isIntersecting)) {
+					visible = true;
+					observer.disconnect();
+				}
+			},
+			{ rootMargin: '0px 0px -8% 0px', threshold: 0.1 }
+		);
+
+		const revealTimer = setTimeout(() => observer.observe(node), delay);
+		return () => {
+			clearTimeout(revealTimer);
+			observer.disconnect();
+		};
 	});
 </script>
 
-<div class="reveal {className}" class:reveal-visible={visible} style="--reveal-delay: {delay}ms">
+<div
+	bind:this={root}
+	class="reveal {className}"
+	class:reveal-visible={visible}
+	style="--reveal-delay: {delay}ms"
+>
 	{@render children()}
 </div>
 

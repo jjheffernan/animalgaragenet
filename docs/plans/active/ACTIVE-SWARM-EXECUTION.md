@@ -1,7 +1,7 @@
 # Active swarm execution tracker
 
 **Created:** 2026-06-30  
-**Last synced:** 2026-06-30 (`dev`, Slot B verify `dd32c00`)  
+**Last synced:** 2026-06-30 (`dev`, Slot B+C — bug inbox/table, MEDIA-P2/P3)  
 **Policy:** Inventory + status sync — no implementation in this doc.  
 **Sources:** All files in `docs/plans/active/` reconciled 2026-06-30.
 

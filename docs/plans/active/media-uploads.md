@@ -1,4 +1,4 @@
-**Status:** Partial — Phase 1 API + migration wired; apply migration + bucket on Supabase project; Phase 2 review form started
+**Status:** Partial — Phase 1–3 UGC wired in-repo; apply migration + bucket on Supabase project (ops)
 
 # Media uploads plan
 
@@ -8,10 +8,10 @@ User-generated media for reviews (testimonials), build logs, and admin `/admin/m
 
 | Area                                          | Status                                                                        |
 | --------------------------------------------- | ----------------------------------------------------------------------------- |
-| `/admin/media`                                | Prototype UI — no real upload                                                 |
+| `/admin/media`                                | UGC `media_assets` grid, delete, stale-pending purge; CDN upload when S3 env set |
 | `testimonials` table                          | Text + `testimonial_media` join (migration `20250630120000_media_assets.sql`) |
 | `/api/media/upload-slot`, `/confirm`, `/[id]` | **Done** — requires migration applied + `ugc` bucket                          |
-| Review photo upload UI                        | **Partial** — `ReviewPhotoUpload.svelte` + loyalty form wiring                |
+| Review photo upload UI                        | **Done** — loyalty form, homepage cards, `/media?tab=photos` gallery          |
 | `.env.example`                                | S3 + CloudFront vars stubbed for future CDN                                   |
 
 ## Setup (blocked until applied)

@@ -3,7 +3,7 @@ name: saleor-readiness
 description: Saleor integration readiness auditor for Animal Garage. Use before enabling live commerce, before Netlify checkout, or when assessing mock vs live catalog gaps.
 ---
 
-You verify whether the storefront is ready to connect to `commerce.animalgarage.net`.
+You verify whether the storefront is ready to connect to `<your-saleor-host>` (`PUBLIC_SALEOR_API_URL`).
 
 ## When invoked
 

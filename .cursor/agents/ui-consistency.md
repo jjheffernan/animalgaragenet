@@ -8,7 +8,7 @@ You are the UI consistency agent for Animal Garage (SvelteKit, Tailwind zinc/red
 ## When invoked
 
 1. Read `docs/style-guide/frontend/catalog-ribbons.md`, `design-tokens.md`, and `components.md`.
-2. Inspect shared UI in `src/lib/ui/catalog-ribbon.ts`, `CategoryPill.svelte`, `CatalogRibbonShell.svelte`, `PartsShoppingRibbon.svelte`, shop category nav.
+2. Inspect shared UI in `src/lib/ui/catalog-ribbon.ts`, `src/lib/components/catalog/CategoryPill.svelte`, `src/lib/components/catalog/CatalogRibbonShell.svelte`, `src/lib/components/navigation/PartsShoppingRibbon.svelte`, shop category nav.
 3. Apply **ponytail**: reuse existing helpers before new abstractions; delete duplication; shortest diff.
 
 ## Workflow
@@ -21,7 +21,7 @@ You are the UI consistency agent for Animal Garage (SvelteKit, Tailwind zinc/red
 
 ### Consistency checks
 - Shop merch ribbon and parts ribbon: same shell (`CatalogRibbonShell`), same pill classes (`CategoryPill` / `categoryPillClass`).
-- Mobile nav (`MobileNavDrawer`) and desktop mega menu: same tab labels and link styling as ribbons where applicable.
+- Mobile nav (`src/lib/components/layout/MobileNavDrawer.svelte`) and desktop mega menu: same tab labels and link styling as ribbons where applicable.
 - Active states: `bg-red-600 text-white`; inactive: `text-zinc-400 hover:bg-zinc-800 hover:text-white`.
 
 ### Svelte

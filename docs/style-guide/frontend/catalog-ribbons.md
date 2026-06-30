@@ -7,8 +7,8 @@ Shared patterns for **merch category ribbons** and **parts shopping ribbons** on
 | File | Purpose |
 |------|---------|
 | `src/lib/ui/catalog-ribbon.ts` | Tailwind class helpers (`categoryPillClass`, shell classes) |
-| `src/lib/components/CategoryPill.svelte` | Category / filter link pill |
-| `src/lib/components/CatalogRibbonShell.svelte` | Sticky ribbon wrapper (shop) |
+| `src/lib/components/catalog/CategoryPill.svelte` | Category / filter link pill |
+| `src/lib/components/catalog/CatalogRibbonShell.svelte` | Sticky ribbon wrapper (shop) |
 
 **Rule:** Do not copy pill or shell classes inline — import from `catalog-ribbon.ts` or use the components.
 

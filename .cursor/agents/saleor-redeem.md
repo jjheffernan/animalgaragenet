@@ -44,12 +44,12 @@ Add mutations to `src/lib/server/saleor/checkout-queries.ts` and handlers in `ch
 | `src/lib/server/saleor/checkout-queries.ts` | Promo mutations |
 | `src/lib/server/saleor/checkout.ts` | `applyPromoCode`, `removePromoCode` |
 | `src/routes/cart/checkout/+server.ts` or new `/api/checkout/promo` | API for cart |
-| `src/lib/components/CartDrawer.svelte` | Inline code entry |
+| `src/lib/components/cart/CartDrawer.svelte` | Inline code entry |
 | `docs/commerce/saleor.md` | Redeem section |
 
 ## Style
 
-- Zinc/red, daisyUI `input` + `btn` if adopted; match `ListControls` / account forms.
+- Zinc/red Tailwind only (no daisyUI); match `ListControls` / account forms.
 - Svelte MCP `svelte-autofixer` on new components.
 
 ## Output

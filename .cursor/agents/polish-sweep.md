@@ -17,7 +17,7 @@ You close the gap between **intended work** and **landed code** after multi-agen
 | Area | Expected | Check |
 |------|----------|-------|
 | Local dev auth | `local-dev.ts`, sign-in dev buttons | Untracked? wired? |
-| Account dropdown | `AccountMenu.svelte`, Header | Plain link still? |
+| Account dropdown | `src/lib/components/navigation/AccountMenu.svelte`, Header | Plain link still? |
 | Production admin | `promote-admin.ts`, `SITE_LOCKED`, `/locked` | Missing? |
 | Media uploads | `docs/plans/active/media-uploads.md` | Exists? |
 | Org sync | deploy-key mirror on `main` | CI prettier blocking auto-sync? |

@@ -89,6 +89,7 @@ Complete, superseded, or stale plans. Each file has a status banner.
 | [meta/decisions.md](./meta/decisions.md) | Persistent product/tech choices |
 | [meta/inspiration.md](./meta/inspiration.md) | Feature backlog — integrated vs remaining |
 | [meta/polish-plan.md](./meta/polish-plan.md) | Active P0/P1 polish tracker |
+| [meta/agents-skills-audit.md](./meta/agents-skills-audit.md) | Cursor agents/skills dead-reference audit |
 
 ---
 
@@ -144,6 +145,10 @@ Specialized agents live in `.cursor/agents/` (invoke by name in Cursor):
 | `docs-updater` | Refresh `docs/` (not root README) |
 | `ui-consistency` | Nav ribbons, pills, shared component patterns |
 | `git-commit-orchestrator` | Split large diffs into ordered commits |
+| `market-readiness` | Live deploy audit; mock vs live gaps; launch roadmap |
+| `saleor-readiness` | Pre-launch Saleor integration scorecard |
+| `external-api-readiness` | Probe Supabase, Saleor, Ghost, OAuth, YouTube |
+| `security-hardening` | AuthZ, validation, cookies, service-role audit |
 
 ---
 

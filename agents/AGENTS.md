@@ -74,9 +74,11 @@ Symlinks: `.cursor/skills/ponytail` → `../../agents/ponytail`, `.cursor/skills
 
 **Svelte plugin** (`svelte-code-writer`, `svelte-core-bestpractices`) and **Supabase plugin** (`supabase`, `supabase-postgres-best-practices`) — see `.cursor/settings.json` (`plugins.*.enabled: true`). Svelte MCP: `list-sections`, `get-documentation`, `svelte-autofixer`. Supabase MCP: schema, migrations, SQL, logs.
 
-Canvas, babysit, review-bugbot, review-security, sdk, daisyui (reference only), and other Cursor default skills live under `agents/` with matching `.cursor/skills/` symlinks.
+Canvas, babysit, review-bugbot, review-security, sdk, and other Cursor default skills live under `agents/` with matching `.cursor/skills/` symlinks.
 
-Install or refresh optional skills: `npx skills add saadeghi/daisyui`, `npx skills add supabase/agent-skills`
+**daisyUI skill** (`.agents/skills/daisyui/`) is vendored for reference only — the app uses Tailwind zinc/red with no daisyUI dependency. Do not auto-trigger it for UI work.
+
+Install or refresh optional skills: `npx skills add supabase/agent-skills`
 
 ### Project-specific Cursor agents
 
@@ -94,6 +96,10 @@ Specs in `.cursor/agents/` — see [docs/README.md](../docs/README.md#cursor-age
 | `docs-updater` | Sync `docs/` with codebase |
 | `ui-consistency` | Ribbons, pills, mobile nav patterns |
 | `git-commit-orchestrator` | Large diff → ordered commits |
+| `market-readiness` | Live deploy audit; mock vs live gaps |
+| `saleor-readiness` | Pre-launch Saleor gap audit |
+| `external-api-readiness` | External API probe + readiness report |
+| `security-hardening` | AuthZ, validation, cookies, XSS audit |
 
 ## Commands
 

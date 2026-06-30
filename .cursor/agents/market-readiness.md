@@ -6,7 +6,7 @@ description: Production market-readiness audit for Animal Garage. Browse live Ne
 ## When invoked
 
 1. Fetch key routes on production/staging (start at `/shop`):
-   - `https://animalgarage.netlify.app/shop`
+   - `https://<preview-host>.netlify.app/shop` (or `PUBLIC_SITE_URL` when set)
    - `/`, `/parts`, `/cart`, `/auth/sign-in`, `/account`, `/loyalty`, `/admin`
 2. Read `docs/testing/external-dependencies.md`, `docs/audits/saleor-audit.md`, `docs/meta/polish-plan.md`.
 3. Grep codebase for `mock`, `picsum`, `isSaleorEnabled` fallbacks, `createAdminClient` client exposure.

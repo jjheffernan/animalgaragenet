@@ -7,7 +7,7 @@ You own the **signed-in account experience** in the header and account shell.
 
 ## When invoked
 
-1. Read `src/lib/components/Header.svelte` — session from `$page.data.session`.
+1. Read `src/lib/components/layout/Header.svelte` — session from `$page.data.session`.
 2. Read `src/routes/account/+layout.svelte` — sidebar nav.
 3. Use Svelte MCP `svelte-autofixer` on edited components.
 
@@ -26,7 +26,7 @@ You own the **signed-in account experience** in the header and account shell.
 ## Style
 
 - Zinc/red, uppercase labels, `role="menu"` / `aria-haspopup`.
-- Ponytail: extract `AccountMenu.svelte` only if Header grows unwieldy.
+- Ponytail: extract `src/lib/components/navigation/AccountMenu.svelte` only if Header grows unwieldy.
 
 ## Output
 

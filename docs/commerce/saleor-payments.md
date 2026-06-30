@@ -182,11 +182,11 @@ See [AUDIT-REMEDIATION.md](../plans/AUDIT-REMEDIATION.md) and [market-readiness.
 | ---- | ---- | ------ |
 | Checkout create / add / update / delete lines | `checkout.ts`, `cart/checkout/+server.ts` | Wired |
 | Promo codes | `checkout.ts`, `cart/checkout/promo/+server.ts` | Wired |
-| Shipping address / methods | `checkout-queries.ts` | Scaffold commented (`@saleor-migration`) |
-| Payment gateway init / transactions | `checkout-queries.ts`, `checkout.ts` | Scaffold commented |
-| `checkoutComplete` | `checkout-queries.ts`, `checkout.ts` | Scaffold commented |
-| Checkout UI | `src/routes/checkout/+page.svelte` | Placeholder |
-| Payment proxy | `src/routes/checkout/payment/+server.ts` | Scaffold (501 until gateway live) |
+| Shipping address / methods | `checkout-queries.ts`, `checkout.ts`, `routes/checkout/shipping/` | Wired |
+| Payment gateway init / transactions | `checkout-queries.ts`, `checkout.ts`, `routes/checkout/payment/` | Wired (proxy; needs Payment App) |
+| `checkoutComplete` | `checkout-queries.ts`, `checkout.ts`, `routes/checkout/complete/` | Wired |
+| Checkout UI | `src/routes/checkout/+page.svelte` | Wired — pay disabled until Payment App on channel |
+| Payment proxy | `src/routes/checkout/payment/initialize`, `process`, `complete` | Wired — 501 when Saleor off; 502 when Payment App missing |
 | Saleor webhooks | `src/routes/api/webhooks/saleor/+server.ts` | Stub (501 until wired) |
 | GraphQL client auth | `client.ts` | No `SALEOR_APP_TOKEN` header yet |
 
@@ -200,8 +200,10 @@ Uncomment `@saleor-migration` blocks when implementing each step — do not dele
 | ----- | ------ | ---- |
 | `/cart/checkout` | POST/PATCH/DELETE | Lines (exists) |
 | `/checkout/shipping` | POST | Address + delivery method update |
-| `/checkout/payment` | POST | `paymentGatewayInitialize` + `transactionInitialize` / `transactionProcess` (scaffold) |
-| `/checkout/complete` | POST | `checkoutComplete` + clear `ag-checkout-id` |
+| `/checkout/payment/initialize` | POST | `paymentGatewayInitialize` (+ optional `transactionInitialize`) |
+| `/checkout/payment/process` | POST | `transactionProcess` |
+| `/checkout/payment/complete` | POST | `checkoutComplete` + clear `ag-checkout-id` |
+| `/checkout/complete` | POST | Alias of payment complete |
 | `/api/webhooks/saleor` | POST | Optional Saleor → storefront events |
 
 ---

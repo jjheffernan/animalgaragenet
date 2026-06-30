@@ -226,78 +226,112 @@ export const CHECKOUT_ADD_PROMO_CODE = `
 //   }
 // `;
 
-// @saleor-migration: intentional — uncomment for shipping address step; see docs/commerce/saleor.md#quick-migration
-// export const CHECKOUT_SHIPPING_ADDRESS_UPDATE = `
-//   mutation CheckoutShippingAddressUpdate($id: ID!, $shippingAddress: AddressInput!) {
-//     checkoutShippingAddressUpdate(id: $id, shippingAddress: $shippingAddress) {
-//       checkout {
-//         id
-//         availableShippingMethods { id name price { amount currency } }
-//       }
-//       errors { field message code }
-//     }
-//   }
-// `;
+/** Set shipping address — returns available shipping methods. */
+export const CHECKOUT_SHIPPING_ADDRESS_UPDATE = `
+  mutation CheckoutShippingAddressUpdate($id: ID!, $shippingAddress: AddressInput!) {
+    checkoutShippingAddressUpdate(id: $id, shippingAddress: $shippingAddress) {
+      checkout {
+        id
+        totalPrice { gross { amount currency } }
+        availableShippingMethods { id name price { amount currency } }
+      }
+      errors { field message code }
+    }
+  }
+`;
 
-// @saleor-migration: intentional — uncomment for shipping method step; see docs/commerce/saleor-payments.md
-// export const CHECKOUT_DELIVERY_METHOD_UPDATE = `
-//   mutation CheckoutDeliveryMethodUpdate($id: ID!, $deliveryMethodId: ID!) {
-//     checkoutDeliveryMethodUpdate(id: $id, deliveryMethodId: $deliveryMethodId) {
-//       checkout {
-//         id
-//         totalPrice { gross { amount currency } }
-//         availablePaymentGateways { id name currencies config }
-//       }
-//       errors { field message code }
-//     }
-//   }
-// `;
+/** Select shipping rate — returns total and payment gateways. */
+export const CHECKOUT_DELIVERY_METHOD_UPDATE = `
+  mutation CheckoutDeliveryMethodUpdate($id: ID!, $deliveryMethodId: ID!) {
+    checkoutDeliveryMethodUpdate(id: $id, deliveryMethodId: $deliveryMethodId) {
+      checkout {
+        id
+        totalPrice { gross { amount currency } }
+        shippingPrice { gross { amount currency } }
+        deliveryMethod { ... on ShippingMethod { id name } }
+        availablePaymentGateways { id name currencies }
+      }
+      errors { field message code }
+    }
+  }
+`;
 
-// @saleor-migration: intentional — uncomment for payment gateway init; see docs/commerce/saleor-payments.md
-// export const PAYMENT_GATEWAY_INITIALIZE = `
-//   mutation PaymentGatewayInitialize($id: ID!, $amount: PositiveDecimal, $paymentGateways: [PaymentGatewayToInitialize!]) {
-//     paymentGatewayInitialize(id: $id, amount: $amount, paymentGateways: $paymentGateways) {
-//       gatewayConfigs { id data errors { field message code } }
-//       errors { field message code }
-//     }
-//   }
-// `;
+/** Read checkout shipping + payment readiness for checkout page. */
+export const CHECKOUT_GET_SHIPPING = `
+  query CheckoutShipping($id: ID!) {
+    checkout(id: $id) {
+      id
+      totalPrice { gross { amount currency } }
+      shippingPrice { gross { amount currency } }
+      deliveryMethod { ... on ShippingMethod { id name } }
+      availableShippingMethods { id name price { amount currency } }
+      availablePaymentGateways { id name currencies }
+      lines {
+        id
+        quantity
+        variant {
+          id
+          name
+          pricing { price { gross { amount currency } } }
+          product {
+            id
+            name
+            slug
+            thumbnail { url alt }
+          }
+        }
+        totalPrice { gross { amount currency } }
+      }
+      ${CHECKOUT_DISCOUNT_FIELDS}
+    }
+  }
+`;
 
-// @saleor-migration: intentional — uncomment for transaction start; see docs/commerce/saleor-payments.md
-// export const TRANSACTION_INITIALIZE = `
-//   mutation TransactionInitialize($id: ID!, $amount: PositiveDecimal, $paymentGateway: PaymentGatewayToInitialize!, $idempotencyKey: String) {
-//     transactionInitialize(id: $id, amount: $amount, paymentGateway: $paymentGateway, idempotencyKey: $idempotencyKey) {
-//       transaction { id }
-//       transactionEvent { type pspReference }
-//       data
-//       errors { field message code }
-//     }
-//   }
-// `;
+/** Initialize payment gateway config (e.g. Stripe publishable key). */
+export const PAYMENT_GATEWAY_INITIALIZE = `
+  mutation PaymentGatewayInitialize($id: ID!, $amount: PositiveDecimal, $paymentGateways: [PaymentGatewayToInitialize!]) {
+    paymentGatewayInitialize(id: $id, amount: $amount, paymentGateways: $paymentGateways) {
+      gatewayConfigs { id data errors { field message code } }
+      errors { field message code }
+    }
+  }
+`;
 
-// @saleor-migration: intentional — uncomment after 3DS / redirect; see docs/commerce/saleor-payments.md
-// export const TRANSACTION_PROCESS = `
-//   mutation TransactionProcess($id: ID!, $data: JSON) {
-//     transactionProcess(id: $id, data: $data) {
-//       transaction { id }
-//       transactionEvent { type pspReference }
-//       data
-//       errors { field message code }
-//     }
-//   }
-// `;
+/** Start a payment transaction on checkout. */
+export const TRANSACTION_INITIALIZE = `
+  mutation TransactionInitialize($id: ID!, $amount: PositiveDecimal, $paymentGateway: PaymentGatewayToInitialize!, $idempotencyKey: String) {
+    transactionInitialize(id: $id, amount: $amount, paymentGateway: $paymentGateway, idempotencyKey: $idempotencyKey) {
+      transaction { id }
+      transactionEvent { type pspReference }
+      data
+      errors { field message code }
+    }
+  }
+`;
 
-// @saleor-migration: intentional — uncomment for payment redirect; see docs/commerce/saleor-payments.md
-// export const CHECKOUT_COMPLETE = `
-//   mutation CheckoutComplete($id: ID!) {
-//     checkoutComplete(id: $id) {
-//       order { id status number }
-//       confirmationNeeded
-//       confirmationData
-//       errors { field message code }
-//     }
-//   }
-// `;
+/** Sync transaction after 3DS / redirect. */
+export const TRANSACTION_PROCESS = `
+  mutation TransactionProcess($id: ID!, $data: JSON) {
+    transactionProcess(id: $id, data: $data) {
+      transaction { id }
+      transactionEvent { type pspReference }
+      data
+      errors { field message code }
+    }
+  }
+`;
+
+/** Create order when checkout is fully paid. */
+export const CHECKOUT_COMPLETE = `
+  mutation CheckoutComplete($id: ID!) {
+    checkoutComplete(id: $id) {
+      order { id status number }
+      confirmationNeeded
+      confirmationData
+      errors { field message code }
+    }
+  }
+`;
 
 /** Remove an applied promo code from checkout. */
 export const CHECKOUT_REMOVE_PROMO_CODE = `

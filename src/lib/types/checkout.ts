@@ -31,3 +31,39 @@ export interface MockPromoState {
 	label: string;
 	percentOff: number;
 }
+
+/** Shipping rate from Saleor after address is set. */
+export interface ShippingMethodDisplay {
+	id: string;
+	name: string;
+	price: Money;
+}
+
+/** Payment gateway exposed on checkout after delivery method is selected. */
+export interface PaymentGatewayDisplay {
+	id: string;
+	name: string;
+	currencies: string[];
+}
+
+/** Checkout snapshot for the shipping + payment steps. */
+export interface CheckoutShippingDisplay {
+	id: string;
+	subtotal: Money;
+	shippingPrice: Money | null;
+	total: Money;
+	shippingMethods: ShippingMethodDisplay[];
+	selectedShippingMethodId: string | null;
+	paymentGateways: PaymentGatewayDisplay[];
+}
+
+/** Address payload for checkoutShippingAddressUpdate. */
+export interface ShippingAddressInput {
+	firstName: string;
+	lastName: string;
+	streetAddress1: string;
+	city: string;
+	countryArea: string;
+	postalCode: string;
+	country: string;
+}

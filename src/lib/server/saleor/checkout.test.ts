@@ -3,10 +3,16 @@ import {
 	CHECKOUT_COOKIE,
 	addCheckoutLine,
 	clearCheckoutId,
+	completeCheckout,
 	createCheckout,
 	getCheckoutId,
 	getCheckoutLines,
-	setCheckoutId
+	getCheckoutShipping,
+	initializePaymentGateway,
+	isPaymentAppConfigured,
+	setCheckoutId,
+	updateDeliveryMethod,
+	updateShippingAddress
 } from './checkout';
 
 vi.mock('./client', () => ({
@@ -41,6 +47,26 @@ const saleorCheckoutFixture = {
 		}
 	],
 	totalPrice: { gross: { amount: 59.98, currency: 'USD' } }
+};
+
+const saleorShippingFixture = {
+	...saleorCheckoutFixture,
+	shippingPrice: { gross: { amount: 8.5, currency: 'USD' } },
+	deliveryMethod: { id: 'ship-1', name: 'Standard' },
+	availableShippingMethods: [
+		{ id: 'ship-1', name: 'Standard', price: { amount: 8.5, currency: 'USD' } }
+	],
+	availablePaymentGateways: [{ id: 'saleor.app.payment.stripe', name: 'Stripe', currencies: ['USD'] }]
+};
+
+const shippingAddress = {
+	firstName: 'Alex',
+	lastName: 'Driver',
+	streetAddress1: '123 Garage Ln',
+	city: 'Austin',
+	countryArea: 'TX',
+	postalCode: '78701',
+	country: 'US'
 };
 
 function mockCookies() {
@@ -158,5 +184,147 @@ describe('getCheckoutLines', () => {
 		});
 
 		expect(await getCheckoutLines('missing')).toBeNull();
+	});
+});
+
+describe('updateShippingAddress', () => {
+	beforeEach(() => {
+		vi.clearAllMocks();
+		vi.mocked(isSaleorEnabled).mockReturnValue(true);
+	});
+
+	it('returns error when Saleor is disabled', async () => {
+		vi.mocked(isSaleorEnabled).mockReturnValue(false);
+		const result = await updateShippingAddress('checkout-1', shippingAddress);
+		expect(result).toEqual({ ok: false, error: 'Saleor not configured' });
+	});
+
+	it('maps available shipping methods', async () => {
+		vi.mocked(saleorFetch).mockResolvedValue({
+			data: {
+				checkoutShippingAddressUpdate: {
+					checkout: {
+						...saleorShippingFixture,
+						deliveryMethod: null,
+						availablePaymentGateways: []
+					},
+					errors: []
+				}
+			}
+		});
+
+		const result = await updateShippingAddress('checkout-1', shippingAddress);
+		expect(result.ok).toBe(true);
+		if (!result.ok) return;
+		expect(result.data.shippingMethods).toHaveLength(1);
+		expect(result.data.shippingMethods[0]?.id).toBe('ship-1');
+	});
+});
+
+describe('updateDeliveryMethod', () => {
+	beforeEach(() => {
+		vi.clearAllMocks();
+		vi.mocked(isSaleorEnabled).mockReturnValue(true);
+	});
+
+	it('exposes payment gateways after delivery method is set', async () => {
+		vi.mocked(saleorFetch).mockResolvedValue({
+			data: {
+				checkoutDeliveryMethodUpdate: { checkout: saleorShippingFixture, errors: [] }
+			}
+		});
+
+		const result = await updateDeliveryMethod('checkout-1', 'ship-1');
+		expect(result.ok).toBe(true);
+		if (!result.ok) return;
+		expect(result.data.selectedShippingMethodId).toBe('ship-1');
+		expect(result.data.paymentGateways[0]?.id).toBe('saleor.app.payment.stripe');
+	});
+});
+
+describe('getCheckoutShipping', () => {
+	beforeEach(() => {
+		vi.clearAllMocks();
+		vi.mocked(isSaleorEnabled).mockReturnValue(true);
+	});
+
+	it('returns checkout lines and shipping snapshot', async () => {
+		vi.mocked(saleorFetch).mockResolvedValue({
+			data: { checkout: saleorShippingFixture }
+		});
+
+		const snapshot = await getCheckoutShipping('checkout-1');
+		expect(snapshot?.checkout.lines).toHaveLength(1);
+		expect(snapshot?.shipping.paymentGateways).toHaveLength(1);
+	});
+});
+
+describe('initializePaymentGateway', () => {
+	beforeEach(() => {
+		vi.clearAllMocks();
+		vi.mocked(isSaleorEnabled).mockReturnValue(true);
+	});
+
+	it('returns gateway config data when Payment App is live', async () => {
+		vi.mocked(saleorFetch).mockResolvedValue({
+			data: {
+				paymentGatewayInitialize: {
+					gatewayConfigs: [
+						{
+							id: 'saleor.app.payment.stripe',
+							data: { stripePublishableKey: 'pk_test_123' },
+							errors: []
+						}
+					],
+					errors: []
+				}
+			}
+		});
+
+		const result = await initializePaymentGateway(
+			'checkout-1',
+			'saleor.app.payment.stripe',
+			59.98
+		);
+		expect(result.ok).toBe(true);
+		if (!result.ok) return;
+		expect(result.data).toMatchObject({ stripePublishableKey: 'pk_test_123' });
+	});
+
+	it('returns structured error when gateway config is missing', async () => {
+		vi.mocked(saleorFetch).mockResolvedValue({
+			data: {
+				paymentGatewayInitialize: {
+					gatewayConfigs: [],
+					errors: []
+				}
+			}
+		});
+
+		const result = await initializePaymentGateway('checkout-1', 'saleor.app.payment.stripe');
+		expect(result.ok).toBe(false);
+		if (result.ok) return;
+		expect(result.error).toContain('Payment gateway not available');
+	});
+});
+
+describe('completeCheckout', () => {
+	beforeEach(() => {
+		vi.clearAllMocks();
+		vi.mocked(isSaleorEnabled).mockReturnValue(true);
+	});
+
+	it('returns order id on success', async () => {
+		vi.mocked(saleorFetch).mockResolvedValue({
+			data: {
+				checkoutComplete: {
+					order: { id: 'order-99' },
+					errors: []
+				}
+			}
+		});
+
+		const result = await completeCheckout('checkout-1');
+		expect(result).toEqual({ ok: true, data: { orderId: 'order-99' } });
 	});
 });

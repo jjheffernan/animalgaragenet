@@ -18,6 +18,12 @@ import {
 	_resetMockStoreForTests as resetFeatured,
 	getFeaturedSection
 } from '$lib/server/featured-sections/repository';
+import {
+	_resetMockStoreForTests as resetGaragePrefs,
+	addGarageXp,
+	getUserGarageState,
+	saveUserVehicles
+} from '$lib/server/user-preferences/repository';
 
 describe('inspiration scaffold repositories (mock fallback)', () => {
 	beforeEach(() => {
@@ -26,6 +32,7 @@ describe('inspiration scaffold repositories (mock fallback)', () => {
 		resetNewsletter();
 		resetWholesale();
 		resetFeatured();
+		resetGaragePrefs();
 	});
 
 	afterEach(() => {
@@ -69,5 +76,26 @@ describe('inspiration scaffold repositories (mock fallback)', () => {
 		expect(hero?.content.headline).toBe('Garage Culture Delivered');
 		expect(hero?.content.subheadline).toContain('Animal Garage');
 		expect(hero?.content.image).toBe('https://picsum.photos/seed/aghero/1920/1080');
+	});
+
+	it('getUserGarageState and addGarageXp work in mock mode', async () => {
+		const empty = await getUserGarageState('user-1');
+		expect(empty.vehicles).toEqual([]);
+		expect(empty.garageXp).toBe(0);
+
+		const saved = await saveUserVehicles('user-1', [
+			{ id: 'v1', year: 2019, make: 'Chevy', model: 'Camaro' }
+		]);
+		expect(saved).toBe(true);
+
+		const withVehicle = await getUserGarageState('user-1');
+		expect(withVehicle.vehicles).toHaveLength(1);
+
+		const xp = await addGarageXp('user-1', 25, 'newsletter');
+		expect(xp?.garageXp).toBe(25);
+		expect(xp?.completedActions).toContain('newsletter');
+
+		const deduped = await addGarageXp('user-1', 25, 'newsletter');
+		expect(deduped?.garageXp).toBe(25);
 	});
 });

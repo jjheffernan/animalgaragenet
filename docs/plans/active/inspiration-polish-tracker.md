@@ -50,6 +50,25 @@ Markers: `@inspiration-scaffold` (Supabase/community/CMS) · `@saleor-migration`
 
 ---
 
+## Next steps (batch 2026-06-30)
+
+Explicit follow-ups from the June 30 implementation batch (`67a150c`–`6837217`, plus `608d8e0` / `5ca1b1f`). Shipped rows are **done** in the tracker above; this table is for remaining code and ops work only.
+
+| ID     | Source              | Task                                                                 | Owner        | Acceptance criteria                                                                 | Prod setup                                                                 |
+| ------ | ------------------- | -------------------------------------------------------------------- | ------------ | ----------------------------------------------------------------------------------- | -------------------------------------------------------------------------- |
+| IP-003 | AUD-P1-001 / batch  | Stripe Elements + live pay flow on `/checkout`                         | saleor / code | Pay button calls `POST /checkout/payment/initialize` → `transactionInitialize` → `@stripe/stripe-js` confirm → `process` + `complete`; order in Saleor Dashboard | Install Stripe Payment App on channel; `PUBLIC_SALEOR_API_URL` + `SALEOR_CHANNEL`; `npm run test:readiness` → `saleor-checkout` pass — [§ Checkout](#prod-checkout) |
+| IP-003 | AUD-P1-001 / batch  | Payment App channel enablement                                       | saleor / ops | `paymentGateways.length > 0` on checkout load; pay button label ≠ “configure Payment App” | Saleor Dashboard → Apps → Stripe (`saleor.app.payment.stripe`) → enable for channel |
+| IP-005 | batch `6837217`     | Verify live collection filter on staging                             | saleor       | `/shop?collection={slug}` returns Saleor products when env set; mock only when Saleor off | `PUBLIC_SALEOR_API_URL` on Netlify; collections populated in Saleor admin |
+| IP-006 | batch `67a150c`     | Apply homepage CMS migration                                         | supabase / ops | `featured_sections` table exists; admin save persists across deploys                 | Apply `20250630150000_content_metadata.sql` on Supabase project            |
+| IP-012 | batch `67a150c`     | Order mirror webhook + migration                                     | code / supabase | `ORDER_CREATED` (and fulfillment updates) call `upsertOrderSnapshot`; HMAC verified when `SALEOR_WEBHOOK_SECRET` set; `/account/orders` shows live rows | Apply `20250630170000_order_snapshots.sql`; register Saleor webhook → `/api/webhooks/saleor` |
+| IP-013 | batch `67a150c`     | CDN presigned upload (Phase 2)                                       | code / ops   | Uncomment `createPresignedUploadUrl` in `cdn.ts`; admin upload UI uses presigned PUT | `PUBLIC_CDN_BASE_URL`, `S3_BUCKET`, `AWS_*` per [§ Prod CDN](#prod-cdn)   |
+| IP-022 | batch `67a150c`     | Featured sections beyond hero                                        | code         | Admin can edit UGC strip / campaign blocks (not only `saveHero`); homepage loaders read all section types | Same as IP-006 migration                                                   |
+| IP-007 | batch `c0f1b80`     | YouTube cron on production                                           | ops          | `POST /api/cron/youtube-sync` runs on schedule; `/watch` shows synced `videos` rows | `YOUTUBE_API_KEY`, `YOUTUBE_SYNC_SECRET`; header `x-youtube-sync-secret`; apply `20250630160000_youtube_sync.sql` — [§ Content](#prod-content) |
+| IP-015 | AUD-P1-009 / batch  | Live Ghost CMS (fallback policy shipped)                             | code / ops   | `/blog` and `/guides` load real posts when env set; production never silently mocks | `GHOST_URL`, `GHOST_CONTENT_API_KEY`; Ghost tags `guide` / `blog`            |
+| —      | batch `5ca1b1f`     | Footer layout (shipped — no follow-up)                               | —            | Condensed Z1-inspired footer; mobile stack; e2e footer links pass                    | —                                                                          |
+
+---
+
 ## Verification
 
 ```bash
@@ -101,9 +120,12 @@ Code wired — **partial** until Payment App is enabled on the Saleor channel (o
 | Configure payment gateway in Saleor channel       | Saleor admin | **ops** |
 | Uncomment `@saleor-migration` blocks in checkout  | Code         | **done** |
 | Replace `/checkout` placeholder UI                | Code         | **done** |
+| Stripe Elements client scaffold on `/checkout`    | Code         | **done** |
+| Pay button gated on shipping + gateway init       | Code         | **done** |
+| `transactionProcess` return URL `/checkout/payment/complete` | Code | **done** |
 | `npm run test:readiness` → `saleor-checkout` pass | CI / local   | pending ops |
 
-Routes: `POST /checkout/shipping`, `/checkout/payment/initialize`, `/checkout/payment/process`, `/checkout/complete`.
+Routes: `POST /checkout/shipping`, `/checkout/payment/initialize`, `/checkout/payment/process`, `GET /checkout/payment/complete` (3DS return), `/checkout/complete`.
 
 See [saleor-payments.md](../../commerce/saleor-payments.md).
 
@@ -142,4 +164,4 @@ npm run test:unit
 
 ---
 
-_Last updated: June 30, 2026_
+_Last updated: June 30, 2026 (batch next-steps recorded)_

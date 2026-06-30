@@ -66,6 +66,12 @@ _Blocked = external dashboard/env; cannot close in-repo._
 | AUD-P1-012 | `isProductionHostname()` includes `*.netlify.app`         | TRIAGE, account-flow-fix              | **done**    | auth       | Dev bypass blocked on Netlify preview hosts                                                        | `src/lib/server/auth/local-dev.ts`                                                                      |
 | AUD-P1-013 | Primary Saleor catalog loaders env-gated                  | saleor-audit                          | **done**    | saleor     | Shop, parts, gift cards, deals, collections use `$lib/server/catalog/*` swap                       | `src/lib/server/catalog/products.ts`                                                                    |
 
+**Next (partial P1 items):**
+
+- **AUD-P1-001 — Ops:** Install and enable Stripe Payment App (`saleor.app.payment.stripe`) on the Saleor channel so `paymentGateways` is non-empty on checkout load.
+- **AUD-P1-001 — Code:** Wire client pay flow per [saleor-payments.md](../commerce/saleor-payments.md) — `@stripe/stripe-js` Payment Element, server `transactionInitialize` / `transactionProcess`, return URL → `checkoutComplete`.
+- **AUD-P1-001 — Verify:** `npm run test:readiness` → `saleor-checkout` pass; manual test card → order visible in Saleor Dashboard.
+
 ---
 
 ## P2 — Polish, SEO, tests, tooling
@@ -112,8 +118,8 @@ _Blocked = external dashboard/env; cannot close in-repo._
 | Source file                                                   | Open items remaining                 | Retire when                   |
 | ------------------------------------------------------------- | ------------------------------------ | ----------------------------- |
 | [audits/site-audit.md](../audits/site-audit.md)               | P2-012–014 (SEO, a11y, locale)       | All AUD-P2 site rows **done** |
-| [audits/saleor-audit.md](../audits/saleor-audit.md)           | P0-004 (ops), P1-001–003, P2-001–006 | All Saleor AUD rows **done**  |
-| [audits/ghost-audit.md](../audits/ghost-audit.md)             | P1-008–009, P2-007–011               | All Ghost AUD rows **done**   |
+| [audits/saleor-audit.md](../audits/saleor-audit.md)           | P0-004 (ops), P1-001 (partial), P2-001–006 | All Saleor AUD rows **done**  |
+| [audits/ghost-audit.md](../audits/ghost-audit.md)             | P1-008, P2-007–011                   | All Ghost AUD rows **done**   |
 | [meta/agents-skills-audit.md](../meta/agents-skills-audit.md) | —                                    | AUD-P2-020–022 **done**       |
 
 _Do not delete source audits until the row above is satisfied._

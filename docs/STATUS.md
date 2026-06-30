@@ -36,6 +36,12 @@ This file reconciles “next steps” across all `docs/` so nothing is orphaned.
 | Locale currency + Saleor channel pricing                   | `currency.ts`, `locale.svelte.ts`, `channels.ts` — channel-native amounts when Saleor on                                                                       |
 | Featured sections CMS scaffold                             | `featured-sections/repository.ts`, `/admin/featured`, homepage `+page.server.ts`                                                                               |
 | Shop collection filter scaffold (`?collection=`)             | `shop-collection.ts`, `shop/+page.server.ts` — mock/Saleor swap point                                                                                        |
+| Listing quick-add with Saleor `variantId` (AUD-P1-003)       | `ProductCard.svelte`, `cart.svelte.ts` `addItemSaleor`                                                                                                       |
+| Ghost production fallback policy (AUD-P1-009)                | `ghost/fallback.ts`, `guardMockGhostFallback()` — no silent mock when Ghost env set on prod                                                                  |
+| YouTube live sync + watch hub DB preference (AUD-P1-005)     | `youtube/sync.ts`, `/api/cron/youtube-sync`, `/watch` prefers Supabase `videos`                                                                              |
+| Saleor checkout shipping + payment proxies (AUD-P1-001 partial) | `routes/checkout/shipping`, `payment/*`, `complete`; UI wired — pay disabled until Payment App on channel                                                 |
+| IP scaffold quick wins (hero, orders, CDN reads, wholesale)  | `67a150c` — admin `saveHero`, order snapshots mock path, `resolveUgcPublicUrl`, wholesale form → repository, collection filter Saleor path                 |
+| Footer layout (Z1-inspired condense)                         | `Footer.svelte` — `5ca1b1f`                                                                                                                                  |
 | GitHub wiki                                                | Published — [wiki home](https://github.com/jjheffernan/animalgaragenet/wiki); backup in `docs/wiki-export/` (sanitized for public — no infra/AWS/secret names) |
 | Org mirror sync                                            | `scripts/sync-org-mirror.sh` on `main`                                                                                                                         |
 
@@ -64,12 +70,15 @@ These appear as unchecked boxes in plans but **cannot be completed in-repo**:
 
 ## Open — code / CI work
 
+**Audit counts (see [AUDIT-REMEDIATION.md](./plans/AUDIT-REMEDIATION.md)):** 21 open · 6 blocked (ops) · 27 done — P1 checkout (`AUD-P1-001`) is **partial**, not open.
+
 | Priority | Task                                                            | Tracker                                                                        |
 | -------- | --------------------------------------------------------------- | ------------------------------------------------------------------------------ |
 | P0       | Merge `dev` → `main` when Netlify env configured                | [deployment.md](./style-guide/backend-ops/deployment.md)                       |
-| P1       | Saleor checkout: shipping, `CHECKOUT_COMPLETE`, payment         | [saleor.md](./commerce/saleor.md), [saleor-audit.md](./audits/saleor-audit.md) |
-| P1       | YouTube live sync (replace stub)                                | [readiness-report.md](./testing/readiness-report.md)                           |
-| P2       | Ghost + remaining homepage mock slices (videos, builds)         | market-readiness Phase 3                                                       |
+| P1       | Saleor checkout: Stripe Elements + Payment App (proxies shipped) | [saleor-payments.md](./commerce/saleor-payments.md), [inspiration-polish-tracker.md](./plans/active/inspiration-polish-tracker.md) § Next steps |
+| P1       | Order mirror webhook + `order_snapshots` migration              | IP-012 in [inspiration-polish-tracker.md](./plans/active/inspiration-polish-tracker.md) |
+| P2       | Ghost live CMS (fallback policy shipped)                          | IP-015 · [ghost-audit.md](./audits/ghost-audit.md)                             |
+| P2       | Remaining homepage mock slices (non-watch)                        | market-readiness Phase 3                                                       |
 | P2       | `profiles` table contract test                                  | readiness-report (testimonials + build_submissions done)                       |
 | P2       | `readiness-ci` optional Actions job                             | readiness-report                                                               |
 | P2       | OAuth Discord/Azure verification                                | [inspiration-polish-tracker.md](./plans/active/inspiration-polish-tracker.md) |

@@ -1,11 +1,11 @@
 # After CI passes on main in the personal repo, mirror main to the org repo
 # used by Netlify (heff-industries/animalgaragenet).
 #
-# Auth: deploy key on heff-industries/animalgaragenet (secret ORG_REPO_DEPLOY_KEY).
-# GitHub does not allow creating fine-grained PATs via API; a deploy key is the
-# recommended CI pattern for repo-to-repo mirroring.
+# Auth: fine-grained PAT in ORG_REPO_SYNC_TOKEN (Contents + Actions write on org repo).
+# Deploy keys cannot update .github/workflows — a PAT is required for full mirroring.
 #
-# Manual re-sync: Actions → Sync main to org → Run workflow.
+# Setup: ./scripts/setup-org-sync-auth.sh pat-url
+#        gh secret set ORG_REPO_SYNC_TOKEN --repo jjheffernan/animalgaragenet
 
 name: Sync main to org
 
@@ -42,28 +42,23 @@ jobs:
           ref: ${{ github.event_name == 'workflow_dispatch' && 'main' || github.event.workflow_run.head_sha }}
           fetch-depth: 0
 
-      - name: Verify deploy key secret
+      - name: Verify sync token secret
         env:
-          ORG_REPO_DEPLOY_KEY: ${{ secrets.ORG_REPO_DEPLOY_KEY }}
+          ORG_REPO_SYNC_TOKEN: ${{ secrets.ORG_REPO_SYNC_TOKEN }}
         run: |
-          if [ -z "$ORG_REPO_DEPLOY_KEY" ]; then
-            echo "::error::ORG_REPO_DEPLOY_KEY is not set."
+          if [ -z "$ORG_REPO_SYNC_TOKEN" ]; then
+            echo "::error::ORG_REPO_SYNC_TOKEN is not set. Run scripts/setup-org-sync-auth.sh pat-url"
             exit 1
           fi
 
-      - name: Load deploy key
-        uses: webfactory/ssh-agent@v0.9.0
-        with:
-          ssh-private-key: ${{ secrets.ORG_REPO_DEPLOY_KEY }}
-
       - name: Push main to heff-industries/animalgaragenet
+        env:
+          ORG_REPO_SYNC_TOKEN: ${{ secrets.ORG_REPO_SYNC_TOKEN }}
         run: |
           set -euo pipefail
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          mkdir -p ~/.ssh
-          ssh-keyscan github.com >> ~/.ssh/known_hosts
-          git remote add org git@github.com:heff-industries/animalgaragenet.git
+          git remote add org "https://x-access-token:${ORG_REPO_SYNC_TOKEN}@github.com/heff-industries/animalgaragenet.git"
           git push org HEAD:refs/heads/main
 
       - name: Summary

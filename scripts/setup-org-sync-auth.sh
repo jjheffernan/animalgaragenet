@@ -1,65 +1,58 @@
 #!/usr/bin/env bash
-# One-time setup for mirroring jjheffernan/animalgaragenet main → heff-industries/animalgaragenet
+# Setup auth for mirroring jjheffernan/animalgaragenet main → heff-industries/animalgaragenet
 #
-# GitHub does not expose an API to mint fine-grained PATs. For CI, a deploy key is
-# recommended (automated below). For a PAT instead, open the pre-filled URL and run
-# the gh secret command shown at the end.
+# GitHub cannot create fine-grained PATs via API. Use pat-url, then store the token.
+# Deploy keys cannot push .github/workflows changes — PAT is required for full sync.
 
 set -euo pipefail
 
 PERSONAL_REPO="jjheffernan/animalgaragenet"
 ORG_REPO="heff-industries/animalgaragenet"
-DEPLOY_KEY_TITLE="personal-main-sync"
 
-PAT_URL="https://github.com/settings/personal-access-tokens/new?name=Org+main+sync&description=Mirror+main+to+heff-industries%2Fanimalgaragenet&target_name=heff-industries&expires_in=366&contents=write&metadata=read"
+# Pre-filled fine-grained PAT: heff-industries → animalgaragenet only
+PAT_URL="https://github.com/settings/personal-access-tokens/new?name=Org+main+sync&description=Mirror+main+to+heff-industries%2Fanimalgaragenet&target_name=heff-industries&expires_in=366&contents=write&actions=write&metadata=read"
 
 usage() {
   cat <<EOF
-Usage: $(basename "$0") [deploy-key|pat-url]
+Usage: $(basename "$0") [pat-url|store-token]
 
-  deploy-key  Create org deploy key + set ORG_REPO_DEPLOY_KEY secret (recommended)
-  pat-url     Print fine-grained PAT creation URL + secret instructions
+  pat-url      Print PAT creation URL (select repository: animalgaragenet only)
+  store-token  Store token from stdin as ORG_REPO_SYNC_TOKEN on $PERSONAL_REPO
+
+After creating the PAT in GitHub:
+  gh secret set ORG_REPO_SYNC_TOKEN --repo $PERSONAL_REPO
 
 EOF
 }
 
-setup_deploy_key() {
-  command -v gh >/dev/null || { echo "gh CLI required"; exit 1; }
-  command -v ssh-keygen >/dev/null || { echo "ssh-keygen required"; exit 1; }
-
-  KEY_DIR=$(mktemp -d)
-  trap 'rm -rf "$KEY_DIR"' EXIT
-  KEY_FILE="$KEY_DIR/org_sync"
-
-  echo "Generating ed25519 deploy key..."
-  ssh-keygen -t ed25519 -f "$KEY_FILE" -N "" -C "github-actions:sync-main-to-heff-industries" >/dev/null
-
-  echo "Registering deploy key on $ORG_REPO..."
-  gh api "repos/${ORG_REPO}/keys" \
-    -f title="$DEPLOY_KEY_TITLE" \
-    -f key="$(cat "${KEY_FILE}.pub")" \
-    -f read_only=false >/dev/null
-
-  echo "Storing ORG_REPO_DEPLOY_KEY on $PERSONAL_REPO..."
-  gh secret set ORG_REPO_DEPLOY_KEY --repo "$PERSONAL_REPO" < "$KEY_FILE"
-
-  echo "Done. Run sync: gh workflow run sync-org-main.yml --repo $PERSONAL_REPO"
-}
-
-print_pat_instructions() {
-  echo "Open this URL to create a fine-grained PAT (select repository: animalgaragenet):"
+print_pat_url() {
+  echo "1. Open this URL and create the token (select only animalgaragenet):"
   echo "$PAT_URL"
   echo
-  echo "After generating the token, store it on the personal repo:"
-  echo "  gh secret set ORG_REPO_SYNC_TOKEN --repo $PERSONAL_REPO"
+  echo "2. Required permissions (pre-filled): Contents write, Actions write, Metadata read"
   echo
-  echo "Note: the current workflow uses ORG_REPO_DEPLOY_KEY (deploy key). Switch the"
-  echo "workflow back to HTTPS + ORG_REPO_SYNC_TOKEN if you prefer a PAT."
+  echo "3. Store the token:"
+  echo "   gh secret set ORG_REPO_SYNC_TOKEN --repo $PERSONAL_REPO"
+  echo
+  echo "4. Test sync:"
+  echo "   gh workflow run sync-org-main.yml --repo $PERSONAL_REPO"
 }
 
-case "${1:-deploy-key}" in
-  deploy-key) setup_deploy_key ;;
-  pat-url) print_pat_instructions ;;
+store_token() {
+  command -v gh >/dev/null || { echo "gh CLI required"; exit 1; }
+  echo "Paste PAT (hidden), then Enter:"
+  read -rs TOKEN
+  echo
+  if [ -z "$TOKEN" ]; then
+    echo "Empty token"; exit 1
+  fi
+  printf '%s' "$TOKEN" | gh secret set ORG_REPO_SYNC_TOKEN --repo "$PERSONAL_REPO"
+  echo "Stored ORG_REPO_SYNC_TOKEN on $PERSONAL_REPO"
+}
+
+case "${1:-pat-url}" in
+  pat-url) print_pat_url ;;
+  store-token) store_token ;;
   -h|--help|help) usage ;;
   *) usage; exit 1 ;;
 esac

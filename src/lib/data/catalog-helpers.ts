@@ -4,6 +4,10 @@ import { getActiveDeals } from './mock-deals';
 import { getAllCatalogProducts } from './mock-parts';
 import { getGiftCardProducts, getProductById, mockProducts } from './mock-products';
 
+function catalogById(): Map<string, Product> {
+	return new Map(getAllCatalogProducts().map((p) => [p.id, p]));
+}
+
 export const SHOP_CATEGORIES = [
 	'ALL',
 	'TEES',
@@ -57,8 +61,9 @@ export function getRelatedProducts(product: Product, count = 4): Product[] {
 }
 
 export function getProductsForBuild(build: BuildThread): Product[] {
+	const byId = catalogById();
 	return build.linkedProductIds
-		.map((id) => getProductById(id))
+		.map((id) => byId.get(id))
 		.filter((p): p is Product => p !== undefined);
 }
 
@@ -68,8 +73,9 @@ export function getProductsForBrand(brand: Brand): Product[] {
 }
 
 export function getProductsForVideo(video: Video): Product[] {
+	const byId = catalogById();
 	return video.linkedProductIds
-		.map((id) => getProductById(id))
+		.map((id) => byId.get(id))
 		.filter((p): p is Product => p !== undefined);
 }
 

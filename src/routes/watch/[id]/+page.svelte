@@ -5,7 +5,7 @@
 </script>
 
 <svelte:head>
-	<title>Watch — Animal Garage</title>
+	<title>{data.video.title} — Watch — Animal Garage</title>
 </svelte:head>
 
-<WatchHub videos={data.videos} />
+<WatchHub videos={data.videos} initialVideoId={data.video.id} />

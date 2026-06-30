@@ -1,4 +1,5 @@
 import type { Product, Fitment, ProductBrand } from '$lib/types/saleor';
+import { mockProducts } from './mock-products';
 
 const img = (seed: string, w = 800, h = 800) => `https://picsum.photos/seed/${seed}/${w}/${h}`;
 
@@ -139,5 +140,5 @@ export function searchParts(query: string): Product[] {
 }
 
 export function getAllCatalogProducts(): Product[] {
-	return [...mockParts];
+	return [...mockProducts, ...mockParts];
 }

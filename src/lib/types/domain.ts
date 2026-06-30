@@ -93,6 +93,8 @@ export interface Video {
 	youtubeId: string;
 	title: string;
 	description: string;
+	longDescription?: string;
+	publishedAt?: string;
 	thumbnail: string;
 	duration: string;
 	linkedProductIds: string[];

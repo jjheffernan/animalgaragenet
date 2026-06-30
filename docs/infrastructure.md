@@ -161,3 +161,88 @@ cp .env.example .env
 - CloudFront + S3 can serve `static/` assets at build time; dynamic media from CDN URL
 - Supabase Row Level Security on all user-facing tables
 - Saleor API URL is public (GraphQL endpoint); auth tokens handled server-side for checkout
+
+## YouTube Data API v3 — Video sync
+
+**Purpose:** Keep the `/watch` catalog in sync with connected YouTube channels without manual uploads.
+
+### Architecture
+
+```
+┌──────────────┐     cron / webhook      ┌─────────────────────┐
+│ Vercel Cron  │────────────────────────▶│ sync.ts             │
+│ or pg_cron   │                         │ fetchChannelVideos  │
+└──────────────┘                         │ syncToDatabase      │
+                                         └──────────┬──────────┘
+                                                    │
+                                                    ▼
+                                         ┌─────────────────────┐
+                                         │ Supabase `videos`   │
+                                         │ + `youtube_channels`│
+                                         └─────────────────────┘
+```
+
+Server module: `src/lib/server/youtube/sync.ts`
+
+- `fetchChannelVideos(apiKey, channelId)` — calls YouTube Data API v3 (`channels.list` → uploads playlist → `playlistItems.list` → `videos.list`)
+- `syncToDatabase(channelId, apiKey)` — maps API payloads to the `Video` domain type and upserts rows
+- `syncAllChannels(channelIds, apiKey)` — cron entry point for batch sync
+
+Admin UI: `/admin/youtube` — connect channels, trigger manual sync, configure `linkedProductIds` per video (future).
+
+### Planned Supabase tables
+
+```sql
+create table youtube_channels (
+  id uuid primary key default gen_random_uuid(),
+  channel_id text unique not null,
+  handle text not null,
+  title text not null,
+  last_synced_at timestamptz,
+  created_at timestamptz default now()
+);
+
+create table videos (
+  id uuid primary key default gen_random_uuid(),
+  youtube_id text unique not null,
+  channel_id text references youtube_channels(channel_id),
+  title text not null,
+  description text,
+  long_description text,
+  thumbnail text,
+  duration text,
+  published_at timestamptz,
+  linked_product_ids jsonb default '[]',
+  updated_at timestamptz default now()
+);
+```
+
+### Cron schedule (recommended)
+
+| Job | Schedule | Notes |
+| --- | --- | --- |
+| `sync-all-youtube-channels` | `0 */6 * * *` (every 6h) | Full channel upload sync |
+| Manual sync | Admin “Sync now” | Same handler, single channel |
+
+**Vercel:** add to `vercel.json`:
+
+```json
+{
+  "crons": [{ "path": "/api/cron/youtube-sync", "schedule": "0 */6 * * *" }]
+}
+```
+
+**Supabase pg_cron:** invoke an Edge Function that calls `syncAllChannels` with the service role key.
+
+### Env vars
+
+| Variable | Scope | Description |
+| --- | --- | --- |
+| `YOUTUBE_API_KEY` | Server | YouTube Data API v3 key (restricted to server IPs) |
+| `YOUTUBE_SYNC_SECRET` | Server | Bearer token for cron webhook authentication |
+
+### API quota notes
+
+- `channels.list` + `playlistItems.list` + `videos.list` ≈ 3 units per sync batch
+- Default daily quota: 10,000 units — sufficient for ~6h sync of several channels
+- Store `publishedAt`, `duration` (ISO 8601 from API), and highest-res thumbnail URL

@@ -50,7 +50,7 @@ This file reconciles “next steps” across all `docs/` so nothing is orphaned.
 | Account social connections (IP-027)                        | `/account/connections`, `api/account/connections`, migration `20250630240000` — `ed1465d`                                                                    |
 | Saleor order mirror webhook (IP-012)                       | `api/webhooks/saleor`, `order-webhook.ts` — `7649a9e`                                                                                                          |
 | Component-route audit cleanup (AUD-P2-034–038)             | SupportCTA removed, `/media` nav, admin stubs disabled, builds/submit shell — `847ba4b`                                                                        |
-| Sitemap & route navigation audit                           | [sitemap-route-audit.md](./audits/sitemap-route-audit.md) — SEO-001/002 shipped; SEO-003 smoke extension optional |
+| Sitemap & route navigation audit                           | [sitemap-route-audit.md](./audits/sitemap-route-audit.md) — SEO-001–003 shipped |
 | July 1 batch (BATCH-002–012)                               | Commerce search, collections, CMS sections, UGC wall, Ghost SEO, profiles contract, admin users, locale, Ghost tests — `4d0d0fd`–`a895eb7`                   |
 | QoL polish pass (IP-BUG-003–004, list canvas)              | Shop filters, sign-out, parts ribbon, mobile footer, `PaginatedListCanvas` — `acd03ad`–`7513c34`                                                               |
 | Pagination + sticky catalog toolbars                       | `86affdd` — mobile pagination layout; sticky shop/parts ribbons                                                                                                  |
@@ -108,7 +108,6 @@ These appear as unchecked boxes in plans but **cannot be completed in-repo**. **
 | P2       | Ghost live CMS (fallback policy + detail SEO shipped)           | IP-015 · [ghost-audit.md](./audits/ghost-audit.md)                             |
 | P2       | Remaining homepage mock slices (non-watch)                        | market-readiness Phase 3                                                       |
 | P2       | OAuth Discord/Azure verification                                | [inspiration-polish-tracker.md](./plans/active/inspiration-polish-tracker.md) (ops-blocked) |
-| P2       | Site-wide analytics (SEO/OG baseline shipped)                     | AUD-P2-012 partial · Phase 5                                                   |
 | P2       | daisyUI skill tree removal (post sign-off)                      | AUD-P2-021                                                                     |
 
 ---
@@ -129,7 +128,6 @@ These appear as unchecked boxes in plans but **cannot be completed in-repo**. **
 
 ## Intentionally future (not launch blockers)
 
-- Extended sitemap smoke coverage (SEO-003) — optional; see [sitemap-route-audit.md](./audits/sitemap-route-audit.md)
 - Advanced animations, scroll-driven motion — [animations.md](./style-guide/frontend/animations.md)
 - Full media CDN (Garage/S3) — [media-cdn-plan.md](./archive/media-cdn-plan.md) (superseded by media-uploads phase 1)
 - Dashboard submodule — [dashboard-adoption-plan.md](./archive/dashboard-adoption-plan.md) (stay in-repo `/admin`)

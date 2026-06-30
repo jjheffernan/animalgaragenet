@@ -24,14 +24,23 @@
 		open: boolean;
 		session: { email?: string | null } | null;
 		dealsHref: string;
+		dealCount: number;
 		shopCategories: readonly { label: string; href: string }[];
 		communityLinks: readonly { label: string; href: string }[];
 		onclose: () => void;
 		onopencart: () => void;
 	}
 
-	let { open, session, dealsHref, shopCategories, communityLinks, onclose, onopencart }: Props =
-		$props();
+	let {
+		open,
+		session,
+		dealsHref,
+		dealCount,
+		shopCategories,
+		communityLinks,
+		onclose,
+		onopencart
+	}: Props = $props();
 
 	let shopOpen = $state(false);
 	let partsOpen = $state(false);
@@ -230,7 +239,7 @@
 							/>
 						</svg>
 					{/if}
-					<DealBadge />
+					<DealBadge count={dealCount} />
 				</a>
 			</li>
 		</ul>

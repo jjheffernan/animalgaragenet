@@ -31,7 +31,8 @@ vi.mock('./client', () => ({
 }));
 
 vi.mock('./channels', () => ({
-	getChannelForLocale: vi.fn(() => 'us')
+	getChannelForLocale: vi.fn(() => 'us'),
+	resolveChannelForLocale: vi.fn(async () => 'us')
 }));
 
 import { isSaleorEnabled, saleorFetch } from './client';

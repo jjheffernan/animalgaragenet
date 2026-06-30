@@ -3,7 +3,7 @@ import type { PageServerLoad } from './$types';
 import { getMockPromo } from '$lib/server/checkout/promo';
 import { isSaleorEnabled } from '$lib/server/saleor/client';
 import { getCheckoutId, getCheckoutLines } from '$lib/server/saleor/checkout';
-import { getFreeShippingProgress } from '$lib/server/saleor/shipping-promo';
+import { getFreeShippingThresholdForLocale } from '$lib/server/saleor/shipping-promo';
 
 // @saleor-migration: intentional — checkout scaffold load; see docs/commerce/saleor.md#quick-migration
 export const load: PageServerLoad = async ({ cookies, url }) => {
@@ -15,7 +15,7 @@ export const load: PageServerLoad = async ({ cookies, url }) => {
 			saleorEnabled,
 			checkout: null,
 			mockPromo: getMockPromo(cookies),
-			freeShipping: getFreeShippingProgress(0, locale)
+			freeShippingThreshold: getFreeShippingThresholdForLocale(locale)
 		};
 	}
 
@@ -25,7 +25,7 @@ export const load: PageServerLoad = async ({ cookies, url }) => {
 			saleorEnabled,
 			checkout: null,
 			mockPromo: null,
-			freeShipping: getFreeShippingProgress(0, locale)
+			freeShippingThreshold: getFreeShippingThresholdForLocale(locale)
 		};
 	}
 
@@ -34,6 +34,6 @@ export const load: PageServerLoad = async ({ cookies, url }) => {
 		saleorEnabled,
 		checkout,
 		mockPromo: null,
-		freeShipping: getFreeShippingProgress(checkout?.subtotal.amount ?? 0, locale)
+		freeShippingThreshold: getFreeShippingThresholdForLocale(locale)
 	};
 };

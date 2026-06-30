@@ -5,7 +5,7 @@ import {
 } from '$lib/data/mock/products';
 import { config } from '$lib/config/env';
 import type { Collection, Product } from '$lib/types/saleor';
-import { getChannelForLocale } from '$lib/server/saleor/channels';
+import { resolveChannelForLocale } from '$lib/server/saleor/channels';
 import { saleorFetch } from '$lib/server/saleor/client';
 import { withSaleorCatalog } from '$lib/server/catalog/fallback';
 import { isProductionSiteUrl } from '$lib/server/auth/local-dev';
@@ -25,7 +25,7 @@ async function fetchSaleorProductsByTag(
 	tag: string,
 	locale: string = config.defaultLocale
 ): Promise<Product[]> {
-	const channel = getChannelForLocale(locale);
+	const channel = await resolveChannelForLocale(locale);
 	const result = await saleorFetch<{
 		products: { edges: { node: SaleorProductListNode }[] };
 	}>(PRODUCTS_QUERY, { channel, first: 100 });
@@ -44,7 +44,7 @@ async function fetchSaleorProductsByTag(
 export async function getCollections(locale: string = config.defaultLocale): Promise<Collection[]> {
 	return withSaleorCatalog(
 		async () => {
-			const channel = getChannelForLocale(locale);
+			const channel = await resolveChannelForLocale(locale);
 			const result = await saleorFetch<{
 				collections: { edges: { node: SaleorCollectionNode }[] };
 			}>(COLLECTIONS_QUERY, { channel, first: 20 });

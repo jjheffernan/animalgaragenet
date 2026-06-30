@@ -1,6 +1,6 @@
 import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
-import { getChannelForLocale } from '$lib/server/saleor/channels';
+import { resolveChannelForLocale } from '$lib/server/saleor/channels';
 import { isSaleorEnabled } from '$lib/server/saleor/client';
 import {
 	addCheckoutLine,
@@ -40,7 +40,7 @@ export const POST: RequestHandler = async ({ request, cookies, url }) => {
 	}
 
 	const locale = url.searchParams.get('locale') ?? undefined;
-	const channel = getChannelForLocale(locale ?? 'en-US');
+	const channel = await resolveChannelForLocale(locale ?? 'en-US');
 
 	let checkoutId = getCheckoutId(cookies);
 	if (!checkoutId) {

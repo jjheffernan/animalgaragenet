@@ -12,7 +12,7 @@ import {
 } from '$lib/data/mock/products';
 import { config } from '$lib/config/env';
 import type { Product } from '$lib/types/saleor';
-import { getChannelForLocale } from '$lib/server/saleor/channels';
+import { resolveChannelForLocale } from '$lib/server/saleor/channels';
 import { saleorFetch } from '$lib/server/saleor/client';
 import {
 	mapProduct,
@@ -101,7 +101,7 @@ function isDealNode(node: SaleorProductCatalogNode): boolean {
 async function fetchSaleorCatalogNodes(
 	locale: string = config.defaultLocale
 ): Promise<SaleorProductCatalogNode[]> {
-	const channel = getChannelForLocale(locale);
+	const channel = await resolveChannelForLocale(locale);
 	const result = await saleorFetch<{
 		products: { edges: { node: SaleorProductCatalogNode }[] };
 	}>(PRODUCTS_CATALOG_QUERY, { channel, first: 100 });
@@ -129,7 +129,7 @@ export async function getShopProducts(
 ): Promise<Product[]> {
 	return withSaleorCatalog(
 		async () => {
-			const channel = getChannelForLocale(locale);
+			const channel = await resolveChannelForLocale(locale);
 			const result = await saleorFetch<{
 				products: { edges: { node: SaleorProductListNode }[] };
 			}>(PRODUCTS_QUERY, { channel, first: 100 });
@@ -156,7 +156,7 @@ export async function getShopProductBySlug(
 ): Promise<Product | null> {
 	return withSaleorCatalog(
 		async () => {
-			const channel = getChannelForLocale(locale);
+			const channel = await resolveChannelForLocale(locale);
 			const result = await saleorFetch<{ product: SaleorProductDetailNode | null }>(
 				PRODUCT_BY_SLUG_QUERY,
 				{ slug, channel }

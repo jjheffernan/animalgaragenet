@@ -6,7 +6,7 @@ import { searchProducts } from '$lib/data/mock/products';
 import { config } from '$lib/config/env';
 import type { BuildThread, Guide } from '$lib/types/domain';
 import type { Product } from '$lib/types/saleor';
-import { getChannelForLocale } from '$lib/server/saleor/channels';
+import { resolveChannelForLocale } from '$lib/server/saleor/channels';
 import { saleorFetch } from '$lib/server/saleor/client';
 import { mapProductListNode, type SaleorProductListNode } from '$lib/server/saleor/mappers';
 import { withSaleorCatalog } from '$lib/server/catalog/fallback';
@@ -27,7 +27,7 @@ const EMPTY_RESULTS: CatalogSearchResults = {
 };
 
 async function searchSaleorProducts(query: string, locale: string): Promise<Product[]> {
-	const channel = getChannelForLocale(locale);
+	const channel = await resolveChannelForLocale(locale);
 	const result = await saleorFetch<{
 		products: { edges: { node: SaleorProductListNode }[] };
 	}>(PRODUCT_SEARCH_QUERY, { channel, query, first: 24 });

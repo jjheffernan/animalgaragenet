@@ -1,6 +1,6 @@
 import { config } from '$lib/config/env';
 import type { Product } from '$lib/types/saleor';
-import { getChannelForLocale } from '$lib/server/saleor/channels';
+import { resolveChannelForLocale } from '$lib/server/saleor/channels';
 import { isSaleorEnabled, saleorFetch } from '$lib/server/saleor/client';
 import { guardMockCatalogFallback } from '$lib/server/catalog/fallback';
 import { mockCollections } from '$lib/data/mock/collections';
@@ -39,7 +39,7 @@ export async function getShopCollectionOptions(
 ): Promise<ShopCollectionFilter[]> {
 	if (isSaleorEnabled()) {
 		try {
-			const channel = getChannelForLocale(locale);
+			const channel = await resolveChannelForLocale(locale);
 			const result = await saleorFetch<{
 				collections: { edges: { node: SaleorCollectionNode }[] };
 			}>(COLLECTIONS_QUERY, { channel, first: 20 });
@@ -66,7 +66,7 @@ export async function getShopProductsByCollection(
 ): Promise<Product[]> {
 	if (isSaleorEnabled()) {
 		try {
-			const channel = getChannelForLocale(locale);
+			const channel = await resolveChannelForLocale(locale);
 			const result = await saleorFetch<{
 				collection: { products: { edges: { node: SaleorProductListNode }[] } } | null;
 			}>(COLLECTION_PRODUCTS_QUERY, { slug: collectionSlug, channel, first: 100 });

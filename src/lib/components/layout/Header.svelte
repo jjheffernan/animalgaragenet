@@ -157,6 +157,7 @@
 	const session = $derived($page.data.session);
 	const staffPanel = $derived($page.data.staffPanel ?? false);
 	const notificationCount = $derived($page.data.notificationCount ?? 0);
+	const dealCount = $derived($page.data.dealCount ?? 0);
 
 	const headerIconBtn =
 		'relative inline-flex size-9 shrink-0 items-center justify-center rounded-sm text-zinc-400 transition hover:text-white';
@@ -461,7 +462,7 @@
 							/>
 						</svg>
 					{/if}
-					<DealBadge />
+					<DealBadge count={dealCount} />
 				</a>
 			</nav>
 
@@ -653,6 +654,7 @@
 		open={mobileOpen}
 		{session}
 		{dealsHref}
+		dealCount={dealCount}
 		{shopCategories}
 		{communityLinks}
 		onclose={closeMobileNav}

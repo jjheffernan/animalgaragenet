@@ -33,6 +33,10 @@
 	const subtotal = $derived(cart.subtotal);
 	const subtotalCurrency = $derived(cart.subtotalCurrency);
 	const upsells = $derived(cart.getUpsellSuggestions(4));
+	const freeShippingRemaining = $derived(
+		Math.max(0, data.freeShippingThreshold - subtotal)
+	);
+	const freeShippingQualified = $derived(subtotal >= data.freeShippingThreshold);
 
 	function updateQty(productId: string, variantId: string, delta: number) {
 		const line = cart.items.find((l) => l.productId === productId && l.variantId === variantId);
@@ -163,9 +167,9 @@
 				<span>Subtotal</span>
 				<span class="text-white">{locale.formatPrice(subtotal, subtotalCurrency)}</span>
 			</div>
-			{#if subtotal < 75}
+			{#if !freeShippingQualified}
 				<p class="mt-2 text-xs text-zinc-500">
-					Add {locale.formatPrice(75 - subtotal, subtotalCurrency)} for free shipping
+					Add {locale.formatPrice(freeShippingRemaining, subtotalCurrency)} for free shipping
 				</p>
 			{:else}
 				<p class="mt-2 text-xs text-green-400">You qualify for free standard shipping</p>

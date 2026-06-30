@@ -6,7 +6,7 @@ import type {
 	ShippingAddressInput,
 	ShippingMethodDisplay
 } from '$lib/types/checkout';
-import { getChannelForLocale } from '$lib/server/saleor/channels';
+import { resolveChannelForLocale } from '$lib/server/saleor/channels';
 import { isSaleorEnabled, saleorFetch } from '$lib/server/saleor/client';
 import {
 	CHECKOUT_ADD_PROMO_CODE,
@@ -242,7 +242,7 @@ export function stripeReturnDataFromUrl(
 export async function createCheckout(channel?: string): Promise<string | null> {
 	if (!isSaleorEnabled()) return null;
 
-	const resolvedChannel = channel ?? getChannelForLocale(config.defaultLocale);
+	const resolvedChannel = channel ?? (await resolveChannelForLocale(config.defaultLocale));
 	const result = await saleorFetch<{
 		checkoutCreate: {
 			checkout: SaleorCheckoutNode | null;

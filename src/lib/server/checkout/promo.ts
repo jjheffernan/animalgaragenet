@@ -3,7 +3,7 @@ import { findMockPromoCode, normalizePromoCode } from '$lib/data/mock/promo-code
 import { checkRateLimit } from '$lib/server/rate-limit';
 import { LIMITS } from '$lib/server/validation/limits';
 import type { CheckoutDisplay, MockPromoState } from '$lib/types/checkout';
-import { getChannelForLocale } from '$lib/server/saleor/channels';
+import { resolveChannelForLocale } from '$lib/server/saleor/channels';
 import { isSaleorEnabled } from '$lib/server/saleor/client';
 import {
 	applyPromoCode,
@@ -72,7 +72,7 @@ export async function redeemCode(
 	}
 
 	if (isSaleorEnabled()) {
-		const channel = getChannelForLocale(locale);
+		const channel = await resolveChannelForLocale(locale);
 		const ensured = await ensureCheckout(cookies, channel);
 		if ('error' in ensured) {
 			return { ok: false, message: ensured.error };

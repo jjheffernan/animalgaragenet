@@ -11,7 +11,7 @@ import {
 import { config } from '$lib/config/env';
 import type { PartCategory } from '$lib/types/domain';
 import type { Product } from '$lib/types/saleor';
-import { getChannelForLocale } from '$lib/server/saleor/channels';
+import { resolveChannelForLocale } from '$lib/server/saleor/channels';
 import { isSaleorEnabled, saleorFetch } from '$lib/server/saleor/client';
 import { withSaleorCatalog } from '$lib/server/catalog/fallback';
 import { isProductionSiteUrl } from '$lib/server/auth/local-dev';
@@ -92,7 +92,7 @@ export async function getPartCategoryBySlug(
 export async function getPartsProducts(locale: string = config.defaultLocale): Promise<Product[]> {
 	return withSaleorCatalog(
 		async () => {
-			const channel = getChannelForLocale(locale);
+			const channel = await resolveChannelForLocale(locale);
 			const result = await saleorFetch<{
 				products: { edges: { node: SaleorProductListNode }[] };
 			}>(PRODUCTS_QUERY, { channel, first: 100 });
@@ -131,7 +131,7 @@ export async function getPartBySlug(
 ): Promise<Product | null> {
 	return withSaleorCatalog(
 		async () => {
-			const channel = getChannelForLocale(locale);
+			const channel = await resolveChannelForLocale(locale);
 			const result = await saleorFetch<{ product: SaleorProductDetailNode | null }>(
 				PRODUCT_BY_SLUG_QUERY,
 				{ slug, channel }

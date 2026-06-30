@@ -1,0 +1,9 @@
+# Supabase CLI local state — never commit
+# https://supabase.com/docs/guides/cli/local-development
+.branches
+.temp
+.env
+.env.*
+
+# Local seed overrides (use supabase/migrations/ for schema)
+seed.local.sql

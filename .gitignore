@@ -16,11 +16,49 @@ Thumbs.db
 *.swo
 *~
 
-# Env
+# Env — never commit real secrets (only templates / CI fixtures)
 .env
 .env.*
 !.env.example
 !.env.test
+
+# Supabase CLI local state (migrations in supabase/migrations/ are committed)
+supabase/.branches
+supabase/.temp
+supabase/.env
+supabase/.env.*
+supabase/functions/.env
+supabase/functions/**/.env
+supabase/seed.local.sql
+.supabase/
+
+# Database dumps & local DB files — schema migrations only, never data dumps
+*.dump
+*.sql.gz
+*.sqlite
+*.sqlite3
+*.db
+*.db-journal
+*.db-wal
+*.db-shm
+pgdata/
+postgres-data/
+docker-data/
+
+# Credentials & key material
+*.pem
+*.p12
+*.pfx
+*.key
+.credentials
+credentials.json
+service-account*.json
+secrets.json
+.secrets/
+secrets/
+
+# Playwright stored auth sessions
+playwright/.auth/
 
 # Vite
 vite.config.js.timestamp-*

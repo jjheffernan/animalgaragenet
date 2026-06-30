@@ -25,14 +25,20 @@ Audit of animalgaragenet prototype on `dev` branch. Run after infrastructure/doc
 - OS files (`.DS_Store`, `Thumbs.db`)
 - Vite timestamp files
 
-### Gaps found & fixed
+### Gaps found & fixed (June 2026 — pre-push hardening)
 
-- IDE directories (`.idea/`, `.vscode/`) — added; `.cursor/` remains committed intentionally
-- Log files (`*.log`, npm/yarn debug logs)
-- Coverage output (`coverage`, `.nyc_output`)
-- Temp/cache (`*.tsbuildinfo`, `.cache`, `tmp`)
-- Editor swap files (`*.swp`, `*~`)
-- `dist` directory
+- Supabase CLI local state: `supabase/.branches`, `supabase/.temp`, `supabase/.env*`, `.supabase/`
+- Database dumps / local DB files: `*.dump`, `*.sqlite`, `*.db`, `pgdata/`, etc.
+- Credential material: `*.pem`, `*.key`, `credentials.json`, `service-account*.json`, `secrets/`
+- Playwright stored auth: `playwright/.auth/`
+- `supabase/.gitignore` for CLI-local files; `scripts/check-secrets.sh` + CI guard step
+- `.env.example` documents all server-only vars (YouTube sync, Ghost, Supabase service role)
+
+### Intentionally tracked
+
+- `.env.example` — placeholders only
+- `supabase/migrations/*.sql` — schema + RLS policies (no row data)
+- `.cursor/` project agents/settings (no secrets)
 
 ---
 

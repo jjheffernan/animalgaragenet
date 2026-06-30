@@ -50,7 +50,8 @@ python3 .cursor/scripts/generate-commit-manifest.py
    - Skip for docs-only or agent-skills-only batches
 7. Commit with batch `message`.
 8. Update progress: mark batch `completed`, set `lastCommit` to `git rev-parse HEAD`.
-9. Report: commit hash, subject, files count, next pending batch id.
+9. Before any push: run `bash scripts/check-secrets.sh`.
+10. Report: commit hash, subject, files count, next pending batch id.
 
 ## Resuming after interruption
 

@@ -92,7 +92,7 @@ npm run test:e2e
 
 ## Do not
 
-- Commit `.env` or secrets
+- Commit `.env`, `.env.local`, Supabase local state (`supabase/.temp`, `.branches`), DB dumps, or credential files — see `.gitignore` and `scripts/check-secrets.sh`
 - Push to remote unless explicitly asked
 - Over-engineer — match existing patterns
 - Add heavy dependencies without justification

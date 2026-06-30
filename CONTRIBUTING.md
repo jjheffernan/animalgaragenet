@@ -26,6 +26,14 @@ npm run dev
 
 Run `npm run check` and `npm run lint` before opening a PR.
 
+## Secrets & environment
+
+- Copy `.env.example` → `.env` locally only — **never commit** `.env`, `.env.local`, or any file with real keys
+- Optional CI fixture: `.env.test` may be committed **only** with placeholder values (see `!.env.test` in `.gitignore`)
+- **Supabase:** commit `supabase/migrations/` (schema); never commit `supabase/.temp`, `supabase/.branches`, or local DB dumps
+- **Server-only keys:** `SUPABASE_SERVICE_ROLE_KEY`, `AWS_*`, `GHOST_CONTENT_API_KEY`, `YOUTUBE_*` — set in `.env` or GitHub Actions secrets, not in source
+- Before push: `bash scripts/check-secrets.sh`
+
 ## Branch protection (recommended)
 
 Configure on GitHub for team repos:

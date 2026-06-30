@@ -157,9 +157,7 @@
 				</label>
 
 				<label class="block">
-					<span class="text-xs font-bold uppercase tracking-widest text-zinc-500">
-						Page URL
-					</span>
+					<span class="text-xs font-bold uppercase tracking-widest text-zinc-500"> Page URL </span>
 					<input
 						type="text"
 						name="pageUrl"
@@ -181,8 +179,7 @@
 						placeholder="Describe the bug — what did you expect vs what happened?"
 						class="mt-1 w-full rounded-sm border border-zinc-700 bg-zinc-900 px-4 py-3 text-white focus:border-red-600 focus:outline-none {fieldErrors.description
 							? 'border-red-600'
-							: ''}"
-					></textarea>
+							: ''}"></textarea>
 					{#if fieldErrors.description}
 						<p class="mt-1 text-xs text-red-500">{fieldErrors.description}</p>
 					{/if}
@@ -200,8 +197,7 @@
 						placeholder="1. Go to… 2. Click… 3. See error"
 						class="mt-1 w-full rounded-sm border border-zinc-700 bg-zinc-900 px-4 py-3 text-white focus:border-red-600 focus:outline-none {fieldErrors.steps
 							? 'border-red-600'
-							: ''}"
-					></textarea>
+							: ''}"></textarea>
 					{#if fieldErrors.steps}
 						<p class="mt-1 text-xs text-red-500">{fieldErrors.steps}</p>
 					{/if}

@@ -4,8 +4,13 @@ import { getPartCategoriesForNav } from '$lib/server/catalog/parts';
 import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({ url }) => {
-	const { products: allProducts, filters, filterLabel, filterOptions, filterSource } =
-		await loadPartsCatalog({ url });
+	const {
+		products: allProducts,
+		filters,
+		filterLabel,
+		filterOptions,
+		filterSource
+	} = await loadPartsCatalog({ url });
 	const { items, pagination } = paginateFromUrl(url, allProducts);
 
 	return {

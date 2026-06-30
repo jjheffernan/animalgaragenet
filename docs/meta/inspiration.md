@@ -10,27 +10,27 @@ No external site names — this doc is the canonical reference for what was rese
 
 ## Integrated in Phase 2 (Done)
 
-| Capability                    | Status | Location                                   |
-| ----------------------------- | ------ | ------------------------------------------ |
-| Merch catalog + category tabs | Done   | `/shop`, `mock/products.ts`                |
-| Parts catalog + category nav  | Done   | `/parts`, `mock/parts.ts`                  |
-| YMM vehicle selector          | Done   | `VehicleSelector.svelte`, homepage         |
-| Shop by popular model         | Done   | `ModelPicker.svelte`                       |
-| Build thread gallery + detail | Done   | `/builds`, `/builds/[slug]`                |
-| Guides + blog                 | Done   | `/guides`, `/blog` — guide category/topic filters wired |
-| Brand lanes                   | Done   | `/brands`                                  |
-| Pit Lane Deals (never empty)  | Done   | `/deals`                                   |
-| Gift cards                    | Done   | `/gift-cards`                              |
-| Garage Squad loyalty UI       | Done   | `/loyalty`                                 |
-| Video hub (basic)             | Done   | `/watch`                                   |
-| UGC wall                      | Done   | `UGCWall.svelte`, `/media`                 |
-| Promo bar + countdown         | Done   | `PromoBar.svelte`, `CountdownTimer.svelte` |
-| Mega-menu (shop + parts)      | Done   | `MegaMenu.svelte`                          |
-| Cart drawer + search modal    | Done   | `CartDrawer.svelte`, `SearchModal.svelte`  |
-| Trust blocks                  | Done   | `TrustBlocks.svelte`                       |
-| Tire + fitment calculators    | Done   | `/tools/*`                                 |
+| Capability                    | Status | Location                                                           |
+| ----------------------------- | ------ | ------------------------------------------------------------------ |
+| Merch catalog + category tabs | Done   | `/shop`, `mock/products.ts`                                        |
+| Parts catalog + category nav  | Done   | `/parts`, `mock/parts.ts`                                          |
+| YMM vehicle selector          | Done   | `VehicleSelector.svelte`, homepage                                 |
+| Shop by popular model         | Done   | `ModelPicker.svelte`                                               |
+| Build thread gallery + detail | Done   | `/builds`, `/builds/[slug]`                                        |
+| Guides + blog                 | Done   | `/guides`, `/blog` — guide category/topic filters wired            |
+| Brand lanes                   | Done   | `/brands`                                                          |
+| Pit Lane Deals (never empty)  | Done   | `/deals`                                                           |
+| Gift cards                    | Done   | `/gift-cards`                                                      |
+| Garage Squad loyalty UI       | Done   | `/loyalty`                                                         |
+| Video hub (basic)             | Done   | `/watch`                                                           |
+| UGC wall                      | Done   | `UGCWall.svelte`, `/media`                                         |
+| Promo bar + countdown         | Done   | `PromoBar.svelte`, `CountdownTimer.svelte`                         |
+| Mega-menu (shop + parts)      | Done   | `MegaMenu.svelte`                                                  |
+| Cart drawer + search modal    | Done   | `CartDrawer.svelte`, `SearchModal.svelte`                          |
+| Trust blocks                  | Done   | `TrustBlocks.svelte`                                               |
+| Tire + fitment calculators    | Done   | `/tools/*`                                                         |
 | International locale selector | Done   | `LocaleSelector.svelte` — Saleor channel + `currency.ts` when live |
-| Policy page stubs             | Done   | `/policies/*`                              |
+| Policy page stubs             | Done   | `/policies/*`                                                      |
 
 ---
 
@@ -46,14 +46,14 @@ Key fixes: nav buttons, search/cart drawers, promo dismiss, build detail, watch 
 
 Full rows, scaffolds, and prod steps live in the [tracker](../plans/active/inspiration-polish-tracker.md). High-level buckets:
 
-| Area        | Examples still open                                      |
-| ----------- | -------------------------------------------------------- |
-| Commerce    | Live Saleor catalog, checkout/payment, gift card checkout |
-| Media & CDN | S3/CloudFront Phase 2, YouTube sync live (scaffold in repo) |
-| Community   | XP + vehicles in Supabase, build moderation, newsletter  |
+| Area        | Examples still open                                                                       |
+| ----------- | ----------------------------------------------------------------------------------------- |
+| Commerce    | Live Saleor catalog, checkout/payment, gift card checkout                                 |
+| Media & CDN | S3/CloudFront Phase 2, YouTube sync live (scaffold in repo)                               |
+| Community   | XP + vehicles in Supabase, build moderation, newsletter                                   |
 | Admin       | Real CDN upload, deal scheduler — featured sections editor scaffolded (`/admin/featured`) |
-| Discovery   | Faceted parts search, YMM fitment on PLPs, 100k SKU PIM  |
-| Motion      | Motion One, view transitions, cart micro-animations      |
+| Discovery   | Faceted parts search, YMM fitment on PLPs, 100k SKU PIM                                   |
+| Motion      | Motion One, view transitions, cart micro-animations                                       |
 
 Saleor migration swap points use `@saleor-migration` in code (not listed here). New feature scaffolds use `@inspiration-scaffold` — see [decisions.md](./decisions.md#agent-scaffold-markers).
 

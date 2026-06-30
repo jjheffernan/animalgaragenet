@@ -161,7 +161,9 @@ export async function upsertSyncedVideos(
 		linked_product_ids: linkedByYoutubeId.get(v.youtubeId) ?? v.linkedProductIds
 	}));
 
-	const { error: videoError } = await admin.from('videos').upsert(rows, { onConflict: 'youtube_id' });
+	const { error: videoError } = await admin
+		.from('videos')
+		.upsert(rows, { onConflict: 'youtube_id' });
 	if (videoError) {
 		console.error('videos upsert failed:', videoError.message);
 		return 0;

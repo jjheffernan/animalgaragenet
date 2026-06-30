@@ -14,12 +14,12 @@ Production deploys via **GitHub → organization mirror → Netlify**. The perso
 
 The project uses `@sveltejs/adapter-auto`, which detects Netlify at deploy time. For explicit control:
 
-| Adapter                        | Platform             |
-| ------------------------------ | -------------------- |
+| Adapter                        | Platform                                      |
+| ------------------------------ | --------------------------------------------- |
 | `@sveltejs/adapter-netlify`    | Netlify (recommended if auto-detection fails) |
-| `@sveltejs/adapter-node`       | VPS, Docker, Railway |
-| `@sveltejs/adapter-vercel`     | Vercel               |
-| `@sveltejs/adapter-cloudflare` | Cloudflare Pages     |
+| `@sveltejs/adapter-node`       | VPS, Docker, Railway                          |
+| `@sveltejs/adapter-vercel`     | Vercel                                        |
+| `@sveltejs/adapter-cloudflare` | Cloudflare Pages                              |
 
 ## Build command
 
@@ -41,7 +41,7 @@ feature/* → dev (CI) → merge to main (CI) → sync to <organization>/<deploy
 | ------------------------------------- | ---------------- | ------------------------------------ | ---------------------------------------------------- |
 | `.github/workflows/ci.yml`            | `dev` and `main` | Push/PR on this repo                 | Lint, typecheck, unit/e2e tests, build               |
 | `.github/workflows/sync-org-main.yml` | **`main` only**  | CI success on `main` push, or manual | Mirror `main` → organization deploy repo for Netlify |
-| `.github/workflows/readiness-ci.yml`  | `dev` and `main` | PR, weekly schedule, manual          | Optional live API probes (non-blocking on PRs)     |
+| `.github/workflows/readiness-ci.yml`  | `dev` and `main` | PR, weekly schedule, manual          | Optional live API probes (non-blocking on PRs)       |
 
 > **Note:** Org-sync workflow lives on **`main`**, not `dev`. Merging `dev` → `main` brings sync changes into the personal repo; only then does CI on `main` push to the org mirror.
 
@@ -49,9 +49,9 @@ feature/* → dev (CI) → merge to main (CI) → sync to <organization>/<deploy
 
 Auth uses an **org-repo deploy key** (GitHub Actions secret on the personal repo), not a PAT. Deploy keys cannot push `.github/workflows`, so the mirror builds an orphan snapshot **without** the workflows folder.
 
-| Where                                             | What you see                                            |
-| ------------------------------------------------- | ------------------------------------------------------- |
-| Organization deploy repo → Settings → Deploy keys | Deploy key registered for mirror push                 |
+| Where                                             | What you see                                           |
+| ------------------------------------------------- | ------------------------------------------------------ |
+| Organization deploy repo → Settings → Deploy keys | Deploy key registered for mirror push                  |
 | Personal repo → Settings → Secrets → Actions      | `<org-sync-secret>` — GitHub never shows secret values |
 
 ```bash
@@ -88,17 +88,17 @@ See [migration-squash-notes.md](../../infrastructure/migration-squash-notes.md) 
 
 Set in **Site settings → Environment variables** for all deploy contexts that serve users. Copy names from [`.env.example`](../../../.env.example).
 
-| Group | Variables | Notes |
-| ----- | --------- | ----- |
-| **Auth (required)** | `PUBLIC_SUPABASE_URL`, `PUBLIC_SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY`, `PUBLIC_SITE_URL` | `PUBLIC_SITE_URL` must match the URL users browse |
-| **Commerce (required for live shop)** | `PUBLIC_SALEOR_API_URL`, `SALEOR_CHANNEL` | Default channel slug `default-channel` |
-| **Content (optional)** | `GHOST_URL`, `GHOST_CONTENT_API_KEY` | Blog + guides |
-| **YouTube sync (optional)** | `YOUTUBE_API_KEY`, `YOUTUBE_SYNC_SECRET` | Cron auth — see § Scheduled jobs |
-| **Order mirror (optional)** | `SALEOR_WEBHOOK_SECRET` | HMAC verify on `POST /api/webhooks/saleor` |
-| **CDN upload (optional)** | `PUBLIC_CDN_BASE_URL`, `S3_BUCKET`, `S3_REGION`, `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, `AWS_CLOUDFRONT_DISTRIBUTION_ID` | Admin presigned PUT + invalidation |
-| **Social linking (optional)** | `SOCIAL_INSTAGRAM_CLIENT_ID`, `SOCIAL_YOUTUBE_CLIENT_ID`, `SOCIAL_TIKTOK_CLIENT_KEY`, `SOCIAL_DISCORD_CLIENT_ID` | Mock handle flow when unset |
-| **Support (optional)** | `BUG_REPORT_WEBHOOK_URL` | Staff alert on new bug report |
-| **Lockdown (optional)** | `SITE_LOCKED=true` | Public → `/locked`; staff bypass |
+| Group                                 | Variables                                                                                                                       | Notes                                             |
+| ------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------- |
+| **Auth (required)**                   | `PUBLIC_SUPABASE_URL`, `PUBLIC_SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY`, `PUBLIC_SITE_URL`                               | `PUBLIC_SITE_URL` must match the URL users browse |
+| **Commerce (required for live shop)** | `PUBLIC_SALEOR_API_URL`, `SALEOR_CHANNEL`                                                                                       | Default channel slug `default-channel`            |
+| **Content (optional)**                | `GHOST_URL`, `GHOST_CONTENT_API_KEY`                                                                                            | Blog + guides                                     |
+| **YouTube sync (optional)**           | `YOUTUBE_API_KEY`, `YOUTUBE_SYNC_SECRET`                                                                                        | Cron auth — see § Scheduled jobs                  |
+| **Order mirror (optional)**           | `SALEOR_WEBHOOK_SECRET`                                                                                                         | HMAC verify on `POST /api/webhooks/saleor`        |
+| **CDN upload (optional)**             | `PUBLIC_CDN_BASE_URL`, `S3_BUCKET`, `S3_REGION`, `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, `AWS_CLOUDFRONT_DISTRIBUTION_ID` | Admin presigned PUT + invalidation                |
+| **Social linking (optional)**         | `SOCIAL_INSTAGRAM_CLIENT_ID`, `SOCIAL_YOUTUBE_CLIENT_ID`, `SOCIAL_TIKTOK_CLIENT_KEY`, `SOCIAL_DISCORD_CLIENT_ID`                | Mock handle flow when unset                       |
+| **Support (optional)**                | `BUG_REPORT_WEBHOOK_URL`                                                                                                        | Staff alert on new bug report                     |
+| **Lockdown (optional)**               | `SITE_LOCKED=true`                                                                                                              | Public → `/locked`; staff bypass                  |
 
 **Never set on Netlify:** `DEV_ADMIN`, `LOCAL_DEV_AUTH`
 
@@ -108,9 +108,9 @@ Set in **Site settings → Environment variables** for all deploy contexts that 
 
 In **Authentication → URL configuration**:
 
-| Setting | Value |
-| ------- | ----- |
-| Site URL | Active deploy URL (`https://<preview-host>` or `https://<your-site-host>`) |
+| Setting       | Value                                                                                                                   |
+| ------------- | ----------------------------------------------------------------------------------------------------------------------- |
+| Site URL      | Active deploy URL (`https://<preview-host>` or `https://<your-site-host>`)                                              |
 | Redirect URLs | `https://<preview-host>/auth/callback`, `https://<your-site-host>/auth/callback`, `http://localhost:5173/auth/callback` |
 
 Enable **Email** provider. For Google / Discord / Microsoft: enable each provider; IdP redirect URIs point to Supabase (see [auth/oauth.md](../../auth/oauth.md), [auth/discord.md](../../auth/discord.md), [auth/microsoft.md](../../auth/microsoft.md)).
@@ -138,8 +138,8 @@ Full flow: [archive/account-flow-fix.md](../../archive/account-flow-fix.md) (his
 
 Register in Saleor Dashboard → Webhooks:
 
-| Event | Target | Secret |
-| ----- | ------ | ------ |
+| Event                                | Target                                         | Secret                                          |
+| ------------------------------------ | ---------------------------------------------- | ----------------------------------------------- |
 | `ORDER_CREATED`, fulfillment updates | `https://<your-site-host>/api/webhooks/saleor` | Set matching `SALEOR_WEBHOOK_SECRET` on Netlify |
 
 Handler: `src/routes/api/webhooks/saleor/+server.ts` — upserts `order_snapshots` for `/account/orders`.
@@ -159,21 +159,21 @@ Auth: request header `x-youtube-sync-secret` must match `YOUTUBE_SYNC_SECRET`.
 
 Netlify does not ship a repo `netlify.toml` cron entry. Options:
 
-| Platform | Setup |
-| -------- | ----- |
-| **Netlify** | Scheduled Functions or external cron (e.g. cron-job.org) hitting the deploy URL with the secret header |
-| **GitHub Actions** | Weekly workflow calling the URL (store URL + secret in Actions secrets) |
-| **Supabase pg_cron** | Edge Function invoking sync with service role |
+| Platform             | Setup                                                                                                  |
+| -------------------- | ------------------------------------------------------------------------------------------------------ |
+| **Netlify**          | Scheduled Functions or external cron (e.g. cron-job.org) hitting the deploy URL with the secret header |
+| **GitHub Actions**   | Weekly workflow calling the URL (store URL + secret in Actions secrets)                                |
+| **Supabase pg_cron** | Edge Function invoking sync with service role                                                          |
 
 Recommended schedule: every 6 hours. Register channels in `/admin/youtube` after first manual sync.
 
 ### 9. CI secrets policy
 
-| Secret location | Purpose | Policy |
-| --------------- | ------- | ------ |
-| Personal repo → Actions secrets | `<org-sync-secret>` (deploy key) | Maintainers only; rotate via `setup-org-sync-auth.sh` |
+| Secret location                 | Purpose                                                                                                                             | Policy                                                           |
+| ------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------- |
+| Personal repo → Actions secrets | `<org-sync-secret>` (deploy key)                                                                                                    | Maintainers only; rotate via `setup-org-sync-auth.sh`            |
 | Personal repo → Actions secrets | `PUBLIC_SUPABASE_*`, `SUPABASE_SERVICE_ROLE_KEY`, `PUBLIC_SALEOR_API_URL`, `SALEOR_CHANNEL`, `GHOST_*`, `YOUTUBE_API_KEY`, CDN vars | Optional — powers `readiness-ci.yml`; probes **skip** when unset |
-| Netlify env | All runtime server + `PUBLIC_*` vars | Never commit values; audit with `bash scripts/check-secrets.sh` |
+| Netlify env                     | All runtime server + `PUBLIC_*` vars                                                                                                | Never commit values; audit with `bash scripts/check-secrets.sh`  |
 
 `readiness-ci.yml` is **non-blocking on pull requests** (`continue-on-error`). Weekly schedule + `workflow_dispatch` for maintainer signal.
 

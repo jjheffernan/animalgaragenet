@@ -81,14 +81,11 @@ export async function getCollections(locale: string = config.defaultLocale): Pro
 export async function getStaffPickProducts(
 	locale: string = config.defaultLocale
 ): Promise<Product[]> {
-	return withSaleorCatalog(
-		async () => {
-			const products = await fetchSaleorProductsByTag('staff-pick', locale);
-			if (products.length > 0 || isProductionSiteUrl()) return products;
-			return undefined;
-		},
-		getMockStaffPickProducts
-	);
+	return withSaleorCatalog(async () => {
+		const products = await fetchSaleorProductsByTag('staff-pick', locale);
+		if (products.length > 0 || isProductionSiteUrl()) return products;
+		return undefined;
+	}, getMockStaffPickProducts);
 }
 
 /**
@@ -99,12 +96,9 @@ export async function getStaffPickProducts(
 export async function getClearanceProducts(
 	locale: string = config.defaultLocale
 ): Promise<Product[]> {
-	return withSaleorCatalog(
-		async () => {
-			const products = await fetchSaleorProductsByTag('clearance', locale);
-			if (products.length > 0 || isProductionSiteUrl()) return products;
-			return undefined;
-		},
-		getMockClearanceProducts
-	);
+	return withSaleorCatalog(async () => {
+		const products = await fetchSaleorProductsByTag('clearance', locale);
+		if (products.length > 0 || isProductionSiteUrl()) return products;
+		return undefined;
+	}, getMockClearanceProducts);
 }

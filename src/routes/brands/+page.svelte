@@ -45,7 +45,9 @@
 							loading="lazy"
 						/>
 						<div>
-							<h3 class="font-display font-bold uppercase tracking-wider text-white">{brand.name}</h3>
+							<h3 class="font-display font-bold uppercase tracking-wider text-white">
+								{brand.name}
+							</h3>
 							<p class="mt-1 text-sm text-zinc-500">{brand.description}</p>
 						</div>
 					</div>

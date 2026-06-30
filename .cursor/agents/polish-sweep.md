@@ -15,16 +15,16 @@ You close the gap between **intended work** and **landed code** after multi-agen
 
 ## Known stragglers to check (refresh each run)
 
-| Area             | Expected                                                   | Check                           |
-| ---------------- | ---------------------------------------------------------- | ------------------------------- |
-| Local dev auth   | `local-dev.ts`, sign-in dev buttons                        | Untracked? wired?               |
-| Account dropdown | `src/lib/components/navigation/AccountMenu.svelte`, Header | Plain link still?               |
-| Production admin | `promote-admin.ts`, `SITE_LOCKED`, `/locked`               | Missing?                        |
-| Media uploads    | `docs/plans/active/media-uploads.md`                       | Exists?                         |
-| Org sync         | deploy-key mirror on `main`                                | CI prettier blocking auto-sync? |
-| Saleor redeem    | `/account/redeem`                                          | Not started?                    |
-| Prettier CI      | formatting drift blocking CI                               | Resolved — commit `63eb20a`; run `npm run lint` before push |
-| Migration scaffolds | `@inspiration-scaffold` / `@saleor-migration` blocks      | Do not delete — inspiration-polish-tracker |
+| Area                | Expected                                                   | Check                                                       |
+| ------------------- | ---------------------------------------------------------- | ----------------------------------------------------------- |
+| Local dev auth      | `local-dev.ts`, sign-in dev buttons                        | Untracked? wired?                                           |
+| Account dropdown    | `src/lib/components/navigation/AccountMenu.svelte`, Header | Plain link still?                                           |
+| Production admin    | `promote-admin.ts`, `SITE_LOCKED`, `/locked`               | Missing?                                                    |
+| Media uploads       | `docs/plans/active/media-uploads.md`                       | Exists?                                                     |
+| Org sync            | deploy-key mirror on `main`                                | CI prettier blocking auto-sync?                             |
+| Saleor redeem       | `/account/redeem`                                          | Not started?                                                |
+| Prettier CI         | formatting drift blocking CI                               | Resolved — commit `63eb20a`; run `npm run lint` before push |
+| Migration scaffolds | `@inspiration-scaffold` / `@saleor-migration` blocks       | Do not delete — inspiration-polish-tracker                  |
 
 ## Polishing plan output
 
@@ -54,11 +54,11 @@ You close the gap between **intended work** and **landed code** after multi-agen
 
 Polish-sweep is **not** an e2e task. Do not run Playwright, start preview, or refresh manual pass docs.
 
-| Do | Don't |
-| --- | --- |
-| `npm run test:unit -- <path>` for files you changed | `npm run test:e2e` or full Playwright suite |
-| `npm run check` after edits | `vite preview` / Playwright webServer |
-| — | Create or update `docs/testing/e2e-manual-pass-*.md` |
+| Do                                                  | Don't                                                |
+| --------------------------------------------------- | ---------------------------------------------------- |
+| `npm run test:unit -- <path>` for files you changed | `npm run test:e2e` or full Playwright suite          |
+| `npm run check` after edits                         | `vite preview` / Playwright webServer                |
+| —                                                   | Create or update `docs/testing/e2e-manual-pass-*.md` |
 
 Playwright is allowed only when the user **explicitly** asks for e2e, or you run **one spec** for the area changed (e.g. `npx playwright test e2e/account.spec.ts`). Manual pass docs are owned by a **dedicated e2e worker** on explicit e2e tasks — see [e2e-policy.md](../../docs/testing/e2e-policy.md) and [AGENTS.md](../../agents/AGENTS.md#e2e-scope-policy).
 

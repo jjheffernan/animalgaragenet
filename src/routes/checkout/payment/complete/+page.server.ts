@@ -12,12 +12,7 @@ import {
 } from '$lib/server/saleor/checkout';
 
 export type PaymentCompleteStatus =
-	| 'disabled'
-	| 'no_transaction'
-	| 'no_checkout'
-	| 'process_failed'
-	| 'complete_failed'
-	| 'success';
+	'disabled' | 'no_transaction' | 'no_checkout' | 'process_failed' | 'complete_failed' | 'success';
 
 /** Stripe 3DS / redirect return — server runs transactionProcess then checkoutComplete. */
 export const load: PageServerLoad = async ({ cookies, url }) => {

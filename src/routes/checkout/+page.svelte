@@ -108,7 +108,9 @@
 				if (cancelled) return;
 
 				if (!response.ok) {
-					const detail = payload.hint ? `${payload.error ?? 'Could not initialize payment gateway.'} ${payload.hint}` : (payload.error ?? 'Could not initialize payment gateway.');
+					const detail = payload.hint
+						? `${payload.error ?? 'Could not initialize payment gateway.'} ${payload.hint}`
+						: (payload.error ?? 'Could not initialize payment gateway.');
 					gatewayError = detail;
 					return;
 				}
@@ -172,9 +174,7 @@
 	});
 
 	const summarySubtotal = $derived(
-		useSaleorDisplay
-			? (shipping?.subtotal.amount ?? cart.subtotal)
-			: cart.subtotal
+		useSaleorDisplay ? (shipping?.subtotal.amount ?? cart.subtotal) : cart.subtotal
 	);
 	const summaryCurrency = $derived(
 		useSaleorDisplay
@@ -183,9 +183,7 @@
 	);
 	const summaryShipping = $derived(shipping?.shippingPrice ?? null);
 	const summaryTotal = $derived(
-		useSaleorDisplay && shipping
-			? shipping.total.amount
-			: cart.subtotal
+		useSaleorDisplay && shipping ? shipping.total.amount : cart.subtotal
 	);
 
 	async function saveAddress(event: SubmitEvent) {
@@ -397,7 +395,8 @@
 									/>
 								</label>
 								<label class="block">
-									<span class="text-xs font-bold uppercase tracking-widest text-zinc-500">City</span>
+									<span class="text-xs font-bold uppercase tracking-widest text-zinc-500">City</span
+									>
 									<input
 										type="text"
 										name="city"

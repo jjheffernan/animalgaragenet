@@ -1,9 +1,5 @@
 import { afterEach, describe, expect, it } from 'vitest';
-import {
-	_resetMetricsForTests,
-	recordHttpRequest,
-	renderPrometheusMetrics
-} from './metrics';
+import { _resetMetricsForTests, recordHttpRequest, renderPrometheusMetrics } from './metrics';
 
 afterEach(() => {
 	_resetMetricsForTests();

@@ -45,9 +45,12 @@ describe('garage-api client', () => {
 
 	it('addGarageXpToApi POSTs amount and clears cache', async () => {
 		vi.mocked(fetch).mockResolvedValue(
-			new Response(JSON.stringify({ vehicles: [], garageXp: 25, completedActions: ['newsletter'] }), {
-				status: 200
-			})
+			new Response(
+				JSON.stringify({ vehicles: [], garageXp: 25, completedActions: ['newsletter'] }),
+				{
+					status: 200
+				}
+			)
 		);
 		const state = await addGarageXpToApi(25, 'newsletter');
 		expect(state?.garageXp).toBe(25);

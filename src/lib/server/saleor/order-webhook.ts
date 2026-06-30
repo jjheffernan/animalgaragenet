@@ -28,9 +28,7 @@ function readAmount(value: unknown): number | null {
 	return null;
 }
 
-function readMoney(
-	value: unknown
-): { amount: number; currency: string } | null {
+function readMoney(value: unknown): { amount: number; currency: string } | null {
 	if (!value || typeof value !== 'object') return null;
 	const record = value as Record<string, unknown>;
 	const gross = record.gross;
@@ -82,10 +80,7 @@ function readTrackingNumber(fulfillments: unknown): string | null {
 	return null;
 }
 
-export function mapSaleorOrderStatus(
-	saleorStatus: string,
-	fulfillments?: unknown
-): OrderStatus {
+export function mapSaleorOrderStatus(saleorStatus: string, fulfillments?: unknown): OrderStatus {
 	const normalized = saleorStatus.toUpperCase();
 	if (normalized === 'CANCELED' || normalized === 'CANCELLED') return 'cancelled';
 

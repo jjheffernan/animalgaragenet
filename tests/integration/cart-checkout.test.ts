@@ -14,7 +14,7 @@ vi.mock('$lib/server/saleor/checkout', () => ({
 }));
 
 vi.mock('$lib/server/saleor/channels', () => ({
-	getChannelForLocale: vi.fn(() => 'us')
+	resolveChannelForLocale: vi.fn(async () => 'us')
 }));
 
 import { isSaleorEnabled } from '$lib/server/saleor/client';

@@ -13,7 +13,10 @@ import {
 	_resetMockStoreForTests as resetNewsletter,
 	subscribeNewsletter
 } from '$lib/server/newsletter/repository';
-import { createWholesaleInquiry, _resetMockStoreForTests as resetWholesale } from '$lib/server/wholesale/repository';
+import {
+	createWholesaleInquiry,
+	_resetMockStoreForTests as resetWholesale
+} from '$lib/server/wholesale/repository';
 import {
 	_resetMockStoreForTests as resetFeatured,
 	getFeaturedSection

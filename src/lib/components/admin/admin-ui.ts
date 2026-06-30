@@ -6,7 +6,8 @@ export const adminQueueCard = 'rounded-sm border border-zinc-800 bg-zinc-900/50 
 
 export const adminKpiCard = 'rounded-sm border border-zinc-800 bg-zinc-900/50 p-5';
 
-export const adminKpiCardMuted = 'rounded-sm border border-dashed border-zinc-700 bg-zinc-900/50 p-5';
+export const adminKpiCardMuted =
+	'rounded-sm border border-dashed border-zinc-700 bg-zinc-900/50 p-5';
 
 export const adminCardFlush = 'overflow-hidden rounded-sm border border-zinc-800 bg-zinc-900/50';
 

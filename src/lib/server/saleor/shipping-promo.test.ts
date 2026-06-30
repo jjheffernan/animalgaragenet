@@ -5,10 +5,7 @@ vi.mock('$env/dynamic/private', () => ({
 }));
 
 import { env } from '$env/dynamic/private';
-import {
-	getFreeShippingProgress,
-	getFreeShippingThresholdForLocale
-} from './shipping-promo';
+import { getFreeShippingProgress, getFreeShippingThresholdForLocale } from './shipping-promo';
 
 describe('shipping-promo', () => {
 	beforeEach(() => {

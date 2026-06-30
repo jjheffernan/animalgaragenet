@@ -7,11 +7,7 @@
 	import Header from '$lib/components/layout/Header.svelte';
 	import Footer from '$lib/components/layout/Footer.svelte';
 	import { isSupportedLocale } from '$lib/i18n/locale';
-	import {
-		DEFAULT_SITE_DESCRIPTION,
-		SITE_NAME,
-		defaultOgImageUrl
-	} from '$lib/seo/site-meta';
+	import { DEFAULT_SITE_DESCRIPTION, SITE_NAME, defaultOgImageUrl } from '$lib/seo/site-meta';
 	import { garage } from '$lib/stores/garage.svelte';
 	import { garageXp } from '$lib/stores/garage-xp.svelte';
 	import { locale } from '$lib/stores/locale.svelte';

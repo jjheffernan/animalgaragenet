@@ -11,12 +11,12 @@ Structured logs (Loki), Prometheus metrics (Mimir), and OTLP trace hooks (Tempo)
 
 ## What ships in-app
 
-| Signal | Mechanism | Where |
-| ------ | --------- | ----- |
-| Request logs | JSON lines on stdout | `src/hooks.server.ts` → `logHttpRequest()` |
-| Metrics | Prometheus text scrape | `GET /api/health/metrics` |
-| Trace context | W3C `traceparent` passthrough | `src/lib/server/observability/trace.ts` |
-| OTLP export | Env hook point (SDK not bundled yet) | `getOtelExportConfig()` in `src/lib/server/observability/otel.ts` |
+| Signal        | Mechanism                            | Where                                                             |
+| ------------- | ------------------------------------ | ----------------------------------------------------------------- |
+| Request logs  | JSON lines on stdout                 | `src/hooks.server.ts` → `logHttpRequest()`                        |
+| Metrics       | Prometheus text scrape               | `GET /api/health/metrics`                                         |
+| Trace context | W3C `traceparent` passthrough        | `src/lib/server/observability/trace.ts`                           |
+| OTLP export   | Env hook point (SDK not bundled yet) | `getOtelExportConfig()` in `src/lib/server/observability/otel.ts` |
 
 Helpers live under `src/lib/server/observability/`:
 
@@ -32,27 +32,27 @@ Each handled request emits one JSON line:
 
 ```json
 {
-  "level": "info",
-  "msg": "http_request",
-  "method": "GET",
-  "path": "/shop",
-  "status": 200,
-  "duration_ms": 42,
-  "request_id": "550e8400-e29b-41d4-a716-446655440000",
-  "trace_id": "4bf92f3577b34da6a3ce929d0e0e4736"
+	"level": "info",
+	"msg": "http_request",
+	"method": "GET",
+	"path": "/shop",
+	"status": 200,
+	"duration_ms": 42,
+	"request_id": "550e8400-e29b-41d4-a716-446655440000",
+	"trace_id": "4bf92f3577b34da6a3ce929d0e0e4736"
 }
 ```
 
 **Labels for Loki parsing (suggested):**
 
-| Field | Use as label? | Notes |
-| ----- | ------------- | ----- |
-| `msg` | Yes | Always `http_request` |
-| `method` | Yes | Low cardinality |
-| `status` | Yes | HTTP status code |
-| `path` | Careful | Route pathname only — no query string; high cardinality on dynamic slugs |
-| `request_id` | No | High cardinality — keep as parsed field for correlation |
-| `duration_ms` | No | Numeric field for quantiles in LogQL |
+| Field         | Use as label? | Notes                                                                    |
+| ------------- | ------------- | ------------------------------------------------------------------------ |
+| `msg`         | Yes           | Always `http_request`                                                    |
+| `method`      | Yes           | Low cardinality                                                          |
+| `status`      | Yes           | HTTP status code                                                         |
+| `path`        | Careful       | Route pathname only — no query string; high cardinality on dynamic slugs |
+| `request_id`  | No            | High cardinality — keep as parsed field for correlation                  |
+| `duration_ms` | No            | Numeric field for quantiles in LogQL                                     |
 
 **PII:** Logs intentionally exclude query strings, cookies, client IPs, and user identifiers.
 
@@ -72,11 +72,11 @@ GET https://<your-site-host>/api/health/metrics
 
 ### Series
 
-| Metric | Type | Labels |
-| ------ | ---- | ------ |
-| `http_server_requests_total` | counter | `method`, `route`, `status` |
+| Metric                                 | Type      | Labels                      |
+| -------------------------------------- | --------- | --------------------------- |
+| `http_server_requests_total`           | counter   | `method`, `route`, `status` |
 | `http_server_request_duration_seconds` | histogram | `method`, `route`, `status` |
-| `storefront_otel_exporter_configured` | gauge | `0` or `1` |
+| `storefront_otel_exporter_configured`  | gauge     | `0` or `1`                  |
 
 `route` is the SvelteKit route id (`event.route.id`, e.g. `/shop/[slug]`) for low Prometheus cardinality.
 
@@ -102,13 +102,13 @@ Full auto-instrumentation is **not** bundled (keeps the serverless bundle small)
 
 ### Environment variables
 
-| Variable | Required | Default | Purpose |
-| -------- | -------- | ------- | ------- |
-| `OTEL_EXPORTER_OTLP_ENDPOINT` | For export | — | e.g. `https://<tempo-or-gateway-host>:4318` |
-| `OTEL_EXPORTER_OTLP_PROTOCOL` | No | `http/protobuf` | `http/protobuf` or `grpc` |
-| `OTEL_SERVICE_NAME` | No | `animalgarage-storefront` | Service name in Tempo |
-| `OTEL_TRACES_SAMPLER` | No | — | e.g. `parentbased_traceidratio` |
-| `OTEL_TRACES_SAMPLER_ARG` | No | — | Sample rate, e.g. `0.1` |
+| Variable                      | Required   | Default                   | Purpose                                     |
+| ----------------------------- | ---------- | ------------------------- | ------------------------------------------- |
+| `OTEL_EXPORTER_OTLP_ENDPOINT` | For export | —                         | e.g. `https://<tempo-or-gateway-host>:4318` |
+| `OTEL_EXPORTER_OTLP_PROTOCOL` | No         | `http/protobuf`           | `http/protobuf` or `grpc`                   |
+| `OTEL_SERVICE_NAME`           | No         | `animalgarage-storefront` | Service name in Tempo                       |
+| `OTEL_TRACES_SAMPLER`         | No         | —                         | e.g. `parentbased_traceidratio`             |
+| `OTEL_TRACES_SAMPLER_ARG`     | No         | —                         | Sample rate, e.g. `0.1`                     |
 
 Inbound `traceparent` headers are validated and echoed on responses so an edge proxy or future SDK can join traces started upstream.
 
@@ -118,13 +118,13 @@ Inbound `traceparent` headers are validated and echoed on responses so an edge p
 
 ## Netlify limitations
 
-| Topic | Limitation | Workaround |
-| ----- | ---------- | ---------- |
-| Logs | Function stdout → Netlify log drain, not a long-lived agent | Ship drains to Loki (Grafana Cloud, self-hosted Alloy) |
-| Metrics | No built-in Prometheus sidecar | Scrape `GET /api/health/metrics` over HTTPS |
-| Traces | Cold starts; no persistent OTLP batcher unless bundled | Low sample rate; parent-based sampling; consider edge-initiated traces |
-| Scraping | Public URL | Firewall / allowlist if metrics must not be public |
-| Cron | No native scheduler | External caller for cron routes (unchanged) |
+| Topic    | Limitation                                                  | Workaround                                                             |
+| -------- | ----------------------------------------------------------- | ---------------------------------------------------------------------- |
+| Logs     | Function stdout → Netlify log drain, not a long-lived agent | Ship drains to Loki (Grafana Cloud, self-hosted Alloy)                 |
+| Metrics  | No built-in Prometheus sidecar                              | Scrape `GET /api/health/metrics` over HTTPS                            |
+| Traces   | Cold starts; no persistent OTLP batcher unless bundled      | Low sample rate; parent-based sampling; consider edge-initiated traces |
+| Scraping | Public URL                                                  | Firewall / allowlist if metrics must not be public                     |
+| Cron     | No native scheduler                                         | External caller for cron routes (unchanged)                            |
 
 ---
 
@@ -176,8 +176,8 @@ Inbound `traceparent` headers are validated and echoed on responses so an edge p
 
 ## Related docs
 
-| Doc | Topic |
-| --- | ----- |
-| [deployment.md](./deployment.md) | Netlify production runbook |
-| [overview.md](./overview.md) | CDN, S3, Supabase architecture |
-| [testing/readiness-report.md](../testing/readiness-report.md) | External dependency probes |
+| Doc                                                           | Topic                          |
+| ------------------------------------------------------------- | ------------------------------ |
+| [deployment.md](./deployment.md)                              | Netlify production runbook     |
+| [overview.md](./overview.md)                                  | CDN, S3, Supabase architecture |
+| [testing/readiness-report.md](../testing/readiness-report.md) | External dependency probes     |

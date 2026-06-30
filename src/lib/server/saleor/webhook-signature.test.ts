@@ -20,9 +20,9 @@ describe('verifySaleorWebhookSignature', () => {
 	it('rejects tampered payload', () => {
 		const body = '{"order":{"id":"ord-1"}}';
 		const secret = 'test-webhook-secret';
-		expect(verifySaleorWebhookSignature('{"order":{"id":"ord-2"}}', sign(body, secret), secret)).toBe(
-			false
-		);
+		expect(
+			verifySaleorWebhookSignature('{"order":{"id":"ord-2"}}', sign(body, secret), secret)
+		).toBe(false);
 	});
 
 	it('rejects wrong secret', () => {

@@ -67,7 +67,9 @@ const saleorShippingFixture = {
 	availableShippingMethods: [
 		{ id: 'ship-1', name: 'Standard', price: { amount: 8.5, currency: 'USD' } }
 	],
-	availablePaymentGateways: [{ id: 'saleor.app.payment.stripe', name: 'Stripe', currencies: ['USD'] }]
+	availablePaymentGateways: [
+		{ id: 'saleor.app.payment.stripe', name: 'Stripe', currencies: ['USD'] }
+	]
 };
 
 const shippingAddress = {
@@ -326,11 +328,7 @@ describe('initializePaymentGateway', () => {
 			}
 		});
 
-		const result = await initializePaymentGateway(
-			'checkout-1',
-			'saleor.app.payment.stripe',
-			59.98
-		);
+		const result = await initializePaymentGateway('checkout-1', 'saleor.app.payment.stripe', 59.98);
 		expect(result.ok).toBe(true);
 		if (!result.ok) return;
 		expect(result.data).toMatchObject({ stripePublishableKey: 'pk_test_123' });

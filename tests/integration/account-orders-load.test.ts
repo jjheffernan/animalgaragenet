@@ -5,10 +5,7 @@ vi.mock('$lib/server/supabase/admin', () => ({
 }));
 
 import { createAdminClient } from '$lib/server/supabase/admin';
-import {
-	_resetMockStoreForTests,
-	upsertOrderSnapshot
-} from '$lib/server/orders/snapshots';
+import { _resetMockStoreForTests, upsertOrderSnapshot } from '$lib/server/orders/snapshots';
 import { load } from '../../src/routes/account/orders/+page.server';
 import type { PageServerLoadEvent } from '../../src/routes/account/orders/$types';
 

@@ -104,8 +104,7 @@
 			{#if data.collections.length > 0}
 				<div class="ms-2 shrink-0 border-l border-zinc-800 pl-2">
 					<label class="flex items-center gap-2">
-						<span class="text-xs font-bold uppercase tracking-widest text-zinc-500"
-							>Collection</span
+						<span class="text-xs font-bold uppercase tracking-widest text-zinc-500">Collection</span
 						>
 						<select
 							class="max-w-[12rem] truncate rounded-sm border border-zinc-700 bg-zinc-900 px-3 py-2 text-xs font-bold uppercase tracking-wider text-zinc-200 focus:border-red-600 focus:outline-none {data.collection

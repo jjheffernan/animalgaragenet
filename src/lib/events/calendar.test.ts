@@ -1,11 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import {
-	buildCalendarDays,
-	isSameDay,
-	isUpcomingDay,
-	startOfMonth,
-	toDateKey
-} from './calendar';
+import { buildCalendarDays, isSameDay, isUpcomingDay, startOfMonth, toDateKey } from './calendar';
 
 describe('events calendar helpers', () => {
 	const june2026 = new Date(2026, 5, 15);

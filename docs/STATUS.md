@@ -9,8 +9,8 @@
 
 ## Open — in-repo code
 
-| ID | Item | Notes |
-| -- | ---- | ----- |
+| ID     | Item                 | Notes                                                                                                                             |
+| ------ | -------------------- | --------------------------------------------------------------------------------------------------------------------------------- |
 | IP-029 | Scroll motion system | `AnimatedReveal` + IO baseline shipped; full `@motionone/svelte` deferred — [animations.md](./style-guide/frontend/animations.md) |
 
 _No other unblocked code rows._ Everything else is **ops-blocked** ([BLOCKERS.md](./BLOCKERS.md)) or **done** ([archive/changelog-2026-H1.md](./archive/changelog-2026-H1.md)).
@@ -19,10 +19,10 @@ _No other unblocked code rows._ Everything else is **ops-blocked** ([BLOCKERS.md
 
 ## Partial — code done, ops gate
 
-| ID | Item | Ops action |
-| -- | ---- | ---------- |
+| ID                  | Item                       | Ops action                                                                                                 |
+| ------------------- | -------------------------- | ---------------------------------------------------------------------------------------------------------- |
 | AUD-P1-001 / IP-003 | Checkout + Stripe Elements | Enable Stripe Payment App on Saleor channel — [commerce/saleor-payments.md](./commerce/saleor-payments.md) |
-| media-uploads | UGC API + admin media | `supabase db push` + bucket `ugc` — [plans/active/media-uploads.md](./plans/active/media-uploads.md) |
+| media-uploads       | UGC API + admin media      | `supabase db push` + bucket `ugc` — [plans/active/media-uploads.md](./plans/active/media-uploads.md)       |
 
 ---
 

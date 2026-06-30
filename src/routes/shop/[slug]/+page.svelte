@@ -52,9 +52,7 @@
 	const productDescription = $derived(
 		product.description?.trim() || `${product.name} — shop Animal Garage merch.`
 	);
-	const productOgImage = $derived(
-		product.thumbnail?.url ?? product.media[0]?.url ?? undefined
-	);
+	const productOgImage = $derived(product.thumbnail?.url ?? product.media[0]?.url ?? undefined);
 </script>
 
 <PageMeta

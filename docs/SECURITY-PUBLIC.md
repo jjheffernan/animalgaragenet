@@ -4,14 +4,14 @@ This repository is **public**. All files under `docs/` must be safe to read with
 
 ## Do not publish in `docs/`
 
-| Category             | Examples (use placeholders instead)                                   |
-| -------------------- | --------------------------------------------------------------------- |
+| Category             | Examples (use placeholders instead)                                                        |
+| -------------------- | ------------------------------------------------------------------------------------------ |
 | Production hostnames | Specific Saleor, CDN, Ghost, or Netlify preview URLs (not public brand `animalgarage.net`) |
-| Internal hostnames   | `*.internal`, private cluster DNS, literal bucket names in archive docs                   |
-| Cloud resources      | Bucket names, regions, cluster names, IAM key variable names in prose |
-| Org topology         | Organization repo names, deploy-key secret names, key fingerprints    |
-| Live probes          | URLs pasted from production audits                                    |
-| Credential shapes    | JWT prefixes, example secret values                                   |
+| Internal hostnames   | `*.internal`, private cluster DNS, literal bucket names in archive docs                    |
+| Cloud resources      | Bucket names, regions, cluster names, IAM key variable names in prose                      |
+| Org topology         | Organization repo names, deploy-key secret names, key fingerprints                         |
+| Live probes          | URLs pasted from production audits                                                         |
+| Credential shapes    | JWT prefixes, example secret values                                                        |
 
 ## Where full detail lives
 
@@ -32,17 +32,17 @@ This repository is **public**. All files under `docs/` must be safe to read with
 
 ## Placeholder conventions
 
-| Instead of               | Use                                  |
-| ------------------------ | ------------------------------------ |
-| Specific Saleor host     | `<your-saleor-host>`                 |
-| CDN custom domain        | `<your-cdn-host>`                    |
-| Netlify preview URL      | `https://<preview-host>.netlify.app` |
-| Storefront custom domain | `https://<your-site-host>`           |
-| S3 bucket name           | `<your-media-bucket>`                |
-| Org deploy repo          | `<organization>/<deploy-repo>`       |
-| Personal fork            | `<your-github-user>/<repo-name>`     |
-| Org mirror Actions secret | `<org-sync-secret>`                 |
-| Internal S3 endpoint     | `http://localhost:3900` or `https://<s3-endpoint-host>` |
+| Instead of                | Use                                                     |
+| ------------------------- | ------------------------------------------------------- |
+| Specific Saleor host      | `<your-saleor-host>`                                    |
+| CDN custom domain         | `<your-cdn-host>`                                       |
+| Netlify preview URL       | `https://<preview-host>.netlify.app`                    |
+| Storefront custom domain  | `https://<your-site-host>`                              |
+| S3 bucket name            | `<your-media-bucket>`                                   |
+| Org deploy repo           | `<organization>/<deploy-repo>`                          |
+| Personal fork             | `<your-github-user>/<repo-name>`                        |
+| Org mirror Actions secret | `<org-sync-secret>`                                     |
+| Internal S3 endpoint      | `http://localhost:3900` or `https://<s3-endpoint-host>` |
 
 ## Pre-PR grep (docs/)
 

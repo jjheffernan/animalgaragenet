@@ -48,7 +48,9 @@
 					</span>
 				</a>
 
-				<address class="mt-3 space-y-0.5 text-sm not-italic leading-relaxed text-zinc-500 lg:mt-5 lg:space-y-1">
+				<address
+					class="mt-3 space-y-0.5 text-sm not-italic leading-relaxed text-zinc-500 lg:mt-5 lg:space-y-1"
+				>
 					<p class="text-zinc-400">Animal Garage HQ</p>
 					<p>123 Redline Drive</p>
 					<p>Los Angeles, CA 90001</p>
@@ -146,7 +148,13 @@
 		>
 			<p>&copy; {new Date().getFullYear()} Animal Garage. All rights reserved.</p>
 			<p class="flex items-center gap-1.5 text-zinc-500">
-				<svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+				<svg
+					class="h-3.5 w-3.5"
+					fill="none"
+					viewBox="0 0 24 24"
+					stroke="currentColor"
+					aria-hidden="true"
+				>
 					<path
 						stroke-linecap="round"
 						stroke-linejoin="round"

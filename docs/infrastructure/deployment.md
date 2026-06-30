@@ -15,12 +15,12 @@ Canonical checklist for a new deployer: Netlify storefront, Supabase schema, Sal
 feature/* → dev (CI) → merge to main (CI) → org deploy mirror → Netlify production
 ```
 
-| Step | Where | Action |
-| ---- | ----- | ------ |
-| 1 | Personal fork (`<your-github-user>/<repo-name>`) | Develop on `dev`; CI runs lint, check, unit tests, build, e2e |
-| 2 | Personal repo → `main` | Merge `dev` → `main` after staging QA |
-| 3 | GitHub Actions | `sync-org-main.yml` mirrors `main` to `<organization>/<deploy-repo>` (workflows excluded) |
-| 4 | Netlify | Site connected to org deploy repo, branch `main`, auto-deploy on push |
+| Step | Where                                            | Action                                                                                    |
+| ---- | ------------------------------------------------ | ----------------------------------------------------------------------------------------- |
+| 1    | Personal fork (`<your-github-user>/<repo-name>`) | Develop on `dev`; CI runs lint, check, unit tests, build, e2e                             |
+| 2    | Personal repo → `main`                           | Merge `dev` → `main` after staging QA                                                     |
+| 3    | GitHub Actions                                   | `sync-org-main.yml` mirrors `main` to `<organization>/<deploy-repo>` (workflows excluded) |
+| 4    | Netlify                                          | Site connected to org deploy repo, branch `main`, auto-deploy on push                     |
 
 **Org mirror auth:** deploy key stored as `<org-sync-secret>` in personal repo → Actions secrets (maintainers). Setup: `./scripts/setup-org-sync-auth.sh`.  
 **Manual re-sync:** GitHub → Actions → **Sync main to org** → Run workflow.
@@ -31,13 +31,13 @@ Do **not** push directly to the org deploy repo.
 
 ## Netlify site settings
 
-| Setting | Value |
-| ------- | ----- |
-| Repository | `<organization>/<deploy-repo>` |
-| Production branch | `main` |
-| Build command | `npm run build` |
-| Publish directory | *(auto — `@sveltejs/adapter-auto` detects Netlify)* |
-| Node version | `22` (match CI) |
+| Setting           | Value                                               |
+| ----------------- | --------------------------------------------------- |
+| Repository        | `<organization>/<deploy-repo>`                      |
+| Production branch | `main`                                              |
+| Build command     | `npm run build`                                     |
+| Publish directory | _(auto — `@sveltejs/adapter-auto` detects Netlify)_ |
+| Node version      | `22` (match CI)                                     |
 
 `adapter-auto` is configured in `vite.config.ts`. For explicit Netlify control, switch to `@sveltejs/adapter-netlify` — see [style-guide/backend-ops/deployment.md](../style-guide/backend-ops/deployment.md).
 
@@ -60,60 +60,60 @@ Copy names from [`.env.example`](../../.env.example). Group by service when ente
 
 ### Site
 
-| Variable | Scope | Required | Notes |
-| -------- | ----- | -------- | ----- |
-| `PUBLIC_SITE_URL` | Public | **Yes** | Canonical storefront origin, e.g. `https://<your-site-host>` |
-| `PUBLIC_DEFAULT_LOCALE` | Public | Recommended | Default `en-US` |
-| `PUBLIC_DEFAULT_CURRENCY` | Public | Recommended | Default `USD` |
-| `SITE_LOCKED` | Server | Optional | `true` — public traffic → `/locked`; admins pass through |
+| Variable                  | Scope  | Required    | Notes                                                        |
+| ------------------------- | ------ | ----------- | ------------------------------------------------------------ |
+| `PUBLIC_SITE_URL`         | Public | **Yes**     | Canonical storefront origin, e.g. `https://<your-site-host>` |
+| `PUBLIC_DEFAULT_LOCALE`   | Public | Recommended | Default `en-US`                                              |
+| `PUBLIC_DEFAULT_CURRENCY` | Public | Recommended | Default `USD`                                                |
+| `SITE_LOCKED`             | Server | Optional    | `true` — public traffic → `/locked`; admins pass through     |
 
 ### Supabase
 
-| Variable | Scope | Required | Notes |
-| -------- | ----- | -------- | ----- |
-| `PUBLIC_SUPABASE_URL` | Public | **Yes** | Project API URL |
-| `PUBLIC_SUPABASE_ANON_KEY` | Public | **Yes** | RLS-scoped anon key |
-| `SUPABASE_SERVICE_ROLE_KEY` | Server | **Yes** | Moderation, webhooks, cron — never `PUBLIC_*` |
+| Variable                    | Scope  | Required | Notes                                         |
+| --------------------------- | ------ | -------- | --------------------------------------------- |
+| `PUBLIC_SUPABASE_URL`       | Public | **Yes**  | Project API URL                               |
+| `PUBLIC_SUPABASE_ANON_KEY`  | Public | **Yes**  | RLS-scoped anon key                           |
+| `SUPABASE_SERVICE_ROLE_KEY` | Server | **Yes**  | Moderation, webhooks, cron — never `PUBLIC_*` |
 
 Without Supabase env, production refuses mock sessions (`hooks.server.ts`). See [integrations/supabase.md](../integrations/supabase.md).
 
 ### Saleor (storefront)
 
-| Variable | Scope | Required | Notes |
-| -------- | ----- | -------- | ----- |
-| `PUBLIC_SALEOR_API_URL` | Public | **Yes** | `https://<your-saleor-host>/graphql/` |
-| `SALEOR_CHANNEL` | Server | **Yes** | Channel slug (e.g. `default-channel`) |
-| `SALEOR_APP_TOKEN` | Server | Optional | Bearer for privileged mutations if your instance requires it |
-| `SALEOR_WEBHOOK_SECRET` | Server | Recommended | HMAC verify on `POST /api/webhooks/saleor` |
+| Variable                | Scope  | Required    | Notes                                                        |
+| ----------------------- | ------ | ----------- | ------------------------------------------------------------ |
+| `PUBLIC_SALEOR_API_URL` | Public | **Yes**     | `https://<your-saleor-host>/graphql/`                        |
+| `SALEOR_CHANNEL`        | Server | **Yes**     | Channel slug (e.g. `default-channel`)                        |
+| `SALEOR_APP_TOKEN`      | Server | Optional    | Bearer for privileged mutations if your instance requires it |
+| `SALEOR_WEBHOOK_SECRET` | Server | Recommended | HMAC verify on `POST /api/webhooks/saleor`                   |
 
 **Do not add Stripe or Adyen secrets here** — payment provider keys belong in the Saleor Payment App dashboard. See [commerce/saleor-payments.md](../commerce/saleor-payments.md).
 
 ### Ghost (guides + blog)
 
-| Variable | Scope | Required | Notes |
-| -------- | ----- | -------- | ----- |
-| `GHOST_URL` | Server | For live CMS | Ghost site URL, no trailing slash |
+| Variable                | Scope  | Required     | Notes                                           |
+| ----------------------- | ------ | ------------ | ----------------------------------------------- |
+| `GHOST_URL`             | Server | For live CMS | Ghost site URL, no trailing slash               |
 | `GHOST_CONTENT_API_KEY` | Server | For live CMS | Content API key from Ghost Admin → Integrations |
 
 See [content/ghost.md](../content/ghost.md) for tag convention (`guide`, `blog`).
 
 ### YouTube sync
 
-| Variable | Scope | Required | Notes |
-| -------- | ----- | -------- | ----- |
-| `YOUTUBE_API_KEY` | Server | For `/watch` sync | YouTube Data API v3 key |
-| `YOUTUBE_SYNC_SECRET` | Server | For cron route | Shared secret for `x-youtube-sync-secret` header |
+| Variable              | Scope  | Required          | Notes                                            |
+| --------------------- | ------ | ----------------- | ------------------------------------------------ |
+| `YOUTUBE_API_KEY`     | Server | For `/watch` sync | YouTube Data API v3 key                          |
+| `YOUTUBE_SYNC_SECRET` | Server | For cron route    | Shared secret for `x-youtube-sync-secret` header |
 
 ### CDN / S3 / CloudFront
 
-| Variable | Scope | Required | Notes |
-| -------- | ----- | -------- | ----- |
-| `PUBLIC_CDN_BASE_URL` | Public | Recommended | `https://<your-cdn-host>` |
-| `S3_BUCKET` | Server | For admin uploads | Media origin bucket |
-| `S3_REGION` | Server | For admin uploads | AWS region |
-| `AWS_ACCESS_KEY_ID` | Server | For admin uploads | IAM user with `s3:PutObject` on bucket |
-| `AWS_SECRET_ACCESS_KEY` | Server | For admin uploads | Paired with access key |
-| `AWS_CLOUDFRONT_DISTRIBUTION_ID` | Server | For invalidation | Enables post-upload cache purge |
+| Variable                         | Scope  | Required          | Notes                                  |
+| -------------------------------- | ------ | ----------------- | -------------------------------------- |
+| `PUBLIC_CDN_BASE_URL`            | Public | Recommended       | `https://<your-cdn-host>`              |
+| `S3_BUCKET`                      | Server | For admin uploads | Media origin bucket                    |
+| `S3_REGION`                      | Server | For admin uploads | AWS region                             |
+| `AWS_ACCESS_KEY_ID`              | Server | For admin uploads | IAM user with `s3:PutObject` on bucket |
+| `AWS_SECRET_ACCESS_KEY`          | Server | For admin uploads | Paired with access key                 |
+| `AWS_CLOUDFRONT_DISTRIBUTION_ID` | Server | For invalidation  | Enables post-upload cache purge        |
 
 Without `AWS_CLOUDFRONT_DISTRIBUTION_ID`, uploads work but `POST /api/admin/media/invalidate` returns 501. Paths are allowlisted (`media/admin/{uuid}/{filename}`).
 
@@ -121,20 +121,20 @@ Without `AWS_CLOUDFRONT_DISTRIBUTION_ID`, uploads work but `POST /api/admin/medi
 
 No Discord/Microsoft client secrets in Netlify — those live in **Supabase Dashboard → Authentication → Providers**.
 
-| Variable | Scope | Required | Notes |
-| -------- | ----- | -------- | ----- |
-| `PUBLIC_SUPABASE_URL` | Public | **Yes** | OAuth broker |
-| `PUBLIC_SUPABASE_ANON_KEY` | Public | **Yes** | PKCE session |
-| `PUBLIC_SITE_URL` | Public | **Yes** | Callback origin for `/auth/callback` |
+| Variable                   | Scope  | Required | Notes                                |
+| -------------------------- | ------ | -------- | ------------------------------------ |
+| `PUBLIC_SUPABASE_URL`      | Public | **Yes**  | OAuth broker                         |
+| `PUBLIC_SUPABASE_ANON_KEY` | Public | **Yes**  | PKCE session                         |
+| `PUBLIC_SITE_URL`          | Public | **Yes**  | Callback origin for `/auth/callback` |
 
 Provider setup: [auth/oauth.md](../auth/oauth.md) · [auth/discord.md](../auth/discord.md) · [auth/microsoft.md](../auth/microsoft.md).
 
 ### Optional
 
-| Variable | Scope | Notes |
-| -------- | ----- | ----- |
+| Variable                 | Scope  | Notes                                                       |
+| ------------------------ | ------ | ----------------------------------------------------------- |
 | `BUG_REPORT_WEBHOOK_URL` | Server | Staff notification on new `/support/report-bug` submissions |
-| `SOCIAL_*_CLIENT_ID` | Server | Account social-linking mock handle flow when unset |
+| `SOCIAL_*_CLIENT_ID`     | Server | Account social-linking mock handle flow when unset          |
 
 ---
 
@@ -142,11 +142,11 @@ Provider setup: [auth/oauth.md](../auth/oauth.md) · [auth/discord.md](../auth/d
 
 Production has **no prior migration history**. Apply the **3 squashed migrations** once:
 
-| # | File | Contents |
-| - | ---- | -------- |
-| 1 | `20250701000000_core_auth_profiles.sql` | `profiles`, signup trigger, `is_staff()` |
-| 2 | `20250701010000_commerce_content.sql` | builds, testimonials, newsletter, featured, preferences, YouTube, orders, restock, wholesale, bugs |
-| 3 | `20250701020000_media_social.sql` | `media_assets`, `ugc` Storage bucket + policies |
+| #   | File                                    | Contents                                                                                           |
+| --- | --------------------------------------- | -------------------------------------------------------------------------------------------------- |
+| 1   | `20250701000000_core_auth_profiles.sql` | `profiles`, signup trigger, `is_staff()`                                                           |
+| 2   | `20250701010000_commerce_content.sql`   | builds, testimonials, newsletter, featured, preferences, YouTube, orders, restock, wholesale, bugs |
+| 3   | `20250701020000_media_social.sql`       | `media_assets`, `ugc` Storage bucket + policies                                                    |
 
 ```bash
 supabase link --project-ref <your-ref>
@@ -167,12 +167,12 @@ Post-apply: run Supabase advisors or `npm run test:readiness` → `supabase-db`.
 
 **Authentication → URL configuration:**
 
-| Field | Values |
-| ----- | ------ |
-| Site URL | `https://<your-site-host>` |
-| Redirect URLs | `https://<your-site-host>/auth/callback` |
-| | `https://<preview-host>.netlify.app/auth/callback` *(if using Netlify preview)* |
-| | `http://localhost:5173/auth/callback` *(local dev)* |
+| Field         | Values                                                                          |
+| ------------- | ------------------------------------------------------------------------------- |
+| Site URL      | `https://<your-site-host>`                                                      |
+| Redirect URLs | `https://<your-site-host>/auth/callback`                                        |
+|               | `https://<preview-host>.netlify.app/auth/callback` _(if using Netlify preview)_ |
+|               | `http://localhost:5173/auth/callback` _(local dev)_                             |
 
 ### Bootstrap first admin
 
@@ -190,11 +190,11 @@ User must sign up on production first (magic link or OAuth). Sign out/in after p
 
 Register in **Saleor Dashboard → Apps → Webhooks** (or custom app):
 
-| Field | Value |
-| ----- | ----- |
-| Target URL | `https://<your-site-host>/api/webhooks/saleor` |
-| Secret | Generate a value → set same string as `SALEOR_WEBHOOK_SECRET` on Netlify |
-| Events | `ORDER_CREATED`, fulfillment events handled by `order-webhook.ts` |
+| Field      | Value                                                                    |
+| ---------- | ------------------------------------------------------------------------ |
+| Target URL | `https://<your-site-host>/api/webhooks/saleor`                           |
+| Secret     | Generate a value → set same string as `SALEOR_WEBHOOK_SECRET` on Netlify |
+| Events     | `ORDER_CREATED`, fulfillment events handled by `order-webhook.ts`        |
 
 Handler: `src/routes/api/webhooks/saleor/+server.ts` — verifies `Saleor-Signature` when secret is set.  
 PSP webhooks (Stripe → Saleor Payment App) **do not** hit this route.
@@ -229,8 +229,8 @@ Add **only** the Supabase callback:
 https://<project-ref>.supabase.co/auth/v1/callback
 ```
 
-- Discord: [Discord Developer Portal](https://discord.com/developers/applications) → OAuth2 → Redirects  
-- Microsoft Entra: App registration → Authentication → Web redirect URI  
+- Discord: [Discord Developer Portal](https://discord.com/developers/applications) → OAuth2 → Redirects
+- Microsoft Entra: App registration → Authentication → Web redirect URI
 
 Copy Client ID + secret into **Supabase → Authentication → Providers** (Discord / Azure).
 
@@ -281,12 +281,12 @@ Verify at `/admin/runtime` (Integrations) — CDN row shows configured when vars
 
 Storefront checkout code is **complete**; live card payment requires ops on the **Saleor host** (not Netlify):
 
-| Step | Where | Action |
-| ---- | ----- | ------ |
-| 1 | Saleor Dashboard → Apps | Install Stripe Payment App (`saleor.app.payment.stripe`) |
-| 2 | Channel settings | Enable app for channel matching `SALEOR_CHANNEL` |
-| 3 | Payment App settings | Enter Stripe **secret** key (Saleor-hosted config — no storefront env) |
-| 4 | Verify | `/checkout` → Payment Element → test card → order in Saleor Dashboard |
+| Step | Where                   | Action                                                                 |
+| ---- | ----------------------- | ---------------------------------------------------------------------- |
+| 1    | Saleor Dashboard → Apps | Install Stripe Payment App (`saleor.app.payment.stripe`)               |
+| 2    | Channel settings        | Enable app for channel matching `SALEOR_CHANNEL`                       |
+| 3    | Payment App settings    | Enter Stripe **secret** key (Saleor-hosted config — no storefront env) |
+| 4    | Verify                  | `/checkout` → Payment Element → test card → order in Saleor Dashboard  |
 
 Cannot document live Stripe keys or Saleor app tokens in this repo. Maintainer private runbook / password manager only.
 
@@ -305,16 +305,16 @@ npm run test:readiness
 bash scripts/check-secrets.sh
 ```
 
-| Probe | Validates |
-| ----- | --------- |
-| `supabase-auth` | Auth health |
-| `supabase-db` | Service role + schema |
-| `saleor-catalog` | Products on channel |
-| `saleor-checkout` | Channel exists (payment app readiness) |
-| `ghost-cms` | Content API |
-| `youtube-sync` | YouTube API key |
-| `oauth-discord` / `oauth-azure` | Provider enabled in Supabase |
-| `cdn-s3` | `HEAD` on `PUBLIC_CDN_BASE_URL` |
+| Probe                           | Validates                              |
+| ------------------------------- | -------------------------------------- |
+| `supabase-auth`                 | Auth health                            |
+| `supabase-db`                   | Service role + schema                  |
+| `saleor-catalog`                | Products on channel                    |
+| `saleor-checkout`               | Channel exists (payment app readiness) |
+| `ghost-cms`                     | Content API                            |
+| `youtube-sync`                  | YouTube API key                        |
+| `oauth-discord` / `oauth-azure` | Provider enabled in Supabase           |
+| `cdn-s3`                        | `HEAD` on `PUBLIC_CDN_BASE_URL`        |
 
 **CI:** `.github/workflows/readiness-ci.yml` — weekly + manual + non-blocking on PRs when GitHub Actions secrets are configured (see maintainer runbook for secret names).
 
@@ -340,14 +340,14 @@ Smoke covers: homepage nav, `/shop` products, `/parts`, search modal, add-to-car
 
 ### 3. Production spot checks
 
-| Check | Pass criteria |
-| ----- | ------------- |
-| `/shop` | Product count ≠ 120 mock; no `picsum.photos` images |
-| `/auth/sign-in` | No dev quick-login buttons |
-| Magic link / OAuth | Lands on `/account` with session |
-| `/admin` | Staff role required; `/admin/runtime` shows integration status |
-| `/checkout` | Shipping works; pay enabled after Payment App ops |
-| `/account/orders` | Populated after test order + webhook mirror |
+| Check              | Pass criteria                                                  |
+| ------------------ | -------------------------------------------------------------- |
+| `/shop`            | Product count ≠ 120 mock; no `picsum.photos` images            |
+| `/auth/sign-in`    | No dev quick-login buttons                                     |
+| Magic link / OAuth | Lands on `/account` with session                               |
+| `/admin`           | Staff role required; `/admin/runtime` shows integration status |
+| `/checkout`        | Shipping works; pay enabled after Payment App ops              |
+| `/account/orders`  | Populated after test order + webhook mirror                    |
 
 ### 4. Admin runtime dashboard
 
@@ -359,11 +359,11 @@ Smoke covers: homepage nav, `/shop` products, `/parts`, search modal, add-to-car
 
 Structured request logs, Prometheus metrics, and documented OTLP hooks for Grafana Loki, Mimir, and Tempo.
 
-| Endpoint / signal | Purpose |
-| ----------------- | ------- |
+| Endpoint / signal                | Purpose                    |
+| -------------------------------- | -------------------------- |
 | stdout JSON (`msg=http_request`) | Loki via Netlify log drain |
-| `GET /api/health/metrics` | Mimir/Prometheus scrape |
-| `OTEL_EXPORTER_OTLP_*` | Future Tempo OTLP export |
+| `GET /api/health/metrics`        | Mimir/Prometheus scrape    |
+| `OTEL_EXPORTER_OTLP_*`           | Future Tempo OTLP export   |
 
 Full runbook: [observability-lgtm.md](./observability-lgtm.md).
 
@@ -416,13 +416,13 @@ Full runbook: [observability-lgtm.md](./observability-lgtm.md).
 
 ## Related docs
 
-| Doc | Topic |
-| --- | ----- |
-| [observability-lgtm.md](./observability-lgtm.md) | LGTM logs, metrics, traces |
-| [integrations/supabase.md](../integrations/supabase.md) | Auth, roles, site lockdown |
-| [commerce/saleor.md](../commerce/saleor.md) | Catalog + checkout architecture |
-| [commerce/saleor-payments.md](../commerce/saleor-payments.md) | Payment App flow |
-| [content/ghost.md](../content/ghost.md) | Ghost tags and filters |
-| [testing/readiness-report.md](../testing/readiness-report.md) | Probe reference |
-| [archive/batch-2026-07-03-followups.md](../archive/batch-2026-07-03-followups.md) | Ops apply row index |
-| [wiki-export/Deployment-and-CI.md](../wiki-export/Deployment-and-CI.md) | Public wiki summary |
+| Doc                                                                               | Topic                           |
+| --------------------------------------------------------------------------------- | ------------------------------- |
+| [observability-lgtm.md](./observability-lgtm.md)                                  | LGTM logs, metrics, traces      |
+| [integrations/supabase.md](../integrations/supabase.md)                           | Auth, roles, site lockdown      |
+| [commerce/saleor.md](../commerce/saleor.md)                                       | Catalog + checkout architecture |
+| [commerce/saleor-payments.md](../commerce/saleor-payments.md)                     | Payment App flow                |
+| [content/ghost.md](../content/ghost.md)                                           | Ghost tags and filters          |
+| [testing/readiness-report.md](../testing/readiness-report.md)                     | Probe reference                 |
+| [archive/batch-2026-07-03-followups.md](../archive/batch-2026-07-03-followups.md) | Ops apply row index             |
+| [wiki-export/Deployment-and-CI.md](../wiki-export/Deployment-and-CI.md)           | Public wiki summary             |

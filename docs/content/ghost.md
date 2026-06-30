@@ -31,12 +31,12 @@ Additional tags on a post become:
 
 ## Guide filters
 
-| Piece            | Location                                                                 |
-| ---------------- | ------------------------------------------------------------------------ |
-| Filter loader    | `src/lib/server/ghost/guide-filters.ts` — `getGuideFilterOptions()`      |
-| Listing wiring   | `src/routes/guides/+page.server.ts` — `?category=` and optional `?topic=` |
-| JSON API         | `GET /api/content/guide-filters` — `{ categories, topics, tags, source }` |
-| UI               | Category/topic ribbons on `/guides` (reuses shop `CategoryPill`)         |
+| Piece          | Location                                                                  |
+| -------------- | ------------------------------------------------------------------------- |
+| Filter loader  | `src/lib/server/ghost/guide-filters.ts` — `getGuideFilterOptions()`       |
+| Listing wiring | `src/routes/guides/+page.server.ts` — `?category=` and optional `?topic=` |
+| JSON API       | `GET /api/content/guide-filters` — `{ categories, topics, tags, source }` |
+| UI             | Category/topic ribbons on `/guides` (reuses shop `CategoryPill`)          |
 
 When `GHOST_URL` and `GHOST_CONTENT_API_KEY` are set, filters hydrate from Ghost guide posts. Otherwise mock guide `category` labels become filter pills.
 
@@ -56,10 +56,10 @@ GET {GHOST_URL}/ghost/api/content/posts/
 
 Tag roles on each post (tags excluding content-type slugs `guide` and `blog`):
 
-| Position | UI / model                         |
-| -------- | ---------------------------------- |
-| First    | Category pill (`Guide.category`)   |
-| Rest     | Topic pills (`Guide.topicSlugs`)   |
+| Position | UI / model                       |
+| -------- | -------------------------------- |
+| First    | Category pill (`Guide.category`) |
+| Rest     | Topic pills (`Guide.topicSlugs`) |
 
 Optional reference endpoint for tag metadata (not used by the loader today):
 
@@ -71,9 +71,9 @@ Ghost **Admin API** exposes GraphQL for editorial workflows; storefront reads us
 
 ### URL params
 
-| Param      | Matches                          |
-| ---------- | -------------------------------- |
-| `category` | Primary category slug or label   |
+| Param      | Matches                           |
+| ---------- | --------------------------------- |
+| `category` | Primary category slug or label    |
 | `topic`    | Secondary topic slug (Ghost only) |
 
 Both filters combine with AND logic before pagination.

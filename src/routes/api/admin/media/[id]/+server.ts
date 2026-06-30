@@ -1,9 +1,6 @@
 import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
-import {
-	adminGateJsonResponse,
-	resolveAdminGateFromLocals
-} from '$lib/server/auth/admin-gate';
+import { adminGateJsonResponse, resolveAdminGateFromLocals } from '$lib/server/auth/admin-gate';
 import { deleteMediaAssetAsAdmin } from '$lib/server/media/repository';
 
 export const DELETE: RequestHandler = async ({ params, locals }) => {

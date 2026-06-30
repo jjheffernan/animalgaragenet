@@ -47,10 +47,10 @@ Condensed evidence for work completed before doc consolidation. Commit hashes re
 
 ## Archived detail trackers
 
-| Doc | Contents |
-| --- | -------- |
-| [audit-remediation-2026-06.md](./audit-remediation-2026-06.md) | Full AUD-P* table |
-| [active-swarm-execution.md](./active-swarm-execution.md) | Swarm batch inventory |
-| [ponytail-audit-tracker.md](./ponytail-audit-tracker.md) | LOC dedupe batches |
-| [next-steps-tracker.md](./next-steps-tracker.md) | Pre-consolidation queue |
+| Doc                                                                                                                          | Contents                 |
+| ---------------------------------------------------------------------------------------------------------------------------- | ------------------------ |
+| [audit-remediation-2026-06.md](./audit-remediation-2026-06.md)                                                               | Full AUD-P* table        |
+| [active-swarm-execution.md](./active-swarm-execution.md)                                                                     | Swarm batch inventory    |
+| [ponytail-audit-tracker.md](./ponytail-audit-tracker.md)                                                                     | LOC dedupe batches       |
+| [next-steps-tracker.md](./next-steps-tracker.md)                                                                             | Pre-consolidation queue  |
 | [batch-2026-07-01.md](./batch-2026-07-01.md) · [02](./batch-2026-07-02.md) · [03-followups](./batch-2026-07-03-followups.md) | July implementer batches |

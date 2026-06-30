@@ -25,8 +25,7 @@ export async function _loadMediaUgcItems(): Promise<UGCItem[]> {
 	}
 
 	const featured = await listFeaturedTestimonials(48);
-	const source =
-		featured.length > 0 ? featured : await listApprovedTestimonials(48);
+	const source = featured.length > 0 ? featured : await listApprovedTestimonials(48);
 	return testimonialsToUgcItems(await enrichTestimonialsWithPhotos(source));
 }
 

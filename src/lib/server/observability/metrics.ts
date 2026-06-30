@@ -80,7 +80,9 @@ export function renderPrometheusMetrics(): string {
 				`http_server_request_duration_seconds_bucket{${key},le="${le}"} ${buckets.get(le) ?? 0}`
 			);
 		}
-		lines.push(`http_server_request_duration_seconds_bucket{${key},le="+Inf"} ${durationCounts.get(key) ?? 0}`);
+		lines.push(
+			`http_server_request_duration_seconds_bucket{${key},le="+Inf"} ${durationCounts.get(key) ?? 0}`
+		);
 		lines.push(
 			`http_server_request_duration_seconds_sum{${key}} ${formatFloat(durationSums.get(key) ?? 0)}`
 		);

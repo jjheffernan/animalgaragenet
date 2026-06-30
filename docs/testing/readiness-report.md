@@ -64,7 +64,7 @@ npm run test:readiness
 | CDN / S3           | No server upload routes; env vars documented but integration planned in `docs/plans/active/media-uploads.md`                                          |
 | Saleor checkout    | Promo/redeem wired; live checkout needs catalog + channel validation before production cutover                                                        |
 | OAuth              | Discord/Microsoft marked P2 in polish plan; probes only verify Supabase Auth provider flags                                                           |
-| `check-secrets.sh` | Blocks tracked env files, hardcoded secrets, client-bundle `SERVICE_ROLE` patterns, and `DEV_ADMIN` in tracked deploy config (commit `ce05185`) |
+| `check-secrets.sh` | Blocks tracked env files, hardcoded secrets, client-bundle `SERVICE_ROLE` patterns, and `DEV_ADMIN` in tracked deploy config (commit `ce05185`)       |
 | Integration tests  | `tests/contracts/` (20 tests) + `tests/integration/crud-business-logic.test.ts` (9 tests); probes in `scripts/test-readiness.ts`                      |
 
 ## Probe reference

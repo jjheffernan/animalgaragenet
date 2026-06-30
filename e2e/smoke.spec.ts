@@ -13,7 +13,9 @@ test.describe('smoke', () => {
 		await dismissCookieBanner(page);
 		await expect(page.getByRole('navigation', { name: 'Main' })).toBeVisible();
 		await expect(
-			page.getByRole('navigation', { name: 'Main' }).getByRole('link', { name: 'Shop', exact: true })
+			page
+				.getByRole('navigation', { name: 'Main' })
+				.getByRole('link', { name: 'Shop', exact: true })
 		).toBeVisible();
 	});
 

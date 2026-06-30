@@ -1,9 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import {
-	adminGateJsonResponse,
-	resolveAdminGate,
-	resolveAdminGateFromLocals
-} from './admin-gate';
+import { adminGateJsonResponse, resolveAdminGate, resolveAdminGateFromLocals } from './admin-gate';
 
 describe('resolveAdminGate (staff panel)', () => {
 	it('allows dev admin bypass without session', () => {

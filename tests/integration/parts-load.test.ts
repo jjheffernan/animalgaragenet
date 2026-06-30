@@ -3,7 +3,9 @@ import { load } from '../../src/routes/parts/+page.server';
 import type { PageServerLoadEvent } from '../../src/routes/parts/$types';
 
 function partsEvent(query = ''): PageServerLoadEvent {
-	return { url: new URL(`http://localhost/parts${query ? `?${query}` : ''}`) } as PageServerLoadEvent;
+	return {
+		url: new URL(`http://localhost/parts${query ? `?${query}` : ''}`)
+	} as PageServerLoadEvent;
 }
 
 describe('parts/+page.server load', () => {

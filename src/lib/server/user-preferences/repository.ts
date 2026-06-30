@@ -22,11 +22,7 @@ export async function getUserGarageState(userId: string): Promise<UserGarageStat
 
 	const [prefsResult, profileResult] = await Promise.all([
 		admin.from('user_preferences').select('vehicles').eq('user_id', userId).maybeSingle(),
-		admin
-			.from('profiles')
-			.select('garage_xp, garage_xp_actions')
-			.eq('id', userId)
-			.maybeSingle()
+		admin.from('profiles').select('garage_xp, garage_xp_actions').eq('id', userId).maybeSingle()
 	]);
 
 	const vehicles = Array.isArray(prefsResult.data?.vehicles)
@@ -40,10 +36,7 @@ export async function getUserGarageState(userId: string): Promise<UserGarageStat
 	return { vehicles, garageXp, completedActions };
 }
 
-export async function saveUserVehicles(
-	userId: string,
-	vehicles: SavedVehicle[]
-): Promise<boolean> {
+export async function saveUserVehicles(userId: string, vehicles: SavedVehicle[]): Promise<boolean> {
 	const admin = createAdminClient();
 	if (!admin) {
 		const state = mockGarage.get(userId) ?? defaultState();
@@ -51,10 +44,9 @@ export async function saveUserVehicles(
 		return true;
 	}
 
-	const { error } = await admin.from('user_preferences').upsert(
-		{ user_id: userId, vehicles },
-		{ onConflict: 'user_id' }
-	);
+	const { error } = await admin
+		.from('user_preferences')
+		.upsert({ user_id: userId, vehicles }, { onConflict: 'user_id' });
 
 	if (error) {
 		console.error('user_preferences vehicles upsert failed:', error.message);

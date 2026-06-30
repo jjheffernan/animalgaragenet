@@ -45,7 +45,7 @@ OAuth → /auth/callback?code=...
 | `src/hooks.server.ts`                     | Session hydration every request                          |
 | `src/lib/config/env.ts`                   | `PUBLIC_SITE_URL` default `http://localhost:5173`        |
 | `src/routes/auth/sign-in/+page.server.ts` | Magic link / OAuth redirect via `buildAuthCallbackUrl()` |
-| `src/lib/server/auth/callback-url.ts`    | Request-origin allowlist + callback URL builder          |
+| `src/lib/server/auth/callback-url.ts`     | Request-origin allowlist + callback URL builder          |
 | `src/routes/auth/callback/+server.ts`     | PKCE code exchange                                       |
 | `src/lib/components/Header.svelte`        | `session = $page.data.session` → Account menu vs Sign In |
 | `src/routes/account/+layout.server.ts`    | Redirect if `!locals.session`                            |

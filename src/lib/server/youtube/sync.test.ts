@@ -57,7 +57,8 @@ describe('fetchChannelVideos', () => {
 	});
 
 	it('calls YouTube Data API when API key is set', async () => {
-		const fetchMock = vi.fn()
+		const fetchMock = vi
+			.fn()
 			.mockResolvedValueOnce({
 				ok: true,
 				json: async () => ({

@@ -32,7 +32,9 @@
 		class="mt-4 flex gap-3 overflow-x-auto overscroll-x-contain pb-2 [-ms-overflow-style:none] [scrollbar-width:none] lg:grid lg:grid-cols-4 lg:overflow-visible lg:pb-0 [&::-webkit-scrollbar]:hidden"
 	>
 		{#each items as product (product.id)}
-			<div class="w-[42vw] max-w-[11rem] shrink-0 sm:w-[28vw] sm:max-w-[12rem] lg:w-auto lg:max-w-none">
+			<div
+				class="w-[42vw] max-w-[11rem] shrink-0 sm:w-[28vw] sm:max-w-[12rem] lg:w-auto lg:max-w-none"
+			>
 				<ProductCard {product} view="grid-sm" />
 			</div>
 		{/each}

@@ -20,7 +20,10 @@
 	>
 	{#if onSale && compareAt}
 		<span class="text-xs text-zinc-500 line-through"
-			>{locale.formatPrice(compareAt, product.compareAtPrice?.currency ?? product.pricing.priceRange.start.currency)}</span
+			>{locale.formatPrice(
+				compareAt,
+				product.compareAtPrice?.currency ?? product.pricing.priceRange.start.currency
+			)}</span
 		>
 	{/if}
 </div>

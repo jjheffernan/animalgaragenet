@@ -67,10 +67,10 @@ Verdicts: `implement` | `ops-only` | `update-doc` | `archive` | `delete` | `alre
 
 ## Blocked for parent (at archive time)
 
-| ID               | Reason                                            |
-| ---------------- | ------------------------------------------------- |
-| DOC-023, DOC-024 | Netlify / Supabase / Saleor dashboard             |
-| DOC-036          | Repo-wide Prettier (~221 files)                   |
-| DOC-037          | Full checkout payment flow                        |
-| DOC-038          | YouTube Data API integration                      |
-| DOC-040          | check-secrets.sh bundle scan                      |
+| ID               | Reason                                |
+| ---------------- | ------------------------------------- |
+| DOC-023, DOC-024 | Netlify / Supabase / Saleor dashboard |
+| DOC-036          | Repo-wide Prettier (~221 files)       |
+| DOC-037          | Full checkout payment flow            |
+| DOC-038          | YouTube Data API integration          |
+| DOC-040          | check-secrets.sh bundle scan          |

@@ -22,7 +22,9 @@ test.describe('cart', () => {
 
 		await page.goto('/cart');
 		await expect(page.getByRole('heading', { name: 'Cart' })).toBeVisible({ timeout: 10_000 });
-		await expect(page.getByRole('link', { name: 'Garage Flag Tee' })).toBeVisible({ timeout: 10_000 });
+		await expect(page.getByRole('link', { name: 'Garage Flag Tee' })).toBeVisible({
+			timeout: 10_000
+		});
 	});
 
 	test('quantity controls update line count in drawer', async ({ page }) => {

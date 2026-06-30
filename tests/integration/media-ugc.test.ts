@@ -9,6 +9,11 @@ vi.mock('$lib/server/testimonials/repository', () => ({
 	listApprovedTestimonials: vi.fn()
 }));
 
+vi.mock('$lib/server/media/repository', () => ({
+	enrichTestimonialsWithPhotos: vi.fn(async (items: unknown[]) => items),
+	listApprovedUgcGalleryItems: vi.fn()
+}));
+
 import { mockUGC } from '$lib/data/mock/ugc';
 import { createAdminClient } from '$lib/server/supabase/admin';
 import {

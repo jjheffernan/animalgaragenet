@@ -187,9 +187,7 @@ export async function deleteMediaAssetAsAdmin(
 }
 
 /** Drop pending uploads that were never confirmed within the retention window. */
-export async function cleanupStalePendingAssets(
-	maxAgeHours = 24
-): Promise<{ deleted: number }> {
+export async function cleanupStalePendingAssets(maxAgeHours = 24): Promise<{ deleted: number }> {
 	const admin = createAdminClient();
 	if (!admin) return { deleted: 0 };
 

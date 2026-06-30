@@ -83,16 +83,16 @@ Path alias `$lib` → `src/lib` (configured in SvelteKit).
 
 ## Paginated list canvas
 
-| Component | Purpose |
-| --------- | ------- |
+| Component                    | Purpose                                                                                               |
+| ---------------------------- | ----------------------------------------------------------------------------------------------------- |
 | `PaginatedListCanvas.svelte` | Wraps list content with top + bottom `ListControls`, optional `filters` snippet, optional `stickyTop` |
-| `ListControls.svelte` | Per-page select, view toggle (when `view` prop set), pagination nav |
+| `ListControls.svelte`        | Per-page select, view toggle (when `view` prop set), pagination nav                                   |
 
 Use `PaginatedListCanvas` on every paginated PLP so filter toolbar and view toggles appear above the first page and below the last item (flanking pagination).
 
 ```svelte
 <PaginatedListCanvas pagination={data.pagination} view={data.view} stickyTop="catalog">
-  <ProductGrid products={data.products} view={data.view} />
+	<ProductGrid products={data.products} view={data.view} />
 </PaginatedListCanvas>
 ```
 
@@ -101,4 +101,3 @@ Use `PaginatedListCanvas` on every paginated PLP so filter toolbar and view togg
 - **`stickyTop`:** `'catalog'` (shop) or `'parts'` — pins top toolbar below header + ribbon; shop ribbon needs `syncHeightVar` on `CatalogRibbonShell`.
 
 Optional page-level filters (e.g. media tabs) pass a `filters` snippet — rendered once above controls and once above bottom pagination.
-

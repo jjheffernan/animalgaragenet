@@ -39,11 +39,14 @@
 		success = null;
 
 		try {
-			const response = await fetch(`/cart/checkout/promo?locale=${encodeURIComponent(locale.code)}`, {
-				method: 'POST',
-				headers: { 'Content-Type': 'application/json' },
-				body: JSON.stringify({ code })
-			});
+			const response = await fetch(
+				`/cart/checkout/promo?locale=${encodeURIComponent(locale.code)}`,
+				{
+					method: 'POST',
+					headers: { 'Content-Type': 'application/json' },
+					body: JSON.stringify({ code })
+				}
+			);
 			const data = (await response.json()) as {
 				message?: string;
 				error?: string;

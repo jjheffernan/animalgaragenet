@@ -50,7 +50,11 @@ export async function createWholesaleInquiry(
 		return inquiry;
 	}
 
-	const { data, error } = await admin.from('wholesale_inquiries').insert(payload).select('*').single();
+	const { data, error } = await admin
+		.from('wholesale_inquiries')
+		.insert(payload)
+		.select('*')
+		.single();
 
 	if (error || !data) {
 		console.error('wholesale_inquiries insert failed:', error?.message);
@@ -63,9 +67,7 @@ export async function createWholesaleInquiry(
 export async function listWholesaleInquiries(limit = 50): Promise<WholesaleInquiry[]> {
 	const admin = createAdminClient();
 	if (!admin) {
-		return [...mockStore]
-			.sort((a, b) => b.createdAt.localeCompare(a.createdAt))
-			.slice(0, limit);
+		return [...mockStore].sort((a, b) => b.createdAt.localeCompare(a.createdAt)).slice(0, limit);
 	}
 
 	const { data, error } = await admin

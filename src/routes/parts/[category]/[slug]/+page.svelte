@@ -61,9 +61,7 @@
 	const productDescription = $derived(
 		metaDescriptionFromText(product.description || `${product.name} — Animal Garage parts.`)
 	);
-	const productOgImage = $derived(
-		product.thumbnail?.url ?? product.media[0]?.url ?? undefined
-	);
+	const productOgImage = $derived(product.thumbnail?.url ?? product.media[0]?.url ?? undefined);
 </script>
 
 <PageMeta

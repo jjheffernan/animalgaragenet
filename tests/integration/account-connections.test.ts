@@ -16,10 +16,7 @@ import { _resetMockStoreForTests } from '$lib/server/social-connections/reposito
 
 const session = { id: 'user-connections-test', email: 'u@test.com', name: 'Test', role: 'user' };
 
-function connectionsEvent(
-	method: 'GET' | 'PUT',
-	body?: unknown
-): RequestEvent {
+function connectionsEvent(method: 'GET' | 'PUT', body?: unknown): RequestEvent {
 	const init: RequestInit = { method };
 	if (body !== undefined) {
 		init.headers = { 'Content-Type': 'application/json' };

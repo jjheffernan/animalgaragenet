@@ -44,9 +44,9 @@ export function isCdnPublicReadConfigured(): boolean {
 export function isCdnUploadConfigured(): boolean {
 	return Boolean(
 		publicEnv.PUBLIC_CDN_BASE_URL?.trim() &&
-			env.S3_BUCKET?.trim() &&
-			env.AWS_ACCESS_KEY_ID?.trim() &&
-			env.AWS_SECRET_ACCESS_KEY?.trim()
+		env.S3_BUCKET?.trim() &&
+		env.AWS_ACCESS_KEY_ID?.trim() &&
+		env.AWS_SECRET_ACCESS_KEY?.trim()
 	);
 }
 
@@ -87,8 +87,7 @@ export interface CdnInvalidationRequest {
 }
 
 export type AdminInvalidationKeyResult =
-	| { ok: true; keys: string[] }
-	| { ok: false; error: string };
+	{ ok: true; keys: string[] } | { ok: false; error: string };
 
 /** Collect and validate admin CDN invalidation keys (`objectKey` first, then `paths`). */
 export function collectAdminInvalidationKeys(

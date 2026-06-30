@@ -125,7 +125,11 @@
 				</label>
 				<label class={adminLabel}>
 					Title
-					<input name="title" value={String(data.campaign.content.title ?? '')} class={adminInputSm} />
+					<input
+						name="title"
+						value={String(data.campaign.content.title ?? '')}
+						class={adminInputSm}
+					/>
 				</label>
 				<label class={adminLabel}>
 					Subtitle

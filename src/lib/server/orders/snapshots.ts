@@ -47,9 +47,7 @@ export async function upsertOrderSnapshot(
 	const syncedAt = fields.syncedAt ?? new Date().toISOString();
 	const admin = createAdminClient();
 	if (!admin) {
-		const existing = [...mockStore.values()].find(
-			(s) => s.saleorOrderId === fields.saleorOrderId
-		);
+		const existing = [...mockStore.values()].find((s) => s.saleorOrderId === fields.saleorOrderId);
 		const snapshot: OrderSnapshot = {
 			id: existing?.id ?? crypto.randomUUID(),
 			userId: fields.userId,

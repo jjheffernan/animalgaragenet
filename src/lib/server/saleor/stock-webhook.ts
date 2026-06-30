@@ -17,10 +17,7 @@ type NotifyResult =
 	| { ok: true; skipped: true; reason: string }
 	| { ok: false; reason: string };
 
-const STOCK_EVENTS = new Set([
-	'PRODUCT_VARIANT_BACK_IN_STOCK',
-	'PRODUCT_VARIANT_STOCK_UPDATED'
-]);
+const STOCK_EVENTS = new Set(['PRODUCT_VARIANT_BACK_IN_STOCK', 'PRODUCT_VARIANT_STOCK_UPDATED']);
 
 export function isStockRestockEvent(event: string): boolean {
 	return STOCK_EVENTS.has(event.toUpperCase());

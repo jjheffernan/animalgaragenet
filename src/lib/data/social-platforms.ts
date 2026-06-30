@@ -28,9 +28,7 @@ export const SOCIAL_PLATFORMS = [
 
 export type SocialPlatformId = (typeof SOCIAL_PLATFORMS)[number]['id'];
 
-export const SOCIAL_PLATFORM_IDS: readonly SocialPlatformId[] = SOCIAL_PLATFORMS.map(
-	(p) => p.id
-);
+export const SOCIAL_PLATFORM_IDS: readonly SocialPlatformId[] = SOCIAL_PLATFORMS.map((p) => p.id);
 
 export function isSocialPlatformId(value: string): value is SocialPlatformId {
 	return (SOCIAL_PLATFORM_IDS as readonly string[]).includes(value);

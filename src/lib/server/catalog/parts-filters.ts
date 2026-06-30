@@ -104,18 +104,15 @@ export async function getPartsFilterOptions(
 	categorySlug?: string,
 	locale: string = config.defaultLocale
 ): Promise<PartsFilterOptions> {
-	return withSaleorCatalog(
-		async () => {
-			const products = categorySlug
-				? await getPartsByCategory(categorySlug, locale)
-				: await getPartsProducts(locale);
-			if (products.length > 0) {
-				return { facets: derivePartsFacetsFromProducts(products), source: 'saleor' as const };
-			}
-			return undefined;
-		},
-		mockPartsFilterOptions
-	);
+	return withSaleorCatalog(async () => {
+		const products = categorySlug
+			? await getPartsByCategory(categorySlug, locale)
+			: await getPartsProducts(locale);
+		if (products.length > 0) {
+			return { facets: derivePartsFacetsFromProducts(products), source: 'saleor' as const };
+		}
+		return undefined;
+	}, mockPartsFilterOptions);
 }
 
 /** Apply URL-synced facet state (YMM, brand, build) to a parts product list. */

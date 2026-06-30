@@ -36,10 +36,9 @@ export async function saveUserSocialConnections(
 		return true;
 	}
 
-	const { error } = await admin.from('user_preferences').upsert(
-		{ user_id: userId, social_connections: connections },
-		{ onConflict: 'user_id' }
-	);
+	const { error } = await admin
+		.from('user_preferences')
+		.upsert({ user_id: userId, social_connections: connections }, { onConflict: 'user_id' });
 
 	if (error) {
 		console.error('user_preferences social_connections upsert failed:', error.message);

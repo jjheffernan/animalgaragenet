@@ -12,26 +12,26 @@ Animal Garage uses **Tailwind CSS v4** with a zinc/red design system only. No co
 
 ## daisyUI
 
-| Check | Result |
-| ----- | ------ |
-| `package.json` / `package-lock.json` | **Absent** — no `daisyui` entry |
-| `src/` grep (`daisyui`, `data-theme`, `btn-primary`, `card-body`, `base-100`, `admin-shell`) | **0 hits** |
-| `layout.css` | Plain `@import 'tailwindcss'` + `@theme` tokens (`--color-ag-red`, `--color-ag-black`) |
-| `vite.config.ts` | `@tailwindcss/vite` only — no daisyUI plugin |
-| `.agents/skills/daisyui/` | **Removed** (AUD-P2-021) |
-| `agents/daisyui`, `.cursor/skills/daisyui` symlinks | **Removed** |
-| `skills-lock.json` | Cleared daisyUI entry |
-| Archive reference | `docs/archive/daisyui.md` (stale banner) |
+| Check                                                                                        | Result                                                                                 |
+| -------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- |
+| `package.json` / `package-lock.json`                                                         | **Absent** — no `daisyui` entry                                                        |
+| `src/` grep (`daisyui`, `data-theme`, `btn-primary`, `card-body`, `base-100`, `admin-shell`) | **0 hits**                                                                             |
+| `layout.css`                                                                                 | Plain `@import 'tailwindcss'` + `@theme` tokens (`--color-ag-red`, `--color-ag-black`) |
+| `vite.config.ts`                                                                             | `@tailwindcss/vite` only — no daisyUI plugin                                           |
+| `.agents/skills/daisyui/`                                                                    | **Removed** (AUD-P2-021)                                                               |
+| `agents/daisyui`, `.cursor/skills/daisyui` symlinks                                          | **Removed**                                                                            |
+| `skills-lock.json`                                                                           | Cleared daisyUI entry                                                                  |
+| Archive reference                                                                            | `docs/archive/daisyui.md` (stale banner)                                               |
 
 ## UI library overlap
 
-| Library | Status |
-| ------- | ------ |
-| daisyUI | Not installed |
-| flowbite / flowbite-svelte | Not installed (Flowbite cited as layout inspiration only) |
-| Bootstrap / Headless UI / Radix / shadcn | Not installed |
-| Chart libs (chart.js, recharts, d3) | Not installed |
-| Date libs (date-fns, dayjs, moment, luxon) | Not installed |
+| Library                                    | Status                                                    |
+| ------------------------------------------ | --------------------------------------------------------- |
+| daisyUI                                    | Not installed                                             |
+| flowbite / flowbite-svelte                 | Not installed (Flowbite cited as layout inspiration only) |
+| Bootstrap / Headless UI / Radix / shadcn   | Not installed                                             |
+| Chart libs (chart.js, recharts, d3)        | Not installed                                             |
+| Date libs (date-fns, dayjs, moment, luxon) | Not installed                                             |
 
 ## Dependency audit (`depcheck`)
 

@@ -1,13 +1,7 @@
 import { json } from '@sveltejs/kit';
 import { env as privateEnv } from '$env/dynamic/private';
-import {
-	isOrderMirrorEvent,
-	mirrorSaleorOrderPayload
-} from '$lib/server/saleor/order-webhook';
-import {
-	isStockRestockEvent,
-	processStockRestockPayload
-} from '$lib/server/saleor/stock-webhook';
+import { isOrderMirrorEvent, mirrorSaleorOrderPayload } from '$lib/server/saleor/order-webhook';
+import { isStockRestockEvent, processStockRestockPayload } from '$lib/server/saleor/stock-webhook';
 import {
 	readSaleorEvent,
 	readSaleorSignature,

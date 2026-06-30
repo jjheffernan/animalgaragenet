@@ -18,10 +18,7 @@ export function verifyHmacSha256Hex(
 }
 
 /** Timing-safe compare for cron / shared-secret headers. */
-export function verifySharedSecret(
-	provided: string | null | undefined,
-	secret: string
-): boolean {
+export function verifySharedSecret(provided: string | null | undefined, secret: string): boolean {
 	const a = (provided ?? '').trim();
 	const b = secret.trim();
 	if (!a || !b || a.length !== b.length) return false;

@@ -42,10 +42,7 @@ function parseLocaleChannelEnv(): Record<string, string> {
 			Object.entries(parsed)
 				.filter(
 					([locale, slug]) =>
-						typeof locale === 'string' &&
-						typeof slug === 'string' &&
-						locale.trim() &&
-						slug.trim()
+						typeof locale === 'string' && typeof slug === 'string' && locale.trim() && slug.trim()
 				)
 				.map(([locale, slug]) => [locale.trim(), (slug as string).trim()])
 		);

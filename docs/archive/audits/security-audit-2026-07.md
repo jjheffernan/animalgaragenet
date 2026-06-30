@@ -12,11 +12,11 @@ Canonical remediation: [archive/audit-remediation-2026-06.md](../audit-remediati
 
 ## Summary
 
-| Severity | Finding | Status |
-| -------- | ------- | ------ |
-| **Medium** | CDN invalidation accepted arbitrary CloudFront paths (including `/*`) | **Remediated** |
-| **Low** | Admin routes rely on session role gate only (no per-route CSRF token) | **Accepted** — SameSite cookies + staff-only surface |
-| **Info** | CloudFront invalidation env gated; endpoint returns 503 when unset | **By design** |
+| Severity   | Finding                                                               | Status                                               |
+| ---------- | --------------------------------------------------------------------- | ---------------------------------------------------- |
+| **Medium** | CDN invalidation accepted arbitrary CloudFront paths (including `/*`) | **Remediated**                                       |
+| **Low**    | Admin routes rely on session role gate only (no per-route CSRF token) | **Accepted** — SameSite cookies + staff-only surface |
+| **Info**   | CloudFront invalidation env gated; endpoint returns 503 when unset    | **By design**                                        |
 
 ---
 

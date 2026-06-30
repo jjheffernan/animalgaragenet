@@ -411,27 +411,27 @@
 								role="menu"
 								id="community-menu"
 							>
-							<p class="px-4 pb-1 text-xs font-bold uppercase tracking-widest text-zinc-500">
-								Community
-							</p>
-							<ul>
-								{#each communityLinks as link (link.href)}
-									<li role="none">
-										<a
-											href={link.href}
-											role="menuitem"
-											class="block px-4 py-2.5 text-sm font-medium uppercase tracking-wider text-zinc-300 transition hover:bg-zinc-900/80 hover:text-red-400 {$page
-												.url.pathname === link.href ||
-											$page.url.pathname.startsWith(`${link.href}/`)
-												? 'bg-zinc-900/50 text-red-400'
-												: ''}"
-											onclick={closeMenus}
-										>
-											{link.label}
-										</a>
-									</li>
-								{/each}
-							</ul>
+								<p class="px-4 pb-1 text-xs font-bold uppercase tracking-widest text-zinc-500">
+									Community
+								</p>
+								<ul>
+									{#each communityLinks as link (link.href)}
+										<li role="none">
+											<a
+												href={link.href}
+												role="menuitem"
+												class="block px-4 py-2.5 text-sm font-medium uppercase tracking-wider text-zinc-300 transition hover:bg-zinc-900/80 hover:text-red-400 {$page
+													.url.pathname === link.href ||
+												$page.url.pathname.startsWith(`${link.href}/`)
+													? 'bg-zinc-900/50 text-red-400'
+													: ''}"
+												onclick={closeMenus}
+											>
+												{link.label}
+											</a>
+										</li>
+									{/each}
+								</ul>
 							</div>
 						</div>
 					{/if}
@@ -605,12 +605,7 @@
 						/>
 					</svg>
 				</button>
-				<button
-					type="button"
-					class="{headerIconBtn} size-9"
-					aria-label="Cart"
-					onclick={toggleCart}
-				>
+				<button type="button" class="{headerIconBtn} size-9" aria-label="Cart" onclick={toggleCart}>
 					<svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 						<path
 							stroke-linecap="round"
@@ -654,7 +649,7 @@
 		open={mobileOpen}
 		{session}
 		{dealsHref}
-		dealCount={dealCount}
+		{dealCount}
 		{shopCategories}
 		{communityLinks}
 		onclose={closeMobileNav}

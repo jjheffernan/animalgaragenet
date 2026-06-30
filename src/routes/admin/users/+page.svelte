@@ -34,8 +34,7 @@
 		const query = searchQuery.trim().toLowerCase();
 		if (!query) return users;
 		return users.filter(
-			(user) =>
-				user.name.toLowerCase().includes(query) || user.email.toLowerCase().includes(query)
+			(user) => user.name.toLowerCase().includes(query) || user.email.toLowerCase().includes(query)
 		);
 	});
 

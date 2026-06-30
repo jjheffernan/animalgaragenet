@@ -10,11 +10,11 @@ Public-safe reference for wiring Animal Garage checkout to Saleor Payment Apps a
 
 Saleor recommends **Payment Apps** (Saleor Apps with synchronous transaction webhooks) over legacy **payment plugins**. Plugins expose older mutations such as `checkoutPaymentCreate`; new headless storefronts should use the **Transaction API**.
 
-| Approach | Storefront talks to | Provider secrets live in | Status |
-| -------- | ------------------- | ------------------------ | ------ |
-| **Payment Apps** (recommended) | Saleor GraphQL only | Saleor Dashboard → installed Payment App (e.g. Stripe App) | Current |
-| **Legacy plugins** | Saleor + plugin-specific fields | Saleor plugin settings | Deprecated for new builds |
-| **Custom backend** | Your API + `transactionCreate` / `transactionEventReport` | Your server | Advanced; more ownership |
+| Approach                       | Storefront talks to                                       | Provider secrets live in                                   | Status                    |
+| ------------------------------ | --------------------------------------------------------- | ---------------------------------------------------------- | ------------------------- |
+| **Payment Apps** (recommended) | Saleor GraphQL only                                       | Saleor Dashboard → installed Payment App (e.g. Stripe App) | Current                   |
+| **Legacy plugins**             | Saleor + plugin-specific fields                           | Saleor plugin settings                                     | Deprecated for new builds |
+| **Custom backend**             | Your API + `transactionCreate` / `transactionEventReport` | Your server                                                | Advanced; more ownership  |
 
 With Payment Apps, the storefront never calls Stripe/Adyen directly for server operations. Saleor mediates via synchronous webhooks (`TRANSACTION_INITIALIZE_SESSION`, `TRANSACTION_PROCESS_SESSION`, etc.) to the installed app.
 
@@ -70,15 +70,15 @@ sequenceDiagram
 
 ### Mutation sequence (Transaction API + Payment Apps)
 
-| Step | Mutation | Purpose |
-| ---- | -------- | ------- |
-| 1 | `checkoutLinesAdd` | Cart lines (wired) |
-| 2 | `checkoutShippingAddressUpdate` | Address → `availableShippingMethods` |
-| 3 | `checkoutDeliveryMethodUpdate` | Selected shipping rate |
-| 4 | `paymentGatewayInitialize` | Fetch gateway config (e.g. Stripe publishable key) |
-| 5 | `transactionInitialize` | Start payment; creates `Transaction` on checkout |
-| 6 | `transactionProcess` | After 3DS / redirect; sync status from provider |
-| 7 | `checkoutComplete` | Create `Order` when payment covers total |
+| Step | Mutation                        | Purpose                                            |
+| ---- | ------------------------------- | -------------------------------------------------- |
+| 1    | `checkoutLinesAdd`              | Cart lines (wired)                                 |
+| 2    | `checkoutShippingAddressUpdate` | Address → `availableShippingMethods`               |
+| 3    | `checkoutDeliveryMethodUpdate`  | Selected shipping rate                             |
+| 4    | `paymentGatewayInitialize`      | Fetch gateway config (e.g. Stripe publishable key) |
+| 5    | `transactionInitialize`         | Start payment; creates `Transaction` on checkout   |
+| 6    | `transactionProcess`            | After 3DS / redirect; sync status from provider    |
+| 7    | `checkoutComplete`              | Create `Order` when payment covers total           |
 
 Event types on `transactionEvent.type` drive UI: `CHARGE_ACTION_REQUIRED` / `AUTHORIZATION_ACTION_REQUIRED` → show 3DS or redirect; `CHARGE_SUCCESS` / `AUTHORIZATION_SUCCESS` → proceed to complete.
 
@@ -95,10 +95,10 @@ Configure per channel, not in the storefront:
 
 ### Webhooks — who receives what
 
-| Webhook direction | Endpoint | Secret location |
-| ----------------- | -------- | --------------- |
-| PSP → Payment App (e.g. Stripe → Saleor Stripe App) | Configured in Payment App / Saleor Cloud | Payment App env in Saleor — **not** storefront |
-| Saleor → your storefront (optional: `ORDER_CREATED`, fulfillment) | `POST /api/webhooks/saleor` | `SALEOR_WEBHOOK_SECRET` (server-only) |
+| Webhook direction                                                 | Endpoint                                 | Secret location                                |
+| ----------------------------------------------------------------- | ---------------------------------------- | ---------------------------------------------- |
+| PSP → Payment App (e.g. Stripe → Saleor Stripe App)               | Configured in Payment App / Saleor Cloud | Payment App env in Saleor — **not** storefront |
+| Saleor → your storefront (optional: `ORDER_CREATED`, fulfillment) | `POST /api/webhooks/saleor`              | `SALEOR_WEBHOOK_SECRET` (server-only)          |
 
 Animal Garage does not need PSP webhook endpoints on Netlify unless you build a custom Payment App.
 
@@ -110,26 +110,26 @@ See [`.env.example`](../../.env.example). Summary:
 
 ### Public (browser-safe)
 
-| Variable | Role |
-| -------- | ---- |
+| Variable                | Role                                                                                                         |
+| ----------------------- | ------------------------------------------------------------------------------------------------------------ |
 | `PUBLIC_SALEOR_API_URL` | Saleor GraphQL endpoint — used for catalog reads; checkout mutations should be **proxied** through SvelteKit |
 
 ### Server-only (Netlify: scoped to builds + functions, never `PUBLIC_`)
 
-| Variable | Required for payments | Role |
-| -------- | --------------------- | ---- |
-| `SALEOR_CHANNEL` | Yes | Channel slug; must match dashboard channel with payment app enabled |
-| `SALEOR_APP_TOKEN` | Optional | Bearer token if your Saleor instance requires app auth for checkout mutations |
-| `SALEOR_WEBHOOK_SECRET` | Optional | Verify `Saleor-Signature` on incoming Saleor webhooks to `/api/webhooks/saleor` |
+| Variable                | Required for payments | Role                                                                            |
+| ----------------------- | --------------------- | ------------------------------------------------------------------------------- |
+| `SALEOR_CHANNEL`        | Yes                   | Channel slug; must match dashboard channel with payment app enabled             |
+| `SALEOR_APP_TOKEN`      | Optional              | Bearer token if your Saleor instance requires app auth for checkout mutations   |
+| `SALEOR_WEBHOOK_SECRET` | Optional              | Verify `Saleor-Signature` on incoming Saleor webhooks to `/api/webhooks/saleor` |
 
 ### Must **not** appear in storefront env
 
-| Secret | Where it belongs |
-| ------ | ---------------- |
+| Secret                                        | Where it belongs                        |
+| --------------------------------------------- | --------------------------------------- |
 | Stripe **secret** key, webhook signing secret | Saleor Stripe Payment App configuration |
-| Adyen API key, HMAC key | Saleor Adyen Payment App configuration |
-| Payment App manifest signing secret | Saleor App deployment |
-| `SALEOR_APP_TOKEN` (if used) | Server-only — never `PUBLIC_*` |
+| Adyen API key, HMAC key                       | Saleor Adyen Payment App configuration  |
+| Payment App manifest signing secret           | Saleor App deployment                   |
+| `SALEOR_APP_TOKEN` (if used)                  | Server-only — never `PUBLIC_*`          |
 
 Stripe **publishable** key is returned by `paymentGatewayInitialize` at runtime — do not hardcode in `.env` unless you have a single-gateway static setup (not recommended).
 
@@ -149,11 +149,11 @@ Stripe **publishable** key is returned by `paymentGatewayInitialize` at runtime 
 
 ## Ops gate vs code complete
 
-| Layer | Status | Notes |
-| ----- | ------ | ----- |
-| **Code** | Complete | Shipping mutations, payment proxies, Stripe Elements, `checkoutComplete`, structured `PAYMENT_GATEWAY_UNAVAILABLE` + `PAYMENT_APP_OPS_HINT` when no Payment App |
-| **Ops** | Pending | Enable Stripe Payment App on Saleor channel — **no storefront Stripe secret or publishable env vars** |
-| **Verify** | Ops-only | `npm run test:readiness` → `saleor-checkout`; manual test card → order in Dashboard |
+| Layer      | Status   | Notes                                                                                                                                                           |
+| ---------- | -------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Code**   | Complete | Shipping mutations, payment proxies, Stripe Elements, `checkoutComplete`, structured `PAYMENT_GATEWAY_UNAVAILABLE` + `PAYMENT_APP_OPS_HINT` when no Payment App |
+| **Ops**    | Pending  | Enable Stripe Payment App on Saleor channel — **no storefront Stripe secret or publishable env vars**                                                           |
+| **Verify** | Ops-only | `npm run test:readiness` → `saleor-checkout`; manual test card → order in Dashboard                                                                             |
 
 ---
 
@@ -172,13 +172,13 @@ For Svelte (not React), use `@stripe/stripe-js` directly instead of `@stripe/rea
 
 ## Implementation phases (aligned with AUDIT-REMEDIATION)
 
-| Phase | AUDIT ID | Work | Owner |
-| ----- | -------- | ---- | ----- |
-| **P0** | AUD-P0-004 | `PUBLIC_SALEOR_API_URL` + `SALEOR_CHANNEL` on Netlify; payment app installed on channel | ops |
-| **P1** | AUD-P1-001 | Shipping address/method mutations; payment proxy routes; `/checkout` UI; `checkoutComplete` | saleor / code |
-| **P1** | AUD-P1-002 | Cart line PATCH/DELETE (largely wired — verify E2E) | saleor |
-| **P2** | — | `/api/webhooks/saleor` `ORDER_CREATED` mirror | code — **done** (`7649a9e`) |
-| **P2** | — | Automatic checkout completion channel setting + storefront handling deleted checkout | code |
+| Phase  | AUDIT ID   | Work                                                                                        | Owner                       |
+| ------ | ---------- | ------------------------------------------------------------------------------------------- | --------------------------- |
+| **P0** | AUD-P0-004 | `PUBLIC_SALEOR_API_URL` + `SALEOR_CHANNEL` on Netlify; payment app installed on channel     | ops                         |
+| **P1** | AUD-P1-001 | Shipping address/method mutations; payment proxy routes; `/checkout` UI; `checkoutComplete` | saleor / code               |
+| **P1** | AUD-P1-002 | Cart line PATCH/DELETE (largely wired — verify E2E)                                         | saleor                      |
+| **P2** | —          | `/api/webhooks/saleor` `ORDER_CREATED` mirror                                               | code — **done** (`7649a9e`) |
+| **P2** | —          | Automatic checkout completion channel setting + storefront handling deleted checkout        | code                        |
 
 See [AUDIT-REMEDIATION.md](../plans/AUDIT-REMEDIATION.md) and [market-readiness.md](../plans/active/market-readiness.md) Phase 2.
 
@@ -186,17 +186,17 @@ See [AUDIT-REMEDIATION.md](../plans/AUDIT-REMEDIATION.md) and [market-readiness.
 
 ## Codebase status (Animal Garage)
 
-| Area | File | Status |
-| ---- | ---- | ------ |
-| Checkout create / add / update / delete lines | `checkout.ts`, `cart/checkout/+server.ts` | Wired |
-| Promo codes | `checkout.ts`, `cart/checkout/promo/+server.ts` | Wired |
-| Shipping address / methods | `checkout-queries.ts`, `checkout.ts`, `routes/checkout/shipping/` | Wired |
-| Payment gateway init / transactions | `checkout-queries.ts`, `checkout.ts`, `routes/checkout/payment/` | Wired (proxy; needs Payment App) |
-| `checkoutComplete` | `checkout-queries.ts`, `checkout.ts`, `routes/checkout/complete/` | Wired |
-| Checkout UI | `src/routes/checkout/+page.svelte` | Wired — Stripe Elements when Payment App on channel; pay gated on shipping + gateway init |
-| Payment proxy | `src/routes/checkout/payment/initialize`, `process`, `complete` | Wired — 501 when Saleor off; 502 when Payment App missing; GET `/payment/complete` for 3DS return |
-| Saleor webhooks | `src/routes/api/webhooks/saleor/+server.ts` | Wired — ORDER_CREATED + fulfillment mirror with HMAC when secret set |
-| GraphQL client auth | `client.ts` | No `SALEOR_APP_TOKEN` header yet |
+| Area                                          | File                                                              | Status                                                                                            |
+| --------------------------------------------- | ----------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
+| Checkout create / add / update / delete lines | `checkout.ts`, `cart/checkout/+server.ts`                         | Wired                                                                                             |
+| Promo codes                                   | `checkout.ts`, `cart/checkout/promo/+server.ts`                   | Wired                                                                                             |
+| Shipping address / methods                    | `checkout-queries.ts`, `checkout.ts`, `routes/checkout/shipping/` | Wired                                                                                             |
+| Payment gateway init / transactions           | `checkout-queries.ts`, `checkout.ts`, `routes/checkout/payment/`  | Wired (proxy; needs Payment App)                                                                  |
+| `checkoutComplete`                            | `checkout-queries.ts`, `checkout.ts`, `routes/checkout/complete/` | Wired                                                                                             |
+| Checkout UI                                   | `src/routes/checkout/+page.svelte`                                | Wired — Stripe Elements when Payment App on channel; pay gated on shipping + gateway init         |
+| Payment proxy                                 | `src/routes/checkout/payment/initialize`, `process`, `complete`   | Wired — 501 when Saleor off; 502 when Payment App missing; GET `/payment/complete` for 3DS return |
+| Saleor webhooks                               | `src/routes/api/webhooks/saleor/+server.ts`                       | Wired — ORDER_CREATED + fulfillment mirror with HMAC when secret set                              |
+| GraphQL client auth                           | `client.ts`                                                       | No `SALEOR_APP_TOKEN` header yet                                                                  |
 
 Uncomment `@saleor-migration` blocks when implementing each step — do not delete during polish sweeps.
 
@@ -217,15 +217,15 @@ When the Payment App is missing, `/checkout` shows a structured ops hint (`PAYME
 
 ## Suggested API routes (future)
 
-| Route | Method | Role |
-| ----- | ------ | ---- |
-| `/cart/checkout` | POST/PATCH/DELETE | Lines (exists) |
-| `/checkout/shipping` | POST | Address + delivery method update |
-| `/checkout/payment/initialize` | POST | `paymentGatewayInitialize` (+ optional `transactionInitialize`) |
-| `/checkout/payment/process` | POST | `transactionProcess` |
-| `/checkout/payment/complete` | POST | `checkoutComplete` + clear `ag-checkout-id` |
-| `/checkout/complete` | POST | Alias of payment complete |
-| `/api/webhooks/saleor` | POST | Optional Saleor → storefront events |
+| Route                          | Method            | Role                                                            |
+| ------------------------------ | ----------------- | --------------------------------------------------------------- |
+| `/cart/checkout`               | POST/PATCH/DELETE | Lines (exists)                                                  |
+| `/checkout/shipping`           | POST              | Address + delivery method update                                |
+| `/checkout/payment/initialize` | POST              | `paymentGatewayInitialize` (+ optional `transactionInitialize`) |
+| `/checkout/payment/process`    | POST              | `transactionProcess`                                            |
+| `/checkout/payment/complete`   | POST              | `checkoutComplete` + clear `ag-checkout-id`                     |
+| `/checkout/complete`           | POST              | Alias of payment complete                                       |
+| `/api/webhooks/saleor`         | POST              | Optional Saleor → storefront events                             |
 
 ---
 

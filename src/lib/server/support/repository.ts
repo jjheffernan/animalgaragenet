@@ -93,9 +93,7 @@ export async function createBugReport(input: BugReportInput): Promise<BugReport 
 export async function listBugReports(limit = 50): Promise<BugReport[]> {
 	const admin = createAdminClient();
 	if (!admin) {
-		return [...mockStore]
-			.sort((a, b) => b.createdAt.localeCompare(a.createdAt))
-			.slice(0, limit);
+		return [...mockStore].sort((a, b) => b.createdAt.localeCompare(a.createdAt)).slice(0, limit);
 	}
 
 	const { data, error } = await admin

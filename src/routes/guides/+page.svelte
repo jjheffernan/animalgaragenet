@@ -31,13 +31,18 @@
 	}
 
 	const topicOptions = $derived(
-		data.topics.length > 0 ? [{ slug: 'all', label: 'ALL' } as GuideFilterOption, ...data.topics] : []
+		data.topics.length > 0
+			? [{ slug: 'all', label: 'ALL' } as GuideFilterOption, ...data.topics]
+			: []
 	);
 
 	const sectionTitle = $derived(
 		data.category.slug === 'all' && data.topic.slug === 'all'
 			? 'All Guides'
-			: [data.category.slug !== 'all' ? data.category.label : null, data.topic.slug !== 'all' ? data.topic.label : null]
+			: [
+					data.category.slug !== 'all' ? data.category.label : null,
+					data.topic.slug !== 'all' ? data.topic.label : null
+				]
 					.filter(Boolean)
 					.join(' · ') || 'All Guides'
 	);

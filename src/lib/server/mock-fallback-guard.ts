@@ -15,8 +15,7 @@ export function guardProductionMockFallback(
 	if (!isProductionSiteUrl()) return;
 
 	if (opts.attemptFailed) {
-		const message =
-			opts.error instanceof Error ? opts.error.message : opts.attemptFailedMessage;
+		const message = opts.error instanceof Error ? opts.error.message : opts.attemptFailedMessage;
 		throw new ErrorClass(message);
 	}
 

@@ -1,10 +1,7 @@
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
-import {
-	PROFILE_SIGNUP_COLUMNS,
-	buildProfileSignupPayload
-} from '$lib/server/profiles/signup';
+import { PROFILE_SIGNUP_COLUMNS, buildProfileSignupPayload } from '$lib/server/profiles/signup';
 
 const VALID_UUID = '550e8400-e29b-41d4-a716-446655440000';
 

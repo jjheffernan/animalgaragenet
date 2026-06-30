@@ -2,8 +2,7 @@ import { json } from '@sveltejs/kit';
 import { checkRateLimit } from '$lib/server/rate-limit';
 
 export type RateLimitedJsonResult =
-	| { ok: true; body: Record<string, unknown> }
-	| { ok: false; response: Response };
+	{ ok: true; body: Record<string, unknown> } | { ok: false; response: Response };
 
 /** Shared rate-limit + JSON parse for public POST API routes. */
 export async function parseRateLimitedJsonPost(

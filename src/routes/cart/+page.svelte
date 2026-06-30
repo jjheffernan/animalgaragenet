@@ -33,9 +33,7 @@
 	const subtotal = $derived(cart.subtotal);
 	const subtotalCurrency = $derived(cart.subtotalCurrency);
 	const upsells = $derived(cart.getUpsellSuggestions(4));
-	const freeShippingRemaining = $derived(
-		Math.max(0, data.freeShippingThreshold - subtotal)
-	);
+	const freeShippingRemaining = $derived(Math.max(0, data.freeShippingThreshold - subtotal));
 	const freeShippingQualified = $derived(subtotal >= data.freeShippingThreshold);
 
 	function updateQty(productId: string, variantId: string, delta: number) {

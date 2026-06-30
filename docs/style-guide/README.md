@@ -49,13 +49,13 @@ Data flow, types, i18n, and server/client boundaries.
 
 Infrastructure, clients, workflow, and deployment.
 
-| Section                                             | Description                             |
-| --------------------------------------------------- | --------------------------------------- |
-| [Supabase](./backend-ops/supabase.md)               | Client setup and planned usage          |
-| [Saleor client](./backend-ops/saleor-client.md)     | GraphQL client structure                |
-| [CDN & media](./backend-ops/cdn-media.md)           | S3/CloudFront env vars and URL patterns |
-| [Branch workflow](./backend-ops/branch-workflow.md) | feature → dev → main                    |
-| [Local dev](./backend-ops/local-dev.md)             | Setup, build, lint commands             |
+| Section                                             | Description                                                             |
+| --------------------------------------------------- | ----------------------------------------------------------------------- |
+| [Supabase](./backend-ops/supabase.md)               | Client setup and planned usage                                          |
+| [Saleor client](./backend-ops/saleor-client.md)     | GraphQL client structure                                                |
+| [CDN & media](./backend-ops/cdn-media.md)           | S3/CloudFront env vars and URL patterns                                 |
+| [Branch workflow](./backend-ops/branch-workflow.md) | feature → dev → main                                                    |
+| [Local dev](./backend-ops/local-dev.md)             | Setup, build, lint commands                                             |
 | [Deployment](./backend-ops/deployment.md)           | Build adapter + CI summary → [runbook](../infrastructure/deployment.md) |
 
 ## Related docs

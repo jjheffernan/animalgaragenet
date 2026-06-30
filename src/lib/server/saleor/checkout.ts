@@ -129,9 +129,7 @@ function mapCheckoutShipping(node: SaleorCheckoutShippingNode): CheckoutShipping
 	return {
 		id: node.id,
 		subtotal: { amount: subtotalAmount, currency: total.currency },
-		shippingPrice: shipping
-			? { amount: shipping.amount, currency: shipping.currency }
-			: null,
+		shippingPrice: shipping ? { amount: shipping.amount, currency: shipping.currency } : null,
 		total: { amount: total.amount, currency: total.currency },
 		shippingMethods,
 		selectedShippingMethodId: node.deliveryMethod?.id ?? null,

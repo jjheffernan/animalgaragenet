@@ -80,7 +80,6 @@
 		}
 		connections = result.connections;
 	}
-
 </script>
 
 <svelte:head>

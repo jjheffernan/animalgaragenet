@@ -6,9 +6,9 @@ Public media delivery via CDN base URL. v1 uses Supabase Storage; Phase 2 adds S
 
 ## Environment variables
 
-| Category              | Scope  | Notes                  |
-| --------------------- | ------ | ---------------------- |
-| `PUBLIC_CDN_BASE_URL` | Public | CDN base URL for media reads |
+| Category              | Scope  | Notes                                 |
+| --------------------- | ------ | ------------------------------------- |
+| `PUBLIC_CDN_BASE_URL` | Public | CDN base URL for media reads          |
 | `S3_BUCKET`, `AWS_*`  | Server | Presigned upload (wired when env set) |
 
 ## Read URLs (wired)

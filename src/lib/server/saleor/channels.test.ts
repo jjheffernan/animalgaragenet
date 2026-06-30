@@ -92,7 +92,9 @@ describe('getChannelForLocale', () => {
 		vi.mocked(getSaleorChannel).mockReturnValue('default-channel');
 		vi.mocked(saleorFetch).mockResolvedValue({
 			data: {
-				channels: [{ slug: 'default-channel', name: 'Default', currencyCode: 'USD', isActive: true }]
+				channels: [
+					{ slug: 'default-channel', name: 'Default', currencyCode: 'USD', isActive: true }
+				]
 			}
 		});
 

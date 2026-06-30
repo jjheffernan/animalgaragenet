@@ -40,7 +40,10 @@ export const POST: RequestHandler = async ({ request, cookies }) => {
 	}
 
 	if (typeof body.amount !== 'number' || body.amount <= 0) {
-		return json({ error: 'amount is required to start a transaction', code: 'INVALID_AMOUNT' }, { status: 400 });
+		return json(
+			{ error: 'amount is required to start a transaction', code: 'INVALID_AMOUNT' },
+			{ status: 400 }
+		);
 	}
 
 	const idempotencyKey = crypto.randomUUID();

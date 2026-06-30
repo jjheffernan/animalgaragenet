@@ -12,25 +12,25 @@ Remaining gaps block production checkout: **Payment App on channel** (ops), **co
 
 ## Wired vs mock-only inventory
 
-| Surface                    | Swap point / route                                            | Saleor when env set | Mock fallback | Notes                                                                      |
-| -------------------------- | ------------------------------------------------------------- | ------------------- | ------------- | -------------------------------------------------------------------------- |
-| Shop list                  | `getShopProducts()` → `shop/+page.server.ts`                  | ✅                  | ✅            | Category filter via `shop-filters.ts` (Saleor taxonomy when env set)       |
-| Shop detail                | `getShopProductBySlug()` → `shop/[slug]/+page.server.ts`      | ✅                  | ✅            | Related products, linked builds still mock                                 |
-| Gift cards                 | `getGiftCardProducts()` → `gift-cards/+page.server.ts`        | ✅                  | ✅            | Filters by metadata `productType`, category slug, slug prefix              |
-| Deals products             | `getDealProducts()` → `deals/+page.server.ts`                 | ✅                  | ✅            | Deal promo banners (`getActiveDeals()`) still mock                         |
-| Parts hub                  | `getPartsProducts()` → `parts/+page.server.ts`                | ✅                  | ✅            | Nav taxonomy (`mockPartCategories`) stays mock                             |
-| Parts category             | `getPartsByCategory()` → `parts/[category]/+page.server.ts`   | ✅                  | ✅            | Filters Saleor list by `category.slug`                                     |
-| Part detail                | `getPartBySlug()` → `parts/[category]/[slug]/+page.server.ts` | ✅                  | ✅            | Related products still mock                                                |
-| Collections list           | `getCollections()` → `+page.server.ts`, `+layout.server.ts`   | ✅                  | ✅            | `products[]` on each collection empty (metadata only)                      |
-| Staff picks                | `getStaffPickProducts()` → `+page.server.ts`                  | ✅                  | ✅            | Filters Saleor by `tags` includes `staff-pick`                             |
-| Clearance                  | `getClearanceProducts()` → `+page.server.ts`                  | ✅                  | ✅            | Filters Saleor by `tags` includes `clearance`                              |
-| Catalog search (merch)     | `searchCatalog()` → `api/catalog/search`                      | ✅                  | ✅            | Client-side filter on fetched list (first 100)                             |
-| Search parts/builds/guides | `searchCatalog()`                                             | ❌                  | ✅            | Content not in Saleor — always mock                                        |
-| Cart display               | `getCheckoutLines()` → `cart/+page.server.ts`                 | ✅                  | localStorage  | Read-only when checkout cookie present                                     |
-| Cart add line              | `POST /cart/checkout`                                         | ✅                  | localStorage  | `ProductCard` passes default `variantId` when Saleor enabled               |
-| Cart remove/qty            | `cart.svelte.ts`, `/cart/checkout` PATCH/DELETE               | ✅                  | ✅            | `checkoutLinesUpdate` / `checkoutLinesDelete` when Saleor enabled          |
-| Checkout page              | `/checkout`                                                   | ✅ partial          | placeholder   | UI + payment proxies wired; pay gated on Payment App                       |
-| Homepage other             | videos, UGC, builds, brands, campaigns                        | ❌                  | ✅            | Not in Saleor scope                                                        |
+| Surface                    | Swap point / route                                            | Saleor when env set | Mock fallback | Notes                                                                |
+| -------------------------- | ------------------------------------------------------------- | ------------------- | ------------- | -------------------------------------------------------------------- |
+| Shop list                  | `getShopProducts()` → `shop/+page.server.ts`                  | ✅                  | ✅            | Category filter via `shop-filters.ts` (Saleor taxonomy when env set) |
+| Shop detail                | `getShopProductBySlug()` → `shop/[slug]/+page.server.ts`      | ✅                  | ✅            | Related products, linked builds still mock                           |
+| Gift cards                 | `getGiftCardProducts()` → `gift-cards/+page.server.ts`        | ✅                  | ✅            | Filters by metadata `productType`, category slug, slug prefix        |
+| Deals products             | `getDealProducts()` → `deals/+page.server.ts`                 | ✅                  | ✅            | Deal promo banners (`getActiveDeals()`) still mock                   |
+| Parts hub                  | `getPartsProducts()` → `parts/+page.server.ts`                | ✅                  | ✅            | Nav taxonomy (`mockPartCategories`) stays mock                       |
+| Parts category             | `getPartsByCategory()` → `parts/[category]/+page.server.ts`   | ✅                  | ✅            | Filters Saleor list by `category.slug`                               |
+| Part detail                | `getPartBySlug()` → `parts/[category]/[slug]/+page.server.ts` | ✅                  | ✅            | Related products still mock                                          |
+| Collections list           | `getCollections()` → `+page.server.ts`, `+layout.server.ts`   | ✅                  | ✅            | `products[]` on each collection empty (metadata only)                |
+| Staff picks                | `getStaffPickProducts()` → `+page.server.ts`                  | ✅                  | ✅            | Filters Saleor by `tags` includes `staff-pick`                       |
+| Clearance                  | `getClearanceProducts()` → `+page.server.ts`                  | ✅                  | ✅            | Filters Saleor by `tags` includes `clearance`                        |
+| Catalog search (merch)     | `searchCatalog()` → `api/catalog/search`                      | ✅                  | ✅            | Client-side filter on fetched list (first 100)                       |
+| Search parts/builds/guides | `searchCatalog()`                                             | ❌                  | ✅            | Content not in Saleor — always mock                                  |
+| Cart display               | `getCheckoutLines()` → `cart/+page.server.ts`                 | ✅                  | localStorage  | Read-only when checkout cookie present                               |
+| Cart add line              | `POST /cart/checkout`                                         | ✅                  | localStorage  | `ProductCard` passes default `variantId` when Saleor enabled         |
+| Cart remove/qty            | `cart.svelte.ts`, `/cart/checkout` PATCH/DELETE               | ✅                  | ✅            | `checkoutLinesUpdate` / `checkoutLinesDelete` when Saleor enabled    |
+| Checkout page              | `/checkout`                                                   | ✅ partial          | placeholder   | UI + payment proxies wired; pay gated on Payment App                 |
+| Homepage other             | videos, UGC, builds, brands, campaigns                        | ❌                  | ✅            | Not in Saleor scope                                                  |
 
 ---
 
@@ -99,13 +99,13 @@ Metadata keys (`productType`, `fitment`, `brand`, `tags`, `compareAtPrice`) pars
 
 ### Cart & checkout (Phase 2)
 
-| Consumer          | File                                  | Status                                      |
-| ----------------- | ------------------------------------- | ------------------------------------------- |
+| Consumer          | File                                  | Status                                                 |
+| ----------------- | ------------------------------------- | ------------------------------------------------------ |
 | Cart store        | `src/lib/stores/cart.svelte.ts`       | ✅ add/remove/qty via POST/PATCH/DELETE when Saleor on |
-| Checkout cookie   | `src/lib/server/saleor/checkout.ts`   | ✅ `ag-checkout-id` helpers                 |
-| Cart load         | `src/routes/cart/+page.server.ts`     | ✅ `getCheckoutLines()` when cookie present |
-| Add to cart       | `src/routes/cart/checkout/+server.ts` | ✅ POST `{ variantId, quantity }`           |
-| Checkout complete | `src/routes/checkout/`                | ✅ Partial — proxies + UI; Payment App ops  |
+| Checkout cookie   | `src/lib/server/saleor/checkout.ts`   | ✅ `ag-checkout-id` helpers                            |
+| Cart load         | `src/routes/cart/+page.server.ts`     | ✅ `getCheckoutLines()` when cookie present            |
+| Add to cart       | `src/routes/cart/checkout/+server.ts` | ✅ POST `{ variantId, quantity }`                      |
+| Checkout complete | `src/routes/checkout/`                | ✅ Partial — proxies + UI; Payment App ops             |
 
 **Cart scaffold behavior:**
 

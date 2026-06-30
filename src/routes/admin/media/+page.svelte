@@ -59,7 +59,9 @@
 			};
 
 			if (!slotResponse.ok) {
-				uploadStatus = slot.hint ? `${slot.error} ${slot.hint}` : (slot.error ?? 'Upload slot failed.');
+				uploadStatus = slot.hint
+					? `${slot.error} ${slot.hint}`
+					: (slot.error ?? 'Upload slot failed.');
 				return;
 			}
 
@@ -177,7 +179,9 @@
 		</div>
 		{#if form?.cleanup}
 			<p class="mt-3 text-sm text-zinc-400">
-				Removed {form.cleanup.deleted} abandoned pending upload{form.cleanup.deleted === 1 ? '' : 's'}.
+				Removed {form.cleanup.deleted} abandoned pending upload{form.cleanup.deleted === 1
+					? ''
+					: 's'}.
 			</p>
 		{/if}
 		{#if !data.ugcConfigured}
@@ -193,13 +197,17 @@
 						{#if asset.previewUrl}
 							<img src={asset.previewUrl} alt="" class="aspect-video w-full object-cover" />
 						{:else}
-							<div class="flex aspect-video items-center justify-center bg-zinc-950 text-xs text-zinc-600">
+							<div
+								class="flex aspect-video items-center justify-center bg-zinc-950 text-xs text-zinc-600"
+							>
 								No preview
 							</div>
 						{/if}
 						<div class="space-y-2 p-4">
 							<div class="flex flex-wrap items-center gap-2">
-								<span class={asset.status === 'ready' ? adminBadgeOn : adminBadgeOff}>{asset.status}</span>
+								<span class={asset.status === 'ready' ? adminBadgeOn : adminBadgeOff}
+									>{asset.status}</span
+								>
 								<span class="text-xs text-zinc-500">{formatBytes(asset.byteSize)}</span>
 							</div>
 							<p class="truncate font-mono text-[10px] text-zinc-600" title={asset.storagePath}>
@@ -207,7 +215,10 @@
 							</p>
 							<form method="POST" action="?/deleteAsset" use:enhance class="pt-1">
 								<input type="hidden" name="id" value={asset.id} />
-								<button type="submit" class="text-xs font-bold uppercase tracking-wider text-red-400 hover:text-red-300">
+								<button
+									type="submit"
+									class="text-xs font-bold uppercase tracking-wider text-red-400 hover:text-red-300"
+								>
 									Delete
 								</button>
 							</form>

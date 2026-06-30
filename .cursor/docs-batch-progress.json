@@ -1,62 +1,62 @@
 {
-  "batchesComplete": [
-    "root",
-    "archive",
-    "audits-auth-commerce-content",
-    "infrastructure-integrations-meta",
-    "plans",
-    "testing",
-    "style-guide-sample",
-    "wiki-export"
-  ],
-  "todos": [
-    {
-      "id": "DOC-021-022",
-      "title": "Production auth guards (supabaseReady UI + refuse mock ag-session)",
-      "status": "done",
-      "subagent": "541544a9-b022-4114-a2bc-7f3f21231dbc"
-    },
-    {
-      "id": "DOC-026",
-      "title": "Wire homepage UGC from listFeaturedTestimonials",
-      "status": "done",
-      "subagent": "cfe6daea-e4fb-4a8d-b8ac-9b3df0c9c2b2"
-    },
-    {
-      "id": "DOC-001-003-docs",
-      "title": "Public-safe scrub, dedupe PUBLIC-SAFE.md, README link",
-      "status": "done",
-      "subagent": "ff59c8cc-4e89-4f67-b82d-0a694085d9c5"
-    },
-    {
-      "id": "DOC-025",
-      "title": "Media uploads Phase 1 (Supabase Storage + API)",
-      "status": "pending",
-      "subagent": "media-uploads"
-    },
-    {
-      "id": "DOC-037",
-      "title": "Saleor checkout qty/remove/shipping/complete",
-      "status": "pending",
-      "subagent": "saleor-redeem"
-    },
-    {
-      "id": "DOC-036",
-      "title": "CI Prettier fix (~221 files)",
-      "status": "pending",
-      "subagent": "polish-sweep"
-    },
-    {
-      "id": "DOC-039",
-      "title": "/builds page from build_submissions table",
-      "status": "pending",
-      "subagent": null
-    },
-    {
-      "id": "DOC-023-024",
-      "title": "Netlify env + Saleor catalog ops",
-      "status": "pending",
-      "subagent": null
-    }
-  ]
+	"batchesComplete": [
+		"root",
+		"archive",
+		"audits-auth-commerce-content",
+		"infrastructure-integrations-meta",
+		"plans",
+		"testing",
+		"style-guide-sample",
+		"wiki-export"
+	],
+	"todos": [
+		{
+			"id": "DOC-021-022",
+			"title": "Production auth guards (supabaseReady UI + refuse mock ag-session)",
+			"status": "done",
+			"subagent": "541544a9-b022-4114-a2bc-7f3f21231dbc"
+		},
+		{
+			"id": "DOC-026",
+			"title": "Wire homepage UGC from listFeaturedTestimonials",
+			"status": "done",
+			"subagent": "cfe6daea-e4fb-4a8d-b8ac-9b3df0c9c2b2"
+		},
+		{
+			"id": "DOC-001-003-docs",
+			"title": "Public-safe scrub, dedupe PUBLIC-SAFE.md, README link",
+			"status": "done",
+			"subagent": "ff59c8cc-4e89-4f67-b82d-0a694085d9c5"
+		},
+		{
+			"id": "DOC-025",
+			"title": "Media uploads Phase 1 (Supabase Storage + API)",
+			"status": "pending",
+			"subagent": "media-uploads"
+		},
+		{
+			"id": "DOC-037",
+			"title": "Saleor checkout qty/remove/shipping/complete",
+			"status": "pending",
+			"subagent": "saleor-redeem"
+		},
+		{
+			"id": "DOC-036",
+			"title": "CI Prettier fix (~221 files)",
+			"status": "pending",
+			"subagent": "polish-sweep"
+		},
+		{
+			"id": "DOC-039",
+			"title": "/builds page from build_submissions table",
+			"status": "pending",
+			"subagent": null
+		},
+		{
+			"id": "DOC-023-024",
+			"title": "Netlify env + Saleor catalog ops",
+			"status": "pending",
+			"subagent": null
+		}
+	]
 }

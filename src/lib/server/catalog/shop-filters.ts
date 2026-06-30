@@ -83,16 +83,13 @@ async function fetchSaleorShopFilterOptions(_locale: string): Promise<ShopFilter
 export async function getShopFilterOptions(
 	locale: string = config.defaultLocale
 ): Promise<ShopFilterOptions> {
-	return withSaleorCatalog(
-		async () => {
-			const categories = await fetchSaleorShopFilterOptions(locale);
-			if (categories.length > 1 || isProductionSiteUrl()) {
-				return { categories, source: 'saleor' as const };
-			}
-			return undefined;
-		},
-		mockShopFilterOptions
-	);
+	return withSaleorCatalog(async () => {
+		const categories = await fetchSaleorShopFilterOptions(locale);
+		if (categories.length > 1 || isProductionSiteUrl()) {
+			return { categories, source: 'saleor' as const };
+		}
+		return undefined;
+	}, mockShopFilterOptions);
 }
 
 /** Match URL `?category=` against filter options (slug, id, or label — case-insensitive). */

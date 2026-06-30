@@ -6,9 +6,7 @@ vi.mock('$lib/server/supabase/admin', () => ({
 }));
 
 import { createAdminClient } from '$lib/server/supabase/admin';
-import {
-	_resetMockStoreForTests
-} from '$lib/server/featured-sections/repository';
+import { _resetMockStoreForTests } from '$lib/server/featured-sections/repository';
 import { actions } from '../../src/routes/admin/featured/+page.server';
 import { load as homepageLoad } from '../../src/routes/+page.server';
 import type { RequestEvent } from '../../src/routes/admin/featured/$types';

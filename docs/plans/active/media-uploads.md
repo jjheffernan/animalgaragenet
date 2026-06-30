@@ -6,13 +6,13 @@ User-generated media for reviews (testimonials), build logs, and admin `/admin/m
 
 ## Current state
 
-| Area                                          | Status                                                                        |
-| --------------------------------------------- | ----------------------------------------------------------------------------- |
+| Area                                          | Status                                                                           |
+| --------------------------------------------- | -------------------------------------------------------------------------------- |
 | `/admin/media`                                | UGC `media_assets` grid, delete, stale-pending purge; CDN upload when S3 env set |
-| `testimonials` table                          | Text + `testimonial_media` join (migration `20250630120000_media_assets.sql`) |
-| `/api/media/upload-slot`, `/confirm`, `/[id]` | **Done** — requires migration applied + `ugc` bucket                          |
-| Review photo upload UI                        | **Done** — loyalty form, homepage cards, `/media?tab=photos` gallery          |
-| `.env.example`                                | S3 + CloudFront vars stubbed for future CDN                                   |
+| `testimonials` table                          | Text + `testimonial_media` join (migration `20250630120000_media_assets.sql`)    |
+| `/api/media/upload-slot`, `/confirm`, `/[id]` | **Done** — requires migration applied + `ugc` bucket                             |
+| Review photo upload UI                        | **Done** — loyalty form, homepage cards, `/media?tab=photos` gallery             |
+| `.env.example`                                | S3 + CloudFront vars stubbed for future CDN                                      |
 
 ## Setup (ops — see [BLOCKERS.md](../../BLOCKERS.md))
 

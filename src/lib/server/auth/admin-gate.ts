@@ -36,8 +36,5 @@ export function resolveAdminGateFromLocals(locals: AdminGateLocals): AdminGateRe
 /** Returns a 403 JSON response when gate !== allow; null when allowed. */
 export function adminGateJsonResponse(gate: AdminGateResult): Response | null {
 	if (gate === 'allow') return null;
-	return json(
-		{ error: gate === 'sign-in' ? 'Sign in required.' : 'Forbidden.' },
-		{ status: 403 }
-	);
+	return json({ error: gate === 'sign-in' ? 'Sign in required.' : 'Forbidden.' }, { status: 403 });
 }

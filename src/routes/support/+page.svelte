@@ -3,9 +3,21 @@
 	import AnimatedReveal from '$lib/components/shared/AnimatedReveal.svelte';
 
 	const supportLinks = [
-		{ label: 'Report a Bug', href: '/support/report-bug', description: 'Something broken on the site?' },
-		{ label: 'Contact Us', href: '/contact', description: 'Orders, fitment, and general questions' },
-		{ label: 'Order Status', href: '/account/orders', description: 'Track shipments and order history' },
+		{
+			label: 'Report a Bug',
+			href: '/support/report-bug',
+			description: 'Something broken on the site?'
+		},
+		{
+			label: 'Contact Us',
+			href: '/contact',
+			description: 'Orders, fitment, and general questions'
+		},
+		{
+			label: 'Order Status',
+			href: '/account/orders',
+			description: 'Track shipments and order history'
+		},
 		{ label: 'Refund Policy', href: '/policies/refunds', description: 'Returns and exchanges' }
 	] as const;
 </script>
@@ -24,10 +36,7 @@
 		<ul class="mt-10 divide-y divide-zinc-800 rounded-sm border border-zinc-800">
 			{#each supportLinks as link (link.href)}
 				<li>
-					<a
-						href={resolvePath(link.href)}
-						class="block px-5 py-5 transition hover:bg-zinc-900/50"
-					>
+					<a href={resolvePath(link.href)} class="block px-5 py-5 transition hover:bg-zinc-900/50">
 						<p class="font-display text-sm font-bold uppercase tracking-wider text-white">
 							{link.label}
 						</p>

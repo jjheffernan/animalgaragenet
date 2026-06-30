@@ -65,11 +65,11 @@ Project skills are symlinked in this directory and `.cursor/skills/`. Read the r
 
 After `git clone`, several `agents/*` entries are **symlinks to machine-local paths** and may show as broken until Cursor is installed:
 
-| Kind | Examples | Target | Fix |
-| ---- | -------- | ------ | --- |
-| **Repo-owned** | `ponytail`, `caveman` | Real directories in `agents/` | Always works |
-| **Cursor IDE defaults** | `automate`, `babysit`, `sdk`, `review-*`, … | `~/.cursor/skills-cursor/<name>` | Install [Cursor](https://cursor.com); run repair script below |
-| **Plugin cache** | `supabase`, `svelte-code-writer`, `svelte-core-bestpractices` | Cursor plugin cache under `~/.cursor/plugins/` | Enable plugins in `.cursor/settings.json` (`plugins.*.enabled: true`) |
+| Kind                    | Examples                                                      | Target                                         | Fix                                                                   |
+| ----------------------- | ------------------------------------------------------------- | ---------------------------------------------- | --------------------------------------------------------------------- |
+| **Repo-owned**          | `ponytail`, `caveman`                                         | Real directories in `agents/`                  | Always works                                                          |
+| **Cursor IDE defaults** | `automate`, `babysit`, `sdk`, `review-*`, …                   | `~/.cursor/skills-cursor/<name>`               | Install [Cursor](https://cursor.com); run repair script below         |
+| **Plugin cache**        | `supabase`, `svelte-code-writer`, `svelte-core-bestpractices` | Cursor plugin cache under `~/.cursor/plugins/` | Enable plugins in `.cursor/settings.json` (`plugins.*.enabled: true`) |
 
 **Repair symlinks** (safe to re-run):
 

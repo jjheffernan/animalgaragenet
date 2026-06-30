@@ -2,10 +2,7 @@
 	import type { Snippet } from 'svelte';
 	import ListControls from '$lib/components/catalog/ListControls.svelte';
 	import type { ListView, PaginationMeta } from '$lib/pagination';
-	import {
-		listControlsStickyShellClass,
-		listControlsStickyTopClass
-	} from '$lib/ui/catalog-ribbon';
+	import { listControlsStickyShellClass, listControlsStickyTopClass } from '$lib/ui/catalog-ribbon';
 
 	interface Props {
 		pagination: PaginationMeta;
@@ -17,14 +14,7 @@
 		stickyTop?: 'catalog' | 'parts';
 	}
 
-	let {
-		pagination,
-		view,
-		filters,
-		children,
-		class: className = '',
-		stickyTop
-	}: Props = $props();
+	let { pagination, view, filters, children, class: className = '', stickyTop }: Props = $props();
 </script>
 
 <div class={className}>
@@ -45,10 +35,7 @@
 	{@render children()}
 
 	{#if filters}
-		<div
-			class="mt-8 border-t border-zinc-800 pt-6"
-			aria-label="List filters"
-		>
+		<div class="mt-8 border-t border-zinc-800 pt-6" aria-label="List filters">
 			{@render filters()}
 		</div>
 	{/if}

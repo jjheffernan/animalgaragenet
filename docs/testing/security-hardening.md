@@ -62,12 +62,12 @@ Mock promo state is non-sensitive (discount label/percent for dev catalog); http
 
 ## Deferred
 
-| Item                                                         | Reason                                                           |
-| ------------------------------------------------------------ | ---------------------------------------------------------------- |
-| Distributed rate limiting (Redis/Netlify edge)               | In-memory limit is per-instance; sufficient for mock promo abuse |
-| OTP / magic-link rate limits                                 | Auth provider responsibility; not in this pass                   |
-| `contact_submissions` / `wholesale_inquiries` DB persistence | Still stubbed in `submitFormStub`                                |
-| RLS contract integration tests                               | Planned in external-dependencies registry                        |
+| Item                                                         | Reason                                                                                                      |
+| ------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------- |
+| Distributed rate limiting (Redis/Netlify edge)               | In-memory limit is per-instance; sufficient for mock promo abuse                                            |
+| OTP / magic-link rate limits                                 | Auth provider responsibility; not in this pass                                                              |
+| `contact_submissions` / `wholesale_inquiries` DB persistence | Still stubbed in `submitFormStub`                                                                           |
+| RLS contract integration tests                               | Planned in external-dependencies registry                                                                   |
 | `scripts/check-secrets.sh` alignment                         | Documented in [readiness-report.md](./readiness-report.md); run `bash scripts/check-secrets.sh` before push |
 
 Last updated: 2026-07-03
@@ -76,10 +76,10 @@ Last updated: 2026-07-03
 
 Public-safe pass after next-steps / deployment runbook land:
 
-| Fix | Files |
-| --- | ----- |
+| Fix                                                                             | Files                                                                                                         |
+| ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- |
 | Redacted personal fork slug, org-sync secret name, deploy-key fingerprint prose | `infrastructure/deployment.md`, `style-guide/backend-ops/deployment.md`, `STATUS.md`, `next-steps-tracker.md` |
-| Redacted `garage.internal`, `ag-media-dev` bucket literal | `archive/media-cdn-plan.md` |
-| Expanded `SECURITY-PUBLIC.md` pre-PR grep + placeholders | `SECURITY-PUBLIC.md` |
-| Linked `next-steps-tracker.md` from index docs | `README.md`, `plans/README.md`, `AUDIT-REMEDIATION.md` |
-| Maintainer-only infra table | `archive/next-steps-tracker.md` |
+| Redacted `garage.internal`, `ag-media-dev` bucket literal                       | `archive/media-cdn-plan.md`                                                                                   |
+| Expanded `SECURITY-PUBLIC.md` pre-PR grep + placeholders                        | `SECURITY-PUBLIC.md`                                                                                          |
+| Linked `next-steps-tracker.md` from index docs                                  | `README.md`, `plans/README.md`, `AUDIT-REMEDIATION.md`                                                        |
+| Maintainer-only infra table                                                     | `archive/next-steps-tracker.md`                                                                               |

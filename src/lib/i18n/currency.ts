@@ -54,7 +54,7 @@ export function convertMoney(
 	if (!fromRate || !toRate) return amount;
 
 	const usd = amount / fromRate;
-	return roundForCurrency((usd * toRate), to);
+	return roundForCurrency(usd * toRate, to);
 }
 
 export function formatMoney(amount: number, currency: string, locale: string): string {

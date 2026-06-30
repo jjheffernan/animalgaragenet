@@ -258,11 +258,11 @@ s3://<media-bucket>/
 
 ### Environment separation
 
-| Env        | Bucket / prefix                                     | CDN URL                                           |
-| ---------- | --------------------------------------------------- | ------------------------------------------------- |
+| Env        | Bucket / prefix                                                | CDN URL                                           |
+| ---------- | -------------------------------------------------------------- | ------------------------------------------------- |
 | Local dev  | MinIO/Garage Docker `<your-media-bucket-dev>` or prefix `dev/` | `http://localhost:3900` or `http://cdn.localhost` |
-| Staging    | `<media-bucket-staging>`                            | `https://<your-cdn-staging-host>`                 |
-| Production | `<media-bucket-prod>`                               | `https://<your-cdn-host>`                         |
+| Staging    | `<media-bucket-staging>`                                       | `https://<your-cdn-staging-host>`                 |
+| Production | `<media-bucket-prod>`                                          | `https://<your-cdn-host>`                         |
 
 ---
 
@@ -387,15 +387,15 @@ Garage bucket policy: deny public listing; allow read only via CDN origin creden
 
 Extend `.env.example` (names can alias existing AWS vars for compatibility):
 
-| Variable                 | Scope  | Purpose                        |
-| ------------------------ | ------ | ------------------------------ |
-| `PUBLIC_CDN_BASE_URL`    | Public | `https://<your-cdn-host>`      |
+| Variable                 | Scope  | Purpose                                                         |
+| ------------------------ | ------ | --------------------------------------------------------------- |
+| `PUBLIC_CDN_BASE_URL`    | Public | `https://<your-cdn-host>`                                       |
 | `S3_ENDPOINT`            | Server | `http://localhost:3900` (local) or `https://<s3-endpoint-host>` |
-| `S3_ACCESS_KEY_ID`       | Server | Garage key                     |
-| `S3_SECRET_ACCESS_KEY`   | Server | Garage secret                  |
-| `MEDIA_UPLOAD_MAX_BYTES` | Server | default 15728640               |
-| `CLOUDFLARE_ZONE_ID`     | Server | optional purge                 |
-| `CLOUDFLARE_API_TOKEN`   | Server | optional purge                 |
+| `S3_ACCESS_KEY_ID`       | Server | Garage key                                                      |
+| `S3_SECRET_ACCESS_KEY`   | Server | Garage secret                                                   |
+| `MEDIA_UPLOAD_MAX_BYTES` | Server | default 15728640                                                |
+| `CLOUDFLARE_ZONE_ID`     | Server | optional purge                                                  |
+| `CLOUDFLARE_API_TOKEN`   | Server | optional purge                                                  |
 
 ### Helper module (planned)
 

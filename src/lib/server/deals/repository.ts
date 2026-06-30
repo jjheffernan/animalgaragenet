@@ -6,9 +6,7 @@ import type { Campaign, Deal } from '$lib/types/domain';
 const mockStore: Deal[] = [];
 
 function rowToDeal(row: Record<string, unknown>): Deal {
-	const productIds = Array.isArray(row.product_ids)
-		? row.product_ids.map((id) => String(id))
-		: [];
+	const productIds = Array.isArray(row.product_ids) ? row.product_ids.map((id) => String(id)) : [];
 
 	return {
 		id: String(row.id),
@@ -74,10 +72,7 @@ export async function getUpcomingDropCampaign(now = new Date()): Promise<Campaig
 	const deals = await listScheduledDealsRaw(now);
 	const upcoming = deals
 		.filter((deal) => deal.startsAt && new Date(deal.startsAt) > now)
-		.sort(
-			(a, b) =>
-				new Date(a.startsAt ?? 0).getTime() - new Date(b.startsAt ?? 0).getTime()
-		)[0];
+		.sort((a, b) => new Date(a.startsAt ?? 0).getTime() - new Date(b.startsAt ?? 0).getTime())[0];
 
 	if (upcoming) return dealToCampaign(upcoming);
 

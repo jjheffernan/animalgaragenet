@@ -11,7 +11,10 @@ import {
 import { listGuides } from '$lib/server/ghost/posts';
 import { createAdminClient } from '$lib/server/supabase/admin';
 import { enrichTestimonialsWithPhotos } from '$lib/server/media/repository';
-import { getDefaultHeroSection, getHomepageFeaturedSections } from '$lib/server/featured-sections/repository';
+import {
+	getDefaultHeroSection,
+	getHomepageFeaturedSections
+} from '$lib/server/featured-sections/repository';
 import {
 	listApprovedTestimonials,
 	listFeaturedTestimonials
@@ -21,17 +24,25 @@ import { loadHomepageVideos } from '$lib/server/youtube/public';
 import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async () => {
-	const [collections, staffPicks, clearance, guides, approvedTestimonials, featuredSections, videos, activeCampaign] =
-		await Promise.all([
-			getCollections(),
-			getStaffPickProducts(),
-			getClearanceProducts(),
-			listGuides(),
-			listApprovedTestimonials(12),
-			getHomepageFeaturedSections(),
-			loadHomepageVideos(3),
-			getUpcomingDropCampaign()
-		]);
+	const [
+		collections,
+		staffPicks,
+		clearance,
+		guides,
+		approvedTestimonials,
+		featuredSections,
+		videos,
+		activeCampaign
+	] = await Promise.all([
+		getCollections(),
+		getStaffPickProducts(),
+		getClearanceProducts(),
+		listGuides(),
+		listApprovedTestimonials(12),
+		getHomepageFeaturedSections(),
+		loadHomepageVideos(3),
+		getUpcomingDropCampaign()
+	]);
 
 	const [featuredTestimonials, enrichedApproved] = await Promise.all([
 		enrichTestimonialsWithPhotos(await listFeaturedTestimonials(3)),

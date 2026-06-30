@@ -66,9 +66,7 @@ describe('POST /api/admin/media/invalidate', () => {
 	});
 
 	it('rejects path traversal', async () => {
-		const response = await POST(
-			apiEvent({ paths: ['media/admin/../secrets.txt'] }, staffLocals)
-		);
+		const response = await POST(apiEvent({ paths: ['media/admin/../secrets.txt'] }, staffLocals));
 		expect(response.status).toBe(400);
 		expect(invalidateCdnPaths).not.toHaveBeenCalled();
 	});

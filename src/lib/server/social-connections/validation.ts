@@ -14,15 +14,17 @@ export function normalizeHandle(raw: string): string {
 	return raw.trim().replace(/^@+/, '');
 }
 
-export function validateConnectionPutBody(body: ConnectionPutBody): {
-	ok: true;
-	platform: string;
-	action: 'connect' | 'disconnect';
-	handle?: string;
-} | {
-	ok: false;
-	error: string;
-} {
+export function validateConnectionPutBody(body: ConnectionPutBody):
+	| {
+			ok: true;
+			platform: string;
+			action: 'connect' | 'disconnect';
+			handle?: string;
+	  }
+	| {
+			ok: false;
+			error: string;
+	  } {
 	const platform = typeof body.platform === 'string' ? body.platform : '';
 	if (!isSocialPlatformId(platform)) {
 		return { ok: false, error: 'Invalid or missing platform' };

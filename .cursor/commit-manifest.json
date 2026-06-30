@@ -80,9 +80,7 @@
 			"id": "04-catalog-lib",
 			"status": "pending",
 			"message": "Add catalog helpers, ribbon tokens, and server catalog layer.",
-			"dependsOn": [
-				"01-mock-data-layout"
-			],
+			"dependsOn": ["01-mock-data-layout"],
 			"paths": [
 				"src/lib/data/catalog-helpers.test.ts",
 				"src/lib/data/catalog-helpers.ts",
@@ -94,10 +92,7 @@
 			"id": "03-pagination-and-filters",
 			"status": "pending",
 			"message": "Add pagination, list controls, and parts filter helpers.",
-			"dependsOn": [
-				"01-mock-data-layout",
-				"02-deps-and-tooling"
-			],
+			"dependsOn": ["01-mock-data-layout", "02-deps-and-tooling"],
 			"paths": [
 				"src/lib/components/ListControls.svelte",
 				"src/lib/data/parts-filters.test.ts",
@@ -110,9 +105,7 @@
 			"id": "06-supabase-auth",
 			"status": "pending",
 			"message": "Wire Supabase SSR auth, OAuth providers, and session hooks.",
-			"dependsOn": [
-				"02-deps-and-tooling"
-			],
+			"dependsOn": ["02-deps-and-tooling"],
 			"paths": [
 				"docs/auth/discord.md",
 				"docs/auth/microsoft.md",
@@ -134,10 +127,7 @@
 			"id": "07-saleor-integration",
 			"status": "pending",
 			"message": "Add Saleor checkout, channels, mappers, and metadata.",
-			"dependsOn": [
-				"02-deps-and-tooling",
-				"05-types-and-i18n"
-			],
+			"dependsOn": ["02-deps-and-tooling", "05-types-and-i18n"],
 			"paths": [
 				"docs/audits/saleor-audit.md",
 				"docs/commerce/saleor.md",
@@ -158,22 +148,14 @@
 			"id": "08-ghost-cms",
 			"status": "pending",
 			"message": "Add Ghost CMS client and blog/guide mappers.",
-			"dependsOn": [
-				"02-deps-and-tooling"
-			],
-			"paths": [
-				"docs/audits/ghost-audit.md",
-				"docs/content/ghost.md",
-				"src/lib/server/ghost/"
-			]
+			"dependsOn": ["02-deps-and-tooling"],
+			"paths": ["docs/audits/ghost-audit.md", "docs/content/ghost.md", "src/lib/server/ghost/"]
 		},
 		{
 			"id": "13-shared-components",
 			"status": "pending",
 			"message": "Add catalog ribbons, nav sections, drawers, and media components.",
-			"dependsOn": [
-				"04-catalog-lib"
-			],
+			"dependsOn": ["04-catalog-lib"],
 			"paths": [
 				"src/lib/components/BlogCard.svelte",
 				"src/lib/components/BrandCard.svelte",
@@ -222,9 +204,7 @@
 			"id": "10-testimonials-loyalty",
 			"status": "pending",
 			"message": "Add testimonials repository, loyalty gate, and Supabase migration.",
-			"dependsOn": [
-				"06-supabase-auth"
-			],
+			"dependsOn": ["06-supabase-auth"],
 			"paths": [
 				"src/lib/components/AuthGateDialog.svelte",
 				"src/lib/components/TestimonialCard.svelte",
@@ -239,9 +219,7 @@
 			"id": "11-build-logs",
 			"status": "pending",
 			"message": "Add build log submissions and admin moderation.",
-			"dependsOn": [
-				"06-supabase-auth"
-			],
+			"dependsOn": ["06-supabase-auth"],
 			"paths": [
 				"docs/content/build-submissions.md",
 				"src/lib/components/BuildLogForm.svelte",
@@ -255,9 +233,7 @@
 			"id": "14-admin-shell",
 			"status": "pending",
 			"message": "Expand admin nav, sidebar, and topbar.",
-			"dependsOn": [
-				"06-supabase-auth"
-			],
+			"dependsOn": ["06-supabase-auth"],
 			"paths": [
 				"src/lib/admin/",
 				"src/routes/admin/+layout.svelte",
@@ -271,10 +247,7 @@
 			"id": "15-parts-experience",
 			"status": "pending",
 			"message": "Add parts layout, ribbon, mega-menu sections, and PDP routes.",
-			"dependsOn": [
-				"04-catalog-lib",
-				"13-shared-components"
-			],
+			"dependsOn": ["04-catalog-lib", "13-shared-components"],
 			"paths": [
 				"docs/style-guide/frontend/catalog-ribbons.md",
 				"src/routes/parts/+layout.svelte",
@@ -289,10 +262,7 @@
 			"id": "12-checkout-cart",
 			"status": "pending",
 			"message": "Add Saleor checkout flow and cart server actions.",
-			"dependsOn": [
-				"07-saleor-integration",
-				"13-shared-components"
-			],
+			"dependsOn": ["07-saleor-integration", "13-shared-components"],
 			"paths": [
 				"src/lib/components/CartActions.svelte",
 				"src/lib/stores/cart.svelte.ts",
@@ -306,9 +276,7 @@
 			"id": "16-routes-core",
 			"status": "pending",
 			"message": "Update shop, watch, media, builds, and homepage routes.",
-			"dependsOn": [
-				"13-shared-components"
-			],
+			"dependsOn": ["13-shared-components"],
 			"paths": [
 				"src/routes/+layout.server.ts",
 				"src/routes/+layout.svelte",
@@ -367,21 +335,14 @@
 			"id": "17-api-routes",
 			"status": "pending",
 			"message": "Add API routes for webhooks and sync.",
-			"dependsOn": [
-				"06-supabase-auth"
-			],
-			"paths": [
-				"src/routes/api/"
-			]
+			"dependsOn": ["06-supabase-auth"],
+			"paths": ["src/routes/api/"]
 		},
 		{
 			"id": "18-layout-stores",
 			"status": "pending",
 			"message": "Update root layout, header, footer, stores, and config.",
-			"dependsOn": [
-				"09-cookies-consent",
-				"13-shared-components"
-			],
+			"dependsOn": ["09-cookies-consent", "13-shared-components"],
 			"paths": [
 				".env.example",
 				".github/workflows/ci.yml",
@@ -398,25 +359,15 @@
 			"id": "19-unit-tests",
 			"status": "pending",
 			"message": "Add Vitest coverage for lib and server modules.",
-			"dependsOn": [
-				"16-routes-core"
-			],
-			"paths": [
-				"src/lib/data/mock/events.test.ts",
-				"src/lib/data/mock/videos.test.ts",
-				"tests/"
-			]
+			"dependsOn": ["16-routes-core"],
+			"paths": ["src/lib/data/mock/events.test.ts", "src/lib/data/mock/videos.test.ts", "tests/"]
 		},
 		{
 			"id": "20-e2e-ci",
 			"status": "pending",
 			"message": "Add Playwright smoke tests and CI workflow.",
-			"dependsOn": [
-				"02-deps-and-tooling"
-			],
-			"paths": [
-				"e2e/"
-			]
+			"dependsOn": ["02-deps-and-tooling"],
+			"paths": ["e2e/"]
 		},
 		{
 			"id": "21-docs",

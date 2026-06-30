@@ -87,17 +87,17 @@ Magic link / OAuth `redirectTo` is built from `config.siteUrl` (`PUBLIC_SITE_URL
 
 ## Security audit summary
 
-| Check                                   | Status                | Notes                                                                                                                                                                               |
-| --------------------------------------- | --------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `SUPABASE_SERVICE_ROLE_KEY` server-only | ✅ Pass               | Only in `src/lib/server/**`, `scripts/promote-admin.ts`, `scripts/test-readiness.ts`                                                                                                |
-| `PUBLIC_*` vars safe                    | ✅ Pass               | Anon key, Saleor URL, site URL — intended for browser                                                                                                                               |
-| `DEV_ADMIN` production guard            | ✅ Pass               | `isProductionHostname()` blocks custom domain and `*.netlify.app` (`src/lib/server/auth/local-dev.ts`)                                                                              |
-| `LOCAL_DEV_AUTH` production guard       | ✅ Pass               | Localhost-only via `isLocalDevAuthEnabled()`; blocked when `isProductionSiteUrl()`                                                                                                  |
-| Supabase redirect URLs                  | ❓ Unverified         | Must include preview and custom-domain `/auth/callback` URLs (see account-flow-fix)                                                                                                 |
-| RLS on tables                           | ✅ Migrations present | `profiles`, `build_submissions`, `testimonials` — all `enable row level security`                                                                                                   |
-| `build_submissions` insert policy       | ✅ Done               | RLS requires `auth.uid() = user_id`; server honeypot + rate limit on submit actions                                                                                                 |
-| `scripts/check-secrets.sh`              | ✅ Pass               | Client bundle `SERVICE_ROLE` scan; blocks `DEV_ADMIN` in tracked deploy config (commit `ce05185`) |
-| Silent mock fallback                    | ⚠️ Partial            | `guardMockCatalogFallback()` on catalog loaders + search; homepage and non-catalog surfaces still mock                                                                              |
+| Check                                   | Status                | Notes                                                                                                  |
+| --------------------------------------- | --------------------- | ------------------------------------------------------------------------------------------------------ |
+| `SUPABASE_SERVICE_ROLE_KEY` server-only | ✅ Pass               | Only in `src/lib/server/**`, `scripts/promote-admin.ts`, `scripts/test-readiness.ts`                   |
+| `PUBLIC_*` vars safe                    | ✅ Pass               | Anon key, Saleor URL, site URL — intended for browser                                                  |
+| `DEV_ADMIN` production guard            | ✅ Pass               | `isProductionHostname()` blocks custom domain and `*.netlify.app` (`src/lib/server/auth/local-dev.ts`) |
+| `LOCAL_DEV_AUTH` production guard       | ✅ Pass               | Localhost-only via `isLocalDevAuthEnabled()`; blocked when `isProductionSiteUrl()`                     |
+| Supabase redirect URLs                  | ❓ Unverified         | Must include preview and custom-domain `/auth/callback` URLs (see account-flow-fix)                    |
+| RLS on tables                           | ✅ Migrations present | `profiles`, `build_submissions`, `testimonials` — all `enable row level security`                      |
+| `build_submissions` insert policy       | ✅ Done               | RLS requires `auth.uid() = user_id`; server honeypot + rate limit on submit actions                    |
+| `scripts/check-secrets.sh`              | ✅ Pass               | Client bundle `SERVICE_ROLE` scan; blocks `DEV_ADMIN` in tracked deploy config (commit `ce05185`)      |
+| Silent mock fallback                    | ⚠️ Partial            | `guardMockCatalogFallback()` on catalog loaders + search; homepage and non-catalog surfaces still mock |
 
 ---
 

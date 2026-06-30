@@ -11,6 +11,10 @@ vi.mock('$lib/server/catalog/fallback', async (importOriginal) => {
 	return { ...actual, guardMockCatalogFallback: vi.fn() };
 });
 
+vi.mock('$lib/server/saleor/channels', () => ({
+	resolveChannelForLocale: vi.fn(async () => 'us')
+}));
+
 import { isSaleorEnabled, saleorFetch } from '$lib/server/saleor/client';
 import { getCollections } from './collections';
 

@@ -6,7 +6,11 @@ import { canAccessAdmin } from '$lib/server/auth/roles';
 import { logHttpRequest } from '$lib/server/observability/request-log';
 import { recordHttpRequest } from '$lib/server/observability/metrics';
 import { REQUEST_ID_HEADER, resolveRequestId } from '$lib/server/observability/request-id';
-import { passthroughTraceHeaders, resolveTraceparent, TRACEPARENT_HEADER } from '$lib/server/observability/trace';
+import {
+	passthroughTraceHeaders,
+	resolveTraceparent,
+	TRACEPARENT_HEADER
+} from '$lib/server/observability/trace';
 import { getSession, parseSessionCookie, SESSION_COOKIE } from '$lib/server/supabase/auth';
 import { createServerClient, isSupabaseConfigured } from '$lib/server/supabase/client';
 
@@ -64,7 +68,15 @@ export const handle: Handle = async ({ event, resolve }) => {
 	const logOutcome = (status: number) => {
 		const route = event.route?.id ?? path;
 		const traceId = event.locals.traceParent?.split('-')[1];
-		observeRequest(method, path, route, status, Math.round(performance.now() - started), requestId, traceId);
+		observeRequest(
+			method,
+			path,
+			route,
+			status,
+			Math.round(performance.now() - started),
+			requestId,
+			traceId
+		);
 	};
 
 	try {

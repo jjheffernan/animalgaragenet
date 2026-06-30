@@ -103,9 +103,7 @@ export async function collectSitemapUrls(siteUrl = config.siteUrl): Promise<Site
 export function renderSitemapXml(urls: SitemapUrl[]): string {
 	const body = urls
 		.map((entry) => {
-			const lastmod = entry.lastmod
-				? `\n    <lastmod>${entry.lastmod.slice(0, 10)}</lastmod>`
-				: '';
+			const lastmod = entry.lastmod ? `\n    <lastmod>${entry.lastmod.slice(0, 10)}</lastmod>` : '';
 			return `  <url>\n    <loc>${escapeXml(entry.loc)}</loc>${lastmod}\n  </url>`;
 		})
 		.join('\n');

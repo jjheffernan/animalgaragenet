@@ -1,9 +1,6 @@
 import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
-import {
-	adminGateJsonResponse,
-	resolveAdminGateFromLocals
-} from '$lib/server/auth/admin-gate';
+import { adminGateJsonResponse, resolveAdminGateFromLocals } from '$lib/server/auth/admin-gate';
 import { createPresignedUploadUrl, isCdnUploadConfigured } from '$lib/server/media/cdn';
 import { validateUploadRequest } from '$lib/server/media/validation';
 

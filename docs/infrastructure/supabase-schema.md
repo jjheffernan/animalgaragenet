@@ -9,12 +9,12 @@ Full auth and env setup: [integrations/supabase.md](../integrations/supabase.md)
 
 ## Environment variables
 
-| Variable | Scope | Used for |
-| --- | --- | --- |
-| `PUBLIC_SUPABASE_URL` | Public | API URL in browser + server |
-| `PUBLIC_SUPABASE_ANON_KEY` | Public | RLS-scoped client |
+| Variable                    | Scope       | Used for                                                      |
+| --------------------------- | ----------- | ------------------------------------------------------------- |
+| `PUBLIC_SUPABASE_URL`       | Public      | API URL in browser + server                                   |
+| `PUBLIC_SUPABASE_ANON_KEY`  | Public      | RLS-scoped client                                             |
 | `SUPABASE_SERVICE_ROLE_KEY` | Server only | Moderation, webhooks, cron sync — **never** in client bundles |
-| `PUBLIC_SITE_URL` | Public | Magic link / OAuth redirects |
+| `PUBLIC_SITE_URL`           | Public      | Magic link / OAuth redirects                                  |
 
 Optional: `SITE_LOCKED`, `DEV_ADMIN` (localhost only), `LOCAL_DEV_AUTH` (localhost only).
 
@@ -55,23 +55,23 @@ supabase migration new <descriptive_name>
 
 ## Tables (public schema)
 
-| Table | Purpose | Wired in app |
-| --- | --- | --- |
-| `profiles` | Display name per `auth.users` | Auth signup trigger |
-| `build_submissions` | Build log submit + account drafts | `src/lib/server/build-logs/`, `/builds/submit` |
-| `testimonials` | Garage Squad reviews / UGC text | `src/lib/server/testimonials/` |
-| `media_assets` | UGC image metadata (Storage `ugc` bucket) | `src/lib/server/media/repository.ts`, `api/media/*` |
-| `testimonial_media` | Gallery join testimonials ↔ assets | `src/lib/server/media/repository.ts` |
-| `newsletter_subscribers` | Footer newsletter opt-ins | `NewsletterSignup.svelte`, `api/newsletter/subscribe` |
-| `featured_sections` | Homepage section JSON (`hero`, `media`, …) | `featured-sections/repository.ts`, `/admin/featured` |
-| `user_preferences` | Locale, currency, favorites, garage XP | `user-preferences/repository.ts`, `api/account/garage` |
-| `youtube_channels` | Connected channels for sync | `youtube/sync.ts`, `api/cron/youtube-sync` |
-| `videos` | Synced YouTube catalog for `/watch` | `youtube/repository.ts`, `/watch` |
-| `order_snapshots` | Saleor order mirror for `/account` | `orders/snapshots.ts`, `api/webhooks/saleor` |
-| `social_connections` | Social handles on `user_preferences.social_connections` | `social-connections/`, `api/account/connections` |
-| `restock_alerts` | PDP back-in-stock signups | `api/restock/subscribe` |
-| `wholesale_inquiries` | B2B wholesale form queue | `/wholesale` |
-| `bug_reports` | Site bug reports from `/support/report-bug` | `bug-reports/`, `admin/bug-reports` |
+| Table                    | Purpose                                                 | Wired in app                                           |
+| ------------------------ | ------------------------------------------------------- | ------------------------------------------------------ |
+| `profiles`               | Display name per `auth.users`                           | Auth signup trigger                                    |
+| `build_submissions`      | Build log submit + account drafts                       | `src/lib/server/build-logs/`, `/builds/submit`         |
+| `testimonials`           | Garage Squad reviews / UGC text                         | `src/lib/server/testimonials/`                         |
+| `media_assets`           | UGC image metadata (Storage `ugc` bucket)               | `src/lib/server/media/repository.ts`, `api/media/*`    |
+| `testimonial_media`      | Gallery join testimonials ↔ assets                      | `src/lib/server/media/repository.ts`                   |
+| `newsletter_subscribers` | Footer newsletter opt-ins                               | `NewsletterSignup.svelte`, `api/newsletter/subscribe`  |
+| `featured_sections`      | Homepage section JSON (`hero`, `media`, …)              | `featured-sections/repository.ts`, `/admin/featured`   |
+| `user_preferences`       | Locale, currency, favorites, garage XP                  | `user-preferences/repository.ts`, `api/account/garage` |
+| `youtube_channels`       | Connected channels for sync                             | `youtube/sync.ts`, `api/cron/youtube-sync`             |
+| `videos`                 | Synced YouTube catalog for `/watch`                     | `youtube/repository.ts`, `/watch`                      |
+| `order_snapshots`        | Saleor order mirror for `/account`                      | `orders/snapshots.ts`, `api/webhooks/saleor`           |
+| `social_connections`     | Social handles on `user_preferences.social_connections` | `social-connections/`, `api/account/connections`       |
+| `restock_alerts`         | PDP back-in-stock signups                               | `api/restock/subscribe`                                |
+| `wholesale_inquiries`    | B2B wholesale form queue                                | `/wholesale`                                           |
+| `bug_reports`            | Site bug reports from `/support/report-bug`             | `bug-reports/`, `admin/bug-reports`                    |
 
 **Commerce** (products, cart, checkout) stays in **Saleor** — not Supabase.
 
@@ -170,11 +170,11 @@ Server-minted signed upload URLs: see [media-uploads.md](../plans/active/media-u
 
 Squashed 2026-07-01 — see [migration-squash-notes.md](./migration-squash-notes.md) for before/after list and reset guidance.
 
-| # | File | Creates / changes |
-| --- | --- | --- |
-| 1 | `20250701000000_core_auth_profiles.sql` | `set_updated_at()`, `profiles`, `handle_new_user` trigger, `is_staff()` |
-| 2 | `20250701010000_commerce_content.sql` | `build_submissions`, `testimonials`, `newsletter_subscribers`, `featured_sections`, `user_preferences`, `youtube_channels`, `videos`, `order_snapshots`, `restock_alerts`, `wholesale_inquiries`, `bug_reports`, staff RLS |
-| 3 | `20250701020000_media_social.sql` | `media_assets`, `testimonial_media`, `ugc` Storage bucket + policies |
+| #   | File                                    | Creates / changes                                                                                                                                                                                                          |
+| --- | --------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 1   | `20250701000000_core_auth_profiles.sql` | `set_updated_at()`, `profiles`, `handle_new_user` trigger, `is_staff()`                                                                                                                                                    |
+| 2   | `20250701010000_commerce_content.sql`   | `build_submissions`, `testimonials`, `newsletter_subscribers`, `featured_sections`, `user_preferences`, `youtube_channels`, `videos`, `order_snapshots`, `restock_alerts`, `wholesale_inquiries`, `bug_reports`, staff RLS |
+| 3   | `20250701020000_media_social.sql`       | `media_assets`, `testimonial_media`, `ugc` Storage bucket + policies                                                                                                                                                       |
 
 ---
 

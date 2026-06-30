@@ -11,8 +11,9 @@ export function readSaleorEvent(request: Request): string {
 
 export function readSaleorSignature(request: Request): string | null {
 	return (
-		request.headers.get('saleor-signature') ?? request.headers.get('Saleor-Signature')
-	)?.trim() ?? null;
+		(request.headers.get('saleor-signature') ?? request.headers.get('Saleor-Signature'))?.trim() ??
+		null
+	);
 }
 
 /** Verify Saleor-Signature HMAC SHA-256 (secretKey webhooks). */

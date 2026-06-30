@@ -72,9 +72,7 @@ export const PUT: RequestHandler = async ({ request, locals }) => {
 
 	const next = await updateUserSocialConnection(locals.session.id, platform, {
 		action: parsed.action,
-		...(parsed.action === 'connect'
-			? { handle: parsed.handle!, mock: !oauthConfigured }
-			: {})
+		...(parsed.action === 'connect' ? { handle: parsed.handle!, mock: !oauthConfigured } : {})
 	});
 
 	if (!next) {

@@ -36,6 +36,19 @@ create table public.testimonial_media (
 create index media_assets_user_id_idx on public.media_assets (user_id);
 create index media_assets_status_idx on public.media_assets (status);
 
+comment on table public.media_assets is 'User-uploaded images in Supabase Storage bucket ugc';
+comment on column public.media_assets.user_id is 'Uploader; path namespace ugc/{user_id}/...';
+comment on column public.media_assets.bucket is 'Storage bucket id (default ugc)';
+comment on column public.media_assets.storage_path is 'Object key within bucket; unique';
+comment on column public.media_assets.mime_type is 'image/jpeg, image/png, or image/webp';
+comment on column public.media_assets.byte_size is 'File size in bytes; max 5 MB';
+comment on column public.media_assets.status is 'pending until confirm endpoint; ready when stored; rejected on moderation';
+comment on column public.media_assets.width is 'Image width in pixels when known';
+comment on column public.media_assets.height is 'Image height in pixels when known';
+
+comment on table public.testimonial_media is 'Join table linking testimonials to media_assets with display order';
+comment on column public.testimonial_media.sort_order is 'Gallery sort order (0 = first)';
+
 alter table public.media_assets enable row level security;
 alter table public.testimonial_media enable row level security;
 

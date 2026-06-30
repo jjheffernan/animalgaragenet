@@ -2,7 +2,7 @@
 	import { resolve } from '$app/paths';
 	import SectionHeading from '$lib/components/shared/SectionHeading.svelte';
 	import AnimatedReveal from '$lib/components/shared/AnimatedReveal.svelte';
-	import ListControls from '$lib/components/catalog/ListControls.svelte';
+	import PaginatedListCanvas from '$lib/components/catalog/PaginatedListCanvas.svelte';
 
 	let { data } = $props();
 </script>
@@ -34,29 +34,30 @@
 	<AnimatedReveal>
 		<SectionHeading title="All Builds" subtitle="{data.pagination.total} threads" />
 	</AnimatedReveal>
-	<div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-		{#each data.builds as build (build.id)}
-			<a
-				href={resolve(`/builds/${build.slug}`)}
-				class="group block overflow-hidden rounded-sm border border-zinc-800 bg-zinc-900"
-			>
-				<img
-					src={build.photos[0]}
-					alt={build.title}
-					class="aspect-[16/10] w-full object-cover transition group-hover:scale-105"
-					loading="lazy"
-				/>
-				<div class="p-4">
-					<p class="text-xs font-bold uppercase tracking-widest text-red-500">
-						{build.year}
-						{build.make}
-						{build.model}
-					</p>
-					<h3 class="mt-1 font-display font-bold uppercase text-white">{build.title}</h3>
-					<p class="mt-2 line-clamp-2 text-sm text-zinc-500">{build.description}</p>
-				</div>
-			</a>
-		{/each}
-	</div>
-	<ListControls pagination={data.pagination} />
+	<PaginatedListCanvas pagination={data.pagination}>
+		<div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+			{#each data.builds as build (build.id)}
+				<a
+					href={resolve(`/builds/${build.slug}`)}
+					class="group block overflow-hidden rounded-sm border border-zinc-800 bg-zinc-900"
+				>
+					<img
+						src={build.photos[0]}
+						alt={build.title}
+						class="aspect-[16/10] w-full object-cover transition group-hover:scale-105"
+						loading="lazy"
+					/>
+					<div class="p-4">
+						<p class="text-xs font-bold uppercase tracking-widest text-red-500">
+							{build.year}
+							{build.make}
+							{build.model}
+						</p>
+						<h3 class="mt-1 font-display font-bold uppercase text-white">{build.title}</h3>
+						<p class="mt-2 line-clamp-2 text-sm text-zinc-500">{build.description}</p>
+					</div>
+				</a>
+			{/each}
+		</div>
+	</PaginatedListCanvas>
 </section>

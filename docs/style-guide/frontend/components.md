@@ -80,3 +80,21 @@ Path alias `$lib` → `src/lib` (configured in SvelteKit).
 ## Export barrel
 
 `src/lib/index.ts` exists but is minimal. Import components directly by path — no requirement to re-export through the barrel.
+
+## Paginated list canvas
+
+| Component | Purpose |
+| --------- | ------- |
+| `PaginatedListCanvas.svelte` | Wraps list content with top + bottom `ListControls` and optional `filters` snippet |
+| `ListControls.svelte` | Per-page select, view toggle (when `view` prop set), pagination nav |
+
+Use `PaginatedListCanvas` on every paginated PLP so filter toolbar and view toggles appear above the first page and below the last item (flanking pagination).
+
+```svelte
+<PaginatedListCanvas pagination={data.pagination} view={data.view}>
+  <ProductGrid products={data.products} view={data.view} />
+</PaginatedListCanvas>
+```
+
+Optional page-level filters (e.g. media tabs) pass a `filters` snippet — rendered once above controls and once above bottom pagination.
+

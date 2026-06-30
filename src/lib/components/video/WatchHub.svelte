@@ -9,7 +9,7 @@
 	import VideoGrid from '$lib/components/video/VideoGrid.svelte';
 	import VideoHero from '$lib/components/video/VideoHero.svelte';
 	import VideoDetailPanel from '$lib/components/video/VideoDetailPanel.svelte';
-	import ListControls from '$lib/components/catalog/ListControls.svelte';
+	import PaginatedListCanvas from '$lib/components/catalog/PaginatedListCanvas.svelte';
 	import { videoPanel } from '$lib/stores/video-panel.svelte';
 
 	interface Props {
@@ -54,8 +54,9 @@
 	<AnimatedReveal>
 		<SectionHeading title="All Videos" subtitle="{pagination.total} videos" />
 	</AnimatedReveal>
-	<VideoGrid {videos} onselect={handleVideoSelect} class="mt-8" />
-	<ListControls {pagination} />
+	<PaginatedListCanvas {pagination} class="mt-8">
+		<VideoGrid {videos} onselect={handleVideoSelect} />
+	</PaginatedListCanvas>
 </section>
 
 <VideoDetailPanel onclose={handleClose} />

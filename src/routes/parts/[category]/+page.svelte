@@ -3,7 +3,7 @@
 	import SectionHeading from '$lib/components/shared/SectionHeading.svelte';
 	import PartCategoryNav from '$lib/components/navigation/PartCategoryNav.svelte';
 	import ProductGrid from '$lib/components/catalog/ProductGrid.svelte';
-	import ListControls from '$lib/components/catalog/ListControls.svelte';
+	import PaginatedListCanvas from '$lib/components/catalog/PaginatedListCanvas.svelte';
 	import AnimatedReveal from '$lib/components/shared/AnimatedReveal.svelte';
 
 	let { data } = $props();
@@ -69,9 +69,9 @@
 				<AnimatedReveal>
 					<SectionHeading title="Products" subtitle="{data.pagination.total} items" />
 				</AnimatedReveal>
-				<ListControls pagination={data.pagination} view={data.view} placement="top" />
-				<ProductGrid products={data.products} view={data.view} />
-				<ListControls pagination={data.pagination} view={data.view} placement="bottom" />
+				<PaginatedListCanvas pagination={data.pagination} view={data.view}>
+					<ProductGrid products={data.products} view={data.view} />
+				</PaginatedListCanvas>
 			</div>
 		</div>
 	</section>

@@ -66,4 +66,14 @@ describe('shop/+page.server load', () => {
 		expect(data.products.length).toBeGreaterThan(0);
 		expect(data.products.length).toBeLessThanOrEqual(collectionOnly.products.length);
 	});
+
+	it('parses list view from the URL', async () => {
+		const data = await load({
+			url: new URL('http://localhost/shop?view=grid-sm&perPage=20')
+		} as PageServerLoadEvent);
+
+		if (!data) throw new Error('shop load returned void');
+		expect(data.view).toBe('grid-sm');
+		expect(data.pagination.perPage).toBe(20);
+	});
 });

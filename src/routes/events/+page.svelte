@@ -2,7 +2,7 @@
 	import SectionHeading from '$lib/components/shared/SectionHeading.svelte';
 	import AnimatedReveal from '$lib/components/shared/AnimatedReveal.svelte';
 	import EventsCalendar from '$lib/components/content/EventsCalendar.svelte';
-	import ListControls from '$lib/components/catalog/ListControls.svelte';
+	import PaginatedListCanvas from '$lib/components/catalog/PaginatedListCanvas.svelte';
 
 	type ViewMode = 'list' | 'calendar';
 
@@ -22,16 +22,16 @@
 </section>
 
 <section class="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
-	<div class="mb-10 flex flex-wrap items-end justify-between gap-4">
-		<AnimatedReveal>
-			<SectionHeading
-				title={viewMode === 'list' ? 'Upcoming' : 'Calendar'}
-				subtitle={viewMode === 'list'
-					? `${data.pagination.total} events`
-					: `${data.allEvents.length} total events`}
-			/>
-		</AnimatedReveal>
+	<AnimatedReveal>
+		<SectionHeading
+			title={viewMode === 'list' ? 'Upcoming' : 'Calendar'}
+			subtitle={viewMode === 'list'
+				? `${data.pagination.total} events`
+				: `${data.allEvents.length} total events`}
+		/>
+	</AnimatedReveal>
 
+	{#snippet eventsViewToggle()}
 		<div role="tablist" aria-label="Events view" class="flex rounded-sm bg-zinc-900 p-1">
 			<button
 				type="button"
@@ -58,42 +58,51 @@
 				Calendar
 			</button>
 		</div>
-	</div>
+	{/snippet}
 
 	{#if viewMode === 'list'}
 		{#if data.upcomingEvents.length === 0}
-			<p class="text-zinc-500">No upcoming events right now. Check back soon.</p>
-		{:else}
-			<div class="grid gap-6 sm:grid-cols-2">
-				{#each data.upcomingEvents as event (event.id)}
-					<article class="overflow-hidden rounded-sm border border-zinc-800 bg-zinc-900">
-						<img
-							src={event.imageUrl}
-							alt={event.title}
-							class="aspect-[16/9] w-full object-cover"
-							loading="lazy"
-						/>
-						<div class="p-6">
-							<p class="text-xs font-bold uppercase tracking-widest text-red-500">
-								{new Date(event.startDate).toLocaleDateString(undefined, {
-									weekday: 'long',
-									month: 'long',
-									day: 'numeric',
-									year: 'numeric'
-								})}
-							</p>
-							<h2 class="mt-2 font-display text-xl font-bold uppercase text-white">
-								{event.title}
-							</h2>
-							<p class="mt-2 text-sm text-zinc-500">{event.location}</p>
-							<p class="mt-3 text-zinc-400">{event.description}</p>
-						</div>
-					</article>
-				{/each}
+			<div class="mt-10">
+				{@render eventsViewToggle()}
 			</div>
-			<ListControls pagination={data.pagination} />
+			<p class="mt-6 text-zinc-500">No upcoming events right now. Check back soon.</p>
+		{:else}
+			<PaginatedListCanvas pagination={data.pagination} filters={eventsViewToggle} class="mt-10">
+				<div class="grid gap-6 sm:grid-cols-2">
+					{#each data.upcomingEvents as event (event.id)}
+						<article class="overflow-hidden rounded-sm border border-zinc-800 bg-zinc-900">
+							<img
+								src={event.imageUrl}
+								alt={event.title}
+								class="aspect-[16/9] w-full object-cover"
+								loading="lazy"
+							/>
+							<div class="p-6">
+								<p class="text-xs font-bold uppercase tracking-widest text-red-500">
+									{new Date(event.startDate).toLocaleDateString(undefined, {
+										weekday: 'long',
+										month: 'long',
+										day: 'numeric',
+										year: 'numeric'
+									})}
+								</p>
+								<h2 class="mt-2 font-display text-xl font-bold uppercase text-white">
+									{event.title}
+								</h2>
+								<p class="mt-2 text-sm text-zinc-500">{event.location}</p>
+								<p class="mt-3 text-zinc-400">{event.description}</p>
+							</div>
+						</article>
+					{/each}
+				</div>
+			</PaginatedListCanvas>
 		{/if}
 	{:else}
-		<EventsCalendar events={data.allEvents} />
+		<div class="mt-10">
+			{@render eventsViewToggle()}
+		</div>
+		<div class="mt-6">
+			<EventsCalendar events={data.allEvents} />
+		</div>
 	{/if}
 </section>

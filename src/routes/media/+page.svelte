@@ -1,27 +1,15 @@
 <script lang="ts">
-	import { page } from '$app/state';
 	import { resolve } from '$app/paths';
 	import SectionHeading from '$lib/components/shared/SectionHeading.svelte';
 	import MediaGallery from '$lib/components/content/MediaGallery.svelte';
 	import UGCWall from '$lib/components/content/UGCWall.svelte';
 	import VideoGrid from '$lib/components/video/VideoGrid.svelte';
 	import AnimatedReveal from '$lib/components/shared/AnimatedReveal.svelte';
-	import ListControls from '$lib/components/catalog/ListControls.svelte';
-	import { buildPaginationUrl } from '$lib/pagination';
-	import { resolvePath } from '$lib/utils/paths';
-
-	const tabs = [
-		{ label: 'All', value: 'all' },
-		{ label: 'Videos', value: 'videos' },
-		{ label: 'Photos', value: 'photos' },
-		{ label: 'UGC', value: 'ugc' }
-	] as const;
+	import PaginatedListCanvas from '$lib/components/catalog/PaginatedListCanvas.svelte';
+	import MediaFilterTabs from '$lib/components/content/MediaFilterTabs.svelte';
+	import CatalogRibbonShell from '$lib/components/catalog/CatalogRibbonShell.svelte';
 
 	let { data } = $props();
-
-	function tabHref(tab: string) {
-		return resolvePath(buildPaginationUrl(page.url.pathname, page.url.searchParams, { tab }));
-	}
 </script>
 
 <svelte:head>
@@ -38,27 +26,15 @@
 </section>
 
 <div>
-	<section
-		class="sticky top-[var(--site-header-height,4.5rem)] z-40 border-b border-zinc-800 bg-zinc-950/95 backdrop-blur"
-	>
-		<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-			<nav class="flex gap-1 py-3" aria-label="Media filters">
-				{#each tabs as tab (tab.value)}
-					<a
-						href={tabHref(tab.value)}
-						class="rounded-sm px-4 py-2 text-xs font-bold uppercase tracking-widest transition {data.tab ===
-						tab.value
-							? 'bg-red-600 text-white'
-							: 'text-zinc-400 hover:bg-zinc-800 hover:text-white'}"
-					>
-						{tab.label}
-					</a>
-				{/each}
-			</nav>
-		</div>
-	</section>
+	<CatalogRibbonShell ariaLabel="Media filters">
+		<MediaFilterTabs activeTab={data.tab} />
+	</CatalogRibbonShell>
 
 	<section class="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+		{#snippet mediaFilters()}
+			<MediaFilterTabs activeTab={data.tab} />
+		{/snippet}
+
 		{#if data.tab === 'ugc'}
 			<AnimatedReveal>
 				<SectionHeading
@@ -67,12 +43,16 @@
 					align="center"
 				/>
 			</AnimatedReveal>
-			<UGCWall items={data.ugcItems} class="mt-8" />
+			<PaginatedListCanvas pagination={data.pagination} filters={mediaFilters} class="mt-8">
+				<UGCWall items={data.ugcItems} />
+			</PaginatedListCanvas>
 		{:else if data.tab === 'videos'}
 			<AnimatedReveal>
 				<SectionHeading title="Videos" subtitle="{data.pagination.total} videos" />
 			</AnimatedReveal>
-			<VideoGrid videos={data.videos} class="mt-8" />
+			<PaginatedListCanvas pagination={data.pagination} filters={mediaFilters} class="mt-8">
+				<VideoGrid videos={data.videos} />
+			</PaginatedListCanvas>
 		{:else}
 			<AnimatedReveal>
 				<SectionHeading
@@ -81,9 +61,10 @@
 					align="center"
 				/>
 			</AnimatedReveal>
-			<MediaGallery items={data.mediaItems} />
+			<PaginatedListCanvas pagination={data.pagination} filters={mediaFilters}>
+				<MediaGallery items={data.mediaItems} />
+			</PaginatedListCanvas>
 		{/if}
-		<ListControls pagination={data.pagination} />
 	</section>
 </div>
 

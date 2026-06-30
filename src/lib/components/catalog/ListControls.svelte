@@ -70,12 +70,84 @@
 	{/if}
 {/snippet}
 
-{#if showControls}
-	{#if placement === 'top' && showView}
-		<div class="mb-6 flex justify-end {className}" aria-label="List view options">
-			{@render viewToggle()}
+{#snippet perPageSelect()}
+	<label class="flex items-center gap-2 text-sm text-zinc-500">
+		<span class="font-bold uppercase tracking-wider">Per page</span>
+		<select
+			class="rounded-sm border border-zinc-700 bg-zinc-900 px-2 py-1.5 text-sm text-zinc-200 focus:border-red-600 focus:outline-none"
+			value={pagination.perPage}
+			onchange={(e) => {
+				const perPage = Number((e.currentTarget as HTMLSelectElement).value);
+				navigate({ perPage });
+			}}
+		>
+			{#each PER_PAGE_OPTIONS as option (option)}
+				<option value={option}>{option}</option>
+			{/each}
+		</select>
+	</label>
+{/snippet}
+
+{#snippet filterToolbar()}
+	<div class="flex flex-wrap items-center gap-4">
+		{@render viewToggle()}
+		{@render perPageSelect()}
+	</div>
+{/snippet}
+
+{#snippet pager()}
+	{#if showPager}
+		<div class="flex items-center gap-1">
+			{#if pagination.page > 1}
+				<button
+					type="button"
+					class="rounded-sm border border-zinc-700 px-3 py-1.5 text-xs font-bold uppercase tracking-wider text-zinc-300 transition hover:border-zinc-500 hover:text-white"
+					onclick={() => navigate({ page: pagination.page - 1 })}
+				>
+					Prev
+				</button>
+			{:else}
+				<span
+					class="rounded-sm border border-zinc-800 px-3 py-1.5 text-xs font-bold uppercase tracking-wider text-zinc-600"
+					aria-disabled="true"
+				>
+					Prev
+				</span>
+			{/if}
+
+			<span class="px-2 text-xs font-bold uppercase tracking-wider text-zinc-500">
+				Page {pagination.page} of {pagination.totalPages}
+			</span>
+
+			{#if pagination.page < pagination.totalPages}
+				<button
+					type="button"
+					class="rounded-sm border border-zinc-700 px-3 py-1.5 text-xs font-bold uppercase tracking-wider text-zinc-300 transition hover:border-zinc-500 hover:text-white"
+					onclick={() => navigate({ page: pagination.page + 1 })}
+				>
+					Next
+				</button>
+			{:else}
+				<span
+					class="rounded-sm border border-zinc-800 px-3 py-1.5 text-xs font-bold uppercase tracking-wider text-zinc-600"
+					aria-disabled="true"
+				>
+					Next
+				</span>
+			{/if}
 		</div>
-	{:else if placement === 'bottom'}
+	{/if}
+{/snippet}
+
+{#if showControls}
+	{#if placement === 'top'}
+		<div
+			class="mb-6 flex flex-wrap items-center justify-end gap-4 {className}"
+			aria-label="List filter options"
+		>
+			{@render filterToolbar()}
+		</div>
+	{:else}
 		<nav
 			class="mt-8 flex flex-col gap-4 border-t border-zinc-800 pt-6 sm:flex-row sm:items-center sm:justify-between {className}"
 			aria-label="List pagination"
@@ -86,65 +158,8 @@
 			</p>
 
 			<div class="flex flex-wrap items-center gap-4">
-				{@render viewToggle()}
-
-				<label class="flex items-center gap-2 text-sm text-zinc-500">
-					<span class="font-bold uppercase tracking-wider">Per page</span>
-					<select
-						class="rounded-sm border border-zinc-700 bg-zinc-900 px-2 py-1.5 text-sm text-zinc-200 focus:border-red-600 focus:outline-none"
-						value={pagination.perPage}
-						onchange={(e) => {
-							const perPage = Number((e.currentTarget as HTMLSelectElement).value);
-							navigate({ perPage });
-						}}
-					>
-						{#each PER_PAGE_OPTIONS as option (option)}
-							<option value={option}>{option}</option>
-						{/each}
-					</select>
-				</label>
-
-				{#if showPager}
-					<div class="flex items-center gap-1">
-						{#if pagination.page > 1}
-							<button
-								type="button"
-								class="rounded-sm border border-zinc-700 px-3 py-1.5 text-xs font-bold uppercase tracking-wider text-zinc-300 transition hover:border-zinc-500 hover:text-white"
-								onclick={() => navigate({ page: pagination.page - 1 })}
-							>
-								Prev
-							</button>
-						{:else}
-							<span
-								class="rounded-sm border border-zinc-800 px-3 py-1.5 text-xs font-bold uppercase tracking-wider text-zinc-600"
-								aria-disabled="true"
-							>
-								Prev
-							</span>
-						{/if}
-
-						<span class="px-2 text-xs font-bold uppercase tracking-wider text-zinc-500">
-							Page {pagination.page} of {pagination.totalPages}
-						</span>
-
-						{#if pagination.page < pagination.totalPages}
-							<button
-								type="button"
-								class="rounded-sm border border-zinc-700 px-3 py-1.5 text-xs font-bold uppercase tracking-wider text-zinc-300 transition hover:border-zinc-500 hover:text-white"
-								onclick={() => navigate({ page: pagination.page + 1 })}
-							>
-								Next
-							</button>
-						{:else}
-							<span
-								class="rounded-sm border border-zinc-800 px-3 py-1.5 text-xs font-bold uppercase tracking-wider text-zinc-600"
-								aria-disabled="true"
-							>
-								Next
-							</span>
-						{/if}
-					</div>
-				{/if}
+				{@render filterToolbar()}
+				{@render pager()}
 			</div>
 		</nav>
 	{/if}

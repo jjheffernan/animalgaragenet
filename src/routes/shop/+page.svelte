@@ -5,7 +5,7 @@
 	import LocaleSelector from '$lib/components/navigation/LocaleSelector.svelte';
 	import AnimatedReveal from '$lib/components/shared/AnimatedReveal.svelte';
 	import ProductGrid from '$lib/components/catalog/ProductGrid.svelte';
-	import ListControls from '$lib/components/catalog/ListControls.svelte';
+	import PaginatedListCanvas from '$lib/components/catalog/PaginatedListCanvas.svelte';
 	import CatalogRibbonShell from '$lib/components/catalog/CatalogRibbonShell.svelte';
 	import CategoryPill from '$lib/components/catalog/CategoryPill.svelte';
 	import type { ShopFilterOption } from '$lib/server/catalog/shop-filters';
@@ -115,8 +115,8 @@
 		<AnimatedReveal>
 			<SectionHeading title={sectionTitle} subtitle="{data.pagination.total} items" />
 		</AnimatedReveal>
-		<ListControls pagination={data.pagination} view={data.view} placement="top" />
-		<ProductGrid products={data.products} view={data.view} />
-		<ListControls pagination={data.pagination} view={data.view} placement="bottom" />
+		<PaginatedListCanvas pagination={data.pagination} view={data.view}>
+			<ProductGrid products={data.products} view={data.view} />
+		</PaginatedListCanvas>
 	</section>
 </div>

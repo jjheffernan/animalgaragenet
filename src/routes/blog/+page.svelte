@@ -2,7 +2,7 @@
 	import { resolve } from '$app/paths';
 	import SectionHeading from '$lib/components/shared/SectionHeading.svelte';
 	import AnimatedReveal from '$lib/components/shared/AnimatedReveal.svelte';
-	import ListControls from '$lib/components/catalog/ListControls.svelte';
+	import PaginatedListCanvas from '$lib/components/catalog/PaginatedListCanvas.svelte';
 
 	let { data } = $props();
 </script>
@@ -22,34 +22,35 @@
 	<AnimatedReveal>
 		<SectionHeading title="Latest Posts" />
 	</AnimatedReveal>
-	<div class="grid gap-8 sm:grid-cols-2">
-		{#each data.posts as post (post.id)}
-			<a
-				href={resolve(`/blog/${post.slug}`)}
-				class="group block overflow-hidden rounded-sm border border-zinc-800 bg-zinc-900"
-			>
-				<img
-					src={post.heroImage}
-					alt={post.title}
-					class="aspect-[16/9] w-full object-cover"
-					loading="lazy"
-				/>
-				<div class="p-6">
-					<p class="text-xs text-zinc-500">{post.publishedAt} · {post.author}</p>
-					<h3
-						class="mt-2 font-display text-xl font-bold uppercase text-white group-hover:text-red-400"
-					>
-						{post.title}
-					</h3>
-					<p class="mt-2 text-zinc-400">{post.excerpt}</p>
-					<div class="mt-3 flex gap-2">
-						{#each post.tags as tag (tag)}
-							<span class="rounded-sm bg-zinc-800 px-2 py-0.5 text-xs text-zinc-500">{tag}</span>
-						{/each}
+	<PaginatedListCanvas pagination={data.pagination}>
+		<div class="grid gap-8 sm:grid-cols-2">
+			{#each data.posts as post (post.id)}
+				<a
+					href={resolve(`/blog/${post.slug}`)}
+					class="group block overflow-hidden rounded-sm border border-zinc-800 bg-zinc-900"
+				>
+					<img
+						src={post.heroImage}
+						alt={post.title}
+						class="aspect-[16/9] w-full object-cover"
+						loading="lazy"
+					/>
+					<div class="p-6">
+						<p class="text-xs text-zinc-500">{post.publishedAt} · {post.author}</p>
+						<h3
+							class="mt-2 font-display text-xl font-bold uppercase text-white group-hover:text-red-400"
+						>
+							{post.title}
+						</h3>
+						<p class="mt-2 text-zinc-400">{post.excerpt}</p>
+						<div class="mt-3 flex gap-2">
+							{#each post.tags as tag (tag)}
+								<span class="rounded-sm bg-zinc-800 px-2 py-0.5 text-xs text-zinc-500">{tag}</span>
+							{/each}
+						</div>
 					</div>
-				</div>
-			</a>
-		{/each}
-	</div>
-	<ListControls pagination={data.pagination} />
+				</a>
+			{/each}
+		</div>
+	</PaginatedListCanvas>
 </section>

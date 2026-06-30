@@ -1,44 +1,9 @@
 <script lang="ts">
-	import DOMPurify from 'isomorphic-dompurify';
+	import { sanitizeRichHtml } from '$lib/utils/sanitize-rich-html';
 
 	let { html = '', content = '' }: { html?: string; content?: string } = $props();
 
-	const sanitizedHtml = $derived(
-		html
-			? DOMPurify.sanitize(html, {
-					ALLOWED_TAGS: [
-						'h1',
-						'h2',
-						'h3',
-						'h4',
-						'h5',
-						'h6',
-						'p',
-						'br',
-						'ul',
-						'ol',
-						'li',
-						'a',
-						'strong',
-						'em',
-						'blockquote',
-						'code',
-						'pre',
-						'img',
-						'figure',
-						'figcaption',
-						'hr',
-						'table',
-						'thead',
-						'tbody',
-						'tr',
-						'th',
-						'td'
-					],
-					ALLOWED_ATTR: ['href', 'src', 'alt', 'title', 'class', 'target', 'rel', 'width', 'height', 'loading']
-				})
-			: ''
-	);
+	const sanitizedHtml = $derived(html ? sanitizeRichHtml(html) : '');
 
 	const plainBlocks = $derived(content ? content.split('\n\n').filter(Boolean) : []);
 </script>

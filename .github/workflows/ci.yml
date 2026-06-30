@@ -36,6 +36,9 @@ jobs:
       - name: Unit tests
         run: npm run test:unit
 
+      - name: Contract tests
+        run: npm run test:contracts
+
       - name: Live Saleor smoke (env-gated)
         run: npm run test:unit -- tests/integration/saleor-live.test.ts
         env:

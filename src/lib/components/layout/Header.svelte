@@ -356,6 +356,7 @@
 
 				<div
 					class="relative inline-flex min-w-0 max-w-full shrink items-center gap-0.5"
+					role="presentation"
 					bind:this={communityMenuRoot}
 					onmouseenter={openCommunityMenu}
 					onmouseleave={scheduleClose}

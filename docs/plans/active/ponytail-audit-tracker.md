@@ -16,7 +16,7 @@ Server-side LOC / dedupe / guard tightening. **No** copy, layout, CSS, or visual
 | ----- | ----- | ----- | ------ |
 | **P1** | 2 | Shared mock-fallback guard; dead validation aliases | **done** |
 | **P2** | 3 | API POST boilerplate; admin upload validation; store localStorage | **done** |
-| **P3** | 3 | Oversized checkout module; catalog try/catch repetition; form stub dead paths | partial (2/3 done) |
+| **P3** | 3 | Oversized checkout module; catalog try/catch repetition; form stub dead paths | partial — **PT-P3-001 open only** |
 
 ---
 

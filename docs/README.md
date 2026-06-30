@@ -81,6 +81,7 @@ Complete, superseded, or stale plans. Each file has a status banner.
 | Doc                                                        | Purpose                        |
 | ---------------------------------------------------------- | ------------------------------ |
 | [infrastructure/deployment.md](./infrastructure/deployment.md) | **Production runbook** — Netlify env, Supabase push, webhooks, smoke |
+| [infrastructure/observability-lgtm.md](./infrastructure/observability-lgtm.md) | **LGTM** — Loki logs, Mimir metrics, Tempo traces |
 | [infrastructure/overview.md](./infrastructure/overview.md) | CDN, S3, Supabase architecture |
 | [infrastructure/migration-squash-notes.md](./infrastructure/migration-squash-notes.md) | Supabase migration squash (17 → 3) |
 | [infrastructure/supabase-schema.md](./infrastructure/supabase-schema.md) | Table inventory |

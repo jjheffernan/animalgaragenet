@@ -355,6 +355,20 @@ Smoke covers: homepage nav, `/shop` products, `/parts`, search modal, add-to-car
 
 ---
 
+## Observability (LGTM)
+
+Structured request logs, Prometheus metrics, and documented OTLP hooks for Grafana Loki, Mimir, and Tempo.
+
+| Endpoint / signal | Purpose |
+| ----------------- | ------- |
+| stdout JSON (`msg=http_request`) | Loki via Netlify log drain |
+| `GET /api/health/metrics` | Mimir/Prometheus scrape |
+| `OTEL_EXPORTER_OTLP_*` | Future Tempo OTLP export |
+
+Full runbook: [observability-lgtm.md](./observability-lgtm.md).
+
+---
+
 ## Pre-launch checklist (copy for deployer)
 
 ### Infrastructure
@@ -404,6 +418,7 @@ Smoke covers: homepage nav, `/shop` products, `/parts`, search modal, add-to-car
 
 | Doc | Topic |
 | --- | ----- |
+| [observability-lgtm.md](./observability-lgtm.md) | LGTM logs, metrics, traces |
 | [integrations/supabase.md](../integrations/supabase.md) | Auth, roles, site lockdown |
 | [commerce/saleor.md](../commerce/saleor.md) | Catalog + checkout architecture |
 | [commerce/saleor-payments.md](../commerce/saleor-payments.md) | Payment App flow |

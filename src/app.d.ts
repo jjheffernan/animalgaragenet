@@ -10,6 +10,8 @@ declare global {
 			supabase: SupabaseClient | null;
 			session: SessionUser | null;
 			devAdmin: boolean;
+			requestId: string;
+			traceParent: string | null;
 		}
 		interface PageData {
 			session: SessionUser | null;

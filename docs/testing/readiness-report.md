@@ -92,7 +92,7 @@ npm run test:readiness
 - [x] `supabase-contract-tests`: `testimonials` + `build_submissions` in `tests/contracts/supabase-payloads.test.ts` — **`profiles` still open**
 - [x] `ghost-contract-test`: Mapper contracts in `tests/contracts/ghost-mapper.test.ts` — raw API fetch test still open
 - [ ] `oauth-discord-azure`: Enable Discord + Microsoft providers in Supabase dashboard; verify probes pass
-- [ ] `readiness-ci`: Optional GitHub Actions job with secrets (`RUN_READINESS=1`) calling `npm run test:readiness` on schedule or pre-deploy
+- [x] `readiness-ci`: Optional GitHub Actions job with secrets calling `npm run test:readiness` on schedule, manual dispatch, and PRs (non-blocking) — `.github/workflows/readiness-ci.yml`
 - [ ] `netlify-deploy-verify`: Confirm `sync-org-main.yml` runs after merge to organization deploy repo; document deploy-key rotation in maintainer runbook
 
 See [STATUS.md](../STATUS.md) for the consolidated open-work tracker.

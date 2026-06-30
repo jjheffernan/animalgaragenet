@@ -22,7 +22,7 @@ Rows here are **missed follow-ups** from prior workers (July 2 QoL + IP-031 + ad
 
 | ID | Priority | Task | Code paths | Acceptance | Owner worker slot |
 | -- | -------- | ---- | ---------- | ---------- | ----------------- |
-| BATCH-021 | P2 | Admin bug report inbox (IP-031 remainder) | `src/lib/server/support/repository.ts`, `src/routes/admin/support/`, `src/lib/admin/nav.ts` | Staff page lists `listBugReports()`; status filter or triage action; nav link under Content or Users; mock path when Supabase unset | **B** |
+| BATCH-021 | P2 | Admin bug report inbox (IP-031 remainder) | `src/routes/admin/bug-reports/`, `src/lib/admin/nav.ts` | **done** — read-only staff list via `listBugReports()`; mock fallback when Supabase unset | **C** |
 
 **Slot B rationale:** Supabase-backed staff UI alongside testimonials/builds moderation patterns.
 

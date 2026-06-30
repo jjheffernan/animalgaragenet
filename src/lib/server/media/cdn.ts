@@ -1,3 +1,4 @@
+import { CloudFrontClient, CreateInvalidationCommand } from '@aws-sdk/client-cloudfront';
 import { PutObjectCommand, S3Client } from '@aws-sdk/client-s3';
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 import { env } from '$env/dynamic/private';
@@ -8,6 +9,13 @@ export interface PresignedUpload {
 	url: string;
 	key: string;
 	publicUrl: string;
+}
+
+function awsCredentials() {
+	return {
+		accessKeyId: env.AWS_ACCESS_KEY_ID!.trim(),
+		secretAccessKey: env.AWS_SECRET_ACCESS_KEY!.trim()
+	};
 }
 
 /**
@@ -42,6 +50,11 @@ export function isCdnUploadConfigured(): boolean {
 	);
 }
 
+/** True when CloudFront invalidation can run after admin uploads. */
+export function isCdnInvalidationConfigured(): boolean {
+	return Boolean(isCdnUploadConfigured() && env.AWS_CLOUDFRONT_DISTRIBUTION_ID?.trim());
+}
+
 /** Presigned PUT for admin `/admin/media` upload UI when S3 env is set. */
 export async function createPresignedUploadUrl(
 	key: string,
@@ -56,10 +69,7 @@ export async function createPresignedUploadUrl(
 
 	const client = new S3Client({
 		region,
-		credentials: {
-			accessKeyId: env.AWS_ACCESS_KEY_ID!.trim(),
-			secretAccessKey: env.AWS_SECRET_ACCESS_KEY!.trim()
-		}
+		credentials: awsCredentials()
 	});
 
 	const command = new PutObjectCommand({
@@ -77,8 +87,30 @@ export async function createPresignedUploadUrl(
 	};
 }
 
-// @migration: intentional — CloudFront invalidation after asset replace; see docs/plans/active/inspiration-polish-tracker.md#IP-013
-// export async function invalidateCdnPaths(paths: string[]): Promise<boolean> {
-// 	if (!isCdnUploadConfigured() || !env.AWS_CLOUDFRONT_DISTRIBUTION_ID) return false;
-// 	return false;
-// }
+/** CloudFront invalidation after asset replace — see inspiration-polish-tracker IP-013 / BATCH-020. */
+export async function invalidateCdnPaths(paths: string[]): Promise<boolean> {
+	if (!isCdnInvalidationConfigured() || !paths.length) return false;
+
+	const distributionId = env.AWS_CLOUDFRONT_DISTRIBUTION_ID!.trim();
+	const items = paths.map((path) => (path.startsWith('/') ? path : `/${path}`));
+
+	const client = new CloudFrontClient({
+		region: 'us-east-1',
+		credentials: awsCredentials()
+	});
+
+	await client.send(
+		new CreateInvalidationCommand({
+			DistributionId: distributionId,
+			InvalidationBatch: {
+				CallerReference: `ag-${Date.now()}-${crypto.randomUUID()}`,
+				Paths: {
+					Quantity: items.length,
+					Items: items
+				}
+			}
+		})
+	);
+
+	return true;
+}

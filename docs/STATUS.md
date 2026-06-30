@@ -82,22 +82,19 @@ These appear as unchecked boxes in plans but **cannot be completed in-repo**:
 
 ## Open — code / CI work
 
-**Audit counts (see [AUDIT-REMEDIATION.md](./plans/AUDIT-REMEDIATION.md)):** 11 open · 6 blocked (ops) · 42 done — P1 checkout (`AUD-P1-001`) is **partial** (code done; ops gate only), not open.
+**Audit counts (see [AUDIT-REMEDIATION.md](./plans/AUDIT-REMEDIATION.md)):** 10 open · 6 blocked (ops) · 43 done — P1 checkout (`AUD-P1-001`) is **partial** (code done; ops gate only), not open.
 
 | Priority | Task                                                            | Tracker                                                                        |
 | -------- | --------------------------------------------------------------- | ------------------------------------------------------------------------------ |
 | P0       | Merge `dev` → `main` when Netlify env configured                | [deployment.md](./style-guide/backend-ops/deployment.md)                       |
 | P1       | Saleor checkout: Payment App enablement + live pay verify       | [batch-2026-07-01.md](./plans/active/batch-2026-07-01.md) BATCH-001 · [saleor-payments.md](./commerce/saleor-payments.md) |
-| P2       | July 2 code batch (YMM filter, related products, SEO, CI, …)    | [batch-2026-07-02.md](./plans/active/batch-2026-07-02.md) — BATCH-013–020       |
-| P2       | Admin bug report inbox (IP-031 remainder)                       | [batch-2026-07-03-followups.md](./plans/active/batch-2026-07-03-followups.md) BATCH-021 |
+| P2       | July 2 code batch (YMM filter, related products, SEO, …)    | [batch-2026-07-02.md](./plans/active/batch-2026-07-02.md) — BATCH-013–019 open       |
 | P2       | Ghost live CMS (fallback policy + detail SEO shipped)           | IP-015 · [ghost-audit.md](./audits/ghost-audit.md)                             |
 | P2       | Remaining homepage mock slices (non-watch)                        | market-readiness Phase 3                                                       |
-| P2       | `readiness-ci` optional Actions job                             | BATCH-018 · readiness-report                                                   |
 | P2       | OAuth Discord/Azure verification                                | [inspiration-polish-tracker.md](./plans/active/inspiration-polish-tracker.md) |
 | P2       | Site-wide SEO/OG (non-Ghost routes), analytics                  | BATCH-016 · Phase 5 (see [README.md](./README.md))                             |
 | P2       | Newsletter / user preferences tables                            | [supabase.md](./integrations/supabase.md) roadmap                              |
 | P2       | Faceted parts search (IP-028)                                   | BATCH-019                                                                      |
-| P2       | CDN CloudFront invalidation (IP-013 remainder)                  | BATCH-020                                                                      |
 
 ---
 

@@ -43,6 +43,10 @@ export const ADMIN_NAV: AdminNavSection[] = [
 		items: [{ href: '/admin/users', label: 'Users & Roles' }]
 	},
 	{
+		label: 'Support',
+		items: [{ href: '/admin/bug-reports', label: 'Bug Reports' }]
+	},
+	{
 		label: 'Runtime',
 		items: [{ href: '/admin/runtime', label: 'Integrations', exact: true }]
 	}

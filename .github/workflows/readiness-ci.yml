@@ -1,0 +1,47 @@
+name: Readiness probes
+
+# Optional live API smoke — non-blocking on pull requests (AUD-P2-017 / BATCH-018).
+# Configure repository secrets to match .env.example; probes skip when vars are unset.
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 12 * * 1'
+  pull_request:
+    branches: [dev, main]
+
+jobs:
+  readiness:
+    if: github.repository == 'jjheffernan/animalgaragenet'
+    runs-on: ubuntu-latest
+    continue-on-error: ${{ github.event_name == 'pull_request' }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Live readiness probes
+        run: npm run test:readiness
+        env:
+          PUBLIC_SUPABASE_URL: ${{ secrets.PUBLIC_SUPABASE_URL }}
+          PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.PUBLIC_SUPABASE_ANON_KEY }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          PUBLIC_SALEOR_API_URL: ${{ secrets.PUBLIC_SALEOR_API_URL }}
+          SALEOR_CHANNEL: ${{ secrets.SALEOR_CHANNEL }}
+          GHOST_URL: ${{ secrets.GHOST_URL }}
+          GHOST_CONTENT_API_KEY: ${{ secrets.GHOST_CONTENT_API_KEY }}
+          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
+          PUBLIC_CDN_BASE_URL: ${{ secrets.PUBLIC_CDN_BASE_URL }}
+          S3_BUCKET: ${{ secrets.S3_BUCKET }}
+          S3_REGION: ${{ secrets.S3_REGION }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          ORG_REPO_DEPLOY_KEY: ${{ secrets.ORG_REPO_DEPLOY_KEY }}

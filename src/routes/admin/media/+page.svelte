@@ -42,6 +42,7 @@
 			});
 			const slot = (await slotResponse.json()) as {
 				uploadUrl?: string;
+				objectKey?: string;
 				publicUrl?: string;
 				error?: string;
 				hint?: string;
@@ -66,6 +67,18 @@
 			if (!putResponse.ok) {
 				uploadStatus = `S3 upload failed (${putResponse.status}).`;
 				return;
+			}
+
+			if (data.cdnInvalidationConfigured && slot.objectKey) {
+				const invalidateResponse = await fetch('/api/admin/media/invalidate', {
+					method: 'POST',
+					headers: { 'Content-Type': 'application/json' },
+					body: JSON.stringify({ objectKey: slot.objectKey })
+				});
+				if (!invalidateResponse.ok) {
+					uploadStatus = `Uploaded to S3, but CDN invalidation failed (${invalidateResponse.status}).`;
+					return;
+				}
 			}
 
 			uploadStatus = `Uploaded "${selectedFile.name}" — public URL: ${slot.publicUrl ?? '(pending CDN)'}`;
@@ -103,7 +116,9 @@
 		</div>
 		<div class="flex flex-wrap gap-2">
 			<dt class="text-zinc-600">AWS_CLOUDFRONT_DISTRIBUTION_ID</dt>
-			<dd class="text-zinc-500">Set for cache invalidation (deferred)</dd>
+			<dd class="text-zinc-500">
+				{data.cdnInvalidationConfigured ? 'Configured' : 'Set for post-upload cache invalidation'}
+			</dd>
 		</div>
 	</dl>
 </section>

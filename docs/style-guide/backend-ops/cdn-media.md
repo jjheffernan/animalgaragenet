@@ -27,9 +27,9 @@ resolveUgcPublicUrl('user-1/photo.jpg');
 
 ## Presigned upload (wired)
 
-`createPresignedUploadUrl` in `cdn.ts` issues S3 presigned PUT URLs when `PUBLIC_CDN_BASE_URL`, `S3_BUCKET`, and `AWS_*` are set. Admin upload flow: `POST /api/admin/media/upload-slot` → client `PUT` to presigned URL.
+`createPresignedUploadUrl` in `cdn.ts` issues S3 presigned PUT URLs when `PUBLIC_CDN_BASE_URL`, `S3_BUCKET`, and `AWS_*` are set. Admin upload flow: `POST /api/admin/media/upload-slot` → client `PUT` to presigned URL → optional `POST /api/admin/media/invalidate` when `AWS_CLOUDFRONT_DISTRIBUTION_ID` is set.
 
-`invalidateCdnPaths` remains deferred until CloudFront invalidation ops are ready.
+`invalidateCdnPaths` creates a CloudFront invalidation batch for the uploaded object keys.
 
 ## Bucket layout (conceptual)
 

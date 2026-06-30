@@ -1,0 +1,469 @@
+{
+	"baseBranch": "dev",
+	"strategy": "sequential-commits",
+	"totalPaths": 246,
+	"batches": [
+		{
+			"id": "01-mock-data-layout",
+			"status": "pending",
+			"message": "Restructure mock data into mock/ subdirectory.",
+			"dependsOn": [],
+			"paths": [
+				"src/lib/data/mock/admin-users.ts",
+				"src/lib/data/mock/banners.ts",
+				"src/lib/data/mock/blog.ts",
+				"src/lib/data/mock/brands.ts",
+				"src/lib/data/mock/builds.ts",
+				"src/lib/data/mock/campaigns.ts",
+				"src/lib/data/mock/collections.ts",
+				"src/lib/data/mock/deals.ts",
+				"src/lib/data/mock/events.ts",
+				"src/lib/data/mock/guides.ts",
+				"src/lib/data/mock/locales.ts",
+				"src/lib/data/mock/media.ts",
+				"src/lib/data/mock/orders.ts",
+				"src/lib/data/mock/part-categories.ts",
+				"src/lib/data/mock/parts.ts",
+				"src/lib/data/mock/popular-models.ts",
+				"src/lib/data/mock/products.ts",
+				"src/lib/data/mock/ugc.ts",
+				"src/lib/data/mock/vehicles.ts",
+				"src/lib/data/mock/videos.ts",
+				"src/lib/data/mock/youtube-channels.ts"
+			]
+		},
+		{
+			"id": "02-deps-and-tooling",
+			"status": "pending",
+			"message": "Add Supabase, Vitest, Playwright, and test scripts.",
+			"dependsOn": [],
+			"paths": [
+				"package-lock.json",
+				"package.json",
+				"playwright.config.ts",
+				"skills-lock.json",
+				"vite.config.ts"
+			]
+		},
+		{
+			"id": "05-types-and-i18n",
+			"status": "pending",
+			"message": "Extend domain types and currency formatting tests.",
+			"dependsOn": [],
+			"paths": [
+				"src/lib/data/garage-levels.ts",
+				"src/lib/i18n/currency.test.ts",
+				"src/lib/i18n/currency.ts",
+				"src/lib/types/build-log.ts",
+				"src/lib/types/checkout.ts",
+				"src/lib/types/domain.ts",
+				"src/lib/types/locale.ts",
+				"src/lib/types/testimonial.ts"
+			]
+		},
+		{
+			"id": "09-cookies-consent",
+			"status": "pending",
+			"message": "Add cookie helpers, consent bar, and promo persistence.",
+			"dependsOn": [],
+			"paths": [
+				"docs/cookies.md",
+				"src/lib/components/CookieConsent.svelte",
+				"src/lib/cookies.ts",
+				"src/lib/cookies/",
+				"src/lib/server/cookies.test.ts",
+				"src/lib/server/cookies.ts",
+				"src/lib/stores/promo.svelte.ts"
+			]
+		},
+		{
+			"id": "04-catalog-lib",
+			"status": "pending",
+			"message": "Add catalog helpers, ribbon tokens, and server catalog layer.",
+			"dependsOn": [
+				"01-mock-data-layout"
+			],
+			"paths": [
+				"src/lib/data/catalog-helpers.test.ts",
+				"src/lib/data/catalog-helpers.ts",
+				"src/lib/server/catalog/",
+				"src/lib/ui/"
+			]
+		},
+		{
+			"id": "03-pagination-and-filters",
+			"status": "pending",
+			"message": "Add pagination, list controls, and parts filter helpers.",
+			"dependsOn": [
+				"01-mock-data-layout",
+				"02-deps-and-tooling"
+			],
+			"paths": [
+				"src/lib/components/ListControls.svelte",
+				"src/lib/data/parts-filters.test.ts",
+				"src/lib/data/parts-filters.ts",
+				"src/lib/pagination.test.ts",
+				"src/lib/pagination.ts"
+			]
+		},
+		{
+			"id": "06-supabase-auth",
+			"status": "pending",
+			"message": "Wire Supabase SSR auth, OAuth providers, and session hooks.",
+			"dependsOn": [
+				"02-deps-and-tooling"
+			],
+			"paths": [
+				"docs/auth-discord.md",
+				"docs/auth-microsoft.md",
+				"docs/auth-oauth.md",
+				"docs/supabase.md",
+				"src/app.d.ts",
+				"src/hooks.server.ts",
+				"src/lib/auth/oauth-providers.ts",
+				"src/lib/auth/oauth.ts",
+				"src/lib/components/OAuthButton.svelte",
+				"src/lib/server/supabase/admin.ts",
+				"src/lib/server/supabase/auth.ts",
+				"src/lib/server/supabase/client.ts",
+				"src/lib/supabase/auth-client.ts",
+				"src/lib/supabase/browser.ts"
+			]
+		},
+		{
+			"id": "07-saleor-integration",
+			"status": "pending",
+			"message": "Add Saleor checkout, channels, mappers, and metadata.",
+			"dependsOn": [
+				"02-deps-and-tooling",
+				"05-types-and-i18n"
+			],
+			"paths": [
+				"docs/saleor-audit.md",
+				"docs/saleor.md",
+				"src/lib/server/saleor/channels.test.ts",
+				"src/lib/server/saleor/channels.ts",
+				"src/lib/server/saleor/checkout-queries.ts",
+				"src/lib/server/saleor/checkout.test.ts",
+				"src/lib/server/saleor/checkout.ts",
+				"src/lib/server/saleor/client.ts",
+				"src/lib/server/saleor/mappers.test.ts",
+				"src/lib/server/saleor/mappers.ts",
+				"src/lib/server/saleor/metadata.test.ts",
+				"src/lib/server/saleor/metadata.ts",
+				"src/lib/server/saleor/queries.ts"
+			]
+		},
+		{
+			"id": "08-ghost-cms",
+			"status": "pending",
+			"message": "Add Ghost CMS client and blog/guide mappers.",
+			"dependsOn": [
+				"02-deps-and-tooling"
+			],
+			"paths": [
+				"docs/ghost-audit.md",
+				"docs/ghost.md",
+				"src/lib/server/ghost/"
+			]
+		},
+		{
+			"id": "13-shared-components",
+			"status": "pending",
+			"message": "Add catalog ribbons, nav sections, drawers, and media components.",
+			"dependsOn": [
+				"04-catalog-lib"
+			],
+			"paths": [
+				"src/lib/components/BlogCard.svelte",
+				"src/lib/components/BrandCard.svelte",
+				"src/lib/components/BrandLanes.svelte",
+				"src/lib/components/Breadcrumbs.svelte",
+				"src/lib/components/CartDrawer.svelte",
+				"src/lib/components/CatalogKindBadge.svelte",
+				"src/lib/components/CatalogRibbonShell.svelte",
+				"src/lib/components/CategoryPill.svelte",
+				"src/lib/components/ClearanceSection.svelte",
+				"src/lib/components/DealBadge.svelte",
+				"src/lib/components/DropBanner.svelte",
+				"src/lib/components/EventsCalendar.svelte",
+				"src/lib/components/FinancingBanner.svelte",
+				"src/lib/components/Footer.svelte",
+				"src/lib/components/Header.svelte",
+				"src/lib/components/Hero.svelte",
+				"src/lib/components/LocaleSelector.svelte",
+				"src/lib/components/MediaGallery.svelte",
+				"src/lib/components/MegaMenu.svelte",
+				"src/lib/components/MobileNavDrawer.svelte",
+				"src/lib/components/ModelPicker.svelte",
+				"src/lib/components/NewsletterSignup.svelte",
+				"src/lib/components/PartCategoryNav.svelte",
+				"src/lib/components/PartsNavSections.svelte",
+				"src/lib/components/PartsShoppingRibbon.svelte",
+				"src/lib/components/ProductCard.svelte",
+				"src/lib/components/ProductGrid.svelte",
+				"src/lib/components/PromoBar.svelte",
+				"src/lib/components/RichContent.svelte",
+				"src/lib/components/SearchModal.svelte",
+				"src/lib/components/SideDrawer.svelte",
+				"src/lib/components/SocialLinks.svelte",
+				"src/lib/components/StaffPicks.svelte",
+				"src/lib/components/SupportCTA.svelte",
+				"src/lib/components/UGCWall.svelte",
+				"src/lib/components/VehicleSelector.svelte",
+				"src/lib/components/VideoDetailPanel.svelte",
+				"src/lib/components/VideoGrid.svelte",
+				"src/lib/components/VideoHero.svelte",
+				"src/lib/components/WatchHub.svelte",
+				"src/lib/components/admin/"
+			]
+		},
+		{
+			"id": "10-testimonials-loyalty",
+			"status": "pending",
+			"message": "Add testimonials repository, loyalty gate, and Supabase migration.",
+			"dependsOn": [
+				"06-supabase-auth"
+			],
+			"paths": [
+				"src/lib/components/AuthGateDialog.svelte",
+				"src/lib/components/TestimonialCard.svelte",
+				"src/lib/components/TestimonialForm.svelte",
+				"src/lib/server/testimonials/",
+				"src/routes/admin/testimonials/",
+				"src/routes/loyalty/+page.server.ts",
+				"supabase/"
+			]
+		},
+		{
+			"id": "11-build-logs",
+			"status": "pending",
+			"message": "Add build log submissions and admin moderation.",
+			"dependsOn": [
+				"06-supabase-auth"
+			],
+			"paths": [
+				"docs/build-submissions.md",
+				"src/lib/components/BuildLogForm.svelte",
+				"src/lib/server/build-logs/",
+				"src/routes/account/builds/",
+				"src/routes/admin/builds/",
+				"src/routes/builds/submit/+page.server.ts"
+			]
+		},
+		{
+			"id": "14-admin-shell",
+			"status": "pending",
+			"message": "Expand admin nav, sidebar, and topbar.",
+			"dependsOn": [
+				"06-supabase-auth"
+			],
+			"paths": [
+				"src/lib/admin/",
+				"src/routes/admin/+layout.svelte",
+				"src/routes/admin/+page.svelte",
+				"src/routes/admin/media/+page.svelte",
+				"src/routes/admin/users/+page.svelte",
+				"src/routes/admin/youtube/+page.server.ts"
+			]
+		},
+		{
+			"id": "15-parts-experience",
+			"status": "pending",
+			"message": "Add parts layout, ribbon, mega-menu sections, and PDP routes.",
+			"dependsOn": [
+				"04-catalog-lib",
+				"13-shared-components"
+			],
+			"paths": [
+				"docs/style-guide/frontend/catalog-ribbons.md",
+				"src/routes/parts/+layout.svelte",
+				"src/routes/parts/+page.server.ts",
+				"src/routes/parts/+page.svelte",
+				"src/routes/parts/[category]/+page.server.ts",
+				"src/routes/parts/[category]/+page.svelte",
+				"src/routes/parts/[category]/[slug]/"
+			]
+		},
+		{
+			"id": "12-checkout-cart",
+			"status": "pending",
+			"message": "Add Saleor checkout flow and cart server actions.",
+			"dependsOn": [
+				"07-saleor-integration",
+				"13-shared-components"
+			],
+			"paths": [
+				"src/lib/components/CartActions.svelte",
+				"src/lib/stores/cart.svelte.ts",
+				"src/lib/stores/cart.test.ts",
+				"src/routes/cart/+page.server.ts",
+				"src/routes/cart/+page.svelte",
+				"src/routes/cart/checkout/"
+			]
+		},
+		{
+			"id": "16-routes-core",
+			"status": "pending",
+			"message": "Update shop, watch, media, builds, and homepage routes.",
+			"dependsOn": [
+				"13-shared-components"
+			],
+			"paths": [
+				"src/routes/+layout.server.ts",
+				"src/routes/+layout.svelte",
+				"src/routes/+page.server.ts",
+				"src/routes/+page.svelte",
+				"src/routes/about/+page.svelte",
+				"src/routes/account/+layout.server.ts",
+				"src/routes/account/+layout.svelte",
+				"src/routes/account/+page.svelte",
+				"src/routes/auth/callback/+server.ts",
+				"src/routes/auth/sign-in/+page.server.ts",
+				"src/routes/auth/sign-in/+page.svelte",
+				"src/routes/auth/sign-out/+server.ts",
+				"src/routes/auth/sign-up/+page.server.ts",
+				"src/routes/auth/sign-up/+page.svelte",
+				"src/routes/blog/+page.server.ts",
+				"src/routes/blog/+page.svelte",
+				"src/routes/blog/[slug]/+page.server.ts",
+				"src/routes/blog/[slug]/+page.svelte",
+				"src/routes/brands/+page.server.ts",
+				"src/routes/brands/+page.svelte",
+				"src/routes/brands/[slug]/+page.server.ts",
+				"src/routes/brands/[slug]/+page.svelte",
+				"src/routes/builds/+page.server.ts",
+				"src/routes/builds/+page.svelte",
+				"src/routes/builds/[slug]/+page.server.ts",
+				"src/routes/builds/submit/+page.svelte",
+				"src/routes/checkout/+page.svelte",
+				"src/routes/deals/+page.server.ts",
+				"src/routes/deals/+page.svelte",
+				"src/routes/events/+page.server.ts",
+				"src/routes/events/+page.svelte",
+				"src/routes/gift-cards/+page.server.ts",
+				"src/routes/gift-cards/+page.svelte",
+				"src/routes/guides/+page.server.ts",
+				"src/routes/guides/+page.svelte",
+				"src/routes/guides/[slug]/+page.server.ts",
+				"src/routes/guides/[slug]/+page.svelte",
+				"src/routes/layout.css",
+				"src/routes/loyalty/+page.svelte",
+				"src/routes/media/+page.server.ts",
+				"src/routes/media/+page.svelte",
+				"src/routes/military/+page.svelte",
+				"src/routes/shop/+page.server.ts",
+				"src/routes/shop/+page.svelte",
+				"src/routes/shop/[slug]/+page.server.ts",
+				"src/routes/shop/[slug]/+page.svelte",
+				"src/routes/tools/fitment-visualizer/+page.svelte",
+				"src/routes/watch/+page.server.ts",
+				"src/routes/watch/+page.svelte",
+				"src/routes/watch/[id]/+page.server.ts",
+				"src/routes/watch/[id]/+page.svelte"
+			]
+		},
+		{
+			"id": "17-api-routes",
+			"status": "pending",
+			"message": "Add API routes for webhooks and sync.",
+			"dependsOn": [
+				"06-supabase-auth"
+			],
+			"paths": [
+				"src/routes/api/"
+			]
+		},
+		{
+			"id": "18-layout-stores",
+			"status": "pending",
+			"message": "Update root layout, header, footer, stores, and config.",
+			"dependsOn": [
+				"09-cookies-consent",
+				"13-shared-components"
+			],
+			"paths": [
+				".env.example",
+				".github/workflows/ci.yml",
+				".gitignore",
+				"src/lib/config/env.ts",
+				"src/lib/index.ts",
+				"src/lib/server/forms/submit.ts",
+				"src/lib/server/youtube/sync.ts",
+				"src/lib/stores/garage-xp.svelte.ts",
+				"src/lib/stores/locale.svelte.ts"
+			]
+		},
+		{
+			"id": "19-unit-tests",
+			"status": "pending",
+			"message": "Add Vitest coverage for lib and server modules.",
+			"dependsOn": [
+				"16-routes-core"
+			],
+			"paths": [
+				"src/lib/data/mock/events.test.ts",
+				"src/lib/data/mock/videos.test.ts",
+				"tests/"
+			]
+		},
+		{
+			"id": "20-e2e-ci",
+			"status": "pending",
+			"message": "Add Playwright smoke tests and CI workflow.",
+			"dependsOn": [
+				"02-deps-and-tooling"
+			],
+			"paths": [
+				"e2e/"
+			]
+		},
+		{
+			"id": "21-docs",
+			"status": "pending",
+			"message": "Add integration audits, style guide, and planning docs.",
+			"dependsOn": [],
+			"paths": [
+				"docs/README.md",
+				"docs/daisyui.md",
+				"docs/dashboard-adoption-plan.md",
+				"docs/decisions.md",
+				"docs/inspiration.md",
+				"docs/media-cdn-plan.md",
+				"docs/phase3-plan.md",
+				"docs/style-guide/business-logic/data-flow.md",
+				"docs/style-guide/business-logic/mock-to-saleor.md",
+				"docs/style-guide/business-logic/types-and-data.md",
+				"docs/style-guide/frontend/components.md",
+				"docs/style-guide/frontend/design-tokens.md",
+				"docs/style-guide/frontend/media.md",
+				"docs/style-guide/quick-start.md"
+			]
+		},
+		{
+			"id": "22-agent-tooling",
+			"status": "pending",
+			"message": "Add Cursor agents, skills, and commit orchestration.",
+			"dependsOn": [],
+			"paths": [
+				".agents/",
+				".cursor/agents/",
+				".cursor/commit-progress.json",
+				".cursor/rules/",
+				".cursor/scripts/",
+				".cursor/skills/daisyui",
+				".cursor/skills/svelte-code-writer",
+				".cursor/skills/svelte-core-bestpractices",
+				"agents/AGENTS.md",
+				"agents/daisyui",
+				"agents/svelte-code-writer",
+				"agents/svelte-core-bestpractices",
+				"agents/svelte-file-editor.md",
+				"cursor/settings.json",
+				".cursor/commit-manifest.json",
+				".cursor/agents/git-commit-orchestrator.md",
+				".cursor/scripts/generate-commit-manifest.py"
+			]
+		}
+	]
+}

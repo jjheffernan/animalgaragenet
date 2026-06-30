@@ -1,0 +1,32 @@
+{
+	"baseBranch": "dev",
+	"strategy": "sequential-commits",
+	"backupRef": "refs/backup/pre-commit-orchestrator-1782793316",
+	"current": null,
+	"lastCommit": "fd93bab",
+	"completed": [
+		"01-mock-data-layout",
+		"02-deps-and-tooling",
+		"05-types-and-i18n",
+		"09-cookies-consent",
+		"04-catalog-lib",
+		"03-pagination-and-filters",
+		"06-supabase-auth",
+		"07-saleor-integration",
+		"08-ghost-cms",
+		"13-shared-components",
+		"10-testimonials-loyalty",
+		"11-build-logs",
+		"14-admin-shell",
+		"15-parts-experience",
+		"12-checkout-cart",
+		"16-routes-core",
+		"17-api-routes",
+		"18-layout-stores",
+		"19-unit-tests",
+		"20-e2e-ci",
+		"21-docs"
+	],
+	"blocked": [],
+	"notes": "22 batches / ~246 paths. Regenerate manifest: python3 .cursor/scripts/generate-commit-manifest.py. Invoke git-commit-orchestrator for next batch."
+}

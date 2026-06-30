@@ -1,4 +1,5 @@
 import { createAdminClient } from '$lib/server/supabase/admin';
+import { createWholesaleInquiry } from '$lib/server/wholesale/repository';
 import { LIMITS, trimToMax } from '$lib/server/validation/limits';
 
 export interface FormSubmitResult {
@@ -78,6 +79,24 @@ export async function submitFormStub(
 ): Promise<FormSubmitResult> {
 	if (table === 'build_submissions') {
 		return insertBuildSubmission(payload, options);
+	}
+
+	if (table === 'wholesale_inquiries') {
+		const inquiry = await createWholesaleInquiry({
+			businessName: payload.businessName ?? '',
+			contactName: payload.contactName ?? '',
+			email: payload.email ?? '',
+			phone: payload.phone,
+			website: payload.website,
+			message: payload.message ?? ''
+		});
+		if (!inquiry) {
+			return { ok: false, message: 'Unable to submit application. Please try again.' };
+		}
+		return {
+			ok: true,
+			message: 'Application received — our wholesale team will respond within 1–2 business days.'
+		};
 	}
 
 	if (!createAdminClient()) {

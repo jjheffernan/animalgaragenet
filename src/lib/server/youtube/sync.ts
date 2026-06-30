@@ -1,5 +1,7 @@
+// @inspiration-scaffold: intentional — see docs/plans/active/inspiration-polish-tracker.md#IP-007
 import type { Video } from '$lib/types/domain';
 import { mockVideos } from '$lib/data/mock/videos';
+import { upsertSyncedVideos } from '$lib/server/youtube/repository';
 
 /** Raw payload from YouTube Data API v3 (subset). */
 export interface YouTubeApiVideo {
@@ -13,7 +15,9 @@ export interface YouTubeApiVideo {
 
 /**
  * Fetch uploads from a channel via YouTube Data API v3.
- * Stub — replace with channels.list → uploads playlist → playlistItems.list → videos.list.
+ *
+ * @inspiration-scaffold: intentional — replace stub with channels.list → uploads playlist
+ * → playlistItems.list → videos.list when YOUTUBE_API_KEY is set; see AUD-P1-005
  */
 export async function fetchChannelVideos(
 	_apiKey: string,
@@ -58,12 +62,14 @@ export interface SyncResult {
 export async function syncToDatabase(channelId: string, apiKey = ''): Promise<SyncResult> {
 	const fetched = await fetchChannelVideos(apiKey, channelId);
 	const videos = fetched.map((v) => mapToVideo(v, channelId));
+	const syncedAt = new Date().toISOString();
+	const upserted = await upsertSyncedVideos(channelId, videos, syncedAt);
 
 	return {
 		channelId,
-		upserted: videos.length,
+		upserted,
 		videos,
-		syncedAt: new Date().toISOString()
+		syncedAt
 	};
 }
 

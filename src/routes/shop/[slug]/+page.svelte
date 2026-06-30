@@ -143,7 +143,13 @@
 					<p class="text-sm font-bold uppercase tracking-widest text-zinc-300">
 						Notify Me When Available
 					</p>
-					<NotifyMeButton productName={product.name} class="mt-3" />
+					<NotifyMeButton
+						productId={product.id}
+						productName={product.name}
+						productSlug={product.slug}
+						variantId={selectedVariantId}
+						class="mt-3"
+					/>
 				</div>
 			{:else}
 				<button

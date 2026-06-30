@@ -1,10 +1,10 @@
 import { fail } from '@sveltejs/kit';
-import { mockYouTubeChannels } from '$lib/data/mock/youtube-channels';
+import { addYouTubeChannel, listYouTubeChannels } from '$lib/server/youtube/repository';
 import { syncToDatabase } from '$lib/server/youtube/sync';
 import type { Actions, PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async () => ({
-	channels: mockYouTubeChannels
+	channels: await listYouTubeChannels()
 });
 
 export const actions: Actions = {
@@ -18,18 +18,10 @@ export const actions: Actions = {
 			return fail(400, { error: 'Channel ID, handle, and title are required.' });
 		}
 
-		const exists = mockYouTubeChannels.some((c) => c.channelId === channelId);
-		if (exists) {
-			return fail(400, { error: 'Channel already connected.' });
+		const added = await addYouTubeChannel({ channelId, handle, title });
+		if (!added) {
+			return fail(400, { error: 'Channel already connected or save failed.' });
 		}
-
-		mockYouTubeChannels.push({
-			id: `yc${mockYouTubeChannels.length + 1}`,
-			channelId,
-			handle: handle.startsWith('@') ? handle : `@${handle}`,
-			title,
-			videoCount: 0
-		});
 
 		return { added: true };
 	},
@@ -42,14 +34,13 @@ export const actions: Actions = {
 			return fail(400, { error: 'Missing channel ID.' });
 		}
 
-		const channel = mockYouTubeChannels.find((c) => c.channelId === channelId);
+		const channels = await listYouTubeChannels();
+		const channel = channels.find((c) => c.channelId === channelId);
 		if (!channel) {
 			return fail(404, { error: 'Channel not found.' });
 		}
 
 		const result = await syncToDatabase(channelId);
-		channel.lastSyncedAt = result.syncedAt;
-		channel.videoCount = result.upserted;
 
 		return {
 			synced: true,

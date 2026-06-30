@@ -47,7 +47,7 @@ Set `PUBLIC_CDN_BASE_URL=https://<your-cdn-host>` in production.
 ### S3 bucket structure
 
 ```
-s3://<media-bucket>/
+s3://<your-media-bucket>/
 ├── products/{slug}/hero.jpg
 ├── products/{slug}/gallery/
 ├── media/{id}/original.mp4

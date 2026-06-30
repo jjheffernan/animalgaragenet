@@ -101,7 +101,7 @@ Supabase auth at `/auth/*`. Admin RBAC at `/admin` with roles: admin, editor, co
 
 **Local-only dev auth (June 2026):** Quick-login accounts (`admin@local.dev`, etc.) and `DEV_ADMIN` bypass run only on localhost when `import.meta.env.DEV` or `LOCAL_DEV_AUTH=true`, and never when `PUBLIC_SITE_URL` or request host is production. Predefined accounts in `src/lib/server/auth/local-dev-accounts.ts`; guards in `local-dev.ts`. Production admin uses `scripts/promote-admin.ts` + `app_metadata.role`. See [integrations/supabase.md](../integrations/supabase.md).
 
-**Org deploy mirror (June 2026):** Netlify deploys from `<org>/<deploy-repo>` @ `main`, synced from personal `jjheffernan/animalgaragenet` via deploy key (`<org-sync-secret>`). Mirror script excludes `.github/workflows` because deploy keys cannot push workflow files; CI stays on the personal repo only. Sync workflow lives on **`main`** branch. See [deployment.md](../style-guide/backend-ops/deployment.md).
+**Org deploy mirror (June 2026):** Netlify deploys from `<organization>/<deploy-repo>` @ `main`, synced from the personal fork via organization deploy key (secret name in `.env.example` / maintainer runbook only). Mirror script excludes `.github/workflows` because deploy keys cannot push workflow files; CI stays on the personal repo only. Sync workflow lives on **`main`** branch. See [deployment.md](../style-guide/backend-ops/deployment.md).
 
 ---
 

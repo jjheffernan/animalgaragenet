@@ -6,9 +6,7 @@ Architecture, integration plans, and developer reference for **animalgarage.net*
 
 A highly animated, media-heavy automotive brand site — merchandising-forward digital marketing with parts, community, and on-domain media. The frontend is a SvelteKit headless storefront; commerce runs on Saleor at a separate domain; media ships via CDN; non-commerce data lives in Supabase.
 
-**Open work tracker:** [STATUS.md](./STATUS.md) · **Public doc policy:** [SECURITY-PUBLIC.md](./SECURITY-PUBLIC.md)
-
-**Public-safe policy:** [SECURITY-PUBLIC.md](./SECURITY-PUBLIC.md) — no infra hostnames or secrets in `docs/`.
+**Open work tracker:** [STATUS.md](./STATUS.md) · **Public doc policy:** [SECURITY-PUBLIC.md](./SECURITY-PUBLIC.md) — no infra hostnames or secrets in `docs/`.
 
 **Developer how-to:** [style-guide/README.md](./style-guide/README.md) — Svelte patterns, deployment, env config.
 
@@ -87,6 +85,7 @@ Complete, superseded, or stale plans. Each file has a status banner.
 
 | Doc | Purpose |
 |-----|---------|
+| [SECURITY-PUBLIC.md](./SECURITY-PUBLIC.md) | Public documentation policy — placeholders, no infra leaks |
 | [meta/decisions.md](./meta/decisions.md) | Persistent product/tech choices |
 | [meta/inspiration.md](./meta/inspiration.md) | Feature backlog — integrated vs remaining |
 | [meta/polish-plan.md](./meta/polish-plan.md) | Active P0/P1 polish tracker |

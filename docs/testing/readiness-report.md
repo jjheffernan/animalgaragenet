@@ -6,7 +6,7 @@ Probe script: [`scripts/test-readiness.ts`](../../scripts/test-readiness.ts)
 
 ## Production Netlify observations (2026-06-30)
 
-Live fetch of https://<your-preview-host> (market-readiness agent). Full roadmap: [`docs/plans/active/market-readiness.md`](../plans/active/market-readiness.md).
+Live fetch of `https://<preview-host>.netlify.app` (market-readiness agent). Full roadmap: [`docs/plans/active/market-readiness.md`](../plans/active/market-readiness.md).
 
 | Route | HTTP | Finding |
 |-------|------|---------|
@@ -93,6 +93,6 @@ npm run test:readiness
 - [x] `ghost-contract-test`: Mapper contracts in `tests/contracts/ghost-mapper.test.ts` — raw API fetch test still open
 - [ ] `oauth-discord-azure`: Enable Discord + Microsoft providers in Supabase dashboard; verify probes pass
 - [ ] `readiness-ci`: Optional GitHub Actions job with secrets (`RUN_READINESS=1`) calling `npm run test:readiness` on schedule or pre-deploy
-- [ ] `netlify-deploy-verify`: Confirm `sync-org-main.yml` runs after merge to org mirror; document `<org-sync-secret>` rotation
+- [ ] `netlify-deploy-verify`: Confirm `sync-org-main.yml` runs after merge to organization deploy repo; document deploy-key rotation in maintainer runbook
 
 See [STATUS.md](../STATUS.md) for the consolidated open-work tracker.

@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { setAnalyticsEnabled, setAnalyticsSink, trackPageView } from '$lib/analytics';
+import { setAnalyticsEnabled, setAnalyticsSink, trackPageView } from '$lib/analytics.svelte';
 
 describe('analytics', () => {
 	afterEach(() => {

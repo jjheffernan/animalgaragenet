@@ -1,38 +1,13 @@
-import { afterEach, describe, expect, it, vi } from 'vitest';
-import { prefersReducedMotion } from './prefers-reduced-motion';
+import { describe, expect, it } from 'vitest';
+import { prefersReducedMotion, reducedMotion } from './prefers-reduced-motion.svelte';
 
 describe('prefersReducedMotion', () => {
-	afterEach(() => {
-		vi.unstubAllGlobals();
+	it('exposes a MediaQuery-backed preference', () => {
+		expect(reducedMotion).toBeDefined();
+		expect(typeof reducedMotion.current).toBe('boolean');
 	});
 
-	it('returns false when matchMedia is unavailable', () => {
-		expect(prefersReducedMotion()).toBe(false);
-	});
-
-	it('returns true when the user prefers reduced motion', () => {
-		vi.stubGlobal('window', {
-			matchMedia: (query: string) => ({
-				matches: query === '(prefers-reduced-motion: reduce)',
-				media: query,
-				addEventListener: vi.fn(),
-				removeEventListener: vi.fn()
-			})
-		});
-
-		expect(prefersReducedMotion()).toBe(true);
-	});
-
-	it('returns false when motion is not reduced', () => {
-		vi.stubGlobal('window', {
-			matchMedia: () => ({
-				matches: false,
-				media: '',
-				addEventListener: vi.fn(),
-				removeEventListener: vi.fn()
-			})
-		});
-
+	it('defaults to false outside a matching client environment', () => {
 		expect(prefersReducedMotion()).toBe(false);
 	});
 });

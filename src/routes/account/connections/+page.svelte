@@ -1,85 +1,10 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import type { SocialPlatformId } from '$lib/data/social-platforms';
-	import {
-		loadConnectionsFromApi,
-		updateConnectionOnApi,
-		type ConnectionsApiState
-	} from '$lib/stores/social-connections-api';
-	import type { SocialConnectionsMap } from '$lib/types/social-connections';
-
-	let loading = $state(true);
-	let error = $state<string | null>(null);
-	let mockMode = $state(true);
-	let platforms = $state<ConnectionsApiState['platforms']>([]);
-	let connections = $state<SocialConnectionsMap>({});
-	let pendingPlatform = $state<SocialPlatformId | null>(null);
-	let handleInput = $state('');
-	let saving = $state(false);
+	import { connections } from '$lib/stores/connections.svelte';
 
 	onMount(() => {
-		void refresh();
+		void connections.refresh();
 	});
-
-	async function refresh() {
-		loading = true;
-		error = null;
-		const data = await loadConnectionsFromApi();
-		if (data === 'guest' || data === null) {
-			error = 'Unable to load connections.';
-			loading = false;
-			return;
-		}
-		connections = data.connections;
-		platforms = data.platforms;
-		mockMode = data.mockMode;
-		loading = false;
-	}
-
-	function startConnect(platform: ConnectionsApiState['platforms'][number]) {
-		if (platform.oauthAuthorizeUrl) {
-			window.location.href = platform.oauthAuthorizeUrl;
-			return;
-		}
-		pendingPlatform = platform.id;
-		handleInput = '';
-		error = null;
-	}
-
-	function cancelConnect() {
-		pendingPlatform = null;
-		handleInput = '';
-	}
-
-	async function submitConnect() {
-		if (!pendingPlatform) return;
-		saving = true;
-		error = null;
-		const result = await updateConnectionOnApi(pendingPlatform, {
-			action: 'connect',
-			handle: handleInput
-		});
-		saving = false;
-		if (!result.ok) {
-			error = result.error;
-			return;
-		}
-		connections = result.connections;
-		pendingPlatform = null;
-		handleInput = '';
-	}
-
-	async function disconnect(platformId: SocialPlatformId) {
-		saving = true;
-		error = null;
-		const result = await updateConnectionOnApi(platformId, { action: 'disconnect' });
-		saving = false;
-		if (!result.ok) {
-			error = result.error;
-			return;
-		}
-		connections = result.connections;
-	}
 </script>
 
 <svelte:head>
@@ -91,23 +16,23 @@
 	Link your profiles to show off your builds and unlock community perks.
 </p>
 
-{#if mockMode}
+{#if connections.mockMode}
 	<p class="mt-4 rounded-sm border border-zinc-800 bg-zinc-900/50 px-4 py-3 text-sm text-zinc-500">
 		Mock mode — OAuth provider keys are not configured. Enter your public handle to link a platform
 		until live OAuth is wired.
 	</p>
 {/if}
 
-{#if error}
-	<p class="mt-4 text-sm text-red-400" role="alert">{error}</p>
+{#if connections.error}
+	<p class="mt-4 text-sm text-red-400" role="alert">{connections.error}</p>
 {/if}
 
-{#if loading}
+{#if connections.loading}
 	<p class="mt-8 text-sm text-zinc-500">Loading connections…</p>
 {:else}
 	<ul class="mt-8 space-y-3">
-		{#each platforms as platform (platform.id)}
-			{@const linked = connections[platform.id]}
+		{#each connections.platforms as platform (platform.id)}
+			{@const linked = connections.connections[platform.id]}
 			<li class="rounded-sm border border-zinc-800 bg-zinc-900/50 px-4 py-4">
 				<div class="flex flex-wrap items-center justify-between gap-4">
 					<div class="flex items-center gap-3">
@@ -160,8 +85,8 @@
 						<button
 							type="button"
 							class="rounded-sm border border-zinc-700 px-3 py-1.5 text-sm text-zinc-400 transition hover:border-red-600/50 hover:text-red-400 disabled:opacity-50"
-							disabled={saving}
-							onclick={() => disconnect(platform.id)}
+							disabled={connections.saving}
+							onclick={() => connections.disconnect(platform.id)}
 						>
 							Disconnect
 						</button>
@@ -169,27 +94,27 @@
 						<button
 							type="button"
 							class="rounded-sm bg-red-600 px-3 py-1.5 text-sm font-medium text-white transition hover:bg-red-500 disabled:opacity-50"
-							disabled={saving}
-							onclick={() => startConnect(platform)}
+							disabled={connections.saving}
+							onclick={() => connections.startConnect(platform)}
 						>
 							Connect
 						</button>
 					{/if}
 				</div>
 
-				{#if pendingPlatform === platform.id}
+				{#if connections.pendingPlatform === platform.id}
 					<form
 						class="mt-4 flex flex-wrap items-end gap-3 border-t border-zinc-800 pt-4"
 						onsubmit={(e) => {
 							e.preventDefault();
-							void submitConnect();
+							void connections.submitConnect();
 						}}
 					>
 						<label class="min-w-[12rem] flex-1 text-sm">
 							<span class="text-zinc-500">Public handle</span>
 							<input
 								type="text"
-								bind:value={handleInput}
+								bind:value={connections.handleInput}
 								placeholder="@username"
 								class="mt-1 w-full rounded-sm border border-zinc-700 bg-zinc-900 px-3 py-2 text-white placeholder:text-zinc-600"
 								required
@@ -199,14 +124,14 @@
 							<button
 								type="button"
 								class="rounded-sm border border-zinc-700 px-3 py-2 text-sm text-zinc-400 hover:text-white"
-								onclick={cancelConnect}
+								onclick={() => connections.cancelConnect()}
 							>
 								Cancel
 							</button>
 							<button
 								type="submit"
 								class="rounded-sm bg-red-600 px-3 py-2 text-sm font-medium text-white hover:bg-red-500 disabled:opacity-50"
-								disabled={saving}
+								disabled={connections.saving}
 							>
 								Save
 							</button>

@@ -1,27 +1,14 @@
 <script lang="ts">
-	import { setAnalyticsEnabled, trackPageView } from '$lib/analytics';
-	import { getCookieConsent, setCookieConsent } from '$lib/cookies/client';
+	import { resolve } from '$app/paths';
+	import { consent } from '$lib/stores/consent.svelte';
 
 	let { show = false }: { show?: boolean } = $props();
 
-	let dismissed = $state(false);
+	$effect(() => {
+		consent.init();
+	});
 
-	const needsConsent = $derived(typeof window !== 'undefined' && getCookieConsent() === undefined);
-
-	const visible = $derived(show && needsConsent && !dismissed);
-
-	function accept() {
-		setCookieConsent(true);
-		dismissed = true;
-		setAnalyticsEnabled(true);
-		trackPageView(window.location.pathname);
-	}
-
-	function decline() {
-		setCookieConsent(false);
-		setAnalyticsEnabled(false);
-		dismissed = true;
-	}
+	const visible = $derived(show && consent.needsConsent);
 </script>
 
 {#if visible}
@@ -36,7 +23,7 @@
 			<p>
 				We use essential cookies for cart and sign-in. Optional analytics cookies help us improve
 				the site.
-				<a href="/policies/privacy" class="text-red-400 underline hover:text-red-300"
+				<a href={resolve('/policies/privacy')} class="text-red-400 underline hover:text-red-300"
 					>Privacy policy</a
 				>
 			</p>
@@ -44,14 +31,14 @@
 				<button
 					type="button"
 					class="rounded border border-zinc-600 px-3 py-1.5 text-zinc-300 hover:border-zinc-500 hover:text-zinc-100"
-					onclick={decline}
+					onclick={() => consent.decline()}
 				>
 					Essential only
 				</button>
 				<button
 					type="button"
 					class="rounded bg-red-600 px-3 py-1.5 font-medium text-white hover:bg-red-500"
-					onclick={accept}
+					onclick={() => consent.accept()}
 				>
 					Accept
 				</button>

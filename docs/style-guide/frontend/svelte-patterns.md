@@ -46,6 +46,12 @@ class LocaleState {
 export const locale = new LocaleState();
 ```
 
+**Prefer `.svelte.ts` for shared client runes** (consent, analytics enablement, search results, connections UI state, motion prefs). Keep plain `.ts` for:
+
+- `$lib/server/**`, `*.server.ts`, `hooks.server.ts`
+- Pure helpers, types, mock data, cookie parse/serialize, HTTP API helpers (`*-api.ts`)
+- scripts, e2e, vitest configs
+
 ### `$derived()` — computed values
 
 Use when a value depends on other reactive state. Not heavily used yet but preferred over `$:` reactive statements.

@@ -3,11 +3,6 @@
 	import { getProductPath } from '$lib/data/catalog-helpers';
 	import { search } from '$lib/stores/search.svelte';
 	import { locale } from '$lib/stores/locale.svelte';
-	import { searchProducts } from '$lib/data/mock/products';
-	import { searchParts } from '$lib/data/mock/parts';
-	import { searchBuilds } from '$lib/data/mock/builds';
-	import { searchGuides } from '$lib/data/mock/guides';
-	import type { CatalogSearchResults } from '$lib/server/catalog/search';
 	import { resolvePath } from '$lib/utils/paths';
 	import CatalogKindBadge from '$lib/components/catalog/CatalogKindBadge.svelte';
 
@@ -23,27 +18,6 @@
 		if (e.key === 'Escape') search.closeModal();
 	}
 
-	let apiResults = $state<CatalogSearchResults | null>(null);
-	let useMockFallback = $state(false);
-	let searching = $state(false);
-
-	const productResults = $derived(
-		(useMockFallback ? searchProducts(search.query) : (apiResults?.products ?? [])).slice(0, 5)
-	);
-	const partResults = $derived(
-		(useMockFallback ? searchParts(search.query) : (apiResults?.parts ?? [])).slice(0, 5)
-	);
-	const buildResults = $derived(
-		(useMockFallback ? searchBuilds(search.query) : (apiResults?.builds ?? [])).slice(0, 3)
-	);
-	const guideResults = $derived(
-		(useMockFallback ? searchGuides(search.query) : (apiResults?.guides ?? [])).slice(0, 3)
-	);
-	const hasResults = $derived(
-		search.query.length > 0 &&
-			productResults.length + partResults.length + buildResults.length + guideResults.length > 0
-	);
-
 	let inputEl = $state<HTMLInputElement | undefined>();
 
 	$effect(() => {
@@ -53,39 +27,9 @@
 	});
 
 	$effect(() => {
-		const q = search.query.trim();
+		const q = search.query;
 		const localeCode = locale.code;
-
-		if (!q) {
-			apiResults = null;
-			useMockFallback = false;
-			searching = false;
-			return;
-		}
-
-		const controller = new AbortController();
-		searching = true;
-
-		const timer = setTimeout(async () => {
-			try {
-				const params = new URLSearchParams({ q, locale: localeCode });
-				const res = await fetch(`/api/catalog/search?${params}`, { signal: controller.signal });
-				if (!res.ok) throw new Error('Search request failed');
-				apiResults = await res.json();
-				useMockFallback = false;
-			} catch {
-				if (controller.signal.aborted) return;
-				useMockFallback = true;
-				apiResults = null;
-			} finally {
-				if (!controller.signal.aborted) searching = false;
-			}
-		}, 200);
-
-		return () => {
-			clearTimeout(timer);
-			controller.abort();
-		};
+		return search.scheduleSearch(q, localeCode);
 	});
 </script>
 
@@ -127,15 +71,15 @@
 			<div class="max-h-[50vh] overflow-y-auto p-4">
 				{#if search.query.length === 0}
 					<p class="text-sm text-zinc-500">Start typing to search the garage…</p>
-				{:else if searching && !useMockFallback && !apiResults}
+				{:else if search.searching && !search.useMockFallback && !search.apiResults}
 					<p class="text-sm text-zinc-500">Searching…</p>
-				{:else if !hasResults}
+				{:else if !search.hasResults}
 					<p class="text-sm text-zinc-500">No results for "{search.query}"</p>
 				{:else}
-					{#if productResults.length > 0}
+					{#if search.productResults.length > 0}
 						<p class="text-[10px] font-bold uppercase tracking-widest text-zinc-500">Merch</p>
 						<ul class="mt-2 space-y-1">
-							{#each productResults as p (p.id)}
+							{#each search.productResults as p (p.id)}
 								<li>
 									<a
 										href={resolvePath(getProductPath(p))}
@@ -148,10 +92,10 @@
 							{/each}
 						</ul>
 					{/if}
-					{#if partResults.length > 0}
+					{#if search.partResults.length > 0}
 						<p class="mt-4 text-[10px] font-bold uppercase tracking-widest text-zinc-500">Parts</p>
 						<ul class="mt-2 space-y-1">
-							{#each partResults as p (p.id)}
+							{#each search.partResults as p (p.id)}
 								<li>
 									<a
 										href={resolvePath(getProductPath(p))}
@@ -165,10 +109,10 @@
 							{/each}
 						</ul>
 					{/if}
-					{#if buildResults.length > 0}
+					{#if search.buildResults.length > 0}
 						<p class="mt-4 text-[10px] font-bold uppercase tracking-widest text-zinc-500">Builds</p>
 						<ul class="mt-2 space-y-1">
-							{#each buildResults as b (b.id)}
+							{#each search.buildResults as b (b.id)}
 								<li>
 									<a
 										href={resolve(`/builds/${b.slug}`)}
@@ -181,10 +125,10 @@
 							{/each}
 						</ul>
 					{/if}
-					{#if guideResults.length > 0}
+					{#if search.guideResults.length > 0}
 						<p class="mt-4 text-[10px] font-bold uppercase tracking-widest text-zinc-500">Guides</p>
 						<ul class="mt-2 space-y-1">
-							{#each guideResults as g (g.id)}
+							{#each search.guideResults as g (g.id)}
 								<li>
 									<a
 										href={resolve(`/guides/${g.slug}`)}

@@ -18,6 +18,11 @@ Thumbs.db
 
 # Cursor agent local state (orchestrator progress — never commit)
 .cursor/commit-progress.json
+.cursor/docs-batch-progress.json
+
+# Playwright / Vitest local reports (also named with trailing slash)
+test-results/
+playwright-report/
 
 # Env — never commit real secrets (only templates / CI fixtures)
 .env
@@ -94,6 +99,9 @@ blob-report
 tmp
 *.tsbuildinfo
 .wiki-cache/
+*.orig
+*.bak
+*.rej
 
 # Vendored agent skills (repo uses agents/ + .cursor/skills symlinks)
 .agents/

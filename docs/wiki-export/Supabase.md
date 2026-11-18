@@ -70,7 +70,7 @@ Insert columns use snake_case (`user_id`, `mod_list`, `status`).
 
 ```typescript
 // src/lib/server/supabase/admin.ts — OK
-import { createAdminClient } from '$lib/server/supabase/admin';
+import { createAdminClient } from '#lib/server/supabase/admin.ts';
 
 // NEVER in client components
 ```

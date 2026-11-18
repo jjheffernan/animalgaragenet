@@ -213,7 +213,7 @@ At custom domain cutover: update `PUBLIC_SITE_URL`, Supabase Site URL + redirect
 
 - `static/` files copied to build output at root path
 - CDN serves dynamic UGC when `PUBLIC_CDN_BASE_URL` set; else Supabase Storage signed URLs
-- Favicon imported from `$lib/assets/` (hashed at build)
+- Favicon imported from `#lib/assets/` (hashed at build)
 
 ---
 

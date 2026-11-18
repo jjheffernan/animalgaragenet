@@ -45,8 +45,8 @@ Future mutations (cart/checkout) will be added here.
 ## Usage in loaders
 
 ```typescript
-import { saleorFetch } from '$lib/server/saleor/client';
-import { PRODUCTS_QUERY } from '$lib/server/saleor/queries';
+import { saleorFetch } from '#lib/server/saleor/client.ts';
+import { PRODUCTS_QUERY } from '#lib/server/saleor/queries.ts';
 import { env } from '$env/dynamic/private';
 
 const result = await saleorFetch(PRODUCTS_QUERY, {

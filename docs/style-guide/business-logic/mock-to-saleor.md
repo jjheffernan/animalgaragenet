@@ -8,7 +8,7 @@ Routes call helpers in `src/lib/server/catalog/` — not mock imports directly:
 
 ```typescript
 // src/routes/shop/+page.server.ts
-import { getShopProducts } from '$lib/server/catalog/products';
+import { getShopProducts } from '#lib/server/catalog/products.ts';
 
 export const load: PageServerLoad = async () => {
 	const products = await getShopProducts();

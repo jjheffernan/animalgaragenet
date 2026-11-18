@@ -16,7 +16,7 @@ Public media delivery via CDN base URL. v1 uses Supabase Storage; Phase 2 adds S
 `src/lib/server/media/cdn.ts`:
 
 ```typescript
-import { resolveUgcPublicUrl } from '$lib/server/media/cdn';
+import { resolveUgcPublicUrl } from '#lib/server/media/cdn.ts';
 
 // When PUBLIC_CDN_BASE_URL is set:
 resolveUgcPublicUrl('user-1/photo.jpg');

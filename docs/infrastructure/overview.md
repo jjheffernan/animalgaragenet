@@ -38,7 +38,7 @@ CDN, object storage, and Supabase architecture for Animal Garage.
 ### Frontend usage
 
 ```typescript
-import { config } from '$lib/config/env';
+import { config } from '#lib/config/env.ts';
 
 const imageUrl = `${config.cdnBaseUrl}/products/garage-flag-tee.jpg`;
 ```

@@ -401,7 +401,7 @@ Extend `.env.example` (names can alias existing AWS vars for compatibility):
 
 ```typescript
 // src/lib/utils/cdn.ts
-import { config } from '$lib/config/env';
+import { config } from '#lib/config/env.ts';
 
 export function cdnUrl(path: string): string {
 	if (!config.cdnBaseUrl) return path;

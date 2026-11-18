@@ -37,7 +37,7 @@ Imported assets get hashed filenames at build time. Static files keep their path
 ### CDN URL pattern
 
 ```typescript
-import { config } from '$lib/config/env';
+import { config } from '#lib/config/env.ts';
 
 const url = `${config.cdnBaseUrl}/products/${slug}/hero.jpg`;
 ```
@@ -97,4 +97,4 @@ Media items support `type: 'IMAGE' | 'VIDEO'` in types. Prototype shows thumbnai
 
 - Hotlink random URLs without seeds (breaks on refresh)
 - Store large binaries in the git repo — use CDN/S3
-- Import product photos from `$lib/assets/` — they belong on CDN
+- Import product photos from `#lib/assets/` — they belong on CDN

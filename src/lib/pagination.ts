@@ -70,10 +70,10 @@ export function paginationRange(pagination: PaginationMeta): { start: number; en
 
 export function buildPaginationUrl(
 	pathname: string,
-	searchParams: URLSearchParams,
+	searchParams: { toString(): string },
 	updates: { page?: number; perPage?: number; tab?: string; view?: ListView }
 ): string {
-	const params = new URLSearchParams(searchParams);
+	const params = new URLSearchParams(searchParams.toString());
 
 	if (updates.tab !== undefined) {
 		if (updates.tab === 'all' || updates.tab === '') params.delete('tab');

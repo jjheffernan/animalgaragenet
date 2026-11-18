@@ -67,7 +67,7 @@ interface LocaleConfig {
 
 | Pattern                 | Example                                                  |
 | ----------------------- | -------------------------------------------------------- |
-| Direct import in loader | `import { mockProducts } from '$lib/data/mock/products'` |
+| Direct import in loader | `import { mockProducts } from '#lib/data/mock/products'` |
 | Lookup helper           | `getProductBySlug(params.slug)`                          |
 | Slice helper            | `getFeaturedProducts(4)`                                 |
 | 404 on missing          | `error(404, 'Product not found')` in server load         |

@@ -42,7 +42,7 @@ Section headings use `SectionHeading`. Brand story paragraph inline in same file
 
 ```svelte
 <script lang="ts">
-	import SectionHeading from '$lib/components/shared/SectionHeading.svelte';
+	import SectionHeading from '#lib/components/shared/SectionHeading.svelte';
 </script>
 
 <svelte:head>
@@ -65,7 +65,7 @@ Root layout wraps all pages with Header + Footer automatically.
 1. Create `src/lib/components/<domain>/MyComponent.svelte` (PascalCase; see README for folders).
 2. Use Svelte 5 `$props()` with typed interface.
 3. Style with Tailwind — dark surfaces `bg-zinc-900`, accent `text-red-500` / `bg-red-600` (see `docs/style-guide/frontend/how-to-change-styling.md`). Admin UI tokens: `src/lib/components/admin/admin-ui.ts`.
-4. Import in page: `import MyComponent from '$lib/components/<domain>/MyComponent.svelte'`.
+4. Import in page: `import MyComponent from '#lib/components/<domain>/MyComponent.svelte'`.
 5. Extract when used on 2+ pages or complex; keep single-use markup inline.
 
 Reference components: `shared/SectionHeading.svelte`, `catalog/ProductCard.svelte`, `catalog/ProductGrid.svelte`, `shared/AnimatedReveal.svelte`.
@@ -75,7 +75,7 @@ Reference components: `shared/SectionHeading.svelte`, `catalog/ProductCard.svelt
 Routes call helpers in `src/lib/server/catalog/` — not mock imports directly:
 
 ```typescript
-import { getShopProducts } from '$lib/server/catalog/products';
+import { getShopProducts } from '#lib/server/catalog/products.ts';
 
 export const load: PageServerLoad = async () => {
 	const products = await getShopProducts();

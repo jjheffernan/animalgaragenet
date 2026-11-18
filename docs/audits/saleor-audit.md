@@ -198,7 +198,7 @@ const LOCALE_CHANNEL: Record<string, string> = {
 | ------------------------------------------------------- | ---------------------------------------------------------------- |
 | Saleor unit tests (mappers, channels, metadata, search) | ✅ 11/11 pass                                                    |
 | Full `npm run test:unit`                                | ✅ 39/39 pass                                                    |
-| Code review: catalog swap points                        | ✅ All primary loaders use `$lib/server/catalog/*`               |
+| Code review: catalog swap points                        | ✅ All primary loaders use `#lib/server/catalog/*`               |
 | Code review: env gate                                   | ✅ `isSaleorEnabled()` checks `PUBLIC_SALEOR_API_URL`            |
 | Live API smoke                                          | ⚠️ Not run — requires `PUBLIC_SALEOR_API_URL` + staging products |
 | `npm run test:e2e`                                      | ⚠️ Playwright browsers not installed (`npx playwright install`)  |

@@ -18,7 +18,7 @@ Minimal static page:
 
 ```svelte
 <script lang="ts">
-	import SectionHeading from '$lib/components/shared/SectionHeading.svelte';
+	import SectionHeading from '#lib/components/shared/SectionHeading.svelte';
 </script>
 
 <svelte:head>

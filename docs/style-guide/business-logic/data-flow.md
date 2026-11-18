@@ -27,7 +27,7 @@
 1. **Server loaders** in `+page.server.ts` import from `src/lib/data/mock/*.ts`
 2. Loaders return plain objects: `{ products }`, `{ product }`
 3. **Page components** receive data and pass to child components
-4. **Client components** read locale from `$lib/stores/locale.svelte.ts` for formatting
+4. **Client components** read locale from `#lib/stores/locale.svelte.ts` for formatting
 
 Example flow — shop page:
 
@@ -47,12 +47,12 @@ Swap loaders one at a time:
 
 ```typescript
 // Before
-import { mockProducts } from '$lib/data/mock/products';
+import { mockProducts } from '#lib/data/mock/products.ts';
 return { products: mockProducts };
 
 // After
-import { saleorFetch } from '$lib/server/saleor/client';
-import { PRODUCTS_QUERY } from '$lib/server/saleor/queries';
+import { saleorFetch } from '#lib/server/saleor/client.ts';
+import { PRODUCTS_QUERY } from '#lib/server/saleor/queries.ts';
 const result = await saleorFetch(PRODUCTS_QUERY, { channel, first: 24 });
 return { products: mapProducts(result.data) };
 ```

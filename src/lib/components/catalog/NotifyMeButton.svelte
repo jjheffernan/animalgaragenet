@@ -57,7 +57,7 @@
 		<button
 			type="submit"
 			disabled={loading}
-			class="shrink-0 rounded-sm border border-zinc-600 px-4 py-2 text-xs font-bold uppercase tracking-wider text-zinc-300 hover:border-red-600 hover:text-white disabled:opacity-50"
+			class="shrink-0 rounded-sm border border-zinc-600 px-4 py-2 text-xs font-bold tracking-wider text-zinc-300 uppercase hover:border-red-600 hover:text-white disabled:opacity-50"
 		>
 			{loading ? '…' : 'Notify Me'}
 		</button>

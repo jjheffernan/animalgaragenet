@@ -31,7 +31,7 @@ See [content/ghost.md](../content/ghost.md) for setup and tag conventions.
 
 ## Loader trace
 
-All content routes go through `$lib/server/ghost/posts.ts`, which gates on `isGhostEnabled()` before any network call.
+All content routes go through `#lib/server/ghost/posts.ts`, which gates on `isGhostEnabled()` before any network call.
 
 | Route            | Loader                          | Ghost function      | Mock fallback             |
 | ---------------- | ------------------------------- | ------------------- | ------------------------- |

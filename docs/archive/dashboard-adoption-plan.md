@@ -87,7 +87,7 @@ Sidebar config is decoupled in `src/routes/sidebar.js`; page routes in `src/rout
 
 ### Option A — In-repo `/admin` extension (recommended default)
 
-Extend existing `src/routes/admin/*` with a dashboard shell, shared `$lib/components/admin/*`, and server modules under `$lib/server/`.
+Extend existing `src/routes/admin/*` with a dashboard shell, shared `#lib/components/admin/*`, and server modules under `$lib/server/`.
 
 | Pros                                                         | Cons                                                                |
 | ------------------------------------------------------------ | ------------------------------------------------------------------- |

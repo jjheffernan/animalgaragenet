@@ -12,9 +12,9 @@ src/lib/components/
 
 **Index:** `src/lib/components/README.md` (full list by folder).
 
-Legacy flat imports (`$lib/components/Foo.svelte`) were removed in June 2026 — always import with the folder path, e.g. `$lib/components/catalog/ProductCard.svelte`.
+Legacy flat imports (`#lib/components/Foo.svelte`) were removed in June 2026 — always import with the folder path, e.g. `$lib/components/catalog/ProductCard.svelte`.
 
-Route-specific markup stays in `src/routes/**/+page.svelte`. Extract to `$lib/components/` when reused on 2+ pages.
+Route-specific markup stays in `src/routes/**/+page.svelte`. Extract to `#lib/components/` when reused on 2+ pages.
 
 ## Naming
 
@@ -29,7 +29,7 @@ Use `$props()` with a typed `Props` interface:
 
 ```svelte
 <script lang="ts">
-	import type { Product } from '$lib/types/saleor';
+	import type { Product } from '#lib/types/saleor.ts';
 
 	interface Props {
 		product: Product;
@@ -55,15 +55,15 @@ let { children, class: className = '', delay = 0 }: Props = $props();
 
 - Rename `class` prop to `className` internally (Svelte reserved word)
 - Use `Snippet` + `{@render children()}` for slot-like content
-- Import types from `$lib/types/`, not inline duplicates
+- Import types from `#lib/types/`, not inline duplicates
 
 ## Imports
 
 ```svelte
-import ProductCard from '$lib/components/catalog/ProductCard.svelte'; import type {Product} from '$lib/types/saleor';
+import ProductCard from '#lib/components/catalog/ProductCard.svelte'; import type {Product} from '$lib/types/saleor';
 ```
 
-Path alias `$lib` → `src/lib` (configured in SvelteKit).
+Path alias `#lib` → `src/lib` (configured in SvelteKit).
 
 ## Styling components
 
@@ -74,7 +74,7 @@ Path alias `$lib` → `src/lib` (configured in SvelteKit).
 ## State & stores
 
 - Local UI state: `$state()` in the component (e.g. `mobileOpen` in Header)
-- Shared locale/currency: import `locale` from `$lib/stores/locale.svelte.ts`
+- Shared locale/currency: import `locale` from `#lib/stores/locale.svelte.ts`
 - No global event buses or legacy Svelte stores (`writable`/`readable`)
 
 ## Export barrel

@@ -96,11 +96,11 @@ Both filters combine with AND logic before pagination.
 
 | Module                                       | Role                                                     |
 | -------------------------------------------- | -------------------------------------------------------- |
-| `$lib/server/ghost/client.ts`                | Content API fetch, `isGhostEnabled()`                    |
-| `$lib/server/ghost/posts.ts`                 | `listGuides`, `getGuide`, `listBlogPosts`, `getBlogPost` |
-| `$lib/server/ghost/guide-filters.ts`         | `getGuideFilterOptions`, category/topic filtering        |
-| `$lib/server/ghost/mappers.ts`               | Ghost post → `Guide` / `BlogPost`                        |
-| `$lib/components/content/RichContent.svelte` | Renders sanitized Ghost `html` or mock plain content     |
+| `#lib/server/ghost/client.ts`                | Content API fetch, `isGhostEnabled()`                    |
+| `#lib/server/ghost/posts.ts`                 | `listGuides`, `getGuide`, `listBlogPosts`, `getBlogPost` |
+| `#lib/server/ghost/guide-filters.ts`         | `getGuideFilterOptions`, category/topic filtering        |
+| `#lib/server/ghost/mappers.ts`               | Ghost post → `Guide` / `BlogPost`                        |
+| `#lib/components/content/RichContent.svelte` | Renders sanitized Ghost `html` or mock plain content     |
 
 Rendering uses Ghost’s pre-rendered `html` field, sanitized with `isomorphic-dompurify` before `{@html}` output.
 

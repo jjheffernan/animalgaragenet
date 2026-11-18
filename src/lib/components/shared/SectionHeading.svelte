@@ -9,7 +9,7 @@
 </script>
 
 <div class="mb-10 {align === 'center' ? 'text-center' : ''}">
-	<h2 class="font-display text-3xl font-bold uppercase tracking-wider text-white sm:text-4xl">
+	<h2 class="font-display text-3xl font-bold tracking-wider text-white uppercase sm:text-4xl">
 		{title}
 	</h2>
 	{#if subtitle}

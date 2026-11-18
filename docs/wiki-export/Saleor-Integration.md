@@ -61,7 +61,7 @@ Detailed audit: `docs/audits/saleor-audit.md` in the repo.
 
 ```typescript
 // src/routes/shop/+page.server.ts
-import { getShopProducts } from '$lib/server/catalog/products';
+import { getShopProducts } from '#lib/server/catalog/products.ts';
 
 export const load: PageServerLoad = async () => {
 	return { products: await getShopProducts() };

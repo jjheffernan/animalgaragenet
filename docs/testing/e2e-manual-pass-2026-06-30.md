@@ -106,7 +106,7 @@ Repositories fall back to in-memory `Map` stores when `SUPABASE_SERVICE_ROLE_KEY
 
 | ID   | Priority | Area     | Blocker                                                                                                                                | Fix type                |
 | ---- | -------- | -------- | -------------------------------------------------------------------------------------------------------------------------------------- | ----------------------- |
-| PB-1 | **P0**   | Build    | `ReviewPhotoUpload.svelte` imported `$lib/server/media/constants` — **production build failed** until shared `$lib/media/constants.ts` | **Code (fixed)**        |
+| PB-1 | **P0**   | Build    | `ReviewPhotoUpload.svelte` imported `#lib/server/media/constants` — **production build failed** until shared `$lib/media/constants.ts` | **Code (fixed)**        |
 | PB-2 | **P0**   | Auth     | Magic-link UI redirect broken (`AUTH-1`)                                                                                               | **Code**                |
 | PB-3 | **P0**   | Auth     | Netlify needs `PUBLIC_SUPABASE_*` + redirect URLs + matching `PUBLIC_SITE_URL` per `docs/plans/active/account-flow-fix.md`             | **Ops**                 |
 | PB-4 | **P0**   | Commerce | `PUBLIC_SALEOR_API_URL` unset → mock catalog; prod guard throws if Saleor down                                                         | **Ops** + verify Saleor |
@@ -124,7 +124,7 @@ Repositories fall back to in-memory `Map` stores when `SUPABASE_SERVICE_ROLE_KEY
 
 ### Code (this branch)
 
-1. **Done:** Split `MAX_FILES_PER_TESTIMONIAL` into `$lib/media/constants.ts` — unblocks `npm run build`.
+1. **Done:** Split `MAX_FILES_PER_TESTIMONIAL` into `#lib/media/constants.ts` — unblocks `npm run build`.
 2. **Done:** Rename sign-in `default` action → `magicLink` to coexist with `devSignIn`.
 3. **Done:** Add `e2e/auth-crud.spec.ts` + `e2e/helpers.ts` for auth + build log + testimonial moderation paths.
 4. **Todo:** Fix magic-link `use:enhance` to follow redirects (skip `update()` when `result.type === 'redirect'`, or remove custom enhance).

@@ -7,7 +7,7 @@
 </script>
 
 <blockquote class="border-l-2 border-red-600 pl-4 {className}">
-	<p class="font-display text-lg font-bold uppercase tracking-wide text-white">
+	<p class="font-display text-lg font-bold tracking-wide text-white uppercase">
 		Built different. Wrench harder. Send it louder.
 	</p>
 	<p class="mt-2 text-sm text-zinc-500">

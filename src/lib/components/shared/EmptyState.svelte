@@ -14,8 +14,8 @@
 <div
 	class="flex flex-col items-center justify-center rounded-sm border border-zinc-800 bg-zinc-900/50 px-6 py-16 text-center {className}"
 >
-	<p class="text-xs font-bold uppercase tracking-widest text-red-500">Nothing Here Yet</p>
-	<h3 class="mt-2 font-display text-xl font-bold uppercase text-white">{title}</h3>
+	<p class="text-xs font-bold tracking-widest text-red-500 uppercase">Nothing Here Yet</p>
+	<h3 class="mt-2 font-display text-xl font-bold text-white uppercase">{title}</h3>
 	{#if description}
 		<p class="mt-2 max-w-md text-sm text-zinc-500">{description}</p>
 	{/if}

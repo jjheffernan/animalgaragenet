@@ -48,9 +48,9 @@ Channels in Saleor map to market/locale (e.g. `us`, `eu`, `jp`). Wire channel se
 Replace mock loaders with:
 
 ```typescript
-import { saleorFetch } from '$lib/server/saleor/client';
-import { PRODUCTS_QUERY } from '$lib/server/saleor/queries';
-import { config } from '$lib/config/env';
+import { saleorFetch } from '#lib/server/saleor/client.ts';
+import { PRODUCTS_QUERY } from '#lib/server/saleor/queries.ts';
+import { config } from '#lib/config/env.ts';
 
 const result = await saleorFetch(PRODUCTS_QUERY, {
 	channel: config.saleorChannel,

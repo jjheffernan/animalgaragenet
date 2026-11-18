@@ -38,7 +38,7 @@ When rendering domain objects, import types:
 
 ```svelte
 <script lang="ts">
-	import type { Product } from '$lib/types/saleor';
+	import type { Product } from '#lib/types/saleor.ts';
 
 	interface Props {
 		product: Product;
@@ -62,7 +62,7 @@ Add scoped `<style>` only for animations (see `AnimatedReveal.svelte`).
 
 ```svelte
 <script lang="ts">
-	import MyComponent from '$lib/components/marketing/MyComponent.svelte';
+	import MyComponent from '#lib/components/marketing/MyComponent.svelte';
 </script>
 
 <MyComponent title="Hello" subtitle="World" />

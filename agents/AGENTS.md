@@ -24,7 +24,7 @@ Automotive brand merchandising/marketing site. Merch-forward digital touchpoint 
 - Svelte 5 runes: `$state`, `$derived`, `$props`, `$effect`
 - Components in `src/lib/components/`
 - Types in `src/lib/types/`
-- Path alias: `$lib` → `src/lib`
+- Path alias: `#lib` → `src/lib`
 
 ## Branch workflow
 

@@ -73,7 +73,7 @@
 		</div>
 		<h2
 			id="auth-gate-title"
-			class="mt-4 font-display text-xl font-bold uppercase tracking-wider text-white"
+			class="mt-4 font-display text-xl font-bold tracking-wider text-white uppercase"
 		>
 			{title}
 		</h2>
@@ -83,13 +83,13 @@
 		<div class="mt-6 flex flex-col gap-3 sm:flex-row">
 			<a
 				href={signInHref}
-				class="inline-flex items-center justify-center rounded-sm bg-red-600 px-5 py-2.5 text-sm font-bold uppercase tracking-wider text-white transition hover:bg-red-500"
+				class="inline-flex items-center justify-center rounded-sm bg-red-600 px-5 py-2.5 text-sm font-bold tracking-wider text-white uppercase transition hover:bg-red-500"
 			>
 				Sign in
 			</a>
 			<a
 				href={dismissHref}
-				class="inline-flex items-center justify-center rounded-sm border border-zinc-700 px-5 py-2.5 text-sm font-bold uppercase tracking-wider text-zinc-300 transition hover:border-zinc-500 hover:text-white"
+				class="inline-flex items-center justify-center rounded-sm border border-zinc-700 px-5 py-2.5 text-sm font-bold tracking-wider text-zinc-300 uppercase transition hover:border-zinc-500 hover:text-white"
 			>
 				{dismissLabel}
 			</a>

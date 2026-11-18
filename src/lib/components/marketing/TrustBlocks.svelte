@@ -16,7 +16,7 @@
 <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4 {className}">
 	{#each blocks as block (block.title)}
 		<div class="rounded-sm border border-zinc-800 bg-zinc-900/50 p-4">
-			<p class="text-xs font-bold uppercase tracking-wider text-red-500">{block.title}</p>
+			<p class="text-xs font-bold tracking-wider text-red-500 uppercase">{block.title}</p>
 			<p class="mt-1 text-sm text-zinc-500">{block.desc}</p>
 		</div>
 	{/each}

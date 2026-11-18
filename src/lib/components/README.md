@@ -1,6 +1,6 @@
 # Components index
 
-Svelte UI components grouped by usage domain. Import via `$lib/components/<folder>/<Name>.svelte`.
+Svelte UI components grouped by usage domain. Import via `#lib/components/<folder>/<Name>.svelte`.
 
 | Folder        | Components                                                                                                                                                                                     | Purpose                                   |
 | ------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------- |

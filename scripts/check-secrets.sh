@@ -84,6 +84,7 @@ for var in "${SERVER_ONLY_VARS[@]}"; do
 		':!src/routes/admin/runtime/+page.svelte' \
 		':!src/routes/admin/media/+page.svelte' \
 		':!src/lib/config/env.ts' \
+		':!src/env.ts' \
 		2>/dev/null; then
 		echo "ERROR: $var referenced outside server-only paths" >&2
 		fail=1
@@ -91,9 +92,10 @@ for var in "${SERVER_ONLY_VARS[@]}"; do
 done
 
 # Private env must not be imported from client-visible modules
-if git grep -n "from '\$env/dynamic/private'" -- 'src/lib/config/**' 'src/lib/stores/**' 'src/lib/components/**' \
+if git grep -nE "from '\\\$(env/dynamic/private|app/env/private)'" -- \
+	'src/lib/config/**' 'src/lib/stores/**' 'src/lib/components/**' \
 	2>/dev/null; then
-	echo "ERROR: \$env/dynamic/private imported in client-shared module" >&2
+	echo "ERROR: private env imported in client-shared module" >&2
 	fail=1
 fi
 

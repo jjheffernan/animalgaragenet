@@ -1,8 +1,7 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
-	import { goto } from '$app/navigation';
 	import type { Snippet } from 'svelte';
-	import { OAUTH_BUTTON_LABELS, type OAuthProvider } from '$lib/auth/oauth';
+	import { OAUTH_BUTTON_LABELS, type OAuthProvider } from '#lib/auth/oauth.ts';
 
 	let {
 		provider,
@@ -31,7 +30,8 @@
 		return async ({ result, update }) => {
 			onloading?.(false);
 			if (result.type === 'redirect') {
-				goto(result.location);
+				// Full navigation: live OAuth is external; Kit 3 goto() rejects non-app URLs.
+				window.location.assign(result.location);
 				return;
 			}
 			await update();
@@ -43,7 +43,7 @@
 	<button
 		type="submit"
 		{disabled}
-		class="flex w-full items-center justify-center gap-3 rounded-sm border border-zinc-700 py-4 text-sm font-bold uppercase tracking-wider text-zinc-300 transition hover:border-red-600 hover:text-white disabled:opacity-50"
+		class="flex w-full items-center justify-center gap-3 rounded-sm border border-zinc-700 py-4 text-sm font-bold tracking-wider text-zinc-300 uppercase transition hover:border-red-600 hover:text-white disabled:opacity-50"
 	>
 		{#if children}
 			{@render children()}

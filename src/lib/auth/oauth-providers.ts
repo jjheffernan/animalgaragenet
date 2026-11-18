@@ -1,4 +1,4 @@
-/** @deprecated Import from `$lib/auth/oauth` instead. */
+/** @deprecated Import from `#lib/auth/oauth.ts` instead. */
 export {
 	isOAuthProvider,
 	mockCallbackQuery,

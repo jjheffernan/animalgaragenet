@@ -1,8 +1,8 @@
 import { fail, redirect, type RequestEvent } from '@sveltejs/kit';
-import { isOAuthProvider, mockCallbackUrl, type OAuthProvider } from '$lib/auth/oauth';
-import { isProductionHostname } from '$lib/server/auth/local-dev';
-import { signInWithOAuth } from '$lib/server/supabase/auth';
-import { createServerClient } from '$lib/server/supabase/client';
+import { isOAuthProvider, mockCallbackUrl, type OAuthProvider } from '#lib/auth/oauth.ts';
+import { isProductionHostname } from '#lib/server/auth/local-dev.ts';
+import { signInWithOAuth } from '#lib/server/supabase/auth.ts';
+import { createServerClient } from '#lib/server/supabase/client.ts';
 
 /** Shared form action for OAuth sign-in / sign-up pages (SSR PKCE — no browser anon key). */
 export async function handleOAuthAction(event: RequestEvent) {
@@ -27,7 +27,7 @@ export async function handleOAuthAction(event: RequestEvent) {
 			return fail(400, { error: result.message });
 		}
 
-		throw redirect(303, result.url);
+		throw redirect(303, result.url, { external: true });
 	}
 
 	if (isProductionHostname(event.url.hostname)) {

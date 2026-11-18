@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
-	import AdminPageHeader from '$lib/components/admin/AdminPageHeader.svelte';
+	import AdminPageHeader from '#lib/components/admin/AdminPageHeader.svelte';
 	import {
 		adminAlertWarning,
 		adminBadgeOff,
@@ -12,8 +12,8 @@
 		adminKpiCardMuted,
 		adminLink,
 		adminTableHead
-	} from '$lib/components/admin/admin-ui';
-	import type { DashboardActivityType } from '$lib/server/admin/dashboard-activity';
+	} from '#lib/components/admin/admin-ui.ts';
+	import type { DashboardActivityType } from '#lib/server/admin/dashboard-activity.ts';
 	import type { PageData } from './$types';
 
 	let { data }: { data: PageData } = $props();
@@ -47,7 +47,6 @@
 		bug: 'Bug',
 		youtube: 'YouTube'
 	};
-
 	const kpiCardClass = $derived(
 		data.stats.commerceSource === 'mirror' ? adminKpiCard : adminKpiCardMuted
 	);
@@ -85,10 +84,11 @@
 	<section class={adminCard}>
 		<div class="flex flex-wrap items-center justify-between gap-3">
 			<div>
-				<h2 class="text-sm font-bold uppercase tracking-widest text-white">System health</h2>
+				<h2 class="text-sm font-bold tracking-widest text-white uppercase">System health</h2>
 				<p class="mt-1 text-xs text-zinc-500">Key integrations — full status on Runtime</p>
 			</div>
-			<a href={resolve('/admin/runtime')} class={adminBtnGhost}>Runtime details</a>
+
+			<a href={resolve('admin/runtime')} class={adminBtnGhost}>Runtime details</a>
 		</div>
 		<div class="mt-4 flex flex-wrap gap-2">
 			{#each snapshotKeys as item (item.key)}
@@ -103,28 +103,28 @@
 	<!-- @inspiration-scaffold: intentional — commerce KPI row; wire Saleor aggregates when commerce routes ship -->
 	<div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
 		<div class={kpiCardClass}>
-			<p class="text-xs font-bold uppercase tracking-widest text-zinc-500">Open orders</p>
+			<p class="text-xs font-bold tracking-widest text-zinc-500 uppercase">Open orders</p>
 			<p class="mt-2 text-3xl font-bold text-red-500">{data.stats.orders}</p>
 			<p class="mt-1 text-xs text-zinc-600">{ordersHint}</p>
 		</div>
 		<div class={kpiCardClass}>
-			<p class="text-xs font-bold uppercase tracking-widest text-zinc-500">Revenue (MTD)</p>
+			<p class="text-xs font-bold tracking-widest text-zinc-500 uppercase">Revenue (MTD)</p>
 			<p class="mt-2 text-3xl font-bold text-zinc-100">{data.stats.revenueLabel}</p>
 			<p class="mt-1 text-xs text-zinc-600">{revenueHint}</p>
 		</div>
 		<a
-			href={resolve('/admin/users')}
+			href={resolve('admin/users')}
 			class="{adminKpiCard} transition hover:border-zinc-700 hover:bg-zinc-900/80"
 		>
-			<p class="text-xs font-bold uppercase tracking-widest text-zinc-500">Users</p>
+			<p class="text-xs font-bold tracking-widest text-zinc-500 uppercase">Users</p>
 			<p class="mt-2 text-3xl font-bold text-white">{data.stats.users}</p>
 			<p class="mt-1 text-xs text-red-400">Manage accounts →</p>
 		</a>
 		<a
-			href={resolve('/admin/bug-reports')}
+			href={resolve('admin/bug-reports')}
 			class="{adminKpiCard} transition hover:border-zinc-700 hover:bg-zinc-900/80"
 		>
-			<p class="text-xs font-bold uppercase tracking-widest text-zinc-500">Open bugs</p>
+			<p class="text-xs font-bold tracking-widest text-zinc-500 uppercase">Open bugs</p>
 			<p class="mt-2 text-3xl font-bold text-red-400">{data.stats.openBugs}</p>
 			<p class="mt-1 text-xs text-red-400">View inbox →</p>
 		</a>
@@ -133,7 +133,7 @@
 	<div class="grid gap-6 lg:grid-cols-3">
 		<section class="{adminCardFlush} lg:col-span-2">
 			<div class="flex flex-wrap items-center justify-between gap-3 px-6 pt-6">
-				<h2 class="text-sm font-bold uppercase tracking-widest text-white">Recent activity</h2>
+				<h2 class="text-sm font-bold tracking-widest text-white uppercase">Recent activity</h2>
 				<div class="flex flex-wrap gap-3">
 					{#each activityViewAll as link (link.href)}
 						<a href={resolve(link.href)} class={adminLink}>View {link.label}</a>
@@ -182,7 +182,7 @@
 		</section>
 
 		<section class={adminCard}>
-			<h2 class="text-sm font-bold uppercase tracking-widest text-white">Staff shortcuts</h2>
+			<h2 class="text-sm font-bold tracking-widest text-white uppercase">Staff shortcuts</h2>
 			<ul class="mt-4 space-y-1">
 				{#each quickLinks as link (link.href)}
 					<li>

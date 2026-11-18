@@ -1,12 +1,12 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
-	import SectionHeading from '$lib/components/shared/SectionHeading.svelte';
-	import AnimatedReveal from '$lib/components/shared/AnimatedReveal.svelte';
-	import PaginatedListCanvas from '$lib/components/catalog/PaginatedListCanvas.svelte';
-	import CatalogRibbonShell from '$lib/components/catalog/CatalogRibbonShell.svelte';
-	import CategoryPill from '$lib/components/catalog/CategoryPill.svelte';
-	import type { GuideFilterOption } from '$lib/server/ghost/guide-filters';
-	import { catalogRibbonNavClass } from '$lib/ui/catalog-ribbon';
+	import SectionHeading from '#lib/components/shared/SectionHeading.svelte';
+	import AnimatedReveal from '#lib/components/shared/AnimatedReveal.svelte';
+	import PaginatedListCanvas from '#lib/components/catalog/PaginatedListCanvas.svelte';
+	import CatalogRibbonShell from '#lib/components/catalog/CatalogRibbonShell.svelte';
+	import CategoryPill from '#lib/components/catalog/CategoryPill.svelte';
+	import type { GuideFilterOption } from '#lib/server/ghost/guide-filters.ts';
+	import { catalogRibbonNavClass } from '#lib/ui/catalog-ribbon.ts';
 
 	let { data } = $props();
 
@@ -19,7 +19,7 @@
 		if (topic !== 'all') params.set('topic', topic);
 
 		const qs = params.toString();
-		return qs ? resolve(`/guides?${qs}`) : resolve('/guides');
+		return qs ? resolve(`guides?${qs}`) : resolve('guides');
 	}
 
 	function categoryHref(cat: GuideFilterOption) {
@@ -54,7 +54,7 @@
 
 <section class="border-b border-zinc-800 bg-zinc-900/50 py-16">
 	<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-		<h1 class="font-display text-4xl font-bold uppercase tracking-wider text-white">Guides</h1>
+		<h1 class="font-display text-4xl font-bold tracking-wider text-white uppercase">Guides</h1>
 		<p class="mt-2 text-zinc-400">Pillar content — learn before you wrench.</p>
 	</div>
 </section>
@@ -94,7 +94,7 @@
 			<div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
 				{#each data.guides as guide (guide.id)}
 					<a
-						href={resolve(`/guides/${guide.slug}`)}
+						href={resolve(`guides/${guide.slug}`)}
 						class="group block overflow-hidden rounded-sm border border-zinc-800 bg-zinc-900"
 					>
 						<img
@@ -104,7 +104,7 @@
 							loading="lazy"
 						/>
 						<div class="p-4">
-							<p class="text-xs font-bold uppercase tracking-widest text-red-500">
+							<p class="text-xs font-bold tracking-widest text-red-500 uppercase">
 								{guide.category} · {guide.readTimeMinutes} min read
 							</p>
 							<h3 class="mt-1 font-medium text-white group-hover:text-red-400">{guide.title}</h3>

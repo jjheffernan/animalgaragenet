@@ -1,14 +1,14 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
-	import SectionHeading from '$lib/components/shared/SectionHeading.svelte';
-	import MediaGallery from '$lib/components/content/MediaGallery.svelte';
-	import UGCWall from '$lib/components/content/UGCWall.svelte';
-	import VideoGrid from '$lib/components/video/VideoGrid.svelte';
-	import AnimatedReveal from '$lib/components/shared/AnimatedReveal.svelte';
-	import PageMeta from '$lib/components/shared/PageMeta.svelte';
-	import PaginatedListCanvas from '$lib/components/catalog/PaginatedListCanvas.svelte';
-	import MediaFilterTabs from '$lib/components/content/MediaFilterTabs.svelte';
-	import CatalogRibbonShell from '$lib/components/catalog/CatalogRibbonShell.svelte';
+	import SectionHeading from '#lib/components/shared/SectionHeading.svelte';
+	import MediaGallery from '#lib/components/content/MediaGallery.svelte';
+	import UGCWall from '#lib/components/content/UGCWall.svelte';
+	import VideoGrid from '#lib/components/video/VideoGrid.svelte';
+	import AnimatedReveal from '#lib/components/shared/AnimatedReveal.svelte';
+	import PageMeta from '#lib/components/shared/PageMeta.svelte';
+	import PaginatedListCanvas from '#lib/components/catalog/PaginatedListCanvas.svelte';
+	import MediaFilterTabs from '#lib/components/content/MediaFilterTabs.svelte';
+	import CatalogRibbonShell from '#lib/components/catalog/CatalogRibbonShell.svelte';
 
 	let { data } = $props();
 </script>
@@ -20,7 +20,7 @@
 
 <section class="border-b border-zinc-800 bg-zinc-900/50 py-16">
 	<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-		<h1 class="font-display text-4xl font-bold uppercase tracking-wider text-white">Media</h1>
+		<h1 class="font-display text-4xl font-bold tracking-wider text-white uppercase">Media</h1>
 		<p class="mt-2 text-zinc-400">
 			Builds, events, and behind-the-scenes from the Animal Garage crew.
 		</p>
@@ -73,8 +73,8 @@
 <section class="border-t border-zinc-800 bg-zinc-900/30 py-12">
 	<div class="mx-auto max-w-3xl px-4 text-center sm:px-6">
 		<a
-			href={resolve('/watch')}
-			class="text-sm font-bold uppercase tracking-widest text-red-500 hover:text-red-400"
+			href={resolve('watch')}
+			class="text-sm font-bold tracking-widest text-red-500 uppercase hover:text-red-400"
 			>Full video hub →</a
 		>
 	</div>

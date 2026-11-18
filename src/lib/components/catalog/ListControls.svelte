@@ -9,8 +9,8 @@
 		paginationRange,
 		type ListView,
 		type PaginationMeta
-	} from '$lib/pagination';
-	import { resolvePath } from '$lib/utils/paths';
+	} from '#lib/pagination.ts';
+	import { resolvePath } from '#lib/utils/paths.ts';
 
 	interface Props {
 		pagination: PaginationMeta;
@@ -40,7 +40,7 @@
 	}
 
 	function navigate(updates: { page?: number; perPage?: number; view?: ListView }) {
-		goto(hrefFor(updates), { keepFocus: true, noScroll: true });
+		goto(hrefFor(updates), { reset: false });
 	}
 </script>
 
@@ -51,11 +51,11 @@
 			role="group"
 			aria-label="View layout"
 		>
-			<span class="mr-1 text-sm font-bold uppercase tracking-wider text-zinc-500">View</span>
+			<span class="mr-1 text-sm font-bold tracking-wider text-zinc-500 uppercase">View</span>
 			{#each LIST_VIEW_OPTIONS as option (option)}
 				{#if activeView === option}
 					<span
-						class="rounded-sm border border-red-600 bg-red-600 px-3 py-1.5 text-xs font-bold uppercase tracking-wider text-white"
+						class="rounded-sm border border-red-600 bg-red-600 px-3 py-1.5 text-xs font-bold tracking-wider text-white uppercase"
 						aria-current="true"
 					>
 						{viewLabels[option]}
@@ -63,7 +63,7 @@
 				{:else}
 					<button
 						type="button"
-						class="rounded-sm border border-zinc-700 px-3 py-1.5 text-xs font-bold uppercase tracking-wider text-zinc-300 transition hover:border-zinc-500 hover:text-white"
+						class="rounded-sm border border-zinc-700 px-3 py-1.5 text-xs font-bold tracking-wider text-zinc-300 uppercase transition hover:border-zinc-500 hover:text-white"
 						onclick={() => navigate({ view: option })}
 					>
 						{viewLabels[option]}
@@ -76,7 +76,7 @@
 
 {#snippet perPageSelect()}
 	<label class="flex items-center justify-center gap-2 text-sm text-zinc-500 sm:justify-start">
-		<span class="font-bold uppercase tracking-wider">Per page</span>
+		<span class="font-bold tracking-wider uppercase">Per page</span>
 		<select
 			class="rounded-sm border border-zinc-700 bg-zinc-900 px-2 py-1.5 text-sm text-zinc-200 focus:border-red-600 focus:outline-none"
 			value={pagination.perPage}
@@ -107,35 +107,35 @@
 			{#if pagination.page > 1}
 				<button
 					type="button"
-					class="rounded-sm border border-zinc-700 px-3 py-1.5 text-xs font-bold uppercase tracking-wider text-zinc-300 transition hover:border-zinc-500 hover:text-white"
+					class="rounded-sm border border-zinc-700 px-3 py-1.5 text-xs font-bold tracking-wider text-zinc-300 uppercase transition hover:border-zinc-500 hover:text-white"
 					onclick={() => navigate({ page: pagination.page - 1 })}
 				>
 					Prev
 				</button>
 			{:else}
 				<span
-					class="rounded-sm border border-zinc-800 px-3 py-1.5 text-xs font-bold uppercase tracking-wider text-zinc-600"
+					class="rounded-sm border border-zinc-800 px-3 py-1.5 text-xs font-bold tracking-wider text-zinc-600 uppercase"
 					aria-disabled="true"
 				>
 					Prev
 				</span>
 			{/if}
 
-			<span class="px-2 text-xs font-bold uppercase tracking-wider text-zinc-500">
+			<span class="px-2 text-xs font-bold tracking-wider text-zinc-500 uppercase">
 				Page {pagination.page} of {pagination.totalPages}
 			</span>
 
 			{#if pagination.page < pagination.totalPages}
 				<button
 					type="button"
-					class="rounded-sm border border-zinc-700 px-3 py-1.5 text-xs font-bold uppercase tracking-wider text-zinc-300 transition hover:border-zinc-500 hover:text-white"
+					class="rounded-sm border border-zinc-700 px-3 py-1.5 text-xs font-bold tracking-wider text-zinc-300 uppercase transition hover:border-zinc-500 hover:text-white"
 					onclick={() => navigate({ page: pagination.page + 1 })}
 				>
 					Next
 				</button>
 			{:else}
 				<span
-					class="rounded-sm border border-zinc-800 px-3 py-1.5 text-xs font-bold uppercase tracking-wider text-zinc-600"
+					class="rounded-sm border border-zinc-800 px-3 py-1.5 text-xs font-bold tracking-wider text-zinc-600 uppercase"
 					aria-disabled="true"
 				>
 					Next

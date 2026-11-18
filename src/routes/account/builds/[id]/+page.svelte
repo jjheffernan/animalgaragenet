@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
 	import { resolve } from '$app/paths';
-	import BuildLogForm from '$lib/components/forms/BuildLogForm.svelte';
-	import { BUILD_LOG_STATUS_LABELS } from '$lib/types/build-log';
+	import BuildLogForm from '#lib/components/forms/BuildLogForm.svelte';
+	import { BUILD_LOG_STATUS_LABELS } from '#lib/types/build-log.ts';
 	import type { ActionData, PageData } from './$types';
 
 	let { data, form }: { data: PageData; form: ActionData } = $props();
@@ -14,8 +14,8 @@
 </svelte:head>
 
 <div class="flex flex-wrap items-center justify-between gap-3">
-	<h1 class="font-display text-2xl font-bold uppercase text-white">Edit Build Log</h1>
-	<span class="text-xs font-bold uppercase tracking-wider text-zinc-500"
+	<h1 class="font-display text-2xl font-bold text-white uppercase">Edit Build Log</h1>
+	<span class="text-xs font-bold tracking-wider text-zinc-500 uppercase"
 		>{BUILD_LOG_STATUS_LABELS[data.log.status]}</span
 	>
 </div>
@@ -62,7 +62,7 @@
 			type="submit"
 			formaction="?/saveDraft"
 			disabled={saving || data.log.status === 'pending' || data.log.status === 'approved'}
-			class="rounded-sm border border-zinc-700 px-4 py-2 text-sm font-bold uppercase tracking-wider text-zinc-300 transition hover:border-red-600 hover:text-white disabled:opacity-50"
+			class="rounded-sm border border-zinc-700 px-4 py-2 text-sm font-bold tracking-wider text-zinc-300 uppercase transition hover:border-red-600 hover:text-white disabled:opacity-50"
 		>
 			Save draft
 		</button>
@@ -70,11 +70,11 @@
 			type="submit"
 			formaction="?/submit"
 			disabled={saving}
-			class="rounded-sm bg-red-600 px-4 py-2 text-sm font-bold uppercase tracking-wider text-white transition hover:bg-red-500 disabled:opacity-50"
+			class="rounded-sm bg-red-600 px-4 py-2 text-sm font-bold tracking-wider text-white uppercase transition hover:bg-red-500 disabled:opacity-50"
+			>{data.log.status === 'approved' ? 'Submit edits for review' : 'Submit for review'}</button
 		>
-			{data.log.status === 'approved' ? 'Submit edits for review' : 'Submit for review'}
-		</button>
-		<a href={resolve('/account/builds')} class="text-sm text-zinc-400 transition hover:text-white"
+
+		<a href={resolve('account/builds')} class="text-sm text-zinc-400 transition hover:text-white"
 			>Cancel</a
 		>
 	</div>

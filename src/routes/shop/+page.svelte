@@ -1,16 +1,16 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import SectionHeading from '$lib/components/shared/SectionHeading.svelte';
-	import LocaleSelector from '$lib/components/navigation/LocaleSelector.svelte';
-	import AnimatedReveal from '$lib/components/shared/AnimatedReveal.svelte';
-	import PageMeta from '$lib/components/shared/PageMeta.svelte';
-	import ProductGrid from '$lib/components/catalog/ProductGrid.svelte';
-	import PaginatedListCanvas from '$lib/components/catalog/PaginatedListCanvas.svelte';
-	import CatalogRibbonShell from '$lib/components/catalog/CatalogRibbonShell.svelte';
-	import CategoryPill from '$lib/components/catalog/CategoryPill.svelte';
-	import { groupShopFilterOptions, type ShopFilterOption } from '$lib/data/shop-filters';
-	import { catalogRibbonNavClass, ribbonSectionLabelClass } from '$lib/ui/catalog-ribbon';
-	import { locale } from '$lib/stores/locale.svelte';
+	import SectionHeading from '#lib/components/shared/SectionHeading.svelte';
+	import LocaleSelector from '#lib/components/navigation/LocaleSelector.svelte';
+	import AnimatedReveal from '#lib/components/shared/AnimatedReveal.svelte';
+	import PageMeta from '#lib/components/shared/PageMeta.svelte';
+	import ProductGrid from '#lib/components/catalog/ProductGrid.svelte';
+	import PaginatedListCanvas from '#lib/components/catalog/PaginatedListCanvas.svelte';
+	import CatalogRibbonShell from '#lib/components/catalog/CatalogRibbonShell.svelte';
+	import CategoryPill from '#lib/components/catalog/CategoryPill.svelte';
+	import { groupShopFilterOptions, type ShopFilterOption } from '#lib/data/shop-filters.ts';
+	import { catalogRibbonNavClass, ribbonSectionLabelClass } from '#lib/ui/catalog-ribbon.ts';
+	import { locale } from '#lib/stores/locale.svelte.ts';
 
 	let { data } = $props();
 
@@ -40,10 +40,7 @@
 
 	function onCollectionChange(event: Event) {
 		const value = (event.currentTarget as HTMLSelectElement).value;
-		goto(getShopPath({ collection: value || null }), {
-			keepFocus: true,
-			noScroll: true
-		});
+		goto(getShopPath({ collection: value || null }), { reset: false });
 	}
 
 	const sectionTitle = $derived(
@@ -66,7 +63,7 @@
 	<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 		<div class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
 			<div>
-				<h1 class="font-display text-4xl font-bold uppercase tracking-wider text-white">Shop</h1>
+				<h1 class="font-display text-4xl font-bold tracking-wider text-white uppercase">Shop</h1>
 				<p class="mt-2 text-zinc-400">Official Animal Garage merch — ships worldwide.</p>
 			</div>
 			<LocaleSelector />
@@ -104,10 +101,10 @@
 			{#if data.collections.length > 0}
 				<div class="ms-2 shrink-0 border-l border-zinc-800 pl-2">
 					<label class="flex items-center gap-2">
-						<span class="text-xs font-bold uppercase tracking-widest text-zinc-500">Collection</span
+						<span class="text-xs font-bold tracking-widest text-zinc-500 uppercase">Collection</span
 						>
 						<select
-							class="max-w-[12rem] truncate rounded-sm border border-zinc-700 bg-zinc-900 px-3 py-2 text-xs font-bold uppercase tracking-wider text-zinc-200 focus:border-red-600 focus:outline-none {data.collection
+							class="max-w-[12rem] truncate rounded-sm border border-zinc-700 bg-zinc-900 px-3 py-2 text-xs font-bold tracking-wider text-zinc-200 uppercase focus:border-red-600 focus:outline-none {data.collection
 								? 'border-red-600 text-white'
 								: ''}"
 							aria-label="Filter by collection"

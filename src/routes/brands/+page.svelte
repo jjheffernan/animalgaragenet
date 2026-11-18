@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
-	import SectionHeading from '$lib/components/shared/SectionHeading.svelte';
-	import AnimatedReveal from '$lib/components/shared/AnimatedReveal.svelte';
-	import PaginatedListCanvas from '$lib/components/catalog/PaginatedListCanvas.svelte';
+	import SectionHeading from '#lib/components/shared/SectionHeading.svelte';
+	import AnimatedReveal from '#lib/components/shared/AnimatedReveal.svelte';
+	import PaginatedListCanvas from '#lib/components/catalog/PaginatedListCanvas.svelte';
 
 	let { data } = $props();
 </script>
@@ -13,7 +13,7 @@
 
 <section class="border-b border-zinc-800 bg-zinc-900/50 py-16">
 	<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-		<h1 class="font-display text-4xl font-bold uppercase tracking-wider text-white">Brands</h1>
+		<h1 class="font-display text-4xl font-bold tracking-wider text-white uppercase">Brands</h1>
 		<p class="mt-2 text-zinc-400">Shop the brands we trust and run in our own builds.</p>
 	</div>
 </section>
@@ -26,7 +26,7 @@
 		<div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
 			{#each data.brands as brand (brand.id)}
 				<a
-					href={resolve(`/brands/${brand.slug}`)}
+					href={resolve(`brands/${brand.slug}`)}
 					class="group flex flex-col overflow-hidden rounded-sm border border-zinc-800 bg-zinc-900 transition hover:border-red-600/50"
 				>
 					{#if brand.heroImage}
@@ -45,7 +45,7 @@
 							loading="lazy"
 						/>
 						<div>
-							<h3 class="font-display font-bold uppercase tracking-wider text-white">
+							<h3 class="font-display font-bold tracking-wider text-white uppercase">
 								{brand.name}
 							</h3>
 							<p class="mt-1 text-sm text-zinc-500">{brand.description}</p>

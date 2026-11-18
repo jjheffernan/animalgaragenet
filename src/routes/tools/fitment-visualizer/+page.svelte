@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
-	import AnimatedReveal from '$lib/components/shared/AnimatedReveal.svelte';
+	import AnimatedReveal from '#lib/components/shared/AnimatedReveal.svelte';
 
 	let offset = $state(-10);
 	let width = $state(9.5);
@@ -24,11 +24,12 @@
 <section class="border-b border-zinc-800 bg-zinc-900/50 py-16">
 	<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 		<nav class="mb-4 text-sm text-zinc-500">
-			<a href={resolve('/tools/tire-calculator')} class="hover:text-red-500">Tools</a>
+			<a href={resolve('tools/tire-calculator')} class="hover:text-red-500">Tools</a>
+
 			<span class="mx-2">/</span>
 			<span class="text-zinc-300">Fitment Visualizer</span>
 		</nav>
-		<h1 class="font-display text-4xl font-bold uppercase tracking-wider text-white">
+		<h1 class="font-display text-4xl font-bold tracking-wider text-white uppercase">
 			Fitment Visualizer
 		</h1>
 		<p class="mt-2 text-zinc-400">Offset visualization — see poke vs tuck before you buy.</p>
@@ -40,7 +41,7 @@
 		<AnimatedReveal>
 			<div class="space-y-4">
 				<label class="block">
-					<span class="text-xs font-bold uppercase tracking-widest text-zinc-500">Offset (mm)</span>
+					<span class="text-xs font-bold tracking-widest text-zinc-500 uppercase">Offset (mm)</span>
 					<input
 						type="range"
 						bind:value={offset}
@@ -51,7 +52,7 @@
 					<p class="mt-1 text-white">{offset} mm — {fitmentLabel}</p>
 				</label>
 				<label class="block">
-					<span class="text-xs font-bold uppercase tracking-widest text-zinc-500"
+					<span class="text-xs font-bold tracking-widest text-zinc-500 uppercase"
 						>Tire Width (in)</span
 					>
 					<input
@@ -64,7 +65,7 @@
 					/>
 				</label>
 				<label class="block">
-					<span class="text-xs font-bold uppercase tracking-widest text-zinc-500"
+					<span class="text-xs font-bold tracking-widest text-zinc-500 uppercase"
 						>Rim Width (in)</span
 					>
 					<input
@@ -93,12 +94,12 @@
 				class="relative flex h-72 items-center justify-center rounded-sm border border-zinc-800 bg-zinc-900"
 			>
 				<p
-					class="absolute left-4 top-4 text-[10px] font-bold uppercase tracking-widest text-zinc-600"
+					class="absolute top-4 left-4 text-[10px] font-bold tracking-widest text-zinc-600 uppercase"
 				>
 					Fender line
 				</p>
 				<div
-					class="absolute left-1/2 top-8 h-48 w-px -translate-x-1/2 bg-zinc-600"
+					class="absolute top-8 left-1/2 h-48 w-px -translate-x-1/2 bg-zinc-600"
 					aria-hidden="true"
 				></div>
 				<div
@@ -111,7 +112,7 @@
 					aria-label="Wheel visualization"
 				></div>
 				<div
-					class="absolute bottom-4 left-0 right-0 flex justify-between px-6 text-[10px] font-bold uppercase tracking-widest text-zinc-500"
+					class="absolute right-0 bottom-4 left-0 flex justify-between px-6 text-[10px] font-bold tracking-widest text-zinc-500 uppercase"
 				>
 					<span>← Poke</span>
 					<span class="text-red-500">{fitmentLabel}</span>
@@ -125,7 +126,7 @@
 <section class="border-t border-zinc-800 bg-zinc-900/30 py-16">
 	<div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
 		<AnimatedReveal>
-			<h2 class="font-display text-xl font-bold uppercase text-white">Fitment Guide Tips</h2>
+			<h2 class="font-display text-xl font-bold text-white uppercase">Fitment Guide Tips</h2>
 			<ul class="mt-6 space-y-4 text-sm leading-relaxed text-zinc-400">
 				<li>
 					<strong class="text-zinc-300">Measure twice.</strong> Check inner fender clearance with the

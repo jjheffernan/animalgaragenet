@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
-	import type { Collection } from '$lib/types/saleor';
+	import type { Collection } from '#lib/types/saleor.ts';
 
 	interface Props {
 		collection: Collection;
@@ -10,7 +10,7 @@
 </script>
 
 <a
-	href="{resolve('/shop')}?collection={collection.slug}"
+	href="{resolve('shop')}?collection={collection.slug}"
 	class="group relative block overflow-hidden rounded-sm"
 >
 	<div class="aspect-[2/1] overflow-hidden bg-zinc-800">
@@ -27,12 +27,12 @@
 		></div>
 	</div>
 	<div class="absolute inset-0 flex flex-col justify-end p-6 sm:p-8">
-		<h3 class="font-display text-2xl font-bold uppercase tracking-wider text-white sm:text-3xl">
+		<h3 class="font-display text-2xl font-bold tracking-wider text-white uppercase sm:text-3xl">
 			{collection.name}
 		</h3>
 		<p class="mt-2 max-w-md text-sm text-zinc-300">{collection.description}</p>
 		<span
-			class="mt-4 inline-flex items-center text-xs font-bold uppercase tracking-widest text-red-500 group-hover:text-red-400"
+			class="mt-4 inline-flex items-center text-xs font-bold tracking-widest text-red-500 uppercase group-hover:text-red-400"
 		>
 			Shop collection →
 		</span>

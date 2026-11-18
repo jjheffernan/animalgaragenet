@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
-	import type { BuildThread } from '$lib/types/domain';
+	import type { BuildThread } from '#lib/types/domain.ts';
 
 	interface Props {
 		build: BuildThread;
@@ -11,7 +11,7 @@
 </script>
 
 <a
-	href={resolve(`/builds/${build.slug}`)}
+	href={resolve(`builds/${build.slug}`)}
 	class="group block overflow-hidden rounded-sm border border-zinc-800 bg-zinc-900 transition hover:border-red-600/50 {className}"
 >
 	<div class="relative aspect-[16/10] overflow-hidden bg-zinc-800">
@@ -25,7 +25,7 @@
 		{/if}
 		{#if build.featured}
 			<span
-				class="absolute left-2 top-2 rounded-sm bg-red-600 px-2 py-0.5 text-[10px] font-bold uppercase text-white"
+				class="absolute top-2 left-2 rounded-sm bg-red-600 px-2 py-0.5 text-[10px] font-bold text-white uppercase"
 			>
 				Featured
 			</span>

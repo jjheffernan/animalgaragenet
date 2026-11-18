@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
-	import PromoCodeForm from '$lib/components/commerce/PromoCodeForm.svelte';
-	import { locale } from '$lib/stores/locale.svelte';
+	import PromoCodeForm from '#lib/components/commerce/PromoCodeForm.svelte';
+	import { locale } from '#lib/stores/locale.svelte.ts';
 	import type { ActionData, PageData } from './$types';
 
 	let { data, form }: { data: PageData; form: ActionData } = $props();
@@ -18,7 +18,7 @@
 	<title>Redeem Code — Animal Garage</title>
 </svelte:head>
 
-<h1 class="font-display text-2xl font-bold uppercase text-white">Redeem</h1>
+<h1 class="font-display text-2xl font-bold text-white uppercase">Redeem</h1>
 <p class="mt-1 text-zinc-400">Apply voucher and gift card codes from Saleor to your cart.</p>
 
 <PromoCodeForm
@@ -38,7 +38,7 @@
 {/if}
 
 <section class="mt-8 rounded-sm border border-zinc-800 bg-zinc-900/30 p-6">
-	<h2 class="text-xs font-bold uppercase tracking-widest text-zinc-500">Cart</h2>
+	<h2 class="text-xs font-bold tracking-widest text-zinc-500 uppercase">Cart</h2>
 	{#if data.saleorEnabled}
 		{#if data.checkout}
 			<p class="mt-3 text-sm text-zinc-400">
@@ -72,7 +72,8 @@
 			<span class="font-mono text-zinc-400">{data.mockCodesHint.join(', ')}</span>
 		</p>
 	{/if}
-	<a href={resolve('/cart')} class="mt-4 inline-block text-sm text-red-500 hover:text-red-400"
+
+	<a href={resolve('cart')} class="mt-4 inline-block text-sm text-red-500 hover:text-red-400"
 		>View cart →</a
 	>
 </section>

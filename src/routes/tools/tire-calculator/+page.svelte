@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
-	import AnimatedReveal from '$lib/components/shared/AnimatedReveal.svelte';
+	import AnimatedReveal from '#lib/components/shared/AnimatedReveal.svelte';
 
 	let width = $state(225);
 	let aspect = $state(45);
@@ -28,11 +28,12 @@
 <section class="border-b border-zinc-800 bg-zinc-900/50 py-16">
 	<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 		<nav class="mb-4 text-sm text-zinc-500">
-			<a href={resolve('/tools/fitment-visualizer')} class="hover:text-red-500">Tools</a>
+			<a href={resolve('tools/fitment-visualizer')} class="hover:text-red-500">Tools</a>
+
 			<span class="mx-2">/</span>
 			<span class="text-zinc-300">Tire Calculator</span>
 		</nav>
-		<h1 class="font-display text-4xl font-bold uppercase tracking-wider text-white">
+		<h1 class="font-display text-4xl font-bold tracking-wider text-white uppercase">
 			Tire Size Calculator
 		</h1>
 		<p class="mt-2 text-zinc-400">Width / aspect / rim → overall diameter and revs per mile.</p>
@@ -42,10 +43,10 @@
 <section class="mx-auto max-w-4xl px-4 py-16 sm:px-6 lg:px-8">
 	<div class="grid gap-12 lg:grid-cols-2">
 		<AnimatedReveal>
-			<h2 class="font-display text-lg font-bold uppercase text-white">Primary Tire</h2>
+			<h2 class="font-display text-lg font-bold text-white uppercase">Primary Tire</h2>
 			<div class="mt-4 space-y-4">
 				<label class="block">
-					<span class="text-xs font-bold uppercase tracking-widest text-zinc-500">Width (mm)</span>
+					<span class="text-xs font-bold tracking-widest text-zinc-500 uppercase">Width (mm)</span>
 					<input
 						type="number"
 						bind:value={width}
@@ -55,7 +56,7 @@
 					/>
 				</label>
 				<label class="block">
-					<span class="text-xs font-bold uppercase tracking-widest text-zinc-500">Aspect Ratio</span
+					<span class="text-xs font-bold tracking-widest text-zinc-500 uppercase">Aspect Ratio</span
 					>
 					<input
 						type="number"
@@ -66,7 +67,7 @@
 					/>
 				</label>
 				<label class="block">
-					<span class="text-xs font-bold uppercase tracking-widest text-zinc-500"
+					<span class="text-xs font-bold tracking-widest text-zinc-500 uppercase"
 						>Rim Diameter (in)</span
 					>
 					<input
@@ -98,10 +99,10 @@
 		</AnimatedReveal>
 
 		<AnimatedReveal delay={150}>
-			<h2 class="font-display text-lg font-bold uppercase text-white">Compare To</h2>
+			<h2 class="font-display text-lg font-bold text-white uppercase">Compare To</h2>
 			<div class="mt-4 space-y-4">
 				<label class="block">
-					<span class="text-xs font-bold uppercase tracking-widest text-zinc-500">Width (mm)</span>
+					<span class="text-xs font-bold tracking-widest text-zinc-500 uppercase">Width (mm)</span>
 					<input
 						type="number"
 						bind:value={width2}
@@ -111,7 +112,7 @@
 					/>
 				</label>
 				<label class="block">
-					<span class="text-xs font-bold uppercase tracking-widest text-zinc-500">Aspect Ratio</span
+					<span class="text-xs font-bold tracking-widest text-zinc-500 uppercase">Aspect Ratio</span
 					>
 					<input
 						type="number"
@@ -122,7 +123,7 @@
 					/>
 				</label>
 				<label class="block">
-					<span class="text-xs font-bold uppercase tracking-widest text-zinc-500"
+					<span class="text-xs font-bold tracking-widest text-zinc-500 uppercase"
 						>Rim Diameter (in)</span
 					>
 					<input

@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
-	import SectionHeading from '$lib/components/shared/SectionHeading.svelte';
-	import AnimatedReveal from '$lib/components/shared/AnimatedReveal.svelte';
-	import PaginatedListCanvas from '$lib/components/catalog/PaginatedListCanvas.svelte';
+	import SectionHeading from '#lib/components/shared/SectionHeading.svelte';
+	import AnimatedReveal from '#lib/components/shared/AnimatedReveal.svelte';
+	import PaginatedListCanvas from '#lib/components/catalog/PaginatedListCanvas.svelte';
 
 	let { data } = $props();
 </script>
@@ -13,7 +13,7 @@
 
 <section class="border-b border-zinc-800 bg-zinc-900/50 py-16">
 	<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-		<h1 class="font-display text-4xl font-bold uppercase tracking-wider text-white">Blog</h1>
+		<h1 class="font-display text-4xl font-bold tracking-wider text-white uppercase">Blog</h1>
 		<p class="mt-2 text-zinc-400">News, drops, and shop updates.</p>
 	</div>
 </section>
@@ -26,7 +26,7 @@
 		<div class="grid gap-8 sm:grid-cols-2">
 			{#each data.posts as post (post.id)}
 				<a
-					href={resolve(`/blog/${post.slug}`)}
+					href={resolve(`blog/${post.slug}`)}
 					class="group block overflow-hidden rounded-sm border border-zinc-800 bg-zinc-900"
 				>
 					<img
@@ -38,7 +38,7 @@
 					<div class="p-6">
 						<p class="text-xs text-zinc-500">{post.publishedAt} · {post.author}</p>
 						<h3
-							class="mt-2 font-display text-xl font-bold uppercase text-white group-hover:text-red-400"
+							class="mt-2 font-display text-xl font-bold text-white uppercase group-hover:text-red-400"
 						>
 							{post.title}
 						</h3>

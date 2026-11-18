@@ -1,14 +1,14 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
-	import { getProductPath } from '$lib/data/catalog-helpers';
-	import { cart } from '$lib/stores/cart.svelte';
-	import { locale } from '$lib/stores/locale.svelte';
-	import { resolvePath } from '$lib/utils/paths';
-	import SideDrawer from '$lib/components/layout/SideDrawer.svelte';
-	import CartActions from '$lib/components/cart/CartActions.svelte';
-	import CatalogKindBadge from '$lib/components/catalog/CatalogKindBadge.svelte';
-	import PriceDisplay from '$lib/components/catalog/PriceDisplay.svelte';
-	import PromoCodeForm from '$lib/components/commerce/PromoCodeForm.svelte';
+	import { getProductPath } from '#lib/data/catalog-helpers.ts';
+	import { cart } from '#lib/stores/cart.svelte.ts';
+	import { locale } from '#lib/stores/locale.svelte.ts';
+	import { resolvePath } from '#lib/utils/paths.ts';
+	import SideDrawer from '#lib/components/layout/SideDrawer.svelte';
+	import CartActions from '#lib/components/cart/CartActions.svelte';
+	import CatalogKindBadge from '#lib/components/catalog/CatalogKindBadge.svelte';
+	import PriceDisplay from '#lib/components/catalog/PriceDisplay.svelte';
+	import PromoCodeForm from '#lib/components/commerce/PromoCodeForm.svelte';
 
 	interface Props {
 		open?: boolean;
@@ -26,7 +26,7 @@
 
 {#snippet drawerHeader()}
 	<div class="flex shrink-0 items-center justify-between border-b border-zinc-800 px-5 py-4">
-		<h2 class="font-display text-lg font-bold uppercase tracking-wider text-white">
+		<h2 class="font-display text-lg font-bold tracking-wider text-white uppercase">
 			Cart ({cart.itemCount})
 		</h2>
 		<button
@@ -41,7 +41,7 @@
 					stroke-linejoin="round"
 					stroke-width="1.5"
 					d="M6 18L18 6M6 6l12 12"
-				/>
+				></path>
 			</svg>
 		</button>
 	</div>
@@ -64,7 +64,7 @@
 						{/if}
 						<div class="min-w-0 flex-1">
 							<a
-								href={resolve(`/shop/${line.productSlug}`)}
+								href={resolve(`shop/${line.productSlug}`)}
 								class="truncate text-sm font-medium text-white hover:text-red-400"
 								onclick={() => onclose?.()}
 							>
@@ -120,10 +120,9 @@
 								<a
 									href={resolvePath(getProductPath(product))}
 									class="truncate text-sm font-medium text-white hover:text-red-400"
-									onclick={() => onclose?.()}
+									onclick={() => onclose?.()}>{product.name}</a
 								>
-									{product.name}
-								</a>
+
 								<CatalogKindBadge {product} />
 							</div>
 							<p class="text-xs text-zinc-500">{variant.name}</p>
@@ -169,7 +168,7 @@
 			{@const upsells = cart.getUpsellSuggestions(3)}
 			{#if upsells.length > 0}
 				<div class="mt-8">
-					<p class="text-xs font-bold uppercase tracking-widest text-zinc-500">
+					<p class="text-xs font-bold tracking-widest text-zinc-500 uppercase">
 						You Might Also Like
 					</p>
 					<ul class="mt-3 space-y-2">
@@ -183,7 +182,7 @@
 								</div>
 								<button
 									type="button"
-									class="shrink-0 rounded-sm bg-red-600 px-2.5 py-1 text-xs font-bold uppercase text-white transition hover:bg-red-500"
+									class="shrink-0 rounded-sm bg-red-600 px-2.5 py-1 text-xs font-bold text-white uppercase transition hover:bg-red-500"
 									onclick={() => cart.addItem(product.id)}
 								>
 									Add
@@ -197,7 +196,7 @@
 
 		{#if cart.itemCount > 0}
 			<div class="mt-6 border-t border-zinc-800 pt-4">
-				<p class="text-xs font-bold uppercase tracking-widest text-zinc-500">Promo code</p>
+				<p class="text-xs font-bold tracking-widest text-zinc-500 uppercase">Promo code</p>
 				<PromoCodeForm
 					compact
 					appliedCode={cart.checkout?.voucherCodes?.[0] ?? cart.mockPromo?.code ?? null}

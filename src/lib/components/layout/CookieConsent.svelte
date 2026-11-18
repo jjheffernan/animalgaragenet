@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
-	import { consent } from '$lib/stores/consent.svelte';
+	import { consent } from '#lib/stores/consent.svelte.ts';
 
 	let { show = false }: { show?: boolean } = $props();
 
@@ -23,7 +23,7 @@
 			<p>
 				We use essential cookies for cart and sign-in. Optional analytics cookies help us improve
 				the site.
-				<a href={resolve('/policies/privacy')} class="text-red-400 underline hover:text-red-300"
+				<a href={resolve('policies/privacy')} class="text-red-400 underline hover:text-red-300"
 					>Privacy policy</a
 				>
 			</p>

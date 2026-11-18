@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
-	import type { PopularModel } from '$lib/types/domain';
-	import { mockPopularModels } from '$lib/data/mock/popular-models';
+	import type { PopularModel } from '#lib/types/domain.ts';
+	import { mockPopularModels } from '#lib/data/mock/popular-models.ts';
 
 	interface Props {
 		models?: PopularModel[];
@@ -14,7 +14,7 @@
 <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 {className}">
 	{#each models as m (m.id)}
 		<a
-			href={resolve(`/parts?model=${m.slug}`)}
+			href={resolve(`parts?model=${m.slug}`)}
 			class="group relative overflow-hidden rounded-sm border border-zinc-800"
 		>
 			<img
@@ -27,9 +27,9 @@
 				class="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/40 to-transparent"
 			></div>
 			<div class="absolute inset-x-0 bottom-0 p-4">
-				<p class="text-xs font-bold uppercase tracking-wider text-red-500">{m.make}</p>
-				<h3 class="font-display text-lg font-bold uppercase text-white">{m.model}</h3>
-				<p class="mt-1 text-xs text-zinc-400 line-clamp-2">{m.description}</p>
+				<p class="text-xs font-bold tracking-wider text-red-500 uppercase">{m.make}</p>
+				<h3 class="font-display text-lg font-bold text-white uppercase">{m.model}</h3>
+				<p class="mt-1 line-clamp-2 text-xs text-zinc-400">{m.description}</p>
 			</div>
 		</a>
 	{/each}

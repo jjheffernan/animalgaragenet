@@ -1,14 +1,14 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
-	import AdminPageHeader from '$lib/components/admin/AdminPageHeader.svelte';
+	import AdminPageHeader from '#lib/components/admin/AdminPageHeader.svelte';
 	import {
 		adminBadgeOff,
 		adminBadgeOn,
 		adminBadgeWarning,
 		adminCard,
 		adminSectionTitle
-	} from '$lib/components/admin/admin-ui';
-	import type { RuntimeStatus } from '$lib/server/admin/runtime-status';
+	} from '#lib/components/admin/admin-ui.ts';
+	import type { RuntimeStatus } from '#lib/server/admin/runtime-status.ts';
 	import type { PageData } from './$types';
 
 	let { data }: { data: PageData } = $props();
@@ -111,7 +111,7 @@
 					{@const on = data.status[card.key]}
 					<div class={adminCard}>
 						<div class="flex items-start justify-between gap-3">
-							<p class="text-xs font-bold uppercase tracking-widest text-zinc-500">
+							<p class="text-xs font-bold tracking-widest text-zinc-500 uppercase">
 								{card.label}
 							</p>
 							<span class={on ? adminBadgeOn : adminBadgeOff}>

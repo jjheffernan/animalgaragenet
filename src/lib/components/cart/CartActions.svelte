@@ -25,7 +25,7 @@
 		>
 	{:else}
 		<a
-			href={resolve('/checkout')}
+			href={resolve('checkout')}
 			class="block w-full rounded-sm bg-red-600 {sizeClass} text-center {label} text-white transition hover:bg-red-500"
 			onclick={handleNavigate}
 		>
@@ -34,21 +34,21 @@
 	{/if}
 
 	<a
-		href={resolve('/shop')}
+		href={resolve('shop')}
 		class="block w-full rounded-sm border border-zinc-700 {sizeClass} text-center {label} text-zinc-300 transition hover:border-red-600 hover:text-white"
 		onclick={handleNavigate}
 	>
 		Continue Shopping
 	</a>
 	<a
-		href={resolve('/parts')}
+		href={resolve('parts')}
 		class="block w-full rounded-sm border border-zinc-700 {sizeClass} text-center {label} text-zinc-300 transition hover:border-red-600 hover:text-white"
 		onclick={handleNavigate}
 	>
 		Browse Parts
 	</a>
 	<a
-		href={resolve('/deals')}
+		href={resolve('deals')}
 		class="block w-full rounded-sm border border-zinc-700 {sizeClass} text-center {label} text-zinc-300 transition hover:border-red-600 hover:text-white"
 		onclick={handleNavigate}
 	>

@@ -1,22 +1,22 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
-	import Hero from '$lib/components/marketing/Hero.svelte';
-	import SectionHeading from '$lib/components/shared/SectionHeading.svelte';
-	import CollectionCard from '$lib/components/marketing/CollectionCard.svelte';
-	import AnimatedReveal from '$lib/components/shared/AnimatedReveal.svelte';
-	import VehicleSelector from '$lib/components/catalog/VehicleSelector.svelte';
-	import ModelPicker from '$lib/components/catalog/ModelPicker.svelte';
-	import VideoGrid from '$lib/components/video/VideoGrid.svelte';
-	import UGCWall from '$lib/components/content/UGCWall.svelte';
-	import TrustBlocks from '$lib/components/marketing/TrustBlocks.svelte';
-	import ManifestoBlock from '$lib/components/marketing/ManifestoBlock.svelte';
-	import CountdownTimer from '$lib/components/marketing/CountdownTimer.svelte';
-	import BuildCard from '$lib/components/content/BuildCard.svelte';
-	import GuideCard from '$lib/components/content/GuideCard.svelte';
-	import BrandLanes from '$lib/components/catalog/BrandLanes.svelte';
-	import ClearanceSection from '$lib/components/commerce/ClearanceSection.svelte';
-	import StaffPicks from '$lib/components/marketing/StaffPicks.svelte';
-	import TestimonialCard from '$lib/components/content/TestimonialCard.svelte';
+	import Hero from '#lib/components/marketing/Hero.svelte';
+	import SectionHeading from '#lib/components/shared/SectionHeading.svelte';
+	import CollectionCard from '#lib/components/marketing/CollectionCard.svelte';
+	import AnimatedReveal from '#lib/components/shared/AnimatedReveal.svelte';
+	import VehicleSelector from '#lib/components/catalog/VehicleSelector.svelte';
+	import ModelPicker from '#lib/components/catalog/ModelPicker.svelte';
+	import VideoGrid from '#lib/components/video/VideoGrid.svelte';
+	import UGCWall from '#lib/components/content/UGCWall.svelte';
+	import TrustBlocks from '#lib/components/marketing/TrustBlocks.svelte';
+	import ManifestoBlock from '#lib/components/marketing/ManifestoBlock.svelte';
+	import CountdownTimer from '#lib/components/marketing/CountdownTimer.svelte';
+	import BuildCard from '#lib/components/content/BuildCard.svelte';
+	import GuideCard from '#lib/components/content/GuideCard.svelte';
+	import BrandLanes from '#lib/components/catalog/BrandLanes.svelte';
+	import ClearanceSection from '#lib/components/commerce/ClearanceSection.svelte';
+	import StaffPicks from '#lib/components/marketing/StaffPicks.svelte';
+	import TestimonialCard from '#lib/components/content/TestimonialCard.svelte';
 
 	let { data } = $props();
 </script>
@@ -52,10 +52,10 @@
 	<section class="border-y border-red-900/50 bg-red-950/30 py-10">
 		<div class="mx-auto max-w-7xl px-4 text-center sm:px-6 lg:px-8">
 			<AnimatedReveal trigger="scroll">
-				<p class="text-xs font-bold uppercase tracking-[0.3em] text-red-500">
+				<p class="text-xs font-bold tracking-[0.3em] text-red-500 uppercase">
 					{String(data.campaignSection.content.badgeLabel ?? 'Drop Incoming')}
 				</p>
-				<h2 class="mt-2 font-display text-3xl font-bold uppercase text-white">
+				<h2 class="mt-2 font-display text-3xl font-bold text-white uppercase">
 					{String(data.campaignSection.content.title ?? '')}
 				</h2>
 				<p class="mt-2 text-zinc-400">{String(data.campaignSection.content.subtitle ?? '')}</p>
@@ -67,8 +67,8 @@
 	<section class="border-y border-red-900/50 bg-red-950/30 py-10">
 		<div class="mx-auto max-w-7xl px-4 text-center sm:px-6 lg:px-8">
 			<AnimatedReveal trigger="scroll">
-				<p class="text-xs font-bold uppercase tracking-[0.3em] text-red-500">Drop Incoming</p>
-				<h2 class="mt-2 font-display text-3xl font-bold uppercase text-white">
+				<p class="text-xs font-bold tracking-[0.3em] text-red-500 uppercase">Drop Incoming</p>
+				<h2 class="mt-2 font-display text-3xl font-bold text-white uppercase">
 					{data.activeCampaign.name}
 				</h2>
 				<p class="mt-2 text-zinc-400">{data.activeCampaign.description}</p>
@@ -84,9 +84,7 @@
 	</AnimatedReveal>
 	<div class="mt-6 grid gap-6 lg:grid-cols-2">
 		{#each data.collections as collection, i (collection.id)}
-			<AnimatedReveal delay={150 * i}>
-				<CollectionCard {collection} />
-			</AnimatedReveal>
+			<AnimatedReveal delay={150 * i}><CollectionCard {collection} /></AnimatedReveal>
 		{/each}
 	</div>
 </section>
@@ -113,8 +111,8 @@
 		<VideoGrid videos={data.videos} class="mt-6" />
 		<div class="mt-10 text-center">
 			<a
-				href={resolve('/watch')}
-				class="text-sm font-bold uppercase tracking-widest text-red-500 hover:text-red-400"
+				href={resolve('watch')}
+				class="text-sm font-bold tracking-widest text-red-500 uppercase hover:text-red-400"
 			>
 				Watch all →
 			</a>
@@ -147,8 +145,8 @@
 		</div>
 		<div class="mt-10 text-center">
 			<a
-				href={resolve('/builds')}
-				class="text-sm font-bold uppercase tracking-widest text-red-500 hover:text-red-400"
+				href={resolve('builds')}
+				class="text-sm font-bold tracking-widest text-red-500 uppercase hover:text-red-400"
 			>
 				All builds →
 			</a>
@@ -177,8 +175,8 @@
 			</div>
 			<div class="mt-10 text-center">
 				<a
-					href={resolve('/loyalty') + '#reviews'}
-					class="text-sm font-bold uppercase tracking-widest text-red-500 hover:text-red-400"
+					href={resolve('loyalty') + '#reviews'}
+					class="text-sm font-bold tracking-widest text-red-500 uppercase hover:text-red-400"
 				>
 					Join Garage Squad →
 				</a>

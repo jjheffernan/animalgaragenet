@@ -1,9 +1,9 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
-	import SectionHeading from '$lib/components/shared/SectionHeading.svelte';
-	import AnimatedReveal from '$lib/components/shared/AnimatedReveal.svelte';
-	import PaginatedListCanvas from '$lib/components/catalog/PaginatedListCanvas.svelte';
-	import { locale } from '$lib/stores/locale.svelte';
+	import SectionHeading from '#lib/components/shared/SectionHeading.svelte';
+	import AnimatedReveal from '#lib/components/shared/AnimatedReveal.svelte';
+	import PaginatedListCanvas from '#lib/components/catalog/PaginatedListCanvas.svelte';
+	import { locale } from '#lib/stores/locale.svelte.ts';
 
 	let { data } = $props();
 </script>
@@ -14,7 +14,7 @@
 
 <section class="border-b border-zinc-800 bg-zinc-900/50 py-16">
 	<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-		<h1 class="font-display text-4xl font-bold uppercase tracking-wider text-white">Gift Cards</h1>
+		<h1 class="font-display text-4xl font-bold tracking-wider text-white uppercase">Gift Cards</h1>
 		<p class="mt-2 text-zinc-400">Digital gift cards — $25 to $200. Delivered by email.</p>
 	</div>
 </section>
@@ -27,7 +27,7 @@
 		<div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
 			{#each data.giftCards as card (card.id)}
 				<a
-					href={resolve(`/shop/${card.slug}`)}
+					href={resolve(`shop/${card.slug}`)}
 					class="group block overflow-hidden rounded-sm border border-zinc-800 bg-zinc-900 transition hover:border-red-600/50"
 				>
 					{#if card.thumbnail}

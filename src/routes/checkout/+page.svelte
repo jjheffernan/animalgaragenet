@@ -1,17 +1,17 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { resolve } from '$app/paths';
-	import type { CheckoutShippingDisplay } from '$lib/types/checkout';
+	import type { CheckoutShippingDisplay } from '#lib/types/checkout.ts';
 	import {
 		mountPaymentElement,
 		readStripeClientSecret,
 		readStripePublishableKey,
 		type StripeElementsHandle
-	} from '$lib/client/checkout/stripe-elements';
-	import { cart } from '$lib/stores/cart.svelte';
-	import { locale } from '$lib/stores/locale.svelte';
-	import AnimatedReveal from '$lib/components/shared/AnimatedReveal.svelte';
-	import CatalogKindBadge from '$lib/components/catalog/CatalogKindBadge.svelte';
+	} from '#lib/client/checkout/stripe-elements.ts';
+	import { cart } from '#lib/stores/cart.svelte.ts';
+	import { locale } from '#lib/stores/locale.svelte.ts';
+	import AnimatedReveal from '#lib/components/shared/AnimatedReveal.svelte';
+	import CatalogKindBadge from '#lib/components/catalog/CatalogKindBadge.svelte';
 
 	let { data } = $props();
 
@@ -49,6 +49,7 @@
 	const useSaleorDisplay = $derived(data.saleorEnabled && cart.checkout !== null);
 	const checkoutLines = $derived(cart.checkout?.lines ?? []);
 	const cartProducts = $derived(cart.getCartProducts());
+
 	const isEmpty = $derived(
 		useSaleorDisplay ? checkoutLines.length === 0 : cartProducts.length === 0
 	);
@@ -176,11 +177,13 @@
 	const summarySubtotal = $derived(
 		useSaleorDisplay ? (shipping?.subtotal.amount ?? cart.subtotal) : cart.subtotal
 	);
+
 	const summaryCurrency = $derived(
 		useSaleorDisplay
 			? (shipping?.subtotal.currency ?? cart.subtotalCurrency)
 			: cart.subtotalCurrency
 	);
+
 	const summaryShipping = $derived(shipping?.shippingPrice ?? null);
 	const summaryTotal = $derived(
 		useSaleorDisplay && shipping ? shipping.total.amount : cart.subtotal
@@ -201,6 +204,7 @@
 					address: { firstName, lastName, streetAddress1, city, countryArea, postalCode, country }
 				})
 			});
+
 			const payload = (await response.json()) as {
 				shipping?: CheckoutShippingDisplay;
 				error?: string;
@@ -236,6 +240,7 @@
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify({ deliveryMethodId: methodId })
 			});
+
 			const payload = (await response.json()) as {
 				shipping?: CheckoutShippingDisplay;
 				error?: string;
@@ -275,10 +280,8 @@
 					startTransaction: true
 				})
 			});
-			const initPayload = (await initResponse.json()) as {
-				data?: unknown;
-				error?: string;
-			};
+
+			const initPayload = (await initResponse.json()) as { data?: unknown; error?: string };
 
 			if (!initResponse.ok) {
 				paymentError = initPayload.error ?? 'Could not start payment.';
@@ -291,7 +294,7 @@
 				return;
 			}
 
-			const returnUrl = new URL(resolve('/checkout/payment/complete'), window.location.origin).href;
+			const returnUrl = new URL(resolve('checkout/payment/complete'), window.location.origin).href;
 			const { error: confirmError } = await stripeHandle.stripe.confirmPayment({
 				elements: stripeHandle.elements,
 				clientSecret,
@@ -315,7 +318,7 @@
 
 <section class="border-b border-zinc-800 bg-zinc-900/50 py-12">
 	<div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-		<h1 class="font-display text-3xl font-bold uppercase text-white">Checkout</h1>
+		<h1 class="font-display text-3xl font-bold text-white uppercase">Checkout</h1>
 		<p class="mt-2 text-sm text-zinc-400">
 			{#if data.saleorEnabled}
 				Live Saleor checkout — shipping saves to your session; payment runs when a Payment App is on
@@ -332,8 +335,8 @@
 		<AnimatedReveal>
 			<p class="text-zinc-400">Your cart is empty. Add items before checking out.</p>
 			<a
-				href={resolve('/cart')}
-				class="mt-6 inline-block text-sm font-bold uppercase tracking-widest text-red-500 hover:text-red-400"
+				href={resolve('cart')}
+				class="mt-6 inline-block text-sm font-bold tracking-widest text-red-500 uppercase hover:text-red-400"
 			>
 				← Back to cart
 			</a>
@@ -344,7 +347,7 @@
 				<AnimatedReveal>
 					<form class="space-y-8" onsubmit={saveAddress}>
 						<fieldset class="space-y-4" disabled={!data.saleorEnabled}>
-							<legend class="font-display text-sm font-bold uppercase tracking-widest text-white">
+							<legend class="font-display text-sm font-bold tracking-widest text-white uppercase">
 								Shipping
 							</legend>
 							{#if !data.saleorEnabled}
@@ -356,7 +359,7 @@
 							{/if}
 							<div class="grid gap-4 sm:grid-cols-2">
 								<label class="block">
-									<span class="text-xs font-bold uppercase tracking-widest text-zinc-500"
+									<span class="text-xs font-bold tracking-widest text-zinc-500 uppercase"
 										>First name</span
 									>
 									<input
@@ -369,7 +372,7 @@
 									/>
 								</label>
 								<label class="block">
-									<span class="text-xs font-bold uppercase tracking-widest text-zinc-500"
+									<span class="text-xs font-bold tracking-widest text-zinc-500 uppercase"
 										>Last name</span
 									>
 									<input
@@ -382,7 +385,7 @@
 									/>
 								</label>
 								<label class="block sm:col-span-2">
-									<span class="text-xs font-bold uppercase tracking-widest text-zinc-500"
+									<span class="text-xs font-bold tracking-widest text-zinc-500 uppercase"
 										>Address</span
 									>
 									<input
@@ -395,7 +398,7 @@
 									/>
 								</label>
 								<label class="block">
-									<span class="text-xs font-bold uppercase tracking-widest text-zinc-500">City</span
+									<span class="text-xs font-bold tracking-widest text-zinc-500 uppercase">City</span
 									>
 									<input
 										type="text"
@@ -407,7 +410,7 @@
 									/>
 								</label>
 								<label class="block">
-									<span class="text-xs font-bold uppercase tracking-widest text-zinc-500"
+									<span class="text-xs font-bold tracking-widest text-zinc-500 uppercase"
 										>State / Province</span
 									>
 									<input
@@ -419,7 +422,7 @@
 									/>
 								</label>
 								<label class="block">
-									<span class="text-xs font-bold uppercase tracking-widest text-zinc-500"
+									<span class="text-xs font-bold tracking-widest text-zinc-500 uppercase"
 										>ZIP / Postal code</span
 									>
 									<input
@@ -432,7 +435,7 @@
 									/>
 								</label>
 								<label class="block">
-									<span class="text-xs font-bold uppercase tracking-widest text-zinc-500"
+									<span class="text-xs font-bold tracking-widest text-zinc-500 uppercase"
 										>Country</span
 									>
 									<select
@@ -452,7 +455,7 @@
 								<button
 									type="submit"
 									disabled={shippingSaving}
-									class="rounded-sm border border-zinc-700 px-4 py-2 text-xs font-bold uppercase tracking-widest text-white transition hover:border-red-600 disabled:opacity-50"
+									class="rounded-sm border border-zinc-700 px-4 py-2 text-xs font-bold tracking-widest text-white uppercase transition hover:border-red-600 disabled:opacity-50"
 								>
 									{shippingSaving ? 'Saving…' : 'Save address & get rates'}
 								</button>
@@ -465,7 +468,7 @@
 
 						{#if data.saleorEnabled && addressSaved && shipping?.shippingMethods.length}
 							<fieldset class="space-y-3">
-								<legend class="font-display text-sm font-bold uppercase tracking-widest text-white">
+								<legend class="font-display text-sm font-bold tracking-widest text-white uppercase">
 									Shipping method
 								</legend>
 								{#each shipping.shippingMethods as method (method.id)}
@@ -492,7 +495,7 @@
 						{/if}
 
 						<fieldset class="space-y-4">
-							<legend class="font-display text-sm font-bold uppercase tracking-widest text-white">
+							<legend class="font-display text-sm font-bold tracking-widest text-white uppercase">
 								Payment
 							</legend>
 							<div class="rounded-sm border border-zinc-800 bg-zinc-900/50 p-4">
@@ -540,7 +543,7 @@
 							type="button"
 							disabled={!canPay}
 							onclick={handlePay}
-							class="w-full rounded-sm py-4 text-sm font-bold uppercase tracking-wider transition {canPay
+							class="w-full rounded-sm py-4 text-sm font-bold tracking-wider uppercase transition {canPay
 								? 'bg-red-600 text-white hover:bg-red-500'
 								: 'bg-zinc-800 text-zinc-500'}"
 							title={payButtonLabel}
@@ -554,7 +557,7 @@
 			<aside class="lg:col-span-2">
 				<AnimatedReveal delay={100}>
 					<div class="sticky top-24 rounded-sm border border-zinc-800 bg-zinc-900/50 p-6">
-						<h2 class="font-display text-lg font-bold uppercase text-white">Order Summary</h2>
+						<h2 class="font-display text-lg font-bold text-white uppercase">Order Summary</h2>
 						<ul class="mt-4 space-y-3 border-b border-zinc-800 pb-4">
 							{#if useSaleorDisplay}
 								{#each checkoutLines as line (line.id)}
@@ -636,8 +639,8 @@
 		</div>
 
 		<a
-			href={resolve('/cart')}
-			class="mt-8 inline-block text-sm font-bold uppercase tracking-widest text-red-500 hover:text-red-400"
+			href={resolve('cart')}
+			class="mt-8 inline-block text-sm font-bold tracking-widest text-red-500 uppercase hover:text-red-400"
 		>
 			← Back to cart
 		</a>

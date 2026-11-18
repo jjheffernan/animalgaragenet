@@ -2,15 +2,15 @@
 	import { resolve } from '$app/paths';
 	import { enhance } from '$app/forms';
 	import { onMount } from 'svelte';
-	import AuthGateDialog from '$lib/components/forms/AuthGateDialog.svelte';
-	import { garageLevels, garageXpActions } from '$lib/data/garage-levels';
-	import SectionHeading from '$lib/components/shared/SectionHeading.svelte';
-	import AnimatedReveal from '$lib/components/shared/AnimatedReveal.svelte';
-	import TestimonialCard from '$lib/components/content/TestimonialCard.svelte';
-	import TestimonialForm from '$lib/components/forms/TestimonialForm.svelte';
-	import { garageXp } from '$lib/stores/garage-xp.svelte';
-	import { resolvePath } from '$lib/utils/paths';
-	import { TESTIMONIAL_STATUS_LABELS } from '$lib/types/testimonial';
+	import AuthGateDialog from '#lib/components/forms/AuthGateDialog.svelte';
+	import { garageLevels, garageXpActions } from '#lib/data/garage-levels.ts';
+	import SectionHeading from '#lib/components/shared/SectionHeading.svelte';
+	import AnimatedReveal from '#lib/components/shared/AnimatedReveal.svelte';
+	import TestimonialCard from '#lib/components/content/TestimonialCard.svelte';
+	import TestimonialForm from '#lib/components/forms/TestimonialForm.svelte';
+	import { garageXp } from '#lib/stores/garage-xp.svelte.ts';
+	import { resolvePath } from '#lib/utils/paths.ts';
+	import { TESTIMONIAL_STATUS_LABELS } from '#lib/types/testimonial.ts';
 	import type { ActionData, PageData } from './$types';
 
 	let { data, form }: { data: PageData; form: ActionData } = $props();
@@ -39,14 +39,14 @@
 />
 
 <div
-	class={data.authenticated ? '' : 'select-none blur-sm'}
+	class={data.authenticated ? '' : 'blur-sm select-none'}
 	inert={!data.authenticated}
 	aria-hidden={!data.authenticated}
 >
 	<section class="border-b border-zinc-800 bg-zinc-900/50 py-16">
 		<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-			<p class="text-xs font-bold uppercase tracking-[0.3em] text-red-500">Loyalty Program</p>
-			<h1 class="mt-2 font-display text-4xl font-bold uppercase tracking-wider text-white">
+			<p class="text-xs font-bold tracking-[0.3em] text-red-500 uppercase">Loyalty Program</p>
+			<h1 class="mt-2 font-display text-4xl font-bold tracking-wider text-white uppercase">
 				Garage Squad
 			</h1>
 			<p class="mt-2 text-zinc-400">Earn XP. Unlock perks. Level up your garage game.</p>
@@ -56,8 +56,8 @@
 	<section class="mx-auto max-w-3xl px-4 py-16 sm:px-6">
 		<AnimatedReveal>
 			<div class="rounded-sm border border-zinc-800 bg-zinc-900/50 p-8 text-center">
-				<p class="text-xs font-bold uppercase tracking-widest text-red-500">Current Level</p>
-				<h2 class="mt-2 font-display text-3xl font-bold uppercase text-white">
+				<p class="text-xs font-bold tracking-widest text-red-500 uppercase">Current Level</p>
+				<h2 class="mt-2 font-display text-3xl font-bold text-white uppercase">
 					{currentLevel.title}
 				</h2>
 				<p class="mt-1 text-zinc-500">Level {currentLevel.level} · {garageXp.xp} XP</p>
@@ -101,10 +101,10 @@
 							? 'border-red-600/50 bg-red-950/10'
 							: 'border-zinc-800 bg-zinc-900/50'}"
 					>
-						<p class="text-xs font-bold uppercase tracking-widest text-zinc-500">
+						<p class="text-xs font-bold tracking-widest text-zinc-500 uppercase">
 							Level {level.level}
 						</p>
-						<h3 class="mt-1 font-display font-bold uppercase text-white">{level.title}</h3>
+						<h3 class="mt-1 font-display font-bold text-white uppercase">{level.title}</h3>
 						<p class="mt-1 text-xs text-zinc-600">{level.xpRequired} XP required</p>
 						<ul class="mt-4 space-y-1">
 							{#each level.perks as perk (perk)}
@@ -139,7 +139,7 @@
 			{/if}
 
 			<div class="mx-auto mt-12 max-w-xl rounded-sm border border-zinc-800 bg-zinc-900/50 p-8">
-				<h3 class="font-display text-lg font-bold uppercase text-white">Share Your Review</h3>
+				<h3 class="font-display text-lg font-bold text-white uppercase">Share Your Review</h3>
 				<p class="mt-2 text-sm text-zinc-400">
 					Tell the squad about your build, your experience, and what loyalty perks mean to you.
 					Approved reviews earn +50 XP.
@@ -167,7 +167,7 @@
 						/>
 						<button
 							type="submit"
-							class="w-full rounded-sm bg-red-600 px-5 py-2.5 text-sm font-bold uppercase tracking-wider text-white transition hover:bg-red-500"
+							class="w-full rounded-sm bg-red-600 px-5 py-2.5 text-sm font-bold tracking-wider text-white uppercase transition hover:bg-red-500"
 						>
 							Submit for review
 						</button>
@@ -176,14 +176,14 @@
 
 				{#if data.userTestimonials.length > 0}
 					<div class="mt-8 border-t border-zinc-800 pt-6">
-						<p class="text-xs font-bold uppercase tracking-widest text-zinc-500">
+						<p class="text-xs font-bold tracking-widest text-zinc-500 uppercase">
 							Your submissions
 						</p>
 						<ul class="mt-3 space-y-2">
 							{#each data.userTestimonials as testimonial (testimonial.id)}
 								<li class="flex items-center justify-between text-sm">
 									<span class="text-zinc-400">{testimonial.title}</span>
-									<span class="text-xs uppercase tracking-wider text-zinc-600">
+									<span class="text-xs tracking-wider text-zinc-600 uppercase">
 										{TESTIMONIAL_STATUS_LABELS[testimonial.status]}
 									</span>
 								</li>

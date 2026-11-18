@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
-	import type { Brand } from '$lib/types/domain';
-	import BrandCard from '$lib/components/catalog/BrandCard.svelte';
-	import SectionHeading from '$lib/components/shared/SectionHeading.svelte';
+	import type { Brand } from '#lib/types/domain.ts';
+	import BrandCard from '#lib/components/catalog/BrandCard.svelte';
+	import SectionHeading from '#lib/components/shared/SectionHeading.svelte';
 
 	interface Props {
 		brands: Brand[];
@@ -17,8 +17,8 @@
 		<div class="flex flex-wrap items-end justify-between gap-4">
 			<SectionHeading title="Brand Lanes" subtitle="Shop by the brands we trust." />
 			<a
-				href={resolve('/brands')}
-				class="shrink-0 text-xs font-bold uppercase tracking-widest text-red-500 hover:text-red-400"
+				href={resolve('brands')}
+				class="shrink-0 text-xs font-bold tracking-widest text-red-500 uppercase hover:text-red-400"
 			>
 				All brands →
 			</a>
@@ -29,9 +29,7 @@
 			role="list"
 		>
 			{#each brands as brand (brand.id)}
-				<li class="min-w-0">
-					<BrandCard {brand} compact />
-				</li>
+				<li class="min-w-0"><BrandCard {brand} compact /></li>
 			{/each}
 		</ul>
 	</div>

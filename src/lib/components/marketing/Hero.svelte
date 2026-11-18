@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
-	import AnimatedReveal from '$lib/components/shared/AnimatedReveal.svelte';
-	import CountdownTimer from '$lib/components/marketing/CountdownTimer.svelte';
-	import { getHeroCampaign } from '$lib/data/mock/campaigns';
+	import AnimatedReveal from '#lib/components/shared/AnimatedReveal.svelte';
+	import CountdownTimer from '#lib/components/marketing/CountdownTimer.svelte';
+	import { getHeroCampaign } from '#lib/data/mock/campaigns.ts';
 
 	interface HeroContent {
 		headline?: string;
@@ -52,7 +52,9 @@
 		style="background-image: url('{bgImage}')"
 		aria-hidden="true"
 	></div>
+
 	<div class="absolute inset-0 bg-gradient-to-r from-zinc-950 via-zinc-950/85 to-zinc-950/40"></div>
+
 	<div
 		class="absolute inset-0 opacity-20"
 		style="background: repeating-linear-gradient(-45deg, transparent, transparent 10px, rgba(220,38,38,0.1) 10px, rgba(220,38,38,0.1) 11px)"
@@ -62,14 +64,14 @@
 	<div class="relative mx-auto max-w-7xl px-4 py-32 sm:px-6 lg:px-8">
 		<AnimatedReveal>
 			{#if campaign}
-				<p class="text-xs font-bold uppercase tracking-[0.3em] text-red-500">
+				<p class="text-xs font-bold tracking-[0.3em] text-red-500 uppercase">
 					{isUpcoming ? 'Drop Incoming' : campaign.name}
 				</p>
 			{:else}
-				<p class="text-xs font-bold uppercase tracking-[0.3em] text-red-500">Built Different</p>
+				<p class="text-xs font-bold tracking-[0.3em] text-red-500 uppercase">Built Different</p>
 			{/if}
 			<h1
-				class="mt-4 max-w-3xl font-display text-5xl font-black uppercase leading-none tracking-tight text-white sm:text-7xl"
+				class="mt-4 max-w-3xl font-display text-5xl leading-none font-black tracking-tight text-white uppercase sm:text-7xl"
 			>
 				{headline}
 			</h1>
@@ -78,7 +80,7 @@
 			</p>
 			{#if countdownTarget}
 				<div class="mt-6">
-					<p class="mb-2 text-xs font-bold uppercase tracking-wider text-zinc-500">
+					<p class="mb-2 text-xs font-bold tracking-wider text-zinc-500 uppercase">
 						{isUpcoming ? 'Drop starts in' : 'Drop ends in'}
 					</p>
 					<CountdownTimer endDate={countdownTarget} />
@@ -87,13 +89,13 @@
 			<div class="mt-10 flex flex-wrap gap-4">
 				<a
 					href={resolve(ctaHref as '/shop')}
-					class="rounded-sm bg-red-600 px-8 py-4 text-base font-bold uppercase tracking-wider text-white transition hover:bg-red-500"
+					class="rounded-sm bg-red-600 px-8 py-4 text-base font-bold tracking-wider text-white uppercase transition hover:bg-red-500"
 				>
 					{ctaLabel}
 				</a>
 				<a
-					href={resolve('/watch')}
-					class="rounded-sm border border-zinc-700 px-8 py-4 text-base font-bold uppercase tracking-wider text-zinc-300 transition hover:border-red-600 hover:text-white"
+					href={resolve('watch')}
+					class="rounded-sm border border-zinc-700 px-8 py-4 text-base font-bold tracking-wider text-zinc-300 uppercase transition hover:border-red-600 hover:text-white"
 				>
 					Watch Builds
 				</a>

@@ -1,9 +1,9 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { resolve } from '$app/paths';
-	import type { Video } from '$lib/types/domain';
-	import { mockVideos } from '$lib/data/mock/videos';
-	import VideoCard from '$lib/components/video/VideoCard.svelte';
+	import type { Video } from '#lib/types/domain.ts';
+	import { mockVideos } from '#lib/data/mock/videos.ts';
+	import VideoCard from '#lib/components/video/VideoCard.svelte';
 
 	interface Props {
 		videos?: Video[];
@@ -21,7 +21,7 @@
 			onselect(video);
 			return;
 		}
-		goto(resolve(`/watch/${video.id}`));
+		goto(resolve(`watch/${video.id}`));
 	}
 </script>
 

@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
-	import AnimatedReveal from '$lib/components/shared/AnimatedReveal.svelte';
-	import RichContent from '$lib/components/content/RichContent.svelte';
+	import AnimatedReveal from '#lib/components/shared/AnimatedReveal.svelte';
+	import RichContent from '#lib/components/content/RichContent.svelte';
 
 	let { data } = $props();
 
@@ -28,14 +28,15 @@
 		<div class="absolute inset-0 bg-gradient-to-b from-zinc-950/60 to-zinc-950"></div>
 		<div class="relative mx-auto max-w-3xl px-4 sm:px-6">
 			<nav class="mb-6 text-sm text-zinc-500">
-				<a href={resolve('/guides')} class="hover:text-red-500">Guides</a>
+				<a href={resolve('guides')} class="hover:text-red-500">Guides</a>
+
 				<span class="mx-2">/</span>
 				<span class="text-zinc-300">{data.guide.title}</span>
 			</nav>
-			<p class="text-xs font-bold uppercase tracking-widest text-red-500">
+			<p class="text-xs font-bold tracking-widest text-red-500 uppercase">
 				{data.guide.category} · {data.guide.readTimeMinutes} min read
 			</p>
-			<h1 class="mt-2 font-display text-4xl font-bold uppercase text-white">{data.guide.title}</h1>
+			<h1 class="mt-2 font-display text-4xl font-bold text-white uppercase">{data.guide.title}</h1>
 			<p class="mt-4 text-lg text-zinc-400">{data.guide.excerpt}</p>
 		</div>
 	</section>
@@ -49,11 +50,11 @@
 	{#if data.related.length > 0}
 		<section class="border-t border-zinc-800 bg-zinc-900/30 py-16">
 			<div class="mx-auto max-w-3xl px-4 sm:px-6">
-				<h2 class="font-display text-xl font-bold uppercase text-white">Related Guides</h2>
+				<h2 class="font-display text-xl font-bold text-white uppercase">Related Guides</h2>
 				<div class="mt-6 grid gap-4 sm:grid-cols-2">
 					{#each data.related as guide (guide.id)}
 						<a
-							href={resolve(`/guides/${guide.slug}`)}
+							href={resolve(`guides/${guide.slug}`)}
 							class="rounded-sm border border-zinc-800 bg-zinc-900 p-4 hover:border-red-600/50"
 						>
 							<h3 class="font-medium text-white">{guide.title}</h3>

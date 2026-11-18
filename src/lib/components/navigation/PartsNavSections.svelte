@@ -1,14 +1,14 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
-	import VehicleSelector from '$lib/components/catalog/VehicleSelector.svelte';
-	import CategoryPill from '$lib/components/catalog/CategoryPill.svelte';
+	import VehicleSelector from '#lib/components/catalog/VehicleSelector.svelte';
+	import CategoryPill from '#lib/components/catalog/CategoryPill.svelte';
 	import {
 		buildPartsFilterUrl,
 		PARTS_BUILD_TYPES,
 		type PartsFilterState
-	} from '$lib/data/parts-filters';
-	import { ribbonSectionLabelClass } from '$lib/ui/catalog-ribbon';
-	import type { Brand, PartCategory, PopularModel } from '$lib/types/domain';
+	} from '#lib/data/parts-filters.ts';
+	import { ribbonSectionLabelClass } from '#lib/ui/catalog-ribbon.ts';
+	import type { Brand, PartCategory, PopularModel } from '#lib/types/domain.ts';
 
 	type Layout = 'megamenu' | 'dropdown' | 'mobile';
 	type Section = 'categories' | 'brands' | 'vehicle' | 'build';
@@ -56,10 +56,10 @@
 
 {#if isMegamenu && section === 'categories'}
 	<div class="flex items-end justify-between gap-4">
-		<p class="text-xs font-bold uppercase tracking-widest text-zinc-500">Categories</p>
+		<p class="text-xs font-bold tracking-widest text-zinc-500 uppercase">Categories</p>
 		<a
-			href={resolve('/parts')}
-			class="text-[10px] font-bold uppercase tracking-widest text-red-500 hover:text-red-400"
+			href={resolve('parts')}
+			class="text-[10px] font-bold tracking-widest text-red-500 uppercase hover:text-red-400"
 			onclick={handleNavigate}
 		>
 			All parts →
@@ -69,7 +69,7 @@
 		{#each categories as cat (cat.id)}
 			<li>
 				<a
-					href={resolve(`/parts/${cat.slug}`)}
+					href={resolve(`parts/${cat.slug}`)}
 					class="block py-1 text-sm font-medium text-zinc-300 transition hover:text-red-400"
 					role="menuitem"
 					onclick={handleNavigate}
@@ -81,7 +81,7 @@
 						{#each cat.children as child (child.id)}
 							<li>
 								<a
-									href={resolve(`/parts/${child.slug}`)}
+									href={resolve(`parts/${child.slug}`)}
 									class="block py-0.5 text-xs text-zinc-500 transition hover:text-red-400"
 									role="menuitem"
 									onclick={handleNavigate}
@@ -96,7 +96,7 @@
 		{/each}
 	</ul>
 {:else if isMegamenu && section === 'brands'}
-	<p class="text-xs font-bold uppercase tracking-widest text-zinc-500">Shop by Brand</p>
+	<p class="text-xs font-bold tracking-widest text-zinc-500 uppercase">Shop by Brand</p>
 	<ul class="mt-2 grid grid-cols-2 gap-x-6 gap-y-0.5 sm:grid-cols-3 lg:grid-cols-4">
 		{#each sortedAlphabeticalBrands as brand (brand.id)}
 			<li>
@@ -114,13 +114,13 @@
 {:else if isMegamenu && section === 'vehicle'}
 	<div class="grid gap-6 lg:grid-cols-2">
 		<div>
-			<p class="mb-3 text-xs font-bold uppercase tracking-widest text-zinc-500">
+			<p class="mb-3 text-xs font-bold tracking-widest text-zinc-500 uppercase">
 				Year · Make · Model
 			</p>
 			<VehicleSelector compact />
 		</div>
 		<div>
-			<p class="text-xs font-bold uppercase tracking-widest text-zinc-500">Popular Models</p>
+			<p class="text-xs font-bold tracking-widest text-zinc-500 uppercase">Popular Models</p>
 			<ul class="mt-2 grid grid-cols-1 gap-0.5 sm:grid-cols-2">
 				{#each visibleModels as model (model.id)}
 					<li>
@@ -143,7 +143,7 @@
 		</div>
 	</div>
 {:else if isMegamenu && section === 'build'}
-	<p class="text-xs font-bold uppercase tracking-widest text-zinc-500">Shop by Build</p>
+	<p class="text-xs font-bold tracking-widest text-zinc-500 uppercase">Shop by Build</p>
 	<ul class="mt-2 grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
 		{#each PARTS_BUILD_TYPES as build (build.slug)}
 			<li>
@@ -153,7 +153,7 @@
 					role="menuitem"
 					onclick={handleNavigate}
 				>
-					<span class="block text-sm font-medium uppercase tracking-wider text-zinc-200">
+					<span class="block text-sm font-medium tracking-wider text-zinc-200 uppercase">
 						{build.label}
 					</span>
 					<span class="mt-0.5 block text-xs text-zinc-500">{build.description}</span>
@@ -163,10 +163,10 @@
 	</ul>
 {:else if isMobile && section === 'categories'}
 	<div class="flex items-end justify-between gap-4">
-		<p class="text-xs font-bold uppercase tracking-widest text-zinc-500">Categories</p>
+		<p class="text-xs font-bold tracking-widest text-zinc-500 uppercase">Categories</p>
 		<a
-			href={resolve('/parts')}
-			class="text-[10px] font-bold uppercase tracking-widest text-red-500 transition hover:text-red-400"
+			href={resolve('parts')}
+			class="text-[10px] font-bold tracking-widest text-red-500 uppercase transition hover:text-red-400"
 			onclick={handleNavigate}
 		>
 			All parts →
@@ -176,8 +176,8 @@
 		{#each categories as cat (cat.id)}
 			<li>
 				<a
-					href={resolve(`/parts/${cat.slug}`)}
-					class="block py-2.5 text-sm font-medium uppercase tracking-wider text-zinc-300 transition hover:text-red-400"
+					href={resolve(`parts/${cat.slug}`)}
+					class="block py-2.5 text-sm font-medium tracking-wider text-zinc-300 uppercase transition hover:text-red-400"
 					role="menuitem"
 					onclick={handleNavigate}
 				>
@@ -188,8 +188,8 @@
 						{#each cat.children as child (child.id)}
 							<li>
 								<a
-									href={resolve(`/parts/${child.slug}`)}
-									class="block py-2 text-xs uppercase tracking-wider text-zinc-500 transition hover:text-red-400"
+									href={resolve(`parts/${child.slug}`)}
+									class="block py-2 text-xs tracking-wider text-zinc-500 uppercase transition hover:text-red-400"
 									role="menuitem"
 									onclick={handleNavigate}
 								>
@@ -203,13 +203,13 @@
 		{/each}
 	</ul>
 {:else if isMobile && section === 'brands'}
-	<p class="text-xs font-bold uppercase tracking-widest text-zinc-500">Shop by Brand</p>
+	<p class="text-xs font-bold tracking-widest text-zinc-500 uppercase">Shop by Brand</p>
 	<ul class="mt-2 max-h-64 space-y-0.5 overflow-y-auto">
 		{#each sortedAlphabeticalBrands as brand (brand.id)}
 			<li>
 				<a
 					href={filterHref({ brand: brand.slug })}
-					class="block py-2.5 text-sm font-medium uppercase tracking-wider text-zinc-300 transition hover:text-red-400"
+					class="block py-2.5 text-sm font-medium tracking-wider text-zinc-300 uppercase transition hover:text-red-400"
 					role="menuitem"
 					onclick={handleNavigate}
 				>
@@ -219,9 +219,9 @@
 		{/each}
 	</ul>
 {:else if isMobile && section === 'vehicle'}
-	<p class="mb-3 text-xs font-bold uppercase tracking-widest text-zinc-500">Year · Make · Model</p>
+	<p class="mb-3 text-xs font-bold tracking-widest text-zinc-500 uppercase">Year · Make · Model</p>
 	<VehicleSelector compact />
-	<p class="mb-2 mt-4 text-xs font-bold uppercase tracking-widest text-zinc-500">Popular Models</p>
+	<p class="mt-4 mb-2 text-xs font-bold tracking-widest text-zinc-500 uppercase">Popular Models</p>
 	<ul class="space-y-0.5">
 		{#each visibleModels as model (model.id)}
 			<li>
@@ -232,7 +232,7 @@
 						year: undefined,
 						submodel: undefined
 					})}
-					class="block rounded-sm py-2.5 text-sm font-medium uppercase tracking-wider text-zinc-300 transition hover:text-red-400"
+					class="block rounded-sm py-2.5 text-sm font-medium tracking-wider text-zinc-300 uppercase transition hover:text-red-400"
 					role="menuitem"
 					onclick={handleNavigate}
 				>
@@ -242,7 +242,7 @@
 		{/each}
 	</ul>
 {:else if isMobile && section === 'build'}
-	<p class="text-xs font-bold uppercase tracking-widest text-zinc-500">Shop by Build</p>
+	<p class="text-xs font-bold tracking-widest text-zinc-500 uppercase">Shop by Build</p>
 	<ul class="mt-2 space-y-2">
 		{#each PARTS_BUILD_TYPES as build (build.slug)}
 			<li>
@@ -252,7 +252,7 @@
 					role="menuitem"
 					onclick={handleNavigate}
 				>
-					<span class="block text-sm font-medium uppercase tracking-wider text-zinc-200">
+					<span class="block text-sm font-medium tracking-wider text-zinc-200 uppercase">
 						{build.label}
 					</span>
 					<span class="mt-0.5 block text-xs text-zinc-500">{build.description}</span>
@@ -264,15 +264,11 @@
 	<p class="px-4 pb-2 {ribbonSectionLabelClass}">Categories</p>
 	<div class="flex max-h-80 flex-wrap gap-1 overflow-y-auto px-4 pb-3">
 		{#each categories as cat (cat.id)}
-			<CategoryPill
-				href={resolve(`/parts/${cat.slug}`)}
-				label={cat.name}
-				onclick={handleNavigate}
-			/>
+			<CategoryPill href={resolve(`parts/${cat.slug}`)} label={cat.name} onclick={handleNavigate} />
 			{#if cat.children}
 				{#each cat.children as child (child.id)}
 					<CategoryPill
-						href={resolve(`/parts/${child.slug}`)}
+						href={resolve(`parts/${child.slug}`)}
 						label={child.name}
 						class="opacity-90"
 						onclick={handleNavigate}
@@ -294,13 +290,13 @@
 		{/each}
 	</div>
 {:else if section === 'vehicle'}
-	<p class="mb-3 px-4 text-xs font-bold uppercase tracking-widest text-zinc-500">
+	<p class="mb-3 px-4 text-xs font-bold tracking-widest text-zinc-500 uppercase">
 		Year · Make · Model
 	</p>
 	<div class="px-4">
 		<VehicleSelector compact />
 	</div>
-	<p class="mb-2 mt-4 px-4 text-xs font-bold uppercase tracking-widest text-zinc-500">
+	<p class="mt-4 mb-2 px-4 text-xs font-bold tracking-widest text-zinc-500 uppercase">
 		Popular Models
 	</p>
 	<ul class="grid gap-1 px-4">
@@ -323,7 +319,7 @@
 		{/each}
 	</ul>
 {:else if section === 'build'}
-	<p class="px-4 pb-1 text-xs font-bold uppercase tracking-widest text-zinc-500">Build Type</p>
+	<p class="px-4 pb-1 text-xs font-bold tracking-widest text-zinc-500 uppercase">Build Type</p>
 	<ul>
 		{#each PARTS_BUILD_TYPES as build (build.slug)}
 			<li role="none">
@@ -339,7 +335,7 @@
 					onclick={handleNavigate}
 				>
 					<span
-						class="block text-sm font-medium uppercase tracking-wider {isActiveFilter(
+						class="block text-sm font-medium tracking-wider uppercase {isActiveFilter(
 							'build',
 							build.slug
 						)

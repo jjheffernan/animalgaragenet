@@ -1,11 +1,11 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { resolve } from '$app/paths';
-	import AnimatedReveal from '$lib/components/shared/AnimatedReveal.svelte';
-	import CartActions from '$lib/components/cart/CartActions.svelte';
-	import MiniProductRow from '$lib/components/catalog/MiniProductRow.svelte';
-	import { cart } from '$lib/stores/cart.svelte';
-	import { locale } from '$lib/stores/locale.svelte';
+	import AnimatedReveal from '#lib/components/shared/AnimatedReveal.svelte';
+	import CartActions from '#lib/components/cart/CartActions.svelte';
+	import MiniProductRow from '#lib/components/catalog/MiniProductRow.svelte';
+	import { cart } from '#lib/stores/cart.svelte.ts';
+	import { locale } from '#lib/stores/locale.svelte.ts';
 
 	let { data } = $props();
 
@@ -53,13 +53,13 @@
 
 <section class="border-b border-zinc-800 bg-zinc-900/50 py-16">
 	<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-		<h1 class="font-display text-4xl font-bold uppercase tracking-wider text-white">Cart</h1>
+		<h1 class="font-display text-4xl font-bold tracking-wider text-white uppercase">Cart</h1>
 	</div>
 </section>
 
 <section class="mx-auto max-w-7xl px-4 py-16 pb-72 sm:px-6 sm:pb-16 lg:px-8">
 	<div class="grid gap-12 lg:grid-cols-3">
-		<div class="lg:col-span-2 space-y-4">
+		<div class="space-y-4 lg:col-span-2">
 			{#if isEmpty}
 				<AnimatedReveal>
 					<p class="text-zinc-400">Your cart is empty.</p>
@@ -77,7 +77,7 @@
 						<div class="flex flex-1 flex-col justify-between">
 							<div>
 								<a
-									href={resolve(`/shop/${line.productSlug}`)}
+									href={resolve(`shop/${line.productSlug}`)}
 									class="font-medium text-white hover:text-red-400">{line.productName}</a
 								>
 								<p class="text-sm text-zinc-500">{line.variantName}</p>
@@ -123,7 +123,7 @@
 						<div class="flex flex-1 flex-col justify-between">
 							<div>
 								<a
-									href={resolve(`/shop/${item.product.slug}`)}
+									href={resolve(`shop/${item.product.slug}`)}
 									class="font-medium text-white hover:text-red-400">{item.product.name}</a
 								>
 								<p class="text-sm text-zinc-500">{item.variant.name}</p>
@@ -158,9 +158,9 @@
 		</div>
 
 		<div
-			class="fixed bottom-0 left-0 right-0 z-40 border-t border-zinc-800 bg-zinc-950 p-4 lg:static lg:z-auto lg:rounded-sm lg:border lg:border-zinc-800 lg:bg-zinc-900/50 lg:p-6 h-fit"
+			class="fixed right-0 bottom-0 left-0 z-40 h-fit border-t border-zinc-800 bg-zinc-950 p-4 lg:static lg:z-auto lg:rounded-sm lg:border lg:border-zinc-800 lg:bg-zinc-900/50 lg:p-6"
 		>
-			<h2 class="font-display text-lg font-bold uppercase text-white">Order Summary</h2>
+			<h2 class="font-display text-lg font-bold text-white uppercase">Order Summary</h2>
 			<div class="mt-4 flex justify-between text-zinc-400">
 				<span>Subtotal</span>
 				<span class="text-white">{locale.formatPrice(subtotal, subtotalCurrency)}</span>

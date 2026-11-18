@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { resolve } from '$app/paths';
-	import EmptyState from '$lib/components/shared/EmptyState.svelte';
-	import { garage } from '$lib/stores/garage.svelte';
+	import EmptyState from '#lib/components/shared/EmptyState.svelte';
+	import { garage } from '#lib/stores/garage.svelte.ts';
 
 	onMount(() => {
 		void garage.init();
@@ -17,7 +17,7 @@
 	<title>Vehicles — Animal Garage</title>
 </svelte:head>
 
-<h1 class="font-display text-2xl font-bold uppercase text-white">Saved Vehicles</h1>
+<h1 class="font-display text-2xl font-bold text-white uppercase">Saved Vehicles</h1>
 <p class="mt-1 text-zinc-400">Your garage — used for fitment and build context across the site.</p>
 
 <p class="mt-4 rounded-sm border border-zinc-800 bg-zinc-900/50 px-4 py-3 text-sm text-zinc-500">

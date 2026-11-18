@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
 	import { goto } from '$app/navigation';
-	import { getYears, getMakes, getModels, getSubmodels } from '$lib/data/mock/vehicles';
-	import { garage } from '$lib/stores/garage.svelte';
+	import { getYears, getMakes, getModels, getSubmodels } from '#lib/data/mock/vehicles.ts';
+	import { garage } from '#lib/stores/garage.svelte.ts';
 
 	let year = $state<number | ''>('');
 	let make = $state('');
@@ -47,7 +47,8 @@
 		params.set('make', make);
 		params.set('model', model);
 		if (submodel) params.set('submodel', submodel);
-		goto(resolve(`/parts?${params.toString()}`));
+
+		goto(resolve(`parts?${params.toString()}`));
 	}
 
 	interface Props {
@@ -60,7 +61,7 @@
 
 <form onsubmit={handleSubmit} class="space-y-3 {className}">
 	{#if !compact}
-		<p class="text-xs font-bold uppercase tracking-widest text-red-500">Shop by Vehicle</p>
+		<p class="text-xs font-bold tracking-widest text-red-500 uppercase">Shop by Vehicle</p>
 	{/if}
 	<div class="grid gap-2 sm:grid-cols-2 lg:grid-cols-4">
 		<select
@@ -112,7 +113,7 @@
 	<button
 		type="submit"
 		disabled={!year || !make || !model}
-		class="w-full rounded-sm bg-red-600 py-2 text-xs font-bold uppercase tracking-wider text-white hover:bg-red-500 disabled:opacity-50 sm:w-auto sm:px-8"
+		class="w-full rounded-sm bg-red-600 py-2 text-xs font-bold tracking-wider text-white uppercase hover:bg-red-500 disabled:opacity-50 sm:w-auto sm:px-8"
 	>
 		Find Parts
 	</button>

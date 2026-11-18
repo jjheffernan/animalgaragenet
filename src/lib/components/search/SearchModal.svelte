@@ -1,10 +1,10 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
-	import { getProductPath } from '$lib/data/catalog-helpers';
-	import { search } from '$lib/stores/search.svelte';
-	import { locale } from '$lib/stores/locale.svelte';
-	import { resolvePath } from '$lib/utils/paths';
-	import CatalogKindBadge from '$lib/components/catalog/CatalogKindBadge.svelte';
+	import { getProductPath } from '#lib/data/catalog-helpers.ts';
+	import { search } from '#lib/stores/search.svelte.ts';
+	import { locale } from '#lib/stores/locale.svelte.ts';
+	import { resolvePath } from '#lib/utils/paths.ts';
+	import CatalogKindBadge from '#lib/components/catalog/CatalogKindBadge.svelte';
 
 	function handleBackdrop(e: MouseEvent) {
 		if (e.target === e.currentTarget) search.closeModal();
@@ -53,7 +53,7 @@
 						stroke-linejoin="round"
 						stroke-width="2"
 						d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-					/>
+					></path>
 				</svg>
 				<input
 					bind:this={inputEl}
@@ -77,7 +77,7 @@
 					<p class="text-sm text-zinc-500">No results for "{search.query}"</p>
 				{:else}
 					{#if search.productResults.length > 0}
-						<p class="text-[10px] font-bold uppercase tracking-widest text-zinc-500">Merch</p>
+						<p class="text-[10px] font-bold tracking-widest text-zinc-500 uppercase">Merch</p>
 						<ul class="mt-2 space-y-1">
 							{#each search.productResults as p (p.id)}
 								<li>
@@ -93,7 +93,7 @@
 						</ul>
 					{/if}
 					{#if search.partResults.length > 0}
-						<p class="mt-4 text-[10px] font-bold uppercase tracking-widest text-zinc-500">Parts</p>
+						<p class="mt-4 text-[10px] font-bold tracking-widest text-zinc-500 uppercase">Parts</p>
 						<ul class="mt-2 space-y-1">
 							{#each search.partResults as p (p.id)}
 								<li>
@@ -110,12 +110,12 @@
 						</ul>
 					{/if}
 					{#if search.buildResults.length > 0}
-						<p class="mt-4 text-[10px] font-bold uppercase tracking-widest text-zinc-500">Builds</p>
+						<p class="mt-4 text-[10px] font-bold tracking-widest text-zinc-500 uppercase">Builds</p>
 						<ul class="mt-2 space-y-1">
 							{#each search.buildResults as b (b.id)}
 								<li>
 									<a
-										href={resolve(`/builds/${b.slug}`)}
+										href={resolve(`builds/${b.slug}`)}
 										class="block rounded-sm px-2 py-1.5 text-sm text-zinc-300 hover:bg-zinc-900 hover:text-white"
 										onclick={() => search.closeModal()}
 									>
@@ -126,12 +126,12 @@
 						</ul>
 					{/if}
 					{#if search.guideResults.length > 0}
-						<p class="mt-4 text-[10px] font-bold uppercase tracking-widest text-zinc-500">Guides</p>
+						<p class="mt-4 text-[10px] font-bold tracking-widest text-zinc-500 uppercase">Guides</p>
 						<ul class="mt-2 space-y-1">
 							{#each search.guideResults as g (g.id)}
 								<li>
 									<a
-										href={resolve(`/guides/${g.slug}`)}
+										href={resolve(`guides/${g.slug}`)}
 										class="block rounded-sm px-2 py-1.5 text-sm text-zinc-300 hover:bg-zinc-900 hover:text-white"
 										onclick={() => search.closeModal()}
 									>

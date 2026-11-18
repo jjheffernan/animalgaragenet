@@ -2,7 +2,7 @@
 	import { resolve } from '$app/paths';
 	import type { PageData } from './$types';
 
-	let { data } = $props<{ data: PageData }>();
+	let { data }: { data: PageData } = $props();
 
 	const message = $derived.by(() => {
 		switch (data.status) {
@@ -27,14 +27,12 @@
 </svelte:head>
 
 <section class="mx-auto max-w-lg px-4 py-24 text-center sm:px-6">
-	<h1 class="font-display text-2xl font-bold uppercase text-white">Payment</h1>
+	<h1 class="font-display text-2xl font-bold text-white uppercase">Payment</h1>
 	<p class="mt-4 text-sm text-zinc-400" role="status">{message}</p>
-	{#if data.status !== 'success'}
-		<a
-			href={resolve('/checkout')}
-			class="mt-8 inline-block text-sm font-bold uppercase tracking-widest text-red-500 hover:text-red-400"
-		>
-			← Back to checkout
-		</a>
-	{/if}
+	<a
+		href={resolve('checkout')}
+		class="mt-8 inline-block text-sm font-bold tracking-widest text-red-500 uppercase hover:text-red-400"
+	>
+		← Back to checkout
+	</a>
 </section>

@@ -1,9 +1,9 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
-	import MiniProductRow from '$lib/components/catalog/MiniProductRow.svelte';
-	import AnimatedReveal from '$lib/components/shared/AnimatedReveal.svelte';
-	import PageMeta from '$lib/components/shared/PageMeta.svelte';
-	import { metaDescriptionFromText } from '$lib/seo/site-meta';
+	import MiniProductRow from '#lib/components/catalog/MiniProductRow.svelte';
+	import AnimatedReveal from '#lib/components/shared/AnimatedReveal.svelte';
+	import PageMeta from '#lib/components/shared/PageMeta.svelte';
+	import { metaDescriptionFromText } from '#lib/seo/site-meta.ts';
 
 	let { data } = $props();
 	let selectedPhoto = $state(0);
@@ -25,7 +25,8 @@
 
 <section class="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
 	<nav class="mb-8 text-sm text-zinc-500">
-		<a href={resolve('/builds')} class="hover:text-red-500">Builds</a>
+		<a href={resolve('builds')} class="hover:text-red-500">Builds</a>
+
 		<span class="mx-2">/</span>
 		<span class="text-zinc-300">{data.build.title}</span>
 	</nav>
@@ -57,16 +58,16 @@
 		</AnimatedReveal>
 
 		<AnimatedReveal delay={150}>
-			<p class="text-xs font-bold uppercase tracking-widest text-red-500">
+			<p class="text-xs font-bold tracking-widest text-red-500 uppercase">
 				{data.build.year}
 				{data.build.make}
 				{data.build.model}{data.build.submodel ? ` ${data.build.submodel}` : ''}
 			</p>
-			<h1 class="mt-2 font-display text-4xl font-bold uppercase text-white">{data.build.title}</h1>
+			<h1 class="mt-2 font-display text-4xl font-bold text-white uppercase">{data.build.title}</h1>
 			<p class="mt-4 leading-relaxed text-zinc-400">{data.build.description}</p>
 
 			<div class="mt-8">
-				<h2 class="text-sm font-bold uppercase tracking-widest text-zinc-500">Mod List</h2>
+				<h2 class="text-sm font-bold tracking-widest text-zinc-500 uppercase">Mod List</h2>
 				<ul class="mt-3 space-y-2">
 					{#each data.build.modList as mod (mod)}
 						<li class="flex items-center gap-2 text-zinc-300">

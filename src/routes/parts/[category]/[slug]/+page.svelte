@@ -1,15 +1,15 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
-	import { locale } from '$lib/stores/locale.svelte';
-	import { cart } from '$lib/stores/cart.svelte';
-	import LocaleSelector from '$lib/components/navigation/LocaleSelector.svelte';
-	import AnimatedReveal from '$lib/components/shared/AnimatedReveal.svelte';
-	import PageMeta from '$lib/components/shared/PageMeta.svelte';
-	import { metaDescriptionFromText } from '$lib/seo/site-meta';
-	import MiniProductRow from '$lib/components/catalog/MiniProductRow.svelte';
-	import PriceDisplay from '$lib/components/catalog/PriceDisplay.svelte';
-	import CatalogKindBadge from '$lib/components/catalog/CatalogKindBadge.svelte';
-	import type { Fitment } from '$lib/types/saleor';
+	import { locale } from '#lib/stores/locale.svelte.ts';
+	import { cart } from '#lib/stores/cart.svelte.ts';
+	import LocaleSelector from '#lib/components/navigation/LocaleSelector.svelte';
+	import AnimatedReveal from '#lib/components/shared/AnimatedReveal.svelte';
+	import PageMeta from '#lib/components/shared/PageMeta.svelte';
+	import { metaDescriptionFromText } from '#lib/seo/site-meta.ts';
+	import MiniProductRow from '#lib/components/catalog/MiniProductRow.svelte';
+	import PriceDisplay from '#lib/components/catalog/PriceDisplay.svelte';
+	import CatalogKindBadge from '#lib/components/catalog/CatalogKindBadge.svelte';
+	import type { Fitment } from '#lib/types/saleor.ts';
 
 	let { data } = $props();
 	const product = $derived(data.product);
@@ -72,10 +72,11 @@
 
 <section class="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
 	<nav class="mb-8 text-sm text-zinc-500">
-		<a href={resolve('/parts')} class="hover:text-red-500">Parts</a>
+		<a href={resolve('parts')} class="hover:text-red-500">Parts</a>
 		{#if product.category}
 			<span class="mx-2">/</span>
-			<a href={resolve(`/parts/${product.category.slug}`)} class="hover:text-red-500"
+
+			<a href={resolve(`parts/${product.category.slug}`)} class="hover:text-red-500"
 				>{product.category.name}</a
 			>
 		{/if}
@@ -121,14 +122,14 @@
 		<AnimatedReveal delay={150}>
 			<div class="flex items-center gap-2">
 				{#if product.category}
-					<p class="text-xs font-bold uppercase tracking-widest text-red-500">
+					<p class="text-xs font-bold tracking-widest text-red-500 uppercase">
 						{product.category.name}
 					</p>
 				{/if}
 				<CatalogKindBadge {product} />
 			</div>
 			<h1
-				class="mt-2 font-display text-3xl font-bold uppercase tracking-wider text-white sm:text-4xl"
+				class="mt-2 font-display text-3xl font-bold tracking-wider text-white uppercase sm:text-4xl"
 			>
 				{product.name}
 			</h1>
@@ -136,20 +137,19 @@
 			{#if product.brand}
 				<p class="mt-3">
 					<a
-						href={resolve(`/brands/${product.brand.slug}`)}
-						class="text-sm font-medium uppercase tracking-wider text-zinc-400 hover:text-red-400"
+						href={resolve(`brands/${product.brand.slug}`)}
+						class="text-sm font-medium tracking-wider text-zinc-400 uppercase hover:text-red-400"
 					>
 						{product.brand.name}
 					</a>
 				</p>
 			{/if}
 
-			<div class="mt-4">
-				<PriceDisplay {product} />
-			</div>
+			<div class="mt-4"><PriceDisplay {product} /></div>
+
 			{#if soldOut}
 				<span
-					class="mt-2 inline-block rounded-sm bg-zinc-950 px-3 py-1 text-xs font-bold uppercase text-white"
+					class="mt-2 inline-block rounded-sm bg-zinc-950 px-3 py-1 text-xs font-bold text-white uppercase"
 					>Sold Out</span
 				>
 			{/if}
@@ -160,7 +160,7 @@
 
 			{#if product.variants.length > 1}
 				<div class="mt-6">
-					<p class="text-xs font-bold uppercase tracking-widest text-zinc-500">Variant</p>
+					<p class="text-xs font-bold tracking-widest text-zinc-500 uppercase">Variant</p>
 					<div class="mt-2 flex flex-wrap gap-2">
 						{#each product.variants as variant (variant.id)}
 							<button
@@ -182,7 +182,7 @@
 
 			{#if fitmentGroups.length > 0}
 				<div class="mt-8 rounded-sm border border-zinc-800 bg-zinc-900/50 p-4">
-					<p class="text-xs font-bold uppercase tracking-widest text-zinc-500">Vehicle Fitment</p>
+					<p class="text-xs font-bold tracking-widest text-zinc-500 uppercase">Vehicle Fitment</p>
 					<ul class="mt-3 space-y-1">
 						{#each fitmentGroups as group (group)}
 							<li class="text-sm text-zinc-300">✓ {group}</li>
@@ -199,7 +199,7 @@
 					class="mt-8 rounded-sm border border-zinc-800 bg-zinc-900/50 p-4"
 					onsubmit={submitNotify}
 				>
-					<p class="text-sm font-bold uppercase tracking-widest text-zinc-300">
+					<p class="text-sm font-bold tracking-widest text-zinc-300 uppercase">
 						Notify Me When Available
 					</p>
 					<div class="mt-3 flex gap-2">
@@ -212,7 +212,7 @@
 						/>
 						<button
 							type="submit"
-							class="rounded-sm bg-red-600 px-4 py-2 text-sm font-bold uppercase text-white hover:bg-red-500"
+							class="rounded-sm bg-red-600 px-4 py-2 text-sm font-bold text-white uppercase hover:bg-red-500"
 							>Notify</button
 						>
 					</div>
@@ -221,7 +221,7 @@
 				<button
 					type="button"
 					onclick={addToCart}
-					class="mt-8 w-full rounded-sm bg-red-600 px-8 py-4 text-sm font-bold uppercase tracking-wider text-white transition hover:bg-red-500 sm:w-auto"
+					class="mt-8 w-full rounded-sm bg-red-600 px-8 py-4 text-sm font-bold tracking-wider text-white uppercase transition hover:bg-red-500 sm:w-auto"
 				>
 					Add to Cart — {locale.formatPrice(
 						product.pricing.priceRange.start.amount,

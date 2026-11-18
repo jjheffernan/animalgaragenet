@@ -1,11 +1,11 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
-	import SectionHeading from '$lib/components/shared/SectionHeading.svelte';
-	import PartCategoryNav from '$lib/components/navigation/PartCategoryNav.svelte';
-	import ProductGrid from '$lib/components/catalog/ProductGrid.svelte';
-	import PaginatedListCanvas from '$lib/components/catalog/PaginatedListCanvas.svelte';
-	import AnimatedReveal from '$lib/components/shared/AnimatedReveal.svelte';
-	import PageMeta from '$lib/components/shared/PageMeta.svelte';
+	import SectionHeading from '#lib/components/shared/SectionHeading.svelte';
+	import PartCategoryNav from '#lib/components/navigation/PartCategoryNav.svelte';
+	import ProductGrid from '#lib/components/catalog/ProductGrid.svelte';
+	import PaginatedListCanvas from '#lib/components/catalog/PaginatedListCanvas.svelte';
+	import AnimatedReveal from '#lib/components/shared/AnimatedReveal.svelte';
+	import PageMeta from '#lib/components/shared/PageMeta.svelte';
 
 	let { data } = $props();
 </script>
@@ -18,11 +18,11 @@
 <section class="border-b border-zinc-800 bg-zinc-900/50 py-16">
 	<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 		<nav class="mb-4 text-sm text-zinc-500">
-			<a href={resolve('/parts')} class="hover:text-red-500">Parts</a>
+			<a href={resolve('parts')} class="hover:text-red-500">Parts</a>
 			<span class="mx-2">/</span>
 			<span class="text-zinc-300">{data.category.name}</span>
 		</nav>
-		<h1 class="font-display text-4xl font-bold uppercase tracking-wider text-white">
+		<h1 class="font-display text-4xl font-bold tracking-wider text-white uppercase">
 			{data.category.name}
 		</h1>
 		{#if data.category.description}
@@ -46,8 +46,8 @@
 		<div class="flex flex-wrap gap-3">
 			{#each data.category.children as child (child.id)}
 				<a
-					href={resolve(`/parts/${child.slug}`)}
-					class="rounded-sm border border-zinc-700 px-4 py-2 text-sm font-bold uppercase tracking-wider text-zinc-300 hover:border-red-600 hover:text-white"
+					href={resolve(`parts/${child.slug}`)}
+					class="rounded-sm border border-zinc-700 px-4 py-2 text-sm font-bold tracking-wider text-zinc-300 uppercase hover:border-red-600 hover:text-white"
 				>
 					{child.name}
 				</a>
@@ -63,7 +63,7 @@
 				<div
 					class="lg:sticky lg:top-[calc(var(--site-header-height,4.5rem)+var(--parts-ribbon-height,0px))] lg:z-30 lg:max-h-[calc(100vh-var(--site-header-height,4.5rem)-var(--parts-ribbon-height,0px))] lg:overflow-y-auto lg:rounded-sm lg:border lg:border-zinc-800 lg:bg-zinc-950/95 lg:p-4 lg:backdrop-blur"
 				>
-					<h2 class="mb-4 text-xs font-bold uppercase tracking-widest text-zinc-500">Browse</h2>
+					<h2 class="mb-4 text-xs font-bold tracking-widest text-zinc-500 uppercase">Browse</h2>
 					<PartCategoryNav activeSlug={data.category.slug} />
 				</div>
 			</aside>

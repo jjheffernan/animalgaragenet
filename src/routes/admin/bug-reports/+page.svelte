@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
-	import AdminPageHeader from '$lib/components/admin/AdminPageHeader.svelte';
+	import AdminPageHeader from '#lib/components/admin/AdminPageHeader.svelte';
 	import {
 		adminBadgeOff,
 		adminBadgeOn,
@@ -10,8 +10,8 @@
 		adminFilterChip,
 		adminFilterChipActive,
 		adminTableHead
-	} from '$lib/components/admin/admin-ui';
-	import { BUG_REPORT_CATEGORIES } from '$lib/types/bug-report';
+	} from '#lib/components/admin/admin-ui.ts';
+	import { BUG_REPORT_CATEGORIES } from '#lib/types/bug-report.ts';
 	import type { PageData } from './$types';
 
 	let { data }: { data: PageData } = $props();
@@ -59,9 +59,13 @@
 	<AdminPageHeader title="Bug Reports" />
 	<p class="-mt-2 text-sm text-zinc-400">
 		Read-only inbox for submissions from
-		<a href={resolve('/support/report-bug')} class="text-red-400 hover:text-red-300">
-			/support/report-bug
-		</a>.
+
+		<a href={resolve('support/report-bug')} class="text-red-400 hover:text-red-300"
+			>/support/report-bug</a
+		>
+
+		.
+
 		{#if data.source === 'mock'}
 			Showing mock fallback — connect Supabase for live reports.
 		{/if}
@@ -74,27 +78,30 @@
 	{:else}
 		<div class="flex flex-wrap items-center justify-between gap-3">
 			<div class="flex flex-wrap gap-2">
-				<button type="button" class={filterClass('all')} onclick={() => (statusFilter = 'all')}>
-					All ({data.reports.length})
-				</button>
-				<button type="button" class={filterClass('open')} onclick={() => (statusFilter = 'open')}>
-					Open ({data.reports.filter((r) => r.status === 'open').length})
-				</button>
+				<button type="button" class={filterClass('all')} onclick={() => (statusFilter = 'all')}
+					>All ({data.reports.length})</button
+				>
+
+				<button type="button" class={filterClass('open')} onclick={() => (statusFilter = 'open')}
+					>Open ({data.reports.filter((r) => r.status === 'open').length})</button
+				>
+
 				<button
 					type="button"
 					class={filterClass('resolved')}
 					onclick={() => (statusFilter = 'resolved')}
+					>Resolved ({data.reports.filter((r) => r.status === 'resolved').length})</button
 				>
-					Resolved ({data.reports.filter((r) => r.status === 'resolved').length})
-				</button>
 			</div>
+
 			<div class="flex gap-2" role="tablist" aria-label="Bug report layout">
-				<button type="button" class={viewClass('inbox')} onclick={() => (viewMode = 'inbox')}>
-					Inbox
-				</button>
-				<button type="button" class={viewClass('table')} onclick={() => (viewMode = 'table')}>
-					Table
-				</button>
+				<button type="button" class={viewClass('inbox')} onclick={() => (viewMode = 'inbox')}
+					>Inbox</button
+				>
+
+				<button type="button" class={viewClass('table')} onclick={() => (viewMode = 'table')}
+					>Table</button
+				>
 			</div>
 		</div>
 
@@ -148,7 +155,7 @@
 											{report.status}
 										</span>
 									</td>
-									<td class="whitespace-nowrap px-4 py-3 text-xs text-zinc-400">
+									<td class="px-4 py-3 text-xs whitespace-nowrap text-zinc-400">
 										{categoryLabels[report.category] ?? report.category}
 									</td>
 									<td class="max-w-xs px-4 py-3">
@@ -157,12 +164,15 @@
 											{report.steps}
 										</p>
 									</td>
-									<td class="whitespace-nowrap px-4 py-3 text-sm text-zinc-400">
-										{report.email ?? 'Anonymous'}
-									</td>
-									<td class="whitespace-nowrap px-4 py-3 text-xs text-zinc-500">
-										{formatWhen(report.createdAt)}
-									</td>
+
+									<td class="px-4 py-3 text-sm whitespace-nowrap text-zinc-400"
+										>{report.email ?? 'Anonymous'}</td
+									>
+
+									<td class="px-4 py-3 text-xs whitespace-nowrap text-zinc-500"
+										>{formatWhen(report.createdAt)}</td
+									>
+
 									<td
 										class="max-w-[12rem] truncate px-4 py-3 font-mono text-xs text-zinc-500"
 										title={report.pageUrl ?? ''}

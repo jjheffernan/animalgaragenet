@@ -1,5 +1,5 @@
-import { env as privateEnv } from '$env/dynamic/private';
-import { config } from '$lib/config/env';
+import { SALEOR_CHANNEL } from '$app/env/private';
+import { config } from '#lib/config/env.ts';
 
 export interface GraphQLResponse<T> {
 	data?: T;
@@ -7,7 +7,7 @@ export interface GraphQLResponse<T> {
 }
 
 export function getSaleorChannel(): string {
-	return privateEnv.SALEOR_CHANNEL ?? 'default-channel';
+	return SALEOR_CHANNEL ?? 'default-channel';
 }
 
 // @saleor-migration: intentional — env gate; see docs/commerce/saleor.md#quick-migration

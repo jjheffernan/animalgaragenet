@@ -1,16 +1,16 @@
 <script lang="ts">
 	import './layout.css';
 	import { page } from '$app/state';
-	import favicon from '$lib/assets/favicon.svg';
-	import { setAnalyticsEnabled, trackPageView } from '$lib/analytics.svelte';
-	import CookieConsent from '$lib/components/layout/CookieConsent.svelte';
-	import Header from '$lib/components/layout/Header.svelte';
-	import Footer from '$lib/components/layout/Footer.svelte';
-	import { isSupportedLocale } from '$lib/i18n/locale';
-	import { DEFAULT_SITE_DESCRIPTION, SITE_NAME, defaultOgImageUrl } from '$lib/seo/site-meta';
-	import { garage } from '$lib/stores/garage.svelte';
-	import { garageXp } from '$lib/stores/garage-xp.svelte';
-	import { locale } from '$lib/stores/locale.svelte';
+	import favicon from '#lib/assets/favicon.svg';
+	import { setAnalyticsEnabled, trackPageView } from '#lib/analytics.svelte.ts';
+	import CookieConsent from '#lib/components/layout/CookieConsent.svelte';
+	import Header from '#lib/components/layout/Header.svelte';
+	import Footer from '#lib/components/layout/Footer.svelte';
+	import { isSupportedLocale } from '#lib/i18n/locale.ts';
+	import { DEFAULT_SITE_DESCRIPTION, SITE_NAME, defaultOgImageUrl } from '#lib/seo/site-meta.ts';
+	import { garage } from '#lib/stores/garage.svelte.ts';
+	import { garageXp } from '#lib/stores/garage-xp.svelte.ts';
+	import { locale } from '#lib/stores/locale.svelte.ts';
 
 	let { children, data } = $props();
 

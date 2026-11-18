@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
-	import { page } from '$app/stores';
-	import { ADMIN_NAV, type AdminNavItem } from '$lib/admin/nav';
-	import type { AdminNavCounts } from '$lib/server/admin/nav-counts';
+	import { page } from '$app/state';
+	import { ADMIN_NAV, type AdminNavItem } from '#lib/admin/nav.ts';
+	import type { AdminNavCounts } from '#lib/server/admin/nav-counts.ts';
 
 	interface Props {
 		navCounts: AdminNavCounts;
@@ -12,7 +12,7 @@
 	let { navCounts, onNavigate }: Props = $props();
 
 	function isActive(href: string, exact = false): boolean {
-		const path = $page.url.pathname;
+		const path = page.url.pathname;
 		if (exact) return path === href;
 		return path.startsWith(href);
 	}
@@ -33,14 +33,14 @@
 </script>
 
 <aside class="flex h-full w-64 shrink-0 flex-col border-r border-zinc-800 bg-zinc-900/80 p-4">
-	<a href={resolve('/admin/dashboard')} class="mb-6 flex items-center gap-2 px-2">
-		<span class="text-xs font-bold uppercase tracking-[0.3em] text-red-500">Animal Garage</span>
+	<a href={resolve('admin/dashboard')} class="mb-6 flex items-center gap-2 px-2">
+		<span class="text-xs font-bold tracking-[0.3em] text-red-500 uppercase">Animal Garage</span>
 	</a>
 
 	<nav class="flex-1 overflow-y-auto" aria-label="Admin">
 		{#each ADMIN_NAV as section (section.label)}
 			<div class="mb-4">
-				<p class="mb-2 px-3 text-[10px] font-bold uppercase tracking-widest text-zinc-600">
+				<p class="mb-2 px-3 text-[10px] font-bold tracking-widest text-zinc-600 uppercase">
 					{section.label}
 				</p>
 				<ul class="space-y-0.5">

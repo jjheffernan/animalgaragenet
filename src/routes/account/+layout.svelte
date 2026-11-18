@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { page } from '$app/stores';
-	import { resolvePath } from '$lib/utils/paths';
+	import { page } from '$app/state';
+	import { resolvePath } from '#lib/utils/paths.ts';
 
 	const navItems = [
 		{ href: '/account', label: 'Overview', disabled: false },
@@ -16,8 +16,8 @@
 
 <div class="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
 	<div class="flex flex-col gap-8 lg:flex-row">
-		<aside class="lg:w-56 shrink-0">
-			<h2 class="font-display text-lg font-bold uppercase tracking-wider text-white">Account</h2>
+		<aside class="shrink-0 lg:w-56">
+			<h2 class="font-display text-lg font-bold tracking-wider text-white uppercase">Account</h2>
 			<nav class="mt-4 space-y-1" aria-label="Account">
 				{#each navItems as item (item.href)}
 					{#if item.disabled}
@@ -25,18 +25,18 @@
 					{:else}
 						<a
 							href={resolvePath(item.href)}
-							class="block rounded-sm px-3 py-2 text-sm transition {$page.url.pathname ===
+							class="block rounded-sm px-3 py-2 text-sm transition {page.url.pathname ===
 								item.href ||
 							(item.href === '/account/builds' &&
-								$page.url.pathname.startsWith('/account/builds')) ||
+								page.url.pathname.startsWith('/account/builds')) ||
 							(item.href === '/account/redeem' &&
-								$page.url.pathname.startsWith('/account/redeem')) ||
+								page.url.pathname.startsWith('/account/redeem')) ||
 							(item.href === '/account/orders' &&
-								$page.url.pathname.startsWith('/account/orders')) ||
+								page.url.pathname.startsWith('/account/orders')) ||
 							(item.href === '/account/vehicles' &&
-								$page.url.pathname.startsWith('/account/vehicles')) ||
+								page.url.pathname.startsWith('/account/vehicles')) ||
 							(item.href === '/account/connections' &&
-								$page.url.pathname.startsWith('/account/connections'))
+								page.url.pathname.startsWith('/account/connections'))
 								? 'bg-zinc-800 text-white'
 								: 'text-zinc-400 hover:bg-zinc-900 hover:text-white'}"
 						>

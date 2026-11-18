@@ -1,17 +1,17 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
-	import { page } from '$app/stores';
-	import PromoBar from '$lib/components/layout/PromoBar.svelte';
-	import MegaMenu from '$lib/components/navigation/MegaMenu.svelte';
-	import CartDrawer from '$lib/components/cart/CartDrawer.svelte';
-	import SearchModal from '$lib/components/search/SearchModal.svelte';
-	import LocaleSelector from '$lib/components/navigation/LocaleSelector.svelte';
-	import MobileNavDrawer from '$lib/components/layout/MobileNavDrawer.svelte';
-	import DealBadge from '$lib/components/commerce/DealBadge.svelte';
-	import AccountMenu from '$lib/components/navigation/AccountMenu.svelte';
-	import { cart } from '$lib/stores/cart.svelte';
-	import { search } from '$lib/stores/search.svelte';
-	import { resolvePath } from '$lib/utils/paths';
+	import { page } from '$app/state';
+	import PromoBar from '#lib/components/layout/PromoBar.svelte';
+	import MegaMenu from '#lib/components/navigation/MegaMenu.svelte';
+	import CartDrawer from '#lib/components/cart/CartDrawer.svelte';
+	import SearchModal from '#lib/components/search/SearchModal.svelte';
+	import LocaleSelector from '#lib/components/navigation/LocaleSelector.svelte';
+	import MobileNavDrawer from '#lib/components/layout/MobileNavDrawer.svelte';
+	import DealBadge from '#lib/components/commerce/DealBadge.svelte';
+	import AccountMenu from '#lib/components/navigation/AccountMenu.svelte';
+	import { cart } from '#lib/stores/cart.svelte.ts';
+	import { search } from '#lib/stores/search.svelte.ts';
+	import { resolvePath } from '#lib/utils/paths.ts';
 
 	let mobileOpen = $state(false);
 	let notificationsOpen = $state(false);
@@ -126,8 +126,8 @@
 
 	$effect(() => {
 		// Close menus on route change
-		void $page.url.pathname;
-		void $page.url.search;
+		void page.url.pathname;
+		void page.url.search;
 		closeMenus();
 		mobileOpen = false;
 		notificationsOpen = false;
@@ -150,22 +150,21 @@
 	});
 
 	const communityPaths = ['/loyalty', '/guides', '/events', '/watch', '/builds', '/media'];
+
 	const isCommunityActive = $derived(
-		communityPaths.some((p) => $page.url.pathname === p || $page.url.pathname.startsWith(`${p}/`))
+		communityPaths.some((p) => page.url.pathname === p || page.url.pathname.startsWith(`${p}/`))
 	);
-
-	const session = $derived($page.data.session);
-	const staffPanel = $derived($page.data.staffPanel ?? false);
-	const notificationCount = $derived($page.data.notificationCount ?? 0);
-	const dealCount = $derived($page.data.dealCount ?? 0);
-
+	const session = $derived(page.data.session);
+	const staffPanel = $derived(page.data.staffPanel ?? false);
+	const notificationCount = $derived(page.data.notificationCount ?? 0);
+	const dealCount = $derived(page.data.dealCount ?? 0);
 	const headerIconBtn =
 		'relative inline-flex size-9 shrink-0 items-center justify-center rounded-sm text-zinc-400 transition hover:text-white';
 	const headerBadgeClass =
 		'pointer-events-none absolute end-0 top-0 flex h-4 min-w-4 translate-x-1/4 -translate-y-1/4 items-center justify-center rounded-full bg-red-600 px-0.5 text-[10px] font-bold leading-none text-white';
 	const activeMenu = $derived(shopMenuOpen ? 'shop' : partsMenuOpen ? 'parts' : null);
 	const dealsHref = $derived(
-		session ? resolve('/deals') : resolvePath('/auth/sign-in?redirect=/deals')
+		session ? resolve('deals') : resolvePath('/auth/sign-in?redirect=/deals')
 	);
 
 	const shopCategories = [
@@ -181,12 +180,12 @@
 	] as const;
 
 	const communityLinks = $derived([
-		{ label: 'Loyalty', href: resolve('/loyalty') },
-		{ label: 'Guides', href: resolve('/guides') },
-		{ label: 'Events', href: resolve('/events') },
-		{ label: 'Watch', href: resolve('/watch') },
-		{ label: 'Builds', href: resolve('/builds') },
-		{ label: 'Media', href: resolve('/media') }
+		{ label: 'Loyalty', href: resolve('loyalty') },
+		{ label: 'Guides', href: resolve('guides') },
+		{ label: 'Events', href: resolve('events') },
+		{ label: 'Watch', href: resolve('watch') },
+		{ label: 'Builds', href: resolve('builds') },
+		{ label: 'Media', href: resolve('media') }
 	] as const);
 
 	function closeMobileNav() {
@@ -251,7 +250,7 @@
 						stroke-linejoin="round"
 						stroke-width="2"
 						d="M4 6h16M4 12h16M4 18h16"
-					/>
+					></path>
 				</svg>
 			</button>
 
@@ -264,7 +263,7 @@
 					>AG</span
 				>
 				<span
-					class="hidden truncate font-display text-lg font-bold uppercase tracking-widest text-white sm:block"
+					class="hidden truncate font-display text-lg font-bold tracking-widest text-white uppercase sm:block"
 				>
 					Animal Garage
 				</span>
@@ -275,19 +274,18 @@
 				aria-label="Main"
 			>
 				<div
-					class="relative inline-flex min-w-0 max-w-full shrink items-center gap-0.5"
+					class="relative inline-flex max-w-full min-w-0 shrink items-center gap-0.5"
 					onmouseenter={openShopMenu}
 					onmouseleave={scheduleClose}
 				>
 					<a
-						href={resolve('/shop')}
-						class="truncate text-sm font-medium uppercase tracking-wider transition-colors {activeMenu ===
+						href={resolve('shop')}
+						class="truncate text-sm font-medium tracking-wider uppercase transition-colors {activeMenu ===
 						'shop'
 							? 'text-white'
-							: 'text-zinc-400 hover:text-white'}"
+							: 'text-zinc-400 hover:text-white'}">Shop</a
 					>
-						Shop
-					</a>
+
 					<button
 						type="button"
 						class="rounded-sm p-0.5 text-zinc-500 transition hover:text-white {shopMenuOpen
@@ -310,25 +308,24 @@
 								stroke-linejoin="round"
 								stroke-width="2"
 								d="M19 9l-7 7-7-7"
-							/>
+							></path>
 						</svg>
 					</button>
 				</div>
 
 				<div
-					class="relative inline-flex min-w-0 max-w-full shrink items-center gap-0.5"
+					class="relative inline-flex max-w-full min-w-0 shrink items-center gap-0.5"
 					onmouseenter={openPartsMenu}
 					onmouseleave={scheduleClose}
 				>
 					<a
-						href={resolve('/parts')}
-						class="truncate text-sm font-medium uppercase tracking-wider transition-colors {activeMenu ===
+						href={resolve('parts')}
+						class="truncate text-sm font-medium tracking-wider uppercase transition-colors {activeMenu ===
 						'parts'
 							? 'text-white'
-							: 'text-zinc-400 hover:text-white'}"
+							: 'text-zinc-400 hover:text-white'}">Parts</a
 					>
-						Parts
-					</a>
+
 					<button
 						type="button"
 						class="rounded-sm p-0.5 text-zinc-500 transition hover:text-white {partsMenuOpen
@@ -351,27 +348,26 @@
 								stroke-linejoin="round"
 								stroke-width="2"
 								d="M19 9l-7 7-7-7"
-							/>
+							></path>
 						</svg>
 					</button>
 				</div>
 
 				<div
-					class="relative inline-flex min-w-0 max-w-full shrink items-center gap-0.5"
+					class="relative inline-flex max-w-full min-w-0 shrink items-center gap-0.5"
 					role="presentation"
 					bind:this={communityMenuRoot}
 					onmouseenter={openCommunityMenu}
 					onmouseleave={scheduleClose}
 				>
 					<a
-						href={resolve('/builds')}
-						class="truncate text-sm font-medium uppercase tracking-wider transition-colors {communityMenuOpen ||
+						href={resolve('builds')}
+						class="truncate text-sm font-medium tracking-wider uppercase transition-colors {communityMenuOpen ||
 						isCommunityActive
 							? 'text-white'
-							: 'text-zinc-400 hover:text-white'}"
+							: 'text-zinc-400 hover:text-white'}">Community</a
 					>
-						Community
-					</a>
+
 					<button
 						type="button"
 						class="rounded-sm p-0.5 text-zinc-500 transition hover:text-white {communityMenuOpen
@@ -395,13 +391,13 @@
 								stroke-linejoin="round"
 								stroke-width="2"
 								d="M19 9l-7 7-7-7"
-							/>
+							></path>
 						</svg>
 					</button>
 
 					{#if communityMenuOpen}
 						<div
-							class="absolute left-0 top-full z-[60] pt-1"
+							class="absolute top-full left-0 z-[60] pt-1"
 							role="presentation"
 							onmouseenter={cancelClose}
 							onmouseleave={scheduleClose}
@@ -411,7 +407,7 @@
 								role="menu"
 								id="community-menu"
 							>
-								<p class="px-4 pb-1 text-xs font-bold uppercase tracking-widest text-zinc-500">
+								<p class="px-4 pb-1 text-xs font-bold tracking-widest text-zinc-500 uppercase">
 									Community
 								</p>
 								<ul>
@@ -420,9 +416,9 @@
 											<a
 												href={link.href}
 												role="menuitem"
-												class="block px-4 py-2.5 text-sm font-medium uppercase tracking-wider text-zinc-300 transition hover:bg-zinc-900/80 hover:text-red-400 {$page
+												class="block px-4 py-2.5 text-sm font-medium tracking-wider text-zinc-300 uppercase transition hover:bg-zinc-900/80 hover:text-red-400 {page
 													.url.pathname === link.href ||
-												$page.url.pathname.startsWith(`${link.href}/`)
+												page.url.pathname.startsWith(`${link.href}/`)
 													? 'bg-zinc-900/50 text-red-400'
 													: ''}"
 												onclick={closeMenus}
@@ -439,7 +435,7 @@
 
 				<a
 					href={dealsHref}
-					class="inline-flex min-w-0 max-w-full shrink items-center gap-1.5 truncate text-sm font-medium uppercase tracking-wider transition-colors {$page
+					class="inline-flex max-w-full min-w-0 shrink items-center gap-1.5 truncate text-sm font-medium tracking-wider uppercase transition-colors {page
 						.url.pathname === '/deals'
 						? 'text-red-500'
 						: 'text-zinc-400 hover:text-white'}"
@@ -459,7 +455,7 @@
 								stroke-linejoin="round"
 								stroke-width="2"
 								d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
-							/>
+							></path>
 						</svg>
 					{/if}
 					<DealBadge count={dealCount} />
@@ -495,7 +491,7 @@
 										stroke-linejoin="round"
 										stroke-width="2"
 										d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
-									/>
+									></path>
 								</svg>
 								{#if notificationCount > 0}
 									<span class={headerBadgeClass}>
@@ -505,7 +501,7 @@
 							</button>
 							{#if notificationsOpen}
 								<div
-									class="absolute right-0 top-full z-50 mt-2 w-64 overflow-hidden rounded-sm border border-zinc-800 bg-zinc-950 py-3 shadow-2xl"
+									class="absolute top-full right-0 z-50 mt-2 w-64 overflow-hidden rounded-sm border border-zinc-800 bg-zinc-950 py-3 shadow-2xl"
 									role="menu"
 								>
 									<p class="px-4 text-sm text-zinc-400">No notifications yet</p>
@@ -515,7 +511,7 @@
 						<div class="relative isolate shrink-0" bind:this={accountMenuRoot}>
 							<button
 								type="button"
-								class="hidden min-h-9 shrink-0 items-center px-2 text-sm font-medium uppercase tracking-wider text-zinc-400 transition hover:text-white lg:inline-flex"
+								class="hidden min-h-9 shrink-0 items-center px-2 text-sm font-medium tracking-wider text-zinc-400 uppercase transition hover:text-white lg:inline-flex"
 								aria-label="Account menu"
 								aria-expanded={accountMenuOpen}
 								aria-haspopup="menu"
@@ -551,7 +547,7 @@
 										stroke-linejoin="round"
 										stroke-width="2"
 										d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-									/>
+									></path>
 								</svg>
 							</button>
 							<AccountMenu
@@ -564,13 +560,13 @@
 					</div>
 				{:else}
 					<a
-						href={resolve('/auth/sign-in')}
-						class="hidden min-h-9 shrink-0 items-center px-2 text-sm font-medium uppercase tracking-wider text-zinc-400 transition hover:text-white lg:inline-flex"
+						href={resolve('auth/sign-in')}
+						class="hidden min-h-9 shrink-0 items-center px-2 text-sm font-medium tracking-wider text-zinc-400 uppercase transition hover:text-white lg:inline-flex"
 					>
 						Sign In
 					</a>
 					<a
-						href={resolve('/auth/sign-in')}
+						href={resolve('auth/sign-in')}
 						class="{headerIconBtn} size-9 lg:hidden"
 						aria-label="Sign In"
 					>
@@ -586,7 +582,7 @@
 								stroke-linejoin="round"
 								stroke-width="2"
 								d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-							/>
+							></path>
 						</svg>
 					</a>
 				{/if}
@@ -602,7 +598,7 @@
 							stroke-linejoin="round"
 							stroke-width="2"
 							d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-						/>
+						></path>
 					</svg>
 				</button>
 				<button type="button" class="{headerIconBtn} size-9" aria-label="Cart" onclick={toggleCart}>
@@ -612,7 +608,7 @@
 							stroke-linejoin="round"
 							stroke-width="2"
 							d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"
-						/>
+						></path>
 					</svg>
 					{#if cart.itemCount > 0}
 						<span class={headerBadgeClass}>

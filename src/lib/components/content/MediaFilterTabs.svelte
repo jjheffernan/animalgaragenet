@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { page } from '$app/state';
-	import { buildPaginationUrl } from '$lib/pagination';
-	import { catalogRibbonNavClass, categoryPillClass } from '$lib/ui/catalog-ribbon';
-	import { resolvePath } from '$lib/utils/paths';
+	import { buildPaginationUrl } from '#lib/pagination.ts';
+	import { catalogRibbonNavClass, categoryPillClass } from '#lib/ui/catalog-ribbon.ts';
+	import { resolvePath } from '#lib/utils/paths.ts';
 
 	const tabs = [
 		{ label: 'All', value: 'all' },

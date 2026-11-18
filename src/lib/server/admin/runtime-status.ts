@@ -1,8 +1,8 @@
-import { env } from '$env/dynamic/private';
-import { isProductionSiteUrl } from '$lib/server/auth/local-dev';
-import { isGhostEnabled } from '$lib/server/ghost/client';
-import { isSaleorEnabled } from '$lib/server/saleor/client';
-import { isSupabaseConfigured } from '$lib/server/supabase/client';
+import { YOUTUBE_SYNC_SECRET, SITE_LOCKED } from '$app/env/private';
+import { isProductionSiteUrl } from '#lib/server/auth/local-dev.ts';
+import { isGhostEnabled } from '#lib/server/ghost/client.ts';
+import { isSaleorEnabled } from '#lib/server/saleor/client.ts';
+import { isSupabaseConfigured } from '#lib/server/supabase/client.ts';
 
 export interface RuntimeStatus {
 	saleorEnabled: boolean;
@@ -27,7 +27,7 @@ export function listRuntimeCronTriggers(): RuntimeCronTrigger[] {
 			id: 'youtube-sync',
 			label: 'YouTube channel sync',
 			path: '/api/cron/youtube-sync',
-			configured: Boolean(env.YOUTUBE_SYNC_SECRET?.trim())
+			configured: Boolean(YOUTUBE_SYNC_SECRET?.trim())
 		}
 	];
 }
@@ -39,7 +39,7 @@ export function getRuntimeStatus(): RuntimeStatus {
 		ghostEnabled: isGhostEnabled(),
 		supabaseConfigured: isSupabaseConfigured(),
 		mockGuardsActive: isProductionSiteUrl(),
-		youtubeSyncConfigured: Boolean(env.YOUTUBE_SYNC_SECRET?.trim()),
-		siteLocked: env.SITE_LOCKED === 'true'
+		youtubeSyncConfigured: Boolean(YOUTUBE_SYNC_SECRET?.trim()),
+		siteLocked: SITE_LOCKED === 'true'
 	};
 }

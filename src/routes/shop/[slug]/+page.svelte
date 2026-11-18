@@ -1,18 +1,18 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { browser } from '$app/environment';
+	import { browser } from '$app/env';
 	import { resolve } from '$app/paths';
-	import { locale } from '$lib/stores/locale.svelte';
-	import LocaleSelector from '$lib/components/navigation/LocaleSelector.svelte';
-	import AnimatedReveal from '$lib/components/shared/AnimatedReveal.svelte';
-	import PageMeta from '$lib/components/shared/PageMeta.svelte';
-	import MiniProductRow from '$lib/components/catalog/MiniProductRow.svelte';
-	import VariantSelector from '$lib/components/catalog/VariantSelector.svelte';
-	import NotifyMeButton from '$lib/components/catalog/NotifyMeButton.svelte';
-	import TrustBlocks from '$lib/components/marketing/TrustBlocks.svelte';
-	import { cart } from '$lib/stores/cart.svelte';
-	import { recentlyViewed } from '$lib/stores/recently-viewed.svelte';
-	import { getAllCatalogProducts } from '$lib/data/mock/parts';
+	import { locale } from '#lib/stores/locale.svelte.ts';
+	import LocaleSelector from '#lib/components/navigation/LocaleSelector.svelte';
+	import AnimatedReveal from '#lib/components/shared/AnimatedReveal.svelte';
+	import PageMeta from '#lib/components/shared/PageMeta.svelte';
+	import MiniProductRow from '#lib/components/catalog/MiniProductRow.svelte';
+	import VariantSelector from '#lib/components/catalog/VariantSelector.svelte';
+	import NotifyMeButton from '#lib/components/catalog/NotifyMeButton.svelte';
+	import TrustBlocks from '#lib/components/marketing/TrustBlocks.svelte';
+	import { cart } from '#lib/stores/cart.svelte.ts';
+	import { recentlyViewed } from '#lib/stores/recently-viewed.svelte.ts';
+	import { getAllCatalogProducts } from '#lib/data/mock/parts.ts';
 
 	let { data } = $props();
 	const product = $derived(data.product);
@@ -45,6 +45,7 @@
 	}
 
 	let selectedImage = $state(0);
+
 	const images = $derived(
 		product.media.length > 0 ? product.media : product.thumbnail ? [product.thumbnail] : []
 	);
@@ -63,10 +64,11 @@
 
 <section class="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
 	<nav class="mb-8 text-sm text-zinc-500">
-		<a href={resolve('/shop')} class="hover:text-red-500">Shop</a>
+		<a href={resolve('shop')} class="hover:text-red-500">Shop</a>
 		{#if product.category}
 			<span class="mx-2">/</span>
-			<a href={resolve(`/shop?category=${product.category.slug}`)} class="hover:text-red-500"
+
+			<a href={resolve(`shop?category=${product.category.slug}`)} class="hover:text-red-500"
 				>{product.category.name}</a
 			>
 		{/if}
@@ -111,12 +113,12 @@
 
 		<AnimatedReveal delay={150}>
 			{#if product.category}
-				<p class="text-xs font-bold uppercase tracking-widest text-red-500">
+				<p class="text-xs font-bold tracking-widest text-red-500 uppercase">
 					{product.category.name}
 				</p>
 			{/if}
 			<h1
-				class="mt-2 font-display text-3xl font-bold uppercase tracking-wider text-white sm:text-4xl"
+				class="mt-2 font-display text-3xl font-bold tracking-wider text-white uppercase sm:text-4xl"
 			>
 				{product.name}
 			</h1>
@@ -128,7 +130,7 @@
 			</p>
 			{#if soldOut}
 				<span
-					class="mt-2 inline-block rounded-sm bg-zinc-950 px-3 py-1 text-xs font-bold uppercase text-white"
+					class="mt-2 inline-block rounded-sm bg-zinc-950 px-3 py-1 text-xs font-bold text-white uppercase"
 					>Sold Out</span
 				>
 			{/if}
@@ -148,7 +150,7 @@
 
 			{#if soldOut}
 				<div class="mt-8 rounded-sm border border-zinc-800 bg-zinc-900/50 p-4">
-					<p class="text-sm font-bold uppercase tracking-widest text-zinc-300">
+					<p class="text-sm font-bold tracking-widest text-zinc-300 uppercase">
 						Notify Me When Available
 					</p>
 					<NotifyMeButton
@@ -163,7 +165,7 @@
 				<button
 					type="button"
 					onclick={addToCart}
-					class="mt-8 w-full rounded-sm bg-red-600 px-8 py-4 text-sm font-bold uppercase tracking-wider text-white transition hover:bg-red-500 sm:w-auto"
+					class="mt-8 w-full rounded-sm bg-red-600 px-8 py-4 text-sm font-bold tracking-wider text-white uppercase transition hover:bg-red-500 sm:w-auto"
 				>
 					Add to Cart
 				</button>
@@ -177,9 +179,9 @@
 {#if data.linkedBuild}
 	<section class="border-t border-zinc-800 bg-zinc-900/30 py-12">
 		<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-			<h2 class="font-display text-xl font-bold uppercase text-white">Shop This Build</h2>
+			<h2 class="font-display text-xl font-bold text-white uppercase">Shop This Build</h2>
 			<a
-				href={resolve(`/builds/${data.linkedBuild.slug}`)}
+				href={resolve(`builds/${data.linkedBuild.slug}`)}
 				class="mt-4 flex items-center gap-4 rounded-sm border border-zinc-800 bg-zinc-900 p-4 transition hover:border-red-600/50"
 			>
 				<img
@@ -188,7 +190,7 @@
 					class="h-20 w-32 rounded-sm object-cover"
 				/>
 				<div>
-					<p class="text-xs font-bold uppercase tracking-widest text-red-500">
+					<p class="text-xs font-bold tracking-widest text-red-500 uppercase">
 						{data.linkedBuild.year}
 						{data.linkedBuild.make}
 						{data.linkedBuild.model}

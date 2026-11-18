@@ -1,12 +1,15 @@
 import { json } from '@sveltejs/kit';
-import { env as privateEnv } from '$env/dynamic/private';
-import { isOrderMirrorEvent, mirrorSaleorOrderPayload } from '$lib/server/saleor/order-webhook';
-import { isStockRestockEvent, processStockRestockPayload } from '$lib/server/saleor/stock-webhook';
+import { SALEOR_WEBHOOK_SECRET } from '$app/env/private';
+import { isOrderMirrorEvent, mirrorSaleorOrderPayload } from '#lib/server/saleor/order-webhook.ts';
+import {
+	isStockRestockEvent,
+	processStockRestockPayload
+} from '#lib/server/saleor/stock-webhook.ts';
 import {
 	readSaleorEvent,
 	readSaleorSignature,
 	verifySaleorWebhookSignature
-} from '$lib/server/saleor/webhook-signature';
+} from '#lib/server/saleor/webhook-signature.ts';
 import type { RequestHandler } from './$types';
 
 /**
@@ -17,7 +20,7 @@ import type { RequestHandler } from './$types';
  */
 export const POST: RequestHandler = async ({ request }) => {
 	const rawBody = await request.text();
-	const secret = privateEnv.SALEOR_WEBHOOK_SECRET?.trim();
+	const secret = SALEOR_WEBHOOK_SECRET?.trim();
 
 	if (secret) {
 		const signature = readSaleorSignature(request);

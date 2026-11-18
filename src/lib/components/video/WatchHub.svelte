@@ -2,15 +2,15 @@
 	import { goto } from '$app/navigation';
 	import { resolve } from '$app/paths';
 	import { page } from '$app/state';
-	import type { Video } from '$lib/types/domain';
-	import type { PaginationMeta } from '$lib/pagination';
-	import SectionHeading from '$lib/components/shared/SectionHeading.svelte';
-	import AnimatedReveal from '$lib/components/shared/AnimatedReveal.svelte';
-	import VideoGrid from '$lib/components/video/VideoGrid.svelte';
-	import VideoHero from '$lib/components/video/VideoHero.svelte';
-	import VideoDetailPanel from '$lib/components/video/VideoDetailPanel.svelte';
-	import PaginatedListCanvas from '$lib/components/catalog/PaginatedListCanvas.svelte';
-	import { videoPanel } from '$lib/stores/video-panel.svelte';
+	import type { Video } from '#lib/types/domain.ts';
+	import type { PaginationMeta } from '#lib/pagination.ts';
+	import SectionHeading from '#lib/components/shared/SectionHeading.svelte';
+	import AnimatedReveal from '#lib/components/shared/AnimatedReveal.svelte';
+	import VideoGrid from '#lib/components/video/VideoGrid.svelte';
+	import VideoHero from '#lib/components/video/VideoHero.svelte';
+	import VideoDetailPanel from '#lib/components/video/VideoDetailPanel.svelte';
+	import PaginatedListCanvas from '#lib/components/catalog/PaginatedListCanvas.svelte';
+	import { videoPanel } from '#lib/stores/video-panel.svelte.ts';
 
 	interface Props {
 		videos: Video[];
@@ -29,19 +29,19 @@
 
 	function handleVideoSelect(video: Video) {
 		videoPanel.openVideo(video);
-		goto(resolve(`/watch/${video.id}`), { keepFocus: true, noScroll: true });
+		goto(resolve(`watch/${video.id}`), { reset: false });
 	}
 
 	function handleClose() {
 		if (page.params.id) {
-			goto(resolve('/watch'), { replaceState: true, noScroll: true });
+			goto(resolve('watch'), { replace: true, reset: false });
 		}
 	}
 </script>
 
 <section class="border-b border-zinc-800 bg-zinc-900/50 py-16">
 	<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-		<h1 class="font-display text-4xl font-bold uppercase tracking-wider text-white">Watch</h1>
+		<h1 class="font-display text-4xl font-bold tracking-wider text-white uppercase">Watch</h1>
 		<p class="mt-2 text-zinc-400">Full video hub — builds, events, and shop tours.</p>
 	</div>
 </section>
@@ -54,9 +54,10 @@
 	<AnimatedReveal>
 		<SectionHeading title="All Videos" subtitle="{pagination.total} videos" />
 	</AnimatedReveal>
-	<PaginatedListCanvas {pagination} class="mt-8">
-		<VideoGrid {videos} onselect={handleVideoSelect} />
-	</PaginatedListCanvas>
+
+	<PaginatedListCanvas {pagination} class="mt-8"
+		><VideoGrid {videos} onselect={handleVideoSelect} /></PaginatedListCanvas
+	>
 </section>
 
 <VideoDetailPanel onclose={handleClose} />

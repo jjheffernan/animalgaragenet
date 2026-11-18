@@ -1,18 +1,19 @@
-import { env } from '$env/dynamic/private';
-import { error, isHttpError, isRedirect, redirect, type Handle } from '@sveltejs/kit';
-import { resolveAdminGate } from '$lib/server/auth/admin-gate';
-import { isDevAdminEnabled, isProductionHostname } from '$lib/server/auth/local-dev';
-import { canAccessAdmin } from '$lib/server/auth/roles';
-import { logHttpRequest } from '$lib/server/observability/request-log';
-import { recordHttpRequest } from '$lib/server/observability/metrics';
-import { REQUEST_ID_HEADER, resolveRequestId } from '$lib/server/observability/request-id';
+import { error, isHttpError, isRedirect, redirect } from '@sveltejs/kit';
+import type { Handle } from '@sveltejs/kit/hooks';
+import { SITE_LOCKED } from '$app/env/private';
+import { resolveAdminGate } from '#lib/server/auth/admin-gate.ts';
+import { isDevAdminEnabled, isProductionHostname } from '#lib/server/auth/local-dev.ts';
+import { canAccessAdmin } from '#lib/server/auth/roles.ts';
+import { logHttpRequest } from '#lib/server/observability/request-log.ts';
+import { recordHttpRequest } from '#lib/server/observability/metrics.ts';
+import { REQUEST_ID_HEADER, resolveRequestId } from '#lib/server/observability/request-id.ts';
 import {
 	passthroughTraceHeaders,
 	resolveTraceparent,
 	TRACEPARENT_HEADER
-} from '$lib/server/observability/trace';
-import { getSession, parseSessionCookie, SESSION_COOKIE } from '$lib/server/supabase/auth';
-import { createServerClient, isSupabaseConfigured } from '$lib/server/supabase/client';
+} from '#lib/server/observability/trace.ts';
+import { getSession, parseSessionCookie, SESSION_COOKIE } from '#lib/server/supabase/auth.ts';
+import { createServerClient, isSupabaseConfigured } from '#lib/server/supabase/client.ts';
 
 function isLockdownExemptPath(pathname: string): boolean {
 	if (pathname === '/locked') return true;
@@ -94,7 +95,7 @@ export const handle: Handle = async ({ event, resolve }) => {
 				: parseSessionCookie(event.cookies.get(SESSION_COOKIE));
 		}
 
-		if (env.SITE_LOCKED === 'true' && !isLockdownExemptPath(event.url.pathname)) {
+		if (SITE_LOCKED === 'true' && !isLockdownExemptPath(event.url.pathname)) {
 			const isAdmin = event.locals.devAdmin || canAccessAdmin(event.locals.session?.role ?? null);
 			if (!isAdmin) {
 				throw redirect(303, '/locked');

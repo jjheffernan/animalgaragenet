@@ -1,16 +1,16 @@
-import { env } from '$env/dynamic/private';
+import { LOCAL_DEV_AUTH, DEV_ADMIN } from '$app/env/private';
 import type { RequestEvent } from '@sveltejs/kit';
 import type { SupabaseClient } from '@supabase/supabase-js';
-import { config } from '$lib/config/env';
-import { createAdminClient } from '$lib/server/supabase/admin';
-import { findUserByEmail } from '$lib/server/supabase/admin-users';
+import { config } from '#lib/config/env.ts';
+import { createAdminClient } from '#lib/server/supabase/admin.ts';
+import { findUserByEmail } from '#lib/server/supabase/admin-users.ts';
 import {
 	createMockUser,
 	mapSupabaseUser,
 	setSessionCookie,
 	type SessionUser
-} from '$lib/server/supabase/auth';
-import { isSupabaseConfigured } from '$lib/server/supabase/client';
+} from '#lib/server/supabase/auth.ts';
+import { isSupabaseConfigured } from '#lib/server/supabase/client.ts';
 import type { LocalDevAccount } from './local-dev-accounts';
 
 const PRODUCTION_HOST = 'animalgarage.net';
@@ -40,12 +40,12 @@ export function isLocalDevAuthEnabled(event: Pick<RequestEvent, 'url'>): boolean
 	if (!isLocalHostname(event.url.hostname)) return false;
 	if (isProductionSiteUrl()) return false;
 	if (import.meta.env.DEV) return true;
-	return env.LOCAL_DEV_AUTH === 'true';
+	return LOCAL_DEV_AUTH === 'true';
 }
 
 /** DEV_ADMIN bypass is allowed only off production hostnames and site URL. */
 export function isDevAdminEnabled(event: Pick<RequestEvent, 'url'>): boolean {
-	if (env.DEV_ADMIN !== 'true') return false;
+	if (DEV_ADMIN !== 'true') return false;
 	if (isProductionHostname(event.url.hostname)) return false;
 	if (isProductionSiteUrl()) return false;
 	return true;
@@ -118,8 +118,12 @@ export async function devSignInAccount(
 			data: { user },
 			error: userError
 		} = await supabase.auth.getUser();
+
 		if (userError || !user)
-			return { ok: false, message: userError?.message ?? 'Dev sign-in failed.' };
+			return {
+				ok: false,
+				message: userError?.message ?? 'Dev sign-in failed.'
+			};
 
 		return { ok: true, user: mapSupabaseUser(user) };
 	} catch (err) {

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { page } from '$app/state';
-	import { defaultOgImageUrl } from '$lib/seo/site-meta';
+	import { defaultOgImageUrl } from '#lib/seo/site-meta.ts';
 
 	interface Props {
 		title: string;

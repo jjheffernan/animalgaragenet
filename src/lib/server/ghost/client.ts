@@ -1,4 +1,4 @@
-import { env } from '$env/dynamic/private';
+import { GHOST_URL, GHOST_CONTENT_API_KEY } from '$app/env/private';
 
 export interface GhostFetchOptions {
 	path: string;
@@ -7,11 +7,11 @@ export interface GhostFetchOptions {
 
 /** True when `GHOST_URL` and `GHOST_CONTENT_API_KEY` are both set. */
 export function isGhostEnabled(): boolean {
-	return Boolean(env.GHOST_URL?.trim() && env.GHOST_CONTENT_API_KEY?.trim());
+	return Boolean(GHOST_URL?.trim() && GHOST_CONTENT_API_KEY?.trim());
 }
 
 function ghostBaseUrl(): string {
-	const url = env.GHOST_URL?.trim();
+	const url = GHOST_URL?.trim();
 	if (!url) {
 		throw new Error('GHOST_URL not configured');
 	}
@@ -19,7 +19,7 @@ function ghostBaseUrl(): string {
 }
 
 function ghostContentApiKey(): string {
-	const key = env.GHOST_CONTENT_API_KEY?.trim();
+	const key = GHOST_CONTENT_API_KEY?.trim();
 	if (!key) {
 		throw new Error('GHOST_CONTENT_API_KEY not configured');
 	}

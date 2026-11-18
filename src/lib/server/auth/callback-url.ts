@@ -1,12 +1,12 @@
-import { env } from '$env/dynamic/public';
-import { isProductionHostname } from '$lib/server/auth/local-dev';
+import { PUBLIC_SITE_URL } from '$app/env/public';
+import { isProductionHostname } from '#lib/server/auth/local-dev.ts';
 
 function normalizeOrigin(origin: string): string {
 	return new URL(origin).origin;
 }
 
 function getConfiguredSiteOrigin(): string {
-	const siteUrl = env.PUBLIC_SITE_URL ?? process.env.PUBLIC_SITE_URL ?? 'http://localhost:5173';
+	const siteUrl = PUBLIC_SITE_URL ?? process.env.PUBLIC_SITE_URL ?? 'http://localhost:5173';
 	return normalizeOrigin(siteUrl);
 }
 

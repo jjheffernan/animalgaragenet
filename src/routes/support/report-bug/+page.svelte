@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { page } from '$app/state';
-	import AnimatedReveal from '$lib/components/shared/AnimatedReveal.svelte';
+	import AnimatedReveal from '#lib/components/shared/AnimatedReveal.svelte';
 	import type { PageData } from './$types';
 
 	let { data }: { data: PageData } = $props();
@@ -85,7 +85,7 @@
 
 <section class="mx-auto max-w-2xl px-4 py-20 sm:px-6 lg:px-8">
 	<AnimatedReveal>
-		<h1 class="font-display text-3xl font-bold uppercase text-white">Report a Bug</h1>
+		<h1 class="font-display text-3xl font-bold text-white uppercase">Report a Bug</h1>
 		<p class="mt-4 text-zinc-400">
 			Something broken on the site? Tell us what happened and we will triage it. Include steps so we
 			can reproduce the issue.
@@ -116,7 +116,7 @@
 				{/if}
 
 				<label class="block">
-					<span class="text-xs font-bold uppercase tracking-widest text-zinc-500">
+					<span class="text-xs font-bold tracking-widest text-zinc-500 uppercase">
 						Email{#if !isLoggedIn}<span class="text-red-500"> *</span>{/if}
 					</span>
 					<input
@@ -135,7 +135,7 @@
 				</label>
 
 				<label class="block">
-					<span class="text-xs font-bold uppercase tracking-widest text-zinc-500">
+					<span class="text-xs font-bold tracking-widest text-zinc-500 uppercase">
 						Category <span class="text-red-500">*</span>
 					</span>
 					<select
@@ -157,7 +157,7 @@
 				</label>
 
 				<label class="block">
-					<span class="text-xs font-bold uppercase tracking-widest text-zinc-500"> Page URL </span>
+					<span class="text-xs font-bold tracking-widest text-zinc-500 uppercase"> Page URL </span>
 					<input
 						type="text"
 						name="pageUrl"
@@ -168,7 +168,7 @@
 				</label>
 
 				<label class="block">
-					<span class="text-xs font-bold uppercase tracking-widest text-zinc-500">
+					<span class="text-xs font-bold tracking-widest text-zinc-500 uppercase">
 						What went wrong? <span class="text-red-500">*</span>
 					</span>
 					<textarea
@@ -186,7 +186,7 @@
 				</label>
 
 				<label class="block">
-					<span class="text-xs font-bold uppercase tracking-widest text-zinc-500">
+					<span class="text-xs font-bold tracking-widest text-zinc-500 uppercase">
 						Steps to reproduce <span class="text-red-500">*</span>
 					</span>
 					<textarea
@@ -206,7 +206,7 @@
 				<button
 					type="submit"
 					disabled={submitting}
-					class="w-full rounded-sm bg-red-600 py-4 text-sm font-bold uppercase tracking-wider text-white hover:bg-red-500 disabled:opacity-60"
+					class="w-full rounded-sm bg-red-600 py-4 text-sm font-bold tracking-wider text-white uppercase hover:bg-red-500 disabled:opacity-60"
 				>
 					{submitting ? 'Submitting…' : 'Submit Bug Report'}
 				</button>

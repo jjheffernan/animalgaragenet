@@ -1,4 +1,4 @@
-import { env as privateEnv } from '$env/dynamic/private';
+import { SALEOR_LOCALE_CHANNELS } from '$app/env/private';
 import { getSaleorChannel, isSaleorEnabled, saleorFetch } from './client';
 
 /**
@@ -31,7 +31,7 @@ export type SaleorChannelInfo = {
 let channelListCache: SaleorChannelInfo[] | null = null;
 
 function parseLocaleChannelEnv(): Record<string, string> {
-	const raw = privateEnv.SALEOR_LOCALE_CHANNELS?.trim();
+	const raw = SALEOR_LOCALE_CHANNELS?.trim();
 	if (!raw) return {};
 
 	try {

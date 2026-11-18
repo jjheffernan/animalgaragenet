@@ -1,10 +1,10 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
-	import { page } from '$app/stores';
-	import PartsNavSections from '$lib/components/navigation/PartsNavSections.svelte';
-	import { buildPartsFilterUrl } from '$lib/data/parts-filters';
-	import { categoryPillClass } from '$lib/ui/catalog-ribbon';
-	import { resolvePath } from '$lib/utils/paths';
+	import { page } from '$app/state';
+	import PartsNavSections from '#lib/components/navigation/PartsNavSections.svelte';
+	import { buildPartsFilterUrl } from '#lib/data/parts-filters.ts';
+	import { categoryPillClass } from '#lib/ui/catalog-ribbon.ts';
+	import { resolvePath } from '#lib/utils/paths.ts';
 
 	interface Props {
 		type: 'shop' | 'parts';
@@ -45,8 +45,8 @@
 		{ label: 'Gift Cards', href: '/gift-cards' }
 	];
 
-	const collections = $derived($page.data.shopCollections ?? []);
-	const partsNav = $derived($page.data.partsNav);
+	const collections = $derived(page.data.shopCollections ?? []);
+	const partsNav = $derived(page.data.partsNav);
 
 	function partsFilterHref(updates: Parameters<typeof buildPartsFilterUrl>[2]) {
 		return resolvePath(buildPartsFilterUrl('/parts', new URLSearchParams(), updates));
@@ -65,10 +65,10 @@
 				{#if type === 'shop'}
 					<div>
 						<div class="flex items-end justify-between gap-4">
-							<p class="text-xs font-bold uppercase tracking-widest text-zinc-500">Categories</p>
+							<p class="text-xs font-bold tracking-widest text-zinc-500 uppercase">Categories</p>
 							<a
-								href={resolve('/shop')}
-								class="text-[10px] font-bold uppercase tracking-widest text-red-500 hover:text-red-400"
+								href={resolve('shop')}
+								class="text-[10px] font-bold tracking-widest text-red-500 uppercase hover:text-red-400"
 							>
 								All shop →
 							</a>
@@ -89,8 +89,8 @@
 
 						{#if collections.length > 0}
 							<div class="mt-3 border-t border-zinc-800/80 pt-3">
-								<p class="text-xs font-bold uppercase tracking-widest text-zinc-500">Collections</p>
-								<ul class="mt-2 flex gap-2 overflow-x-auto pb-1 scrollbar-thin">
+								<p class="text-xs font-bold tracking-widest text-zinc-500 uppercase">Collections</p>
+								<ul class="mt-2 flex scrollbar-thin gap-2 overflow-x-auto pb-1">
 									{#each collections as col (col.id)}
 										<li class="shrink-0">
 											<a
@@ -118,10 +118,8 @@
 								role="tab"
 								aria-selected={activePartsTab === tab.id}
 								class={categoryPillClass(activePartsTab === tab.id)}
-								onclick={() => (activePartsTab = tab.id)}
+								onclick={() => (activePartsTab = tab.id)}>{tab.label}</button
 							>
-								{tab.label}
-							</button>
 						{/each}
 					</div>
 					<div role="tabpanel">

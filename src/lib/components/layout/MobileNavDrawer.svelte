@@ -1,15 +1,15 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
-	import { page } from '$app/stores';
-	import SideDrawer from '$lib/components/layout/SideDrawer.svelte';
-	import DealBadge from '$lib/components/commerce/DealBadge.svelte';
-	import LocaleSelector from '$lib/components/navigation/LocaleSelector.svelte';
-	import PartsNavSections from '$lib/components/navigation/PartsNavSections.svelte';
-	import { cart } from '$lib/stores/cart.svelte';
-	import { search } from '$lib/stores/search.svelte';
-	import { buildPartsFilterUrl } from '$lib/data/parts-filters';
-	import { categoryPillClass } from '$lib/ui/catalog-ribbon';
-	import { resolvePath } from '$lib/utils/paths';
+	import { page } from '$app/state';
+	import SideDrawer from '#lib/components/layout/SideDrawer.svelte';
+	import DealBadge from '#lib/components/commerce/DealBadge.svelte';
+	import LocaleSelector from '#lib/components/navigation/LocaleSelector.svelte';
+	import PartsNavSections from '#lib/components/navigation/PartsNavSections.svelte';
+	import { cart } from '#lib/stores/cart.svelte.ts';
+	import { search } from '#lib/stores/search.svelte.ts';
+	import { buildPartsFilterUrl } from '#lib/data/parts-filters.ts';
+	import { categoryPillClass } from '#lib/ui/catalog-ribbon.ts';
+	import { resolvePath } from '#lib/utils/paths.ts';
 
 	type PartsTab = 'categories' | 'vehicle' | 'brands' | 'build';
 
@@ -47,7 +47,7 @@
 	let communityOpen = $state(false);
 	let activePartsTab = $state<PartsTab>('categories');
 
-	const partsNav = $derived($page.data.partsNav);
+	const partsNav = $derived(page.data.partsNav);
 
 	function partsFilterHref(updates: Parameters<typeof buildPartsFilterUrl>[2]) {
 		return resolvePath(buildPartsFilterUrl('/parts', new URLSearchParams(), updates));
@@ -87,7 +87,7 @@
 				class="flex h-9 w-9 items-center justify-center bg-red-600 text-sm font-black tracking-tighter text-white"
 				>AG</span
 			>
-			<span class="font-display text-sm font-bold uppercase tracking-widest text-white"
+			<span class="font-display text-sm font-bold tracking-widest text-white uppercase"
 				>Animal Garage</span
 			>
 		</a>
@@ -103,7 +103,7 @@
 					stroke-linejoin="round"
 					stroke-width="1.5"
 					d="M6 18L18 6M6 6l12 12"
-				/>
+				></path>
 			</svg>
 		</button>
 	</div>
@@ -115,12 +115,12 @@
 			<li>
 				<button
 					type="button"
-					class="flex w-full items-center justify-between py-4 text-left font-display text-lg font-bold uppercase tracking-wide text-white"
+					class="flex w-full items-center justify-between py-4 text-left font-display text-lg font-bold tracking-wide text-white uppercase"
 					aria-expanded={shopOpen}
 					onclick={() => toggle('shop')}
 				>
 					Shop
-					<span class="text-2xl font-light leading-none text-zinc-500">{shopOpen ? '−' : '+'}</span>
+					<span class="text-2xl leading-none font-light text-zinc-500">{shopOpen ? '−' : '+'}</span>
 				</button>
 				{#if shopOpen}
 					<ul class="space-y-1 pb-4 pl-1">
@@ -128,7 +128,7 @@
 							<li>
 								<a
 									href={resolvePath(cat.href)}
-									class="block py-2 text-sm font-medium uppercase tracking-wider text-zinc-400 transition hover:text-red-400"
+									class="block py-2 text-sm font-medium tracking-wider text-zinc-400 uppercase transition hover:text-red-400"
 									onclick={onclose}
 								>
 									{cat.label}
@@ -142,18 +142,18 @@
 			<li>
 				<button
 					type="button"
-					class="flex w-full items-center justify-between py-4 text-left font-display text-lg font-bold uppercase tracking-wide text-white"
+					class="flex w-full items-center justify-between py-4 text-left font-display text-lg font-bold tracking-wide text-white uppercase"
 					aria-expanded={partsOpen}
 					onclick={() => toggle('parts')}
 				>
 					Parts
-					<span class="text-2xl font-light leading-none text-zinc-500">{partsOpen ? '−' : '+'}</span
+					<span class="text-2xl leading-none font-light text-zinc-500">{partsOpen ? '−' : '+'}</span
 					>
 				</button>
 				{#if partsOpen && partsNav}
 					<div class="pb-4 pl-1">
 						<div
-							class="-mx-1 mb-3 flex gap-1.5 overflow-x-auto border-b border-zinc-800 pb-3 scrollbar-thin"
+							class="-mx-1 mb-3 flex scrollbar-thin gap-1.5 overflow-x-auto border-b border-zinc-800 pb-3"
 							role="tablist"
 							aria-label="Parts shopping modes"
 						>
@@ -163,10 +163,8 @@
 									role="tab"
 									aria-selected={activePartsTab === tab.id}
 									class="shrink-0 {categoryPillClass(activePartsTab === tab.id)}"
-									onclick={() => (activePartsTab = tab.id)}
+									onclick={() => (activePartsTab = tab.id)}>{tab.label}</button
 								>
-									{tab.label}
-								</button>
 							{/each}
 						</div>
 						<div role="tabpanel">
@@ -187,12 +185,12 @@
 			<li>
 				<button
 					type="button"
-					class="flex w-full items-center justify-between py-4 text-left font-display text-lg font-bold uppercase tracking-wide text-white"
+					class="flex w-full items-center justify-between py-4 text-left font-display text-lg font-bold tracking-wide text-white uppercase"
 					aria-expanded={communityOpen}
 					onclick={() => toggle('community')}
 				>
 					Community
-					<span class="text-2xl font-light leading-none text-zinc-500"
+					<span class="text-2xl leading-none font-light text-zinc-500"
 						>{communityOpen ? '−' : '+'}</span
 					>
 				</button>
@@ -202,8 +200,8 @@
 							<li>
 								<a
 									href={link.href}
-									class="block py-2 text-sm font-medium uppercase tracking-wider text-zinc-400 transition hover:text-red-400 {$page
-										.url.pathname === link.href || $page.url.pathname.startsWith(`${link.href}/`)
+									class="block py-2 text-sm font-medium tracking-wider text-zinc-400 uppercase transition hover:text-red-400 {page
+										.url.pathname === link.href || page.url.pathname.startsWith(`${link.href}/`)
 										? 'text-red-400'
 										: ''}"
 									onclick={onclose}
@@ -219,7 +217,7 @@
 			<li>
 				<a
 					href={dealsHref}
-					class="flex items-center gap-2 py-4 font-display text-lg font-bold uppercase tracking-wide text-white transition hover:text-red-400"
+					class="flex items-center gap-2 py-4 font-display text-lg font-bold tracking-wide text-white uppercase transition hover:text-red-400"
 					onclick={onclose}
 				>
 					Pit Lane Deals
@@ -236,7 +234,7 @@
 								stroke-linejoin="round"
 								stroke-width="2"
 								d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
-							/>
+							></path>
 						</svg>
 					{/if}
 					<DealBadge count={dealCount} />
@@ -252,7 +250,7 @@
 			<li>
 				<button
 					type="button"
-					class="text-sm font-medium uppercase tracking-wider text-zinc-400 transition hover:text-white"
+					class="text-sm font-medium tracking-wider text-zinc-400 uppercase transition hover:text-white"
 					onclick={() => closeAnd(() => search.openModal())}
 				>
 					Search
@@ -261,7 +259,7 @@
 			<li>
 				<button
 					type="button"
-					class="flex items-center gap-2 text-sm font-medium uppercase tracking-wider text-zinc-400 transition hover:text-white"
+					class="flex items-center gap-2 text-sm font-medium tracking-wider text-zinc-400 uppercase transition hover:text-white"
 					onclick={() => closeAnd(onopencart)}
 				>
 					Cart
@@ -275,8 +273,8 @@
 			{#if session}
 				<li>
 					<a
-						href={resolve('/account')}
-						class="text-sm font-medium uppercase tracking-wider text-zinc-400 transition hover:text-white"
+						href={resolve('account')}
+						class="text-sm font-medium tracking-wider text-zinc-400 uppercase transition hover:text-white"
 						onclick={onclose}
 					>
 						Account
@@ -286,7 +284,7 @@
 				<li>
 					<a
 						href={resolvePath('/auth/sign-in')}
-						class="text-sm font-medium uppercase tracking-wider text-zinc-400 transition hover:text-white"
+						class="text-sm font-medium tracking-wider text-zinc-400 uppercase transition hover:text-white"
 						onclick={onclose}
 					>
 						Sign In

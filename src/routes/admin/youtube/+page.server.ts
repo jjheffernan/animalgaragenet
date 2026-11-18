@@ -1,7 +1,7 @@
-import { env } from '$env/dynamic/private';
+import { YOUTUBE_API_KEY } from '$app/env/private';
 import { fail } from '@sveltejs/kit';
-import { addYouTubeChannel, listYouTubeChannels } from '$lib/server/youtube/repository';
-import { syncToDatabase } from '$lib/server/youtube/sync';
+import { addYouTubeChannel, listYouTubeChannels } from '#lib/server/youtube/repository.ts';
+import { syncToDatabase } from '#lib/server/youtube/sync.ts';
 import type { Actions, PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async () => ({
@@ -41,7 +41,7 @@ export const actions: Actions = {
 			return fail(404, { error: 'Channel not found.' });
 		}
 
-		const result = await syncToDatabase(channelId, env.YOUTUBE_API_KEY ?? '');
+		const result = await syncToDatabase(channelId, YOUTUBE_API_KEY ?? '');
 
 		return {
 			synced: true,

@@ -1,10 +1,10 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { page } from '$app/state';
-	import { config } from '$lib/config/env';
-	import { locales, type LocaleCode } from '$lib/types/locale';
-	import { getCurrencySymbol } from '$lib/i18n/currency';
-	import { locale } from '$lib/stores/locale.svelte';
+	import { config } from '#lib/config/env.ts';
+	import { locales, type LocaleCode } from '#lib/types/locale.ts';
+	import { getCurrencySymbol } from '#lib/i18n/currency.ts';
+	import { locale } from '#lib/stores/locale.svelte.ts';
 
 	interface Props {
 		size?: 'sm' | 'lg';
@@ -23,16 +23,16 @@
 		locale.setLocale(code);
 		open = false;
 
-		const url = new URL(page.url);
+		const url = new URL(page.url.href);
 		if (url.searchParams.get('locale') === code) return;
 
 		url.searchParams.set('locale', code);
 		const target = `${url.pathname}${url.search}`;
 
 		if (config.saleorApiUrl) {
-			await goto(target, { invalidateAll: true, keepFocus: true, noScroll: true });
+			await goto(target, { refreshAll: true, reset: false });
 		} else {
-			await goto(target, { replaceState: true, keepFocus: true, noScroll: true });
+			await goto(target, { replace: true, reset: false });
 		}
 	}
 
@@ -73,8 +73,8 @@
 	{#if open}
 		<ul
 			class={size === 'lg'
-				? 'absolute left-0 right-0 top-full z-50 mt-1 max-h-64 overflow-y-auto rounded-sm border border-zinc-800 bg-zinc-900 py-1 shadow-xl'
-				: 'absolute right-0 top-full z-50 mt-1 max-h-64 w-52 overflow-y-auto rounded-sm border border-zinc-800 bg-zinc-900 py-1 shadow-xl'}
+				? 'absolute top-full right-0 left-0 z-50 mt-1 max-h-64 overflow-y-auto rounded-sm border border-zinc-800 bg-zinc-900 py-1 shadow-xl'
+				: 'absolute top-full right-0 z-50 mt-1 max-h-64 w-52 overflow-y-auto rounded-sm border border-zinc-800 bg-zinc-900 py-1 shadow-xl'}
 			role="listbox"
 			aria-label="Select region"
 		>

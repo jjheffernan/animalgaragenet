@@ -1,7 +1,7 @@
-import type { Video } from '$lib/types/domain';
-import { env as privateEnv } from '$env/dynamic/private';
-import { mockVideos } from '$lib/data/mock/videos';
-import { upsertSyncedVideos } from '$lib/server/youtube/repository';
+import type { Video } from '#lib/types/domain.ts';
+import { YOUTUBE_API_KEY } from '$app/env/private';
+import { mockVideos } from '#lib/data/mock/videos.ts';
+import { upsertSyncedVideos } from '#lib/server/youtube/repository.ts';
 
 /** Raw payload from YouTube Data API v3 (subset). */
 export interface YouTubeApiVideo {
@@ -58,6 +58,7 @@ export function formatYoutubeDuration(iso: string): string {
 
 function pickThumbnail(thumbnails?: Record<string, { url?: string }>): string {
 	if (!thumbnails) return '';
+
 	return (
 		thumbnails.maxres?.url ??
 		thumbnails.standard?.url ??
@@ -188,7 +189,7 @@ export interface SyncResult {
 
 /** Sync channel uploads into the videos table (Supabase upsert or mock fallback). */
 export async function syncToDatabase(channelId: string, apiKey?: string): Promise<SyncResult> {
-	const key = apiKey ?? privateEnv.YOUTUBE_API_KEY ?? '';
+	const key = apiKey ?? YOUTUBE_API_KEY ?? '';
 	const fetched = await fetchChannelVideos(key, channelId);
 	const videos = fetched.map((v) => mapToVideo(v, channelId));
 	const syncedAt = new Date().toISOString();

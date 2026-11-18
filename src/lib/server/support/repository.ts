@@ -1,7 +1,7 @@
-import { env } from '$env/dynamic/private';
-import { createAdminClient } from '$lib/server/supabase/admin';
-import { LIMITS, trimToMax } from '$lib/server/validation/limits';
-import type { BugReport, BugReportInput } from '$lib/types/bug-report';
+import { BUG_REPORT_WEBHOOK_URL } from '$app/env/private';
+import { createAdminClient } from '#lib/server/supabase/admin.ts';
+import { LIMITS, trimToMax } from '#lib/server/validation/limits.ts';
+import type { BugReport, BugReportInput } from '#lib/types/bug-report.ts';
 
 const mockStore: BugReport[] = [];
 
@@ -22,7 +22,7 @@ function rowToBugReport(row: Record<string, unknown>): BugReport {
 // @inspiration-scaffold: intentional — POST to support email webhook when BUG_REPORT_WEBHOOK_URL set;
 // see docs/plans/active/inspiration-polish-tracker.md#IP-031
 async function notifyBugReportWebhook(report: BugReport): Promise<void> {
-	const webhookUrl = env.BUG_REPORT_WEBHOOK_URL?.trim();
+	const webhookUrl = BUG_REPORT_WEBHOOK_URL?.trim();
 	if (!webhookUrl) return;
 
 	try {

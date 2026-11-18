@@ -1,17 +1,17 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
 	import { page } from '$app/state';
-	import PartsNavSections from '$lib/components/navigation/PartsNavSections.svelte';
-	import { buildPartsFilterUrl, parsePartsFilters } from '$lib/data/parts-filters';
+	import PartsNavSections from '#lib/components/navigation/PartsNavSections.svelte';
+	import { buildPartsFilterUrl, parsePartsFilters } from '#lib/data/parts-filters.ts';
 	import {
 		catalogRibbonInsetClass,
 		catalogRibbonScrollNavClass,
 		catalogRibbonScrollTrackClass,
 		catalogRibbonShellClass,
 		categoryPillClass
-	} from '$lib/ui/catalog-ribbon';
-	import type { Brand, PartCategory, PopularModel } from '$lib/types/domain';
-	import { resolvePath } from '$lib/utils/paths';
+	} from '#lib/ui/catalog-ribbon.ts';
+	import type { Brand, PartCategory, PopularModel } from '#lib/types/domain.ts';
+	import { resolvePath } from '#lib/utils/paths.ts';
 
 	interface Props {
 		categories: PartCategory[];
@@ -169,7 +169,7 @@
 		<div class={catalogRibbonScrollTrackClass}>
 			<nav class={catalogRibbonScrollNavClass} aria-label="Parts shopping">
 				<a
-					href={resolve('/parts')}
+					href={resolve('parts')}
 					class="{categoryPillClass(pathname === '/parts')} flex items-center gap-2"
 				>
 					<svg
@@ -184,18 +184,18 @@
 							stroke-linejoin="round"
 							stroke-width="2"
 							d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"
-						/>
+						></path>
 						<path
 							stroke-linecap="round"
 							stroke-linejoin="round"
 							stroke-width="2"
 							d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-						/>
+						></path>
 					</svg>
 					<span>Shop Parts</span>
 				</a>
 
-				<a href={resolve('/shop')} class="{categoryPillClass(false)} flex items-center gap-2">
+				<a href={resolve('shop')} class="{categoryPillClass(false)} flex items-center gap-2">
 					<svg
 						class="h-4 w-4 shrink-0 text-red-500"
 						fill="none"
@@ -208,7 +208,7 @@
 							stroke-linejoin="round"
 							stroke-width="2"
 							d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"
-						/>
+						></path>
 					</svg>
 					<span>Merch</span>
 					<svg
@@ -218,12 +218,8 @@
 						viewBox="0 0 24 24"
 						aria-hidden="true"
 					>
-						<path
-							stroke-linecap="round"
-							stroke-linejoin="round"
-							stroke-width="2"
-							d="M9 5l7 7-7 7"
-						/>
+						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"
+						></path>
 					</svg>
 				</a>
 
@@ -250,12 +246,8 @@
 								aria-hidden="true"
 							>
 								{#each panel.iconPaths as iconPath (iconPath)}
-									<path
-										stroke-linecap="round"
-										stroke-linejoin="round"
-										stroke-width="2"
-										d={iconPath}
-									/>
+									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d={iconPath}
+									></path>
 								{/each}
 							</svg>
 							<span>{panel.label}</span>
@@ -273,7 +265,7 @@
 									stroke-linejoin="round"
 									stroke-width="2"
 									d="M9 5l7 7-7 7"
-								/>
+								></path>
 							</svg>
 						</button>
 					</div>

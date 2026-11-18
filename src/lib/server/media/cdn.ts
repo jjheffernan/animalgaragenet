@@ -1,8 +1,16 @@
 import { CloudFrontClient, CreateInvalidationCommand } from '@aws-sdk/client-cloudfront';
 import { PutObjectCommand, S3Client } from '@aws-sdk/client-s3';
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
-import { env } from '$env/dynamic/private';
-import { env as publicEnv } from '$env/dynamic/public';
+
+import {
+	AWS_ACCESS_KEY_ID,
+	AWS_SECRET_ACCESS_KEY,
+	S3_BUCKET,
+	AWS_CLOUDFRONT_DISTRIBUTION_ID,
+	S3_REGION
+} from '$app/env/private';
+
+import { PUBLIC_CDN_BASE_URL } from '$app/env/public';
 import { UGC_BUCKET } from './constants';
 
 export interface PresignedUpload {
@@ -13,8 +21,8 @@ export interface PresignedUpload {
 
 function awsCredentials() {
 	return {
-		accessKeyId: env.AWS_ACCESS_KEY_ID!.trim(),
-		secretAccessKey: env.AWS_SECRET_ACCESS_KEY!.trim()
+		accessKeyId: AWS_ACCESS_KEY_ID!.trim(),
+		secretAccessKey: AWS_SECRET_ACCESS_KEY!.trim()
 	};
 }
 
@@ -23,7 +31,7 @@ function awsCredentials() {
  * When `PUBLIC_CDN_BASE_URL` is unset, returns the path unchanged (caller may prefix origin).
  */
 export function resolveCdnUrl(objectKey: string): string {
-	const base = publicEnv.PUBLIC_CDN_BASE_URL?.replace(/\/$/, '');
+	const base = PUBLIC_CDN_BASE_URL?.replace(/\/$/, '');
 	if (!base || !objectKey) return objectKey;
 	const key = objectKey.startsWith('/') ? objectKey.slice(1) : objectKey;
 	return `${base}/${key}`;
@@ -37,22 +45,22 @@ export function resolveUgcPublicUrl(storagePath: string): string {
 
 /** True when a CDN base is set (read URLs can skip signed Supabase URLs). */
 export function isCdnPublicReadConfigured(): boolean {
-	return Boolean(publicEnv.PUBLIC_CDN_BASE_URL?.trim());
+	return Boolean(PUBLIC_CDN_BASE_URL?.trim());
 }
 
 /** True when CloudFront/S3 env is configured for presigned admin uploads. */
 export function isCdnUploadConfigured(): boolean {
 	return Boolean(
-		publicEnv.PUBLIC_CDN_BASE_URL?.trim() &&
-		env.S3_BUCKET?.trim() &&
-		env.AWS_ACCESS_KEY_ID?.trim() &&
-		env.AWS_SECRET_ACCESS_KEY?.trim()
+		PUBLIC_CDN_BASE_URL?.trim() &&
+		S3_BUCKET?.trim() &&
+		AWS_ACCESS_KEY_ID?.trim() &&
+		AWS_SECRET_ACCESS_KEY?.trim()
 	);
 }
 
 /** True when CloudFront invalidation can run after admin uploads. */
 export function isCdnInvalidationConfigured(): boolean {
-	return Boolean(isCdnUploadConfigured() && env.AWS_CLOUDFRONT_DISTRIBUTION_ID?.trim());
+	return Boolean(isCdnUploadConfigured() && AWS_CLOUDFRONT_DISTRIBUTION_ID?.trim());
 }
 
 /** Max CloudFront paths per invalidation request (API + SDK guard). */
@@ -85,7 +93,6 @@ export interface CdnInvalidationRequest {
 	paths?: unknown;
 	objectKey?: unknown;
 }
-
 export type AdminInvalidationKeyResult =
 	{ ok: true; keys: string[] } | { ok: false; error: string };
 
@@ -142,8 +149,8 @@ export async function createPresignedUploadUrl(
 ): Promise<PresignedUpload | null> {
 	if (!isCdnUploadConfigured()) return null;
 
-	const bucket = env.S3_BUCKET!.trim();
-	const region = env.S3_REGION?.trim() || 'us-west-2';
+	const bucket = S3_BUCKET!.trim();
+	const region = S3_REGION?.trim() || 'us-west-2';
 	const objectKey = key.startsWith('/') ? key.slice(1) : key;
 
 	const client = new S3Client({
@@ -173,23 +180,16 @@ export async function invalidateCdnPaths(paths: string[]): Promise<boolean> {
 	const keys = paths.map((path) => normalizeCdnInvalidationKey(path)).filter(Boolean) as string[];
 	if (!keys.length || keys.length > MAX_CDN_INVALIDATION_PATHS) return false;
 
-	const distributionId = env.AWS_CLOUDFRONT_DISTRIBUTION_ID!.trim();
+	const distributionId = AWS_CLOUDFRONT_DISTRIBUTION_ID!.trim();
 	const items = keys.map((key) => `/${key}`);
-
-	const client = new CloudFrontClient({
-		region: 'us-east-1',
-		credentials: awsCredentials()
-	});
+	const client = new CloudFrontClient({ region: 'us-east-1', credentials: awsCredentials() });
 
 	await client.send(
 		new CreateInvalidationCommand({
 			DistributionId: distributionId,
 			InvalidationBatch: {
 				CallerReference: `ag-${Date.now()}-${crypto.randomUUID()}`,
-				Paths: {
-					Quantity: items.length,
-					Items: items
-				}
+				Paths: { Quantity: items.length, Items: items }
 			}
 		})
 	);

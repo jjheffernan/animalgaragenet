@@ -1,5 +1,5 @@
-import { env as privateEnv } from '$env/dynamic/private';
-import { FREE_SHIP_THRESHOLD } from '$lib/data/mock/banners';
+import { SALEOR_FREE_SHIPPING_THRESHOLDS } from '$app/env/private';
+import { FREE_SHIP_THRESHOLD } from '#lib/data/mock/banners.ts';
 import { getChannelForLocale } from './channels';
 
 /** Per-channel free-shipping subtotal thresholds (USD-equivalent display units). */
@@ -18,7 +18,7 @@ export type FreeShippingProgress = {
 };
 
 function parseThresholdEnv(): Record<string, number> {
-	const raw = privateEnv.SALEOR_FREE_SHIPPING_THRESHOLDS?.trim();
+	const raw = SALEOR_FREE_SHIPPING_THRESHOLDS?.trim();
 	if (!raw) return {};
 
 	try {

@@ -9,14 +9,6 @@ updates:
     ignore:
       - dependency-name: '@types/node'
         update-types: ['version-update:semver-major']
-      # Kit 3 is a deliberate migration (and the only fix for several Kit advisories).
-      - dependency-name: '@sveltejs/kit'
-        update-types: ['version-update:semver-major']
-      - dependency-name: '@sveltejs/adapter-auto'
-        update-types: ['version-update:semver-major']
-      # Prettier 3.10+ / prettier-plugin-tailwindcss 0.8.1 reformat ~100 files; bump with a format pass.
-      - dependency-name: prettier
-      - dependency-name: prettier-plugin-tailwindcss
     groups:
       svelte:
         patterns:

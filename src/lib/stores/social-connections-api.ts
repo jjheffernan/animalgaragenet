@@ -1,5 +1,5 @@
-import type { SocialConnectionsMap } from '$lib/types/social-connections';
-import type { SocialPlatformId } from '$lib/data/social-platforms';
+import type { SocialConnectionsMap } from '#lib/types/social-connections.ts';
+import type { SocialPlatformId } from '#lib/data/social-platforms.ts';
 
 export interface ConnectionsApiState {
 	connections: SocialConnectionsMap;

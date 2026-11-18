@@ -1,5 +1,5 @@
-import type { BuildLog } from '$lib/types/build-log';
-import type { BuildThread } from '$lib/types/domain';
+import type { BuildLog } from '#lib/types/build-log.ts';
+import type { BuildThread } from '#lib/types/domain.ts';
 
 export function parseModList(raw: string): string[] {
 	return raw

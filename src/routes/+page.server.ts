@@ -1,26 +1,26 @@
-import { getFeaturedPublicBuilds } from '$lib/server/builds/public';
-import { mockUGC } from '$lib/data/mock/ugc';
-import { mockBrands } from '$lib/data/mock/brands';
-import { mockPopularModels } from '$lib/data/mock/popular-models';
-import { getUpcomingDropCampaign } from '$lib/server/deals/repository';
+import { getFeaturedPublicBuilds } from '#lib/server/builds/public.ts';
+import { mockUGC } from '#lib/data/mock/ugc.ts';
+import { mockBrands } from '#lib/data/mock/brands.ts';
+import { mockPopularModels } from '#lib/data/mock/popular-models.ts';
+import { getUpcomingDropCampaign } from '#lib/server/deals/repository.ts';
 import {
 	getClearanceProducts,
 	getCollections,
 	getStaffPickProducts
-} from '$lib/server/catalog/collections';
-import { listGuides } from '$lib/server/ghost/posts';
-import { createAdminClient } from '$lib/server/supabase/admin';
-import { enrichTestimonialsWithPhotos } from '$lib/server/media/repository';
+} from '#lib/server/catalog/collections.ts';
+import { listGuides } from '#lib/server/ghost/posts.ts';
+import { createAdminClient } from '#lib/server/supabase/admin.ts';
+import { enrichTestimonialsWithPhotos } from '#lib/server/media/repository.ts';
 import {
 	getDefaultHeroSection,
 	getHomepageFeaturedSections
-} from '$lib/server/featured-sections/repository';
+} from '#lib/server/featured-sections/repository.ts';
 import {
 	listApprovedTestimonials,
 	listFeaturedTestimonials
-} from '$lib/server/testimonials/repository';
-import { testimonialsToUgcItems } from '$lib/server/testimonials/to-ugc';
-import { loadHomepageVideos } from '$lib/server/youtube/public';
+} from '#lib/server/testimonials/repository.ts';
+import { testimonialsToUgcItems } from '#lib/server/testimonials/to-ugc.ts';
+import { loadHomepageVideos } from '#lib/server/youtube/public.ts';
 import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async () => {

@@ -1,6 +1,6 @@
-import { listPendingBuildLogs } from '$lib/server/build-logs/repository';
-import { listBugReports } from '$lib/server/support/repository';
-import { listPendingTestimonials } from '$lib/server/testimonials/repository';
+import { listPendingBuildLogs } from '#lib/server/build-logs/repository.ts';
+import { listBugReports } from '#lib/server/support/repository.ts';
+import { listPendingTestimonials } from '#lib/server/testimonials/repository.ts';
 
 export interface AdminNavCounts {
 	builds: number;

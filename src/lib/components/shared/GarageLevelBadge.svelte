@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { garageXp } from '$lib/stores/garage-xp.svelte';
+	import { garageXp } from '#lib/stores/garage-xp.svelte.ts';
 
 	interface Props {
 		class?: string;
@@ -11,7 +11,7 @@
 
 <div class="inline-flex flex-col {className}">
 	<span
-		class="inline-flex items-center gap-1.5 rounded-sm bg-zinc-900 px-2 py-1 text-xs font-bold uppercase tracking-wider text-red-500"
+		class="inline-flex items-center gap-1.5 rounded-sm bg-zinc-900 px-2 py-1 text-xs font-bold tracking-wider text-red-500 uppercase"
 	>
 		<svg class="h-3.5 w-3.5" fill="currentColor" viewBox="0 0 20 20">
 			<path

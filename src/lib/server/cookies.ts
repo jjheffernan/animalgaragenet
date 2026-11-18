@@ -1,5 +1,5 @@
 import type { Cookies } from '@sveltejs/kit';
-import { COOKIE_CONSENT } from '$lib/cookies';
+import { COOKIE_CONSENT } from '#lib/cookies.ts';
 
 type CookieOptions = NonNullable<Parameters<Cookies['set']>[2]>;
 

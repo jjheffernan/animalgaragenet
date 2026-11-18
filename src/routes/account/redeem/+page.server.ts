@@ -1,7 +1,7 @@
 import { fail } from '@sveltejs/kit';
-import { getPromoStatus, redeemCode } from '$lib/server/checkout/promo';
-import { isSaleorEnabled } from '$lib/server/saleor/client';
-import { MOCK_PROMO_CODES } from '$lib/data/mock/promo-codes';
+import { getPromoStatus, redeemCode } from '#lib/server/checkout/promo.ts';
+import { isSaleorEnabled } from '#lib/server/saleor/client.ts';
+import { MOCK_PROMO_CODES } from '#lib/data/mock/promo-codes.ts';
 import type { Actions, PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({ cookies }) => {

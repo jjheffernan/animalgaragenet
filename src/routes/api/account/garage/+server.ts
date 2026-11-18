@@ -3,8 +3,8 @@ import {
 	addGarageXp,
 	getUserGarageState,
 	saveUserVehicles
-} from '$lib/server/user-preferences/repository';
-import type { SavedVehicle } from '$lib/types/domain';
+} from '#lib/server/user-preferences/repository.ts';
+import type { SavedVehicle } from '#lib/types/domain.ts';
 import type { RequestHandler } from './$types';
 
 /**

@@ -1,6 +1,6 @@
 import { error } from '@sveltejs/kit';
-import { getProductsForBuild } from '$lib/data/catalog-helpers';
-import { getPublicBuildBySlug } from '$lib/server/builds/public';
+import { getProductsForBuild } from '#lib/data/catalog-helpers.ts';
+import { getPublicBuildBySlug } from '#lib/server/builds/public.ts';
 import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({ params }) => {

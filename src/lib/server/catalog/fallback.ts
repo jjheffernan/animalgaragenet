@@ -1,5 +1,5 @@
-import { guardProductionMockFallback } from '$lib/server/mock-fallback-guard';
-import { isSaleorEnabled } from '$lib/server/saleor/client';
+import { guardProductionMockFallback } from '#lib/server/mock-fallback-guard.ts';
+import { isSaleorEnabled } from '#lib/server/saleor/client.ts';
 
 export class CatalogUnavailableError extends Error {
 	constructor(message: string) {

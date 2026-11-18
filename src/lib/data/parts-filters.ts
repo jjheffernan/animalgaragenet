@@ -1,6 +1,6 @@
-import { mockVehicleData } from '$lib/data/mock/vehicles';
-import { getBrandBySlug } from '$lib/data/mock/brands';
-import type { Product } from '$lib/types/saleor';
+import { mockVehicleData } from '#lib/data/mock/vehicles.ts';
+import { getBrandBySlug } from '#lib/data/mock/brands.ts';
+import type { Product } from '#lib/types/saleor.ts';
 
 export const PARTS_BUILD_TYPES = [
 	{
@@ -38,7 +38,9 @@ const BUILD_TAG_BY_SLUG = Object.fromEntries(
 	PARTS_BUILD_TYPES.map((b) => [b.slug, b.tag])
 ) as Record<PartsBuildType, string>;
 
-export function parsePartsFilters(url: URL): PartsFilterState {
+export function parsePartsFilters(url: {
+	searchParams: { get(name: string): string | null };
+}): PartsFilterState {
 	const ymm = url.searchParams.get('ymm');
 	if (ymm) {
 		const parsed = parseYmmParam(ymm);
@@ -156,10 +158,10 @@ export function formatPartsFilterLabel(filters: PartsFilterState): string | null
 
 export function buildPartsFilterUrl(
 	pathname: string,
-	searchParams: URLSearchParams,
+	searchParams: { toString(): string },
 	updates: Partial<PartsFilterState> & { resetPage?: boolean }
 ): string {
-	const params = new URLSearchParams(searchParams);
+	const params = new URLSearchParams(searchParams.toString());
 	params.delete('ymm');
 
 	const keys: (keyof PartsFilterState)[] = ['build', 'brand', 'year', 'make', 'model', 'submodel'];

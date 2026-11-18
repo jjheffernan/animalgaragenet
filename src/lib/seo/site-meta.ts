@@ -1,4 +1,4 @@
-import { config } from '$lib/config/env';
+import { config } from '#lib/config/env.ts';
 
 export const SITE_NAME = 'Animal Garage';
 

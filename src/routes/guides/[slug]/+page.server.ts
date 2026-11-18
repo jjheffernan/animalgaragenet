@@ -1,6 +1,6 @@
 import { error } from '@sveltejs/kit';
-import { setGhostDetailCacheHeaders } from '$lib/server/ghost/cache-headers';
-import { getGuide, listGuides } from '$lib/server/ghost/posts';
+import { setGhostDetailCacheHeaders } from '#lib/server/ghost/cache-headers.ts';
+import { getGuide, listGuides } from '#lib/server/ghost/posts.ts';
 import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({ params, setHeaders }) => {

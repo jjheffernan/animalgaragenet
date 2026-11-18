@@ -1,4 +1,4 @@
-import { isProductionSiteUrl } from '$lib/server/auth/local-dev';
+import { isProductionSiteUrl } from '#lib/server/auth/local-dev.ts';
 
 export interface ProductionMockFallbackOptions {
 	attemptFailed?: boolean;

@@ -1,6 +1,6 @@
-import { config } from '$lib/config/env';
-import { getPartBySlug } from '$lib/server/catalog/parts';
-import { getRelatedCatalogProducts } from '$lib/server/catalog/related';
+import { config } from '#lib/config/env.ts';
+import { getPartBySlug } from '#lib/server/catalog/parts.ts';
+import { getRelatedCatalogProducts } from '#lib/server/catalog/related.ts';
 import { error } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 

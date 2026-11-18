@@ -1,28 +1,28 @@
 import {
 	filterShopProducts,
 	getDealProducts as getMockDealProducts
-} from '$lib/data/catalog-helpers';
+} from '#lib/data/catalog-helpers.ts';
 import {
 	filterProductsByShopSlug,
 	filterSlugToShopCategory
-} from '$lib/server/catalog/shop-filters';
+} from '#lib/server/catalog/shop-filters.ts';
 import {
 	getGiftCardProducts as getMockGiftCardProducts,
 	getProductBySlug
-} from '$lib/data/mock/products';
-import { config } from '$lib/config/env';
-import type { Product } from '$lib/types/saleor';
-import { resolveChannelForLocale } from '$lib/server/saleor/channels';
-import { saleorFetch } from '$lib/server/saleor/client';
+} from '#lib/data/mock/products.ts';
+import { config } from '#lib/config/env.ts';
+import type { Product } from '#lib/types/saleor.ts';
+import { resolveChannelForLocale } from '#lib/server/saleor/channels.ts';
+import { saleorFetch } from '#lib/server/saleor/client.ts';
 import {
 	mapProduct,
 	mapProductListNode,
 	type SaleorProductDetailNode,
 	type SaleorProductListNode,
 	type SaleorTaxedMoney
-} from '$lib/server/saleor/mappers';
-import { withSaleorCatalog } from '$lib/server/catalog/fallback';
-import { PRODUCTS_QUERY, PRODUCT_BY_SLUG_QUERY } from '$lib/server/saleor/queries';
+} from '#lib/server/saleor/mappers.ts';
+import { withSaleorCatalog } from '#lib/server/catalog/fallback.ts';
+import { PRODUCTS_QUERY, PRODUCT_BY_SLUG_QUERY } from '#lib/server/saleor/queries.ts';
 
 /** Extended list query — metadata + full price range for gift cards / deals. */
 const PRODUCTS_CATALOG_QUERY = `

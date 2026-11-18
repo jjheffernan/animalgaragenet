@@ -1,5 +1,5 @@
 <script lang="ts">
-	import AnimatedReveal from '$lib/components/shared/AnimatedReveal.svelte';
+	import AnimatedReveal from '#lib/components/shared/AnimatedReveal.svelte';
 </script>
 
 <svelte:head>
@@ -8,15 +8,15 @@
 
 <section class="mx-auto max-w-3xl px-4 py-20 sm:px-6 lg:px-8">
 	<AnimatedReveal>
-		<h1 class="font-display text-3xl font-bold uppercase text-white">Shipping Policy</h1>
+		<h1 class="font-display text-3xl font-bold text-white uppercase">Shipping Policy</h1>
 		<p class="mt-4 text-zinc-400">
 			We ship merch and parts from our warehouse in the continental US. Processing times vary by
 			product type — details below.
 		</p>
 
-		<div class="mt-8 space-y-8 text-zinc-400 leading-relaxed">
+		<div class="mt-8 space-y-8 leading-relaxed text-zinc-400">
 			<div>
-				<h2 class="font-display text-lg font-bold uppercase text-white">Free Shipping Threshold</h2>
+				<h2 class="font-display text-lg font-bold text-white uppercase">Free Shipping Threshold</h2>
 				<p class="mt-3">
 					Orders over <strong class="text-white">$75</strong> qualify for free standard shipping within
 					the contiguous United States. The discount applies automatically at checkout once your cart
@@ -26,7 +26,7 @@
 			</div>
 
 			<div>
-				<h2 class="font-display text-lg font-bold uppercase text-white">
+				<h2 class="font-display text-lg font-bold text-white uppercase">
 					Domestic Zones &amp; Times
 				</h2>
 				<p class="mt-3">Standard and expedited options are available at checkout.</p>
@@ -55,7 +55,7 @@
 			</div>
 
 			<div>
-				<h2 class="font-display text-lg font-bold uppercase text-white">Processing Times</h2>
+				<h2 class="font-display text-lg font-bold text-white uppercase">Processing Times</h2>
 				<ul class="mt-4 list-inside list-disc space-y-2">
 					<li>
 						<strong class="text-zinc-300">Merch:</strong> ships within 1–2 business days when in stock
@@ -72,7 +72,7 @@
 			</div>
 
 			<div>
-				<h2 class="font-display text-lg font-bold uppercase text-white">International Shipping</h2>
+				<h2 class="font-display text-lg font-bold text-white uppercase">International Shipping</h2>
 				<p class="mt-3">
 					We ship to Canada, the UK, Australia, and select EU countries. International rates are
 					calculated at checkout based on weight and destination. Delivery typically takes 10–21
@@ -86,7 +86,7 @@
 			</div>
 
 			<div>
-				<h2 class="font-display text-lg font-bold uppercase text-white">Tracking &amp; Issues</h2>
+				<h2 class="font-display text-lg font-bold text-white uppercase">Tracking &amp; Issues</h2>
 				<p class="mt-3">
 					You will receive a tracking number by email once your order ships. If tracking shows
 					delivered but you did not receive your package, contact us within 7 days so we can file a

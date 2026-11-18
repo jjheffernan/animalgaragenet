@@ -1,4 +1,4 @@
-import type { Role } from '$lib/auth/roles';
+import type { Role } from '#lib/auth/roles.ts';
 
 export interface MockAdminUser {
 	id: string;

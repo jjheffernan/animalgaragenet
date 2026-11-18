@@ -1,5 +1,5 @@
 import { json } from '@sveltejs/kit';
-import { isSaleorEnabled } from '$lib/server/saleor/client';
+import { isSaleorEnabled } from '#lib/server/saleor/client.ts';
 
 /** Structured response when Saleor env is not configured. */
 export function saleorDisabledResponse() {

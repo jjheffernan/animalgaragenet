@@ -1,20 +1,20 @@
-import { isPartProduct } from '$lib/data/catalog-helpers';
+import { isPartProduct } from '#lib/data/catalog-helpers.ts';
 import {
 	getPartBySlug as mockGetPartBySlug,
 	getPartsByCategory as mockGetPartsByCategory,
 	mockParts
-} from '$lib/data/mock/parts';
+} from '#lib/data/mock/parts.ts';
 import {
 	getPartCategoryBySlug as mockGetPartCategoryBySlug,
 	mockPartCategories
-} from '$lib/data/mock/part-categories';
-import { config } from '$lib/config/env';
-import type { PartCategory } from '$lib/types/domain';
-import type { Product } from '$lib/types/saleor';
-import { resolveChannelForLocale } from '$lib/server/saleor/channels';
-import { isSaleorEnabled, saleorFetch } from '$lib/server/saleor/client';
-import { withSaleorCatalog } from '$lib/server/catalog/fallback';
-import { isProductionSiteUrl } from '$lib/server/auth/local-dev';
+} from '#lib/data/mock/part-categories.ts';
+import { config } from '#lib/config/env.ts';
+import type { PartCategory } from '#lib/types/domain.ts';
+import type { Product } from '#lib/types/saleor.ts';
+import { resolveChannelForLocale } from '#lib/server/saleor/channels.ts';
+import { isSaleorEnabled, saleorFetch } from '#lib/server/saleor/client.ts';
+import { withSaleorCatalog } from '#lib/server/catalog/fallback.ts';
+import { isProductionSiteUrl } from '#lib/server/auth/local-dev.ts';
 import {
 	mapPartCategory,
 	mapProduct,
@@ -22,12 +22,12 @@ import {
 	type SaleorCategoryTreeNode,
 	type SaleorProductDetailNode,
 	type SaleorProductListNode
-} from '$lib/server/saleor/mappers';
+} from '#lib/server/saleor/mappers.ts';
 import {
 	CATEGORIES_QUERY,
 	PRODUCT_BY_SLUG_QUERY,
 	PRODUCTS_QUERY
-} from '$lib/server/saleor/queries';
+} from '#lib/server/saleor/queries.ts';
 
 function findPartCategoryInTree(
 	categories: PartCategory[],

@@ -1,4 +1,4 @@
-import { mockLocales } from '$lib/data/mock/locales';
+import { mockLocales } from '#lib/data/mock/locales.ts';
 
 export type LocaleCode = (typeof mockLocales)[number]['code'];
 

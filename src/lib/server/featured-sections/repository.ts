@@ -1,13 +1,13 @@
-import { createAdminClient } from '$lib/server/supabase/admin';
-import { trimToMax } from '$lib/server/validation/limits';
+import { createAdminClient } from '#lib/server/supabase/admin.ts';
+import { trimToMax } from '#lib/server/validation/limits.ts';
 import type {
 	CampaignSectionContent,
 	FeaturedSection,
 	HomepageSectionKey,
 	UgcSectionContent
-} from '$lib/types/featured-section';
-import { HOMEPAGE_SECTION_KEYS as SECTION_KEYS } from '$lib/types/featured-section';
-import { getActiveCampaign } from '$lib/data/mock/campaigns';
+} from '#lib/types/featured-section.ts';
+import { HOMEPAGE_SECTION_KEYS as SECTION_KEYS } from '#lib/types/featured-section.ts';
+import { getActiveCampaign } from '#lib/data/mock/campaigns.ts';
 
 const mockSections = new Map<string, FeaturedSection>();
 

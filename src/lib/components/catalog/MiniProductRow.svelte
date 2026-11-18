@@ -1,7 +1,7 @@
 <script lang="ts">
-	import type { Product } from '$lib/types/saleor';
-	import ProductCard from '$lib/components/catalog/ProductCard.svelte';
-	import SectionHeading from '$lib/components/shared/SectionHeading.svelte';
+	import type { Product } from '#lib/types/saleor.ts';
+	import ProductCard from '#lib/components/catalog/ProductCard.svelte';
+	import SectionHeading from '#lib/components/shared/SectionHeading.svelte';
 
 	interface Props {
 		products: Product[];
@@ -29,7 +29,7 @@
 <section class={className}>
 	<SectionHeading {title} {subtitle} />
 	<div
-		class="mt-4 flex gap-3 overflow-x-auto overscroll-x-contain pb-2 [-ms-overflow-style:none] [scrollbar-width:none] lg:grid lg:grid-cols-4 lg:overflow-visible lg:pb-0 [&::-webkit-scrollbar]:hidden"
+		class="mt-4 flex [scrollbar-width:none] gap-3 overflow-x-auto overscroll-x-contain pb-2 [-ms-overflow-style:none] lg:grid lg:grid-cols-4 lg:overflow-visible lg:pb-0 [&::-webkit-scrollbar]:hidden"
 	>
 		{#each items as product (product.id)}
 			<div
@@ -43,7 +43,7 @@
 		<div class="mt-6 text-center">
 			<a
 				href={viewAllHref}
-				class="text-xs font-bold uppercase tracking-wider text-red-500 hover:text-red-400"
+				class="text-xs font-bold tracking-wider text-red-500 uppercase hover:text-red-400"
 			>
 				{viewAllLabel}
 			</a>

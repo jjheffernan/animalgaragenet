@@ -5,9 +5,9 @@ import {
 	mockOAuthEmail,
 	oauthDisplayName,
 	OAUTH_PROVIDER_LABELS
-} from '$lib/auth/oauth';
-import { createMockUser, exchangeOAuthCode, setSessionCookie } from '$lib/server/supabase/auth';
-import { isSupabaseConfigured } from '$lib/server/supabase/client';
+} from '#lib/auth/oauth.ts';
+import { createMockUser, exchangeOAuthCode, setSessionCookie } from '#lib/server/supabase/auth.ts';
+import { isSupabaseConfigured } from '#lib/server/supabase/client.ts';
 
 export const GET: RequestHandler = async ({ url, cookies, locals }) => {
 	const providerParam = url.searchParams.get('provider');

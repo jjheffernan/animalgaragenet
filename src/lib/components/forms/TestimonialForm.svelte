@@ -1,6 +1,6 @@
 <script lang="ts">
-	import type { TestimonialFields } from '$lib/server/testimonials/validation';
-	import ReviewPhotoUpload from '$lib/components/forms/ReviewPhotoUpload.svelte';
+	import type { TestimonialFields } from '#lib/server/testimonials/validation.ts';
+	import ReviewPhotoUpload from '#lib/components/forms/ReviewPhotoUpload.svelte';
 
 	interface Props {
 		displayName: string;
@@ -25,7 +25,7 @@
 </script>
 
 <label class="block">
-	<span class="text-xs font-bold uppercase tracking-widest text-zinc-500">Display Name</span>
+	<span class="text-xs font-bold tracking-widest text-zinc-500 uppercase">Display Name</span>
 	<input
 		type="text"
 		name="displayName"
@@ -41,7 +41,7 @@
 </label>
 
 <label class="block">
-	<span class="text-xs font-bold uppercase tracking-widest text-zinc-500"
+	<span class="text-xs font-bold tracking-widest text-zinc-500 uppercase"
 		>Vehicle / Build (optional)</span
 	>
 	<input
@@ -58,7 +58,7 @@
 </label>
 
 <fieldset class="block">
-	<span class="text-xs font-bold uppercase tracking-widest text-zinc-500">Rating</span>
+	<span class="text-xs font-bold tracking-widest text-zinc-500 uppercase">Rating</span>
 	<div class="mt-2 flex gap-1" role="radiogroup" aria-label="Star rating">
 		{#each [1, 2, 3, 4, 5] as star (star)}
 			<label class="cursor-pointer">
@@ -87,7 +87,7 @@
 </fieldset>
 
 <label class="block">
-	<span class="text-xs font-bold uppercase tracking-widest text-zinc-500">Review Title</span>
+	<span class="text-xs font-bold tracking-widest text-zinc-500 uppercase">Review Title</span>
 	<input
 		type="text"
 		name="title"
@@ -103,7 +103,7 @@
 </label>
 
 <label class="block">
-	<span class="text-xs font-bold uppercase tracking-widest text-zinc-500">Your Story</span>
+	<span class="text-xs font-bold tracking-widest text-zinc-500 uppercase">Your Story</span>
 	<textarea
 		name="body"
 		rows="5"

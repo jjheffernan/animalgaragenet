@@ -1,6 +1,6 @@
 import { redirect } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
-import { isSaleorEnabled } from '$lib/server/saleor/client';
+import { isSaleorEnabled } from '#lib/server/saleor/client.ts';
 import {
 	clearCheckoutId,
 	clearTransactionId,
@@ -9,7 +9,7 @@ import {
 	getTransactionId,
 	processTransaction,
 	stripeReturnDataFromUrl
-} from '$lib/server/saleor/checkout';
+} from '#lib/server/saleor/checkout.ts';
 
 export type PaymentCompleteStatus =
 	'disabled' | 'no_transaction' | 'no_checkout' | 'process_failed' | 'complete_failed' | 'success';

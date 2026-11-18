@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { resolvePath } from '$lib/utils/paths';
-	import AnimatedReveal from '$lib/components/shared/AnimatedReveal.svelte';
+	import { resolvePath } from '#lib/utils/paths.ts';
+	import AnimatedReveal from '#lib/components/shared/AnimatedReveal.svelte';
 
 	const supportLinks = [
 		{
@@ -28,7 +28,7 @@
 
 <section class="mx-auto max-w-3xl px-4 py-20 sm:px-6 lg:px-8">
 	<AnimatedReveal>
-		<h1 class="font-display text-3xl font-bold uppercase text-white">Support</h1>
+		<h1 class="font-display text-3xl font-bold text-white uppercase">Support</h1>
 		<p class="mt-4 text-zinc-400">
 			Need help? Start here — we typically respond to messages within 1–2 business days.
 		</p>
@@ -37,7 +37,7 @@
 			{#each supportLinks as link (link.href)}
 				<li>
 					<a href={resolvePath(link.href)} class="block px-5 py-5 transition hover:bg-zinc-900/50">
-						<p class="font-display text-sm font-bold uppercase tracking-wider text-white">
+						<p class="font-display text-sm font-bold tracking-wider text-white uppercase">
 							{link.label}
 						</p>
 						<p class="mt-1 text-sm text-zinc-500">{link.description}</p>

@@ -1,4 +1,4 @@
-import type { Product, Fitment, ProductBrand } from '$lib/types/saleor';
+import type { Product, Fitment, ProductBrand } from '#lib/types/saleor.ts';
 import { mockProducts } from './products';
 import { getAllPartCategorySlugs, mockPartCategories } from './part-categories';
 

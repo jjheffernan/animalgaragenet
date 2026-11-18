@@ -1,5 +1,5 @@
 <script lang="ts">
-	import AnimatedReveal from '$lib/components/shared/AnimatedReveal.svelte';
+	import AnimatedReveal from '#lib/components/shared/AnimatedReveal.svelte';
 </script>
 
 <svelte:head>
@@ -8,16 +8,16 @@
 
 <section class="mx-auto max-w-3xl px-4 py-20 sm:px-6 lg:px-8">
 	<AnimatedReveal>
-		<h1 class="font-display text-3xl font-bold uppercase text-white">Privacy Policy</h1>
+		<h1 class="font-display text-3xl font-bold text-white uppercase">Privacy Policy</h1>
 		<p class="mt-4 text-zinc-400">
 			Last updated: June 2026. Animal Garage ("we," "us," "our") operates animalgarage.net. This
 			policy explains how we collect, use, and protect your personal information when you shop with
 			us.
 		</p>
 
-		<div class="mt-8 space-y-8 text-zinc-400 leading-relaxed">
+		<div class="mt-8 space-y-8 leading-relaxed text-zinc-400">
 			<div>
-				<h2 class="font-display text-lg font-bold uppercase text-white">Information We Collect</h2>
+				<h2 class="font-display text-lg font-bold text-white uppercase">Information We Collect</h2>
 				<ul class="mt-4 list-inside list-disc space-y-2">
 					<li>
 						<strong class="text-zinc-300">Account data:</strong> name, email, password hash (via Supabase
@@ -43,7 +43,7 @@
 			</div>
 
 			<div>
-				<h2 class="font-display text-lg font-bold uppercase text-white">
+				<h2 class="font-display text-lg font-bold text-white uppercase">
 					How We Use Your Information
 				</h2>
 				<ul class="mt-4 list-inside list-disc space-y-2">
@@ -57,7 +57,7 @@
 			</div>
 
 			<div>
-				<h2 class="font-display text-lg font-bold uppercase text-white">
+				<h2 class="font-display text-lg font-bold text-white uppercase">
 					Sharing &amp; Third Parties
 				</h2>
 				<p class="mt-3">
@@ -87,7 +87,7 @@
 			</div>
 
 			<div>
-				<h2 class="font-display text-lg font-bold uppercase text-white">Cookies</h2>
+				<h2 class="font-display text-lg font-bold text-white uppercase">Cookies</h2>
 				<p class="mt-3">
 					We use essential cookies for cart and session management, and optional analytics cookies
 					to understand how visitors use our site. You can control cookies through your browser
@@ -96,7 +96,7 @@
 			</div>
 
 			<div>
-				<h2 class="font-display text-lg font-bold uppercase text-white">
+				<h2 class="font-display text-lg font-bold text-white uppercase">
 					Data Retention &amp; Security
 				</h2>
 				<p class="mt-3">
@@ -107,7 +107,7 @@
 			</div>
 
 			<div>
-				<h2 class="font-display text-lg font-bold uppercase text-white">Your Rights</h2>
+				<h2 class="font-display text-lg font-bold text-white uppercase">Your Rights</h2>
 				<p class="mt-3">
 					Depending on your location, you may have the right to access, correct, delete, or export
 					your personal data, and to opt out of marketing communications. California residents have
@@ -116,7 +116,7 @@
 			</div>
 
 			<div>
-				<h2 class="font-display text-lg font-bold uppercase text-white">Children</h2>
+				<h2 class="font-display text-lg font-bold text-white uppercase">Children</h2>
 				<p class="mt-3">
 					Our site is not intended for users under 16. We do not knowingly collect data from
 					children.
@@ -124,7 +124,7 @@
 			</div>
 
 			<div>
-				<h2 class="font-display text-lg font-bold uppercase text-white">Contact</h2>
+				<h2 class="font-display text-lg font-bold text-white uppercase">Contact</h2>
 				<p class="mt-3">
 					Questions about this policy? Reach us through our <a
 						href="/contact"

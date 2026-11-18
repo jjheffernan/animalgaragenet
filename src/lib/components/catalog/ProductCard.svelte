@@ -1,11 +1,11 @@
 <script lang="ts">
-	import type { Product } from '$lib/types/saleor';
-	import type { ListView } from '$lib/pagination';
-	import { getDefaultVariantId, getProductPath, isPartProduct } from '$lib/data/catalog-helpers';
-	import { cart } from '$lib/stores/cart.svelte';
-	import { resolvePath } from '$lib/utils/paths';
-	import CatalogKindBadge from '$lib/components/catalog/CatalogKindBadge.svelte';
-	import PriceDisplay from '$lib/components/catalog/PriceDisplay.svelte';
+	import type { Product } from '#lib/types/saleor.ts';
+	import type { ListView } from '#lib/pagination.ts';
+	import { getDefaultVariantId, getProductPath, isPartProduct } from '#lib/data/catalog-helpers.ts';
+	import { cart } from '#lib/stores/cart.svelte.ts';
+	import { resolvePath } from '#lib/utils/paths.ts';
+	import CatalogKindBadge from '#lib/components/catalog/CatalogKindBadge.svelte';
+	import PriceDisplay from '#lib/components/catalog/PriceDisplay.svelte';
 
 	interface Props {
 		product: Product;
@@ -52,8 +52,8 @@
 		{/if}
 		{#if soldOut}
 			<span
-				class="absolute left-2 top-2 rounded-sm bg-zinc-950 px-2 py-0.5 text-[10px] font-bold uppercase text-white {isSmall
-					? 'left-1 top-1 px-1.5 py-0.5 text-[8px]'
+				class="absolute top-2 left-2 rounded-sm bg-zinc-950 px-2 py-0.5 text-[10px] font-bold text-white uppercase {isSmall
+					? 'top-1 left-1 px-1.5 py-0.5 text-[8px]'
 					: ''}"
 			>
 				Sold Out
@@ -68,8 +68,8 @@
 		{/if}
 		{#if product.tags?.includes('staff-pick') && !isList}
 			<span
-				class="absolute right-2 top-2 rounded-sm bg-red-600 px-2 py-0.5 text-[10px] font-bold uppercase text-white {isSmall
-					? 'right-1 top-1 px-1.5 text-[8px]'
+				class="absolute top-2 right-2 rounded-sm bg-red-600 px-2 py-0.5 text-[10px] font-bold text-white uppercase {isSmall
+					? 'top-1 right-1 px-1.5 text-[8px]'
 					: ''}"
 			>
 				Staff Pick
@@ -77,8 +77,8 @@
 		{/if}
 		{#if product.tags?.includes('clearance') && !isList}
 			<span
-				class="absolute right-2 top-10 rounded-sm bg-amber-600/20 px-2 py-0.5 text-[10px] font-bold uppercase text-amber-400 {isSmall
-					? 'right-1 top-8 px-1.5 text-[8px]'
+				class="absolute top-10 right-2 rounded-sm bg-amber-600/20 px-2 py-0.5 text-[10px] font-bold text-amber-400 uppercase {isSmall
+					? 'top-8 right-1 px-1.5 text-[8px]'
 					: ''}"
 			>
 				Clearance
@@ -91,8 +91,8 @@
 			{#if canQuickAdd}
 				<button
 					type="button"
-					class="absolute bottom-3 right-3 rounded-sm bg-red-600 px-2.5 py-1 text-xs font-bold uppercase tracking-wider text-white opacity-0 transition hover:bg-red-500 group-hover:opacity-100 {isSmall
-						? 'bottom-2 right-2 px-2 py-0.5 text-[10px]'
+					class="absolute right-3 bottom-3 rounded-sm bg-red-600 px-2.5 py-1 text-xs font-bold tracking-wider text-white uppercase opacity-0 transition group-hover:opacity-100 hover:bg-red-500 {isSmall
+						? 'right-2 bottom-2 px-2 py-0.5 text-[10px]'
 						: ''}"
 					onclick={handleQuickAdd}
 				>
@@ -111,7 +111,7 @@
 		{/if}
 		{#if product.brand}
 			<p
-				class="font-medium uppercase tracking-wider text-zinc-500 {isSmall
+				class="font-medium tracking-wider text-zinc-500 uppercase {isSmall
 					? 'text-[9px]'
 					: 'text-[10px]'}"
 			>
@@ -119,7 +119,7 @@
 			</p>
 		{:else if product.category}
 			<p
-				class="font-medium uppercase tracking-wider text-red-500 {isSmall
+				class="font-medium tracking-wider text-red-500 uppercase {isSmall
 					? 'text-[10px]'
 					: 'text-xs'}"
 			>
@@ -143,14 +143,14 @@
 			{#if isList}
 				{#if product.tags?.includes('staff-pick')}
 					<span
-						class="rounded-sm bg-red-600/20 px-2 py-0.5 text-[10px] font-bold uppercase text-red-400"
+						class="rounded-sm bg-red-600/20 px-2 py-0.5 text-[10px] font-bold text-red-400 uppercase"
 					>
 						Staff Pick
 					</span>
 				{/if}
 				{#if product.tags?.includes('clearance')}
 					<span
-						class="rounded-sm bg-amber-600/20 px-2 py-0.5 text-[10px] font-bold uppercase text-amber-400"
+						class="rounded-sm bg-amber-600/20 px-2 py-0.5 text-[10px] font-bold text-amber-400 uppercase"
 					>
 						Clearance
 					</span>
@@ -160,7 +160,7 @@
 		{#if isList && canQuickAdd}
 			<button
 				type="button"
-				class="mt-3 w-fit rounded-sm border border-zinc-700 px-3 py-1.5 text-xs font-bold uppercase tracking-wider text-zinc-300 transition hover:border-red-600 hover:text-white"
+				class="mt-3 w-fit rounded-sm border border-zinc-700 px-3 py-1.5 text-xs font-bold tracking-wider text-zinc-300 uppercase transition hover:border-red-600 hover:text-white"
 				onclick={handleQuickAdd}
 			>
 				Quick Add

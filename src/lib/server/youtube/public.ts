@@ -3,10 +3,10 @@ import {
 	getVideoById,
 	getVideosExcluding,
 	mockVideos
-} from '$lib/data/mock/videos';
-import { createAdminClient } from '$lib/server/supabase/admin';
-import { getPublicVideoById, listPublicVideos } from '$lib/server/youtube/repository';
-import type { Video } from '$lib/types/domain';
+} from '#lib/data/mock/videos.ts';
+import { createAdminClient } from '#lib/server/supabase/admin.ts';
+import { getPublicVideoById, listPublicVideos } from '#lib/server/youtube/repository.ts';
+import type { Video } from '#lib/types/domain.ts';
 
 function sortByPublishedDesc(videos: Video[]): Video[] {
 	return [...videos].sort(

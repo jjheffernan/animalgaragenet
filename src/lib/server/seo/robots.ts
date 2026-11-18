@@ -1,4 +1,4 @@
-import { config } from '$lib/config/env';
+import { config } from '#lib/config/env.ts';
 
 /** robots.txt body — Sitemap uses PUBLIC_SITE_URL (SEO-002). */
 export function renderRobotsTxt(siteUrl = config.siteUrl): string {

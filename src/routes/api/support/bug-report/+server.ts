@@ -1,7 +1,7 @@
 import { json } from '@sveltejs/kit';
-import { parseRateLimitedJsonPost } from '$lib/server/api/parse-rate-limited-json';
-import { createBugReport } from '$lib/server/support/repository';
-import { validateBugReportPayload } from '$lib/server/support/bug-report-validation';
+import { parseRateLimitedJsonPost } from '#lib/server/api/parse-rate-limited-json.ts';
+import { createBugReport } from '#lib/server/support/repository.ts';
+import { validateBugReportPayload } from '#lib/server/support/bug-report-validation.ts';
 import type { RequestHandler } from './$types';
 
 /**

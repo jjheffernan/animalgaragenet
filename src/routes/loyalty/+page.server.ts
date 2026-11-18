@@ -1,12 +1,15 @@
 import { fail, redirect } from '@sveltejs/kit';
-import { enrichTestimonialsWithPhotos, linkMediaToTestimonial } from '$lib/server/media/repository';
-import { validateMediaAssetIds } from '$lib/server/media/validation';
+import {
+	enrichTestimonialsWithPhotos,
+	linkMediaToTestimonial
+} from '#lib/server/media/repository.ts';
+import { validateMediaAssetIds } from '#lib/server/media/validation.ts';
 import {
 	createTestimonial,
 	listApprovedTestimonials,
 	listTestimonialsForUser
-} from '$lib/server/testimonials/repository';
-import { validateTestimonialFields } from '$lib/server/testimonials/validation';
+} from '#lib/server/testimonials/repository.ts';
+import { validateTestimonialFields } from '#lib/server/testimonials/validation.ts';
 import type { Actions, PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({ locals }) => {

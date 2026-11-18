@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { MAX_FILES_PER_TESTIMONIAL } from '$lib/media/constants';
+	import { MAX_FILES_PER_TESTIMONIAL } from '#lib/media/constants.ts';
 
 	export interface UploadedPhoto {
 		assetId: string;
@@ -109,14 +109,14 @@
 
 <div class="space-y-3">
 	<label class="block">
-		<span class="text-xs font-bold uppercase tracking-widest text-zinc-500">Photos (optional)</span>
+		<span class="text-xs font-bold tracking-widest text-zinc-500 uppercase">Photos (optional)</span>
 		<input
 			type="file"
 			accept="image/jpeg,image/png,image/webp"
 			multiple
 			disabled={disabled || uploading || photos.length >= MAX_FILES_PER_TESTIMONIAL}
 			onchange={onFileChange}
-			class="mt-1 block w-full text-sm text-zinc-400 file:mr-4 file:rounded-sm file:border-0 file:bg-zinc-800 file:px-3 file:py-2 file:text-xs file:font-bold file:uppercase file:tracking-wider file:text-white hover:file:bg-zinc-700 disabled:opacity-50"
+			class="mt-1 block w-full text-sm text-zinc-400 file:mr-4 file:rounded-sm file:border-0 file:bg-zinc-800 file:px-3 file:py-2 file:text-xs file:font-bold file:tracking-wider file:text-white file:uppercase hover:file:bg-zinc-700 disabled:opacity-50"
 		/>
 	</label>
 	<p class="text-xs text-zinc-600">
@@ -138,7 +138,7 @@
 					<img src={photo.previewUrl} alt="" class="h-16 w-16 rounded-sm object-cover" />
 					<button
 						type="button"
-						class="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-zinc-900 text-xs text-zinc-300 ring-1 ring-zinc-700 hover:text-red-400"
+						class="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-zinc-900 text-xs text-zinc-300 ring-1 ring-zinc-700 hover:text-red-400"
 						aria-label="Remove photo"
 						{disabled}
 						onclick={() => removePhoto(photo.assetId)}

@@ -1,4 +1,4 @@
-import type { SavedVehicle } from '$lib/types/domain';
+import type { SavedVehicle } from '#lib/types/domain.ts';
 import { loadGarageFromApi, resetGarageApiCache, saveVehiclesToApi } from './garage-api';
 import { readStoredJson, removeStoredJson, writeStoredJson } from './storage';
 

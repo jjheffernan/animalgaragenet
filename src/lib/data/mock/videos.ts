@@ -1,4 +1,4 @@
-import type { Video } from '$lib/types/domain';
+import type { Video } from '#lib/types/domain.ts';
 
 export const mockVideos: Video[] = [
 	{

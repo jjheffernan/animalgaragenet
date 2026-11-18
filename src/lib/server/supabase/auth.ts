@@ -1,7 +1,7 @@
 import type { Cookies } from '@sveltejs/kit';
 import type { SupabaseClient, User } from '@supabase/supabase-js';
-import { oauthDisplayName, type OAuthProvider } from '$lib/auth/oauth';
-import { isValidRole, type Role } from '$lib/auth/roles';
+import { oauthDisplayName, type OAuthProvider } from '#lib/auth/oauth.ts';
+import { isValidRole, type Role } from '#lib/auth/roles.ts';
 
 /** Legacy mock session cookie — used when Supabase env vars are unset. */
 export const SESSION_COOKIE = 'ag-session';

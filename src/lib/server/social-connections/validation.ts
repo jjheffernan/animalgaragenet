@@ -1,5 +1,5 @@
-import { isSocialPlatformId } from '$lib/data/social-platforms';
-import type { SocialConnection, SocialConnectionsMap } from '$lib/types/social-connections';
+import { isSocialPlatformId } from '#lib/data/social-platforms.ts';
+import type { SocialConnection, SocialConnectionsMap } from '#lib/types/social-connections.ts';
 
 const HANDLE_RE = /^[a-zA-Z0-9._-]{1,50}$/;
 

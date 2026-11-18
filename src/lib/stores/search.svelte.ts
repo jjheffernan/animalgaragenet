@@ -1,9 +1,9 @@
-import { locale } from '$lib/stores/locale.svelte';
-import { searchProducts } from '$lib/data/mock/products';
-import { searchParts } from '$lib/data/mock/parts';
-import { searchBuilds } from '$lib/data/mock/builds';
-import { searchGuides } from '$lib/data/mock/guides';
-import type { CatalogSearchResults } from '$lib/server/catalog/search';
+import { locale } from '#lib/stores/locale.svelte.ts';
+import { searchProducts } from '#lib/data/mock/products.ts';
+import { searchParts } from '#lib/data/mock/parts.ts';
+import { searchBuilds } from '#lib/data/mock/builds.ts';
+import { searchGuides } from '#lib/data/mock/guides.ts';
+import type { CatalogSearchResults } from '#lib/server/catalog/search.ts';
 
 class SearchState {
 	open = $state(false);

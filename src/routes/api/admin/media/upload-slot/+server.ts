@@ -1,8 +1,8 @@
 import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
-import { adminGateJsonResponse, resolveAdminGateFromLocals } from '$lib/server/auth/admin-gate';
-import { createPresignedUploadUrl, isCdnUploadConfigured } from '$lib/server/media/cdn';
-import { validateUploadRequest } from '$lib/server/media/validation';
+import { adminGateJsonResponse, resolveAdminGateFromLocals } from '#lib/server/auth/admin-gate.ts';
+import { createPresignedUploadUrl, isCdnUploadConfigured } from '#lib/server/media/cdn.ts';
+import { validateUploadRequest } from '#lib/server/media/validation.ts';
 
 interface UploadSlotBody {
 	filename?: string;

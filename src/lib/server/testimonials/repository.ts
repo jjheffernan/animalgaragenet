@@ -1,6 +1,6 @@
-import { createAdminClient } from '$lib/server/supabase/admin';
-import { LIMITS, trimToMax } from '$lib/server/validation/limits';
-import type { Testimonial, TestimonialStatus } from '$lib/types/testimonial';
+import { createAdminClient } from '#lib/server/supabase/admin.ts';
+import { LIMITS, trimToMax } from '#lib/server/validation/limits.ts';
+import type { Testimonial, TestimonialStatus } from '#lib/types/testimonial.ts';
 
 const mockStore = new Map<string, Testimonial>();
 

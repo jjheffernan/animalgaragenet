@@ -1,5 +1,5 @@
-import { listBuildLogsForUser } from '$lib/server/build-logs/repository';
-import { paginateFromUrl } from '$lib/pagination';
+import { listBuildLogsForUser } from '#lib/server/build-logs/repository.ts';
+import { paginateFromUrl } from '#lib/pagination.ts';
 import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({ parent, url }) => {

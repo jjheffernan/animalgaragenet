@@ -1,7 +1,7 @@
 <script lang="ts">
-	import { getClearanceProducts } from '$lib/data/mock/products';
-	import type { Product } from '$lib/types/saleor';
-	import MiniProductRow from '$lib/components/catalog/MiniProductRow.svelte';
+	import { getClearanceProducts } from '#lib/data/mock/products.ts';
+	import type { Product } from '#lib/types/saleor.ts';
+	import MiniProductRow from '#lib/components/catalog/MiniProductRow.svelte';
 
 	interface Props {
 		products?: Product[];

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
-	import AnimatedReveal from '$lib/components/shared/AnimatedReveal.svelte';
+	import AnimatedReveal from '#lib/components/shared/AnimatedReveal.svelte';
 	import type { ActionData } from './$types';
 
 	let { form }: { form: ActionData } = $props();
@@ -19,7 +19,7 @@
 
 <section class="mx-auto max-w-3xl px-4 py-20 sm:px-6 lg:px-8">
 	<AnimatedReveal>
-		<h1 class="font-display text-3xl font-bold uppercase text-white">Wholesale Inquiry</h1>
+		<h1 class="font-display text-3xl font-bold text-white uppercase">Wholesale Inquiry</h1>
 		<p class="mt-4 text-zinc-400">
 			Interested in carrying Animal Garage at your shop, event, or retail location? We work with
 			select B2B partners who share our garage-culture ethos.
@@ -27,19 +27,19 @@
 
 		<div class="mt-10 grid gap-8 sm:grid-cols-2">
 			<div class="rounded-sm border border-zinc-800 bg-zinc-900/50 p-6">
-				<p class="text-xs font-bold uppercase tracking-widest text-red-500">Minimum Order</p>
+				<p class="text-xs font-bold tracking-widest text-red-500 uppercase">Minimum Order</p>
 				<p class="mt-2 font-display text-2xl font-bold text-white">$500</p>
 				<p class="mt-2 text-sm text-zinc-500">Opening order minimum. Reorders from $250.</p>
 			</div>
 			<div class="rounded-sm border border-zinc-800 bg-zinc-900/50 p-6">
-				<p class="text-xs font-bold uppercase tracking-widest text-red-500">Response Time</p>
+				<p class="text-xs font-bold tracking-widest text-red-500 uppercase">Response Time</p>
 				<p class="mt-2 font-display text-2xl font-bold text-white">3–5 Days</p>
 				<p class="mt-2 text-sm text-zinc-500">Our wholesale team reviews every application.</p>
 			</div>
 		</div>
 
-		<div class="mt-10 space-y-4 text-zinc-400 leading-relaxed">
-			<h2 class="font-display text-lg font-bold uppercase text-white">What We Offer</h2>
+		<div class="mt-10 space-y-4 leading-relaxed text-zinc-400">
+			<h2 class="font-display text-lg font-bold text-white uppercase">What We Offer</h2>
 			<ul class="list-inside list-disc space-y-2">
 				<li>Tiered wholesale pricing on merch and select parts</li>
 				<li>Co-branded event kits and pop-up shop support</li>
@@ -47,7 +47,7 @@
 				<li>Marketing assets and product photography</li>
 			</ul>
 
-			<h2 class="font-display text-lg font-bold uppercase text-white pt-4">Timeline</h2>
+			<h2 class="pt-4 font-display text-lg font-bold text-white uppercase">Timeline</h2>
 			<ol class="list-inside list-decimal space-y-2">
 				<li>Submit the inquiry form below</li>
 				<li>Wholesale team reviews within 3–5 business days</li>
@@ -79,7 +79,7 @@
 				{/if}
 
 				<label class="block">
-					<span class="text-xs font-bold uppercase tracking-widest text-zinc-500"
+					<span class="text-xs font-bold tracking-widest text-zinc-500 uppercase"
 						>Business Name</span
 					>
 					<input
@@ -99,7 +99,7 @@
 				</label>
 
 				<label class="block">
-					<span class="text-xs font-bold uppercase tracking-widest text-zinc-500">Contact Name</span
+					<span class="text-xs font-bold tracking-widest text-zinc-500 uppercase">Contact Name</span
 					>
 					<input
 						type="text"
@@ -119,7 +119,7 @@
 
 				<div class="grid gap-6 sm:grid-cols-2">
 					<label class="block">
-						<span class="text-xs font-bold uppercase tracking-widest text-zinc-500">Email</span>
+						<span class="text-xs font-bold tracking-widest text-zinc-500 uppercase">Email</span>
 						<input
 							type="email"
 							name="email"
@@ -137,7 +137,7 @@
 					</label>
 
 					<label class="block">
-						<span class="text-xs font-bold uppercase tracking-widest text-zinc-500"
+						<span class="text-xs font-bold tracking-widest text-zinc-500 uppercase"
 							>Phone (optional)</span
 						>
 						<input
@@ -150,7 +150,7 @@
 				</div>
 
 				<label class="block">
-					<span class="text-xs font-bold uppercase tracking-widest text-zinc-500"
+					<span class="text-xs font-bold tracking-widest text-zinc-500 uppercase"
 						>Website (optional)</span
 					>
 					<input
@@ -163,7 +163,7 @@
 				</label>
 
 				<label class="block">
-					<span class="text-xs font-bold uppercase tracking-widest text-zinc-500"
+					<span class="text-xs font-bold tracking-widest text-zinc-500 uppercase"
 						>Tell Us About Your Business</span
 					>
 					<textarea
@@ -185,7 +185,7 @@
 				<button
 					type="submit"
 					disabled={submitting}
-					class="w-full rounded-sm bg-red-600 py-4 text-sm font-bold uppercase tracking-wider text-white hover:bg-red-500 disabled:opacity-60"
+					class="w-full rounded-sm bg-red-600 py-4 text-sm font-bold tracking-wider text-white uppercase hover:bg-red-500 disabled:opacity-60"
 				>
 					{submitting ? 'Submitting…' : 'Submit Inquiry'}
 				</button>

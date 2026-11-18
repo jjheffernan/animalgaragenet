@@ -1,4 +1,4 @@
-import type { BlogPost, Guide } from '$lib/types/domain';
+import type { BlogPost, Guide } from '#lib/types/domain.ts';
 import type { GhostContentTag, GhostPost } from './types';
 
 const heroFallback = (seed: string) => `https://picsum.photos/seed/${seed}/1200/600`;

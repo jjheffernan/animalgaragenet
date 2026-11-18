@@ -1,5 +1,5 @@
-import { paginateFromUrl } from '$lib/pagination';
-import { getGiftCardProducts } from '$lib/server/catalog/products';
+import { paginateFromUrl } from '#lib/pagination.ts';
+import { getGiftCardProducts } from '#lib/server/catalog/products.ts';
 import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({ url }) => {

@@ -5,9 +5,9 @@ import type {
 	CheckoutShippingDisplay,
 	ShippingAddressInput,
 	ShippingMethodDisplay
-} from '$lib/types/checkout';
-import { resolveChannelForLocale } from '$lib/server/saleor/channels';
-import { isSaleorEnabled, saleorFetch } from '$lib/server/saleor/client';
+} from '#lib/types/checkout.ts';
+import { resolveChannelForLocale } from '#lib/server/saleor/channels.ts';
+import { isSaleorEnabled, saleorFetch } from '#lib/server/saleor/client.ts';
 import {
 	CHECKOUT_ADD_PROMO_CODE,
 	CHECKOUT_COMPLETE,
@@ -23,8 +23,8 @@ import {
 	PAYMENT_GATEWAY_INITIALIZE,
 	TRANSACTION_INITIALIZE,
 	TRANSACTION_PROCESS
-} from '$lib/server/saleor/checkout-queries';
-import { config } from '$lib/config/env';
+} from '#lib/server/saleor/checkout-queries.ts';
+import { config } from '#lib/config/env.ts';
 
 export const CHECKOUT_COOKIE = 'ag-checkout-id';
 export const TRANSACTION_COOKIE = 'ag-transaction-id';
@@ -222,9 +222,9 @@ export function isPaymentAppConfigured(shipping: CheckoutShippingDisplay | null)
 }
 
 /** Map Stripe redirect query params for transactionProcess. */
-export function stripeReturnDataFromUrl(
-	searchParams: URLSearchParams
-): Record<string, unknown> | undefined {
+export function stripeReturnDataFromUrl(searchParams: {
+	get(name: string): string | null;
+}): Record<string, unknown> | undefined {
 	const paymentIntent = searchParams.get('payment_intent');
 	if (!paymentIntent) return undefined;
 

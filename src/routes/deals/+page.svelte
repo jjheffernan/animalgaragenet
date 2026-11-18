@@ -1,8 +1,8 @@
 <script lang="ts">
-	import SectionHeading from '$lib/components/shared/SectionHeading.svelte';
-	import ProductGrid from '$lib/components/catalog/ProductGrid.svelte';
-	import PaginatedListCanvas from '$lib/components/catalog/PaginatedListCanvas.svelte';
-	import AnimatedReveal from '$lib/components/shared/AnimatedReveal.svelte';
+	import SectionHeading from '#lib/components/shared/SectionHeading.svelte';
+	import ProductGrid from '#lib/components/catalog/ProductGrid.svelte';
+	import PaginatedListCanvas from '#lib/components/catalog/PaginatedListCanvas.svelte';
+	import AnimatedReveal from '#lib/components/shared/AnimatedReveal.svelte';
 
 	let { data } = $props();
 </script>
@@ -13,8 +13,8 @@
 
 <section class="border-b border-red-900/50 bg-red-950/30 py-16">
 	<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-		<p class="text-xs font-bold uppercase tracking-[0.3em] text-red-500">Homie Hookup</p>
-		<h1 class="mt-2 font-display text-4xl font-bold uppercase tracking-wider text-white">
+		<p class="text-xs font-bold tracking-[0.3em] text-red-500 uppercase">Homie Hookup</p>
+		<h1 class="mt-2 font-display text-4xl font-bold tracking-wider text-white uppercase">
 			Pit Lane Deals
 		</h1>
 		<p class="mt-2 text-zinc-400">Curated savings — always something on sale.</p>
@@ -26,10 +26,10 @@
 		<div class="grid gap-4 sm:grid-cols-2">
 			{#each data.deals as deal (deal.id)}
 				<div class="rounded-sm border border-red-900/50 bg-red-950/10 p-6">
-					<span class="rounded-sm bg-red-600 px-2 py-1 text-xs font-bold uppercase text-white"
+					<span class="rounded-sm bg-red-600 px-2 py-1 text-xs font-bold text-white uppercase"
 						>{deal.discountLabel}</span
 					>
-					<h2 class="mt-3 font-display text-xl font-bold uppercase text-white">{deal.title}</h2>
+					<h2 class="mt-3 font-display text-xl font-bold text-white uppercase">{deal.title}</h2>
 					<p class="mt-2 text-zinc-400">{deal.description}</p>
 					{#if deal.expiresAt}
 						<p class="mt-2 text-xs text-zinc-500">

@@ -3,7 +3,7 @@ import {
 	getFeaturedSection,
 	listFeaturedSections,
 	upsertFeaturedSection
-} from '$lib/server/featured-sections/repository';
+} from '#lib/server/featured-sections/repository.ts';
 import type { Actions, PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async () => {

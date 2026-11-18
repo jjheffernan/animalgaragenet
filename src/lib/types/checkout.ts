@@ -1,4 +1,4 @@
-import type { Money } from '$lib/types/saleor';
+import type { Money } from '#lib/types/saleor.ts';
 
 /** Flattened checkout line for read-only cart display. */
 export interface CheckoutLineDisplay {

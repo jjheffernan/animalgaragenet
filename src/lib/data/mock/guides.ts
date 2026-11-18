@@ -1,4 +1,4 @@
-import type { Guide } from '$lib/types/domain';
+import type { Guide } from '#lib/types/domain.ts';
 
 const hero = (seed: string) => `https://picsum.photos/seed/${seed}/1200/600`;
 

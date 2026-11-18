@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { MediaItem } from '$lib/data/mock/media';
+	import type { MediaItem } from '#lib/data/mock/media.ts';
 
 	interface Props {
 		items: MediaItem[];
@@ -34,7 +34,7 @@
 				{/if}
 			</div>
 			<figcaption class="p-4">
-				<p class="text-xs font-medium uppercase tracking-wider text-red-500">{item.category}</p>
+				<p class="text-xs font-medium tracking-wider text-red-500 uppercase">{item.category}</p>
 				<p class="mt-1 font-medium text-white">{item.title}</p>
 			</figcaption>
 		</figure>

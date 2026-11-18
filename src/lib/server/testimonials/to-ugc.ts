@@ -1,5 +1,5 @@
-import type { UGCItem } from '$lib/types/domain';
-import type { Testimonial } from '$lib/types/testimonial';
+import type { UGCItem } from '#lib/types/domain.ts';
+import type { Testimonial } from '#lib/types/testimonial.ts';
 
 /** Map approved testimonials to UGC wall tiles; prefers linked review photos when present. */
 export function testimonialsToUgcItems(testimonials: Testimonial[]): UGCItem[] {

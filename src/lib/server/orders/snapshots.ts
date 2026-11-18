@@ -1,5 +1,5 @@
-import { createAdminClient } from '$lib/server/supabase/admin';
-import type { OrderSnapshot, OrderStatus } from '$lib/types/order';
+import { createAdminClient } from '#lib/server/supabase/admin.ts';
+import type { OrderSnapshot, OrderStatus } from '#lib/types/order.ts';
 
 const mockStore = new Map<string, OrderSnapshot>();
 

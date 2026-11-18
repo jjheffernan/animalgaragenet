@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
-	import AdminPageHeader from '$lib/components/admin/AdminPageHeader.svelte';
+	import AdminPageHeader from '#lib/components/admin/AdminPageHeader.svelte';
 	import {
 		adminAlertError,
 		adminAlertSuccess,
@@ -10,7 +10,7 @@
 		adminCardFlush,
 		adminField,
 		adminTableHead
-	} from '$lib/components/admin/admin-ui';
+	} from '#lib/components/admin/admin-ui.ts';
 
 	let { data, form } = $props();
 
@@ -96,7 +96,7 @@
 	</div>
 
 	<section class={adminCard}>
-		<h2 class="text-xs font-bold uppercase tracking-widest text-red-500">Add channel</h2>
+		<h2 class="text-xs font-bold tracking-widest text-red-500 uppercase">Add channel</h2>
 		<form method="POST" action="?/addChannel" class="mt-4 grid gap-4 sm:grid-cols-3" use:enhance>
 			<label class="block">
 				<span class="text-xs text-zinc-500">YouTube channel ID</span>

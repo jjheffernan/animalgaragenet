@@ -1,7 +1,7 @@
-import { checkBuildSubmitRateLimit } from '$lib/server/build-logs/submit-guard';
-import { createAdminClient } from '$lib/server/supabase/admin';
-import { createWholesaleInquiry } from '$lib/server/wholesale/repository';
-import { LIMITS, trimToMax } from '$lib/server/validation/limits';
+import { checkBuildSubmitRateLimit } from '#lib/server/build-logs/submit-guard.ts';
+import { createAdminClient } from '#lib/server/supabase/admin.ts';
+import { createWholesaleInquiry } from '#lib/server/wholesale/repository.ts';
+import { LIMITS, trimToMax } from '#lib/server/validation/limits.ts';
 
 export interface FormSubmitResult {
 	ok: boolean;

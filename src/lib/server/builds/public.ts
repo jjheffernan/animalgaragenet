@@ -1,11 +1,11 @@
-import { mockBuilds, getBuildBySlug as getMockBuildBySlug } from '$lib/data/mock/builds';
+import { mockBuilds, getBuildBySlug as getMockBuildBySlug } from '#lib/data/mock/builds.ts';
 import {
 	listApprovedBuildLogs,
 	getApprovedBuildLogBySlug
-} from '$lib/server/build-logs/repository';
-import { createAdminClient } from '$lib/server/supabase/admin';
-import { buildLogToThread, buildLogsToThreads } from '$lib/server/builds/to-thread';
-import type { BuildThread } from '$lib/types/domain';
+} from '#lib/server/build-logs/repository.ts';
+import { createAdminClient } from '#lib/server/supabase/admin.ts';
+import { buildLogToThread, buildLogsToThreads } from '#lib/server/builds/to-thread.ts';
+import type { BuildThread } from '#lib/types/domain.ts';
 
 export async function listPublicBuilds(): Promise<BuildThread[]> {
 	const admin = createAdminClient();

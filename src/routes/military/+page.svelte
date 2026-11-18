@@ -1,5 +1,5 @@
 <script lang="ts">
-	import AnimatedReveal from '$lib/components/shared/AnimatedReveal.svelte';
+	import AnimatedReveal from '#lib/components/shared/AnimatedReveal.svelte';
 </script>
 
 <svelte:head>
@@ -8,15 +8,15 @@
 
 <section class="mx-auto max-w-3xl px-4 py-20 sm:px-6 lg:px-8">
 	<AnimatedReveal>
-		<h1 class="font-display text-3xl font-bold uppercase text-white">Military Discount</h1>
+		<h1 class="font-display text-3xl font-bold text-white uppercase">Military Discount</h1>
 		<p class="mt-4 text-lg text-zinc-400">
 			<strong class="text-white">15% off</strong> for active duty, veterans, and their families. Thank
 			you for your service.
 		</p>
 
-		<div class="mt-10 space-y-8 text-zinc-400 leading-relaxed">
+		<div class="mt-10 space-y-8 leading-relaxed text-zinc-400">
 			<div>
-				<h2 class="font-display text-lg font-bold uppercase text-white">How to Verify</h2>
+				<h2 class="font-display text-lg font-bold text-white uppercase">How to Verify</h2>
 				<p class="mt-3">
 					When Saleor checkout goes live, you will verify once through our secure partner portal.
 					Your military status is stored on your account and the <strong class="text-zinc-300"
@@ -25,7 +25,7 @@
 				</p>
 				<div class="mt-6 flex flex-wrap gap-4">
 					<div class="rounded-sm border border-zinc-700 bg-zinc-900/50 px-6 py-4">
-						<p class="text-xs font-bold uppercase tracking-widest text-zinc-500">ID.me</p>
+						<p class="text-xs font-bold tracking-widest text-zinc-500 uppercase">ID.me</p>
 						<p class="mt-1 text-sm text-zinc-400">
 							Verify with CAC, military ID, or .mil email. Fastest option for active duty.
 						</p>
@@ -33,16 +33,16 @@
 							type="button"
 							disabled
 							title="Available at Saleor checkout"
-							class="mt-3 rounded-sm border border-zinc-700 bg-zinc-800 px-4 py-2 text-xs font-bold uppercase tracking-wider text-zinc-400"
+							class="mt-3 rounded-sm border border-zinc-700 bg-zinc-800 px-4 py-2 text-xs font-bold tracking-wider text-zinc-400 uppercase"
 						>
 							Verify at Checkout
 						</button>
-						<p class="mt-2 text-[10px] uppercase tracking-wider text-zinc-600">
+						<p class="mt-2 text-[10px] tracking-wider text-zinc-600 uppercase">
 							Saleor integration pending
 						</p>
 					</div>
 					<div class="rounded-sm border border-zinc-700 bg-zinc-900/50 px-6 py-4">
-						<p class="text-xs font-bold uppercase tracking-widest text-zinc-500">VerifyPass</p>
+						<p class="text-xs font-bold tracking-widest text-zinc-500 uppercase">VerifyPass</p>
 						<p class="mt-1 text-sm text-zinc-400">
 							Alternative path for veterans, retirees, and spouses — DD-214 or VA ID accepted.
 						</p>
@@ -50,11 +50,11 @@
 							type="button"
 							disabled
 							title="Available at Saleor checkout"
-							class="mt-3 rounded-sm border border-zinc-700 bg-zinc-800 px-4 py-2 text-xs font-bold uppercase tracking-wider text-zinc-400"
+							class="mt-3 rounded-sm border border-zinc-700 bg-zinc-800 px-4 py-2 text-xs font-bold tracking-wider text-zinc-400 uppercase"
 						>
 							Verify at Checkout
 						</button>
-						<p class="mt-2 text-[10px] uppercase tracking-wider text-zinc-600">
+						<p class="mt-2 text-[10px] tracking-wider text-zinc-600 uppercase">
 							Saleor integration pending
 						</p>
 					</div>
@@ -66,7 +66,7 @@
 			</div>
 
 			<div>
-				<h2 class="font-display text-lg font-bold uppercase text-white">Who Is Eligible</h2>
+				<h2 class="font-display text-lg font-bold text-white uppercase">Who Is Eligible</h2>
 				<ul class="mt-4 list-inside list-disc space-y-2">
 					<li>Active duty US military (all branches)</li>
 					<li>Veterans with honorable discharge</li>
@@ -77,7 +77,7 @@
 			</div>
 
 			<div>
-				<h2 class="font-display text-lg font-bold uppercase text-white">Discount Rules</h2>
+				<h2 class="font-display text-lg font-bold text-white uppercase">Discount Rules</h2>
 				<ul class="mt-4 list-inside list-disc space-y-2">
 					<li>
 						<strong class="text-zinc-300">15% off</strong> eligible merchandise and in-stock parts
@@ -90,7 +90,7 @@
 			</div>
 
 			<div>
-				<h2 class="font-display text-lg font-bold uppercase text-white">FAQ</h2>
+				<h2 class="font-display text-lg font-bold text-white uppercase">FAQ</h2>
 				<dl class="mt-4 space-y-4">
 					<div>
 						<dt class="font-bold text-zinc-300">

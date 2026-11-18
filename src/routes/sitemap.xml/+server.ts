@@ -1,4 +1,4 @@
-import { renderSitemapXml, collectSitemapUrls } from '$lib/server/seo/sitemap';
+import { renderSitemapXml, collectSitemapUrls } from '#lib/server/seo/sitemap.ts';
 import type { RequestHandler } from './$types';
 
 export const GET: RequestHandler = async () => {

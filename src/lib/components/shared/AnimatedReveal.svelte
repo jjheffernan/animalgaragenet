@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { Snippet } from 'svelte';
-	import { prefersReducedMotion } from '$lib/motion/prefers-reduced-motion.svelte';
+	import { prefersReducedMotion } from '#lib/motion/prefers-reduced-motion.svelte.ts';
 
 	interface Props {
 		children: Snippet;

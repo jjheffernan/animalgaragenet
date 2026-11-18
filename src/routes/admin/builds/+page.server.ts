@@ -1,6 +1,6 @@
 import { fail } from '@sveltejs/kit';
-import { listPendingBuildLogs, moderateBuildLog } from '$lib/server/build-logs/repository';
-import { paginateFromUrl } from '$lib/pagination';
+import { listPendingBuildLogs, moderateBuildLog } from '#lib/server/build-logs/repository.ts';
+import { paginateFromUrl } from '#lib/pagination.ts';
 import type { Actions, PageServerLoad } from './$types';
 
 function slugify(title: string, year: number, make: string, model: string): string {

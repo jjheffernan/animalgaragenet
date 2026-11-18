@@ -1,6 +1,6 @@
 import { json } from '@sveltejs/kit';
-import { config } from '$lib/config/env';
-import { getPartsFilterOptions } from '$lib/server/catalog/parts-filters';
+import { config } from '#lib/config/env.ts';
+import { getPartsFilterOptions } from '#lib/server/catalog/parts-filters.ts';
 import type { RequestHandler } from './$types';
 
 export const GET: RequestHandler = async ({ url, setHeaders }) => {

@@ -1,7 +1,7 @@
 import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
-import { deleteMediaAsset } from '$lib/server/media/repository';
-import { isSupabaseConfigured } from '$lib/server/supabase/client';
+import { deleteMediaAsset } from '#lib/server/media/repository.ts';
+import { isSupabaseConfigured } from '#lib/server/supabase/client.ts';
 
 export const DELETE: RequestHandler = async ({ params, locals }) => {
 	if (!locals.session) {

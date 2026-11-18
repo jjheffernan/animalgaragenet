@@ -1,10 +1,10 @@
-import type { PartCategory } from '$lib/types/domain';
-import type { Collection, Money, Product, ProductMedia } from '$lib/types/saleor';
+import type { PartCategory } from '#lib/types/domain.ts';
+import type { Collection, Money, Product, ProductMedia } from '#lib/types/saleor.ts';
 import {
 	mapProductMetadata,
 	type SaleorAttribute,
 	type SaleorMetadataEntry
-} from '$lib/server/saleor/metadata';
+} from '#lib/server/saleor/metadata.ts';
 
 /** Saleor GraphQL money wrapper (`gross` / `net`). */
 export interface SaleorTaxedMoney {

@@ -1,6 +1,6 @@
 import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
-import { clearCode, getPromoStatus, redeemCode } from '$lib/server/checkout/promo';
+import { clearCode, getPromoStatus, redeemCode } from '#lib/server/checkout/promo.ts';
 
 interface PromoBody {
 	code?: string;

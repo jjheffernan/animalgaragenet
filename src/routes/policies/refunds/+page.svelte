@@ -1,5 +1,5 @@
 <script lang="ts">
-	import AnimatedReveal from '$lib/components/shared/AnimatedReveal.svelte';
+	import AnimatedReveal from '#lib/components/shared/AnimatedReveal.svelte';
 </script>
 
 <svelte:head>
@@ -8,15 +8,15 @@
 
 <section class="mx-auto max-w-3xl px-4 py-20 sm:px-6 lg:px-8">
 	<AnimatedReveal>
-		<h1 class="font-display text-3xl font-bold uppercase text-white">Refund Policy</h1>
+		<h1 class="font-display text-3xl font-bold text-white uppercase">Refund Policy</h1>
 		<p class="mt-4 text-zinc-400">
 			We want you stoked on every order. If something is not right, we will make it right — within
 			the guidelines below.
 		</p>
 
-		<div class="mt-8 space-y-8 text-zinc-400 leading-relaxed">
+		<div class="mt-8 space-y-8 leading-relaxed text-zinc-400">
 			<div>
-				<h2 class="font-display text-lg font-bold uppercase text-white">30-Day Return Window</h2>
+				<h2 class="font-display text-lg font-bold text-white uppercase">30-Day Return Window</h2>
 				<p class="mt-3">
 					Most items may be returned within <strong class="text-white">30 days of delivery</strong> for
 					a refund or exchange. Items must be unused, in original condition, and include all tags, packaging,
@@ -25,7 +25,7 @@
 			</div>
 
 			<div>
-				<h2 class="font-display text-lg font-bold uppercase text-white">Merchandise</h2>
+				<h2 class="font-display text-lg font-bold text-white uppercase">Merchandise</h2>
 				<ul class="mt-4 list-inside list-disc space-y-2">
 					<li>Unworn apparel with original tags attached</li>
 					<li>Accessories in resalable condition with packaging intact</li>
@@ -34,7 +34,7 @@
 			</div>
 
 			<div>
-				<h2 class="font-display text-lg font-bold uppercase text-white">Parts</h2>
+				<h2 class="font-display text-lg font-bold text-white uppercase">Parts</h2>
 				<ul class="mt-4 list-inside list-disc space-y-2">
 					<li>Unused parts in original, unopened packaging — 30-day window</li>
 					<li>Installed, modified, or test-fit parts are not eligible for return</li>
@@ -44,7 +44,7 @@
 			</div>
 
 			<div>
-				<h2 class="font-display text-lg font-bold uppercase text-white">
+				<h2 class="font-display text-lg font-bold text-white uppercase">
 					Final Sale &amp; Clearance
 				</h2>
 				<p class="mt-3">
@@ -57,7 +57,7 @@
 			</div>
 
 			<div>
-				<h2 class="font-display text-lg font-bold uppercase text-white">Damaged or Wrong Items</h2>
+				<h2 class="font-display text-lg font-bold text-white uppercase">Damaged or Wrong Items</h2>
 				<p class="mt-3">
 					Received something damaged or not what you ordered? Contact us within 7 days with photos.
 					We will cover return shipping and send a replacement or full refund — your choice.
@@ -65,7 +65,7 @@
 			</div>
 
 			<div>
-				<h2 class="font-display text-lg font-bold uppercase text-white">How to Start a Return</h2>
+				<h2 class="font-display text-lg font-bold text-white uppercase">How to Start a Return</h2>
 				<ol class="mt-4 list-inside list-decimal space-y-2">
 					<li>Email support with your order number and reason for return</li>
 					<li>We will send a return authorization and shipping instructions</li>

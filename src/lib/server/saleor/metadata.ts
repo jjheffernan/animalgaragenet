@@ -1,4 +1,4 @@
-import type { Fitment, Money, Product, ProductBrand, ProductType } from '$lib/types/saleor';
+import type { Fitment, Money, Product, ProductBrand, ProductType } from '#lib/types/saleor.ts';
 
 /** Saleor `metadata { key value }` entry. */
 export interface SaleorMetadataEntry {

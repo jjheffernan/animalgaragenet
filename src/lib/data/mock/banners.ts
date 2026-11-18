@@ -1,4 +1,4 @@
-import type { PromoBanner } from '$lib/types/domain';
+import type { PromoBanner } from '#lib/types/domain.ts';
 
 export const mockBanners: PromoBanner[] = [
 	{

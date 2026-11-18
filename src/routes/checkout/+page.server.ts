@@ -1,12 +1,12 @@
-import { config } from '$lib/config/env';
+import { config } from '#lib/config/env.ts';
 import type { PageServerLoad } from './$types';
-import { isSaleorEnabled } from '$lib/server/saleor/client';
+import { isSaleorEnabled } from '#lib/server/saleor/client.ts';
 import {
 	getCheckoutId,
 	getCheckoutShipping,
 	PAYMENT_APP_OPS_HINT
-} from '$lib/server/saleor/checkout';
-import { getFreeShippingProgress } from '$lib/server/saleor/shipping-promo';
+} from '#lib/server/saleor/checkout.ts';
+import { getFreeShippingProgress } from '#lib/server/saleor/shipping-promo.ts';
 
 export const load: PageServerLoad = async ({ cookies, url }) => {
 	const saleorEnabled = isSaleorEnabled();

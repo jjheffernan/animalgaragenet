@@ -1,5 +1,5 @@
 import type { SupabaseClient } from '@supabase/supabase-js';
-import { createAdminClient } from '$lib/server/supabase/admin';
+import { createAdminClient } from '#lib/server/supabase/admin.ts';
 import { isCdnPublicReadConfigured, resolveUgcPublicUrl } from './cdn';
 import { UGC_BUCKET, UPLOAD_URL_TTL_SECONDS, type AllowedImageMime } from './constants';
 import { mimeToExtension } from './validation';

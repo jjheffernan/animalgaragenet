@@ -1,8 +1,8 @@
-import { setAnalyticsEnabled, trackPageView } from '$lib/analytics.svelte';
-import { getCookieConsent, setCookieConsent } from '$lib/cookies/client';
+import { setAnalyticsEnabled, trackPageView } from '#lib/analytics.svelte.ts';
+import { getCookieConsent, setCookieConsent } from '#lib/cookies/client.ts';
 
 /**
- * Reactive cookie-consent state. Cookie parse/serialize stays in `$lib/cookies/client`.
+ * Reactive cookie-consent state. Cookie parse/serialize stays in `#lib/cookies/client.ts`.
  */
 class ConsentState {
 	/** `undefined` until answered; mirrors cookie after init. */

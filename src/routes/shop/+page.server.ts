@@ -1,18 +1,18 @@
-import { config } from '$lib/config/env';
-import { paginateFromUrl, parseListView } from '$lib/pagination';
-import { getShopProducts } from '$lib/server/catalog/products';
+import { config } from '#lib/config/env.ts';
+import { paginateFromUrl, parseListView } from '#lib/pagination.ts';
+import { getShopProducts } from '#lib/server/catalog/products.ts';
 import {
 	filterProductsByShopSlug,
 	getShopFilterOptions,
 	resolveShopFilter
-} from '$lib/server/catalog/shop-filters';
+} from '#lib/server/catalog/shop-filters.ts';
 import {
 	getShopCollectionOptions,
 	getShopProductsByCollection,
 	resolveShopCollection,
 	type ShopCollectionFilter
-} from '$lib/server/catalog/shop-collection';
-import type { Product } from '$lib/types/saleor';
+} from '#lib/server/catalog/shop-collection.ts';
+import type { Product } from '#lib/types/saleor.ts';
 import type { PageServerLoad } from './$types';
 
 async function getFilteredShopProducts(

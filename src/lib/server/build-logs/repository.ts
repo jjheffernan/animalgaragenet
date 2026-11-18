@@ -1,6 +1,6 @@
-import { createAdminClient } from '$lib/server/supabase/admin';
-import { LIMITS, trimToMax } from '$lib/server/validation/limits';
-import type { BuildLog, BuildLogStatus } from '$lib/types/build-log';
+import { createAdminClient } from '#lib/server/supabase/admin.ts';
+import { LIMITS, trimToMax } from '#lib/server/validation/limits.ts';
+import type { BuildLog, BuildLogStatus } from '#lib/types/build-log.ts';
 
 const mockStore = new Map<string, BuildLog>();
 

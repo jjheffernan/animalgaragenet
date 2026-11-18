@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { sanitizeRichHtml } from '$lib/utils/sanitize-rich-html';
+	import { sanitizeRichHtml } from '#lib/utils/sanitize-rich-html.ts';
 
 	let { html = '', content = '' }: { html?: string; content?: string } = $props();
 

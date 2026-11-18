@@ -1,5 +1,5 @@
 import type { User } from '@supabase/supabase-js';
-import { isValidRole, type Role } from '$lib/auth/roles';
+import { isValidRole, type Role } from '#lib/auth/roles.ts';
 import { createAdminClient } from './admin';
 import { mapSupabaseUser } from './auth';
 import type { createAdminClient as CreateAdminClientFn } from './admin';

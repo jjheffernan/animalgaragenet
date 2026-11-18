@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { locale } from '$lib/stores/locale.svelte';
+	import { locale } from '#lib/stores/locale.svelte.ts';
 
 	let email = $state('');
 	let submitted = $state(false);
@@ -40,7 +40,7 @@
 </script>
 
 <form onsubmit={handleSubmit} novalidate class="space-y-3">
-	<p class="text-xs font-bold uppercase tracking-widest text-zinc-400">Newsletter</p>
+	<p class="text-xs font-bold tracking-widest text-zinc-400 uppercase">Newsletter</p>
 	<p class="text-sm text-zinc-500">Drops, deals, and garage culture — no spam.</p>
 	{#if submitted}
 		<p class="text-sm text-red-500">You're in. Welcome to the squad.</p>
@@ -57,7 +57,7 @@
 			<button
 				type="submit"
 				disabled={loading}
-				class="shrink-0 rounded-sm bg-red-600 px-4 py-2 text-sm font-bold uppercase tracking-wider text-white transition hover:bg-red-500 disabled:opacity-50"
+				class="shrink-0 rounded-sm bg-red-600 px-4 py-2 text-sm font-bold tracking-wider text-white uppercase transition hover:bg-red-500 disabled:opacity-50"
 			>
 				{loading ? '…' : 'Join'}
 			</button>

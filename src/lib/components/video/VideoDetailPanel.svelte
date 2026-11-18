@@ -1,13 +1,13 @@
 <script lang="ts">
-	import type { Video } from '$lib/types/domain';
-	import type { Product } from '$lib/types/saleor';
-	import { getProductPath, getProductsForVideo } from '$lib/data/catalog-helpers';
-	import { getRelatedVideos } from '$lib/data/mock/videos';
-	import { cart } from '$lib/stores/cart.svelte';
-	import { videoPanel } from '$lib/stores/video-panel.svelte';
-	import { resolvePath } from '$lib/utils/paths';
-	import PriceDisplay from '$lib/components/catalog/PriceDisplay.svelte';
-	import VideoCard from '$lib/components/video/VideoCard.svelte';
+	import type { Video } from '#lib/types/domain.ts';
+	import type { Product } from '#lib/types/saleor.ts';
+	import { getProductPath, getProductsForVideo } from '#lib/data/catalog-helpers.ts';
+	import { getRelatedVideos } from '#lib/data/mock/videos.ts';
+	import { cart } from '#lib/stores/cart.svelte.ts';
+	import { videoPanel } from '#lib/stores/video-panel.svelte.ts';
+	import { resolvePath } from '#lib/utils/paths.ts';
+	import PriceDisplay from '#lib/components/catalog/PriceDisplay.svelte';
+	import VideoCard from '#lib/components/video/VideoCard.svelte';
 
 	interface Props {
 		onclose?: () => void;
@@ -66,7 +66,7 @@
 			tabindex="-1"
 		>
 			<div class="flex items-center justify-between border-b border-zinc-800 px-4 py-4">
-				<h2 class="font-display text-lg font-bold uppercase tracking-wider text-white line-clamp-1">
+				<h2 class="line-clamp-1 font-display text-lg font-bold tracking-wider text-white uppercase">
 					{video.title}
 				</h2>
 				<button
@@ -112,7 +112,7 @@
 
 					{#if products.length > 0}
 						<div>
-							<h3 class="text-xs font-bold uppercase tracking-widest text-red-500">
+							<h3 class="text-xs font-bold tracking-widest text-red-500 uppercase">
 								Products in this video
 							</h3>
 							<div class="mt-4 grid gap-4 sm:grid-cols-2">
@@ -132,7 +132,7 @@
 										</a>
 										<div class="p-3">
 											{#if product.brand}
-												<p class="text-[10px] font-medium uppercase tracking-wider text-zinc-500">
+												<p class="text-[10px] font-medium tracking-wider text-zinc-500 uppercase">
 													{product.brand.name}
 												</p>
 											{/if}
@@ -147,13 +147,13 @@
 												{#if !soldOut}
 													<button
 														type="button"
-														class="shrink-0 rounded-sm bg-red-600 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-white hover:bg-red-500"
+														class="shrink-0 rounded-sm bg-red-600 px-2.5 py-1 text-[10px] font-bold tracking-wider text-white uppercase hover:bg-red-500"
 														onclick={() => handleAddToCart(product)}
 													>
 														Add
 													</button>
 												{:else}
-													<span class="text-[10px] font-bold uppercase text-zinc-500">Sold out</span
+													<span class="text-[10px] font-bold text-zinc-500 uppercase">Sold out</span
 													>
 												{/if}
 											</div>
@@ -166,7 +166,7 @@
 
 					{#if related.length > 0}
 						<div>
-							<h3 class="text-xs font-bold uppercase tracking-widest text-zinc-400">
+							<h3 class="text-xs font-bold tracking-widest text-zinc-400 uppercase">
 								Related videos
 							</h3>
 							<div class="mt-4 grid gap-4 sm:grid-cols-2">

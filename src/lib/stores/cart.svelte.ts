@@ -1,14 +1,14 @@
-import type { CheckoutDisplay, MockPromoState } from '$lib/types/checkout';
-import type { CartItem } from '$lib/types/domain';
-import type { Product } from '$lib/types/saleor';
-import { config } from '$lib/config/env';
+import type { CheckoutDisplay, MockPromoState } from '#lib/types/checkout.ts';
+import type { CartItem } from '#lib/types/domain.ts';
+import type { Product } from '#lib/types/saleor.ts';
+import { config } from '#lib/config/env.ts';
 import {
 	filterByCatalogKind,
 	getCatalogKind,
 	getCatalogProductById
-} from '$lib/data/catalog-helpers';
-import { getAllCatalogProducts } from '$lib/data/mock/parts';
-import { locale } from '$lib/stores/locale.svelte';
+} from '#lib/data/catalog-helpers.ts';
+import { getAllCatalogProducts } from '#lib/data/mock/parts.ts';
+import { locale } from '#lib/stores/locale.svelte.ts';
 import { readStoredJson, writeStoredJson } from './storage';
 
 const STORAGE_KEY = 'ag-cart';

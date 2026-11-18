@@ -1,7 +1,7 @@
-import { mockYouTubeChannels } from '$lib/data/mock/youtube-channels';
-import { createAdminClient } from '$lib/server/supabase/admin';
-import { trimToMax } from '$lib/server/validation/limits';
-import type { Video } from '$lib/types/domain';
+import { mockYouTubeChannels } from '#lib/data/mock/youtube-channels.ts';
+import { createAdminClient } from '#lib/server/supabase/admin.ts';
+import { trimToMax } from '#lib/server/validation/limits.ts';
+import type { Video } from '#lib/types/domain.ts';
 
 const MOCK_CHANNEL_SEED = mockYouTubeChannels.map((c) => ({ ...c }));
 

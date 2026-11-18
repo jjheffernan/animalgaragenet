@@ -1,6 +1,6 @@
 import { error } from '@sveltejs/kit';
-import { paginateFromUrl } from '$lib/pagination';
-import { loadWatchHubVideos, resolveWatchVideo } from '$lib/server/youtube/public';
+import { paginateFromUrl } from '#lib/pagination.ts';
+import { loadWatchHubVideos, resolveWatchVideo } from '#lib/server/youtube/public.ts';
 import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({ params, url }) => {

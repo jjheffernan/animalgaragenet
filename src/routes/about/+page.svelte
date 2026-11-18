@@ -1,7 +1,7 @@
 <script lang="ts">
-	import SectionHeading from '$lib/components/shared/SectionHeading.svelte';
-	import ManifestoBlock from '$lib/components/marketing/ManifestoBlock.svelte';
-	import AnimatedReveal from '$lib/components/shared/AnimatedReveal.svelte';
+	import SectionHeading from '#lib/components/shared/SectionHeading.svelte';
+	import ManifestoBlock from '#lib/components/marketing/ManifestoBlock.svelte';
+	import AnimatedReveal from '#lib/components/shared/AnimatedReveal.svelte';
 </script>
 
 <svelte:head>
@@ -16,7 +16,7 @@
 	></div>
 	<div class="absolute inset-0 bg-gradient-to-b from-zinc-950/80 to-zinc-950"></div>
 	<div class="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-		<h1 class="font-display text-5xl font-black uppercase tracking-tight text-white sm:text-6xl">
+		<h1 class="font-display text-5xl font-black tracking-tight text-white uppercase sm:text-6xl">
 			Our Story
 		</h1>
 		<p class="mt-4 max-w-2xl text-xl text-zinc-400">
@@ -28,7 +28,7 @@
 <section class="border-b border-zinc-800 bg-red-950/10 py-20">
 	<div class="mx-auto max-w-3xl px-4 text-center sm:px-6">
 		<AnimatedReveal>
-			<p class="text-xs font-bold uppercase tracking-[0.3em] text-red-500">The Manifesto</p>
+			<p class="text-xs font-bold tracking-[0.3em] text-red-500 uppercase">The Manifesto</p>
 			<div class="mt-6 text-left">
 				<ManifestoBlock />
 			</div>
@@ -62,7 +62,7 @@
 			{#each [{ n: '2019', l: 'Founded' }, { n: '50+', l: 'Builds' }, { n: 'Global', l: 'Shipping' }] as stat (stat.l)}
 				<div class="rounded-sm border border-zinc-800 bg-zinc-900/50 p-6 text-center">
 					<p class="font-display text-3xl font-bold text-red-600">{stat.n}</p>
-					<p class="mt-1 text-xs font-bold uppercase tracking-widest text-zinc-500">{stat.l}</p>
+					<p class="mt-1 text-xs font-bold tracking-widest text-zinc-500 uppercase">{stat.l}</p>
 				</div>
 			{/each}
 		</div>

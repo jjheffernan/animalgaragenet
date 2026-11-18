@@ -1,4 +1,4 @@
-import { renderRobotsTxt } from '$lib/server/seo/robots';
+import { renderRobotsTxt } from '#lib/server/seo/robots.ts';
 import type { RequestHandler } from './$types';
 
 export const GET: RequestHandler = async () => {

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { Testimonial } from '$lib/types/testimonial';
+	import type { Testimonial } from '#lib/types/testimonial.ts';
 
 	interface Props {
 		testimonial: Testimonial;
@@ -14,7 +14,7 @@
 <article class="rounded-sm border border-zinc-800 bg-zinc-900/50 p-6 {compact ? '' : 'h-full'}">
 	<div class="flex items-start justify-between gap-4">
 		<div>
-			<p class="text-xs font-bold uppercase tracking-widest text-red-500">
+			<p class="text-xs font-bold tracking-widest text-red-500 uppercase">
 				{testimonial.displayName}
 			</p>
 			{#if testimonial.vehicleSummary}
@@ -36,7 +36,7 @@
 			{/each}
 		</div>
 	</div>
-	<h3 class="mt-3 font-display text-lg font-bold uppercase text-white">{testimonial.title}</h3>
+	<h3 class="mt-3 font-display text-lg font-bold text-white uppercase">{testimonial.title}</h3>
 	{#if photoUrls.length > 0}
 		<ul class="mt-3 flex flex-wrap gap-2" aria-label="Review photos">
 			{#each photoUrls as url, index (url)}

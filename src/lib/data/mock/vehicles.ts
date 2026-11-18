@@ -1,4 +1,4 @@
-import type { VehicleMake } from '$lib/types/domain';
+import type { VehicleMake } from '#lib/types/domain.ts';
 
 export const VEHICLE_YEARS = Array.from({ length: 2026 - 1990 + 1 }, (_, i) => 2026 - i);
 

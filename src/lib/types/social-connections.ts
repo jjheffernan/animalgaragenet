@@ -1,4 +1,4 @@
-import type { SocialPlatformId } from '$lib/data/social-platforms';
+import type { SocialPlatformId } from '#lib/data/social-platforms.ts';
 
 export interface SocialConnection {
 	handle: string;

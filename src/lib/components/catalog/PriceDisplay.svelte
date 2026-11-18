@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { locale } from '$lib/stores/locale.svelte';
-	import type { Product } from '$lib/types/saleor';
+	import { locale } from '#lib/stores/locale.svelte.ts';
+	import type { Product } from '#lib/types/saleor.ts';
 
 	interface Props {
 		product: Product;

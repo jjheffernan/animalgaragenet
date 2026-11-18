@@ -1,5 +1,5 @@
 import { json } from '@sveltejs/kit';
-import { getGuideFilterOptions } from '$lib/server/ghost/guide-filters';
+import { getGuideFilterOptions } from '#lib/server/ghost/guide-filters.ts';
 import type { RequestHandler } from './$types';
 
 export const GET: RequestHandler = async ({ setHeaders }) => {

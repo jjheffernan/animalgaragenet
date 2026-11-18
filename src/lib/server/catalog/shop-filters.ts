@@ -3,18 +3,18 @@ import {
 	filterProductsByShopCategory,
 	getShopCategoryGroup,
 	type ShopCategory
-} from '$lib/data/catalog-helpers';
-import { config } from '$lib/config/env';
-import type { Product } from '$lib/types/saleor';
-import { saleorFetch } from '$lib/server/saleor/client';
-import { withSaleorCatalog } from '$lib/server/catalog/fallback';
-import { isProductionSiteUrl } from '$lib/server/auth/local-dev';
-import { CATEGORIES_QUERY } from '$lib/server/saleor/queries';
-import type { SaleorCategoryTreeNode } from '$lib/server/saleor/mappers';
-import type { ShopFilterOption } from '$lib/data/shop-filters';
+} from '#lib/data/catalog-helpers.ts';
+import { config } from '#lib/config/env.ts';
+import type { Product } from '#lib/types/saleor.ts';
+import { saleorFetch } from '#lib/server/saleor/client.ts';
+import { withSaleorCatalog } from '#lib/server/catalog/fallback.ts';
+import { isProductionSiteUrl } from '#lib/server/auth/local-dev.ts';
+import { CATEGORIES_QUERY } from '#lib/server/saleor/queries.ts';
+import type { SaleorCategoryTreeNode } from '#lib/server/saleor/mappers.ts';
+import type { ShopFilterOption } from '#lib/data/shop-filters.ts';
 
-export type { ShopFilterGroup, ShopFilterOption } from '$lib/data/shop-filters';
-export { groupShopFilterOptions } from '$lib/data/shop-filters';
+export type { ShopFilterGroup, ShopFilterOption } from '#lib/data/shop-filters.ts';
+export { groupShopFilterOptions } from '#lib/data/shop-filters.ts';
 
 export interface ShopFilterOptions {
 	categories: ShopFilterOption[];

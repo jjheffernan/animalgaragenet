@@ -1,7 +1,10 @@
 import { fail } from '@sveltejs/kit';
-import { enrichTestimonialsWithPhotos } from '$lib/server/media/repository';
-import { listPendingTestimonials, moderateTestimonial } from '$lib/server/testimonials/repository';
-import { paginateFromUrl } from '$lib/pagination';
+import { enrichTestimonialsWithPhotos } from '#lib/server/media/repository.ts';
+import {
+	listPendingTestimonials,
+	moderateTestimonial
+} from '#lib/server/testimonials/repository.ts';
+import { paginateFromUrl } from '#lib/pagination.ts';
 import type { Actions, PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({ url }) => {

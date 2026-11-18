@@ -1,12 +1,12 @@
 <script lang="ts">
-	import type { Event } from '$lib/types/domain';
+	import type { Event } from '#lib/types/domain.ts';
 	import {
 		buildCalendarDays,
 		isSameDay,
 		isUpcomingDay,
 		startOfMonth,
 		toDateKey
-	} from '$lib/events/calendar';
+	} from '#lib/events/calendar.ts';
 
 	interface Props {
 		events: Event[];
@@ -53,13 +53,13 @@
 	<div
 		class="flex flex-wrap items-center justify-between gap-3 border-b border-zinc-800 px-4 py-4 sm:px-6"
 	>
-		<h3 class="font-display text-xl font-bold uppercase tracking-wider text-white">
+		<h3 class="font-display text-xl font-bold tracking-wider text-white uppercase">
 			{monthLabel}
 		</h3>
 		<div class="flex items-center gap-2">
 			<button
 				type="button"
-				class="rounded-sm px-3 py-1.5 text-sm font-bold uppercase tracking-wider text-zinc-400 transition hover:text-white"
+				class="rounded-sm px-3 py-1.5 text-sm font-bold tracking-wider text-zinc-400 uppercase transition hover:text-white"
 				onclick={goToToday}
 			>
 				Today
@@ -104,7 +104,7 @@
 	<div class="grid grid-cols-7 border-b border-zinc-800 bg-zinc-900/80" role="row">
 		{#each WEEKDAYS as weekday (weekday)}
 			<div
-				class="px-1 py-2 text-center text-xs font-bold uppercase tracking-widest text-zinc-500"
+				class="px-1 py-2 text-center text-xs font-bold tracking-widest text-zinc-500 uppercase"
 				role="columnheader"
 			>
 				<span class="hidden sm:inline">{weekday}</span>
@@ -121,9 +121,9 @@
 			{@const upcoming = isUpcomingDay(date)}
 			{@const past = !upcoming}
 			<div
-				class="min-h-24 border-b border-r border-zinc-800 p-1.5 sm:min-h-28 sm:p-2
+				class="min-h-24 border-r border-b border-zinc-800 p-1.5 sm:min-h-28 sm:p-2
 					{inMonth ? '' : 'bg-zinc-950/50'}
-					{today ? 'ring-1 ring-inset ring-red-600/60' : ''}"
+					{today ? 'ring-1 ring-red-600/60 ring-inset' : ''}"
 				role="gridcell"
 				aria-label="{date.toLocaleDateString(undefined, {
 					weekday: 'long',
@@ -147,7 +147,7 @@
 						{date.getDate()}
 					</span>
 					{#if dayEvents.length > MAX_VISIBLE}
-						<span class="text-[10px] font-bold uppercase tracking-wider text-zinc-500">
+						<span class="text-[10px] font-bold tracking-wider text-zinc-500 uppercase">
 							+{dayEvents.length - MAX_VISIBLE}
 						</span>
 					{/if}

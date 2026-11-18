@@ -1,4 +1,4 @@
-import type { Event } from '$lib/types/domain';
+import type { Event } from '#lib/types/domain.ts';
 
 export const mockEvents: Event[] = [
 	{

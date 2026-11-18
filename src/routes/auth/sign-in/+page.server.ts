@@ -1,15 +1,15 @@
 import { fail, redirect } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
-import { buildAuthCallbackUrl } from '$lib/server/auth/callback-url';
-import { LOCAL_DEV_ACCOUNTS } from '$lib/server/auth/local-dev-accounts';
+import { buildAuthCallbackUrl } from '#lib/server/auth/callback-url.ts';
+import { LOCAL_DEV_ACCOUNTS } from '#lib/server/auth/local-dev-accounts.ts';
 import {
 	devSignInAccount,
 	isLocalDevAuthEnabled,
 	isProductionHostname
-} from '$lib/server/auth/local-dev';
-import { createMockUser, setSessionCookie, signInWithOtp } from '$lib/server/supabase/auth';
-import { createServerClient, isSupabaseConfigured } from '$lib/server/supabase/client';
-import { handleOAuthAction } from '$lib/server/auth/oauth-action';
+} from '#lib/server/auth/local-dev.ts';
+import { createMockUser, setSessionCookie, signInWithOtp } from '#lib/server/supabase/auth.ts';
+import { createServerClient, isSupabaseConfigured } from '#lib/server/supabase/client.ts';
+import { handleOAuthAction } from '#lib/server/auth/oauth-action.ts';
 
 export const load: PageServerLoad = async ({ locals, url }) => {
 	if (locals.session) {

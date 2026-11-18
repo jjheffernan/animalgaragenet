@@ -1,5 +1,5 @@
-import { createAdminClient } from '$lib/server/supabase/admin';
-import type { SavedVehicle } from '$lib/types/domain';
+import { createAdminClient } from '#lib/server/supabase/admin.ts';
+import type { SavedVehicle } from '#lib/types/domain.ts';
 
 export interface UserGarageState {
 	vehicles: SavedVehicle[];

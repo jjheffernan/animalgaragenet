@@ -1,4 +1,4 @@
-import type { Brand } from '$lib/types/domain';
+import type { Brand } from '#lib/types/domain.ts';
 
 const logo = (seed: string) => `https://picsum.photos/seed/${seed}/200/200`;
 

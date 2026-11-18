@@ -1,8 +1,12 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
-	import AdminPageHeader from '$lib/components/admin/AdminPageHeader.svelte';
-	import { adminBtnOutline, adminBtnPrimary, adminQueueCard } from '$lib/components/admin/admin-ui';
-	import PaginatedListCanvas from '$lib/components/catalog/PaginatedListCanvas.svelte';
+	import AdminPageHeader from '#lib/components/admin/AdminPageHeader.svelte';
+	import {
+		adminBtnOutline,
+		adminBtnPrimary,
+		adminQueueCard
+	} from '#lib/components/admin/admin-ui.ts';
+	import PaginatedListCanvas from '#lib/components/catalog/PaginatedListCanvas.svelte';
 	import type { PageData } from './$types';
 
 	let { data }: { data: PageData } = $props();

@@ -1,16 +1,16 @@
-import { isPartProduct } from '$lib/data/catalog-helpers';
-import { searchBuilds } from '$lib/data/mock/builds';
-import { searchGuides } from '$lib/data/mock/guides';
-import { searchParts } from '$lib/data/mock/parts';
-import { searchProducts } from '$lib/data/mock/products';
-import { config } from '$lib/config/env';
-import type { BuildThread, Guide } from '$lib/types/domain';
-import type { Product } from '$lib/types/saleor';
-import { resolveChannelForLocale } from '$lib/server/saleor/channels';
-import { saleorFetch } from '$lib/server/saleor/client';
-import { mapProductListNode, type SaleorProductListNode } from '$lib/server/saleor/mappers';
-import { withSaleorCatalog } from '$lib/server/catalog/fallback';
-import { PRODUCT_SEARCH_QUERY } from '$lib/server/saleor/queries';
+import { isPartProduct } from '#lib/data/catalog-helpers.ts';
+import { searchBuilds } from '#lib/data/mock/builds.ts';
+import { searchGuides } from '#lib/data/mock/guides.ts';
+import { searchParts } from '#lib/data/mock/parts.ts';
+import { searchProducts } from '#lib/data/mock/products.ts';
+import { config } from '#lib/config/env.ts';
+import type { BuildThread, Guide } from '#lib/types/domain.ts';
+import type { Product } from '#lib/types/saleor.ts';
+import { resolveChannelForLocale } from '#lib/server/saleor/channels.ts';
+import { saleorFetch } from '#lib/server/saleor/client.ts';
+import { mapProductListNode, type SaleorProductListNode } from '#lib/server/saleor/mappers.ts';
+import { withSaleorCatalog } from '#lib/server/catalog/fallback.ts';
+import { PRODUCT_SEARCH_QUERY } from '#lib/server/saleor/queries.ts';
 
 export interface CatalogSearchResults {
 	products: Product[];

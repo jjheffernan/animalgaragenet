@@ -1,10 +1,10 @@
 <script lang="ts">
-	import { promo } from '$lib/stores/promo.svelte';
-	import { getPromoBannerId, setPromoBannerId } from '$lib/cookies/client';
-	import { getActiveBanners } from '$lib/data/mock/banners';
-	import { getActiveCampaign } from '$lib/data/mock/campaigns';
-	import { resolvePath } from '$lib/utils/paths';
-	import CountdownTimer from '$lib/components/marketing/CountdownTimer.svelte';
+	import { promo } from '#lib/stores/promo.svelte.ts';
+	import { getPromoBannerId, setPromoBannerId } from '#lib/cookies/client.ts';
+	import { getActiveBanners } from '#lib/data/mock/banners.ts';
+	import { getActiveCampaign } from '#lib/data/mock/campaigns.ts';
+	import { resolvePath } from '#lib/utils/paths.ts';
+	import CountdownTimer from '#lib/components/marketing/CountdownTimer.svelte';
 
 	const banners = getActiveBanners();
 	const campaign = getActiveCampaign();
@@ -35,7 +35,7 @@
 {#if promo.visible && current}
 	<div class="relative bg-red-600 text-white">
 		<div
-			class="mx-auto flex max-w-7xl items-center justify-center gap-4 px-4 py-2 text-xs font-medium uppercase tracking-wider sm:text-sm"
+			class="mx-auto flex max-w-7xl items-center justify-center gap-4 px-4 py-2 text-xs font-medium tracking-wider uppercase sm:text-sm"
 		>
 			<span>{current.message}</span>
 			{#if endDate}
@@ -49,7 +49,7 @@
 		</div>
 		<button
 			type="button"
-			class="absolute right-2 top-1/2 -translate-y-1/2 p-1 text-white/80 hover:text-white"
+			class="absolute top-1/2 right-2 -translate-y-1/2 p-1 text-white/80 hover:text-white"
 			aria-label="Dismiss promo"
 			onclick={() => promo.dismiss()}
 		>

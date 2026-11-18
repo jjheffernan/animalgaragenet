@@ -1,4 +1,4 @@
-import { renderPrometheusMetrics } from '$lib/server/observability/metrics';
+import { renderPrometheusMetrics } from '#lib/server/observability/metrics.ts';
 import type { RequestHandler } from './$types';
 
 /** Prometheus text exposition for Grafana Mimir / Alloy scrape targets. */

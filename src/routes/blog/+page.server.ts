@@ -1,6 +1,6 @@
-import { paginateFromUrl } from '$lib/pagination';
-import { setGhostListCacheHeaders } from '$lib/server/ghost/cache-headers';
-import { listBlogPosts } from '$lib/server/ghost/posts';
+import { paginateFromUrl } from '#lib/pagination.ts';
+import { setGhostListCacheHeaders } from '#lib/server/ghost/cache-headers.ts';
+import { listBlogPosts } from '#lib/server/ghost/posts.ts';
 import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({ url, setHeaders }) => {

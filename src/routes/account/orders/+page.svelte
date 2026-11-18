@@ -1,7 +1,7 @@
 <script lang="ts">
-	import EmptyState from '$lib/components/shared/EmptyState.svelte';
-	import { locale } from '$lib/stores/locale.svelte';
-	import type { OrderStatus } from '$lib/data/mock/orders';
+	import EmptyState from '#lib/components/shared/EmptyState.svelte';
+	import { locale } from '#lib/stores/locale.svelte.ts';
+	import type { OrderStatus } from '#lib/data/mock/orders.ts';
 	import type { PageData } from './$types';
 
 	let { data }: { data: PageData } = $props();
@@ -25,7 +25,7 @@
 	<title>Orders — Animal Garage</title>
 </svelte:head>
 
-<h1 class="font-display text-2xl font-bold uppercase text-white">Orders</h1>
+<h1 class="font-display text-2xl font-bold text-white uppercase">Orders</h1>
 <p class="mt-1 text-zinc-400">Order history from your Garage Squad account.</p>
 
 {#if data.orders.length === 0}
@@ -48,7 +48,7 @@
 					</div>
 					<div class="text-right">
 						<p class="text-sm font-medium text-white">{locale.formatPrice(order.total)}</p>
-						<p class="text-xs font-bold uppercase tracking-wider {statusColors[order.status]}">
+						<p class="text-xs font-bold tracking-wider uppercase {statusColors[order.status]}">
 							{statusLabels[order.status]}
 						</p>
 					</div>

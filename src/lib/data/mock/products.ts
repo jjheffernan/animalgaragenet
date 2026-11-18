@@ -1,4 +1,4 @@
-import type { Product, ProductBrand, Fitment } from '$lib/types/saleor';
+import type { Product, ProductBrand, Fitment } from '#lib/types/saleor.ts';
 
 const img = (seed: string, w = 800, h = 800) => `https://picsum.photos/seed/${seed}/${w}/${h}`;
 

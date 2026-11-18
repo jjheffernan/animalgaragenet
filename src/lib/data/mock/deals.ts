@@ -1,4 +1,4 @@
-import type { Deal } from '$lib/types/domain';
+import type { Deal } from '#lib/types/domain.ts';
 
 export const FALLBACK_SALE_COLLECTION_ID = 'col-8';
 

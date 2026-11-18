@@ -1,7 +1,7 @@
 import { error } from '@sveltejs/kit';
-import { getBrandBySlug } from '$lib/data/mock/brands';
-import { getProductsForBrand } from '$lib/data/catalog-helpers';
-import { paginateFromUrl } from '$lib/pagination';
+import { getBrandBySlug } from '#lib/data/mock/brands.ts';
+import { getProductsForBrand } from '#lib/data/catalog-helpers.ts';
+import { paginateFromUrl } from '#lib/pagination.ts';
 import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({ params, url }) => {

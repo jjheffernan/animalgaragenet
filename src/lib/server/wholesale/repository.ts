@@ -1,6 +1,6 @@
-import { createAdminClient } from '$lib/server/supabase/admin';
-import { LIMITS, trimToMax } from '$lib/server/validation/limits';
-import type { WholesaleInquiry, WholesaleInquiryInput } from '$lib/types/wholesale';
+import { createAdminClient } from '#lib/server/supabase/admin.ts';
+import { LIMITS, trimToMax } from '#lib/server/validation/limits.ts';
+import type { WholesaleInquiry, WholesaleInquiryInput } from '#lib/types/wholesale.ts';
 
 const mockStore: WholesaleInquiry[] = [];
 

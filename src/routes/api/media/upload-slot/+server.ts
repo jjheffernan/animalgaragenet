@@ -1,8 +1,8 @@
 import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
-import { createUploadSlot } from '$lib/server/media/repository';
-import { isAllowedImageMime, validateUploadRequest } from '$lib/server/media/validation';
-import { isSupabaseConfigured } from '$lib/server/supabase/client';
+import { createUploadSlot } from '#lib/server/media/repository.ts';
+import { isAllowedImageMime, validateUploadRequest } from '#lib/server/media/validation.ts';
+import { isSupabaseConfigured } from '#lib/server/supabase/client.ts';
 
 interface UploadSlotBody {
 	mimeType?: string;

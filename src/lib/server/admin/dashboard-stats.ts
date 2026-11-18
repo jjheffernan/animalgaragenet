@@ -1,7 +1,7 @@
-import { mockAdminUsers } from '$lib/data/mock/admin-users';
-import { listAdminUsers } from '$lib/server/supabase/admin-users';
-import { listBugReports } from '$lib/server/support/repository';
-import { createAdminClient } from '$lib/server/supabase/admin';
+import { mockAdminUsers } from '#lib/data/mock/admin-users.ts';
+import { listAdminUsers } from '#lib/server/supabase/admin-users.ts';
+import { listBugReports } from '#lib/server/support/repository.ts';
+import { createAdminClient } from '#lib/server/supabase/admin.ts';
 
 export type CommerceKpiSource = 'mirror' | 'mock' | 'empty';
 

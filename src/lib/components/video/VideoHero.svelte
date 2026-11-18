@@ -1,6 +1,6 @@
 <script lang="ts">
-	import type { Video } from '$lib/types/domain';
-	import AnimatedReveal from '$lib/components/shared/AnimatedReveal.svelte';
+	import type { Video } from '#lib/types/domain.ts';
+	import AnimatedReveal from '#lib/components/shared/AnimatedReveal.svelte';
 
 	interface Props {
 		video: Video;
@@ -34,7 +34,7 @@
 
 	<div class="relative mx-auto max-w-7xl px-4 py-12 sm:px-6 sm:py-16 lg:px-8">
 		<AnimatedReveal>
-			<p class="text-xs font-bold uppercase tracking-[0.3em] text-red-500">On Deck</p>
+			<p class="text-xs font-bold tracking-[0.3em] text-red-500 uppercase">On Deck</p>
 			<p class="mt-1 text-sm text-zinc-500">Latest from the channel</p>
 
 			<div class="mt-8 grid items-center gap-8 lg:grid-cols-2 lg:gap-12">
@@ -64,7 +64,7 @@
 						</span>
 					</div>
 					<span
-						class="absolute bottom-3 right-3 rounded-sm bg-zinc-950/90 px-2 py-1 text-xs font-medium text-white"
+						class="absolute right-3 bottom-3 rounded-sm bg-zinc-950/90 px-2 py-1 text-xs font-medium text-white"
 					>
 						{video.duration}
 					</span>
@@ -72,11 +72,11 @@
 
 				<div>
 					<h2
-						class="font-display text-3xl font-black uppercase leading-tight tracking-tight text-white sm:text-4xl"
+						class="font-display text-3xl leading-tight font-black tracking-tight text-white uppercase sm:text-4xl"
 					>
 						{video.title}
 					</h2>
-					<p class="mt-4 text-base leading-relaxed text-zinc-400 line-clamp-3">
+					<p class="mt-4 line-clamp-3 text-base leading-relaxed text-zinc-400">
 						{video.description}
 					</p>
 					<div class="mt-4 flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-zinc-500">
@@ -92,7 +92,7 @@
 					</div>
 					<button
 						type="button"
-						class="mt-8 rounded-sm bg-red-600 px-8 py-4 text-sm font-bold uppercase tracking-wider text-white transition hover:bg-red-500"
+						class="mt-8 rounded-sm bg-red-600 px-8 py-4 text-sm font-bold tracking-wider text-white uppercase transition hover:bg-red-500"
 						onclick={onplay}
 					>
 						Watch Now

@@ -1,8 +1,8 @@
-import { resolveAdminGate } from '$lib/server/auth/admin-gate';
-import { getCollections } from '$lib/server/catalog/collections';
-import { getPartsNavData } from '$lib/server/catalog/parts-nav';
-import { hasAnalyticsConsent, hasCookieConsentAnswer } from '$lib/server/cookies';
-import { countActiveDeals } from '$lib/server/deals/repository';
+import { resolveAdminGate } from '#lib/server/auth/admin-gate.ts';
+import { getCollections } from '#lib/server/catalog/collections.ts';
+import { getPartsNavData } from '#lib/server/catalog/parts-nav.ts';
+import { hasAnalyticsConsent, hasCookieConsentAnswer } from '#lib/server/cookies.ts';
+import { countActiveDeals } from '#lib/server/deals/repository.ts';
 import type { LayoutServerLoad } from './$types';
 
 export const load: LayoutServerLoad = async ({ cookies, locals }) => {

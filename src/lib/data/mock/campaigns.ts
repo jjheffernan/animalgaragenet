@@ -1,4 +1,4 @@
-import type { Campaign } from '$lib/types/domain';
+import type { Campaign } from '#lib/types/domain.ts';
 
 export const mockCampaigns: Campaign[] = [
 	{

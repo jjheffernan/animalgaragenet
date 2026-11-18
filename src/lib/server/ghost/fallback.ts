@@ -1,4 +1,4 @@
-import { guardProductionMockFallback } from '$lib/server/mock-fallback-guard';
+import { guardProductionMockFallback } from '#lib/server/mock-fallback-guard.ts';
 
 export class GhostContentUnavailableError extends Error {
 	constructor(message: string) {

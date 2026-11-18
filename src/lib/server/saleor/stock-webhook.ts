@@ -1,8 +1,8 @@
 import {
 	listPendingRestockAlerts,
 	markRestockAlertsNotified
-} from '$lib/server/restock/repository';
-import type { RestockAlert } from '$lib/types/restock-alert';
+} from '#lib/server/restock/repository.ts';
+import type { RestockAlert } from '#lib/types/restock-alert.ts';
 
 export interface ParsedStockWebhook {
 	productId: string;

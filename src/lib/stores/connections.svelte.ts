@@ -1,10 +1,10 @@
-import type { SocialPlatformId } from '$lib/data/social-platforms';
+import type { SocialPlatformId } from '#lib/data/social-platforms.ts';
 import {
 	loadConnectionsFromApi,
 	updateConnectionOnApi,
 	type ConnectionsApiState
-} from '$lib/stores/social-connections-api';
-import type { SocialConnectionsMap } from '$lib/types/social-connections';
+} from '#lib/stores/social-connections-api.ts';
+import type { SocialConnectionsMap } from '#lib/types/social-connections.ts';
 
 /**
  * Reactive social connections state. HTTP stays in `social-connections-api.ts`.

@@ -1,6 +1,6 @@
 import { json } from '@sveltejs/kit';
-import { parseRateLimitedJsonPost } from '$lib/server/api/parse-rate-limited-json';
-import { createRestockAlert } from '$lib/server/restock/repository';
+import { parseRateLimitedJsonPost } from '#lib/server/api/parse-rate-limited-json.ts';
+import { createRestockAlert } from '#lib/server/restock/repository.ts';
 import type { RequestHandler } from './$types';
 
 /**

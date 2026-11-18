@@ -1,6 +1,6 @@
-import { createAdminClient } from '$lib/server/supabase/admin';
-import type { SocialPlatformId } from '$lib/data/social-platforms';
-import type { SocialConnectionsMap } from '$lib/types/social-connections';
+import { createAdminClient } from '#lib/server/supabase/admin.ts';
+import type { SocialPlatformId } from '#lib/data/social-platforms.ts';
+import type { SocialConnectionsMap } from '#lib/types/social-connections.ts';
 import { parseStoredConnections } from './validation';
 
 const mockConnections = new Map<string, SocialConnectionsMap>();

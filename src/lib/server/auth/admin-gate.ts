@@ -1,5 +1,5 @@
 import { json } from '@sveltejs/kit';
-import { canAccessAdmin, type Role } from '$lib/auth/roles';
+import { canAccessAdmin, type Role } from '#lib/auth/roles.ts';
 
 /** Mirrors Supabase `public.is_staff()` — editor and admin via app_metadata.role. */
 export type AdminGateResult = 'allow' | 'sign-in' | 'forbidden';

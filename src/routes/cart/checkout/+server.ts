@@ -1,7 +1,7 @@
 import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
-import { resolveChannelForLocale } from '$lib/server/saleor/channels';
-import { isSaleorEnabled } from '$lib/server/saleor/client';
+import { resolveChannelForLocale } from '#lib/server/saleor/channels.ts';
+import { isSaleorEnabled } from '#lib/server/saleor/client.ts';
 import {
 	addCheckoutLine,
 	createCheckout,
@@ -9,7 +9,7 @@ import {
 	getCheckoutId,
 	setCheckoutId,
 	updateCheckoutLine
-} from '$lib/server/saleor/checkout';
+} from '#lib/server/saleor/checkout.ts';
 
 interface AddLineBody {
 	variantId?: string;

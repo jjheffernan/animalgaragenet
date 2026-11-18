@@ -1,8 +1,8 @@
 import { redirect } from '@sveltejs/kit';
-import { mockProducts } from '$lib/data/mock/products';
-import { paginateFromUrl } from '$lib/pagination';
-import { getDealProducts } from '$lib/server/catalog/products';
-import { listActiveDeals } from '$lib/server/deals/repository';
+import { mockProducts } from '#lib/data/mock/products.ts';
+import { paginateFromUrl } from '#lib/pagination.ts';
+import { getDealProducts } from '#lib/server/catalog/products.ts';
+import { listActiveDeals } from '#lib/server/deals/repository.ts';
 import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({ locals, url }) => {

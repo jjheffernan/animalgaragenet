@@ -6,4 +6,4 @@ export {
 	hasRole,
 	canAccessAdmin,
 	isValidRole
-} from '$lib/auth/roles';
+} from '#lib/auth/roles.ts';

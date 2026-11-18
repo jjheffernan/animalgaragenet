@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { categoryPillClass } from '$lib/ui/catalog-ribbon';
+	import { categoryPillClass } from '#lib/ui/catalog-ribbon.ts';
 
 	interface Props {
 		href: string;

@@ -1,5 +1,5 @@
-import { BUG_REPORT_CATEGORIES } from '$lib/types/bug-report';
-import { LIMITS } from '$lib/server/validation/limits';
+import { BUG_REPORT_CATEGORIES } from '#lib/types/bug-report.ts';
+import { LIMITS } from '#lib/server/validation/limits.ts';
 import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({ locals, url }) => {

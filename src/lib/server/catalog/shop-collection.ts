@@ -1,15 +1,15 @@
-import { config } from '$lib/config/env';
-import type { Product } from '$lib/types/saleor';
-import { resolveChannelForLocale } from '$lib/server/saleor/channels';
-import { isSaleorEnabled, saleorFetch } from '$lib/server/saleor/client';
-import { guardMockCatalogFallback } from '$lib/server/catalog/fallback';
-import { mockCollections } from '$lib/data/mock/collections';
+import { config } from '#lib/config/env.ts';
+import type { Product } from '#lib/types/saleor.ts';
+import { resolveChannelForLocale } from '#lib/server/saleor/channels.ts';
+import { isSaleorEnabled, saleorFetch } from '#lib/server/saleor/client.ts';
+import { guardMockCatalogFallback } from '#lib/server/catalog/fallback.ts';
+import { mockCollections } from '#lib/data/mock/collections.ts';
 import {
 	mapProductListNode,
 	type SaleorCollectionNode,
 	type SaleorProductListNode
-} from '$lib/server/saleor/mappers';
-import { COLLECTIONS_QUERY, COLLECTION_PRODUCTS_QUERY } from '$lib/server/saleor/queries';
+} from '#lib/server/saleor/mappers.ts';
+import { COLLECTIONS_QUERY, COLLECTION_PRODUCTS_QUERY } from '#lib/server/saleor/queries.ts';
 
 export interface ShopCollectionFilter {
 	slug: string;

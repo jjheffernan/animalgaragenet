@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { Snippet } from 'svelte';
-	import { catalogRibbonInnerClass, catalogRibbonShellClass } from '$lib/ui/catalog-ribbon';
+	import { catalogRibbonInnerClass, catalogRibbonShellClass } from '#lib/ui/catalog-ribbon.ts';
 
 	interface Props {
 		ariaLabel: string;

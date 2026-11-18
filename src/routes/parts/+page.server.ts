@@ -1,6 +1,6 @@
-import { paginateFromUrl, parseListView } from '$lib/pagination';
-import { loadPartsCatalog } from '$lib/server/catalog/parts-filters';
-import { getPartCategoriesForNav } from '$lib/server/catalog/parts';
+import { paginateFromUrl, parseListView } from '#lib/pagination.ts';
+import { loadPartsCatalog } from '#lib/server/catalog/parts-filters.ts';
+import { getPartCategoriesForNav } from '#lib/server/catalog/parts.ts';
 import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({ url }) => {

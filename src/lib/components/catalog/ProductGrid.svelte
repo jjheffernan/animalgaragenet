@@ -1,7 +1,7 @@
 <script lang="ts">
-	import type { Product } from '$lib/types/saleor';
-	import type { ListView } from '$lib/pagination';
-	import ProductCard from '$lib/components/catalog/ProductCard.svelte';
+	import type { Product } from '#lib/types/saleor.ts';
+	import type { ListView } from '#lib/pagination.ts';
+	import ProductCard from '#lib/components/catalog/ProductCard.svelte';
 
 	interface Props {
 		products: Product[];

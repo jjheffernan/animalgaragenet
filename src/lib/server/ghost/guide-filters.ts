@@ -1,6 +1,6 @@
-import { mockGuides } from '$lib/data/mock/guides';
-import type { Guide } from '$lib/types/domain';
-import { isProductionSiteUrl } from '$lib/server/auth/local-dev';
+import { mockGuides } from '#lib/data/mock/guides.ts';
+import type { Guide } from '#lib/types/domain.ts';
+import { isProductionSiteUrl } from '#lib/server/auth/local-dev.ts';
 import { ghostFetch, isGhostEnabled } from './client';
 import { guardMockGhostFallback } from './fallback';
 import type { GhostPostsResponse } from './types';

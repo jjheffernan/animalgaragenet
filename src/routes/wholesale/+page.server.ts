@@ -1,6 +1,6 @@
 import { fail } from '@sveltejs/kit';
-import { createWholesaleInquiry } from '$lib/server/wholesale/repository';
-import { LIMITS } from '$lib/server/validation/limits';
+import { createWholesaleInquiry } from '#lib/server/wholesale/repository.ts';
+import { LIMITS } from '#lib/server/validation/limits.ts';
 import type { Actions } from './$types';
 
 const SUCCESS_MESSAGE =

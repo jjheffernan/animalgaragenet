@@ -3,8 +3,8 @@ import {
 	COOKIE_PROMO_BANNER_ID,
 	COOKIE_PROMO_DISMISSED,
 	PREF_COOKIE_MAX_AGE
-} from '$lib/cookies';
-import { parseCookieString, serializeCookie } from '$lib/cookies/format';
+} from '#lib/cookies.ts';
+import { parseCookieString, serializeCookie } from '#lib/cookies/format.ts';
 
 const DEFAULT_PATH = '/';
 

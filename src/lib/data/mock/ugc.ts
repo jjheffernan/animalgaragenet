@@ -1,4 +1,4 @@
-import type { UGCItem } from '$lib/types/domain';
+import type { UGCItem } from '#lib/types/domain.ts';
 
 export const mockUGC: UGCItem[] = [
 	{

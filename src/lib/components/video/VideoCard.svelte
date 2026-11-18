@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { Video } from '$lib/types/domain';
+	import type { Video } from '#lib/types/domain.ts';
 
 	interface Props {
 		video: Video;
@@ -37,7 +37,7 @@
 			loading="lazy"
 		/>
 		<span
-			class="absolute bottom-2 right-2 rounded-sm bg-zinc-950/80 px-1.5 py-0.5 text-[10px] font-medium text-white"
+			class="absolute right-2 bottom-2 rounded-sm bg-zinc-950/80 px-1.5 py-0.5 text-[10px] font-medium text-white"
 		>
 			{video.duration}
 		</span>
@@ -56,14 +56,14 @@
 		</div>
 	</div>
 	<div class={compact ? 'p-2' : 'p-3'}>
-		<h3 class="text-sm font-medium text-white group-hover:text-red-400 line-clamp-2">
+		<h3 class="line-clamp-2 text-sm font-medium text-white group-hover:text-red-400">
 			{video.title}
 		</h3>
 		{#if !compact}
-			<p class="mt-1 text-xs text-zinc-500 line-clamp-2">{video.description}</p>
+			<p class="mt-1 line-clamp-2 text-xs text-zinc-500">{video.description}</p>
 		{/if}
 		{#if video.linkedProductIds.length > 0}
-			<p class="mt-1 text-[10px] uppercase tracking-wider text-zinc-500">
+			<p class="mt-1 text-[10px] tracking-wider text-zinc-500 uppercase">
 				{video.linkedProductIds.length} shoppable items
 			</p>
 		{/if}

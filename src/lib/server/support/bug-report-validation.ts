@@ -1,5 +1,5 @@
-import { BUG_REPORT_CATEGORIES, type BugReportCategory } from '$lib/types/bug-report';
-import { LIMITS } from '$lib/server/validation/limits';
+import { BUG_REPORT_CATEGORIES, type BugReportCategory } from '#lib/types/bug-report.ts';
+import { LIMITS } from '#lib/server/validation/limits.ts';
 
 const CATEGORY_VALUES = new Set<string>(BUG_REPORT_CATEGORIES.map((c) => c.value));
 

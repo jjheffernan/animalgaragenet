@@ -1,12 +1,12 @@
 import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
-import type { ShippingAddressInput } from '$lib/types/checkout';
+import type { ShippingAddressInput } from '#lib/types/checkout.ts';
 import {
 	getCheckoutId,
 	updateDeliveryMethod,
 	updateShippingAddress
-} from '$lib/server/saleor/checkout';
-import { requireSaleorEnabled } from '$lib/server/saleor/checkout-route-helpers';
+} from '#lib/server/saleor/checkout.ts';
+import { requireSaleorEnabled } from '#lib/server/saleor/checkout-route-helpers.ts';
 
 interface ShippingBody {
 	address?: Partial<ShippingAddressInput>;

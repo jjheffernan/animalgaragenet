@@ -1,7 +1,7 @@
 import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
-import { getTransactionId, processTransaction } from '$lib/server/saleor/checkout';
-import { requireSaleorPaymentEnabled } from '$lib/server/saleor/checkout-route-helpers';
+import { getTransactionId, processTransaction } from '#lib/server/saleor/checkout.ts';
+import { requireSaleorPaymentEnabled } from '#lib/server/saleor/checkout-route-helpers.ts';
 
 interface ProcessBody {
 	transactionId?: string;

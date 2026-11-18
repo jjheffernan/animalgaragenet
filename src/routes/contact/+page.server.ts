@@ -1,6 +1,6 @@
 import { fail } from '@sveltejs/kit';
-import { submitFormStub } from '$lib/server/forms/submit';
-import { LIMITS } from '$lib/server/validation/limits';
+import { submitFormStub } from '#lib/server/forms/submit.ts';
+import { LIMITS } from '#lib/server/validation/limits.ts';
 import type { Actions } from './$types';
 
 function validateEmail(email: string): boolean {

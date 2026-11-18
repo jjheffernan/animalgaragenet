@@ -5,8 +5,8 @@ import {
 	clearTransactionId,
 	completeCheckout,
 	getCheckoutId
-} from '$lib/server/saleor/checkout';
-import { requireSaleorPaymentEnabled } from '$lib/server/saleor/checkout-route-helpers';
+} from '#lib/server/saleor/checkout.ts';
+import { requireSaleorPaymentEnabled } from '#lib/server/saleor/checkout-route-helpers.ts';
 
 /** Complete checkout after payment — creates Saleor order and clears session cookies. */
 export const POST: RequestHandler = async ({ cookies }) => {

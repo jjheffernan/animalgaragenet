@@ -4,12 +4,12 @@ import {
 	PARTS_BUILD_TYPES,
 	parsePartsFilters,
 	type PartsFilterState
-} from '$lib/data/parts-filters';
-import { mockBrands } from '$lib/data/mock/brands';
-import { config } from '$lib/config/env';
-import type { Product } from '$lib/types/saleor';
-import { withSaleorCatalog } from '$lib/server/catalog/fallback';
-import { getPartsByCategory, getPartsProducts } from '$lib/server/catalog/parts';
+} from '#lib/data/parts-filters.ts';
+import { mockBrands } from '#lib/data/mock/brands.ts';
+import { config } from '#lib/config/env.ts';
+import type { Product } from '#lib/types/saleor.ts';
+import { withSaleorCatalog } from '#lib/server/catalog/fallback.ts';
+import { getPartsByCategory, getPartsProducts } from '#lib/server/catalog/parts.ts';
 
 export type { PartsFilterState };
 export { parsePartsFilters, formatPartsFilterLabel };

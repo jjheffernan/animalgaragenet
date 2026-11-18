@@ -1,17 +1,17 @@
-import type { MediaItem } from '$lib/data/mock/media';
-import { mockMedia } from '$lib/data/mock/media';
-import { mockUGC } from '$lib/data/mock/ugc';
-import { paginateFromUrl } from '$lib/pagination';
-import { listApprovedUgcGalleryItems } from '$lib/server/media/repository';
-import { createAdminClient } from '$lib/server/supabase/admin';
+import type { MediaItem } from '#lib/data/mock/media.ts';
+import { mockMedia } from '#lib/data/mock/media.ts';
+import { mockUGC } from '#lib/data/mock/ugc.ts';
+import { paginateFromUrl } from '#lib/pagination.ts';
+import { listApprovedUgcGalleryItems } from '#lib/server/media/repository.ts';
+import { createAdminClient } from '#lib/server/supabase/admin.ts';
 import {
 	listApprovedTestimonials,
 	listFeaturedTestimonials
-} from '$lib/server/testimonials/repository';
-import { enrichTestimonialsWithPhotos } from '$lib/server/media/repository';
-import { testimonialsToUgcItems } from '$lib/server/testimonials/to-ugc';
-import { loadWatchHubVideos } from '$lib/server/youtube/public';
-import type { UGCItem, Video } from '$lib/types/domain';
+} from '#lib/server/testimonials/repository.ts';
+import { enrichTestimonialsWithPhotos } from '#lib/server/media/repository.ts';
+import { testimonialsToUgcItems } from '#lib/server/testimonials/to-ugc.ts';
+import { loadWatchHubVideos } from '#lib/server/youtube/public.ts';
+import type { UGCItem, Video } from '#lib/types/domain.ts';
 import type { PageServerLoad } from './$types';
 
 const MEDIA_TABS = ['all', 'videos', 'photos', 'ugc'] as const;

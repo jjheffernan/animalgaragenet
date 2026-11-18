@@ -3,15 +3,15 @@ import {
 	getProductsForBuild as getMockProductsForBuild,
 	getRelatedProducts as getMockRelatedProducts,
 	isPartProduct
-} from '$lib/data/catalog-helpers';
-import { config } from '$lib/config/env';
-import type { BuildThread } from '$lib/types/domain';
-import type { Product } from '$lib/types/saleor';
-import { listPublicBuilds } from '$lib/server/builds/public';
-import { withSaleorCatalog } from '$lib/server/catalog/fallback';
-import { getPartsByCategory, getPartsProducts } from '$lib/server/catalog/parts';
-import { getShopProducts } from '$lib/server/catalog/products';
-import { isSaleorEnabled } from '$lib/server/saleor/client';
+} from '#lib/data/catalog-helpers.ts';
+import { config } from '#lib/config/env.ts';
+import type { BuildThread } from '#lib/types/domain.ts';
+import type { Product } from '#lib/types/saleor.ts';
+import { listPublicBuilds } from '#lib/server/builds/public.ts';
+import { withSaleorCatalog } from '#lib/server/catalog/fallback.ts';
+import { getPartsByCategory, getPartsProducts } from '#lib/server/catalog/parts.ts';
+import { getShopProducts } from '#lib/server/catalog/products.ts';
+import { isSaleorEnabled } from '#lib/server/saleor/client.ts';
 
 async function findCatalogProductById(
 	id: string,

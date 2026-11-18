@@ -1,5 +1,5 @@
-import { paginateFromUrl } from '$lib/pagination';
-import { loadWatchHubVideos } from '$lib/server/youtube/public';
+import { paginateFromUrl } from '#lib/pagination.ts';
+import { loadWatchHubVideos } from '#lib/server/youtube/public.ts';
 import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({ url }) => {

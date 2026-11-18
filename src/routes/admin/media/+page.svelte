@@ -1,5 +1,5 @@
 <script lang="ts">
-	import AdminPageHeader from '$lib/components/admin/AdminPageHeader.svelte';
+	import AdminPageHeader from '#lib/components/admin/AdminPageHeader.svelte';
 	import {
 		adminBadgeOff,
 		adminBadgeOn,
@@ -7,9 +7,9 @@
 		adminBtnOutline,
 		adminCard,
 		adminSectionTitle
-	} from '$lib/components/admin/admin-ui';
-	import { mockMedia } from '$lib/data/mock/media';
-	import { config } from '$lib/config/env';
+	} from '#lib/components/admin/admin-ui.ts';
+	import { mockMedia } from '#lib/data/mock/media.ts';
+	import { config } from '#lib/config/env.ts';
 	import { enhance } from '$app/forms';
 
 	let { data, form } = $props();
@@ -217,7 +217,7 @@
 								<input type="hidden" name="id" value={asset.id} />
 								<button
 									type="submit"
-									class="text-xs font-bold uppercase tracking-wider text-red-400 hover:text-red-300"
+									class="text-xs font-bold tracking-wider text-red-400 uppercase hover:text-red-300"
 								>
 									Delete
 								</button>

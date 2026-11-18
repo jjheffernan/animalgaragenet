@@ -1,4 +1,4 @@
-import type { SessionUser } from '$lib/server/supabase/auth';
+import type { SessionUser } from '#lib/server/supabase/auth.ts';
 import type { SupabaseClient } from '@supabase/supabase-js';
 
 // See https://svelte.dev/docs/kit/types#app.d.ts

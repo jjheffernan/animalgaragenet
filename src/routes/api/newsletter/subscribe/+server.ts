@@ -1,7 +1,7 @@
 import { json } from '@sveltejs/kit';
-import { config } from '$lib/config/env';
-import { parseRateLimitedJsonPost } from '$lib/server/api/parse-rate-limited-json';
-import { subscribeNewsletter } from '$lib/server/newsletter/repository';
+import { config } from '#lib/config/env.ts';
+import { parseRateLimitedJsonPost } from '#lib/server/api/parse-rate-limited-json.ts';
+import { subscribeNewsletter } from '#lib/server/newsletter/repository.ts';
 import type { RequestHandler } from './$types';
 
 /**

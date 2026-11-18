@@ -1,5 +1,5 @@
-import type { Brand, BuildThread, Video } from '$lib/types/domain';
-import type { Product } from '$lib/types/saleor';
+import type { Brand, BuildThread, Video } from '#lib/types/domain.ts';
+import type { Product } from '#lib/types/saleor.ts';
 import { getActiveDeals } from './mock/deals';
 import { getAllCatalogProducts } from './mock/parts';
 import { getGiftCardProducts, mockProducts } from './mock/products';

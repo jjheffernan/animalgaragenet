@@ -1,6 +1,6 @@
-import { createAdminClient } from '$lib/server/supabase/admin';
-import { LIMITS, trimToMax } from '$lib/server/validation/limits';
-import type { RestockAlert, RestockAlertInput } from '$lib/types/restock-alert';
+import { createAdminClient } from '#lib/server/supabase/admin.ts';
+import { LIMITS, trimToMax } from '#lib/server/validation/limits.ts';
+import type { RestockAlert, RestockAlertInput } from '#lib/types/restock-alert.ts';
 
 const mockStore = new Map<string, RestockAlert>();
 

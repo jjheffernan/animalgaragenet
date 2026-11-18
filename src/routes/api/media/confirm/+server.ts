@@ -1,7 +1,7 @@
 import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
-import { confirmUpload } from '$lib/server/media/repository';
-import { isSupabaseConfigured } from '$lib/server/supabase/client';
+import { confirmUpload } from '#lib/server/media/repository.ts';
+import { isSupabaseConfigured } from '#lib/server/supabase/client.ts';
 
 interface ConfirmBody {
 	assetId?: string;

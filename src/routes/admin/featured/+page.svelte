@@ -1,5 +1,5 @@
 <script lang="ts">
-	import AdminPageHeader from '$lib/components/admin/AdminPageHeader.svelte';
+	import AdminPageHeader from '#lib/components/admin/AdminPageHeader.svelte';
 	import {
 		adminAlertError,
 		adminAlertSuccess,
@@ -10,7 +10,7 @@
 		adminInputSm,
 		adminLabel,
 		adminSectionTitle
-	} from '$lib/components/admin/admin-ui';
+	} from '#lib/components/admin/admin-ui.ts';
 	import type { PageData } from './$types';
 
 	let { data, form }: { data: PageData; form: import('./$types').ActionData } = $props();

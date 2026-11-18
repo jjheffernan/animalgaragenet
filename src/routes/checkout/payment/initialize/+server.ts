@@ -7,8 +7,8 @@ import {
 	initializeTransaction,
 	paymentGatewayUnavailablePayload,
 	setTransactionId
-} from '$lib/server/saleor/checkout';
-import { requireSaleorPaymentEnabled } from '$lib/server/saleor/checkout-route-helpers';
+} from '#lib/server/saleor/checkout.ts';
+import { requireSaleorPaymentEnabled } from '#lib/server/saleor/checkout-route-helpers.ts';
 
 interface InitializeBody {
 	gatewayId?: string;

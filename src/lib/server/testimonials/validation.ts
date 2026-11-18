@@ -1,4 +1,4 @@
-import { LIMITS } from '$lib/server/validation/limits';
+import { LIMITS } from '#lib/server/validation/limits.ts';
 
 export interface TestimonialFields {
 	displayName: string;

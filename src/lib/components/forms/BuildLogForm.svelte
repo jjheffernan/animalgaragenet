@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { BuildLog } from '$lib/types/build-log';
+	import type { BuildLog } from '#lib/types/build-log.ts';
 
 	interface Props {
 		log?: BuildLog | null;
@@ -37,7 +37,7 @@
 <input type="hidden" name="email" value={email} />
 
 <label class="block">
-	<span class="text-xs font-bold uppercase tracking-widest text-zinc-500">Build Title</span>
+	<span class="text-xs font-bold tracking-widest text-zinc-500 uppercase">Build Title</span>
 	<input
 		type="text"
 		name="title"
@@ -53,7 +53,7 @@
 
 <div class="grid gap-4 sm:grid-cols-2">
 	<label class="block">
-		<span class="text-xs font-bold uppercase tracking-widest text-zinc-500">Year</span>
+		<span class="text-xs font-bold tracking-widest text-zinc-500 uppercase">Year</span>
 		<input
 			type="number"
 			name="year"
@@ -68,7 +68,7 @@
 		{#if errors.year}<p class="mt-1 text-xs text-red-500">{errors.year}</p>{/if}
 	</label>
 	<label class="block">
-		<span class="text-xs font-bold uppercase tracking-widest text-zinc-500">Make</span>
+		<span class="text-xs font-bold tracking-widest text-zinc-500 uppercase">Make</span>
 		<input
 			type="text"
 			name="make"
@@ -83,7 +83,7 @@
 </div>
 
 <label class="block">
-	<span class="text-xs font-bold uppercase tracking-widest text-zinc-500">Model</span>
+	<span class="text-xs font-bold tracking-widest text-zinc-500 uppercase">Model</span>
 	<input
 		type="text"
 		name="model"
@@ -97,7 +97,7 @@
 </label>
 
 <label class="block">
-	<span class="text-xs font-bold uppercase tracking-widest text-zinc-500">Description</span>
+	<span class="text-xs font-bold tracking-widest text-zinc-500 uppercase">Description</span>
 	<textarea
 		name="description"
 		rows="5"
@@ -110,7 +110,7 @@
 </label>
 
 <label class="block">
-	<span class="text-xs font-bold uppercase tracking-widest text-zinc-500">Mod List</span>
+	<span class="text-xs font-bold tracking-widest text-zinc-500 uppercase">Mod List</span>
 	<textarea
 		name="modList"
 		rows="4"

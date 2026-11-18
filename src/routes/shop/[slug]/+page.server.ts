@@ -1,10 +1,10 @@
-import { config } from '$lib/config/env';
+import { config } from '#lib/config/env.ts';
 import {
 	getBuildLinkedProducts,
 	getLinkedBuildForProduct,
 	getRelatedCatalogProducts
-} from '$lib/server/catalog/related';
-import { getShopProductBySlug } from '$lib/server/catalog/products';
+} from '#lib/server/catalog/related.ts';
+import { getShopProductBySlug } from '#lib/server/catalog/products.ts';
 import { error } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 

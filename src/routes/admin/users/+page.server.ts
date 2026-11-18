@@ -1,11 +1,11 @@
 import { error, fail } from '@sveltejs/kit';
-import { mockAdminUsers } from '$lib/data/mock/admin-users';
-import { hasRole, isValidRole, type Role } from '$lib/auth/roles';
+import { mockAdminUsers } from '#lib/data/mock/admin-users.ts';
+import { hasRole, isValidRole, type Role } from '#lib/auth/roles.ts';
 import {
 	inviteAdminUser,
 	listAdminUsers,
 	updateAdminUserRole
-} from '$lib/server/supabase/admin-users';
+} from '#lib/server/supabase/admin-users.ts';
 import type { Actions, PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({ locals }) => {

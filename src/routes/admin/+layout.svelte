@@ -1,6 +1,6 @@
 <script lang="ts">
-	import AdminSidebar from '$lib/components/admin/AdminSidebar.svelte';
-	import AdminTopbar from '$lib/components/admin/AdminTopbar.svelte';
+	import AdminSidebar from '#lib/components/admin/AdminSidebar.svelte';
+	import AdminTopbar from '#lib/components/admin/AdminTopbar.svelte';
 	import type { LayoutData } from './$types';
 
 	let { data, children }: { data: LayoutData; children: import('svelte').Snippet } = $props();

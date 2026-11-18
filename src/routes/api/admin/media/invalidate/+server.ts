@@ -1,11 +1,11 @@
 import { json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
-import { adminGateJsonResponse, resolveAdminGateFromLocals } from '$lib/server/auth/admin-gate';
+import { adminGateJsonResponse, resolveAdminGateFromLocals } from '#lib/server/auth/admin-gate.ts';
 import {
 	collectAdminInvalidationKeys,
 	invalidateCdnPaths,
 	isCdnInvalidationConfigured
-} from '$lib/server/media/cdn';
+} from '#lib/server/media/cdn.ts';
 
 interface InvalidateBody {
 	paths?: string[];

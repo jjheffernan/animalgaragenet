@@ -1,10 +1,10 @@
 /** Nav-linked static routes + dynamic slug collectors for sitemap.xml (SEO-001). */
-import { getProductPath } from '$lib/data/catalog-helpers';
-import { listPublicBuilds } from '$lib/server/builds/public';
-import { getPartCategoriesForNav, getPartsProducts } from '$lib/server/catalog/parts';
-import { getShopProducts } from '$lib/server/catalog/products';
-import { listBlogPosts, listGuides } from '$lib/server/ghost/posts';
-import { config } from '$lib/config/env';
+import { getProductPath } from '#lib/data/catalog-helpers.ts';
+import { listPublicBuilds } from '#lib/server/builds/public.ts';
+import { getPartCategoriesForNav, getPartsProducts } from '#lib/server/catalog/parts.ts';
+import { getShopProducts } from '#lib/server/catalog/products.ts';
+import { listBlogPosts, listGuides } from '#lib/server/ghost/posts.ts';
+import { config } from '#lib/config/env.ts';
 
 export const SITEMAP_STATIC_PATHS = [
 	'/',

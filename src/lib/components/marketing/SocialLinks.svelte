@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { SOCIAL_PLATFORMS } from '$lib/data/social-platforms';
+	import { SOCIAL_PLATFORMS } from '#lib/data/social-platforms.ts';
 
 	const links = SOCIAL_PLATFORMS.map((p) => ({
 		label: p.label,

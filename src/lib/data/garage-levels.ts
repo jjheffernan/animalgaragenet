@@ -1,4 +1,4 @@
-import type { GarageLevel, GarageXpAction } from '$lib/types/domain';
+import type { GarageLevel, GarageXpAction } from '#lib/types/domain.ts';
 
 export const garageLevels: GarageLevel[] = [
 	{ level: 1, title: 'Parking Lot Rookie', xpRequired: 0, perks: ['Welcome sticker pack'] },

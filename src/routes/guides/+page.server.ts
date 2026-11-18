@@ -1,13 +1,13 @@
-import { paginateFromUrl } from '$lib/pagination';
-import { setGhostListCacheHeaders } from '$lib/server/ghost/cache-headers';
+import { paginateFromUrl } from '#lib/pagination.ts';
+import { setGhostListCacheHeaders } from '#lib/server/ghost/cache-headers.ts';
 import {
 	ALL_GUIDE_FILTER,
 	filterGuidesByCategory,
 	filterGuidesByTopic,
 	getGuideFilterOptions,
 	resolveGuideFilter
-} from '$lib/server/ghost/guide-filters';
-import { listGuides } from '$lib/server/ghost/posts';
+} from '#lib/server/ghost/guide-filters.ts';
+import { listGuides } from '#lib/server/ghost/posts.ts';
 import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({ url, setHeaders }) => {

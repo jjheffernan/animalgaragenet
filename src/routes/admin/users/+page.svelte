@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
-	import AdminPageHeader from '$lib/components/admin/AdminPageHeader.svelte';
+	import AdminPageHeader from '#lib/components/admin/AdminPageHeader.svelte';
 	import {
 		adminAlertInfo,
 		adminBtnPrimary,
@@ -8,9 +8,9 @@
 		adminCardFlush,
 		adminField,
 		adminTableHead
-	} from '$lib/components/admin/admin-ui';
-	import type { AdminUserRow } from '$lib/server/supabase/admin-users';
-	import { ROLE_OPTIONS, type Role } from '$lib/auth/roles';
+	} from '#lib/components/admin/admin-ui.ts';
+	import type { AdminUserRow } from '#lib/server/supabase/admin-users.ts';
+	import { ROLE_OPTIONS, type Role } from '#lib/auth/roles.ts';
 	import type { PageData } from './$types';
 
 	let {
@@ -98,7 +98,7 @@
 	{/if}
 
 	<div class={adminCard}>
-		<h2 class="text-sm font-bold uppercase tracking-widest text-white">
+		<h2 class="text-sm font-bold tracking-widest text-white uppercase">
 			{isLive ? 'Invite User' : 'Create User'}
 		</h2>
 		{#if isLive}
@@ -231,7 +231,7 @@
 	</div>
 
 	<div class={adminCard}>
-		<h2 class="text-sm font-bold uppercase tracking-widest text-white">Role Definitions</h2>
+		<h2 class="text-sm font-bold tracking-widest text-white uppercase">Role Definitions</h2>
 		<dl class="mt-4 grid gap-4 sm:grid-cols-2">
 			{#each ROLE_OPTIONS as opt (opt.value)}
 				<div>

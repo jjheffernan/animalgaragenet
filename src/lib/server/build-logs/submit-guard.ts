@@ -1,4 +1,4 @@
-import { checkRateLimit } from '$lib/server/rate-limit';
+import { checkRateLimit } from '#lib/server/rate-limit.ts';
 
 /** Honeypot field — bots fill hidden inputs; humans leave empty. */
 export const BUILD_SUBMIT_HONEYPOT = '_hp';

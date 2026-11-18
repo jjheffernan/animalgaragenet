@@ -1,10 +1,10 @@
 import type { Cookies } from '@sveltejs/kit';
-import { findMockPromoCode, normalizePromoCode } from '$lib/data/mock/promo-codes';
-import { checkRateLimit } from '$lib/server/rate-limit';
-import { LIMITS } from '$lib/server/validation/limits';
-import type { CheckoutDisplay, MockPromoState } from '$lib/types/checkout';
-import { resolveChannelForLocale } from '$lib/server/saleor/channels';
-import { isSaleorEnabled } from '$lib/server/saleor/client';
+import { findMockPromoCode, normalizePromoCode } from '#lib/data/mock/promo-codes.ts';
+import { checkRateLimit } from '#lib/server/rate-limit.ts';
+import { LIMITS } from '#lib/server/validation/limits.ts';
+import type { CheckoutDisplay, MockPromoState } from '#lib/types/checkout.ts';
+import { resolveChannelForLocale } from '#lib/server/saleor/channels.ts';
+import { isSaleorEnabled } from '#lib/server/saleor/client.ts';
 import {
 	applyPromoCode,
 	ensureCheckout,
@@ -12,7 +12,7 @@ import {
 	getCheckoutLines,
 	removePromoCode,
 	setCheckoutId
-} from '$lib/server/saleor/checkout';
+} from '#lib/server/saleor/checkout.ts';
 
 export const MOCK_PROMO_COOKIE = 'ag-mock-promo';
 

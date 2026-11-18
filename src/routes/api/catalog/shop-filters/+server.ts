@@ -1,6 +1,6 @@
 import { json } from '@sveltejs/kit';
-import { config } from '$lib/config/env';
-import { getShopFilterOptions } from '$lib/server/catalog/shop-filters';
+import { config } from '#lib/config/env.ts';
+import { getShopFilterOptions } from '#lib/server/catalog/shop-filters.ts';
 import type { RequestHandler } from './$types';
 
 export const GET: RequestHandler = async ({ url, setHeaders }) => {

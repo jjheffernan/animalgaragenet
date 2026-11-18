@@ -1,8 +1,11 @@
 <script lang="ts">
 	import type { Snippet } from 'svelte';
-	import ListControls from '$lib/components/catalog/ListControls.svelte';
-	import type { ListView, PaginationMeta } from '$lib/pagination';
-	import { listControlsStickyShellClass, listControlsStickyTopClass } from '$lib/ui/catalog-ribbon';
+	import ListControls from '#lib/components/catalog/ListControls.svelte';
+	import type { ListView, PaginationMeta } from '#lib/pagination.ts';
+	import {
+		listControlsStickyShellClass,
+		listControlsStickyTopClass
+	} from '#lib/ui/catalog-ribbon.ts';
 
 	interface Props {
 		pagination: PaginationMeta;

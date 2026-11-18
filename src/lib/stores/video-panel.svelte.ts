@@ -1,4 +1,4 @@
-import type { Video } from '$lib/types/domain';
+import type { Video } from '#lib/types/domain.ts';
 
 class VideoPanelState {
 	open = $state(false);

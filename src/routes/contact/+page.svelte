@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
-	import AnimatedReveal from '$lib/components/shared/AnimatedReveal.svelte';
+	import AnimatedReveal from '#lib/components/shared/AnimatedReveal.svelte';
 	import type { ActionData } from './$types';
 
 	let { form }: { form: ActionData } = $props();
@@ -19,7 +19,7 @@
 
 <section class="mx-auto max-w-xl px-4 py-20 sm:px-6 lg:px-8">
 	<AnimatedReveal>
-		<h1 class="font-display text-3xl font-bold uppercase text-white">Contact</h1>
+		<h1 class="font-display text-3xl font-bold text-white uppercase">Contact</h1>
 		<p class="mt-4 text-zinc-400">
 			Questions about an order, a part fitment, or just want to talk builds? We typically respond
 			within 1–2 business days.
@@ -48,7 +48,7 @@
 				{/if}
 
 				<label class="block">
-					<span class="text-xs font-bold uppercase tracking-widest text-zinc-500">Name</span>
+					<span class="text-xs font-bold tracking-widest text-zinc-500 uppercase">Name</span>
 					<input
 						type="text"
 						name="name"
@@ -66,7 +66,7 @@
 				</label>
 
 				<label class="block">
-					<span class="text-xs font-bold uppercase tracking-widest text-zinc-500">Email</span>
+					<span class="text-xs font-bold tracking-widest text-zinc-500 uppercase">Email</span>
 					<input
 						type="email"
 						name="email"
@@ -84,7 +84,7 @@
 				</label>
 
 				<label class="block">
-					<span class="text-xs font-bold uppercase tracking-widest text-zinc-500">Subject</span>
+					<span class="text-xs font-bold tracking-widest text-zinc-500 uppercase">Subject</span>
 					<select
 						name="subject"
 						class="mt-1 w-full rounded-sm border border-zinc-700 bg-zinc-900 px-4 py-3 text-white focus:border-red-600 focus:outline-none {fieldError(
@@ -108,7 +108,7 @@
 				</label>
 
 				<label class="block">
-					<span class="text-xs font-bold uppercase tracking-widest text-zinc-500">Message</span>
+					<span class="text-xs font-bold tracking-widest text-zinc-500 uppercase">Message</span>
 					<textarea
 						name="message"
 						rows="5"
@@ -127,7 +127,7 @@
 				<button
 					type="submit"
 					disabled={submitting}
-					class="w-full rounded-sm bg-red-600 py-4 text-sm font-bold uppercase tracking-wider text-white hover:bg-red-500 disabled:opacity-60"
+					class="w-full rounded-sm bg-red-600 py-4 text-sm font-bold tracking-wider text-white uppercase hover:bg-red-500 disabled:opacity-60"
 				>
 					{submitting ? 'Sending…' : 'Send Message'}
 				</button>

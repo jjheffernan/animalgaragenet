@@ -1,4 +1,4 @@
-import type { SavedVehicle } from '$lib/types/domain';
+import type { SavedVehicle } from '#lib/types/domain.ts';
 
 interface GarageApiState {
 	vehicles: SavedVehicle[];

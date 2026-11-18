@@ -1,5 +1,5 @@
-import { getAllEvents, getUpcomingEvents } from '$lib/data/mock/events';
-import { paginateFromUrl } from '$lib/pagination';
+import { getAllEvents, getUpcomingEvents } from '#lib/data/mock/events.ts';
+import { paginateFromUrl } from '#lib/pagination.ts';
 import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({ url }) => {

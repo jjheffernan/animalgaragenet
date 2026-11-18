@@ -1,7 +1,7 @@
-import { getActiveDeals as getMockActiveDeals } from '$lib/data/mock/deals';
-import { getHeroCampaign, getUpcomingCampaign } from '$lib/data/mock/campaigns';
-import { createAdminClient } from '$lib/server/supabase/admin';
-import type { Campaign, Deal } from '$lib/types/domain';
+import { getActiveDeals as getMockActiveDeals } from '#lib/data/mock/deals.ts';
+import { getHeroCampaign, getUpcomingCampaign } from '#lib/data/mock/campaigns.ts';
+import { createAdminClient } from '#lib/server/supabase/admin.ts';
+import type { Campaign, Deal } from '#lib/types/domain.ts';
 
 const mockStore: Deal[] = [];
 

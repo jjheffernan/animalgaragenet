@@ -1,4 +1,4 @@
-import { garageLevels } from '$lib/data/garage-levels';
+import { garageLevels } from '#lib/data/garage-levels.ts';
 import { addGarageXpToApi, loadGarageFromApi, resetGarageApiCache } from './garage-api';
 import { readStoredJson, removeStoredJson, writeStoredJson } from './storage';
 

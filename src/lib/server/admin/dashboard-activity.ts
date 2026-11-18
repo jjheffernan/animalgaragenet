@@ -1,6 +1,6 @@
-import { listPendingBuildLogs } from '$lib/server/build-logs/repository';
-import { listBugReports } from '$lib/server/support/repository';
-import { listYouTubeChannels } from '$lib/server/youtube/repository';
+import { listPendingBuildLogs } from '#lib/server/build-logs/repository.ts';
+import { listBugReports } from '#lib/server/support/repository.ts';
+import { listYouTubeChannels } from '#lib/server/youtube/repository.ts';
 
 export type DashboardActivityType = 'build' | 'bug' | 'youtube';
 

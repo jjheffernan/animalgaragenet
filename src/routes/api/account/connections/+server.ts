@@ -1,15 +1,15 @@
 import { json } from '@sveltejs/kit';
-import { isSocialOAuthConfigured, socialOAuthAuthorizeUrl } from '$lib/auth/social-oauth';
-import { SOCIAL_PLATFORMS } from '$lib/data/social-platforms';
+import { isSocialOAuthConfigured, socialOAuthAuthorizeUrl } from '#lib/auth/social-oauth.ts';
+import { SOCIAL_PLATFORMS } from '#lib/data/social-platforms.ts';
 import {
 	getUserSocialConnections,
 	updateUserSocialConnection
-} from '$lib/server/social-connections/repository';
+} from '#lib/server/social-connections/repository.ts';
 import {
 	validateConnectionPutBody,
 	type ConnectionPutBody
-} from '$lib/server/social-connections/validation';
-import type { SocialPlatformId } from '$lib/data/social-platforms';
+} from '#lib/server/social-connections/validation.ts';
+import type { SocialPlatformId } from '#lib/data/social-platforms.ts';
 import type { RequestHandler } from './$types';
 
 /**

@@ -1,4 +1,4 @@
-export { MAX_FILES_PER_TESTIMONIAL } from '$lib/media/constants';
+export { MAX_FILES_PER_TESTIMONIAL } from '#lib/media/constants.ts';
 
 export const UGC_BUCKET = 'ugc';
 

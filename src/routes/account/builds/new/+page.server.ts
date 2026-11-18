@@ -1,10 +1,10 @@
 import { fail, redirect } from '@sveltejs/kit';
-import { createBuildLogDraft, updateBuildLog } from '$lib/server/build-logs/repository';
+import { createBuildLogDraft, updateBuildLog } from '#lib/server/build-logs/repository.ts';
 import {
 	checkBuildSubmitRateLimit,
 	isBuildSubmitHoneypotTripped
-} from '$lib/server/build-logs/submit-guard';
-import { validateBuildLogFields } from '$lib/server/build-logs/validation';
+} from '#lib/server/build-logs/submit-guard.ts';
+import { validateBuildLogFields } from '#lib/server/build-logs/validation.ts';
 import type { Actions, PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({ parent }) => {

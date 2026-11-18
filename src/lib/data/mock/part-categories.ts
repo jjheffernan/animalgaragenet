@@ -1,4 +1,4 @@
-import type { PartCategory } from '$lib/types/domain';
+import type { PartCategory } from '#lib/types/domain.ts';
 
 const catImg = (seed: string) => `https://picsum.photos/seed/${seed}/400/300`;
 

@@ -1,4 +1,4 @@
-import type { Collection } from '$lib/types/saleor';
+import type { Collection } from '#lib/types/saleor.ts';
 import { mockProducts } from './products';
 
 const colImg = (seed: string) => `https://picsum.photos/seed/${seed}/1200/600`;

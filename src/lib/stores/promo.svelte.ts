@@ -1,4 +1,4 @@
-import { isPromoDismissed, setPromoDismissed } from '$lib/cookies/client';
+import { isPromoDismissed, setPromoDismissed } from '#lib/cookies/client.ts';
 
 class PromoState {
 	dismissed = $state(false);

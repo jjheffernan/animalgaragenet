@@ -1,7 +1,7 @@
 <script lang="ts">
-	import { resolvePath } from '$lib/utils/paths';
-	import NewsletterSignup from '$lib/components/marketing/NewsletterSignup.svelte';
-	import SocialLinks from '$lib/components/marketing/SocialLinks.svelte';
+	import { resolvePath } from '#lib/utils/paths.ts';
+	import NewsletterSignup from '#lib/components/marketing/NewsletterSignup.svelte';
+	import SocialLinks from '#lib/components/marketing/SocialLinks.svelte';
 
 	const helpfulLinkColumns = [
 		[
@@ -43,13 +43,13 @@
 			<div class="lg:col-span-4">
 				<a href={resolvePath('/')} class="inline-flex items-center gap-3">
 					<img src="/logo.svg" alt="" width="40" height="40" class="h-10 w-10 shrink-0" />
-					<span class="font-display text-lg font-bold uppercase tracking-widest text-white">
+					<span class="font-display text-lg font-bold tracking-widest text-white uppercase">
 						Animal Garage
 					</span>
 				</a>
 
 				<address
-					class="mt-3 space-y-0.5 text-sm not-italic leading-relaxed text-zinc-500 lg:mt-5 lg:space-y-1"
+					class="mt-3 space-y-0.5 text-sm leading-relaxed text-zinc-500 not-italic lg:mt-5 lg:space-y-1"
 				>
 					<p class="text-zinc-400">Animal Garage HQ</p>
 					<p>123 Redline Drive</p>
@@ -57,7 +57,7 @@
 				</address>
 
 				<div class="mt-3 lg:mt-5">
-					<p class="text-xs font-bold uppercase tracking-widest text-zinc-400">Business Hours</p>
+					<p class="text-xs font-bold tracking-widest text-zinc-400 uppercase">Business Hours</p>
 					<ul class="mt-2 space-y-1 text-sm text-zinc-500 lg:mt-3 lg:space-y-2">
 						{#each businessHours as row (row.days)}
 							<li class="flex justify-between gap-4">
@@ -75,7 +75,7 @@
 
 			<!-- Contact + social -->
 			<div class="lg:col-span-2">
-				<p class="text-xs font-bold uppercase tracking-widest text-zinc-400">Get in Touch</p>
+				<p class="text-xs font-bold tracking-widest text-zinc-400 uppercase">Get in Touch</p>
 				<ul class="mt-3 space-y-0 text-sm lg:mt-4 lg:space-y-1">
 					<li>
 						<a
@@ -96,8 +96,8 @@
 				</ul>
 
 				<div class="mt-4 lg:mt-6">
-					<p class="text-xs font-bold uppercase tracking-widest text-zinc-400">Follow Us</p>
-					<div class="mt-2 [&_a]:h-9 [&_a]:w-9 lg:mt-3 lg:[&_a]:h-11 lg:[&_a]:w-11">
+					<p class="text-xs font-bold tracking-widest text-zinc-400 uppercase">Follow Us</p>
+					<div class="mt-2 lg:mt-3 [&_a]:h-9 [&_a]:w-9 lg:[&_a]:h-11 lg:[&_a]:w-11">
 						<SocialLinks />
 					</div>
 				</div>
@@ -105,7 +105,7 @@
 
 			<!-- Helpful links — desktop -->
 			<div class="hidden lg:col-span-6 lg:col-start-7 lg:block">
-				<p class="text-xs font-bold uppercase tracking-widest text-zinc-400">Helpful Links</p>
+				<p class="text-xs font-bold tracking-widest text-zinc-400 uppercase">Helpful Links</p>
 				<div class="mt-4 grid grid-cols-3 gap-x-8 gap-y-1">
 					{#each helpfulLinkColumns as column, columnIndex (columnIndex)}
 						<ul class="space-y-1.5">
@@ -126,7 +126,7 @@
 
 			<!-- Helpful links — mobile (always visible) -->
 			<div class="w-full lg:hidden">
-				<p class="text-xs font-bold uppercase tracking-widest text-zinc-400">Helpful Links</p>
+				<p class="text-xs font-bold tracking-widest text-zinc-400 uppercase">Helpful Links</p>
 				<ul class="mt-3 grid grid-cols-2 gap-x-4">
 					{#each helpfulLinks as link (link.href)}
 						<li>

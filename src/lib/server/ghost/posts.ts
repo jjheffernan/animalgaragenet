@@ -1,7 +1,7 @@
-import { getBlogPostBySlug, mockBlogPosts } from '$lib/data/mock/blog';
-import { getGuideBySlug, mockGuides } from '$lib/data/mock/guides';
-import type { BlogPost, Guide } from '$lib/types/domain';
-import { isProductionSiteUrl } from '$lib/server/auth/local-dev';
+import { getBlogPostBySlug, mockBlogPosts } from '#lib/data/mock/blog.ts';
+import { getGuideBySlug, mockGuides } from '#lib/data/mock/guides.ts';
+import type { BlogPost, Guide } from '#lib/types/domain.ts';
+import { isProductionSiteUrl } from '#lib/server/auth/local-dev.ts';
 import { ghostFetch, isGhostEnabled } from './client';
 import { guardMockGhostFallback } from './fallback';
 import { mapGhostPostToBlogPost, mapGhostPostToGuide } from './mappers';

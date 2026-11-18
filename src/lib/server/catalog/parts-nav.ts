@@ -1,8 +1,8 @@
-import { mockBrands } from '$lib/data/mock/brands';
-import { mockPopularModels } from '$lib/data/mock/popular-models';
-import type { Brand, PartCategory, PopularModel } from '$lib/types/domain';
-import { config } from '$lib/config/env';
-import { getPartCategoriesForNav } from '$lib/server/catalog/parts';
+import { mockBrands } from '#lib/data/mock/brands.ts';
+import { mockPopularModels } from '#lib/data/mock/popular-models.ts';
+import type { Brand, PartCategory, PopularModel } from '#lib/types/domain.ts';
+import { config } from '#lib/config/env.ts';
+import { getPartCategoriesForNav } from '#lib/server/catalog/parts.ts';
 
 export interface PartsNavData {
 	categories: PartCategory[];

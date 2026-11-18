@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { connections } from '$lib/stores/connections.svelte';
+	import { connections } from '#lib/stores/connections.svelte.ts';
 
 	onMount(() => {
 		void connections.refresh();
@@ -11,7 +11,7 @@
 	<title>Connections — Animal Garage</title>
 </svelte:head>
 
-<h1 class="font-display text-2xl font-bold uppercase text-white">Social Connections</h1>
+<h1 class="font-display text-2xl font-bold text-white uppercase">Social Connections</h1>
 <p class="mt-1 text-zinc-400">
 	Link your profiles to show off your builds and unlock community perks.
 </p>

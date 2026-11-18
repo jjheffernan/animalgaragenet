@@ -1,4 +1,4 @@
-import type { CountryLocale } from '$lib/types/domain';
+import type { CountryLocale } from '#lib/types/domain.ts';
 
 export const mockLocales: CountryLocale[] = [
 	{

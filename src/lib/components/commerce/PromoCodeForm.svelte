@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { enhance } from '$app/forms';
 
-	import type { CheckoutDisplay, MockPromoState } from '$lib/types/checkout';
-	import { locale } from '$lib/stores/locale.svelte';
+	import type { CheckoutDisplay, MockPromoState } from '#lib/types/checkout.ts';
+	import { locale } from '#lib/stores/locale.svelte.ts';
 
 	let {
 		action = '?/apply',
@@ -73,7 +73,7 @@
 
 <div class={compact ? '' : 'rounded-sm border border-zinc-800 bg-zinc-900/50 p-6'}>
 	{#if !compact}
-		<h2 class="text-xs font-bold uppercase tracking-widest text-zinc-500">Redeem code</h2>
+		<h2 class="text-xs font-bold tracking-widest text-zinc-500 uppercase">Redeem code</h2>
 		<p class="mt-1 text-sm text-zinc-500">
 			Enter a voucher or gift card code from Saleor. Codes apply to your active cart.
 		</p>
@@ -104,12 +104,12 @@
 				bind:value={code}
 				placeholder="Enter code"
 				autocomplete="off"
-				class="min-w-[10rem] flex-1 rounded-sm border border-zinc-700 bg-zinc-900 px-3 py-2 text-sm uppercase text-white placeholder:normal-case placeholder:text-zinc-600 focus:border-red-600 focus:outline-none"
+				class="min-w-[10rem] flex-1 rounded-sm border border-zinc-700 bg-zinc-900 px-3 py-2 text-sm text-white uppercase placeholder:text-zinc-600 placeholder:normal-case focus:border-red-600 focus:outline-none"
 			/>
 			<button
 				type="submit"
 				disabled={loading || !code.trim()}
-				class="rounded-sm bg-red-600 px-4 py-2 text-xs font-bold uppercase tracking-wider text-white transition hover:bg-red-500 disabled:opacity-50"
+				class="rounded-sm bg-red-600 px-4 py-2 text-xs font-bold tracking-wider text-white uppercase transition hover:bg-red-500 disabled:opacity-50"
 			>
 				{loading ? 'Applying…' : 'Apply'}
 			</button>
@@ -143,12 +143,12 @@
 				bind:value={code}
 				placeholder="Enter code"
 				autocomplete="off"
-				class="min-w-[10rem] flex-1 rounded-sm border border-zinc-700 bg-zinc-900 px-3 py-2 text-sm uppercase text-white placeholder:normal-case placeholder:text-zinc-600 focus:border-red-600 focus:outline-none"
+				class="min-w-[10rem] flex-1 rounded-sm border border-zinc-700 bg-zinc-900 px-3 py-2 text-sm text-white uppercase placeholder:text-zinc-600 placeholder:normal-case focus:border-red-600 focus:outline-none"
 			/>
 			<button
 				type="submit"
 				disabled={loading || !code.trim()}
-				class="rounded-sm bg-red-600 px-4 py-2 text-xs font-bold uppercase tracking-wider text-white transition hover:bg-red-500 disabled:opacity-50"
+				class="rounded-sm bg-red-600 px-4 py-2 text-xs font-bold tracking-wider text-white uppercase transition hover:bg-red-500 disabled:opacity-50"
 			>
 				{loading ? 'Applying…' : 'Apply'}
 			</button>

@@ -3,9 +3,9 @@ import {
 	cleanupStalePendingAssets,
 	deleteMediaAssetAsAdmin,
 	listStaffMediaAssets
-} from '$lib/server/media/repository';
-import { isCdnInvalidationConfigured, isCdnUploadConfigured } from '$lib/server/media/cdn';
-import { createAdminClient } from '$lib/server/supabase/admin';
+} from '#lib/server/media/repository.ts';
+import { isCdnInvalidationConfigured, isCdnUploadConfigured } from '#lib/server/media/cdn.ts';
+import { createAdminClient } from '#lib/server/supabase/admin.ts';
 import type { Actions, PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async () => {

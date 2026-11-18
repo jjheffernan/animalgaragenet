@@ -1,6 +1,6 @@
-import { createAdminClient } from '$lib/server/supabase/admin';
-import { LIMITS, trimToMax } from '$lib/server/validation/limits';
-import type { NewsletterSignupInput, NewsletterSubscriber } from '$lib/types/newsletter';
+import { createAdminClient } from '#lib/server/supabase/admin.ts';
+import { LIMITS, trimToMax } from '#lib/server/validation/limits.ts';
+import type { NewsletterSignupInput, NewsletterSubscriber } from '#lib/types/newsletter.ts';
 
 const mockStore = new Map<string, NewsletterSubscriber>();
 

@@ -1,9 +1,9 @@
-import { config } from '$lib/config/env';
+import { config } from '#lib/config/env.ts';
 import type { PageServerLoad } from './$types';
-import { getMockPromo } from '$lib/server/checkout/promo';
-import { isSaleorEnabled } from '$lib/server/saleor/client';
-import { getCheckoutId, getCheckoutLines } from '$lib/server/saleor/checkout';
-import { getFreeShippingThresholdForLocale } from '$lib/server/saleor/shipping-promo';
+import { getMockPromo } from '#lib/server/checkout/promo.ts';
+import { isSaleorEnabled } from '#lib/server/saleor/client.ts';
+import { getCheckoutId, getCheckoutLines } from '#lib/server/saleor/checkout.ts';
+import { getFreeShippingThresholdForLocale } from '#lib/server/saleor/shipping-promo.ts';
 
 // @saleor-migration: intentional — checkout scaffold load; see docs/commerce/saleor.md#quick-migration
 export const load: PageServerLoad = async ({ cookies, url }) => {

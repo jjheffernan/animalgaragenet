@@ -1,4 +1,4 @@
-import { verifyHmacSha256Hex } from '$lib/server/webhook-signature';
+import { verifyHmacSha256Hex } from '#lib/server/webhook-signature.ts';
 
 export function readSaleorEvent(request: Request): string {
 	return (

@@ -1,8 +1,8 @@
 import { createServerClient as createSupabaseServerClient } from '@supabase/ssr';
 import type { RequestEvent } from '@sveltejs/kit';
 import type { SupabaseClient } from '@supabase/supabase-js';
-import { getSupabaseEnv, isSupabaseConfigured } from '$lib/server/supabase/config';
-import { createAdminClient } from '$lib/server/supabase/admin';
+import { getSupabaseEnv, isSupabaseConfigured } from '#lib/server/supabase/config.ts';
+import { createAdminClient } from '#lib/server/supabase/admin.ts';
 
 export type SupabaseClientConfig = NonNullable<ReturnType<typeof getSupabaseEnv>>;
 
@@ -29,7 +29,7 @@ export function createServerClient(event: Pick<RequestEvent, 'cookies'>): Supaba
 	});
 }
 
-/** @deprecated Use createAdminClient() from `$lib/server/supabase/admin` */
+/** @deprecated Use createAdminClient() from `#lib/server/supabase/admin.ts` */
 export async function createSupabaseClient() {
 	return createAdminClient();
 }

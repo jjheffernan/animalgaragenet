@@ -1,8 +1,8 @@
-import { config } from '$lib/config/env';
-import { formatDisplayPrice } from '$lib/i18n/currency';
-import { getLocaleConfig, isSupportedLocale } from '$lib/i18n/locale';
-import type { Money } from '$lib/types/saleor';
-import type { LocaleCode } from '$lib/types/locale';
+import { config } from '#lib/config/env.ts';
+import { formatDisplayPrice } from '#lib/i18n/currency.ts';
+import { getLocaleConfig, isSupportedLocale } from '#lib/i18n/locale.ts';
+import type { Money } from '#lib/types/saleor.ts';
+import type { LocaleCode } from '#lib/types/locale.ts';
 import { readStoredString, writeStoredString } from './storage';
 
 const STORAGE_KEY = 'ag-locale';

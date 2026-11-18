@@ -1,6 +1,6 @@
-import { resolveUserIdByEmail } from '$lib/server/supabase/admin-users';
-import { upsertOrderSnapshot } from '$lib/server/orders/snapshots';
-import type { OrderLineSnapshot, OrderStatus } from '$lib/types/order';
+import { resolveUserIdByEmail } from '#lib/server/supabase/admin-users.ts';
+import { upsertOrderSnapshot } from '#lib/server/orders/snapshots.ts';
+import type { OrderLineSnapshot, OrderStatus } from '#lib/types/order.ts';
 
 export interface ParsedSaleorOrder {
 	saleorOrderId: string;

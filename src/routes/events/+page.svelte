@@ -1,8 +1,8 @@
 <script lang="ts">
-	import SectionHeading from '$lib/components/shared/SectionHeading.svelte';
-	import AnimatedReveal from '$lib/components/shared/AnimatedReveal.svelte';
-	import EventsCalendar from '$lib/components/content/EventsCalendar.svelte';
-	import PaginatedListCanvas from '$lib/components/catalog/PaginatedListCanvas.svelte';
+	import SectionHeading from '#lib/components/shared/SectionHeading.svelte';
+	import AnimatedReveal from '#lib/components/shared/AnimatedReveal.svelte';
+	import EventsCalendar from '#lib/components/content/EventsCalendar.svelte';
+	import PaginatedListCanvas from '#lib/components/catalog/PaginatedListCanvas.svelte';
 
 	type ViewMode = 'list' | 'calendar';
 
@@ -16,7 +16,7 @@
 
 <section class="border-b border-zinc-800 bg-zinc-900/50 py-16">
 	<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-		<h1 class="font-display text-4xl font-bold uppercase tracking-wider text-white">Events</h1>
+		<h1 class="font-display text-4xl font-bold tracking-wider text-white uppercase">Events</h1>
 		<p class="mt-2 text-zinc-400">Meets, open garage nights, and track days.</p>
 	</div>
 </section>
@@ -36,7 +36,7 @@
 			<button
 				type="button"
 				role="tab"
-				class="rounded-sm px-4 py-2 text-xs font-bold uppercase tracking-widest transition {viewMode ===
+				class="rounded-sm px-4 py-2 text-xs font-bold tracking-widest uppercase transition {viewMode ===
 				'list'
 					? 'bg-red-600 text-white'
 					: 'text-zinc-400 hover:bg-zinc-800 hover:text-white'}"
@@ -48,7 +48,7 @@
 			<button
 				type="button"
 				role="tab"
-				class="rounded-sm px-4 py-2 text-xs font-bold uppercase tracking-widest transition {viewMode ===
+				class="rounded-sm px-4 py-2 text-xs font-bold tracking-widest uppercase transition {viewMode ===
 				'calendar'
 					? 'bg-red-600 text-white'
 					: 'text-zinc-400 hover:bg-zinc-800 hover:text-white'}"
@@ -79,7 +79,7 @@
 								loading="lazy"
 							/>
 							<div class="p-6">
-								<p class="text-xs font-bold uppercase tracking-widest text-red-500">
+								<p class="text-xs font-bold tracking-widest text-red-500 uppercase">
 									{new Date(event.startDate).toLocaleDateString(undefined, {
 										weekday: 'long',
 										month: 'long',
@@ -87,7 +87,7 @@
 										year: 'numeric'
 									})}
 								</p>
-								<h2 class="mt-2 font-display text-xl font-bold uppercase text-white">
+								<h2 class="mt-2 font-display text-xl font-bold text-white uppercase">
 									{event.title}
 								</h2>
 								<p class="mt-2 text-sm text-zinc-500">{event.location}</p>

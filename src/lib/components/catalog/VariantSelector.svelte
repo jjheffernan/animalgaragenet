@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { Product } from '$lib/types/saleor';
+	import type { Product } from '#lib/types/saleor.ts';
 
 	interface Props {
 		product: Product;
@@ -15,12 +15,12 @@
 
 {#if product.variants.length > 1}
 	<div class="space-y-2 {className}">
-		<p class="text-xs font-bold uppercase tracking-wider text-zinc-400">Select Option</p>
+		<p class="text-xs font-bold tracking-wider text-zinc-400 uppercase">Select Option</p>
 		<div class="flex flex-wrap gap-2">
 			{#each product.variants as variant (variant.id)}
 				<button
 					type="button"
-					class="rounded-sm border px-3 py-1.5 text-xs font-medium uppercase tracking-wider transition {selected ===
+					class="rounded-sm border px-3 py-1.5 text-xs font-medium tracking-wider uppercase transition {selected ===
 					variant.id
 						? 'border-red-600 bg-red-600/10 text-red-500'
 						: 'border-zinc-700 text-zinc-400 hover:border-zinc-500'}"

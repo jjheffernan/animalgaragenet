@@ -1,5 +1,5 @@
 import type { PageServerLoad } from './$types';
-import { listOrderSnapshotsForUser } from '$lib/server/orders/snapshots';
+import { listOrderSnapshotsForUser } from '#lib/server/orders/snapshots.ts';
 
 function snapshotsToDisplayOrders(
 	snapshots: Awaited<ReturnType<typeof listOrderSnapshotsForUser>>

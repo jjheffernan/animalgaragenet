@@ -1,4 +1,4 @@
-import { getAnalyticsConfig } from '$lib/analytics/config';
+import { getAnalyticsConfig } from '#lib/analytics/config.ts';
 
 /** Consent-gated client analytics hook (AUD-P2-012). Vendor-neutral — wire via env script URL. */
 class AnalyticsState {

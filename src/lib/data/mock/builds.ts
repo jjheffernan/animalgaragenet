@@ -1,4 +1,4 @@
-import type { BuildThread } from '$lib/types/domain';
+import type { BuildThread } from '#lib/types/domain.ts';
 
 const photo = (seed: string) => `https://picsum.photos/seed/${seed}/1200/800`;
 

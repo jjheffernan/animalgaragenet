@@ -1,25 +1,25 @@
-import { mockCollections } from '$lib/data/mock/collections';
+import { mockCollections } from '#lib/data/mock/collections.ts';
 import {
 	getClearanceProducts as getMockClearanceProducts,
 	getStaffPickProducts as getMockStaffPickProducts
-} from '$lib/data/mock/products';
-import { config } from '$lib/config/env';
-import type { Collection, Product } from '$lib/types/saleor';
-import { resolveChannelForLocale } from '$lib/server/saleor/channels';
-import { saleorFetch } from '$lib/server/saleor/client';
-import { withSaleorCatalog } from '$lib/server/catalog/fallback';
-import { isProductionSiteUrl } from '$lib/server/auth/local-dev';
+} from '#lib/data/mock/products.ts';
+import { config } from '#lib/config/env.ts';
+import type { Collection, Product } from '#lib/types/saleor.ts';
+import { resolveChannelForLocale } from '#lib/server/saleor/channels.ts';
+import { saleorFetch } from '#lib/server/saleor/client.ts';
+import { withSaleorCatalog } from '#lib/server/catalog/fallback.ts';
+import { isProductionSiteUrl } from '#lib/server/auth/local-dev.ts';
 import {
 	mapCollection,
 	mapProductListNode,
 	type SaleorCollectionNode,
 	type SaleorProductListNode
-} from '$lib/server/saleor/mappers';
+} from '#lib/server/saleor/mappers.ts';
 import {
 	COLLECTION_PRODUCTS_QUERY,
 	COLLECTIONS_QUERY,
 	PRODUCTS_QUERY
-} from '$lib/server/saleor/queries';
+} from '#lib/server/saleor/queries.ts';
 
 async function fetchSaleorProductsByTag(
 	tag: string,

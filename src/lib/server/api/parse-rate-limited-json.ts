@@ -1,5 +1,5 @@
 import { json } from '@sveltejs/kit';
-import { checkRateLimit } from '$lib/server/rate-limit';
+import { checkRateLimit } from '#lib/server/rate-limit.ts';
 
 export type RateLimitedJsonResult =
 	{ ok: true; body: Record<string, unknown> } | { ok: false; response: Response };

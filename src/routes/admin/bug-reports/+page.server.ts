@@ -1,5 +1,5 @@
-import { listBugReports } from '$lib/server/support/repository';
-import { createAdminClient } from '$lib/server/supabase/admin';
+import { listBugReports } from '#lib/server/support/repository.ts';
+import { createAdminClient } from '#lib/server/supabase/admin.ts';
 import type { PageServerLoad } from './$types';
 
 // @inspiration-scaffold: intentional — staff bug report inbox (read-only); see docs/plans/active/inspiration-polish-tracker.md#IP-031

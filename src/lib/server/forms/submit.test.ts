@@ -1,9 +1,9 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { _resetRateLimitsForTests } from '$lib/server/rate-limit';
-import { createAdminClient } from '$lib/server/supabase/admin';
-import { submitFormStub } from '$lib/server/forms/submit';
+import { _resetRateLimitsForTests } from '#lib/server/rate-limit.ts';
+import { createAdminClient } from '#lib/server/supabase/admin.ts';
+import { submitFormStub } from '#lib/server/forms/submit.ts';
 
-vi.mock('$lib/server/supabase/admin', () => ({
+vi.mock('#lib/server/supabase/admin.ts', () => ({
 	createAdminClient: vi.fn()
 }));
 

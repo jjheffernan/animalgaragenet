@@ -1,10 +1,10 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
-vi.mock('$lib/server/supabase/admin', () => ({
+vi.mock('#lib/server/supabase/admin.ts', () => ({
 	createAdminClient: vi.fn()
 }));
 
-import { createAdminClient } from '$lib/server/supabase/admin';
+import { createAdminClient } from '#lib/server/supabase/admin.ts';
 import { cleanupStalePendingAssets, listStaffMediaAssets } from './repository';
 
 describe('media repository (admin)', () => {

@@ -5,7 +5,7 @@ const { isPromoDismissed, setPromoDismissed } = vi.hoisted(() => ({
 	setPromoDismissed: vi.fn()
 }));
 
-vi.mock('$lib/cookies/client', () => ({
+vi.mock('#lib/cookies/client.ts', () => ({
 	isPromoDismissed,
 	setPromoDismissed
 }));

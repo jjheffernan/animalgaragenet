@@ -23,7 +23,7 @@ import {
 import {
 	readStripeClientSecret,
 	readStripePublishableKey
-} from '$lib/client/checkout/stripe-elements';
+} from '#lib/client/checkout/stripe-elements.ts';
 
 vi.mock('./client', () => ({
 	isSaleorEnabled: vi.fn(() => true),

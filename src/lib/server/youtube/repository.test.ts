@@ -1,18 +1,18 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
-vi.mock('$lib/server/supabase/admin', () => ({
+vi.mock('#lib/server/supabase/admin.ts', () => ({
 	createAdminClient: vi.fn()
 }));
 
-import { createAdminClient } from '$lib/server/supabase/admin';
-import { mockYouTubeChannels } from '$lib/data/mock/youtube-channels';
+import { createAdminClient } from '#lib/server/supabase/admin.ts';
+import { mockYouTubeChannels } from '#lib/data/mock/youtube-channels.ts';
 import {
 	_resetMockStoreForTests,
 	getPublicVideoById,
 	listPublicVideos,
 	upsertSyncedVideos
 } from './repository';
-import type { Video } from '$lib/types/domain';
+import type { Video } from '#lib/types/domain.ts';
 
 const sampleVideos: Video[] = [
 	{

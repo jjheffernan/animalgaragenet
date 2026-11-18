@@ -1,13 +1,13 @@
 import { describe, expect, it } from 'vitest';
 import type { Cookies } from '@sveltejs/kit';
-import { COOKIE_CONSENT } from '$lib/cookies';
+import { COOKIE_CONSENT } from '#lib/cookies.ts';
 import {
 	deleteCookie,
 	getCookie,
 	hasAnalyticsConsent,
 	hasCookieConsentAnswer,
 	setCookie
-} from '$lib/server/cookies';
+} from '#lib/server/cookies.ts';
 
 function mockCookies() {
 	const store = new Map<string, string>();

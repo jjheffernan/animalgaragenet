@@ -1,14 +1,14 @@
 import { describe, expect, it, vi, beforeEach, afterEach } from 'vitest';
-import { mockPartCategories } from '$lib/data/mock/part-categories';
-import { getPartCategoriesForNav, getPartCategoryBySlug } from '$lib/server/catalog/parts';
-import { mapPartCategory } from '$lib/server/saleor/mappers';
+import { mockPartCategories } from '#lib/data/mock/part-categories.ts';
+import { getPartCategoriesForNav, getPartCategoryBySlug } from '#lib/server/catalog/parts.ts';
+import { mapPartCategory } from '#lib/server/saleor/mappers.ts';
 
-vi.mock('$lib/server/saleor/client', () => ({
+vi.mock('#lib/server/saleor/client.ts', () => ({
 	isSaleorEnabled: vi.fn(() => false),
 	saleorFetch: vi.fn()
 }));
 
-import { isSaleorEnabled, saleorFetch } from '$lib/server/saleor/client';
+import { isSaleorEnabled, saleorFetch } from '#lib/server/saleor/client.ts';
 
 describe('getPartCategoriesForNav', () => {
 	beforeEach(() => {

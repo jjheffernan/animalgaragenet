@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, it } from 'vitest';
-import { mockParts } from '$lib/data/mock/parts';
-import { mockProducts } from '$lib/data/mock/products';
-import { getCatalogKind } from '$lib/data/catalog-helpers';
+import { mockParts } from '#lib/data/mock/parts.ts';
+import { mockProducts } from '#lib/data/mock/products.ts';
+import { getCatalogKind } from '#lib/data/catalog-helpers.ts';
 import { cart } from './cart.svelte';
 
 const availableMerch = mockProducts.find((p) => p.isAvailableForPurchase)!;

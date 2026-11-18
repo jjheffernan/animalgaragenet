@@ -1,13 +1,13 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
-vi.mock('$lib/server/supabase/admin', () => ({
+vi.mock('#lib/server/supabase/admin.ts', () => ({
 	createAdminClient: vi.fn()
 }));
 
-import { createAdminClient } from '$lib/server/supabase/admin';
-import { _resetMockStoreForTests as resetRestock } from '$lib/server/restock/repository';
-import { _resetMockStoreForTests as resetNewsletter } from '$lib/server/newsletter/repository';
-import { _resetMockStoreForTests as resetBugReports } from '$lib/server/support/repository';
+import { createAdminClient } from '#lib/server/supabase/admin.ts';
+import { _resetMockStoreForTests as resetRestock } from '#lib/server/restock/repository.ts';
+import { _resetMockStoreForTests as resetNewsletter } from '#lib/server/newsletter/repository.ts';
+import { _resetMockStoreForTests as resetBugReports } from '#lib/server/support/repository.ts';
 import { POST as restockPost } from '../../src/routes/api/restock/notify/+server';
 import { POST as newsletterPost } from '../../src/routes/api/newsletter/subscribe/+server';
 import { POST as bugReportPost } from '../../src/routes/api/support/bug-report/+server';

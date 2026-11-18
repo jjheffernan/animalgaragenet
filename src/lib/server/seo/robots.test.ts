@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { renderRobotsTxt } from '$lib/server/seo/robots';
+import { renderRobotsTxt } from '#lib/server/seo/robots.ts';
 
 describe('robots.txt', () => {
 	it('includes Sitemap from site URL', () => {

@@ -1,17 +1,20 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
-vi.mock('$lib/server/supabase/admin', () => ({
+vi.mock('#lib/server/supabase/admin.ts', () => ({
 	createAdminClient: vi.fn()
 }));
 
-vi.mock('$lib/server/supabase/admin-users', () => ({
+vi.mock('#lib/server/supabase/admin-users.ts', () => ({
 	findUserByEmail: vi.fn(),
 	resolveUserIdByEmail: vi.fn()
 }));
 
-import { createAdminClient } from '$lib/server/supabase/admin';
-import { resolveUserIdByEmail } from '$lib/server/supabase/admin-users';
-import { _resetMockStoreForTests, listOrderSnapshotsForUser } from '$lib/server/orders/snapshots';
+import { createAdminClient } from '#lib/server/supabase/admin.ts';
+import { resolveUserIdByEmail } from '#lib/server/supabase/admin-users.ts';
+import {
+	_resetMockStoreForTests,
+	listOrderSnapshotsForUser
+} from '#lib/server/orders/snapshots.ts';
 import {
 	extractSaleorOrderFromPayload,
 	isOrderMirrorEvent,

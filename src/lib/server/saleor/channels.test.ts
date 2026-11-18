@@ -1,7 +1,13 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
-vi.mock('$env/dynamic/private', () => ({
-	env: {}
+const privateEnv = vi.hoisted(() => ({
+	SALEOR_LOCALE_CHANNELS: undefined as string | undefined
+}));
+
+vi.mock('$app/env/private', () => ({
+	get SALEOR_LOCALE_CHANNELS() {
+		return privateEnv.SALEOR_LOCALE_CHANNELS;
+	}
 }));
 
 vi.mock('./client', () => ({
@@ -10,7 +16,6 @@ vi.mock('./client', () => ({
 	saleorFetch: vi.fn()
 }));
 
-import { env } from '$env/dynamic/private';
 import { getSaleorChannel, isSaleorEnabled, saleorFetch } from './client';
 import {
 	LOCALE_CHANNEL,
@@ -24,7 +29,7 @@ import {
 describe('getChannelForLocale', () => {
 	beforeEach(() => {
 		vi.clearAllMocks();
-		vi.mocked(env).SALEOR_LOCALE_CHANNELS = undefined;
+		privateEnv.SALEOR_LOCALE_CHANNELS = undefined;
 		_resetChannelCacheForTests();
 	});
 
@@ -47,7 +52,7 @@ describe('getChannelForLocale', () => {
 	});
 
 	it('merges SALEOR_LOCALE_CHANNELS env overrides', () => {
-		vi.mocked(env).SALEOR_LOCALE_CHANNELS = JSON.stringify({
+		privateEnv.SALEOR_LOCALE_CHANNELS = JSON.stringify({
 			'de-DE': 'eu',
 			'en-US': 'us-west'
 		});

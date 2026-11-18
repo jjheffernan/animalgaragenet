@@ -3,9 +3,9 @@ import {
 	extractStockWebhookFromPayload,
 	isStockRestockEvent,
 	processStockRestockPayload
-} from '$lib/server/saleor/stock-webhook';
+} from '#lib/server/saleor/stock-webhook.ts';
 
-vi.mock('$lib/server/restock/repository', () => ({
+vi.mock('#lib/server/restock/repository.ts', () => ({
 	listPendingRestockAlerts: vi.fn(),
 	markRestockAlertsNotified: vi.fn()
 }));
@@ -13,7 +13,7 @@ vi.mock('$lib/server/restock/repository', () => ({
 import {
 	listPendingRestockAlerts,
 	markRestockAlertsNotified
-} from '$lib/server/restock/repository';
+} from '#lib/server/restock/repository.ts';
 
 describe('stock webhook parsing', () => {
 	it('recognizes stock restock events', () => {

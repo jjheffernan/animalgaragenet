@@ -2,16 +2,16 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { POST } from '../../src/routes/cart/checkout/promo/+server';
 import type { RequestEvent } from '../../src/routes/cart/checkout/promo/$types';
 
-vi.mock('$lib/server/saleor/client', () => ({
+vi.mock('#lib/server/saleor/client.ts', () => ({
 	isSaleorEnabled: vi.fn()
 }));
 
-vi.mock('$lib/server/checkout/promo', () => ({
+vi.mock('#lib/server/checkout/promo.ts', () => ({
 	redeemCode: vi.fn()
 }));
 
-import { isSaleorEnabled } from '$lib/server/saleor/client';
-import { redeemCode } from '$lib/server/checkout/promo';
+import { isSaleorEnabled } from '#lib/server/saleor/client.ts';
+import { redeemCode } from '#lib/server/checkout/promo.ts';
 
 function promoEvent(body: unknown): RequestEvent {
 	const request = new Request('http://localhost/cart/checkout/promo', {

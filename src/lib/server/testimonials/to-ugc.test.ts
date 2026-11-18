@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import type { Testimonial } from '$lib/types/testimonial';
+import type { Testimonial } from '#lib/types/testimonial.ts';
 import { testimonialsToUgcItems } from './to-ugc';
 
 const sample: Testimonial = {

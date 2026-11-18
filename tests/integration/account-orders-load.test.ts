@@ -1,11 +1,11 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
-vi.mock('$lib/server/supabase/admin', () => ({
+vi.mock('#lib/server/supabase/admin.ts', () => ({
 	createAdminClient: vi.fn()
 }));
 
-import { createAdminClient } from '$lib/server/supabase/admin';
-import { _resetMockStoreForTests, upsertOrderSnapshot } from '$lib/server/orders/snapshots';
+import { createAdminClient } from '#lib/server/supabase/admin.ts';
+import { _resetMockStoreForTests, upsertOrderSnapshot } from '#lib/server/orders/snapshots.ts';
 import { load } from '../../src/routes/account/orders/+page.server';
 import type { PageServerLoadEvent } from '../../src/routes/account/orders/$types';
 

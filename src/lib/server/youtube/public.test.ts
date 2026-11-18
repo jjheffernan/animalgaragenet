@@ -1,11 +1,11 @@
 import { describe, expect, it, vi } from 'vitest';
 
-vi.mock('$lib/server/supabase/admin', () => ({
+vi.mock('#lib/server/supabase/admin.ts', () => ({
 	createAdminClient: vi.fn(() => null)
 }));
 
 import { loadHomepageVideos } from './public';
-import { mockVideos } from '$lib/data/mock/videos';
+import { mockVideos } from '#lib/data/mock/videos.ts';
 
 describe('loadHomepageVideos', () => {
 	it('falls back to mock videos when Supabase is unset', async () => {

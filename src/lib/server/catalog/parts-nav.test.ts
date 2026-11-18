@@ -1,10 +1,10 @@
 import { describe, expect, it, vi } from 'vitest';
-import { mockBrands } from '$lib/data/mock/brands';
-import { mockPartCategories } from '$lib/data/mock/part-categories';
-import { mockPopularModels } from '$lib/data/mock/popular-models';
+import { mockBrands } from '#lib/data/mock/brands.ts';
+import { mockPartCategories } from '#lib/data/mock/part-categories.ts';
+import { mockPopularModels } from '#lib/data/mock/popular-models.ts';
 import { getPartsNavData } from './parts-nav';
 
-vi.mock('$lib/server/catalog/parts', () => ({
+vi.mock('#lib/server/catalog/parts.ts', () => ({
 	getPartCategoriesForNav: vi.fn(async () => mockPartCategories)
 }));
 

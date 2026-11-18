@@ -1,26 +1,26 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { mockBrands } from '$lib/data/mock/brands';
-import { mockParts } from '$lib/data/mock/parts';
-import { PARTS_BUILD_TYPES } from '$lib/data/parts-filters';
+import { mockBrands } from '#lib/data/mock/brands.ts';
+import { mockParts } from '#lib/data/mock/parts.ts';
+import { PARTS_BUILD_TYPES } from '#lib/data/parts-filters.ts';
 import {
 	applyPartsFilters,
 	derivePartsFacetsFromProducts,
 	getPartsFilterOptions,
 	loadPartsCatalog
-} from '$lib/server/catalog/parts-filters';
+} from '#lib/server/catalog/parts-filters.ts';
 
-vi.mock('$lib/server/saleor/client', () => ({
+vi.mock('#lib/server/saleor/client.ts', () => ({
 	isSaleorEnabled: vi.fn(() => false),
 	saleorFetch: vi.fn()
 }));
 
-vi.mock('$lib/server/catalog/parts', () => ({
+vi.mock('#lib/server/catalog/parts.ts', () => ({
 	getPartsByCategory: vi.fn(),
 	getPartsProducts: vi.fn()
 }));
 
-import { isSaleorEnabled } from '$lib/server/saleor/client';
-import { getPartsByCategory, getPartsProducts } from '$lib/server/catalog/parts';
+import { isSaleorEnabled } from '#lib/server/saleor/client.ts';
+import { getPartsByCategory, getPartsProducts } from '#lib/server/catalog/parts.ts';
 
 describe('derivePartsFacetsFromProducts', () => {
 	it('collects brand and build facets from product attributes', () => {

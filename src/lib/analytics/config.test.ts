@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { getAnalyticsConfig } from '$lib/analytics/config';
+import { getAnalyticsConfig } from '#lib/analytics/config.ts';
 
 describe('getAnalyticsConfig', () => {
 	it('reports unconfigured when env is unset', () => {

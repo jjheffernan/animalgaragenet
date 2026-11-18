@@ -3,7 +3,7 @@ import {
 	collectSitemapUrls,
 	renderSitemapXml,
 	SITEMAP_STATIC_PATHS
-} from '$lib/server/seo/sitemap';
+} from '#lib/server/seo/sitemap.ts';
 
 describe('sitemap', () => {
 	it('includes nav-linked static paths', () => {

@@ -1,15 +1,24 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
-vi.mock('$env/dynamic/private', () => ({
-	env: {}
+const privateEnv = vi.hoisted(() => ({
+	SALEOR_FREE_SHIPPING_THRESHOLDS: undefined as string | undefined,
+	SALEOR_LOCALE_CHANNELS: undefined as string | undefined
 }));
 
-import { env } from '$env/dynamic/private';
+vi.mock('$app/env/private', () => ({
+	get SALEOR_FREE_SHIPPING_THRESHOLDS() {
+		return privateEnv.SALEOR_FREE_SHIPPING_THRESHOLDS;
+	},
+	get SALEOR_LOCALE_CHANNELS() {
+		return privateEnv.SALEOR_LOCALE_CHANNELS;
+	}
+}));
+
 import { getFreeShippingProgress, getFreeShippingThresholdForLocale } from './shipping-promo';
 
 describe('shipping-promo', () => {
 	beforeEach(() => {
-		vi.mocked(env).SALEOR_FREE_SHIPPING_THRESHOLDS = undefined;
+		privateEnv.SALEOR_FREE_SHIPPING_THRESHOLDS = undefined;
 	});
 
 	afterEach(() => {
@@ -23,7 +32,7 @@ describe('shipping-promo', () => {
 	});
 
 	it('merges SALEOR_FREE_SHIPPING_THRESHOLDS env overrides', () => {
-		vi.mocked(env).SALEOR_FREE_SHIPPING_THRESHOLDS = JSON.stringify({ us: 99 });
+		privateEnv.SALEOR_FREE_SHIPPING_THRESHOLDS = JSON.stringify({ us: 99 });
 		expect(getFreeShippingThresholdForLocale('en-US')).toBe(99);
 	});
 

@@ -1,4 +1,4 @@
-import type { SessionUser } from '$lib/server/supabase/auth';
+import type { SessionUser } from '#lib/server/supabase/auth.ts';
 
 export const DEFAULT_SESSION: SessionUser = {
 	id: 'mock-user-1',

@@ -1,12 +1,12 @@
 import { isActionFailure } from '@sveltejs/kit';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
-vi.mock('$lib/server/supabase/admin', () => ({
+vi.mock('#lib/server/supabase/admin.ts', () => ({
 	createAdminClient: vi.fn()
 }));
 
-import { createAdminClient } from '$lib/server/supabase/admin';
-import { _resetMockStoreForTests } from '$lib/server/featured-sections/repository';
+import { createAdminClient } from '#lib/server/supabase/admin.ts';
+import { _resetMockStoreForTests } from '#lib/server/featured-sections/repository.ts';
 import { actions } from '../../src/routes/admin/featured/+page.server';
 import { load as homepageLoad } from '../../src/routes/+page.server';
 import type { RequestEvent } from '../../src/routes/admin/featured/$types';

@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { COOKIE_CONSENT, COOKIE_PROMO_DISMISSED } from '$lib/cookies';
-import { parseCookieString, serializeCookie } from '$lib/cookies/format';
+import { COOKIE_CONSENT, COOKIE_PROMO_DISMISSED } from '#lib/cookies.ts';
+import { parseCookieString, serializeCookie } from '#lib/cookies/format.ts';
 
 describe('serializeCookie', () => {
 	it('encodes value and applies defaults', () => {

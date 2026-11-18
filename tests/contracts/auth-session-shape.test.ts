@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import type { User } from '@supabase/supabase-js';
-import { isValidRole } from '$lib/auth/roles';
-import { mapSupabaseUser } from '$lib/server/supabase/auth';
+import { isValidRole } from '#lib/auth/roles.ts';
+import { mapSupabaseUser } from '#lib/server/supabase/auth.ts';
 
 function supabaseUserFixture(overrides: Partial<User> = {}): User {
 	return {

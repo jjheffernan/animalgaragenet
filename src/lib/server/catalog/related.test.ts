@@ -1,35 +1,35 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { mockBuilds } from '$lib/data/mock/builds';
-import { mockParts } from '$lib/data/mock/parts';
-import { mockProducts } from '$lib/data/mock/products';
+import { mockBuilds } from '#lib/data/mock/builds.ts';
+import { mockParts } from '#lib/data/mock/parts.ts';
+import { mockProducts } from '#lib/data/mock/products.ts';
 import {
 	getBuildLinkedProducts,
 	getLinkedBuildForProduct,
 	getRelatedCatalogProducts
-} from '$lib/server/catalog/related';
+} from '#lib/server/catalog/related.ts';
 
-vi.mock('$lib/server/saleor/client', () => ({
+vi.mock('#lib/server/saleor/client.ts', () => ({
 	isSaleorEnabled: vi.fn(() => false),
 	saleorFetch: vi.fn()
 }));
 
-vi.mock('$lib/server/builds/public', () => ({
+vi.mock('#lib/server/builds/public.ts', () => ({
 	listPublicBuilds: vi.fn()
 }));
 
-vi.mock('$lib/server/catalog/parts', () => ({
+vi.mock('#lib/server/catalog/parts.ts', () => ({
 	getPartsByCategory: vi.fn(),
 	getPartsProducts: vi.fn()
 }));
 
-vi.mock('$lib/server/catalog/products', () => ({
+vi.mock('#lib/server/catalog/products.ts', () => ({
 	getShopProducts: vi.fn()
 }));
 
-import { isSaleorEnabled } from '$lib/server/saleor/client';
-import { listPublicBuilds } from '$lib/server/builds/public';
-import { getPartsByCategory, getPartsProducts } from '$lib/server/catalog/parts';
-import { getShopProducts } from '$lib/server/catalog/products';
+import { isSaleorEnabled } from '#lib/server/saleor/client.ts';
+import { listPublicBuilds } from '#lib/server/builds/public.ts';
+import { getPartsByCategory, getPartsProducts } from '#lib/server/catalog/parts.ts';
+import { getShopProducts } from '#lib/server/catalog/products.ts';
 
 describe('getRelatedCatalogProducts', () => {
 	beforeEach(() => {

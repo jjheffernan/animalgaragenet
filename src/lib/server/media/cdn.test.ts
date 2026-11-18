@@ -27,20 +27,16 @@ vi.mock('@aws-sdk/s3-request-presigner', () => ({
 	getSignedUrl
 }));
 
-vi.mock('$env/dynamic/private', () => ({
-	env: {
-		S3_BUCKET: 'animalgarage-media',
-		S3_REGION: 'us-west-2',
-		AWS_ACCESS_KEY_ID: 'test-key',
-		AWS_SECRET_ACCESS_KEY: 'test-secret',
-		AWS_CLOUDFRONT_DISTRIBUTION_ID: 'E1234567890'
-	}
+vi.mock('$app/env/private', () => ({
+	S3_BUCKET: 'animalgarage-media',
+	S3_REGION: 'us-west-2',
+	AWS_ACCESS_KEY_ID: 'test-key',
+	AWS_SECRET_ACCESS_KEY: 'test-secret',
+	AWS_CLOUDFRONT_DISTRIBUTION_ID: 'E1234567890'
 }));
 
-vi.mock('$env/dynamic/public', () => ({
-	env: {
-		PUBLIC_CDN_BASE_URL: 'https://cdn.animalgarage.net'
-	}
+vi.mock('$app/env/public', () => ({
+	PUBLIC_CDN_BASE_URL: 'https://cdn.animalgarage.net'
 }));
 
 describe('cdn invalidation', () => {

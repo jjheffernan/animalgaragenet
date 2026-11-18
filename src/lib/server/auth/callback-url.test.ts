@@ -4,10 +4,16 @@ const { publicEnv } = vi.hoisted(() => ({
 	publicEnv: {} as Record<string, string | undefined>
 }));
 
-vi.mock('$env/dynamic/public', () => ({
-	get env() {
-		return publicEnv;
-	}
+vi.mock('$app/env/public', () => ({
+	get PUBLIC_SITE_URL() {
+		return publicEnv.PUBLIC_SITE_URL ?? '';
+	},
+	PUBLIC_CDN_BASE_URL: '',
+	PUBLIC_SALEOR_API_URL: '',
+	PUBLIC_DEFAULT_LOCALE: 'en-US',
+	PUBLIC_DEFAULT_CURRENCY: 'USD',
+	PUBLIC_ANALYTICS_SCRIPT_URL: '',
+	PUBLIC_SUPABASE_URL: ''
 }));
 
 import { buildAuthCallbackUrl, resolveAuthCallbackOrigin } from './callback-url';

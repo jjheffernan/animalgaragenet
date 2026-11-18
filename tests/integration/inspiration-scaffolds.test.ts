@@ -1,32 +1,32 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
-vi.mock('$lib/server/supabase/admin', () => ({
+vi.mock('#lib/server/supabase/admin.ts', () => ({
 	createAdminClient: vi.fn()
 }));
 
-import { createAdminClient } from '$lib/server/supabase/admin';
+import { createAdminClient } from '#lib/server/supabase/admin.ts';
 import {
 	_resetMockStoreForTests as resetRestock,
 	createRestockAlert
-} from '$lib/server/restock/repository';
+} from '#lib/server/restock/repository.ts';
 import {
 	_resetMockStoreForTests as resetNewsletter,
 	subscribeNewsletter
-} from '$lib/server/newsletter/repository';
+} from '#lib/server/newsletter/repository.ts';
 import {
 	createWholesaleInquiry,
 	_resetMockStoreForTests as resetWholesale
-} from '$lib/server/wholesale/repository';
+} from '#lib/server/wholesale/repository.ts';
 import {
 	_resetMockStoreForTests as resetFeatured,
 	getFeaturedSection
-} from '$lib/server/featured-sections/repository';
+} from '#lib/server/featured-sections/repository.ts';
 import {
 	_resetMockStoreForTests as resetGaragePrefs,
 	addGarageXp,
 	getUserGarageState,
 	saveUserVehicles
-} from '$lib/server/user-preferences/repository';
+} from '#lib/server/user-preferences/repository.ts';
 
 describe('inspiration scaffold repositories (mock fallback)', () => {
 	beforeEach(() => {

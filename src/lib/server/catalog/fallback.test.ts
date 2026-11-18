@@ -1,15 +1,15 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { CatalogUnavailableError, guardMockCatalogFallback, withSaleorCatalog } from './fallback';
 
-vi.mock('$lib/server/auth/local-dev', () => ({
+vi.mock('#lib/server/auth/local-dev.ts', () => ({
 	isProductionSiteUrl: vi.fn(() => false)
 }));
 
-vi.mock('$lib/server/saleor/client', () => ({
+vi.mock('#lib/server/saleor/client.ts', () => ({
 	isSaleorEnabled: vi.fn(() => false)
 }));
 
-import { isSaleorEnabled } from '$lib/server/saleor/client';
+import { isSaleorEnabled } from '#lib/server/saleor/client.ts';
 
 describe('guardMockCatalogFallback', () => {
 	it('allows mock fallback off production', () => {
@@ -20,7 +20,7 @@ describe('guardMockCatalogFallback', () => {
 
 describe('guardMockCatalogFallback on production', () => {
 	it('throws when Saleor is not configured', async () => {
-		const { isProductionSiteUrl } = await import('$lib/server/auth/local-dev');
+		const { isProductionSiteUrl } = await import('#lib/server/auth/local-dev.ts');
 		vi.mocked(isProductionSiteUrl).mockReturnValue(true);
 
 		expect(() => guardMockCatalogFallback()).toThrow(CatalogUnavailableError);
@@ -28,7 +28,7 @@ describe('guardMockCatalogFallback on production', () => {
 	});
 
 	it('throws Saleor error message when query failed', async () => {
-		const { isProductionSiteUrl } = await import('$lib/server/auth/local-dev');
+		const { isProductionSiteUrl } = await import('#lib/server/auth/local-dev.ts');
 		vi.mocked(isProductionSiteUrl).mockReturnValue(true);
 
 		expect(() =>
@@ -39,7 +39,7 @@ describe('guardMockCatalogFallback on production', () => {
 
 describe('withSaleorCatalog', () => {
 	beforeEach(async () => {
-		const { isProductionSiteUrl } = await import('$lib/server/auth/local-dev');
+		const { isProductionSiteUrl } = await import('#lib/server/auth/local-dev.ts');
 		vi.mocked(isProductionSiteUrl).mockReturnValue(false);
 		vi.mocked(isSaleorEnabled).mockReturnValue(false);
 	});

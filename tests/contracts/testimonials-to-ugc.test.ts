@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { testimonialsToUgcItems } from '$lib/server/testimonials/to-ugc';
-import type { Testimonial } from '$lib/types/testimonial';
+import { testimonialsToUgcItems } from '#lib/server/testimonials/to-ugc.ts';
+import type { Testimonial } from '#lib/types/testimonial.ts';
 
 function testimonialFixture(overrides: Partial<Testimonial> = {}): Testimonial {
 	return {

@@ -1,10 +1,10 @@
 import { describe, expect, it, beforeEach } from 'vitest';
-import { _resetRateLimitsForTests } from '$lib/server/rate-limit';
+import { _resetRateLimitsForTests } from '#lib/server/rate-limit.ts';
 import {
 	BUILD_SUBMIT_HONEYPOT,
 	checkBuildSubmitRateLimit,
 	isBuildSubmitHoneypotTripped
-} from '$lib/server/build-logs/submit-guard';
+} from '#lib/server/build-logs/submit-guard.ts';
 
 describe('build submit guard', () => {
 	beforeEach(() => {

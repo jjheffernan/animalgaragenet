@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
-import { mockCollections } from '$lib/data/mock/collections';
-import type { Product } from '$lib/types/saleor';
-import type { ShopFilterOption } from '$lib/server/catalog/shop-filters';
+import { mockCollections } from '#lib/data/mock/collections.ts';
+import type { Product } from '#lib/types/saleor.ts';
+import type { ShopFilterOption } from '#lib/server/catalog/shop-filters.ts';
 import { load } from '../../src/routes/shop/+page.server';
 import type { PageServerLoadEvent } from '../../src/routes/shop/$types';
 

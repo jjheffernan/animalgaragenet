@@ -2,17 +2,17 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { GET, PUT } from '../../src/routes/api/account/connections/+server';
 import type { RequestEvent } from '../../src/routes/api/account/connections/$types';
 
-vi.mock('$lib/server/supabase/admin', () => ({
+vi.mock('#lib/server/supabase/admin.ts', () => ({
 	createAdminClient: vi.fn()
 }));
 
-vi.mock('$lib/auth/social-oauth', () => ({
+vi.mock('#lib/auth/social-oauth.ts', () => ({
 	isSocialOAuthConfigured: vi.fn(() => false),
 	socialOAuthAuthorizeUrl: vi.fn(() => null)
 }));
 
-import { createAdminClient } from '$lib/server/supabase/admin';
-import { _resetMockStoreForTests } from '$lib/server/social-connections/repository';
+import { createAdminClient } from '#lib/server/supabase/admin.ts';
+import { _resetMockStoreForTests } from '#lib/server/social-connections/repository.ts';
 
 const session = { id: 'user-connections-test', email: 'u@test.com', name: 'Test', role: 'user' };
 

@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { buildLogToThread, parseModList } from '$lib/server/builds/to-thread';
-import type { BuildLog } from '$lib/types/build-log';
+import { buildLogToThread, parseModList } from '#lib/server/builds/to-thread.ts';
+import type { BuildLog } from '#lib/types/build-log.ts';
 
 function buildLogFixture(overrides: Partial<BuildLog> = {}): BuildLog {
 	return {

@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
-import type { BlogPost, Guide } from '$lib/types/domain';
-import { mapGhostPostToBlogPost, mapGhostPostToGuide } from '$lib/server/ghost/mappers';
-import type { GhostPost } from '$lib/server/ghost/types';
+import type { BlogPost, Guide } from '#lib/types/domain.ts';
+import { mapGhostPostToBlogPost, mapGhostPostToGuide } from '#lib/server/ghost/mappers.ts';
+import type { GhostPost } from '#lib/server/ghost/types.ts';
 
 const ghostPostFixture: GhostPost = {
 	id: 'post-1',

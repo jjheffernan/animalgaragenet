@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { mockParts } from '$lib/data/mock/parts';
+import { mockParts } from '#lib/data/mock/parts.ts';
 import { filterPartsProducts, formatPartsFilterLabel, parsePartsFilters } from './parts-filters';
 
 describe('parsePartsFilters', () => {

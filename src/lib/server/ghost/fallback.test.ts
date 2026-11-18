@@ -1,7 +1,7 @@
 import { describe, expect, it, vi } from 'vitest';
 import { GhostContentUnavailableError, guardMockGhostFallback } from './fallback';
 
-vi.mock('$lib/server/auth/local-dev', () => ({
+vi.mock('#lib/server/auth/local-dev.ts', () => ({
 	isProductionSiteUrl: vi.fn(() => false)
 }));
 
@@ -14,7 +14,7 @@ describe('guardMockGhostFallback', () => {
 
 describe('guardMockGhostFallback on production', () => {
 	it('throws when Ghost fetch failed', async () => {
-		const { isProductionSiteUrl } = await import('$lib/server/auth/local-dev');
+		const { isProductionSiteUrl } = await import('#lib/server/auth/local-dev.ts');
 		vi.mocked(isProductionSiteUrl).mockReturnValue(true);
 
 		expect(() => guardMockGhostFallback({ ghostAttemptFailed: true })).toThrow(

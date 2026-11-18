@@ -1,17 +1,17 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
-vi.mock('$lib/server/saleor/client', () => ({
+vi.mock('#lib/server/saleor/client.ts', () => ({
 	isSaleorEnabled: vi.fn(() => false),
 	saleorFetch: vi.fn()
 }));
 
-vi.mock('$lib/server/catalog/fallback', async (importOriginal) => {
-	const actual = await importOriginal<typeof import('$lib/server/catalog/fallback')>();
+vi.mock('#lib/server/catalog/fallback.ts', async (importOriginal) => {
+	const actual = await importOriginal<typeof import('#lib/server/catalog/fallback.ts')>();
 	return { ...actual, guardMockCatalogFallback: vi.fn() };
 });
 
-import { isSaleorEnabled, saleorFetch } from '$lib/server/saleor/client';
-import { searchCatalog } from '$lib/server/catalog/search';
+import { isSaleorEnabled, saleorFetch } from '#lib/server/saleor/client.ts';
+import { searchCatalog } from '#lib/server/catalog/search.ts';
 
 describe('searchCatalog', () => {
 	beforeEach(() => {

@@ -2,28 +2,28 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { POST } from '../../src/routes/cart/checkout/+server';
 import type { RequestEvent } from '../../src/routes/cart/checkout/$types';
 
-vi.mock('$lib/server/saleor/client', () => ({
+vi.mock('#lib/server/saleor/client.ts', () => ({
 	isSaleorEnabled: vi.fn()
 }));
 
-vi.mock('$lib/server/saleor/checkout', () => ({
+vi.mock('#lib/server/saleor/checkout.ts', () => ({
 	getCheckoutId: vi.fn(),
 	setCheckoutId: vi.fn(),
 	createCheckout: vi.fn(),
 	addCheckoutLine: vi.fn()
 }));
 
-vi.mock('$lib/server/saleor/channels', () => ({
+vi.mock('#lib/server/saleor/channels.ts', () => ({
 	resolveChannelForLocale: vi.fn(async () => 'us')
 }));
 
-import { isSaleorEnabled } from '$lib/server/saleor/client';
+import { isSaleorEnabled } from '#lib/server/saleor/client.ts';
 import {
 	addCheckoutLine,
 	createCheckout,
 	getCheckoutId,
 	setCheckoutId
-} from '$lib/server/saleor/checkout';
+} from '#lib/server/saleor/checkout.ts';
 
 function checkoutEvent(body: unknown, locale = 'en-US'): RequestEvent {
 	const request = new Request(`http://localhost/cart/checkout?locale=${locale}`, {

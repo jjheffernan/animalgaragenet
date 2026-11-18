@@ -2,8 +2,8 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 const validKey = 'media/admin/550e8400-e29b-41d4-a716-446655440000/hero.jpg';
 
-vi.mock('$lib/server/media/cdn', async (importOriginal) => {
-	const actual = await importOriginal<typeof import('$lib/server/media/cdn')>();
+vi.mock('#lib/server/media/cdn.ts', async (importOriginal) => {
+	const actual = await importOriginal<typeof import('#lib/server/media/cdn.ts')>();
 	return {
 		...actual,
 		invalidateCdnPaths: vi.fn(),
@@ -15,7 +15,7 @@ import {
 	collectAdminInvalidationKeys,
 	invalidateCdnPaths,
 	isCdnInvalidationConfigured
-} from '$lib/server/media/cdn';
+} from '#lib/server/media/cdn.ts';
 import { POST } from '../../src/routes/api/admin/media/invalidate/+server';
 import type { RequestEvent } from '../../src/routes/api/admin/media/invalidate/$types';
 

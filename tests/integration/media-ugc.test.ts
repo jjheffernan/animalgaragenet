@@ -1,25 +1,25 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
-vi.mock('$lib/server/supabase/admin', () => ({
+vi.mock('#lib/server/supabase/admin.ts', () => ({
 	createAdminClient: vi.fn()
 }));
 
-vi.mock('$lib/server/testimonials/repository', () => ({
+vi.mock('#lib/server/testimonials/repository.ts', () => ({
 	listFeaturedTestimonials: vi.fn(),
 	listApprovedTestimonials: vi.fn()
 }));
 
-vi.mock('$lib/server/media/repository', () => ({
+vi.mock('#lib/server/media/repository.ts', () => ({
 	enrichTestimonialsWithPhotos: vi.fn(async (items: unknown[]) => items),
 	listApprovedUgcGalleryItems: vi.fn()
 }));
 
-import { mockUGC } from '$lib/data/mock/ugc';
-import { createAdminClient } from '$lib/server/supabase/admin';
+import { mockUGC } from '#lib/data/mock/ugc.ts';
+import { createAdminClient } from '#lib/server/supabase/admin.ts';
 import {
 	listApprovedTestimonials,
 	listFeaturedTestimonials
-} from '$lib/server/testimonials/repository';
+} from '#lib/server/testimonials/repository.ts';
 import { _loadMediaUgcItems } from '../../src/routes/media/+page.server';
 
 describe('/media UGC wall source', () => {

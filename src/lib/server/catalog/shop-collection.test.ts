@@ -1,12 +1,12 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { mockCollections } from '$lib/data/mock/collections';
+import { mockCollections } from '#lib/data/mock/collections.ts';
 
-vi.mock('$lib/server/saleor/client', () => ({
+vi.mock('#lib/server/saleor/client.ts', () => ({
 	isSaleorEnabled: vi.fn(() => false),
 	saleorFetch: vi.fn()
 }));
 
-import { isSaleorEnabled, saleorFetch } from '$lib/server/saleor/client';
+import { isSaleorEnabled, saleorFetch } from '#lib/server/saleor/client.ts';
 import {
 	getShopCollectionOptions,
 	getShopProductsByCollection,

@@ -1,21 +1,21 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { mockCollections } from '$lib/data/mock/collections';
+import { mockCollections } from '#lib/data/mock/collections.ts';
 
-vi.mock('$lib/server/saleor/client', () => ({
+vi.mock('#lib/server/saleor/client.ts', () => ({
 	isSaleorEnabled: vi.fn(() => false),
 	saleorFetch: vi.fn()
 }));
 
-vi.mock('$lib/server/catalog/fallback', async (importOriginal) => {
-	const actual = await importOriginal<typeof import('$lib/server/catalog/fallback')>();
+vi.mock('#lib/server/catalog/fallback.ts', async (importOriginal) => {
+	const actual = await importOriginal<typeof import('#lib/server/catalog/fallback.ts')>();
 	return { ...actual, guardMockCatalogFallback: vi.fn() };
 });
 
-vi.mock('$lib/server/saleor/channels', () => ({
+vi.mock('#lib/server/saleor/channels.ts', () => ({
 	resolveChannelForLocale: vi.fn(async () => 'us')
 }));
 
-import { isSaleorEnabled, saleorFetch } from '$lib/server/saleor/client';
+import { isSaleorEnabled, saleorFetch } from '#lib/server/saleor/client.ts';
 import { getCollections } from './collections';
 
 describe('getCollections', () => {

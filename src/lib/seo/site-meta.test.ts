@@ -8,7 +8,7 @@ import {
 	metaDescriptionFromText
 } from './site-meta';
 
-vi.mock('$lib/config/env', () => ({
+vi.mock('#lib/config/env.ts', () => ({
 	config: { siteUrl: 'https://animalgarage.net' }
 }));
 

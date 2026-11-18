@@ -1,19 +1,19 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import type { CheckoutDisplay, CheckoutLineDisplay } from '$lib/types/checkout';
+import type { CheckoutDisplay, CheckoutLineDisplay } from '#lib/types/checkout.ts';
 import {
 	CHECKOUT_ADD_PROMO_CODE,
 	CHECKOUT_CREATE,
 	CHECKOUT_LINES_ADD,
 	CHECKOUT_REMOVE_PROMO_CODE
-} from '$lib/server/saleor/checkout-queries';
-import { addCheckoutLine, applyPromoCode } from '$lib/server/saleor/checkout';
+} from '#lib/server/saleor/checkout-queries.ts';
+import { addCheckoutLine, applyPromoCode } from '#lib/server/saleor/checkout.ts';
 
-vi.mock('$lib/server/saleor/client', () => ({
+vi.mock('#lib/server/saleor/client.ts', () => ({
 	isSaleorEnabled: vi.fn(() => true),
 	saleorFetch: vi.fn()
 }));
 
-import { saleorFetch } from '$lib/server/saleor/client';
+import { saleorFetch } from '#lib/server/saleor/client.ts';
 
 const CHECKOUT_LINE_KEYS: (keyof CheckoutLineDisplay)[] = [
 	'id',

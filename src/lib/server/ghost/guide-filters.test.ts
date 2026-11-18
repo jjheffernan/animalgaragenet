@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { mockGuides } from '$lib/data/mock/guides';
+import { mockGuides } from '#lib/data/mock/guides.ts';
 import {
 	ALL_GUIDE_FILTER,
 	filterGuidesByCategory,
@@ -7,7 +7,7 @@ import {
 	getGuideFilterOptions,
 	resolveGuideFilter,
 	type GuideFilterOption
-} from '$lib/server/ghost/guide-filters';
+} from '#lib/server/ghost/guide-filters.ts';
 
 vi.mock('./client', () => ({
 	isGhostEnabled: vi.fn(() => false),

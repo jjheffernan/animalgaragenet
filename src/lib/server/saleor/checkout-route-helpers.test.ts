@@ -1,10 +1,10 @@
 import { describe, expect, it, vi } from 'vitest';
 
-vi.mock('$lib/server/saleor/client', () => ({
+vi.mock('#lib/server/saleor/client.ts', () => ({
 	isSaleorEnabled: vi.fn()
 }));
 
-import { isSaleorEnabled } from '$lib/server/saleor/client';
+import { isSaleorEnabled } from '#lib/server/saleor/client.ts';
 import {
 	requireSaleorEnabled,
 	requireSaleorPaymentEnabled,

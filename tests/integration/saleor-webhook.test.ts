@@ -1,28 +1,32 @@
 import { createHmac } from 'node:crypto';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
-vi.mock('$env/dynamic/private', () => ({
-	env: {} as Record<string, string | undefined>
+const privateEnv = vi.hoisted(() => ({
+	SALEOR_WEBHOOK_SECRET: undefined as string | undefined
 }));
 
-vi.mock('$lib/server/supabase/admin', () => ({
-	createAdminClient: vi.fn()
+vi.mock('$app/env/private', () => ({
+	get SALEOR_WEBHOOK_SECRET() {
+		return privateEnv.SALEOR_WEBHOOK_SECRET;
+	}
 }));
-
-vi.mock('$lib/server/supabase/admin-users', () => ({
+vi.mock('#lib/server/supabase/admin.ts', () => ({ createAdminClient: vi.fn() }));
+vi.mock('#lib/server/supabase/admin-users.ts', () => ({
 	findUserByEmail: vi.fn(),
 	resolveUserIdByEmail: vi.fn()
 }));
 
-import { env } from '$env/dynamic/private';
-import { createAdminClient } from '$lib/server/supabase/admin';
-import { resolveUserIdByEmail } from '$lib/server/supabase/admin-users';
-import { _resetMockStoreForTests, listOrderSnapshotsForUser } from '$lib/server/orders/snapshots';
+import { createAdminClient } from '#lib/server/supabase/admin.ts';
+import { resolveUserIdByEmail } from '#lib/server/supabase/admin-users.ts';
+import {
+	_resetMockStoreForTests,
+	listOrderSnapshotsForUser
+} from '#lib/server/orders/snapshots.ts';
 import {
 	_resetMockStoreForTests as resetRestock,
 	createRestockAlert,
 	listPendingRestockAlerts
-} from '$lib/server/restock/repository';
+} from '#lib/server/restock/repository.ts';
 import { POST } from '../../src/routes/api/webhooks/saleor/+server';
 
 function sign(body: string, secret: string): string {
@@ -57,12 +61,12 @@ describe('POST /api/webhooks/saleor', () => {
 		vi.mocked(createAdminClient).mockReturnValue(null);
 		_resetMockStoreForTests();
 		resetRestock();
-		env.SALEOR_WEBHOOK_SECRET = 'saleor-test-secret';
+		privateEnv.SALEOR_WEBHOOK_SECRET = 'saleor-test-secret';
 	});
 
 	afterEach(() => {
 		vi.clearAllMocks();
-		delete env.SALEOR_WEBHOOK_SECRET;
+		privateEnv.SALEOR_WEBHOOK_SECRET = undefined;
 	});
 
 	it('mirrors ORDER_CREATED when signature is valid', async () => {

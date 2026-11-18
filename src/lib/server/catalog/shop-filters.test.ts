@@ -1,5 +1,5 @@
 import { describe, expect, it, vi, beforeEach, afterEach } from 'vitest';
-import { SHOP_CATEGORIES, getShopCategoryGroup } from '$lib/data/catalog-helpers';
+import { SHOP_CATEGORIES, getShopCategoryGroup } from '#lib/data/catalog-helpers.ts';
 import {
 	ALL_SHOP_FILTER,
 	filterProductsByShopSlug,
@@ -8,14 +8,14 @@ import {
 	groupShopFilterOptions,
 	resolveShopFilter,
 	type ShopFilterOption
-} from '$lib/server/catalog/shop-filters';
+} from '#lib/server/catalog/shop-filters.ts';
 
-vi.mock('$lib/server/saleor/client', () => ({
+vi.mock('#lib/server/saleor/client.ts', () => ({
 	isSaleorEnabled: vi.fn(() => false),
 	saleorFetch: vi.fn()
 }));
 
-import { isSaleorEnabled, saleorFetch } from '$lib/server/saleor/client';
+import { isSaleorEnabled, saleorFetch } from '#lib/server/saleor/client.ts';
 
 describe('getShopFilterOptions', () => {
 	beforeEach(() => {

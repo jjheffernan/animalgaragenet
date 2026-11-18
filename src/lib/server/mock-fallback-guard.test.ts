@@ -8,7 +8,7 @@ class TestUnavailableError extends Error {
 	}
 }
 
-vi.mock('$lib/server/auth/local-dev', () => ({
+vi.mock('#lib/server/auth/local-dev.ts', () => ({
 	isProductionSiteUrl: vi.fn(() => false)
 }));
 
@@ -23,7 +23,7 @@ describe('guardProductionMockFallback', () => {
 	});
 
 	it('throws missing-config message on production', async () => {
-		const { isProductionSiteUrl } = await import('$lib/server/auth/local-dev');
+		const { isProductionSiteUrl } = await import('#lib/server/auth/local-dev.ts');
 		vi.mocked(isProductionSiteUrl).mockReturnValue(true);
 
 		expect(() =>
@@ -41,7 +41,7 @@ describe('guardProductionMockFallback', () => {
 	});
 
 	it('throws upstream error message when attempt failed', async () => {
-		const { isProductionSiteUrl } = await import('$lib/server/auth/local-dev');
+		const { isProductionSiteUrl } = await import('#lib/server/auth/local-dev.ts');
 		vi.mocked(isProductionSiteUrl).mockReturnValue(true);
 
 		expect(() =>

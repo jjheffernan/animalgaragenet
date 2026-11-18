@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it } from 'vitest';
-import { _resetRateLimitsForTests } from '$lib/server/rate-limit';
+import { _resetRateLimitsForTests } from '#lib/server/rate-limit.ts';
 import { parseRateLimitedJsonPost } from './parse-rate-limited-json';
 
 afterEach(() => {

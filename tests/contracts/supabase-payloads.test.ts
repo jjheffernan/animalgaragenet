@@ -1,22 +1,22 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
-vi.mock('$lib/server/supabase/admin', () => ({
+vi.mock('#lib/server/supabase/admin.ts', () => ({
 	createAdminClient: vi.fn()
 }));
 
-import { createAdminClient } from '$lib/server/supabase/admin';
+import { createAdminClient } from '#lib/server/supabase/admin.ts';
 import {
 	_resetMockStoreForTests as resetBuildLogs,
 	createBuildLogDraft,
 	moderateBuildLog,
 	updateBuildLog
-} from '$lib/server/build-logs/repository';
+} from '#lib/server/build-logs/repository.ts';
 import {
 	_resetMockStoreForTests as resetTestimonials,
 	createTestimonial,
 	moderateTestimonial
-} from '$lib/server/testimonials/repository';
-import { submitFormStub } from '$lib/server/forms/submit';
+} from '#lib/server/testimonials/repository.ts';
+import { submitFormStub } from '#lib/server/forms/submit.ts';
 
 const VALID_UUID = '550e8400-e29b-41d4-a716-446655440000';
 

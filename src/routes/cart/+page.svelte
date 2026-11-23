@@ -78,8 +78,10 @@
 							<div>
 								<a
 									href={resolve(`shop/${line.productSlug}`)}
-									class="font-medium text-white hover:text-red-400">{line.productName}</a
+									class="font-medium text-white hover:text-red-400"
 								>
+									{line.productName}
+								</a>
 								<p class="text-sm text-zinc-500">{line.variantName}</p>
 							</div>
 							<div class="flex items-center gap-4">
@@ -88,21 +90,25 @@
 										type="button"
 										onclick={() => updateSaleorQty(line.id, line.quantity - 1)}
 										class="flex h-8 w-8 items-center justify-center rounded-sm border border-zinc-700 text-zinc-400 transition hover:border-zinc-500 hover:text-white"
-										>−</button
 									>
+										−
+									</button>
 									<span class="w-8 text-center text-white">{line.quantity}</span>
 									<button
 										type="button"
 										onclick={() => updateSaleorQty(line.id, line.quantity + 1)}
 										class="flex h-8 w-8 items-center justify-center rounded-sm border border-zinc-700 text-zinc-400 transition hover:border-zinc-500 hover:text-white"
-										>+</button
 									>
+										+
+									</button>
 								</div>
 								<button
 									type="button"
 									onclick={() => cart.removeSaleorLine(line.id)}
-									class="text-xs text-zinc-600 hover:text-red-500">Remove</button
+									class="text-xs text-zinc-600 hover:text-red-500"
 								>
+									Remove
+								</button>
 								<p class="ml-auto font-medium text-white">
 									{locale.formatMoneyValue(line.lineTotal)}
 								</p>
@@ -124,8 +130,10 @@
 							<div>
 								<a
 									href={resolve(`shop/${item.product.slug}`)}
-									class="font-medium text-white hover:text-red-400">{item.product.name}</a
+									class="font-medium text-white hover:text-red-400"
 								>
+									{item.product.name}
+								</a>
 								<p class="text-sm text-zinc-500">{item.variant.name}</p>
 							</div>
 							<div class="flex items-center gap-4">
@@ -134,15 +142,17 @@
 										type="button"
 										onclick={() => updateQty(item.product.id, item.variant.id, -1)}
 										class="flex h-8 w-8 items-center justify-center rounded-sm border border-zinc-700 text-zinc-400 transition hover:border-zinc-500 hover:text-white"
-										>−</button
 									>
+										−
+									</button>
 									<span class="w-8 text-center text-white">{item.quantity}</span>
 									<button
 										type="button"
 										onclick={() => updateQty(item.product.id, item.variant.id, 1)}
 										class="flex h-8 w-8 items-center justify-center rounded-sm border border-zinc-700 text-zinc-400 transition hover:border-zinc-500 hover:text-white"
-										>+</button
 									>
+										+
+									</button>
 								</div>
 								<p class="ml-auto font-medium text-white">
 									{locale.formatPrice(

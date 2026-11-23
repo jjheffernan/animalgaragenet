@@ -41,9 +41,9 @@
 </label>
 
 <label class="block">
-	<span class="text-xs font-bold tracking-widest text-zinc-500 uppercase"
-		>Vehicle / Build (optional)</span
-	>
+	<span class="text-xs font-bold tracking-widest text-zinc-500 uppercase">
+		Vehicle / Build (optional)
+	</span>
 	<input
 		type="text"
 		name="vehicleSummary"

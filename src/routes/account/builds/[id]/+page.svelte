@@ -15,9 +15,9 @@
 
 <div class="flex flex-wrap items-center justify-between gap-3">
 	<h1 class="font-display text-2xl font-bold text-white uppercase">Edit Build Log</h1>
-	<span class="text-xs font-bold tracking-wider text-zinc-500 uppercase"
-		>{BUILD_LOG_STATUS_LABELS[data.log.status]}</span
-	>
+	<span class="text-xs font-bold tracking-wider text-zinc-500 uppercase">
+		{BUILD_LOG_STATUS_LABELS[data.log.status]}
+	</span>
 </div>
 
 {#if data.log.status === 'pending'}
@@ -71,11 +71,12 @@
 			formaction="?/submit"
 			disabled={saving}
 			class="rounded-sm bg-red-600 px-4 py-2 text-sm font-bold tracking-wider text-white uppercase transition hover:bg-red-500 disabled:opacity-50"
-			>{data.log.status === 'approved' ? 'Submit edits for review' : 'Submit for review'}</button
 		>
+			{data.log.status === 'approved' ? 'Submit edits for review' : 'Submit for review'}
+		</button>
 
-		<a href={resolve('account/builds')} class="text-sm text-zinc-400 transition hover:text-white"
-			>Cancel</a
-		>
+		<a href={resolve('account/builds')} class="text-sm text-zinc-400 transition hover:text-white">
+			Cancel
+		</a>
 	</div>
 </form>

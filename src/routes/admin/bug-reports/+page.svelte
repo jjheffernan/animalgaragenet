@@ -60,9 +60,9 @@
 	<p class="-mt-2 text-sm text-zinc-400">
 		Read-only inbox for submissions from
 
-		<a href={resolve('support/report-bug')} class="text-red-400 hover:text-red-300"
-			>/support/report-bug</a
-		>
+		<a href={resolve('support/report-bug')} class="text-red-400 hover:text-red-300">
+			/support/report-bug
+		</a>
 
 		.
 
@@ -78,30 +78,31 @@
 	{:else}
 		<div class="flex flex-wrap items-center justify-between gap-3">
 			<div class="flex flex-wrap gap-2">
-				<button type="button" class={filterClass('all')} onclick={() => (statusFilter = 'all')}
-					>All ({data.reports.length})</button
-				>
+				<button type="button" class={filterClass('all')} onclick={() => (statusFilter = 'all')}>
+					All ({data.reports.length})
+				</button>
 
-				<button type="button" class={filterClass('open')} onclick={() => (statusFilter = 'open')}
-					>Open ({data.reports.filter((r) => r.status === 'open').length})</button
-				>
+				<button type="button" class={filterClass('open')} onclick={() => (statusFilter = 'open')}>
+					Open ({data.reports.filter((r) => r.status === 'open').length})
+				</button>
 
 				<button
 					type="button"
 					class={filterClass('resolved')}
 					onclick={() => (statusFilter = 'resolved')}
-					>Resolved ({data.reports.filter((r) => r.status === 'resolved').length})</button
 				>
+					Resolved ({data.reports.filter((r) => r.status === 'resolved').length})
+				</button>
 			</div>
 
 			<div class="flex gap-2" role="tablist" aria-label="Bug report layout">
-				<button type="button" class={viewClass('inbox')} onclick={() => (viewMode = 'inbox')}
-					>Inbox</button
-				>
+				<button type="button" class={viewClass('inbox')} onclick={() => (viewMode = 'inbox')}>
+					Inbox
+				</button>
 
-				<button type="button" class={viewClass('table')} onclick={() => (viewMode = 'table')}
-					>Table</button
-				>
+				<button type="button" class={viewClass('table')} onclick={() => (viewMode = 'table')}>
+					Table
+				</button>
 			</div>
 		</div>
 
@@ -165,13 +166,13 @@
 										</p>
 									</td>
 
-									<td class="px-4 py-3 text-sm whitespace-nowrap text-zinc-400"
-										>{report.email ?? 'Anonymous'}</td
-									>
+									<td class="px-4 py-3 text-sm whitespace-nowrap text-zinc-400">
+										{report.email ?? 'Anonymous'}
+									</td>
 
-									<td class="px-4 py-3 text-xs whitespace-nowrap text-zinc-500"
-										>{formatWhen(report.createdAt)}</td
-									>
+									<td class="px-4 py-3 text-xs whitespace-nowrap text-zinc-500">
+										{formatWhen(report.createdAt)}
+									</td>
 
 									<td
 										class="max-w-[12rem] truncate px-4 py-3 font-mono text-xs text-zinc-500"

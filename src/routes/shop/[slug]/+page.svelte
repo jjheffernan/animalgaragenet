@@ -68,9 +68,9 @@
 		{#if product.category}
 			<span class="mx-2">/</span>
 
-			<a href={resolve(`shop?category=${product.category.slug}`)} class="hover:text-red-500"
-				>{product.category.name}</a
-			>
+			<a href={resolve(`shop?category=${product.category.slug}`)} class="hover:text-red-500">
+				{product.category.name}
+			</a>
 		{/if}
 		<span class="mx-2">/</span>
 		<span class="text-zinc-300">{product.name}</span>
@@ -131,8 +131,9 @@
 			{#if soldOut}
 				<span
 					class="mt-2 inline-block rounded-sm bg-zinc-950 px-3 py-1 text-xs font-bold text-white uppercase"
-					>Sold Out</span
 				>
+					Sold Out
+				</span>
 			{/if}
 
 			<div class="mt-6 flex items-center gap-4">

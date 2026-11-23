@@ -75,7 +75,8 @@
 		<a
 			href={resolve('watch')}
 			class="text-sm font-bold tracking-widest text-red-500 uppercase hover:text-red-400"
-			>Full video hub →</a
 		>
+			Full video hub →
+		</a>
 	</div>
 </section>

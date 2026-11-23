@@ -73,7 +73,7 @@
 		</p>
 	{/if}
 
-	<a href={resolve('cart')} class="mt-4 inline-block text-sm text-red-500 hover:text-red-400"
-		>View cart →</a
-	>
+	<a href={resolve('cart')} class="mt-4 inline-block text-sm text-red-500 hover:text-red-400">
+		View cart →
+	</a>
 </section>

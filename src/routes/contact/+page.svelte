@@ -95,9 +95,9 @@
 					>
 						<option value="" disabled selected={!form?.subject}>Select a topic</option>
 						<option value="Order" selected={form?.subject === 'Order'}>Order question</option>
-						<option value="Returns" selected={form?.subject === 'Returns'}
-							>Returns &amp; refunds</option
-						>
+						<option value="Returns" selected={form?.subject === 'Returns'}>
+							Returns &amp; refunds
+						</option>
 						<option value="Parts" selected={form?.subject === 'Parts'}>Parts &amp; fitment</option>
 						<option value="Wholesale" selected={form?.subject === 'Wholesale'}>Wholesale</option>
 						<option value="Other" selected={form?.subject === 'Other'}>Other</option>

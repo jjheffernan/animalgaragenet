@@ -52,14 +52,14 @@
 						</span>
 					</div>
 					<div class="mt-3 flex flex-wrap gap-3 text-sm">
-						<a href={resolve(`account/builds/${log.id}`)} class="text-red-500 hover:text-red-400"
-							>Edit</a
-						>
+						<a href={resolve(`account/builds/${log.id}`)} class="text-red-500 hover:text-red-400">
+							Edit
+						</a>
 
 						{#if log.status === 'approved' && log.slug}
-							<a href={resolve(`builds/${log.slug}`)} class="text-zinc-400 hover:text-white"
-								>View published</a
-							>
+							<a href={resolve(`builds/${log.slug}`)} class="text-zinc-400 hover:text-white">
+								View published
+							</a>
 						{/if}
 					</div>
 				</li>

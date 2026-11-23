@@ -76,8 +76,10 @@
 					<a
 						href={resolve('account')}
 						class="block px-4 py-2 text-sm text-zinc-300 hover:bg-zinc-800 hover:text-white"
-						role="menuitem">Account</a
+						role="menuitem"
 					>
+						Account
+					</a>
 
 					<form method="POST" action={resolvePath('/auth/sign-out')}>
 						<button

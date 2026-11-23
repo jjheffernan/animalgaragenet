@@ -61,9 +61,9 @@
 		aria-haspopup="listbox"
 		onclick={toggle}
 	>
-		<span aria-hidden="true" class="{size === 'lg' ? 'text-2xl' : 'text-lg'} leading-none"
-			>{current.flag}</span
-		>
+		<span aria-hidden="true" class="{size === 'lg' ? 'text-2xl' : 'text-lg'} leading-none">
+			{current.flag}
+		</span>
 		<span class="{size === 'lg' ? 'text-xl' : 'text-base'} font-semibold">{symbol}</span>
 		{#if size === 'lg'}
 			<span class="text-base font-medium text-zinc-400">{current.label}</span>

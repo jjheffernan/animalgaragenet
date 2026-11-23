@@ -352,16 +352,16 @@
 							</legend>
 							{#if !data.saleorEnabled}
 								<p class="text-sm text-zinc-500">
-									Shipping is saved locally for preview. Set <code class="text-zinc-400"
-										>PUBLIC_SALEOR_API_URL</code
-									> to sync with Saleor.
+									Shipping is saved locally for preview. Set <code class="text-zinc-400">
+										PUBLIC_SALEOR_API_URL
+									</code> to sync with Saleor.
 								</p>
 							{/if}
 							<div class="grid gap-4 sm:grid-cols-2">
 								<label class="block">
-									<span class="text-xs font-bold tracking-widest text-zinc-500 uppercase"
-										>First name</span
-									>
+									<span class="text-xs font-bold tracking-widest text-zinc-500 uppercase">
+										First name
+									</span>
 									<input
 										type="text"
 										name="firstName"
@@ -372,9 +372,9 @@
 									/>
 								</label>
 								<label class="block">
-									<span class="text-xs font-bold tracking-widest text-zinc-500 uppercase"
-										>Last name</span
-									>
+									<span class="text-xs font-bold tracking-widest text-zinc-500 uppercase">
+										Last name
+									</span>
 									<input
 										type="text"
 										name="lastName"
@@ -385,9 +385,9 @@
 									/>
 								</label>
 								<label class="block sm:col-span-2">
-									<span class="text-xs font-bold tracking-widest text-zinc-500 uppercase"
-										>Address</span
-									>
+									<span class="text-xs font-bold tracking-widest text-zinc-500 uppercase">
+										Address
+									</span>
 									<input
 										type="text"
 										name="streetAddress1"
@@ -398,8 +398,9 @@
 									/>
 								</label>
 								<label class="block">
-									<span class="text-xs font-bold tracking-widest text-zinc-500 uppercase">City</span
-									>
+									<span class="text-xs font-bold tracking-widest text-zinc-500 uppercase">
+										City
+									</span>
 									<input
 										type="text"
 										name="city"
@@ -410,9 +411,9 @@
 									/>
 								</label>
 								<label class="block">
-									<span class="text-xs font-bold tracking-widest text-zinc-500 uppercase"
-										>State / Province</span
-									>
+									<span class="text-xs font-bold tracking-widest text-zinc-500 uppercase">
+										State / Province
+									</span>
 									<input
 										type="text"
 										name="countryArea"
@@ -422,9 +423,9 @@
 									/>
 								</label>
 								<label class="block">
-									<span class="text-xs font-bold tracking-widest text-zinc-500 uppercase"
-										>ZIP / Postal code</span
-									>
+									<span class="text-xs font-bold tracking-widest text-zinc-500 uppercase">
+										ZIP / Postal code
+									</span>
 									<input
 										type="text"
 										name="postalCode"
@@ -435,9 +436,9 @@
 									/>
 								</label>
 								<label class="block">
-									<span class="text-xs font-bold tracking-widest text-zinc-500 uppercase"
-										>Country</span
-									>
+									<span class="text-xs font-bold tracking-widest text-zinc-500 uppercase">
+										Country
+									</span>
 									<select
 										name="country"
 										bind:value={country}
@@ -486,9 +487,9 @@
 											/>
 											<span class="text-sm text-white">{method.name}</span>
 										</span>
-										<span class="text-sm text-zinc-300"
-											>{locale.formatPrice(method.price.amount, method.price.currency)}</span
-										>
+										<span class="text-sm text-zinc-300">
+											{locale.formatPrice(method.price.amount, method.price.currency)}
+										</span>
 									</label>
 								{/each}
 							</fieldset>
@@ -573,9 +574,9 @@
 											<p class="truncate font-medium text-white">{line.productName}</p>
 											<p class="text-xs text-zinc-500">Qty {line.quantity}</p>
 										</div>
-										<span class="shrink-0 text-zinc-300"
-											>{locale.formatPrice(line.lineTotal.amount, line.lineTotal.currency)}</span
-										>
+										<span class="shrink-0 text-zinc-300">
+											{locale.formatPrice(line.lineTotal.amount, line.lineTotal.currency)}
+										</span>
 									</li>
 								{/each}
 							{:else}
@@ -597,12 +598,12 @@
 												<CatalogKindBadge {product} />
 											</div>
 										</div>
-										<span class="shrink-0 text-zinc-300"
-											>{locale.formatPrice(
+										<span class="shrink-0 text-zinc-300">
+											{locale.formatPrice(
 												variant.pricing.price.amount * item.quantity,
 												variant.pricing.price.currency
-											)}</span
-										>
+											)}
+										</span>
 									</li>
 								{/each}
 							{/if}
@@ -610,9 +611,9 @@
 						<div class="mt-4 space-y-2 text-sm">
 							<div class="flex justify-between text-zinc-400">
 								<span>Subtotal</span>
-								<span class="text-white"
-									>{locale.formatPrice(summarySubtotal, summaryCurrency)}</span
-								>
+								<span class="text-white">
+									{locale.formatPrice(summarySubtotal, summaryCurrency)}
+								</span>
 							</div>
 							<div class="flex justify-between text-zinc-400">
 								<span>Shipping</span>

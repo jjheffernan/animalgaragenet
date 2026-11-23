@@ -153,8 +153,9 @@
 														Add
 													</button>
 												{:else}
-													<span class="text-[10px] font-bold text-zinc-500 uppercase">Sold out</span
-													>
+													<span class="text-[10px] font-bold text-zinc-500 uppercase">
+														Sold out
+													</span>
 												{/if}
 											</div>
 										</div>

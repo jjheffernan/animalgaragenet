@@ -55,9 +55,9 @@
 		<SectionHeading title="All Videos" subtitle="{pagination.total} videos" />
 	</AnimatedReveal>
 
-	<PaginatedListCanvas {pagination} class="mt-8"
-		><VideoGrid {videos} onselect={handleVideoSelect} /></PaginatedListCanvas
-	>
+	<PaginatedListCanvas {pagination} class="mt-8">
+		<VideoGrid {videos} onselect={handleVideoSelect} />
+	</PaginatedListCanvas>
 </section>
 
 <VideoDetailPanel onclose={handleClose} />

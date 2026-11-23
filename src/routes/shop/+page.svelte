@@ -86,9 +86,9 @@
 					></span>
 				{/if}
 				{#if group.label}
-					<span class="{ribbonSectionLabelClass} hidden shrink-0 self-center sm:inline"
-						>{group.label}</span
-					>
+					<span class="{ribbonSectionLabelClass} hidden shrink-0 self-center sm:inline">
+						{group.label}
+					</span>
 				{/if}
 				{#each group.options as cat (cat.slug)}
 					<CategoryPill
@@ -101,8 +101,9 @@
 			{#if data.collections.length > 0}
 				<div class="ms-2 shrink-0 border-l border-zinc-800 pl-2">
 					<label class="flex items-center gap-2">
-						<span class="text-xs font-bold tracking-widest text-zinc-500 uppercase">Collection</span
-						>
+						<span class="text-xs font-bold tracking-widest text-zinc-500 uppercase">
+							Collection
+						</span>
 						<select
 							class="max-w-[12rem] truncate rounded-sm border border-zinc-700 bg-zinc-900 px-3 py-2 text-xs font-bold tracking-wider text-zinc-200 uppercase focus:border-red-600 focus:outline-none {data.collection
 								? 'border-red-600 text-white'

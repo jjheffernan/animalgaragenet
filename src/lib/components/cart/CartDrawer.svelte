@@ -77,15 +77,17 @@
 										type="button"
 										class="flex h-6 w-6 items-center justify-center rounded-sm border border-zinc-700 text-zinc-400 transition hover:border-zinc-500 hover:text-white"
 										onclick={() => cart.updateSaleorLineQuantity(line.id, line.quantity - 1)}
-										>−</button
 									>
+										−
+									</button>
 									<span class="text-sm text-white">{line.quantity}</span>
 									<button
 										type="button"
 										class="flex h-6 w-6 items-center justify-center rounded-sm border border-zinc-700 text-zinc-400 transition hover:border-zinc-500 hover:text-white"
 										onclick={() => cart.updateSaleorLineQuantity(line.id, line.quantity + 1)}
-										>+</button
 									>
+										+
+									</button>
 								</div>
 								<span class="text-sm text-zinc-400">
 									{locale.formatMoneyValue(line.lineTotal)}
@@ -120,8 +122,10 @@
 								<a
 									href={resolvePath(getProductPath(product))}
 									class="truncate text-sm font-medium text-white hover:text-red-400"
-									onclick={() => onclose?.()}>{product.name}</a
+									onclick={() => onclose?.()}
 								>
+									{product.name}
+								</a>
 
 								<CatalogKindBadge {product} />
 							</div>
@@ -133,16 +137,18 @@
 										class="flex h-6 w-6 items-center justify-center rounded-sm border border-zinc-700 text-zinc-400 transition hover:border-zinc-500 hover:text-white"
 										onclick={() =>
 											cart.updateQuantity(item.productId, item.variantId, item.quantity - 1)}
-										>−</button
 									>
+										−
+									</button>
 									<span class="text-sm text-white">{item.quantity}</span>
 									<button
 										type="button"
 										class="flex h-6 w-6 items-center justify-center rounded-sm border border-zinc-700 text-zinc-400 transition hover:border-zinc-500 hover:text-white"
 										onclick={() =>
 											cart.updateQuantity(item.productId, item.variantId, item.quantity + 1)}
-										>+</button
 									>
+										+
+									</button>
 								</div>
 								<span class="text-sm text-zinc-400">
 									{locale.formatPrice(
@@ -213,12 +219,12 @@
 		{#if cart.saleorDiscountAmount > 0}
 			<div class="flex justify-between text-sm text-emerald-400">
 				<span>Discount</span>
-				<span
-					>-{locale.formatPrice(
+				<span>
+					-{locale.formatPrice(
 						cart.saleorDiscountAmount,
 						cart.checkout?.discount?.currency ?? cart.subtotalCurrency
-					)}</span
-				>
+					)}
+				</span>
 			</div>
 		{/if}
 		{#if cart.mockDiscountAmount > 0}
@@ -229,9 +235,9 @@
 		{/if}
 		<div class="flex justify-between text-sm">
 			<span class="text-zinc-400">Subtotal</span>
-			<span class="font-medium text-white"
-				>{locale.formatPrice(cart.subtotal, cart.subtotalCurrency)}</span
-			>
+			<span class="font-medium text-white">
+				{locale.formatPrice(cart.subtotal, cart.subtotalCurrency)}
+			</span>
 		</div>
 		<div class="mt-4">
 			<CartActions empty={cart.itemCount === 0} size="drawer" onNavigate={() => onclose?.()} />

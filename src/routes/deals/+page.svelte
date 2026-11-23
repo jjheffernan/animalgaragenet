@@ -26,9 +26,9 @@
 		<div class="grid gap-4 sm:grid-cols-2">
 			{#each data.deals as deal (deal.id)}
 				<div class="rounded-sm border border-red-900/50 bg-red-950/10 p-6">
-					<span class="rounded-sm bg-red-600 px-2 py-1 text-xs font-bold text-white uppercase"
-						>{deal.discountLabel}</span
-					>
+					<span class="rounded-sm bg-red-600 px-2 py-1 text-xs font-bold text-white uppercase">
+						{deal.discountLabel}
+					</span>
 					<h2 class="mt-3 font-display text-xl font-bold text-white uppercase">{deal.title}</h2>
 					<p class="mt-2 text-zinc-400">{deal.description}</p>
 					{#if deal.expiresAt}

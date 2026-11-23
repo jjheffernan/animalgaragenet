@@ -118,8 +118,10 @@
 								role="tab"
 								aria-selected={activePartsTab === tab.id}
 								class={categoryPillClass(activePartsTab === tab.id)}
-								onclick={() => (activePartsTab = tab.id)}>{tab.label}</button
+								onclick={() => (activePartsTab = tab.id)}
 							>
+								{tab.label}
+							</button>
 						{/each}
 					</div>
 					<div role="tabpanel">

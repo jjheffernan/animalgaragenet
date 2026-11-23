@@ -19,9 +19,9 @@
 				<h2 class="font-display text-lg font-bold text-white uppercase">How to Verify</h2>
 				<p class="mt-3">
 					When Saleor checkout goes live, you will verify once through our secure partner portal.
-					Your military status is stored on your account and the <strong class="text-zinc-300"
-						>15% discount applies automatically</strong
-					> at checkout — no promo code needed.
+					Your military status is stored on your account and the <strong class="text-zinc-300">
+						15% discount applies automatically
+					</strong> at checkout — no promo code needed.
 				</p>
 				<div class="mt-6 flex flex-wrap gap-4">
 					<div class="rounded-sm border border-zinc-700 bg-zinc-900/50 px-6 py-4">

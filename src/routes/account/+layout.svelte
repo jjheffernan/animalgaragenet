@@ -47,9 +47,9 @@
 			</nav>
 
 			<form method="POST" action={resolvePath('/auth/sign-out')} class="mt-8">
-				<button type="submit" class="text-sm text-zinc-500 transition hover:text-red-400"
-					>Sign out</button
-				>
+				<button type="submit" class="text-sm text-zinc-500 transition hover:text-red-400">
+					Sign out
+				</button>
 			</form>
 		</aside>
 

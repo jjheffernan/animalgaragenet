@@ -260,8 +260,9 @@
 			>
 				<span
 					class="flex size-9 shrink-0 items-center justify-center bg-red-600 text-sm font-black tracking-tighter text-white transition-transform group-hover:scale-105"
-					>AG</span
 				>
+					AG
+				</span>
 				<span
 					class="hidden truncate font-display text-lg font-bold tracking-widest text-white uppercase sm:block"
 				>
@@ -283,8 +284,10 @@
 						class="truncate text-sm font-medium tracking-wider uppercase transition-colors {activeMenu ===
 						'shop'
 							? 'text-white'
-							: 'text-zinc-400 hover:text-white'}">Shop</a
+							: 'text-zinc-400 hover:text-white'}"
 					>
+						Shop
+					</a>
 
 					<button
 						type="button"
@@ -323,8 +326,10 @@
 						class="truncate text-sm font-medium tracking-wider uppercase transition-colors {activeMenu ===
 						'parts'
 							? 'text-white'
-							: 'text-zinc-400 hover:text-white'}">Parts</a
+							: 'text-zinc-400 hover:text-white'}"
 					>
+						Parts
+					</a>
 
 					<button
 						type="button"
@@ -365,8 +370,10 @@
 						class="truncate text-sm font-medium tracking-wider uppercase transition-colors {communityMenuOpen ||
 						isCommunityActive
 							? 'text-white'
-							: 'text-zinc-400 hover:text-white'}">Community</a
+							: 'text-zinc-400 hover:text-white'}"
 					>
+						Community
+					</a>
 
 					<button
 						type="button"

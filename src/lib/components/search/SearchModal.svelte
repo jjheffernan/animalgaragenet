@@ -64,8 +64,9 @@
 				/>
 				<kbd
 					class="hidden rounded-sm border border-zinc-700 px-1.5 py-0.5 text-[10px] text-zinc-500 sm:inline"
-					>ESC</kbd
 				>
+					ESC
+				</kbd>
 			</div>
 
 			<div class="max-h-[50vh] overflow-y-auto p-4">

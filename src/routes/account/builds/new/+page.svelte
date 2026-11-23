@@ -23,8 +23,10 @@
 		<p class="text-sm text-emerald-300">{form.message}</p>
 		<a
 			href={resolve('account/builds')}
-			class="mt-3 inline-block text-sm text-red-500 hover:text-red-400">← My build logs</a
+			class="mt-3 inline-block text-sm text-red-500 hover:text-red-400"
 		>
+			← My build logs
+		</a>
 	</div>
 {:else}
 	<form

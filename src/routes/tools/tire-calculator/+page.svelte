@@ -56,8 +56,9 @@
 					/>
 				</label>
 				<label class="block">
-					<span class="text-xs font-bold tracking-widest text-zinc-500 uppercase">Aspect Ratio</span
-					>
+					<span class="text-xs font-bold tracking-widest text-zinc-500 uppercase">
+						Aspect Ratio
+					</span>
 					<input
 						type="number"
 						bind:value={aspect}
@@ -67,9 +68,9 @@
 					/>
 				</label>
 				<label class="block">
-					<span class="text-xs font-bold tracking-widest text-zinc-500 uppercase"
-						>Rim Diameter (in)</span
-					>
+					<span class="text-xs font-bold tracking-widest text-zinc-500 uppercase">
+						Rim Diameter (in)
+					</span>
 					<input
 						type="number"
 						bind:value={rim}
@@ -112,8 +113,9 @@
 					/>
 				</label>
 				<label class="block">
-					<span class="text-xs font-bold tracking-widest text-zinc-500 uppercase">Aspect Ratio</span
-					>
+					<span class="text-xs font-bold tracking-widest text-zinc-500 uppercase">
+						Aspect Ratio
+					</span>
 					<input
 						type="number"
 						bind:value={aspect2}
@@ -123,9 +125,9 @@
 					/>
 				</label>
 				<label class="block">
-					<span class="text-xs font-bold tracking-widest text-zinc-500 uppercase"
-						>Rim Diameter (in)</span
-					>
+					<span class="text-xs font-bold tracking-widest text-zinc-500 uppercase">
+						Rim Diameter (in)
+					</span>
 					<input
 						type="number"
 						bind:value={rim2}

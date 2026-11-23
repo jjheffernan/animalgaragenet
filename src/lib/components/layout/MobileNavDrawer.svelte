@@ -85,11 +85,12 @@
 		<a href={resolve('/')} class="group flex items-center gap-2" onclick={onclose}>
 			<span
 				class="flex h-9 w-9 items-center justify-center bg-red-600 text-sm font-black tracking-tighter text-white"
-				>AG</span
 			>
-			<span class="font-display text-sm font-bold tracking-widest text-white uppercase"
-				>Animal Garage</span
-			>
+				AG
+			</span>
+			<span class="font-display text-sm font-bold tracking-widest text-white uppercase">
+				Animal Garage
+			</span>
 		</a>
 		<button
 			type="button"
@@ -147,8 +148,9 @@
 					onclick={() => toggle('parts')}
 				>
 					Parts
-					<span class="text-2xl leading-none font-light text-zinc-500">{partsOpen ? '−' : '+'}</span
-					>
+					<span class="text-2xl leading-none font-light text-zinc-500">
+						{partsOpen ? '−' : '+'}
+					</span>
 				</button>
 				{#if partsOpen && partsNav}
 					<div class="pb-4 pl-1">
@@ -163,8 +165,10 @@
 									role="tab"
 									aria-selected={activePartsTab === tab.id}
 									class="shrink-0 {categoryPillClass(activePartsTab === tab.id)}"
-									onclick={() => (activePartsTab = tab.id)}>{tab.label}</button
+									onclick={() => (activePartsTab = tab.id)}
 								>
+									{tab.label}
+								</button>
 							{/each}
 						</div>
 						<div role="tabpanel">
@@ -190,9 +194,9 @@
 					onclick={() => toggle('community')}
 				>
 					Community
-					<span class="text-2xl leading-none font-light text-zinc-500"
-						>{communityOpen ? '−' : '+'}</span
-					>
+					<span class="text-2xl leading-none font-light text-zinc-500">
+						{communityOpen ? '−' : '+'}
+					</span>
 				</button>
 				{#if communityOpen}
 					<ul class="space-y-1 pb-4 pl-1">

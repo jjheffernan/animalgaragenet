@@ -52,9 +52,9 @@
 					<p class="mt-1 text-white">{offset} mm — {fitmentLabel}</p>
 				</label>
 				<label class="block">
-					<span class="text-xs font-bold tracking-widest text-zinc-500 uppercase"
-						>Tire Width (in)</span
-					>
+					<span class="text-xs font-bold tracking-widest text-zinc-500 uppercase">
+						Tire Width (in)
+					</span>
 					<input
 						type="number"
 						bind:value={width}
@@ -65,9 +65,9 @@
 					/>
 				</label>
 				<label class="block">
-					<span class="text-xs font-bold tracking-widest text-zinc-500 uppercase"
-						>Rim Width (in)</span
-					>
+					<span class="text-xs font-bold tracking-widest text-zinc-500 uppercase">
+						Rim Width (in)
+					</span>
 					<input
 						type="number"
 						bind:value={rimWidth}

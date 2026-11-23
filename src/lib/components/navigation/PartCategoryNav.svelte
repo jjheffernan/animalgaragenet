@@ -35,8 +35,10 @@
 								href={resolve(`parts/${child.slug}`)}
 								class="block py-1.5 text-xs transition {currentSlug === child.slug
 									? 'text-red-500'
-									: 'text-zinc-500 hover:text-white'}">{child.name}</a
+									: 'text-zinc-500 hover:text-white'}"
 							>
+								{child.name}
+							</a>
 						</li>
 					{/each}
 				</ul>

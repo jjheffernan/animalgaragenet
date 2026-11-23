@@ -70,9 +70,9 @@
 		</p>
 	{/if}
 
-	<a href={resolve('loyalty')} class="mt-4 inline-block text-sm text-red-500 hover:text-red-400"
-		>View loyalty perks →</a
-	>
+	<a href={resolve('loyalty')} class="mt-4 inline-block text-sm text-red-500 hover:text-red-400">
+		View loyalty perks →
+	</a>
 </section>
 
 <section class="mt-6 rounded-sm border border-zinc-800 bg-zinc-900/50 p-6">

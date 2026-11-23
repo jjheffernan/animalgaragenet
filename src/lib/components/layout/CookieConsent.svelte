@@ -23,9 +23,9 @@
 			<p>
 				We use essential cookies for cart and sign-in. Optional analytics cookies help us improve
 				the site.
-				<a href={resolve('policies/privacy')} class="text-red-400 underline hover:text-red-300"
-					>Privacy policy</a
-				>
+				<a href={resolve('policies/privacy')} class="text-red-400 underline hover:text-red-300">
+					Privacy policy
+				</a>
 			</p>
 			<div class="flex shrink-0 gap-2">
 				<button

@@ -79,9 +79,9 @@
 				{/if}
 
 				<label class="block">
-					<span class="text-xs font-bold tracking-widest text-zinc-500 uppercase"
-						>Business Name</span
-					>
+					<span class="text-xs font-bold tracking-widest text-zinc-500 uppercase">
+						Business Name
+					</span>
 					<input
 						type="text"
 						name="businessName"
@@ -99,8 +99,9 @@
 				</label>
 
 				<label class="block">
-					<span class="text-xs font-bold tracking-widest text-zinc-500 uppercase">Contact Name</span
-					>
+					<span class="text-xs font-bold tracking-widest text-zinc-500 uppercase">
+						Contact Name
+					</span>
 					<input
 						type="text"
 						name="contactName"
@@ -137,9 +138,9 @@
 					</label>
 
 					<label class="block">
-						<span class="text-xs font-bold tracking-widest text-zinc-500 uppercase"
-							>Phone (optional)</span
-						>
+						<span class="text-xs font-bold tracking-widest text-zinc-500 uppercase">
+							Phone (optional)
+						</span>
 						<input
 							type="tel"
 							name="phone"
@@ -150,9 +151,9 @@
 				</div>
 
 				<label class="block">
-					<span class="text-xs font-bold tracking-widest text-zinc-500 uppercase"
-						>Website (optional)</span
-					>
+					<span class="text-xs font-bold tracking-widest text-zinc-500 uppercase">
+						Website (optional)
+					</span>
 					<input
 						type="url"
 						name="website"
@@ -163,9 +164,9 @@
 				</label>
 
 				<label class="block">
-					<span class="text-xs font-bold tracking-widest text-zinc-500 uppercase"
-						>Tell Us About Your Business</span
-					>
+					<span class="text-xs font-bold tracking-widest text-zinc-500 uppercase">
+						Tell Us About Your Business
+					</span>
 					<textarea
 						name="message"
 						rows="4"

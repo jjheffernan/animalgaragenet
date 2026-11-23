@@ -205,9 +205,9 @@
 						{/if}
 						<div class="space-y-2 p-4">
 							<div class="flex flex-wrap items-center gap-2">
-								<span class={asset.status === 'ready' ? adminBadgeOn : adminBadgeOff}
-									>{asset.status}</span
-								>
+								<span class={asset.status === 'ready' ? adminBadgeOn : adminBadgeOff}>
+									{asset.status}
+								</span>
 								<span class="text-xs text-zinc-500">{formatBytes(asset.byteSize)}</span>
 							</div>
 							<p class="truncate font-mono text-[10px] text-zinc-600" title={asset.storagePath}>

@@ -128,8 +128,10 @@
 				<p class="mt-3">
 					Questions about this policy? Reach us through our <a
 						href="/contact"
-						class="text-red-500 hover:text-red-400">contact page</a
-					>.
+						class="text-red-500 hover:text-red-400"
+					>
+						contact page
+					</a>.
 				</p>
 			</div>
 		</div>

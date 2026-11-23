@@ -9,6 +9,9 @@ updates:
     ignore:
       - dependency-name: '@types/node'
         update-types: ['version-update:semver-major']
+      # Kit still peers typescript ^6; hold until Kit supports TS 7.
+      - dependency-name: typescript
+        update-types: ['version-update:semver-major']
     groups:
       svelte:
         patterns:

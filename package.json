@@ -55,7 +55,7 @@
 		"@aws-sdk/client-cloudfront": "^3.1076.0",
 		"@aws-sdk/client-s3": "^3.1079.0",
 		"@aws-sdk/s3-request-presigner": "^3.1079.0",
-		"@stripe/stripe-js": "^9.8.0",
+		"@stripe/stripe-js": "^10.3.0",
 		"@supabase/ssr": "^0.12.7",
 		"@supabase/supabase-js": "^2.110.0",
 		"sanitize-html": "^2.18.2"

@@ -8,6 +8,19 @@ export default defineConfig({
 		include: ['src/**/*.{test,spec}.{js,ts}', 'tests/**/*.{test,spec}.{js,ts}'],
 		environment: 'node'
 	},
+	// sanitize-html (CJS) requires htmlparser2@12 (ESM-only). Netlify/Lambda disables
+	// require(ESM); bundle the chain into SSR output so the boundary is resolved at build.
+	ssr: {
+		noExternal: [
+			'sanitize-html',
+			'htmlparser2',
+			'escape-string-regexp',
+			'is-plain-object',
+			'parse-srcset',
+			'postcss',
+			'launder'
+		]
+	},
 	plugins: [
 		tailwindcss(),
 		sveltekit({
